@@ -1,10 +1,10 @@
 # FlexPlan.jl
 
-Status:
-[![CI](https://github.com/Electa-Git/FlexPlan.jl/workflows/CI/badge.svg)](https://github.com/Electa-Git/FlexPlan.jl/actions?query=workflow%3ACI)
-<a href="https://codecov.io/gh/Electa-Git/FlexPlan.jl"><img src="https://img.shields.io/codecov/c/github/Electa-Git/FlexPlan.jl?logo=Codecov"></img></a>
-<a href="https://electa-git.github.io/FlexPlan.jl/dev/"><img src="https://github.com/Electa-Git/FlexPlan.jl/workflows/Documentation/badge.svg"></img></a>
-[![DOI](https://zenodo.org/badge/293785598.svg)](https://zenodo.org/badge/latestdoi/293785598)
+[![](https://img.shields.io/github/actions/workflow/status/Electa-Git/FlexPlan.jl/ci.yml?branch=master&label=CI)](https://github.com/Electa-Git/FlexPlan.jl/actions?query=workflow:CI)
+[![](https://img.shields.io/codecov/c/github/Electa-Git/FlexPlan.jl)](https://app.codecov.io/gh/Electa-Git/FlexPlan.jl)
+[![](https://img.shields.io/badge/DOI-10.5281%2Fzenodo.8035491-blue)](https://doi.org/10.5281/zenodo.8035491)
+[![](https://img.shields.io/badge/docs-stable-blue.svg)](https://electa-git.github.io/FlexPlan.jl/stable/)
+[![](https://img.shields.io/badge/docs-dev-blue.svg)](https://electa-git.github.io/FlexPlan.jl/dev/)
 
 
 ## Overview
