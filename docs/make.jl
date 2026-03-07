@@ -24,5 +24,6 @@ makedocs(
 )
 
 deploydocs(
-    repo = "github.com/Electa-Git/FlexPlan.jl.git"
+    repo = "github.com/Electa-Git/FlexPlan.jl.git",
+    push_preview = true
 )
