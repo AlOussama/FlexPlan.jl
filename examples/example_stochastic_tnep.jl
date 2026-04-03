@@ -6,7 +6,7 @@
 import PowerModels as _PM
 import PowerModelsACDC as _PMACDC
 import FlexPlan as _FP
-const _FP_dir = dirname(dirname(pathof(_FP))) # Root directory of FlexPlan package
+const _FP_dir = pkgdir(_FP) # Root directory of FlexPlan package
 include(joinpath(_FP_dir,"test/io/create_profile.jl")) # Include sample data from FlexPlan repository; you can of course also use your own data
 
 # Add solver packages

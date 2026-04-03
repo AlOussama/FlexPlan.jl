@@ -11,7 +11,7 @@ using Memento
 using Printf
 import CPLEX
 _LOGGER = Logger(basename(@__FILE__)[1:end-3]) # A logger for this script, also used by included files.
-const _FP_dir = dirname(dirname(pathof(_FP))) # Root directory of FlexPlan package
+const _FP_dir = pkgdir(_FP) # Root directory of FlexPlan package
 include(joinpath(_FP_dir,"test/io/load_case.jl"))
 include(joinpath(_FP_dir,"test/benders/cplex.jl"))
 include(joinpath(_FP_dir,"test/benders/compare.jl"))

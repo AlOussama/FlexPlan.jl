@@ -5,7 +5,7 @@
 import PowerModels as _PM
 import PowerModelsACDC as _PMACDC
 import FlexPlan as _FP
-const _FP_dir = dirname(dirname(pathof(_FP))) # Root directory of FlexPlan package
+const _FP_dir = pkgdir(_FP) # Root directory of FlexPlan package
 import HiGHS
 optimizer = _FP.optimizer_with_attributes(HiGHS.Optimizer, "output_flag"=>false)
 

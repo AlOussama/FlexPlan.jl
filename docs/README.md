@@ -23,7 +23,7 @@ displaying the corresponding page is automatically refreshed.
    Pkg.add("Documenter")
    Pkg.add("LiveServer")
    using FlexPlan, LiveServer
-   cd(dirname(dirname(pathof(FlexPlan))))
+   cd(pkgdir(FlexPlan))
    servedocs()
    exit()
    ```

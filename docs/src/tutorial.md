@@ -48,7 +48,7 @@ These test cases have been used in for the validation of the model in the FlexPl
 The functions are named `load_*` where `*` is the name of a test case.
 For example, `case6` can be loaded using:
 ```julia
-const _FP_dir = dirname(dirname(pathof(_FP))) # Root directory of FlexPlan package
+const _FP_dir = pkgdir(_FP) # Root directory of FlexPlan package
 include(joinpath(_FP_dir,"test/io/load_case.jl"))
 data = load_case6(; number_of_hours=24, number_of_scenarios=1, number_of_years=1)
 ```
@@ -70,7 +70,7 @@ The procedure is as follows.
 
 Here is some sample code to get started:
 ```julia
-const _FP_dir = dirname(dirname(pathof(_FP))) # Root directory of FlexPlan package
+const _FP_dir = pkgdir(_FP) # Root directory of FlexPlan package
 sn_data = _FP.parse_file(joinpath(_FP_dir,"test/data/case6/case6_2030.m"))
 _FP.add_dimension!(sn_data, :hour, 24)
 _FP.add_dimension!(sn_data, :scenario, Dict(1 => Dict{String,Any}("probability"=>1)))
@@ -101,7 +101,7 @@ Here is an example (using FlexPlan sample data):
 number_of_hours = 4
 number_of_scenarios = 2
 number_of_years = 1
-const _FP_dir = dirname(dirname(pathof(_FP))) # Root directory of FlexPlan package
+const _FP_dir = pkgdir(_FP) # Root directory of FlexPlan package
 include(joinpath(_FP_dir, "test/io/load_case.jl"))
 
 # Transmission network data
@@ -166,7 +166,7 @@ They also allow you to save numerical results as CSV files and plots in any form
 All these functions are contained in [`/test/io/sol.jl`](https://github.com/Electa-Git/FlexPlan.jl/blob/master/test/io/sol.jl), but are not part of FlexPlan module to avoid unwanted dependencies.
 Include them with
 ```julia
-const _FP_dir = dirname(dirname(pathof(_FP))) # Root directory of FlexPlan package
+const _FP_dir = pkgdir(_FP) # Root directory of FlexPlan package
 include(joinpath(_FP_dir,"test/io/sol.jl"))
 ```
 and import the required packages.
