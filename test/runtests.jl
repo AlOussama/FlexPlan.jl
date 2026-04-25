@@ -24,6 +24,9 @@ milp_optimizer = _FP.optimizer_with_attributes(HiGHS.Optimizer, "output_flag"=>f
     include("dimensions.jl")
     include("io.jl")
 
+    # Block UC / gSCR extension
+    include("uc_gscr_block.jl")
+
     # Models
     include("bfarad.jl")
 
