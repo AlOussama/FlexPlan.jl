@@ -36,8 +36,8 @@ Example:
 Adds the linear Gershgorin sufficient gSCR/ESCR condition at bus `n`
 for network snapshot `nw`:
 
-    sigma0_G[n] + sum(b_block[k] * na[k] for k in gfm_at_bus[n])
-        >= g_min * sum(p_block[i] * na[i] for i in gfl_at_bus[n])
+    gscr_sigma0_gershgorin_margin[n] + sum(b_block[k] * na[k] for k in gfm_at_bus[n])
+        >= g_min * sum(P^{block}[i] * na[i] for i in gfl_at_bus[n])
 
 This constraint is formulation-independent and LP/MILP-compatible.
 It uses the full-network Gershgorin margin, not a reduced network.
