@@ -12,7 +12,7 @@ When suggesting or reviewing code:
 6. Device type is data: `gfl` or `gfm`.
 7. Use \(B^0\), the real full-network susceptance matrix.
 8. The LP/MILP gSCR constraint is:
-   `sigma0_gershgorin[n] + sum(b_block[k] * na[k,t] for gfm at n) >= g_min * sum(p_block[i] * na[i,t] for gfl at n)`.
+   `gscr_sigma0_gershgorin_margin[n] + sum(b_block[k] * na[k,t] for gfm at n) >= g_min * sum(P^{block}[i] * na[i,t] for gfl at n)`.
 9. The global gSCR constraint is an SDP/LMI:
    `B_t - g_min*S_t >= 0` in PSD sense.
 10. Start with `relax=true`; keep `relax=false` ready for integer follow-up.
