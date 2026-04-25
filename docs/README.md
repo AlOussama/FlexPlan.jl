@@ -1,10 +1,22 @@
-# Documentation for FlexPlan.jl
+# Documentation for FlexPlan UC/gSCR Block-Expansion
 
-You can read this documentation online at <https://electa-git.github.io/FlexPlan.jl/dev/>.
+This repository extends FlexPlan.jl with block-based generator/storage expansion and full-network gSCR/ESCR security constraints.
+
+The Documenter.jl-built reference documentation is located in `docs/src/` and is published via `docs/make.jl`.
+
+UC/gSCR-specific design documents live in:
+
+```text
+docs/block_expansion/         — mathematical block-expansion formulation
+docs/uc_gscr_block/           — data mapping, architecture, gSCR LMI and Gershgorin docs
+docs/project_start/           — onboarding and start-here guides
+docs/review_workflow/         — documentation and review quality requirements
+docs/tests/                   — test plan and specification
+```
 
 ## Preview the documentation (for developers)
 
-While developing FlexPlan you can also preview the documentation locally in your browser
+While developing you can preview the documentation locally in your browser
 with live-reload capability, i.e. when modifying a file, every browser (tab) currently
 displaying the corresponding page is automatically refreshed.
 
