@@ -27,12 +27,8 @@ Use Codex for:
 
 Codex must not invent new mathematical assumptions.
 
-If ambiguous, Codex must stop and write the ambiguity to:
-
-```text
-docs/uc_gscr_block/open_questions.md
-```
-
+If ambiguous, Codex must stop and record the ambiguity in the current PR description
+or escalate it directly to the human reviewer before proceeding.
 ## 3. GitHub Copilot role
 
 Copilot is the IDE-level assistant and PR review assistant.
