@@ -188,3 +188,95 @@ function _uc_gscr_block_dispatch_variable(pm::_PM.AbstractPowerModel, n::Int, de
 
     return _PM.var(pm, n, variable_symbol, device_id)
 end
+
+
+## UC/gSCR block storage bounds
+
+"""
+    constraint_uc_gscr_block_storage_energy_capacity(pm, n, device_key, e_block)
+
+Implements the UC/gSCR storage energy-capacity equation for one block device:
+
+`0 <= e[k,t] <= e_block[k] * n_block[k]`.
+
+This formulation-specific method targets generic PowerModels formulations with
+storage energy variables. It assumes `n_block` exists on compound key
+`(table_name, device_id)` and uses FlexPlan storage energy variable mapping:
+`storage -> se`, `ne_storage -> se_ne`. The function mutates only the JuMP
+model by adding one upper-bound constraint.
+"""
+function constraint_uc_gscr_block_storage_energy_capacity(pm::_PM.AbstractPowerModel, n::Int, device_key::Tuple{Symbol,Any}, e_block)
+    e = _uc_gscr_block_storage_variable(pm, n, device_key, :energy)
+    n_block = _PM.var(pm, n, :n_block, device_key)
+
+    return JuMP.@constraint(pm.model, e <= e_block * n_block)
+end
+
+"""
+    constraint_uc_gscr_block_storage_charge_discharge_bounds(pm, n, device_key, p_ch_block_max, p_dch_block_max)
+
+Implements UC/gSCR storage charge/discharge block-power equations for one
+block device:
+
+`sc[k,t] <= p_ch_block_max[k] * na_block[k,t]`
+
+`sd[k,t] <= p_dch_block_max[k] * na_block[k,t]`.
+
+This formulation-specific method targets generic PowerModels formulations with
+storage charge/discharge variables. It assumes `na_block` exists on compound
+key `(table_name, device_id)` and uses FlexPlan mapping:
+`storage -> (sc, sd)`, `ne_storage -> (sc_ne, sd_ne)`. The function mutates
+only the JuMP model by adding two upper-bound constraints.
+"""
+function constraint_uc_gscr_block_storage_charge_discharge_bounds(pm::_PM.AbstractPowerModel, n::Int, device_key::Tuple{Symbol,Any}, p_ch_block_max, p_dch_block_max)
+    sc = _uc_gscr_block_storage_variable(pm, n, device_key, :charge)
+    sd = _uc_gscr_block_storage_variable(pm, n, device_key, :discharge)
+    na = _PM.var(pm, n, :na_block, device_key)
+
+    charge_bound = JuMP.@constraint(pm.model, sc <= p_ch_block_max * na)
+    discharge_bound = JuMP.@constraint(pm.model, sd <= p_dch_block_max * na)
+
+    return (charge_bound, discharge_bound)
+end
+
+"""
+    _uc_gscr_block_storage_variable(pm, n, device_key, component)
+
+Returns the mapped storage variable for one UC/gSCR block storage device.
+
+`component` must be one of `:energy`, `:charge`, or `:discharge`. Device keys
+must be compound `(:storage, i)` or `(:ne_storage, i)` tuples. Mapping follows
+existing FlexPlan naming:
+`storage -> (se, sc, sd)` and `ne_storage -> (se_ne, sc_ne, sd_ne)`.
+This helper is formulation-independent and mutates no model state.
+"""
+function _uc_gscr_block_storage_variable(pm::_PM.AbstractPowerModel, n::Int, device_key::Tuple{Symbol,Any}, component::Symbol)
+    table_name, device_id = device_key
+
+    variable_symbol =
+        if table_name == :storage
+            if component == :energy
+                :se
+            elseif component == :charge
+                :sc
+            elseif component == :discharge
+                :sd
+            else
+                Memento.error(_LOGGER, "Unsupported UC/gSCR block storage component `$(component)`.")
+            end
+        elseif table_name == :ne_storage
+            if component == :energy
+                :se_ne
+            elseif component == :charge
+                :sc_ne
+            elseif component == :discharge
+                :sd_ne
+            else
+                Memento.error(_LOGGER, "Unsupported UC/gSCR block storage component `$(component)`.")
+            end
+        else
+            Memento.error(_LOGGER, "Unsupported UC/gSCR block storage table `$(table_name)`.")
+        end
+
+    return _PM.var(pm, n, variable_symbol, device_id)
+end

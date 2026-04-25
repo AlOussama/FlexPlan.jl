@@ -217,3 +217,118 @@ template intentionally adds no constraints and returns `nothing`.
 """
 function constraint_uc_gscr_block_reactive_dispatch_bounds(pm::_PM.AbstractActivePowerModel; nw::Int=_PM.nw_id_default)
 end
+
+
+## UC/gSCR block storage bounds
+
+"""
+    constraint_uc_gscr_block_storage_bounds(pm; nw=nw_id_default)
+
+Adds UC/gSCR storage block constraints on network `nw`:
+
+`0 <= e <= e_block * n_block`
+
+`sc <= p_ch_block_max * na_block`
+
+`sd <= p_dch_block_max * na_block`.
+
+This template applies only to `storage` and `ne_storage` devices with block
+fields, using compound keys `(table_name, device_id)` to keep indexing
+collision-free. In this codebase, `e/sc/sd` map to `se/sc/sd` for `storage`
+and `se_ne/sc_ne/sd_ne` for `ne_storage`; `p_ch_block_max` and
+`p_dch_block_max` map to `charge_rating` and `discharge_rating`.
+
+This function is formulation-independent, calls formulation-specific methods,
+and mutates the JuMP model plus PowerModels constraint dictionaries. It is a
+no-op when UC/gSCR block references are absent.
+"""
+function constraint_uc_gscr_block_storage_bounds(pm::_PM.AbstractPowerModel; nw::Int=_PM.nw_id_default)
+    constraint_uc_gscr_block_storage_energy_capacity(pm; nw)
+    constraint_uc_gscr_block_storage_charge_discharge_bounds(pm; nw)
+end
+
+"""
+    constraint_uc_gscr_block_storage_energy_capacity(pm; nw=nw_id_default)
+
+Adds the UC/gSCR storage energy-capacity equation on network `nw`:
+
+`0 <= e[k,t] <= n_block[k] * e_block[k]`.
+
+The template iterates only over block-annotated `storage` and `ne_storage`
+compound keys and calls the formulation-specific method
+`constraint_uc_gscr_block_storage_energy_capacity(pm, nw, device_key, e_block)`.
+It assumes `e_block` is present on those storage device records.
+
+This function is formulation-independent and mutates the model constraint
+dictionary. It is a no-op when UC/gSCR block references are absent.
+"""
+function constraint_uc_gscr_block_storage_energy_capacity(pm::_PM.AbstractPowerModel; nw::Int=_PM.nw_id_default)
+    if !_has_uc_gscr_block_ref(pm, nw)
+        return
+    end
+
+    if haskey(_PM.con(pm, nw), :uc_gscr_block_storage_energy_capacity)
+        return _PM.con(pm, nw)[:uc_gscr_block_storage_energy_capacity]
+    end
+
+    constraints = _PM.con(pm, nw)[:uc_gscr_block_storage_energy_capacity] = Dict{Tuple{Symbol,Any},JuMP.ConstraintRef}()
+
+    for device_key in _uc_gscr_block_storage_device_keys(pm, nw)
+        device = _PM.ref(pm, nw, device_key[1], device_key[2])
+        constraints[device_key] = constraint_uc_gscr_block_storage_energy_capacity(pm, nw, device_key, device["e_block"])
+    end
+
+    return constraints
+end
+
+"""
+    constraint_uc_gscr_block_storage_charge_discharge_bounds(pm; nw=nw_id_default)
+
+Adds UC/gSCR storage charge/discharge block-power equations on network `nw`:
+
+`sc[k,t] <= p_ch_block_max[k] * na_block[k,t]`
+
+`sd[k,t] <= p_dch_block_max[k] * na_block[k,t]`.
+
+This template applies only to block-annotated `storage` and `ne_storage`
+devices using compound keys. In this FlexPlan model,
+`p_ch_block_max = charge_rating` and `p_dch_block_max = discharge_rating`.
+It calls the formulation-specific method
+`constraint_uc_gscr_block_storage_charge_discharge_bounds(pm, nw, device_key, p_ch_block_max, p_dch_block_max)`.
+
+This function is formulation-independent and mutates the model constraint
+dictionary. It is a no-op when UC/gSCR block references are absent.
+"""
+function constraint_uc_gscr_block_storage_charge_discharge_bounds(pm::_PM.AbstractPowerModel; nw::Int=_PM.nw_id_default)
+    if !_has_uc_gscr_block_ref(pm, nw)
+        return
+    end
+
+    if haskey(_PM.con(pm, nw), :uc_gscr_block_storage_charge_discharge_bounds)
+        return _PM.con(pm, nw)[:uc_gscr_block_storage_charge_discharge_bounds]
+    end
+
+    constraints = _PM.con(pm, nw)[:uc_gscr_block_storage_charge_discharge_bounds] = Dict{Tuple{Symbol,Any},Tuple{JuMP.ConstraintRef,JuMP.ConstraintRef}}()
+
+    for device_key in _uc_gscr_block_storage_device_keys(pm, nw)
+        device = _PM.ref(pm, nw, device_key[1], device_key[2])
+        constraints[device_key] = constraint_uc_gscr_block_storage_charge_discharge_bounds(
+            pm, nw, device_key, device["charge_rating"], device["discharge_rating"]
+        )
+    end
+
+    return constraints
+end
+
+"""
+    _uc_gscr_block_storage_device_keys(pm, nw)
+
+Returns deterministic UC/gSCR block storage compound keys for network `nw`.
+
+Keys are filtered from `_uc_gscr_block_device_keys(pm, nw)` and include only
+`(:storage, i)` and `(:ne_storage, i)`. This helper is formulation-independent
+and mutates no data or model state.
+"""
+function _uc_gscr_block_storage_device_keys(pm::_PM.AbstractPowerModel, nw::Int)
+    return [device_key for device_key in _uc_gscr_block_device_keys(pm, nw) if device_key[1] == :storage || device_key[1] == :ne_storage]
+end
