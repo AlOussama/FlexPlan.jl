@@ -26,4 +26,4 @@ Important:
 - Use full-network \(B^0\).
 - Add tests for every change.
 - Add docstrings for every new function.
-- If ambiguous, write to `docs/uc_gscr_block/open_questions.md`.
+- If ambiguous, document the question under `docs/uc_gscr_block/`.
