@@ -73,7 +73,7 @@ function ref_add_uc_gscr_block!(ref::Dict{Symbol,<:Any}, data::Dict{String,<:Any
             continue
         end
 
-        _validate_uc_gscr_block_devices!(nw_ref)
+        _validate_uc_gscr_block_devices(nw_ref)
         _add_uc_gscr_device_maps!(nw_ref)
         _add_uc_gscr_row_metrics!(nw_ref)
     end
@@ -104,7 +104,7 @@ function _has_uc_gscr_block_data(nw_ref::Dict{Symbol,<:Any})
 end
 
 """
-    _validate_uc_gscr_block_devices!(nw_ref)
+    _validate_uc_gscr_block_devices(nw_ref)
 
 Validates required UC/gSCR block fields on every block-annotated supported
 device in `nw_ref`.
@@ -115,7 +115,7 @@ No defaults are inferred for these mathematical fields. Optional fields
 `H`, `s_block`, and `e_block` are only read when present. This function is
 formulation-independent and mutates no data.
 """
-function _validate_uc_gscr_block_devices!(nw_ref::Dict{Symbol,<:Any})
+function _validate_uc_gscr_block_devices(nw_ref::Dict{Symbol,<:Any})
     for (table_name, device_id, device) in _uc_gscr_block_devices(nw_ref)
         for field in _UC_GSCR_BLOCK_REQUIRED_FIELDS
             if !haskey(device, field)
