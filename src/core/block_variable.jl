@@ -10,9 +10,10 @@ satisfying `0 <= na_block[k,t]`, and the linking constraint
 network snapshots; the active count is specific to `nw`.
 
 The argument `relax` selects continuous variables when `true` and integer
-variables when `false`. Block counts are dimensionless. This helper is
-formulation-independent and mutates the JuMP model plus PowerModels variable
-and constraint dictionaries.
+variables when `false`; `report` controls solution reporting on the original
+device tables under `n_block` and `na_block`. Block counts are dimensionless.
+This helper is formulation-independent and mutates the JuMP model plus
+PowerModels variable, constraint, and solution-report dictionaries.
 """
 function variable_uc_gscr_block(pm::_PM.AbstractPowerModel; nw::Int=_PM.nw_id_default, relax::Bool=false, report::Bool=true)
     variable_installed_blocks(pm; nw, relax, report)
@@ -32,9 +33,12 @@ on the first network id and aliasing the same container into later network
 refs.
 
 The argument `relax` selects continuous variables when `true` and integer
-variables when `false`. Block counts are dimensionless. This function is
-formulation-independent and mutates the JuMP model plus PowerModels variable
-dictionaries.
+variables when `false`; `report` controls solution reporting on the original
+device tables under `n_block`. Block counts are dimensionless. When network
+`nw` has no UC/gSCR block reference data, the function follows the local
+no-op convention and returns `nothing`. This function is formulation-
+independent and mutates the JuMP model plus PowerModels variable and
+solution-report dictionaries.
 """
 function variable_installed_blocks(pm::_PM.AbstractPowerModel; nw::Int=_PM.nw_id_default, relax::Bool=false, report::Bool=true)
     if !_has_uc_gscr_block_ref(pm, nw)
@@ -47,12 +51,15 @@ function variable_installed_blocks(pm::_PM.AbstractPowerModel; nw::Int=_PM.nw_id
         if !haskey(_PM.var(pm, first_nw), :n_block)
             variable_installed_blocks(pm; nw=first_nw, relax, report=false)
         end
-        _PM.var(pm, nw)[:n_block] = _PM.var(pm, first_nw)[:n_block]
-        return
+        n_block = _PM.var(pm, nw)[:n_block] = _PM.var(pm, first_nw)[:n_block]
+        report && _report_uc_gscr_block_variable(pm, nw, :n_block, n_block)
+        return n_block
     end
 
     if haskey(_PM.var(pm, nw), :n_block)
-        return
+        n_block = _PM.var(pm, nw)[:n_block]
+        report && _report_uc_gscr_block_variable(pm, nw, :n_block, n_block)
+        return n_block
     end
 
     device_keys = _uc_gscr_block_device_keys(pm, nw)
@@ -73,6 +80,7 @@ function variable_installed_blocks(pm::_PM.AbstractPowerModel; nw::Int=_PM.nw_id
         )
     end
 
+    report && _report_uc_gscr_block_variable(pm, nw, :n_block, n_block)
     return n_block
 end
 
@@ -87,9 +95,12 @@ the lower bound `0 <= na_block[k,t]`. The upper relation
 `constraint_active_blocks_le_installed`.
 
 The argument `relax` selects continuous variables when `true` and integer
-variables when `false`. Active block counts are dimensionless and
-snapshot-specific. This function is formulation-independent and mutates the
-JuMP model plus PowerModels variable dictionaries.
+variables when `false`; `report` controls solution reporting on the original
+device tables under `na_block`. Active block counts are dimensionless and
+snapshot-specific. When network `nw` has no UC/gSCR block reference data, the
+function follows the local no-op convention and returns `nothing`. This
+function is formulation-independent and mutates the JuMP model plus
+PowerModels variable and solution-report dictionaries.
 """
 function variable_active_blocks(pm::_PM.AbstractPowerModel; nw::Int=_PM.nw_id_default, relax::Bool=false, report::Bool=true)
     if !_has_uc_gscr_block_ref(pm, nw)
@@ -97,7 +108,9 @@ function variable_active_blocks(pm::_PM.AbstractPowerModel; nw::Int=_PM.nw_id_de
     end
 
     if haskey(_PM.var(pm, nw), :na_block)
-        return
+        na_block = _PM.var(pm, nw)[:na_block]
+        report && _report_uc_gscr_block_variable(pm, nw, :na_block, na_block)
+        return na_block
     end
 
     device_keys = _uc_gscr_block_device_keys(pm, nw)
@@ -116,6 +129,7 @@ function variable_active_blocks(pm::_PM.AbstractPowerModel; nw::Int=_PM.nw_id_de
         )
     end
 
+    report && _report_uc_gscr_block_variable(pm, nw, :na_block, na_block)
     return na_block
 end
 
@@ -171,6 +185,49 @@ function _uc_gscr_block_device_keys(pm::_PM.AbstractPowerModel, nw::Int)
     device_keys = collect(union(keys(_PM.ref(pm, nw, :gfl_devices)), keys(_PM.ref(pm, nw, :gfm_devices))))
     sort!(device_keys; by=device_key -> (string(device_key[1]), string(device_key[2])))
     return device_keys
+end
+
+"""
+    _report_uc_gscr_block_variable(pm, nw, field_name, variables)
+
+Adds solution reporting for one UC/gSCR block variable container.
+
+The field `field_name` is `:n_block` or `:na_block`, and `variables` is
+indexed by stable compound keys `(table_name, device_id)`. Reporting is
+written back to the original PowerModels/FlexPlan component tables (`gen`,
+`storage`, and `ne_storage`) using the local `_PM.sol_component_value` style.
+This helper is formulation-independent and mutates only the solution-report
+dictionary.
+"""
+function _report_uc_gscr_block_variable(pm::_PM.AbstractPowerModel, nw::Int, field_name::Symbol, variables)
+    for table_name in (:gen, :storage, :ne_storage)
+        table_ids = _uc_gscr_block_report_ids(pm, nw, table_name, field_name)
+        if isempty(table_ids)
+            continue
+        end
+
+        table_variables = Dict(device_id => variables[(table_name, device_id)] for device_id in table_ids)
+        _PM.sol_component_value(pm, nw, table_name, field_name, table_ids, table_variables)
+    end
+end
+
+"""
+    _uc_gscr_block_report_ids(pm, nw, table_name, field_name)
+
+Returns unreported UC/gSCR block device ids for one component table.
+
+The ids are selected from the stable compound block keys `(table_name,
+device_id)` and filtered to avoid duplicate solution-report fields when a
+variable constructor is called more than once. This helper is formulation-
+independent and mutates only empty solution dictionaries that PowerModels
+creates while checking report state.
+"""
+function _uc_gscr_block_report_ids(pm::_PM.AbstractPowerModel, nw::Int, table_name::Symbol, field_name::Symbol)
+    return [
+        device_id
+        for (device_table, device_id) in _uc_gscr_block_device_keys(pm, nw)
+        if device_table == table_name && !haskey(_PM.sol(pm, nw, table_name, device_id), field_name)
+    ]
 end
 
 """
