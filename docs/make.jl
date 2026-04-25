@@ -2,7 +2,7 @@ using Documenter, FlexPlan
 
 makedocs(
     modules = [FlexPlan],
-    sitename = "FlexPlan",
+    sitename = "FlexPlan UC/gSCR Block-Expansion",
     warnonly = :missing_docs,
     pages = [
         "Home" => "index.md"
@@ -24,6 +24,6 @@ makedocs(
 )
 
 deploydocs(
-    repo = "github.com/Electa-Git/FlexPlan.jl.git",
+    repo = "github.com/AlOussama/FlexPlan.jl.git",
     push_preview = true
 )
