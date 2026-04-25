@@ -117,3 +117,103 @@ function constraint_ne_converter_activation(pm::_PM.AbstractPowerModel, i::Int, 
     end
     constraint_ne_converter_activation(pm, nw, i, investment_horizon)
 end
+
+
+## UC/gSCR block dispatch bounds
+
+"""
+    constraint_uc_gscr_block_dispatch(pm; nw=nw_id_default)
+
+Adds the UC/gSCR block dispatch-bound equations on network `nw`:
+
+`p_block_min * na_block <= p <= p_block_max * na_block`
+
+`q_block_min * na_block <= q <= q_block_max * na_block`.
+
+This template applies both active and reactive dispatch bounds to every
+block-annotated device (`gen`, `storage`, `ne_storage`) using compound keys
+`(table_name, device_id)`. It is formulation-independent and a no-op when
+UC/gSCR block references are absent.
+"""
+function constraint_uc_gscr_block_dispatch(pm::_PM.AbstractPowerModel; nw::Int=_PM.nw_id_default)
+    constraint_uc_gscr_block_active_dispatch_bounds(pm; nw)
+    constraint_uc_gscr_block_reactive_dispatch_bounds(pm; nw)
+end
+
+"""
+    constraint_uc_gscr_block_active_dispatch_bounds(pm; nw=nw_id_default)
+
+Adds the UC/gSCR active-power dispatch-bound equation on network `nw`:
+
+`p_block_min * na_block <= p <= p_block_max * na_block`.
+
+The bound is added for each block-annotated `gen`, `storage`, and
+`ne_storage` device via the formulation-specific implementation. This
+template is formulation-independent and a no-op when UC/gSCR block references
+are absent.
+"""
+function constraint_uc_gscr_block_active_dispatch_bounds(pm::_PM.AbstractPowerModel; nw::Int=_PM.nw_id_default)
+    if !_has_uc_gscr_block_ref(pm, nw)
+        return
+    end
+
+    if haskey(_PM.con(pm, nw), :uc_gscr_block_active_dispatch_bounds)
+        return _PM.con(pm, nw)[:uc_gscr_block_active_dispatch_bounds]
+    end
+
+    constraints = _PM.con(pm, nw)[:uc_gscr_block_active_dispatch_bounds] = Dict{Tuple{Symbol,Any},Tuple{JuMP.ConstraintRef,JuMP.ConstraintRef}}()
+
+    for device_key in _uc_gscr_block_device_keys(pm, nw)
+        device = _PM.ref(pm, nw, device_key[1], device_key[2])
+        constraints[device_key] = constraint_uc_gscr_block_active_dispatch_bounds(
+            pm, nw, device_key, device["p_block_min"], device["p_block_max"]
+        )
+    end
+
+    return constraints
+end
+
+"""
+    constraint_uc_gscr_block_reactive_dispatch_bounds(pm; nw=nw_id_default)
+
+Adds the UC/gSCR reactive-power dispatch-bound equation on network `nw`:
+
+`q_block_min * na_block <= q <= q_block_max * na_block`.
+
+The bound is added for each block-annotated `gen`, `storage`, and
+`ne_storage` device via the formulation-specific implementation. This
+template is a no-op when UC/gSCR block references are absent.
+"""
+function constraint_uc_gscr_block_reactive_dispatch_bounds(pm::_PM.AbstractPowerModel; nw::Int=_PM.nw_id_default)
+    if !_has_uc_gscr_block_ref(pm, nw)
+        return
+    end
+
+    if haskey(_PM.con(pm, nw), :uc_gscr_block_reactive_dispatch_bounds)
+        return _PM.con(pm, nw)[:uc_gscr_block_reactive_dispatch_bounds]
+    end
+
+    constraints = _PM.con(pm, nw)[:uc_gscr_block_reactive_dispatch_bounds] = Dict{Tuple{Symbol,Any},Tuple{JuMP.ConstraintRef,JuMP.ConstraintRef}}()
+
+    for device_key in _uc_gscr_block_device_keys(pm, nw)
+        device = _PM.ref(pm, nw, device_key[1], device_key[2])
+        constraints[device_key] = constraint_uc_gscr_block_reactive_dispatch_bounds(
+            pm, nw, device_key, device["q_block_min"], device["q_block_max"]
+        )
+    end
+
+    return constraints
+end
+
+"""
+    constraint_uc_gscr_block_reactive_dispatch_bounds(pm::AbstractActivePowerModel; nw=nw_id_default)
+
+Active-power-only no-op hook for the UC/gSCR reactive dispatch equation:
+
+`q_block_min * na_block <= q <= q_block_max * na_block`.
+
+For active-power-only formulations, reactive variables are absent, so this
+template intentionally adds no constraints and returns `nothing`.
+"""
+function constraint_uc_gscr_block_reactive_dispatch_bounds(pm::_PM.AbstractActivePowerModel; nw::Int=_PM.nw_id_default)
+end

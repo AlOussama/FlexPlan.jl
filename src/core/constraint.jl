@@ -106,3 +106,85 @@ function constraint_ne_converter_activation(pm::_PM.AbstractPowerModel, n::Int, 
 
     JuMP.@constraint(pm.model, indicator == sum(investments))
 end
+
+
+## UC/gSCR block dispatch bounds
+
+"""
+    constraint_uc_gscr_block_active_dispatch_bounds(pm, n, device_key, p_block_min, p_block_max)
+
+Implements the UC/gSCR active-power dispatch equation for one block device:
+
+`p_block_min * na_block <= p <= p_block_max * na_block`.
+
+This formulation-specific method targets generic PowerModels formulations with
+active-power dispatch variables and stores no extra state.
+"""
+function constraint_uc_gscr_block_active_dispatch_bounds(pm::_PM.AbstractPowerModel, n::Int, device_key::Tuple{Symbol,Any}, p_block_min, p_block_max)
+    p = _uc_gscr_block_dispatch_variable(pm, n, device_key, :p)
+    na = _PM.var(pm, n, :na_block, device_key)
+
+    lower = JuMP.@constraint(pm.model, p >= p_block_min * na)
+    upper = JuMP.@constraint(pm.model, p <= p_block_max * na)
+
+    return (lower, upper)
+end
+
+"""
+    constraint_uc_gscr_block_reactive_dispatch_bounds(pm, n, device_key, q_block_min, q_block_max)
+
+Implements the UC/gSCR reactive-power dispatch equation for one block device:
+
+`q_block_min * na_block <= q <= q_block_max * na_block`.
+
+This formulation-specific method targets formulations with reactive-power
+dispatch variables and stores no extra state.
+"""
+function constraint_uc_gscr_block_reactive_dispatch_bounds(pm::_PM.AbstractPowerModel, n::Int, device_key::Tuple{Symbol,Any}, q_block_min, q_block_max)
+    q = _uc_gscr_block_dispatch_variable(pm, n, device_key, :q)
+    na = _PM.var(pm, n, :na_block, device_key)
+
+    lower = JuMP.@constraint(pm.model, q >= q_block_min * na)
+    upper = JuMP.@constraint(pm.model, q <= q_block_max * na)
+
+    return (lower, upper)
+end
+
+"""
+    constraint_uc_gscr_block_reactive_dispatch_bounds(pm::AbstractActivePowerModel, n, device_key, q_block_min, q_block_max)
+
+Active-power-only no-op implementation of the UC/gSCR reactive dispatch
+equation `q_block_min * na_block <= q <= q_block_max * na_block`.
+
+Reactive dispatch variables are absent in active-power-only formulations, so
+this method intentionally returns `nothing`.
+"""
+function constraint_uc_gscr_block_reactive_dispatch_bounds(pm::_PM.AbstractActivePowerModel, n::Int, device_key::Tuple{Symbol,Any}, q_block_min, q_block_max)
+end
+
+"""
+    _uc_gscr_block_dispatch_variable(pm, n, device_key, component)
+
+Returns the UC/gSCR dispatch variable for one block device and component.
+
+`component` must be `:p` or `:q`. Device keys are compound
+`(table_name, device_id)` tuples and map to `pg/qg` (`gen`), `ps/qs`
+(`storage`), and `ps_ne/qs_ne` (`ne_storage`). This helper is
+formulation-independent and mutates no model state.
+"""
+function _uc_gscr_block_dispatch_variable(pm::_PM.AbstractPowerModel, n::Int, device_key::Tuple{Symbol,Any}, component::Symbol)
+    table_name, device_id = device_key
+
+    variable_symbol =
+        if table_name == :gen
+            component == :p ? :pg : :qg
+        elseif table_name == :storage
+            component == :p ? :ps : :qs
+        elseif table_name == :ne_storage
+            component == :p ? :ps_ne : :qs_ne
+        else
+            Memento.error(_LOGGER, "Unsupported UC/gSCR block dispatch table `$(table_name)`.")
+        end
+
+    return _PM.var(pm, n, variable_symbol, device_id)
+end
