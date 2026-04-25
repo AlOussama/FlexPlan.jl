@@ -127,4 +127,33 @@ end
         @test !haskey(_PM.var(pm, 1), :na_block)
         @test !haskey(_PM.con(pm, 1), :active_blocks_le_installed)
     end
+
+    @testset "R1 solution reporting: report=true populates solution dict for n_block" begin
+        pm = _uc_gscr_block_variable_pm(; relax=true, hours=2)
+
+        @test haskey(_PM.sol(pm, 1, :gen, 1), :n_block)
+        @test haskey(_PM.sol(pm, 2, :gen, 1), :n_block)
+        @test _PM.sol(pm, 1, :gen, 1)[:n_block] === _PM.var(pm, 1, :n_block, device_key)
+        @test _PM.sol(pm, 2, :gen, 1)[:n_block] === _PM.var(pm, 2, :n_block, device_key)
+    end
+
+    @testset "R2 solution reporting: report=true populates solution dict for na_block" begin
+        pm = _uc_gscr_block_variable_pm(; relax=true, hours=2)
+
+        @test haskey(_PM.sol(pm, 1, :gen, 1), :na_block)
+        @test haskey(_PM.sol(pm, 2, :gen, 1), :na_block)
+        @test _PM.sol(pm, 1, :gen, 1)[:na_block] === _PM.var(pm, 1, :na_block, device_key)
+        @test _PM.sol(pm, 2, :gen, 1)[:na_block] === _PM.var(pm, 2, :na_block, device_key)
+    end
+
+    @testset "R3 solution reporting: report=false leaves solution dict empty" begin
+        data = _uc_gscr_block_variable_data(; block=true, hours=2)
+        pm = _PM.instantiate_model(data, _PM.DCPPowerModel, pm -> nothing; ref_extensions=[_FP.ref_add_uc_gscr_block!])
+        for nw in _FP.nw_ids(pm)
+            _FP.variable_uc_gscr_block(pm; nw, relax=true, report=false)
+        end
+
+        @test !haskey(_PM.sol(pm, 1, :gen, 1), :n_block)
+        @test !haskey(_PM.sol(pm, 1, :gen, 1), :na_block)
+    end
 end

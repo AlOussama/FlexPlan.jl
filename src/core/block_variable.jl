@@ -32,9 +32,11 @@ on the first network id and aliasing the same container into later network
 refs.
 
 The argument `relax` selects continuous variables when `true` and integer
-variables when `false`. Block counts are dimensionless. This function is
-formulation-independent and mutates the JuMP model plus PowerModels variable
-dictionaries.
+variables when `false`. Block counts are dimensionless. When `report=true`,
+each `n_block[k]` variable ref is written into the PowerModels solution dict
+under the device component table so downstream solution processors can extract
+solved values. This function is formulation-independent and mutates the JuMP
+model plus PowerModels variable and solution dictionaries.
 """
 function variable_installed_blocks(pm::_PM.AbstractPowerModel; nw::Int=_PM.nw_id_default, relax::Bool=false, report::Bool=true)
     if !_has_uc_gscr_block_ref(pm, nw)
@@ -42,38 +44,41 @@ function variable_installed_blocks(pm::_PM.AbstractPowerModel; nw::Int=_PM.nw_id
     end
 
     first_nw = first(nw_id for nw_id in nw_ids(pm) if _has_uc_gscr_block_ref(pm, nw_id))
+    device_keys = _uc_gscr_block_device_keys(pm, nw)
 
-    if nw != first_nw
+    if nw == first_nw
+        if haskey(_PM.var(pm, nw), :n_block)
+            return
+        end
+        if relax
+            _PM.var(pm, nw)[:n_block] = JuMP.@variable(pm.model,
+                [device_key in device_keys], base_name="$(nw)_n_block",
+                lower_bound = _PM.ref(pm, nw, device_key[1], device_key[2], "n0"),
+                upper_bound = _PM.ref(pm, nw, device_key[1], device_key[2], "nmax"),
+                start = _PM.ref(pm, nw, device_key[1], device_key[2], "n0")
+            )
+        else
+            _PM.var(pm, nw)[:n_block] = JuMP.@variable(pm.model,
+                [device_key in device_keys], base_name="$(nw)_n_block",
+                integer = true,
+                lower_bound = _PM.ref(pm, nw, device_key[1], device_key[2], "n0"),
+                upper_bound = _PM.ref(pm, nw, device_key[1], device_key[2], "nmax"),
+                start = _PM.ref(pm, nw, device_key[1], device_key[2], "n0")
+            )
+        end
+    else
         if !haskey(_PM.var(pm, first_nw), :n_block)
             variable_installed_blocks(pm; nw=first_nw, relax, report=false)
         end
         _PM.var(pm, nw)[:n_block] = _PM.var(pm, first_nw)[:n_block]
-        return
     end
 
-    if haskey(_PM.var(pm, nw), :n_block)
-        return
+    if report
+        n_block = _PM.var(pm, nw)[:n_block]
+        for (table_sym, id) in device_keys
+            _PM.sol(pm, nw, table_sym, id)[:n_block] = n_block[(table_sym, id)]
+        end
     end
-
-    device_keys = _uc_gscr_block_device_keys(pm, nw)
-    if relax
-        n_block = _PM.var(pm, nw)[:n_block] = JuMP.@variable(pm.model,
-            [device_key in device_keys], base_name="$(nw)_n_block",
-            lower_bound = _PM.ref(pm, nw, device_key[1], device_key[2], "n0"),
-            upper_bound = _PM.ref(pm, nw, device_key[1], device_key[2], "nmax"),
-            start = _PM.ref(pm, nw, device_key[1], device_key[2], "n0")
-        )
-    else
-        n_block = _PM.var(pm, nw)[:n_block] = JuMP.@variable(pm.model,
-            [device_key in device_keys], base_name="$(nw)_n_block",
-            integer = true,
-            lower_bound = _PM.ref(pm, nw, device_key[1], device_key[2], "n0"),
-            upper_bound = _PM.ref(pm, nw, device_key[1], device_key[2], "nmax"),
-            start = _PM.ref(pm, nw, device_key[1], device_key[2], "n0")
-        )
-    end
-
-    return n_block
 end
 
 """
@@ -88,8 +93,11 @@ the lower bound `0 <= na_block[k,t]`. The upper relation
 
 The argument `relax` selects continuous variables when `true` and integer
 variables when `false`. Active block counts are dimensionless and
-snapshot-specific. This function is formulation-independent and mutates the
-JuMP model plus PowerModels variable dictionaries.
+snapshot-specific. When `report=true`, each `na_block[k,t]` variable ref is
+written into the PowerModels solution dict under the device component table so
+downstream solution processors can extract solved values. This function is
+formulation-independent and mutates the JuMP model plus PowerModels variable
+and solution dictionaries.
 """
 function variable_active_blocks(pm::_PM.AbstractPowerModel; nw::Int=_PM.nw_id_default, relax::Bool=false, report::Bool=true)
     if !_has_uc_gscr_block_ref(pm, nw)
@@ -102,13 +110,13 @@ function variable_active_blocks(pm::_PM.AbstractPowerModel; nw::Int=_PM.nw_id_de
 
     device_keys = _uc_gscr_block_device_keys(pm, nw)
     if relax
-        na_block = _PM.var(pm, nw)[:na_block] = JuMP.@variable(pm.model,
+        _PM.var(pm, nw)[:na_block] = JuMP.@variable(pm.model,
             [device_key in device_keys], base_name="$(nw)_na_block",
             lower_bound = 0.0,
             start = _PM.ref(pm, nw, device_key[1], device_key[2], "n0")
         )
     else
-        na_block = _PM.var(pm, nw)[:na_block] = JuMP.@variable(pm.model,
+        _PM.var(pm, nw)[:na_block] = JuMP.@variable(pm.model,
             [device_key in device_keys], base_name="$(nw)_na_block",
             integer = true,
             lower_bound = 0.0,
@@ -116,7 +124,12 @@ function variable_active_blocks(pm::_PM.AbstractPowerModel; nw::Int=_PM.nw_id_de
         )
     end
 
-    return na_block
+    if report
+        na_block = _PM.var(pm, nw)[:na_block]
+        for (table_sym, id) in device_keys
+            _PM.sol(pm, nw, table_sym, id)[:na_block] = na_block[(table_sym, id)]
+        end
+    end
 end
 
 """
