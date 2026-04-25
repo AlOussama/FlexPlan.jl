@@ -1,0 +1,158 @@
+# FlexPlan Data Mapping and Extensions
+
+## 1. Existing FlexPlan/PowerModels data to reuse
+
+### `bus`
+
+Use for:
+
+- full bus set \(\mathcal N\);
+- bus IDs;
+- active demand `pd`;
+- reactive demand `qd` for later AC formulation;
+- bus zone/area if available.
+
+### `branch`
+
+Use for:
+
+- full branch set \(\mathcal R\);
+- `f_bus`, `t_bus`;
+- `br_x`, optionally `br_r`;
+- `rate_a`;
+- `br_status`;
+- `angmin`, `angmax`.
+
+Use this to build the full-network \(B^0\) and line-flow constraints.
+
+### `gen`
+
+Use for existing controllable devices.
+
+Extend with:
+
+```julia
+type
+n0
+nmax
+p_block_min
+p_block_max
+q_block_min
+q_block_max
+b_block
+H
+s_block
+cost_inv_block
+```
+
+If the existing generator table is not suitable for new fields, use an auxiliary table such as `gen_block`.
+
+### `storage` and `ne_storage`
+
+Use for storage-capable devices.
+
+Extend candidate storage first because FlexPlan already has candidate-storage expansion structure.
+
+Add:
+
+```julia
+type
+n0
+nmax
+p_block_min
+p_block_max
+q_block_min
+q_block_max
+b_block
+e_block
+H
+s_block
+cost_inv_block
+```
+
+### `time_elapsed`
+
+Use as:
+
+\[
+\Delta t.
+\]
+
+### Multinetwork / time-series data
+
+Use existing FlexPlan multinetwork/time-series machinery for:
+
+- time-varying loads;
+- renewable availability;
+- hour/scenario/year snapshot indexing;
+- storage dynamics across ordered snapshots.
+
+The installed block variable \(n\) must be shared across snapshots.
+
+The active block variable \(n_a(t)\) is snapshot-specific.
+
+## 2. New common fields
+
+| Field | Meaning |
+|---|---|
+| `type` | `"gfl"` or `"gfm"` |
+| `n0` | initially installed blocks |
+| `nmax` | maximum installed blocks |
+| `p_block_min` | active lower bound per active block |
+| `p_block_max` | active upper bound per active block |
+| `q_block_min` | reactive lower bound per active block |
+| `q_block_max` | reactive upper bound per active block |
+| `b_block` | per-block GFM susceptance/strength contribution |
+| `H` | inertia time constant for later RoCoF/inertia constraints |
+| `s_block` | rating used with \(H\), optional |
+| `cost_inv_block` | investment cost per added block |
+
+## 3. Storage-specific fields
+
+| Field | Meaning |
+|---|---|
+| `e_block` | energy capacity per installed block |
+| `energy_to_power` | optional fallback for `e_block` |
+| `charge_efficiency` | storage charge efficiency |
+| `discharge_efficiency` | storage discharge efficiency |
+| `self_discharge_rate` | optional |
+
+## 4. Quantities to precompute
+
+### Full susceptance matrix
+
+Build:
+
+\[
+B^0.
+\]
+
+### Gershgorin margin
+
+\[
+\sigma_n^{0,G}
+=
+B^0_{nn}
+-
+\sum_{j\ne n}|B^0_{nj}|.
+\]
+
+Store:
+
+```julia
+:gscr_sigma0_gershgorin_margin
+```
+
+### Raw row sum for diagnostics
+
+Optionally store:
+
+```julia
+:gscr_sigma0_raw_rowsum
+```
+
+## 5. Backward compatibility
+
+If no block fields exist, the new module should do nothing.
+
+Existing FlexPlan examples should continue to run.
