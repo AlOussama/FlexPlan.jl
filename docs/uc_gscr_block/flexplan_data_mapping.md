@@ -107,7 +107,40 @@ The active block variable \(n_a(t)\) is snapshot-specific.
 | `s_block` | rating used with \(H\), optional |
 | `cost_inv_block` | investment cost per added block |
 
-## 3. Storage-specific fields
+## 3. Global security fields
+
+| Field | Meaning |
+|---|---|
+| `g_min` | global minimum gSCR/ESCR strength threshold \(\underline g\) |
+
+`g_min` is a case-level scalar, not a per-device field.
+It must be provided explicitly in the network data; no silent default is permitted.
+
+`g_min` is dimensionless when all strength and power quantities are expressed on a consistent per-unit base (susceptance in p.u., active power in p.u.).
+
+`g_min` appears in two constraints:
+
+**LP/MILP-compatible Gershgorin sufficient condition** (implemented first):
+
+\[
+\sigma_n^{0,G}
++
+\sum_{k:\phi(k)=n,\;type(k)=gfm}
+b_k^{block}n_{a,k,t}
+\ge
+\underline g
+\sum_{i:\phi(i)=n,\;type(i)=gfl}
+P_i^{block}n_{a,i,t}
+\qquad \forall n,t.
+\]
+
+**Global full-network SDP/LMI condition** (implemented later):
+
+\[
+B_t - \underline g\, S_t \succeq 0.
+\]
+
+## 4. Storage-specific fields
 
 | Field | Meaning |
 |---|---|
@@ -117,7 +150,7 @@ The active block variable \(n_a(t)\) is snapshot-specific.
 | `discharge_efficiency` | storage discharge efficiency |
 | `self_discharge_rate` | optional |
 
-## 4. Quantities to precompute
+## 5. Quantities to precompute
 
 ### Full susceptance matrix
 
@@ -151,7 +184,7 @@ Optionally store:
 :gscr_sigma0_raw_rowsum
 ```
 
-## 5. Backward compatibility
+## 6. Backward compatibility
 
 If no block fields exist, the new module should do nothing.
 
