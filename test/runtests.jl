@@ -31,6 +31,7 @@ milp_optimizer = _FP.optimizer_with_attributes(HiGHS.Optimizer, "output_flag"=>f
     include("gen.jl")
     include("flex_demand.jl")
     include("storage.jl")
+    include("uc_gscr_ref_extension.jl")
 
     # Problems
     include("prob.jl")
