@@ -127,6 +127,112 @@ end
         @test ext[:gscr_sigma0_raw_rowsum][2] == 0.0
     end
 
+    @testset "B_pm DC-flow sign convention and B0_strength mapping on a 2-bus inductive network" begin
+        nw_ref = Dict{Symbol,Any}(
+            :bus => Dict{Int,Any}(
+                1 => Dict{String,Any}("index" => 1, "bus_i" => 1, "bus_type" => 3),
+                2 => Dict{String,Any}("index" => 2, "bus_i" => 2, "bus_type" => 1),
+            ),
+            :branch => Dict{Int,Any}(
+                1 => Dict{String,Any}("index" => 1, "f_bus" => 1, "t_bus" => 2, "br_r" => 0.0, "br_x" => 0.5, "br_status" => 1),
+            ),
+            :gen => Dict{Int,Any}(1 => _uc_gscr_test_device("gfm", 1)),
+            :storage => Dict{Int,Any}(),
+            :ne_storage => Dict{Int,Any}(),
+        )
+
+        basic_data = _FP._uc_gscr_basic_susceptance_data(nw_ref)
+        b_pm = _PM.calc_basic_susceptance_matrix(basic_data)
+        @test b_pm[1, 1] == -2.0
+        @test b_pm[1, 2] == 2.0
+        @test b_pm[2, 1] == 2.0
+        @test b_pm[2, 2] == -2.0
+
+        b0 = _FP._calc_uc_gscr_susceptance_matrix(nw_ref)
+        @test b0[(1, 1)] == 2.0
+        @test b0[(1, 2)] == -2.0
+        @test b0[(2, 1)] == -2.0
+        @test b0[(2, 2)] == 2.0
+
+        _FP._add_uc_gscr_row_metrics!(nw_ref)
+        sigma1 = nw_ref[:gscr_sigma0_gershgorin_margin][1]
+        sigma2 = nw_ref[:gscr_sigma0_gershgorin_margin][2]
+        @test sigma1 == b0[(1, 1)] - abs(b0[(1, 2)])
+        @test sigma2 == b0[(2, 2)] - abs(b0[(2, 1)])
+    end
+
+    @testset "B0 ignores DC-side tables in mixed AC/DC references" begin
+        nw_ref_ac_only = Dict{Symbol,Any}(
+            :bus => Dict{Int,Any}(
+                1 => Dict{String,Any}("index" => 1, "bus_i" => 1),
+                2 => Dict{String,Any}("index" => 2, "bus_i" => 2),
+            ),
+            :branch => Dict{Int,Any}(
+                1 => Dict{String,Any}("index" => 1, "f_bus" => 1, "t_bus" => 2, "br_x" => 0.5, "br_status" => 1),
+            ),
+            :gen => Dict{Int,Any}(1 => _uc_gscr_test_device("gfm", 1)),
+        )
+
+        nw_ref_mixed = deepcopy(nw_ref_ac_only)
+        nw_ref_mixed[:busdc] = Dict{Int,Any}(101 => Dict{String,Any}("index" => 101))
+        nw_ref_mixed[:branchdc] = Dict{Int,Any}(
+            201 => Dict{String,Any}("index" => 201, "fbusdc" => 101, "tbusdc" => 102),
+        )
+        nw_ref_mixed[:convdc] = Dict{Int,Any}(
+            301 => Dict{String,Any}("index" => 301, "busac_i" => 1, "busdc_i" => 101),
+        )
+
+        b0_ac_only = _FP._calc_uc_gscr_susceptance_matrix(nw_ref_ac_only)
+        b0_mixed = _FP._calc_uc_gscr_susceptance_matrix(nw_ref_mixed)
+        @test b0_mixed == b0_ac_only
+    end
+
+    @testset "Disconnected AC graph is allowed and sigma0_G is computed row-wise" begin
+        nw_ref = Dict{Symbol,Any}(
+            :bus => Dict{Int,Any}(
+                1 => Dict{String,Any}("index" => 1),
+                2 => Dict{String,Any}("index" => 2),
+                3 => Dict{String,Any}("index" => 3),
+                4 => Dict{String,Any}("index" => 4),
+            ),
+            :branch => Dict{Int,Any}(
+                1 => Dict{String,Any}("f_bus" => 1, "t_bus" => 2, "br_x" => 0.5, "br_status" => 1),
+                2 => Dict{String,Any}("f_bus" => 3, "t_bus" => 4, "br_x" => 0.25, "br_status" => 1),
+            ),
+            :gen => Dict{Int,Any}(1 => _uc_gscr_test_device("gfm", 1)),
+        )
+
+        _FP._add_uc_gscr_row_metrics!(nw_ref)
+        @test nw_ref[:gscr_sigma0_gershgorin_margin][1] == 0.0
+        @test nw_ref[:gscr_sigma0_gershgorin_margin][2] == 0.0
+        @test nw_ref[:gscr_sigma0_gershgorin_margin][3] == 0.0
+        @test nw_ref[:gscr_sigma0_gershgorin_margin][4] == 0.0
+        @test nw_ref[:gscr_sigma0_raw_rowsum][1] == 0.0
+        @test nw_ref[:gscr_sigma0_raw_rowsum][4] == 0.0
+    end
+
+    @testset "Ambiguous AC-side extraction raises explicit error" begin
+        nw_ref = Dict{Symbol,Any}(
+            :bus => Dict{Int,Any}(
+                1 => Dict{String,Any}("index" => 1),
+                2 => Dict{String,Any}("index" => 2),
+            ),
+            :branch => Dict{Int,Any}(
+                1 => Dict{String,Any}("f_bus" => 1, "t_bus" => 99, "br_x" => 0.5, "br_status" => 1),
+            ),
+            :gen => Dict{Int,Any}(1 => _uc_gscr_test_device("gfm", 1)),
+        )
+
+        err = try
+            _FP._calc_uc_gscr_susceptance_matrix(nw_ref)
+            nothing
+        catch e
+            e
+        end
+        @test err isa ErrorException
+        @test occursin("AC-side extraction is ambiguous", sprint(showerror, err))
+    end
+
     @testset "G regression rule for cases without block fields" begin
         nw_ref = Dict{Symbol,Any}(
             :bus => Dict{Int,Any}(1 => Dict{String,Any}("index" => 1)),

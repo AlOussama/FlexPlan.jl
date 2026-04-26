@@ -35,6 +35,14 @@ Build:
 :gscr_sigma0_raw_rowsum
 ```
 
+Policy for mixed AC/DC cases:
+
+- do not restrict the optimization model to AC-only systems;
+- compute gSCR `B0`/sigma0 from extracted AC `bus`/`branch` tables only;
+- ignore DC buses/branches/DC-side converter elements in `B0`;
+- throw an explicit error when AC-side extraction is ambiguous;
+- allow disconnected AC graphs and compute sigma0 row-wise.
+
 ## 4. Variables
 
 Installed block variable:
@@ -110,6 +118,8 @@ constraint_gscr_global_lmi
 ```
 
 The global LMI is a later SDP module.
+gSCR constraint indexing is over AC buses only, and device contributions use
+their AC terminal bus mapping \(\phi(k)\).
 
 ## 7. Formulation compatibility
 
