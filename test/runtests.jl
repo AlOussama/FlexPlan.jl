@@ -37,6 +37,9 @@ milp_optimizer = _FP.optimizer_with_attributes(HiGHS.Optimizer, "output_flag"=>f
     include("uc_gscr_block_objective.jl")
     include("uc_gscr_gershgorin_constraint.jl")
     include("uc_gscr_block_integration.jl")
+    include("uc_gscr_block_benchmarks.jl")
+    include("pypsa_dataset_optimizer_acceptance.jl")
+    include("pypsa_opf_infeasibility_diagnostics.jl")
 
     # Problems
     include("prob.jl")
