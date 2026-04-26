@@ -44,6 +44,9 @@ b_block
 H
 s_block
 cost_inv_block
+startup_block_cost
+shutdown_block_cost
+na0
 ```
 
 If the existing generator table is not suitable for new fields, use an auxiliary table such as `gen_block`.
@@ -69,6 +72,9 @@ e_block
 H
 s_block
 cost_inv_block
+startup_block_cost
+shutdown_block_cost
+na0
 ```
 
 ### `time_elapsed`
@@ -99,6 +105,7 @@ The active block variable \(n_a(t)\) is snapshot-specific.
 | `type` | `"gfl"` or `"gfm"` |
 | `n0` | initially installed blocks |
 | `nmax` | maximum installed blocks |
+| `na0` | initially active/online blocks at first snapshot |
 | `p_block_min` | active lower bound per active block |
 | `p_block_max` | active upper bound per active block |
 | `q_block_min` | reactive lower bound per active block |
@@ -107,6 +114,8 @@ The active block variable \(n_a(t)\) is snapshot-specific.
 | `H` | inertia time constant for later RoCoF/inertia constraints |
 | `s_block` | rating used with \(H\), optional |
 | `cost_inv_block` | investment cost per added block |
+| `startup_block_cost` | startup cost per started block |
+| `shutdown_block_cost` | shutdown cost per shut-down block |
 
 ### Unit and base conventions for block fields
 
@@ -122,6 +131,7 @@ Use the following internal-unit conventions consistently across `gen`,
 | `H` | inertia time constant; do not power-scale |
 | `b_block` | per-unit admittance/susceptance contribution in the same base as shunt admittances and line susceptance terms (\(1/x\)); it is not defined as a direct copy of any single line \(1/br_x\) value |
 | `cost_inv_block` | pure investment-cost coefficient (objective-level use); do not MVA-base scale |
+| `startup_block_cost`, `shutdown_block_cost` | pure startup/shutdown objective coefficients per block count; do not MVA-base scale |
 
 For later inertia aggregation, use:
 
@@ -152,6 +162,13 @@ Schema validation policy for block fields:
 - no silent guessing of missing required mathematical fields;
 - explicit warning/report listing missing required fields;
 - hard validation error if required fields are missing.
+
+For simplified block startup/shutdown counting, the required explicit fields
+are:
+
+- `na0`;
+- `startup_block_cost`;
+- `shutdown_block_cost`.
 
 ## 3. Global security fields
 

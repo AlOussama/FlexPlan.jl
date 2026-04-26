@@ -42,11 +42,14 @@ const _UC_GSCR_BLOCK_REQUIRED_FIELDS = [
     "type",
     "n0",
     "nmax",
+    "na0",
     "p_block_min",
     "p_block_max",
     "q_block_min",
     "q_block_max",
     "b_block",
+    "startup_block_cost",
+    "shutdown_block_cost",
 ]
 
 const _UC_GSCR_BLOCK_OPTIONAL_FIELDS = ["H", "s_block", "e_block"]
@@ -153,8 +156,9 @@ end
 Validates required UC/gSCR block fields on every block-annotated supported
 device in `nw_ref`.
 
-The required mathematical fields are `type`, `n0`, `nmax`, per-active-block
-P/Q bounds, and `b_block`, with `type` restricted to `"gfl"` or `"gfm"`.
+The required mathematical fields are `type`, `n0`, `nmax`, `na0`,
+per-active-block P/Q bounds, `b_block`, `startup_block_cost`, and
+`shutdown_block_cost`, with `type` restricted to `"gfl"` or `"gfm"`.
 No defaults are inferred for these mathematical fields. Optional fields
 `H`, `s_block`, and `e_block` are only read when present. This function is
 formulation-independent and mutates no data. Missing required fields are
@@ -185,6 +189,11 @@ function _validate_uc_gscr_block_devices(nw_ref::Dict{Symbol,<:Any})
         nmax = device["nmax"]
         if n0 < 0 || nmax < n0
             Memento.error(_LOGGER, "$(uppercase(string(table_name))) device $(device_id) has invalid UC/gSCR block bounds: require 0 <= n0 <= nmax.")
+        end
+
+        na0 = device["na0"]
+        if na0 < 0 || nmax < na0
+            Memento.error(_LOGGER, "$(uppercase(string(table_name))) device $(device_id) has invalid UC/gSCR active-block initial state: require 0 <= na0 <= nmax.")
         end
     end
 end

@@ -14,12 +14,15 @@ function _set_uc_gscr_objective_fields!(device, type; n0, nmax, p_block_max, cos
         "type" => type,
         "n0" => n0,
         "nmax" => nmax,
+        "na0" => n0,
         "p_block_min" => 0.0,
         "p_block_max" => p_block_max,
         "q_block_min" => -1.0,
         "q_block_max" => 1.0,
         "b_block" => type == "gfm" ? 0.6 : 0.0,
         "cost_inv_block" => cost_inv_block,
+        "startup_block_cost" => 1.0,
+        "shutdown_block_cost" => 1.0,
     ))
     return device
 end

@@ -12,16 +12,32 @@ n_k = \text{installed blocks}
 n_{a,k,t} = \text{active/online blocks at time/network }t.
 \]
 
+\[
+su_{k,t}^{block} = \text{started blocks at time/network }t.
+\]
+
+\[
+sd_{k,t}^{block} = \text{shut-down blocks at time/network }t.
+\]
+
 The first implementation uses continuous relaxation:
 
 \[
 n_k,n_{a,k,t}\in\mathbb R.
 \]
 
+\[
+su_{k,t}^{block}, sd_{k,t}^{block}\in\mathbb R_{\ge 0}.
+\]
+
 The integer follow-up uses:
 
 \[
 n_k,n_{a,k,t}\in\mathbb Z.
+\]
+
+\[
+su_{k,t}^{block}, sd_{k,t}^{block}\in\mathbb Z_{\ge 0}.
 \]
 
 ## 2. Installed block bound
@@ -47,6 +63,32 @@ C_k^{inv} = c_k^{block}(n_k-n_k^0).
 The installed count \(n_k\) is used for investment and installed capacity.
 
 The active count \(n_{a,k,t}\) is used for operational limits and stability contributions.
+
+## 4b. Startup/shutdown block transitions
+
+For \(t > 1\):
+
+\[
+n_{a,k,t} - n_{a,k,t-1} = su_{k,t}^{block} - sd_{k,t}^{block}.
+\]
+
+For the first snapshot:
+
+\[
+n_{a,k,1} - n_{a,k}^{0,a} = su_{k,1}^{block} - sd_{k,1}^{block},
+\]
+
+where \(n_{a,k}^{0,a}\) is input field `na0`.
+
+## 4c. Startup/shutdown block operation cost
+
+\[
+C^{su/sd} = \sum_{k,t}
+\left(
+c_k^{startup,block} \, su_{k,t}^{block}
+ c_k^{shutdown,block} \, sd_{k,t}^{block}
+\right).
+\]
 
 ## 5. Active-power dispatch bounds
 

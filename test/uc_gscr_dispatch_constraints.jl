@@ -11,11 +11,14 @@ function _add_uc_gscr_dispatch_test_fields!(device, type; pmin, pmax, qmin, qmax
         "type" => type,
         "n0" => 1,
         "nmax" => 4,
+        "na0" => 1,
         "p_block_min" => pmin,
         "p_block_max" => pmax,
         "q_block_min" => qmin,
         "q_block_max" => qmax,
         "b_block" => type == "gfm" ? 0.5 : 0.0,
+        "startup_block_cost" => 1.0,
+        "shutdown_block_cost" => 1.0,
     ))
     return device
 end

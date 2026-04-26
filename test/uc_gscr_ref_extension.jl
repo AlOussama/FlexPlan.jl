@@ -31,11 +31,14 @@ function _uc_gscr_test_device(type, bus; kwargs...)
         "type" => type,
         "n0" => 1,
         "nmax" => 3,
+        "na0" => 1,
         "p_block_min" => 0.0,
         "p_block_max" => 10.0,
         "q_block_min" => -2.0,
         "q_block_max" => 2.0,
         "b_block" => type == "gfm" ? 0.5 : 0.0,
+        "startup_block_cost" => 1.0,
+        "shutdown_block_cost" => 1.0,
     )
     table = get(kwargs, :table, :gen)
     if table == :gen
