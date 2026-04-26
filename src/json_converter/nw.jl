@@ -239,6 +239,7 @@ function add_uc_gscr_block_fields!(target::AbstractDict, source::AbstractDict, y
     optional_value(target, "type", source, "type")
     optional_value(target, "n0", source, "n0")
     optional_value(target, "nmax", source, "nmax")
+    optional_value(target, "na0", source, "na0")
 
     optional_value(target, "p_block_min", source, "p_block_min", y)
     optional_value(target, "p_block_max", source, "p_block_max", y)
@@ -248,6 +249,10 @@ function add_uc_gscr_block_fields!(target::AbstractDict, source::AbstractDict, y
     optional_value(target, "H", source, "H", y)
     optional_value(target, "s_block", source, "s_block", y)
     optional_value(target, "cost_inv_block", source, "cost_inv_block", y)
+    optional_value(target, "startup_block_cost", source, "startup_block_cost", y)
+    optional_value(target, "shutdown_block_cost", source, "shutdown_block_cost", y)
+    optional_value(target, "min_up_block_time", source, "min_up_block_time")
+    optional_value(target, "min_down_block_time", source, "min_down_block_time")
     if is_storage
         optional_value(target, "e_block", source, "e_block", y)
     end

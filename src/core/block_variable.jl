@@ -12,7 +12,8 @@ counts `sd_block[k,t]`, and the linking/transition constraints:
 `na_block[k,t] - na_block[k,t-1] = su_block[k,t] - sd_block[k,t]` for
 `t > 1`, and
 `na_block[k,1] - na0[k] = su_block[k,1] - sd_block[k,1]` for the first
-snapshot.
+snapshot. When min-up/down fields are enabled, it also adds truncated-window
+count constraints for minimum up/down time.
 
 The argument `relax` selects continuous variables when `true` and integer
 variables when `false`; `report` controls solution reporting on the original
@@ -27,6 +28,7 @@ function variable_uc_gscr_block(pm::_PM.AbstractPowerModel; nw::Int=_PM.nw_id_de
     variable_block_startup_shutdown_counts(pm; nw, relax, report)
     constraint_active_blocks_le_installed(pm; nw)
     constraint_block_count_transitions(pm; nw)
+    constraint_block_minimum_up_down_times(pm; nw)
 end
 
 """
@@ -282,6 +284,137 @@ function constraint_block_count_transitions(pm::_PM.AbstractPowerModel; nw::Int=
     end
 
     return constraints
+end
+
+"""
+    constraint_block_minimum_up_down_times(pm; nw=nw_id_default)
+
+Adds UC/gSCR block minimum up/down-time count constraints for snapshot `nw`.
+
+This wrapper adds both:
+- minimum up-time:
+  `sum(su_block[k,tau] for tau=max(1, t-min_up_block_time[k]+1):t) <= na_block[k,t]`
+- minimum down-time:
+  `sum(sd_block[k,tau] for tau=max(1, t-min_down_block_time[k]+1):t) <= n_block[k] - na_block[k,t]`.
+
+The template is formulation-independent and mutates the JuMP model plus
+PowerModels constraint dictionaries. It is a no-op when minimum up/down-time
+is not enabled in the reference extension.
+"""
+function constraint_block_minimum_up_down_times(pm::_PM.AbstractPowerModel; nw::Int=_PM.nw_id_default)
+    constraint_block_minimum_up_time(pm; nw)
+    constraint_block_minimum_down_time(pm; nw)
+end
+
+"""
+    constraint_block_minimum_up_time(pm; nw=nw_id_default)
+
+Adds UC/gSCR minimum up-time count constraints for snapshot `nw`.
+
+For each compound device key `k`, this enforces:
+`sum(su_block[k,tau] for tau=max(1, t-min_up_block_time[k]+1):t) <= na_block[k,t]`,
+using truncated windows near the first snapshot in the `:hour` dimension.
+Counts are based on existing integer block-count variables and no binary
+commitment variables are introduced. This function is formulation-independent,
+mutates the JuMP model plus PowerModels constraint dictionaries, and is a
+no-op when the feature is disabled.
+"""
+function constraint_block_minimum_up_time(pm::_PM.AbstractPowerModel; nw::Int=_PM.nw_id_default)
+    if !_has_uc_gscr_block_ref(pm, nw) || !_uc_gscr_block_min_up_down_enabled(pm, nw)
+        return
+    end
+
+    if haskey(_PM.con(pm, nw), :block_minimum_up_time)
+        return _PM.con(pm, nw)[:block_minimum_up_time]
+    end
+
+    na_block = _PM.var(pm, nw, :na_block)
+    constraints = _PM.con(pm, nw)[:block_minimum_up_time] = Dict{Tuple{Symbol,Any},JuMP.ConstraintRef}()
+
+    for device_key in _uc_gscr_block_device_keys(pm, nw)
+        min_up_block_time = _PM.ref(pm, nw, device_key[1], device_key[2], "min_up_block_time")
+        window_nws = _uc_gscr_block_hour_window(pm, nw, min_up_block_time)
+        su_window = sum(_PM.var(pm, window_nw, :su_block, device_key) for window_nw in window_nws)
+        constraints[device_key] = JuMP.@constraint(pm.model, su_window <= na_block[device_key])
+    end
+
+    return constraints
+end
+
+"""
+    constraint_block_minimum_down_time(pm; nw=nw_id_default)
+
+Adds UC/gSCR minimum down-time count constraints for snapshot `nw`.
+
+For each compound device key `k`, this enforces:
+`sum(sd_block[k,tau] for tau=max(1, t-min_down_block_time[k]+1):t) <= n_block[k] - na_block[k,t]`,
+using installed offline blocks `n_block - na_block` (not `n_block_max`) and
+truncated windows near the first snapshot in the `:hour` dimension. Counts are
+based on existing integer block-count variables and no binary commitment
+variables are introduced. This function is formulation-independent, mutates
+the JuMP model plus PowerModels constraint dictionaries, and is a no-op when
+the feature is disabled.
+"""
+function constraint_block_minimum_down_time(pm::_PM.AbstractPowerModel; nw::Int=_PM.nw_id_default)
+    if !_has_uc_gscr_block_ref(pm, nw) || !_uc_gscr_block_min_up_down_enabled(pm, nw)
+        return
+    end
+
+    if haskey(_PM.con(pm, nw), :block_minimum_down_time)
+        return _PM.con(pm, nw)[:block_minimum_down_time]
+    end
+
+    n_block = _PM.var(pm, nw, :n_block)
+    na_block = _PM.var(pm, nw, :na_block)
+    constraints = _PM.con(pm, nw)[:block_minimum_down_time] = Dict{Tuple{Symbol,Any},JuMP.ConstraintRef}()
+
+    for device_key in _uc_gscr_block_device_keys(pm, nw)
+        min_down_block_time = _PM.ref(pm, nw, device_key[1], device_key[2], "min_down_block_time")
+        window_nws = _uc_gscr_block_hour_window(pm, nw, min_down_block_time)
+        sd_window = sum(_PM.var(pm, window_nw, :sd_block, device_key) for window_nw in window_nws)
+        constraints[device_key] = JuMP.@constraint(pm.model, sd_window <= n_block[device_key] - na_block[device_key])
+    end
+
+    return constraints
+end
+
+"""
+    _uc_gscr_block_hour_window(pm, nw, window_length)
+
+Returns the truncated backward hour window ending at snapshot `nw`.
+
+The returned network ids correspond to
+`tau=max(1, t-window_length+1), ..., t` in the local `:hour` ordering, without
+introducing any pre-horizon history snapshots. When `window_length <= 0`, the
+result is empty. This helper is formulation-independent and mutates no model
+state.
+"""
+function _uc_gscr_block_hour_window(pm::_PM.AbstractPowerModel, nw::Int, window_length::Int)
+    if window_length <= 0
+        return Int[]
+    end
+
+    window_nws = Int[nw]
+    cursor_nw = nw
+    while length(window_nws) < window_length && !is_first_id(pm, cursor_nw, :hour)
+        cursor_nw = prev_id(pm, cursor_nw, :hour)
+        push!(window_nws, cursor_nw)
+    end
+    reverse!(window_nws)
+    return window_nws
+end
+
+"""
+    _uc_gscr_block_min_up_down_enabled(pm, nw)
+
+Returns whether minimum up/down-time constraints are enabled for snapshot `nw`.
+
+The flag is written by `ref_add_uc_gscr_block!` based on presence of
+`min_up_block_time`/`min_down_block_time` in block-annotated devices.
+This helper is formulation-independent and mutates no model state.
+"""
+function _uc_gscr_block_min_up_down_enabled(pm::_PM.AbstractPowerModel, nw::Int)
+    return get(_PM.ref(pm, nw), :uc_gscr_block_min_up_down_enabled, false)
 end
 
 """

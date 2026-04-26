@@ -90,6 +90,29 @@ c_k^{startup,block} \, su_{k,t}^{block}
 \right).
 \]
 
+## 4d. Minimum up/down-time on block counts
+
+For each block-enabled device \(k\) and snapshot \(t\):
+
+\[
+\sum_{\tau=\max(1,\,t-T_k^{up}+1)}^{t} su_{k,\tau}^{block}
+\le
+n_{a,k,t},
+\]
+
+with \(T_k^{up}=\texttt{min\_up\_block\_time}[k]\) in snapshots.
+
+\[
+\sum_{\tau=\max(1,\,t-T_k^{down}+1)}^{t} sd_{k,\tau}^{block}
+\le
+n_k - n_{a,k,t},
+\]
+
+with \(T_k^{down}=\texttt{min\_down\_block\_time}[k]\) in snapshots.
+
+The minimum down-time equation uses installed offline blocks \(n_k-n_{a,k,t}\),
+not unbuilt candidate margin.
+
 ## 5. Active-power dispatch bounds
 
 \[

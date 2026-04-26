@@ -52,7 +52,8 @@ const _UC_GSCR_BLOCK_REQUIRED_FIELDS = [
     "shutdown_block_cost",
 ]
 
-const _UC_GSCR_BLOCK_OPTIONAL_FIELDS = ["H", "s_block", "e_block"]
+const _UC_GSCR_BLOCK_MIN_UP_DOWN_FIELDS = ["min_up_block_time", "min_down_block_time"]
+const _UC_GSCR_BLOCK_OPTIONAL_FIELDS = ["H", "s_block", "e_block", _UC_GSCR_BLOCK_MIN_UP_DOWN_FIELDS...]
 
 """
     ref_add_uc_gscr_block!(ref, data)
@@ -79,12 +80,34 @@ function ref_add_uc_gscr_block!(ref::Dict{Symbol,<:Any}, data::Dict{String,<:Any
             continue
         end
 
-        missing_report = _uc_gscr_missing_required_fields_report(nw_ref)
+        min_up_down_enabled = _uc_gscr_block_min_up_down_enabled(nw_ref)
+        missing_report = _uc_gscr_missing_required_fields_report(nw_ref; min_up_down_enabled)
         _warn_uc_gscr_missing_required_fields(missing_report)
-        _validate_uc_gscr_block_devices(nw_ref)
+        _validate_uc_gscr_block_devices(nw_ref; min_up_down_enabled)
         _add_uc_gscr_device_maps!(nw_ref)
         _add_uc_gscr_row_metrics!(nw_ref)
+        nw_ref[:uc_gscr_block_min_up_down_enabled] = min_up_down_enabled
     end
+end
+
+"""
+    _uc_gscr_block_min_up_down_enabled(nw_ref)
+
+Returns whether UC/gSCR block minimum up/down-time constraints are enabled for
+`nw_ref`.
+
+The feature is enabled when at least one block-annotated supported device
+contains either `min_up_block_time` or `min_down_block_time`. This helper is
+formulation-independent, mutates no data, and preserves backward
+compatibility for cases that do not opt in to minimum up/down-time fields.
+"""
+function _uc_gscr_block_min_up_down_enabled(nw_ref::Dict{Symbol,<:Any})
+    for (_, _, device) in _uc_gscr_block_devices(nw_ref)
+        if any(haskey(device, field) for field in _UC_GSCR_BLOCK_MIN_UP_DOWN_FIELDS)
+            return true
+        end
+    end
+    return false
 end
 
 """
@@ -112,18 +135,26 @@ function _has_uc_gscr_block_data(nw_ref::Dict{Symbol,<:Any})
 end
 
 """
-    _uc_gscr_missing_required_fields_report(nw_ref)
+    _uc_gscr_missing_required_fields_report(nw_ref; min_up_down_enabled=false)
 
 Builds a missing-field report for required UC/gSCR block schema entries.
 
 Returned keys are `(table_name, device_id)` tuples and values are vectors of
-missing required field names. Only block-annotated devices with missing fields
-are included. This helper is formulation-independent and mutates no data.
+missing required field names. When `min_up_down_enabled=true`, required fields
+also include `min_up_block_time` and `min_down_block_time`; otherwise only the
+base UC/gSCR block schema is required. Only block-annotated devices with
+missing fields are included. This helper is formulation-independent and
+mutates no data.
 """
-function _uc_gscr_missing_required_fields_report(nw_ref::Dict{Symbol,<:Any})
+function _uc_gscr_missing_required_fields_report(nw_ref::Dict{Symbol,<:Any}; min_up_down_enabled::Bool=false)
     report = Dict{Tuple{Symbol,Any},Vector{String}}()
+    required_fields = if min_up_down_enabled
+        [_UC_GSCR_BLOCK_REQUIRED_FIELDS; _UC_GSCR_BLOCK_MIN_UP_DOWN_FIELDS]
+    else
+        _UC_GSCR_BLOCK_REQUIRED_FIELDS
+    end
     for (table_name, device_id, device) in _uc_gscr_block_devices(nw_ref)
-        missing = String[field for field in _UC_GSCR_BLOCK_REQUIRED_FIELDS if !haskey(device, field)]
+        missing = String[field for field in required_fields if !haskey(device, field)]
         if !isempty(missing)
             report[(table_name, device_id)] = missing
         end
@@ -151,7 +182,7 @@ function _warn_uc_gscr_missing_required_fields(missing_report::Dict{Tuple{Symbol
 end
 
 """
-    _validate_uc_gscr_block_devices(nw_ref)
+    _validate_uc_gscr_block_devices(nw_ref; min_up_down_enabled=false)
 
 Validates required UC/gSCR block fields on every block-annotated supported
 device in `nw_ref`.
@@ -159,13 +190,16 @@ device in `nw_ref`.
 The required mathematical fields are `type`, `n0`, `nmax`, `na0`,
 per-active-block P/Q bounds, `b_block`, `startup_block_cost`, and
 `shutdown_block_cost`, with `type` restricted to `"gfl"` or `"gfm"`.
-No defaults are inferred for these mathematical fields. Optional fields
-`H`, `s_block`, and `e_block` are only read when present. This function is
-formulation-independent and mutates no data. Missing required fields are
-reported explicitly and then raise a hard validation error.
+When `min_up_down_enabled=true`, `min_up_block_time` and
+`min_down_block_time` are additionally required and must be nonnegative
+integers (snapshot counts). No defaults are inferred for these mathematical
+fields. Optional fields `H`, `s_block`, and `e_block` are only read when
+present. This function is formulation-independent and mutates no data.
+Missing required fields are reported explicitly and then raise a hard
+validation error.
 """
-function _validate_uc_gscr_block_devices(nw_ref::Dict{Symbol,<:Any})
-    missing_report = _uc_gscr_missing_required_fields_report(nw_ref)
+function _validate_uc_gscr_block_devices(nw_ref::Dict{Symbol,<:Any}; min_up_down_enabled::Bool=false)
+    missing_report = _uc_gscr_missing_required_fields_report(nw_ref; min_up_down_enabled)
     if !isempty(missing_report)
         device_summaries = String[
             "$(uppercase(string(table_name))) $(device_id): $(join(missing_fields, ", "))"
@@ -194,6 +228,18 @@ function _validate_uc_gscr_block_devices(nw_ref::Dict{Symbol,<:Any})
         na0 = device["na0"]
         if na0 < 0 || nmax < na0
             Memento.error(_LOGGER, "$(uppercase(string(table_name))) device $(device_id) has invalid UC/gSCR active-block initial state: require 0 <= na0 <= nmax.")
+        end
+
+        if min_up_down_enabled
+            min_up_block_time = device["min_up_block_time"]
+            min_down_block_time = device["min_down_block_time"]
+
+            if !(min_up_block_time isa Integer) || min_up_block_time < 0
+                Memento.error(_LOGGER, "$(uppercase(string(table_name))) device $(device_id) has invalid `min_up_block_time=$(min_up_block_time)`. Expected a nonnegative integer number of snapshots.")
+            end
+            if !(min_down_block_time isa Integer) || min_down_block_time < 0
+                Memento.error(_LOGGER, "$(uppercase(string(table_name))) device $(device_id) has invalid `min_down_block_time=$(min_down_block_time)`. Expected a nonnegative integer number of snapshots.")
+            end
         end
     end
 end
