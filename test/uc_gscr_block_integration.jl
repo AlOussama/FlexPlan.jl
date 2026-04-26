@@ -69,11 +69,11 @@ function _uc_gscr_synthetic_integration_data(; g_min)
         n0=0,
         nmax=4,
         p_block_min=0.0,
-        p_block_max=0.0,
+        p_block_max=1.0,
         q_block_min=-10.0,
         q_block_max=10.0,
         b_block=1.0,
-        cost_inv_block=20.0,
+        cost_inv_block=7.0,
     )
     data["gen"]["2"] = gfm
 
@@ -98,6 +98,45 @@ function _uc_gscr_synthetic_integration_data(; g_min)
     _FP.add_dimension!(data, :year, 1; metadata=Dict{String,Any}("scale_factor" => 1))
 
     return _FP.make_multinetwork(data, Dict{String,Any}(); share_data=false)
+end
+
+"""
+    _uc_gscr_solve_integration_pm(data)
+
+Builds and solves the UC/gSCR integration model for a prepared multinetwork.
+
+The returned `pm` contains solved variable values for explicit post-solve
+constraint checks. This helper is test-only and mutates only the local model
+instance it creates.
+"""
+function _uc_gscr_solve_integration_pm(data)
+    pm = _uc_gscr_build_integration_pm(data)
+    JuMP.set_optimizer(pm.model, HiGHS.Optimizer)
+    JuMP.set_silent(pm.model)
+    JuMP.optimize!(pm.model)
+    return pm
+end
+
+"""
+    _uc_gscr_gershgorin_lhs_rhs(pm, bus_id; nw=1)
+
+Computes the post-solve Gershgorin sufficient-condition sides at one bus.
+
+Returns `(lhs, rhs)` for
+`lhs = sigma0_G + sum(b_block * na_block for GFM at bus)` and
+`rhs = g_min * sum(p_block_max * na_block for GFL at bus)` on snapshot `nw`.
+This helper is test-only and reads solved values without mutating model state.
+"""
+function _uc_gscr_gershgorin_lhs_rhs(pm, bus_id; nw::Int=1)
+    sigma0 = _PM.ref(pm, nw, :gscr_sigma0_gershgorin_margin, bus_id)
+    g_min = _PM.ref(pm, nw, :g_min)
+    na = _PM.var(pm, nw, :na_block)
+    gfm_devices = _PM.ref(pm, nw, :bus_gfm_devices, bus_id)
+    gfl_devices = _PM.ref(pm, nw, :bus_gfl_devices, bus_id)
+
+    lhs = sigma0 + sum(_PM.ref(pm, nw, device_key[1], device_key[2], "b_block") * JuMP.value(na[device_key]) for device_key in gfm_devices)
+    rhs = g_min * sum(_PM.ref(pm, nw, device_key[1], device_key[2], "p_block_max") * JuMP.value(na[device_key]) for device_key in gfl_devices)
+    return lhs, rhs
 end
 
 """
@@ -221,6 +260,41 @@ end
         data_tight = _uc_gscr_synthetic_integration_data(; g_min=1.0)
         result_tight = _FP.uc_gscr_block_integration(data_tight, _PM.DCPPowerModel, milp_optimizer)
         @test result_tight["termination_status"] == INFEASIBLE
+    end
+
+    @testset "Synthetic g_min binding-feasible validation with explicit LHS/RHS checks" begin
+        tol = 1e-6
+
+        data_nonbinding = _uc_gscr_synthetic_integration_data(; g_min=0.20)
+        pm_nonbinding = _uc_gscr_solve_integration_pm(data_nonbinding)
+        @test JuMP.termination_status(pm_nonbinding.model) == JuMP.MOI.OPTIMAL
+        sigma0_nonbinding = _PM.ref(pm_nonbinding, 1, :gscr_sigma0_gershgorin_margin, 1)
+        @test sigma0_nonbinding ≈ 0.0 atol=tol
+        lhs_nonbinding, rhs_nonbinding = _uc_gscr_gershgorin_lhs_rhs(pm_nonbinding, 1; nw=1)
+        @test lhs_nonbinding >= rhs_nonbinding - tol
+
+        data_binding = _uc_gscr_synthetic_integration_data(; g_min=0.40)
+        pm_binding = _uc_gscr_solve_integration_pm(data_binding)
+        @test JuMP.termination_status(pm_binding.model) == JuMP.MOI.OPTIMAL
+        sigma0_binding = _PM.ref(pm_binding, 1, :gscr_sigma0_gershgorin_margin, 1)
+        @test sigma0_binding ≈ 0.0 atol=tol
+        lhs_binding, rhs_binding = _uc_gscr_gershgorin_lhs_rhs(pm_binding, 1; nw=1)
+        @test lhs_binding >= rhs_binding - tol
+
+        na_nonbinding_gfm = JuMP.value(_PM.var(pm_nonbinding, 1, :na_block, (:gen, 2)))
+        na_binding_gfm = JuMP.value(_PM.var(pm_binding, 1, :na_block, (:gen, 2)))
+        na_nonbinding_gfl = JuMP.value(_PM.var(pm_nonbinding, 1, :na_block, (:gen, 1)))
+        na_binding_gfl = JuMP.value(_PM.var(pm_binding, 1, :na_block, (:gen, 1)))
+        obj_nonbinding = JuMP.objective_value(pm_nonbinding.model)
+        obj_binding = JuMP.objective_value(pm_binding.model)
+
+        @test na_binding_gfm >= na_nonbinding_gfm + tol
+        @test obj_binding >= obj_nonbinding + tol
+        @test na_binding_gfl <= na_nonbinding_gfl + tol
+
+        data_infeasible = _uc_gscr_synthetic_integration_data(; g_min=0.45)
+        result_infeasible = _FP.uc_gscr_block_integration(data_infeasible, _PM.DCPPowerModel, milp_optimizer)
+        @test result_infeasible["termination_status"] == INFEASIBLE
     end
 
     @testset "Case6 4h/1s/1y integration" begin
