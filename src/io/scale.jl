@@ -123,6 +123,30 @@ function _scale_investment_cost_data!(data, number_of_years, year_idx, cost_scal
 end
 
 """
+    _rescale_uc_gscr_block_fields_mva_base!(device, rescale)
+
+Rescales UC/gSCR block fields during MVA-base conversion.
+
+The mapping follows existing FlexPlan internal quantity classes:
+- `p_block_min`, `p_block_max`, `q_block_min`, `q_block_max`, `e_block`,
+  `s_block` scale as power/energy (`rescale`);
+- `b_block` scales as per-unit admittance (`rescale`).
+
+Fields such as `H` and `cost_inv_block` are intentionally not scaled because
+they do not depend on the MVA base convention. This helper mutates `device`.
+"""
+function _rescale_uc_gscr_block_fields_mva_base!(device::Dict{String,<:Any}, rescale::Function)
+    _PM._apply_func!(device, "p_block_min", rescale)
+    _PM._apply_func!(device, "p_block_max", rescale)
+    _PM._apply_func!(device, "q_block_min", rescale)
+    _PM._apply_func!(device, "q_block_max", rescale)
+    _PM._apply_func!(device, "e_block", rescale)
+    _PM._apply_func!(device, "s_block", rescale)
+    _PM._apply_func!(device, "b_block", rescale)
+    return device
+end
+
+"""
     convert_mva_base(data, mva_base)
 
 Convert a data or solution Dict to a different per-unit system MVA base value.
@@ -265,6 +289,7 @@ function convert_mva_base!(data::Dict{String,<:Any}, mva_base::Real)
                     _PM._apply_func!(gen, "pg", rescale)
                     _PM._apply_func!(gen, "pgcurt", rescale)
                     _PM._apply_func!(gen, "qg", rescale)
+                    _rescale_uc_gscr_block_fields_mva_base!(gen, rescale)
                 end
             end
 
@@ -292,6 +317,7 @@ function convert_mva_base!(data::Dict{String,<:Any}, mva_base::Real)
                         _PM._apply_func!(strg, "sc", rescale_inverse)
                         _PM._apply_func!(strg, "sd", rescale_inverse)
                         _PM._apply_func!(strg, "se", rescale_inverse)
+                        _rescale_uc_gscr_block_fields_mva_base!(strg, rescale)
                     end
                 end
             end

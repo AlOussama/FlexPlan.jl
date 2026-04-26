@@ -45,4 +45,207 @@
         end
     end
 
+    @testset "UC/gSCR block field unit conventions" begin
+        @testset "Parser scaling matches gen/storage/ne_storage internal bases" begin
+            parse_data = Dict{String,Any}(
+                "baseMVA" => 100.0,
+                "gen" => Dict{String,Any}(
+                    "1" => Dict{String,Any}(
+                        "dispatchable" => true,
+                        "pmax" => 0.5,
+                        "qmax" => 0.2,
+                        "p_block_min" => 10.0,
+                        "p_block_max" => 50.0,
+                        "q_block_min" => -20.0,
+                        "q_block_max" => 20.0,
+                        "s_block" => 60.0,
+                        "b_block" => 0.4,
+                        "H" => 3.5,
+                        "cost_inv_block" => 1200.0,
+                    ),
+                ),
+                "storage" => Dict{String,Any}(
+                    "1" => Dict{String,Any}(
+                        "max_energy_absorption" => 5.0,
+                        "stationary_energy_outflow" => 2.0,
+                        "stationary_energy_inflow" => 1.0,
+                        "p_block_max" => 40.0,
+                        "q_block_max" => 30.0,
+                        "e_block" => 80.0,
+                        "s_block" => 50.0,
+                        "H" => 4.0,
+                        "b_block" => 0.1,
+                        "cost_inv_block" => 2200.0,
+                    ),
+                ),
+                "ne_storage" => Dict{String,Any}(
+                    "1" => Dict{String,Any}(
+                        "energy_rating" => 100.0,
+                        "thermal_rating" => 100.0,
+                        "discharge_rating" => 100.0,
+                        "charge_rating" => 100.0,
+                        "energy" => 20.0,
+                        "ps" => 0.0,
+                        "qs" => 0.0,
+                        "q_loss" => 0.0,
+                        "p_loss" => 0.0,
+                        "qmax" => 50.0,
+                        "qmin" => -50.0,
+                        "max_energy_absorption" => 4.0,
+                        "stationary_energy_outflow" => 1.0,
+                        "stationary_energy_inflow" => 1.0,
+                        "p_block_max" => 30.0,
+                        "q_block_max" => 25.0,
+                        "e_block" => 70.0,
+                        "s_block" => 45.0,
+                        "H" => 5.0,
+                        "b_block" => 0.2,
+                        "cost_inv_block" => 3200.0,
+                    ),
+                ),
+            )
+
+            _FP._add_gen_data!(parse_data)
+            _FP._add_storage_data!(parse_data)
+
+            @test parse_data["gen"]["1"]["p_block_max"] ≈ parse_data["gen"]["1"]["pmax"]
+            @test parse_data["gen"]["1"]["q_block_max"] ≈ parse_data["gen"]["1"]["qmax"]
+            @test parse_data["gen"]["1"]["H"] == 3.5
+            @test parse_data["gen"]["1"]["cost_inv_block"] == 1200.0
+
+            @test parse_data["storage"]["1"]["e_block"] ≈ 0.8
+            @test parse_data["storage"]["1"]["p_block_max"] ≈ 0.4
+            @test parse_data["storage"]["1"]["q_block_max"] ≈ 0.3
+
+            @test parse_data["ne_storage"]["1"]["e_block"] ≈ 0.7
+            @test parse_data["ne_storage"]["1"]["p_block_max"] ≈ 0.3
+            @test parse_data["ne_storage"]["1"]["q_block_max"] ≈ 0.25
+            @test parse_data["ne_storage"]["1"]["H"] == 5.0
+            @test parse_data["ne_storage"]["1"]["cost_inv_block"] == 3200.0
+        end
+
+        @testset "MVA-base conversion keeps block admittance on the same base as network admittance terms" begin
+            mva_data = Dict{String,Any}(
+                "baseMVA" => 100.0,
+                "bus" => Dict{String,Any}(
+                    "1" => Dict{String,Any}("index" => 1),
+                    "2" => Dict{String,Any}("index" => 2),
+                ),
+                "branch" => Dict{String,Any}(
+                    "1" => Dict{String,Any}("f_bus" => 1, "t_bus" => 2, "br_x" => 0.2, "br_status" => 1),
+                ),
+                "gen" => Dict{String,Any}(
+                    "1" => Dict{String,Any}(
+                        "pmax" => 1.0,
+                        "pmin" => 0.0,
+                        "qmax" => 0.4,
+                        "qmin" => -0.4,
+                        "model" => 2,
+                        "ncost" => 2,
+                        "pg" => 0.0,
+                        "qg" => 0.0,
+                        "p_block_max" => 0.8,
+                        "q_block_max" => 0.3,
+                        "s_block" => 0.8,
+                        "b_block" => 5.0,
+                        "H" => 6.0,
+                        "cost_inv_block" => 1800.0,
+                        "cost" => [10.0, 0.0],
+                    ),
+                ),
+                "storage" => Dict{String,Any}(),
+                "ne_storage" => Dict{String,Any}(),
+                "load" => Dict{String,Any}(),
+                "shunt" => Dict{String,Any}(),
+            )
+
+            b_branch_before = 1 / mva_data["branch"]["1"]["br_x"]
+            b_block_before = mva_data["gen"]["1"]["b_block"]
+
+            _FP.convert_mva_base!(mva_data, 200.0)
+
+            b_branch_after = 1 / mva_data["branch"]["1"]["br_x"]
+            b_block_after = mva_data["gen"]["1"]["b_block"]
+
+            @test mva_data["gen"]["1"]["p_block_max"] ≈ 0.4
+            @test mva_data["gen"]["1"]["q_block_max"] ≈ 0.15
+            @test mva_data["gen"]["1"]["s_block"] ≈ 0.4
+            @test (b_block_after / b_block_before) ≈ (b_branch_after / b_branch_before)
+            @test mva_data["gen"]["1"]["H"] == 6.0
+            @test mva_data["gen"]["1"]["cost_inv_block"] == 1800.0
+        end
+
+        @testset "JSON converter copies block fields without guessing missing entries" begin
+            gen_source = Dict{String,Any}(
+                "minReactivePower" => [0.0],
+                "maxReactivePower" => [40.0],
+                "generationCosts" => [5.0],
+                "minActivePower" => [0.0],
+                "maxActivePower" => [100.0],
+                "type" => "gfm",
+                "n0" => 1.0,
+                "nmax" => 3.0,
+                "p_block_min" => [0.0],
+                "p_block_max" => [60.0],
+                "q_block_max" => [20.0],
+                "b_block" => [0.25],
+                "H" => [4.5],
+                "s_block" => [60.0],
+                "cost_inv_block" => [900.0],
+            )
+            gen_target = _FP.JSONConverter.make_gen(gen_source, 1, ["gridModelInputFile", "generators", "G1"], 1, 1; scale_gen=1.0)
+            @test gen_target["p_block_max"] == 60.0
+            @test gen_target["q_block_max"] == 20.0
+            @test gen_target["H"] == 4.5
+            @test !haskey(gen_target, "q_block_min")
+
+            storage_source = Dict{String,Any}(
+                "maxEnergy" => [80.0],
+                "maxAbsActivePower" => [20.0],
+                "maxInjActivePower" => [20.0],
+                "absEfficiency" => [0.95],
+                "injEfficiency" => [0.95],
+                "minReactivePowerExchange" => [-10.0],
+                "maxReactivePowerExchange" => [10.0],
+                "selfDischargeRate" => [0.0],
+                "type" => "gfl",
+                "n0" => 0.0,
+                "nmax" => 4.0,
+                "p_block_max" => [20.0],
+                "q_block_max" => [10.0],
+                "e_block" => [80.0],
+                "b_block" => [0.0],
+                "H" => [3.0],
+                "s_block" => [20.0],
+                "cost_inv_block" => [1500.0],
+            )
+            storage_target = _FP.JSONConverter.make_storage(storage_source, 1, ["gridModelInputFile", "storage", "S1"], 1, 1)
+            @test storage_target["e_block"] == 80.0
+            @test storage_target["p_block_max"] == 20.0
+            @test storage_target["q_block_max"] == 10.0
+            @test storage_target["H"] == 3.0
+            @test !haskey(storage_target, "p_block_min")
+        end
+
+        @testset "cost_inv_block remains objective-only and is not scaled by scale_data!" begin
+            scale_data = Dict{String,Any}(
+                "gen" => Dict{String,Any}(),
+                "load" => Dict{String,Any}(),
+                "ne_storage" => Dict{String,Any}(
+                    "1" => Dict{String,Any}(
+                        "lifetime" => 10,
+                        "eq_cost" => 100.0,
+                        "inst_cost" => 20.0,
+                        "co2_cost" => 0.0,
+                        "cost_inv_block" => 7.5,
+                    ),
+                ),
+            )
+            _FP.scale_data!(scale_data; number_of_hours=1, year_scale_factor=1, number_of_years=10, year_idx=1, cost_scale_factor=2.0)
+            @test scale_data["ne_storage"]["1"]["eq_cost"] ≈ 200.0
+            @test scale_data["ne_storage"]["1"]["inst_cost"] ≈ 40.0
+            @test scale_data["ne_storage"]["1"]["cost_inv_block"] == 7.5
+        end
+    end
+
 end;

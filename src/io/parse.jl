@@ -32,10 +32,33 @@ function parse_file(file::String; flex_load=true, kwargs...)
     return data
 end
 
+const _UC_GSCR_BLOCK_POWER_FIELDS = ("p_block_min", "p_block_max", "q_block_min", "q_block_max", "e_block", "s_block")
+
+"""
+    _rescale_uc_gscr_block_fields!(device, data)
+
+Rescales UC/gSCR block fields on one parsed device to FlexPlan internal units.
+
+Power-like block fields (`p_block_*`, `q_block_*`, `e_block`, `s_block`) are
+mapped to the same p.u. base used by generator/storage power and energy fields.
+The admittance-like field `b_block` and non-power fields (for example `H`,
+`cost_inv_block`) are intentionally left unchanged.
+
+This helper is formulation-independent and mutates `device` in-place.
+"""
+function _rescale_uc_gscr_block_fields!(device::Dict{String,Any}, data::Dict{String,Any})
+    rescale_power = x -> x / data["baseMVA"]
+    for field in _UC_GSCR_BLOCK_POWER_FIELDS
+        _PM._apply_func!(device, field, rescale_power)
+    end
+    return device
+end
+
 "Add a `dispatchable` bool field to all generators; add non-dispatchable generators to `data[\"gen\"]`."
 function _add_gen_data!(data::Dict{String,Any})
     for dgen in values(data["gen"])
         dgen["dispatchable"] = true
+        _rescale_uc_gscr_block_fields!(dgen, data)
     end
 
     if haskey(data, "ndgen")
@@ -63,6 +86,7 @@ function _add_gen_data!(data::Dict{String,Any})
             ndgen["model"] = 2 # Cost model (2 => polynomial cost)
             ndgen["cost"] = [ndgen["cost_gen"], 0.0]
             delete!(ndgen, "cost_gen")
+            _rescale_uc_gscr_block_fields!(ndgen, data)
 
             # Assign to non-dispatchable generators ids contiguous to dispatchable
             # generators so that each generator has an unique id.
@@ -75,6 +99,16 @@ function _add_gen_data!(data::Dict{String,Any})
     return data
 end
 
+"""
+    _add_storage_data!(data)
+
+Adds and normalizes storage and candidate-storage tables in parsed data.
+
+Existing FlexPlan storage fields are converted to the internal p.u. base, and
+UC/gSCR block power/energy/rating fields are converted with the same base.
+Admittance-style and non-power block fields (such as `b_block`, `H`,
+`cost_inv_block`) are not scaled here. The function mutates `data`.
+"""
 function _add_storage_data!(data)
     if haskey(data, "storage")
         for (s, storage) in data["storage"]
@@ -82,6 +116,7 @@ function _add_storage_data!(data)
             _PM._apply_func!(storage, "max_energy_absorption", rescale_power)
             _PM._apply_func!(storage, "stationary_energy_outflow", rescale_power)
             _PM._apply_func!(storage, "stationary_energy_inflow", rescale_power)
+            _rescale_uc_gscr_block_fields!(storage, data)
         end
     else
         data["storage"] = Dict{String,Any}()
@@ -104,6 +139,7 @@ function _add_storage_data!(data)
             _PM._apply_func!(storage, "max_energy_absorption", rescale_power)
             _PM._apply_func!(storage, "stationary_energy_outflow", rescale_power)
             _PM._apply_func!(storage, "stationary_energy_inflow", rescale_power)
+            _rescale_uc_gscr_block_fields!(storage, data)
         end
     else
         data["ne_storage"] = Dict{String,Any}()

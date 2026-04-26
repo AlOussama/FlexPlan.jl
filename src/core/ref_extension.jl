@@ -73,6 +73,8 @@ function ref_add_uc_gscr_block!(ref::Dict{Symbol,<:Any}, data::Dict{String,<:Any
             continue
         end
 
+        missing_report = _uc_gscr_missing_required_fields_report(nw_ref)
+        _warn_uc_gscr_missing_required_fields(missing_report)
         _validate_uc_gscr_block_devices(nw_ref)
         _add_uc_gscr_device_maps!(nw_ref)
         _add_uc_gscr_row_metrics!(nw_ref)
@@ -104,6 +106,45 @@ function _has_uc_gscr_block_data(nw_ref::Dict{Symbol,<:Any})
 end
 
 """
+    _uc_gscr_missing_required_fields_report(nw_ref)
+
+Builds a missing-field report for required UC/gSCR block schema entries.
+
+Returned keys are `(table_name, device_id)` tuples and values are vectors of
+missing required field names. Only block-annotated devices with missing fields
+are included. This helper is formulation-independent and mutates no data.
+"""
+function _uc_gscr_missing_required_fields_report(nw_ref::Dict{Symbol,<:Any})
+    report = Dict{Tuple{Symbol,Any},Vector{String}}()
+    for (table_name, device_id, device) in _uc_gscr_block_devices(nw_ref)
+        missing = String[field for field in _UC_GSCR_BLOCK_REQUIRED_FIELDS if !haskey(device, field)]
+        if !isempty(missing)
+            report[(table_name, device_id)] = missing
+        end
+    end
+    return report
+end
+
+"""
+    _warn_uc_gscr_missing_required_fields(missing_report)
+
+Logs warnings for every device that is missing required UC/gSCR block fields.
+
+This warning pass is intentionally separate from hard validation errors so the
+user gets an explicit missing-field report before execution stops. The helper
+is formulation-independent and mutates no model or data state.
+"""
+function _warn_uc_gscr_missing_required_fields(missing_report::Dict{Tuple{Symbol,Any},Vector{String}})
+    for ((table_name, device_id), missing_fields) in missing_report
+        Memento.warn(
+            _LOGGER,
+            "$(uppercase(string(table_name))) device $(device_id) is missing required UC/gSCR block fields: $(join(missing_fields, ", ")).",
+        )
+    end
+    return nothing
+end
+
+"""
     _validate_uc_gscr_block_devices(nw_ref)
 
 Validates required UC/gSCR block fields on every block-annotated supported
@@ -113,16 +154,25 @@ The required mathematical fields are `type`, `n0`, `nmax`, per-active-block
 P/Q bounds, and `b_block`, with `type` restricted to `"gfl"` or `"gfm"`.
 No defaults are inferred for these mathematical fields. Optional fields
 `H`, `s_block`, and `e_block` are only read when present. This function is
-formulation-independent and mutates no data.
+formulation-independent and mutates no data. Missing required fields are
+reported explicitly and then raise a hard validation error.
 """
 function _validate_uc_gscr_block_devices(nw_ref::Dict{Symbol,<:Any})
-    for (table_name, device_id, device) in _uc_gscr_block_devices(nw_ref)
-        for field in _UC_GSCR_BLOCK_REQUIRED_FIELDS
-            if !haskey(device, field)
-                Memento.error(_LOGGER, "$(uppercase(string(table_name))) device $(device_id) is missing required UC/gSCR block field `$(field)`.")
-            end
-        end
+    missing_report = _uc_gscr_missing_required_fields_report(nw_ref)
+    if !isempty(missing_report)
+        device_summaries = String[
+            "$(uppercase(string(table_name))) $(device_id): $(join(missing_fields, ", "))"
+            for ((table_name, device_id), missing_fields) in missing_report
+        ]
+        Memento.error(
+            _LOGGER,
+            "UC/gSCR block schema validation failed due to missing required fields. " *
+            "Missing-field report: " * join(device_summaries, " | ") * ". " *
+            "No silent defaults are applied.",
+        )
+    end
 
+    for (table_name, device_id, device) in _uc_gscr_block_devices(nw_ref)
         device_type = device["type"]
         if !(device_type in ("gfl", "gfm"))
             Memento.error(_LOGGER, "$(uppercase(string(table_name))) device $(device_id) has invalid UC/gSCR block field `type=$(device_type)`. Expected `gfl` or `gfm`.")

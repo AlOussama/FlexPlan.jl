@@ -152,6 +152,9 @@ end
         )
         ref = _uc_gscr_test_ref(nw_ref)
 
+        missing_report = _FP._uc_gscr_missing_required_fields_report(nw_ref)
+        @test haskey(missing_report, (:gen, 1))
+        @test missing_report[(:gen, 1)] == ["b_block"]
         @test_throws ErrorException _FP.ref_add_uc_gscr_block!(ref, Dict{String,Any}())
     end
 end

@@ -225,6 +225,36 @@ function optional_value(target::AbstractDict, target_key::String, source::Abstra
     end
 end
 
+"""
+    add_uc_gscr_block_fields!(target, source, y; is_storage)
+
+Copies UC/gSCR block-schema fields from one JSON component into one FlexPlan
+component dictionary without guessing missing values.
+
+Power/reactive/energy/rating-like fields are copied for year `y` so they use
+the same JSON conversion path as existing per-year power/energy fields.
+This helper is formulation-independent and mutates `target` in-place.
+"""
+function add_uc_gscr_block_fields!(target::AbstractDict, source::AbstractDict, y::Int; is_storage::Bool)
+    optional_value(target, "type", source, "type")
+    optional_value(target, "n0", source, "n0")
+    optional_value(target, "nmax", source, "nmax")
+
+    optional_value(target, "p_block_min", source, "p_block_min", y)
+    optional_value(target, "p_block_max", source, "p_block_max", y)
+    optional_value(target, "q_block_min", source, "q_block_min", y)
+    optional_value(target, "q_block_max", source, "q_block_max", y)
+    optional_value(target, "b_block", source, "b_block", y)
+    optional_value(target, "H", source, "H", y)
+    optional_value(target, "s_block", source, "s_block", y)
+    optional_value(target, "cost_inv_block", source, "cost_inv_block", y)
+    if is_storage
+        optional_value(target, "e_block", source, "e_block", y)
+    end
+
+    return target
+end
+
 function make_branch(source::AbstractDict, index::Int, source_id::Vector{String}, f_bus::Int, t_bus::Int, y::Int; transformer::Bool, oltc::Bool=false)
     target = Dict{String,Any}(
         "index"       => index,
@@ -341,6 +371,15 @@ function make_convdc(source::AbstractDict, index::Int, source_id::Vector{String}
     return target
 end
 
+"""
+    make_gen(source, index, source_id, gen_bus, y; scale_gen)
+
+Builds one FlexPlan generator dictionary from JSON input data.
+
+The function maps standard generator attributes and copies UC/gSCR block
+fields when present for year `y`. Missing block fields are not inferred.
+This helper is formulation-independent and returns a new dictionary.
+"""
 function make_gen(source::AbstractDict, index::Int, source_id::Vector{String}, gen_bus::Int, y::Int; scale_gen::Real)
     target = Dict{String,Any}(
         "index"        => index,
@@ -365,6 +404,7 @@ function make_gen(source::AbstractDict, index::Int, source_id::Vector{String}, g
         target["dispatchable"] = true
         target["pmin"] = scale_gen * pmin
     end
+    add_uc_gscr_block_fields!(target, source, y; is_storage=false)
     return target
 end
 
@@ -392,6 +432,15 @@ function make_load(source::AbstractDict, index::Int, source_id::Vector{String}, 
     return target
 end
 
+"""
+    make_storage(source, index, source_id, storage_bus, y)
+
+Builds one FlexPlan storage dictionary from JSON input data.
+
+The function maps standard storage attributes and copies UC/gSCR block fields
+when present for year `y`, without silent defaults. This helper is
+formulation-independent and returns a new dictionary.
+"""
 function make_storage(source::AbstractDict, index::Int, source_id::Vector{String}, storage_bus::Int, y::Int)
     target = Dict{String,Any}(
         "index"                 => index,
@@ -417,5 +466,6 @@ function make_storage(source::AbstractDict, index::Int, source_id::Vector{String
     # apparent power.
     target["thermal_rating"] = 2 * max(target["charge_rating"], target["discharge_rating"], target["qmax"], -target["qmin"])
     optional_value(target, "max_energy_absorption", source, "maxEnergyYear", y)
+    add_uc_gscr_block_fields!(target, source, y; is_storage=true)
     return target
 end

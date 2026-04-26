@@ -107,6 +107,51 @@ The active block variable \(n_a(t)\) is snapshot-specific.
 | `s_block` | rating used with \(H\), optional |
 | `cost_inv_block` | investment cost per added block |
 
+### Unit and base conventions for block fields
+
+Use the following internal-unit conventions consistently across `gen`,
+`storage`, and `ne_storage`:
+
+| Field | Internal unit/base convention |
+|---|---|
+| `p_block_min`, `p_block_max` | same internal base as `pg`, `ps`, `ps_ne`, `sc`, `sd`, `sc_ne`, `sd_ne` |
+| `q_block_min`, `q_block_max` | same internal base as `qg`, `qs`, `qs_ne` |
+| `e_block` | same internal base as `se`, `se_ne` |
+| `s_block` | same base convention as the rating quantity used in CbaOPF-style inertia aggregation |
+| `H` | inertia time constant; do not power-scale |
+| `b_block` | per-unit admittance/susceptance contribution in the same base as shunt admittances and line susceptance terms (\(1/x\)); it is not defined as a direct copy of any single line \(1/br_x\) value |
+| `cost_inv_block` | pure investment-cost coefficient (objective-level use); do not MVA-base scale |
+
+For later inertia aggregation, use:
+
+\[
+\sum_k H_k \, s_k^{block} \, n_{a,k,t}.
+\]
+
+Current FlexPlan candidate-storage investment cost in the objective is modeled
+as:
+
+\[
+(\text{eq\_cost} + \text{inst\_cost}) \cdot z^{investment}.
+\]
+
+For block expansion, use:
+
+\[
+\text{cost\_inv\_block}\cdot p_{k}^{block,max}\cdot(n_k - n_k^0).
+\]
+
+`cost_inv_block` is treated as a pure investment coefficient at objective
+level. Planning-horizon depreciation/scaling for this custom field is left as a
+TODO and must be handled explicitly when block-investment objective terms are
+implemented.
+
+Schema validation policy for block fields:
+
+- no silent guessing of missing required mathematical fields;
+- explicit warning/report listing missing required fields;
+- hard validation error if required fields are missing.
+
 ## 3. Global security fields
 
 | Field | Meaning |
