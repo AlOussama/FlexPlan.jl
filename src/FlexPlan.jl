@@ -26,6 +26,7 @@ include("prob/storage_tnep.jl")
 include("prob/flexible_tnep.jl")
 include("prob/stochastic_flexible_tnep.jl")
 include("prob/simple_stochastic_flexible_tnep.jl")
+include("prob/uc_gscr_block_integration.jl")
 
 include("io/parse.jl")
 include("io/scale.jl")
