@@ -280,3 +280,42 @@ function _uc_gscr_block_storage_variable(pm::_PM.AbstractPowerModel, n::Int, dev
 
     return _PM.var(pm, n, variable_symbol, device_id)
 end
+
+
+## UC/gSCR Gershgorin sufficient condition
+
+"""
+    constraint_gscr_gershgorin_sufficient(pm, n, bus_id, sigma0, g_min, gfm_devices, gfl_devices, b_block, p_block_max)
+
+Implements the LP/MILP-compatible Gershgorin sufficient gSCR/ESCR condition
+for one bus and network snapshot:
+
+`sigma0 + sum(b_block[k] * na_block[k,t] for k in gfm_devices) >=
+g_min * sum(p_block_max[i] * na_block[i,t] for i in gfl_devices)`.
+
+This formulation-specific method targets all PowerModels formulations that
+have the UC/gSCR active block variable `na_block` indexed by compound device
+keys. `sigma0` and `b_block` are susceptance/strength quantities in p.u.
+admittance base; `p_block_max` is in the active-power variable base. The
+method mutates only the JuMP model by adding one affine constraint and permits
+empty GFM or GFL device lists.
+"""
+function constraint_gscr_gershgorin_sufficient(
+    pm::_PM.AbstractPowerModel,
+    n::Int,
+    bus_id,
+    sigma0,
+    g_min,
+    gfm_devices,
+    gfl_devices,
+    b_block,
+    p_block_max,
+)
+    na = _PM.var(pm, n, :na_block)
+
+    return JuMP.@constraint(
+        pm.model,
+        sigma0 + sum(b_block[device_key] * na[device_key] for device_key in gfm_devices) >=
+        g_min * sum(p_block_max[device_key] * na[device_key] for device_key in gfl_devices)
+    )
+end

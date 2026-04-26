@@ -332,3 +332,77 @@ and mutates no data or model state.
 function _uc_gscr_block_storage_device_keys(pm::_PM.AbstractPowerModel, nw::Int)
     return [device_key for device_key in _uc_gscr_block_device_keys(pm, nw) if device_key[1] == :storage || device_key[1] == :ne_storage]
 end
+
+
+## UC/gSCR Gershgorin sufficient condition
+
+"""
+    constraint_gscr_gershgorin_sufficient(pm; nw=nw_id_default)
+
+Adds the linear Gershgorin sufficient gSCR/ESCR condition for every bus in
+network snapshot `nw`:
+
+`sigma0_G[n] + sum(b_block[k] * na_block[k,t] for GFM k at bus n) >=
+g_min * sum(p_block_max[i] * na_block[i,t] for GFL i at bus n)`.
+
+The template reads `:gscr_sigma0_gershgorin_margin`, `:bus_gfm_devices`,
+`:bus_gfl_devices`, device `b_block`, device `p_block_max`, and global
+`g_min` from the reference extension, then calls the formulation-specific
+method for each bus. `b_block` is assumed to be in p.u. admittance base and
+`p_block_max` in the active-power variable base. This LP/MILP-compatible
+function is formulation-independent, is a no-op when UC/gSCR block references
+are absent, and mutates only the model constraint dictionary.
+"""
+function constraint_gscr_gershgorin_sufficient(pm::_PM.AbstractPowerModel; nw::Int=_PM.nw_id_default)
+    if !_has_uc_gscr_block_ref(pm, nw)
+        return
+    end
+
+    if haskey(_PM.con(pm, nw), :gscr_gershgorin_sufficient)
+        return _PM.con(pm, nw)[:gscr_gershgorin_sufficient]
+    end
+
+    g_min = _uc_gscr_g_min(pm, nw)
+    constraints = _PM.con(pm, nw)[:gscr_gershgorin_sufficient] = Dict{Any,JuMP.ConstraintRef}()
+
+    for bus_id in sort(collect(_PM.ids(pm, nw, :bus)))
+        gfm_devices = _PM.ref(pm, nw, :bus_gfm_devices, bus_id)
+        gfl_devices = _PM.ref(pm, nw, :bus_gfl_devices, bus_id)
+        b_block = Dict(device_key => _PM.ref(pm, nw, device_key[1], device_key[2], "b_block") for device_key in gfm_devices)
+        p_block_max = Dict(device_key => _PM.ref(pm, nw, device_key[1], device_key[2], "p_block_max") for device_key in gfl_devices)
+        sigma0 = _PM.ref(pm, nw, :gscr_sigma0_gershgorin_margin, bus_id)
+
+        constraints[bus_id] = constraint_gscr_gershgorin_sufficient(
+            pm, nw, bus_id, sigma0, g_min, gfm_devices, gfl_devices, b_block, p_block_max
+        )
+    end
+
+    return constraints
+end
+
+"""
+    _uc_gscr_g_min(pm, nw)
+
+Returns the required global gSCR/ESCR threshold `g_min` for snapshot `nw`.
+
+`g_min` is a case-level dimensionless scalar used in the Gershgorin condition.
+This formulation-independent validation helper applies no default, raises an
+explicit error if the field is missing or nonnumeric, and mutates no data or
+model state.
+"""
+function _uc_gscr_g_min(pm::_PM.AbstractPowerModel, nw::Int)
+    if !haskey(_PM.ref(pm, nw), :g_min)
+        Memento.error(
+            _LOGGER,
+            "Network $(nw) is missing required global field `g_min`. " *
+            "The gSCR Gershgorin constraint uses g_min as the minimum " *
+            "strength threshold; no silent default is applied.",
+        )
+    end
+
+    g_min = _PM.ref(pm, nw, :g_min)
+    if !(g_min isa Real)
+        Memento.error(_LOGGER, "Network $(nw) has invalid global field `g_min=$(g_min)`. Expected a numeric gSCR/ESCR threshold.")
+    end
+    return g_min
+end
