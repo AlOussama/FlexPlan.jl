@@ -12,8 +12,7 @@ counts `sd_block[k,t]`, and the linking/transition constraints:
 `na_block[k,t] - na_block[k,t-1] = su_block[k,t] - sd_block[k,t]` for
 `t > 1`, and
 `na_block[k,1] - na0[k] = su_block[k,1] - sd_block[k,1]` for the first
-snapshot. When min-up/down fields are enabled, it also adds truncated-window
-count constraints for minimum up/down time.
+snapshot.
 
 The argument `relax` selects continuous variables when `true` and integer
 variables when `false`; `report` controls solution reporting on the original
@@ -28,7 +27,6 @@ function variable_uc_gscr_block(pm::_PM.AbstractPowerModel; nw::Int=_PM.nw_id_de
     variable_block_startup_shutdown_counts(pm; nw, relax, report)
     constraint_active_blocks_le_installed(pm; nw)
     constraint_block_count_transitions(pm; nw)
-    constraint_block_minimum_up_down_times(pm; nw)
 end
 
 """

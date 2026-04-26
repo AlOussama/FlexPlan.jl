@@ -267,50 +267,29 @@ end
         @test_throws ErrorException _FP.ref_add_uc_gscr_block!(ref, Dict{String,Any}())
     end
 
-    @testset "Minimum up/down fields are conditionally required when enabled" begin
+    @testset "Stage-required temporal fields remain na0/startup/shutdown only" begin
         device = _uc_gscr_test_device("gfl", 1)
-        device["min_up_block_time"] = 3
         nw_ref = Dict{Symbol,Any}(
-            :bus => Dict{Int,Any}(1 => Dict{String,Any}("index" => 1)),
+            :bus => Dict{Int,Any}(
+                1 => Dict{String,Any}("index" => 1),
+                2 => Dict{String,Any}("index" => 2),
+            ),
             :gen => Dict{Int,Any}(1 => device),
-            :branch => Dict{Int,Any}(),
+            :branch => Dict{Int,Any}(
+                1 => Dict{String,Any}("f_bus" => 1, "t_bus" => 2, "br_x" => 0.5, "br_status" => 1),
+            ),
         )
         ref = _uc_gscr_test_ref(nw_ref)
 
-        @test _FP._uc_gscr_block_min_up_down_enabled(nw_ref)
-        missing = _FP._uc_gscr_missing_required_fields_report(nw_ref; min_up_down_enabled=true)
-        @test haskey(missing, (:gen, 1))
-        @test missing[(:gen, 1)] == ["min_down_block_time"]
-        @test_throws ErrorException _FP.ref_add_uc_gscr_block!(ref, Dict{String,Any}())
+        missing = _FP._uc_gscr_missing_required_fields_report(nw_ref)
+        @test isempty(missing)
+        _FP.ref_add_uc_gscr_block!(ref, Dict{String,Any}())
+        @test haskey(ref[:it][_PM.pm_it_sym][:nw][0], :gfl_devices)
     end
 
-    @testset "Minimum up/down field validation accepts integer snapshots and rejects invalid values" begin
-        valid = _uc_gscr_test_device("gfl", 1)
-        valid["min_up_block_time"] = 2
-        valid["min_down_block_time"] = 3
-        valid_ref = Dict{Symbol,Any}(
-            :bus => Dict{Int,Any}(
-                1 => Dict{String,Any}("index" => 1),
-                2 => Dict{String,Any}("index" => 2),
-            ),
-            :gen => Dict{Int,Any}(1 => valid),
-            :branch => Dict{Int,Any}(),
-        )
-        wrapped = _uc_gscr_test_ref(valid_ref)
-        _FP.ref_add_uc_gscr_block!(wrapped, Dict{String,Any}())
-        @test wrapped[:it][_PM.pm_it_sym][:nw][0][:uc_gscr_block_min_up_down_enabled]
-
-        bad = _uc_gscr_test_device("gfl", 1)
-        bad["min_up_block_time"] = 1.5
-        bad["min_down_block_time"] = -1
-        bad_ref = Dict{Symbol,Any}(
-            :bus => Dict{Int,Any}(
-                1 => Dict{String,Any}("index" => 1),
-                2 => Dict{String,Any}("index" => 2),
-            ),
-            :gen => Dict{Int,Any}(1 => bad),
-            :branch => Dict{Int,Any}(),
-        )
-        @test_throws ErrorException _FP.ref_add_uc_gscr_block!(_uc_gscr_test_ref(bad_ref), Dict{String,Any}())
-    end
+    #=
+    Archived (commented-out) min-up/min-down validation tests for a future stage:
+    - Minimum up/down fields are conditionally required when enabled
+    - Minimum up/down field validation accepts integer snapshots and rejects invalid values
+    =#
 end
