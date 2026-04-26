@@ -6,7 +6,7 @@
 
 Use for:
 
-- full bus set \(\mathcal N\);
+- AC-side bus set \(\mathcal N_{ac}\) used by gSCR;
 - bus IDs;
 - active demand `pd`;
 - reactive demand `qd` for later AC formulation;
@@ -16,14 +16,15 @@ Use for:
 
 Use for:
 
-- full branch set \(\mathcal R\);
+- AC-side branch set \(\mathcal R_{ac}\) used by gSCR;
 - `f_bus`, `t_bus`;
 - `br_x`, optionally `br_r`;
 - `rate_a`;
 - `br_status`;
 - `angmin`, `angmax`.
 
-Use this to build the full-network \(B^0\) and line-flow constraints.
+Use this to build the gSCR baseline \(B^0\) on the AC-side network.
+DC buses, DC branches, and DC-side converter elements do not enter \(B^0\).
 
 ### `gen`
 
@@ -199,11 +200,18 @@ B_t - \underline g\, S_t \succeq 0.
 
 ### Full susceptance matrix
 
-Build:
+Build from the extracted AC-side PowerModels network only:
 
 \[
 B^0.
 \]
+
+Policy:
+
+- mixed AC/DC optimization cases are allowed;
+- \(B^0\) for gSCR is computed from AC `bus`/`branch` tables only;
+- AC-side extraction ambiguity is a hard explicit error;
+- disconnected AC-side graphs are allowed; compute row metrics bus-by-bus.
 
 ### Gershgorin margin
 
@@ -221,6 +229,9 @@ Store:
 :gscr_sigma0_gershgorin_margin
 ```
 
+gSCR constraints are indexed over AC buses only. GFL/GFM block contributions
+enter through their AC terminal bus mapping \(\phi(k)\).
+
 ### Raw row sum for diagnostics
 
 Optionally store:
@@ -228,6 +239,8 @@ Optionally store:
 ```julia
 :gscr_sigma0_raw_rowsum
 ```
+
+This is diagnostic-only and is not used as a security certificate.
 
 ## 6. Backward compatibility
 

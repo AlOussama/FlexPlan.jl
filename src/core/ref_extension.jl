@@ -62,6 +62,9 @@ the full-network baseline susceptance matrix `B^0`, the Gershgorin margin
 `B^0[n,n] - sum(abs(B^0[n,j]) for j != n)`, and the raw row sum diagnostic.
 The function reads block fields from `gen`, `storage`, and `ne_storage`.
 If no block fields are present in a network, it leaves that network unchanged.
+Mixed AC/DC optimization networks are supported: `B^0` is built only from the
+AC-side PowerModels tables (`:bus`, `:branch`), while DC-side tables are
+ignored for `B^0`.
 
 Arguments are the PowerModels `ref` dictionary and original network `data`.
 Block strengths are assumed to be in a per-unit base consistent with device
@@ -272,9 +275,9 @@ end
 
 Computes and stores the baseline full-network susceptance row metrics.
 
-The matrix `B^0` is built on the original bus set from active branches using
-`1 / br_x`, with diagonal entries increased and off-diagonal entries
-decreased for each in-service branch. The Gershgorin margin is
+The matrix `B^0` is built as the UC/gSCR strength matrix from PowerModels'
+basic susceptance convention: `B^0 = -B_pm`, where
+`B_pm = calc_basic_susceptance_matrix(...)`. The Gershgorin margin is
 `B^0[n,n] - sum(abs(B^0[n,j]) for j != n)`, and the raw row sum is
 `sum(B^0[n,j] for j)`. This function is formulation-independent and mutates
 `nw_ref`.
@@ -300,46 +303,135 @@ end
 """
     _calc_uc_gscr_susceptance_matrix(nw_ref)
 
-Builds the full-network baseline susceptance matrix `B^0` from branch data.
+Builds the full-network baseline strength matrix `B^0` from PowerModels
+susceptance conventions.
 
-Only active branches with endpoints present in the full bus set are used.
-Each branch contributes `1 / br_x` to both endpoint diagonal entries and
-`-1 / br_x` to the symmetric off-diagonal entries. Branch reactance is
-assumed to be nonzero and in the same per-unit base as the gSCR data. This
-helper is formulation-independent and mutates no data.
+This helper builds a basic-compatible network dictionary on a non-mutating
+path and computes `B_pm = PowerModels.calc_basic_susceptance_matrix(data)`,
+which follows PowerModels' DC-flow sign convention `p = -B_pm * theta`.
+The UC/gSCR strength matrix is then defined as `B^0 = -B_pm`, yielding the
+required sign pattern (nonnegative diagonal, nonpositive off-diagonal for
+inductive networks). The matrix is mapped back onto the original full bus set
+without Kron reduction, and missing rows/columns are kept at zero. This helper
+is formulation-independent and mutates no input data.
 """
 function _calc_uc_gscr_susceptance_matrix(nw_ref::Dict{Symbol,<:Any})
-    bus_ids = collect(keys(nw_ref[:bus]))
-    b0 = Dict((i, j) => 0.0 for i in bus_ids for j in bus_ids)
+    bus_ids = sort(collect(keys(nw_ref[:bus])))
+    b0_strength = Dict((i, j) => 0.0 for i in bus_ids for j in bus_ids)
 
-    if !haskey(nw_ref, :branch)
-        return b0
+    basic_data = _uc_gscr_basic_susceptance_data(nw_ref)
+    if isempty(basic_data["branch"])
+        return b0_strength
     end
 
-    for (branch_id, branch) in nw_ref[:branch]
-        if get(branch, "br_status", 1) != 1
-            continue
-        end
+    b0_strength_ac = -_PM.calc_basic_susceptance_matrix(basic_data)
+    idx_to_bus = _PM.calc_susceptance_matrix(basic_data).idx_to_bus
 
-        f_bus = branch["f_bus"]
-        t_bus = branch["t_bus"]
-        if !(haskey(nw_ref[:bus], f_bus) && haskey(nw_ref[:bus], t_bus))
-            continue
+    for row_idx in axes(b0_strength_ac, 1), col_idx in axes(b0_strength_ac, 2)
+        row_bus = idx_to_bus[row_idx]
+        col_bus = idx_to_bus[col_idx]
+        if haskey(nw_ref[:bus], row_bus) && haskey(nw_ref[:bus], col_bus)
+            b0_strength[(row_bus, col_bus)] = b0_strength_ac[row_idx, col_idx]
         end
-
-        br_x = branch["br_x"]
-        if br_x == 0
-            Memento.error(_LOGGER, "Branch $(branch_id) has `br_x=0`, so the UC/gSCR baseline susceptance contribution `1 / br_x` is undefined.")
-        end
-
-        b = 1.0 / br_x
-        b0[(f_bus, f_bus)] += b
-        b0[(t_bus, t_bus)] += b
-        b0[(f_bus, t_bus)] -= b
-        b0[(t_bus, f_bus)] -= b
     end
 
-    return b0
+    return b0_strength
+end
+
+"""
+    _uc_gscr_basic_susceptance_data(nw_ref)
+
+Builds a non-mutating, basic-compatible network dictionary for susceptance
+matrix construction.
+
+The returned data keeps the full bus set from `nw_ref` where possible and
+contains only the fields required by PowerModels susceptance routines:
+`bus`, `branch`, `dcline`, `switch`, and `basic_network=true`. Branch defaults
+are filled for omitted optional electrical fields. AC-side extraction must be
+unambiguous: each AC branch endpoint must map to the AC bus table. This helper
+is
+formulation-independent and mutates no input data.
+"""
+function _uc_gscr_basic_susceptance_data(nw_ref::Dict{Symbol,<:Any})
+    if !haskey(nw_ref, :bus)
+        Memento.error(_LOGGER, "UC/gSCR AC-side extraction is ambiguous: network reference is missing `:bus`.")
+    end
+
+    branch_table = get(nw_ref, :branch, Dict())
+    _validate_uc_gscr_ac_side_extraction(nw_ref[:bus], branch_table)
+
+    bus = Dict{String,Any}()
+    for (bus_id, bus_data) in nw_ref[:bus]
+        bus_entry = deepcopy(bus_data)
+        bus_entry["index"] = get(bus_entry, "index", bus_id)
+        bus_entry["bus_i"] = get(bus_entry, "bus_i", bus_entry["index"])
+        bus_entry["bus_type"] = get(bus_entry, "bus_type", 1)
+        bus_entry["vm"] = get(bus_entry, "vm", 1.0)
+        bus_entry["va"] = get(bus_entry, "va", 0.0)
+        bus_entry["vmin"] = get(bus_entry, "vmin", 0.9)
+        bus_entry["vmax"] = get(bus_entry, "vmax", 1.1)
+        bus_entry["base_kv"] = get(bus_entry, "base_kv", 1.0)
+        bus_entry["zone"] = get(bus_entry, "zone", 1)
+        bus[string(bus_id)] = bus_entry
+    end
+
+    branch = Dict{String,Any}()
+    for (branch_id, branch_data) in branch_table
+        branch_entry = deepcopy(branch_data)
+        branch_entry["index"] = get(branch_entry, "index", branch_id)
+        branch_entry["br_status"] = get(branch_entry, "br_status", 1)
+        branch_entry["br_r"] = get(branch_entry, "br_r", 0.0)
+        branch_entry["br_x"] = get(branch_entry, "br_x", 0.0)
+        branch_entry["g_fr"] = get(branch_entry, "g_fr", 0.0)
+        branch_entry["g_to"] = get(branch_entry, "g_to", 0.0)
+        branch_entry["b_fr"] = get(branch_entry, "b_fr", 0.0)
+        branch_entry["b_to"] = get(branch_entry, "b_to", 0.0)
+        branch_entry["tap"] = get(branch_entry, "tap", 1.0)
+        branch_entry["shift"] = get(branch_entry, "shift", 0.0)
+        branch_entry["rate_a"] = get(branch_entry, "rate_a", 1.0e6)
+        branch_entry["angmin"] = get(branch_entry, "angmin", -Inf)
+        branch_entry["angmax"] = get(branch_entry, "angmax", Inf)
+        branch_entry["transformer"] = get(branch_entry, "transformer", false)
+        branch[string(branch_id)] = branch_entry
+    end
+
+    return Dict{String,Any}(
+        "basic_network" => true,
+        "bus" => bus,
+        "branch" => branch,
+        "dcline" => Dict{String,Any}(),
+        "switch" => Dict{String,Any}(),
+    )
+end
+
+"""
+    _validate_uc_gscr_ac_side_extraction(bus_table, branch_table)
+
+Validates that the AC-side tables used for UC/gSCR `B^0` extraction are
+unambiguous.
+
+Each branch must define `f_bus` and `t_bus`, and both endpoint buses must
+exist in `bus_table`. This validator is formulation-independent and mutates no
+input data.
+"""
+function _validate_uc_gscr_ac_side_extraction(bus_table, branch_table)
+    for (branch_id, branch_data) in branch_table
+        if !haskey(branch_data, "f_bus") || !haskey(branch_data, "t_bus")
+            Memento.error(
+                _LOGGER,
+                "UC/gSCR AC-side extraction is ambiguous: branch $(branch_id) is missing `f_bus` or `t_bus` in `:branch`.",
+            )
+        end
+
+        f_bus = branch_data["f_bus"]
+        t_bus = branch_data["t_bus"]
+        if !haskey(bus_table, f_bus) || !haskey(bus_table, t_bus)
+            Memento.error(
+                _LOGGER,
+                "UC/gSCR AC-side extraction is ambiguous: branch $(branch_id) endpoint(s) ($(f_bus), $(t_bus)) are not present in AC `:bus`.",
+            )
+        end
+    end
 end
 
 
