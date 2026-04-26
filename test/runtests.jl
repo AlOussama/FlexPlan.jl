@@ -34,6 +34,7 @@ milp_optimizer = _FP.optimizer_with_attributes(HiGHS.Optimizer, "output_flag"=>f
     include("uc_gscr_ref_extension.jl")
     include("uc_gscr_block_variables.jl")
     include("uc_gscr_dispatch_constraints.jl")
+    include("uc_gscr_gershgorin_constraint.jl")
 
     # Problems
     include("prob.jl")
