@@ -26,11 +26,14 @@ function _uc_gscr_gershgorin_device(type, bus; id=1, n0=0, nmax=1, pmax=1.0, bbl
         "type" => type,
         "n0" => n0,
         "nmax" => nmax,
+        "na0" => n0,
         "p_block_min" => 0.0,
         "p_block_max" => pmax,
         "q_block_min" => -1.0,
         "q_block_max" => 1.0,
         "b_block" => bblock,
+        "startup_block_cost" => 1.0,
+        "shutdown_block_cost" => 1.0,
     )
 end
 

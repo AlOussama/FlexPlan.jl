@@ -1,24 +1,32 @@
 """
     variable_uc_gscr_block(pm; nw=nw_id_default, relax=false, report=true)
 
-Creates the UC/gSCR installed and active block variables for network `nw`.
+Creates UC/gSCR installed/active/startup/shutdown block variables for
+network `nw`.
 
 This adds installed block counts `n_block[k]` satisfying
 `n0[k] <= n_block[k] <= nmax[k]`, active block counts `na_block[k,t]`
-satisfying `0 <= na_block[k,t]`, and the linking constraint
-`na_block[k,t] <= n_block[k]`. The installed count is shared across all
-network snapshots; the active count is specific to `nw`.
+satisfying `0 <= na_block[k,t]`, startup counts `su_block[k,t]`, shutdown
+counts `sd_block[k,t]`, and the linking/transition constraints:
+`na_block[k,t] <= n_block[k]`,
+`na_block[k,t] - na_block[k,t-1] = su_block[k,t] - sd_block[k,t]` for
+`t > 1`, and
+`na_block[k,1] - na0[k] = su_block[k,1] - sd_block[k,1]` for the first
+snapshot.
 
 The argument `relax` selects continuous variables when `true` and integer
 variables when `false`; `report` controls solution reporting on the original
-device tables under `n_block` and `na_block`. Block counts are dimensionless.
-This helper is formulation-independent and mutates the JuMP model plus
-PowerModels variable, constraint, and solution-report dictionaries.
+device tables under `n_block`, `na_block`, `su_block`, and `sd_block`.
+Block counts are dimensionless. This helper is formulation-independent and
+mutates the JuMP model plus PowerModels variable, constraint, and solution-
+report dictionaries.
 """
 function variable_uc_gscr_block(pm::_PM.AbstractPowerModel; nw::Int=_PM.nw_id_default, relax::Bool=false, report::Bool=true)
     variable_installed_blocks(pm; nw, relax, report)
     variable_active_blocks(pm; nw, relax, report)
+    variable_block_startup_shutdown_counts(pm; nw, relax, report)
     constraint_active_blocks_le_installed(pm; nw)
+    constraint_block_count_transitions(pm; nw)
 end
 
 """
@@ -134,6 +142,69 @@ function variable_active_blocks(pm::_PM.AbstractPowerModel; nw::Int=_PM.nw_id_de
 end
 
 """
+    variable_block_startup_shutdown_counts(pm; nw=nw_id_default, relax=false, report=true)
+
+Creates startup/shutdown UC/gSCR block count variables for network `nw`.
+
+For each UC/gSCR block device `k` and snapshot `t == nw`, this creates
+`su_block[k,t]` and `sd_block[k,t]` with `0 <= su_block[k,t]` and
+`0 <= sd_block[k,t]`. The inter-snapshot transition equations are added by
+`constraint_block_count_transitions`.
+
+The argument `relax` selects continuous variables when `true` and integer
+variables when `false`; `report` controls solution reporting on the original
+device tables under `su_block` and `sd_block`. Counts are dimensionless and
+snapshot-specific. When network `nw` has no UC/gSCR block reference data, the
+function follows the local no-op convention and returns `nothing`. This
+function is formulation-independent and mutates the JuMP model plus
+PowerModels variable and solution-report dictionaries.
+"""
+function variable_block_startup_shutdown_counts(pm::_PM.AbstractPowerModel; nw::Int=_PM.nw_id_default, relax::Bool=false, report::Bool=true)
+    if !_has_uc_gscr_block_ref(pm, nw)
+        return
+    end
+
+    if haskey(_PM.var(pm, nw), :su_block) && haskey(_PM.var(pm, nw), :sd_block)
+        su_block = _PM.var(pm, nw)[:su_block]
+        sd_block = _PM.var(pm, nw)[:sd_block]
+        if report
+            _report_uc_gscr_block_variable(pm, nw, :su_block, su_block)
+            _report_uc_gscr_block_variable(pm, nw, :sd_block, sd_block)
+        end
+        return (su_block, sd_block)
+    end
+
+    device_keys = _uc_gscr_block_device_keys(pm, nw)
+    if relax
+        su_block = _PM.var(pm, nw)[:su_block] = JuMP.@variable(pm.model,
+            [device_key in device_keys], base_name="$(nw)_su_block",
+            lower_bound = 0.0
+        )
+        sd_block = _PM.var(pm, nw)[:sd_block] = JuMP.@variable(pm.model,
+            [device_key in device_keys], base_name="$(nw)_sd_block",
+            lower_bound = 0.0
+        )
+    else
+        su_block = _PM.var(pm, nw)[:su_block] = JuMP.@variable(pm.model,
+            [device_key in device_keys], base_name="$(nw)_su_block",
+            integer = true,
+            lower_bound = 0.0
+        )
+        sd_block = _PM.var(pm, nw)[:sd_block] = JuMP.@variable(pm.model,
+            [device_key in device_keys], base_name="$(nw)_sd_block",
+            integer = true,
+            lower_bound = 0.0
+        )
+    end
+
+    if report
+        _report_uc_gscr_block_variable(pm, nw, :su_block, su_block)
+        _report_uc_gscr_block_variable(pm, nw, :sd_block, sd_block)
+    end
+    return (su_block, sd_block)
+end
+
+"""
     constraint_active_blocks_le_installed(pm; nw=nw_id_default)
 
 Adds the active block linking constraint for network `nw`.
@@ -168,6 +239,52 @@ function constraint_active_blocks_le_installed(pm::_PM.AbstractPowerModel; nw::I
 end
 
 """
+    constraint_block_count_transitions(pm; nw=nw_id_default)
+
+Adds UC/gSCR active/startup/shutdown block transition equations for `nw`.
+
+For each UC/gSCR block device `k`, this implements:
+`na_block[k,t] - na_block[k,t-1] = su_block[k,t] - sd_block[k,t]` when `t`
+is not the first snapshot in the `:hour` dimension, and
+`na_block[k,1] - na0[k] = su_block[k,1] - sd_block[k,1]` on the first
+snapshot.
+
+The template reads block initial state `na0` from reference data and variables
+`:na_block`, `:su_block`, and `:sd_block`. It is formulation-independent and
+mutates the JuMP model plus PowerModels constraint dictionaries. It is a no-op
+for networks without UC/gSCR block data.
+"""
+function constraint_block_count_transitions(pm::_PM.AbstractPowerModel; nw::Int=_PM.nw_id_default)
+    if !_has_uc_gscr_block_ref(pm, nw)
+        return
+    end
+
+    if haskey(_PM.con(pm, nw), :block_count_transitions)
+        return _PM.con(pm, nw)[:block_count_transitions]
+    end
+
+    na_block = _PM.var(pm, nw, :na_block)
+    su_block = _PM.var(pm, nw, :su_block)
+    sd_block = _PM.var(pm, nw, :sd_block)
+    constraints = _PM.con(pm, nw)[:block_count_transitions] = Dict{Tuple{Symbol,Any},JuMP.ConstraintRef}()
+
+    if is_first_id(pm, nw, :hour)
+        for device_key in _uc_gscr_block_device_keys(pm, nw)
+            na0 = _PM.ref(pm, nw, device_key[1], device_key[2], "na0")
+            constraints[device_key] = JuMP.@constraint(pm.model, na_block[device_key] - na0 == su_block[device_key] - sd_block[device_key])
+        end
+    else
+        prev_nw = prev_id(pm, nw, :hour)
+        na_prev = _PM.var(pm, prev_nw, :na_block)
+        for device_key in _uc_gscr_block_device_keys(pm, nw)
+            constraints[device_key] = JuMP.@constraint(pm.model, na_block[device_key] - na_prev[device_key] == su_block[device_key] - sd_block[device_key])
+        end
+    end
+
+    return constraints
+end
+
+"""
     _uc_gscr_block_device_keys(pm, nw)
 
 Returns deterministic UC/gSCR block device keys for network `nw`.
@@ -192,12 +309,12 @@ end
 
 Adds solution reporting for one UC/gSCR block variable container.
 
-The field `field_name` is `:n_block` or `:na_block`, and `variables` is
-indexed by stable compound keys `(table_name, device_id)`. Reporting is
-written back to the original PowerModels/FlexPlan component tables (`gen`,
-`storage`, and `ne_storage`) using the local `_PM.sol_component_value` style.
-This helper is formulation-independent and mutates only the solution-report
-dictionary.
+The field `field_name` is one of `:n_block`, `:na_block`, `:su_block`, or
+`:sd_block`, and `variables` is indexed by stable compound keys
+`(table_name, device_id)`. Reporting is written back to the original
+PowerModels/FlexPlan component tables (`gen`, `storage`, and `ne_storage`)
+using the local `_PM.sol_component_value` style. This helper is
+formulation-independent and mutates only the solution-report dictionary.
 """
 function _report_uc_gscr_block_variable(pm::_PM.AbstractPowerModel, nw::Int, field_name::Symbol, variables)
     for table_name in (:gen, :storage, :ne_storage)

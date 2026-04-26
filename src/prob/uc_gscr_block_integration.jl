@@ -4,9 +4,11 @@
 Solves a minimal AC-side UC/gSCR block integration model on a multinetwork.
 
 The model wires together already-implemented UC/gSCR components: reference
-extension, installed/active block variables, block dispatch and storage bounds,
-Gershgorin sufficient gSCR constraints, and the block investment objective term
-`sum(cost_inv_block * p_block_max * (n_block - n0))`.
+extension, installed/active/startup/shutdown block variables, block dispatch
+and storage bounds, Gershgorin sufficient gSCR constraints, and block objective
+terms:
+`sum(cost_inv_block * p_block_max * (n_block - n0))` and
+`sum(startup_block_cost * su_block + shutdown_block_cost * sd_block)`.
 
 Arguments are the input `data`, a PowerModels `model_type`, and a JuMP
 `optimizer`. Required dimensions are `:hour`, `:scenario`, and `:year`.
@@ -143,10 +145,12 @@ end
 Builds the minimal objective used by `build_uc_gscr_block_integration`.
 
 The objective includes generation operating cost, candidate-storage investment
-cost, and the UC/gSCR block investment term
-`sum(cost_inv_block * p_block_max * (n_block - n0))` once per model. It
-intentionally excludes AC/DC line and converter investment terms to keep
-topology fixed in this integrated path.
+cost, and UC/gSCR block terms:
+`sum(cost_inv_block * p_block_max * (n_block - n0))` and
+`sum(startup_block_cost * su_block + shutdown_block_cost * sd_block)`.
+Block terms are each added once per model. The objective intentionally excludes
+AC/DC line and converter investment terms to keep topology fixed in this
+integrated path.
 
 This helper is formulation-independent and mutates only the JuMP objective.
 """
@@ -158,6 +162,7 @@ function objective_min_cost_uc_gscr_block_integration(pm::_PM.AbstractPowerModel
     end
 
     JuMP.add_to_expression!(cost, calc_uc_gscr_block_investment_cost(pm))
+    JuMP.add_to_expression!(cost, calc_uc_gscr_block_startup_shutdown_cost(pm))
 
     for n in nw_ids(pm)
         JuMP.add_to_expression!(cost, calc_gen_cost(pm, n))

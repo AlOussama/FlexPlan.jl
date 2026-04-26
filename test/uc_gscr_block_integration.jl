@@ -1,20 +1,23 @@
 """
-    _uc_gscr_integration_add_block_fields!(device, type; n0, nmax, p_block_min, p_block_max, q_block_min, q_block_max, b_block, cost_inv_block, e_block=nothing)
+    _uc_gscr_integration_add_block_fields!(device, type; n0, nmax, na0, p_block_min, p_block_max, q_block_min, q_block_max, b_block, cost_inv_block, startup_block_cost, shutdown_block_cost, e_block=nothing)
 
 Adds UC/gSCR block schema fields to one synthetic integration-test device.
 
 This helper is test-only and mutates `device` in place. Optional `e_block`
 is added for storage-capable devices.
 """
-function _uc_gscr_integration_add_block_fields!(device, type; n0, nmax, p_block_min, p_block_max, q_block_min, q_block_max, b_block, cost_inv_block, e_block=nothing)
+function _uc_gscr_integration_add_block_fields!(device, type; n0, nmax, na0, p_block_min, p_block_max, q_block_min, q_block_max, b_block, cost_inv_block, startup_block_cost, shutdown_block_cost, e_block=nothing)
     device["type"] = type
     device["n0"] = n0
     device["nmax"] = nmax
+    device["na0"] = na0
     device["p_block_min"] = p_block_min
     device["p_block_max"] = p_block_max
     device["q_block_min"] = q_block_min
     device["q_block_max"] = q_block_max
     device["b_block"] = b_block
+    device["startup_block_cost"] = startup_block_cost
+    device["shutdown_block_cost"] = shutdown_block_cost
     device["H"] = 3.0
     device["s_block"] = max(abs(p_block_max), 1.0)
     device["cost_inv_block"] = cost_inv_block
@@ -49,12 +52,15 @@ function _uc_gscr_synthetic_integration_data(; g_min)
         "gfl";
         n0=0,
         nmax=3,
+        na0=0,
         p_block_min=0.0,
         p_block_max=5.0,
         q_block_min=-10.0,
         q_block_max=10.0,
         b_block=0.0,
         cost_inv_block=1.0,
+        startup_block_cost=1.0,
+        shutdown_block_cost=1.0,
     )
 
     gfm = deepcopy(gfl)
@@ -68,12 +74,15 @@ function _uc_gscr_synthetic_integration_data(; g_min)
         "gfm";
         n0=0,
         nmax=4,
+        na0=0,
         p_block_min=0.0,
         p_block_max=1.0,
         q_block_min=-10.0,
         q_block_max=10.0,
         b_block=1.0,
         cost_inv_block=7.0,
+        startup_block_cost=1.0,
+        shutdown_block_cost=1.0,
     )
     data["gen"]["2"] = gfm
 
@@ -82,12 +91,15 @@ function _uc_gscr_synthetic_integration_data(; g_min)
         "gfm";
         n0=1,
         nmax=3,
+        na0=1,
         p_block_min=0.0,
         p_block_max=1.0,
         q_block_min=-1.0,
         q_block_max=1.0,
         b_block=0.0,
         cost_inv_block=0.5,
+        startup_block_cost=1.0,
+        shutdown_block_cost=1.0,
         e_block=1.0,
     )
 
@@ -176,12 +188,15 @@ function _uc_gscr_case6_extension(g_min)
                     "gfl";
                     n0=0,
                     nmax=8,
+                    na0=0,
                     p_block_min=0.0,
                     p_block_max=gen["pmax"] / 2,
                     q_block_min=gen["qmin"],
                     q_block_max=gen["qmax"],
                     b_block=0.0,
                     cost_inv_block=1.0,
+                    startup_block_cost=1.0,
+                    shutdown_block_cost=1.0,
                 )
             elseif gen_id == gfm_id
                 gen["gen_bus"] = gfl_bus
@@ -191,12 +206,15 @@ function _uc_gscr_case6_extension(g_min)
                     "gfm";
                     n0=0,
                     nmax=2,
+                    na0=0,
                     p_block_min=0.0,
                     p_block_max=0.0,
                     q_block_min=gen["qmin"],
                     q_block_max=gen["qmax"],
                     b_block=1.0,
                     cost_inv_block=50.0,
+                    startup_block_cost=1.0,
+                    shutdown_block_cost=1.0,
                 )
             else
                 gen["pmax"] = 0.0
@@ -221,6 +239,116 @@ function _uc_gscr_build_integration_pm(data)
         _PM.DCPPowerModel,
         _FP.build_uc_gscr_block_integration;
         ref_extensions=[_FP.ref_add_gen!, _FP.ref_add_storage!, _FP.ref_add_uc_gscr_block!],
+    )
+end
+
+"""
+    _uc_gscr_transition_fixture(; na0=1.0, startup_cost=1.0, shutdown_cost=1.0, include_storage=false, hours=2)
+
+Builds a deterministic UC/gSCR block fixture used by startup/shutdown tests.
+
+The returned multinetwork can include only a generator block device or all
+three component tables (`gen`, `storage`, `ne_storage`) to validate compound
+keys. The helper is test-only and mutates only local fixture data.
+"""
+function _uc_gscr_transition_fixture(; na0::Float64=1.0, startup_cost::Float64=1.0, shutdown_cost::Float64=1.0, include_storage::Bool=false, hours::Int=2)
+    data = _FP.parse_file(normpath(@__DIR__, "data", "case2", "case2_d_strg.m"))
+    data["g_min"] = 0.0
+
+    _uc_gscr_integration_add_block_fields!(
+        data["gen"]["1"],
+        "gfl";
+        n0=0,
+        nmax=8,
+        na0=na0,
+        p_block_min=0.0,
+        p_block_max=20.0,
+        q_block_min=-10.0,
+        q_block_max=10.0,
+        b_block=0.0,
+        cost_inv_block=0.0,
+        startup_block_cost=startup_cost,
+        shutdown_block_cost=shutdown_cost,
+    )
+
+    if include_storage
+        _uc_gscr_integration_add_block_fields!(
+            data["storage"]["1"],
+            "gfm";
+            n0=0,
+            nmax=8,
+            na0=na0,
+            p_block_min=0.0,
+            p_block_max=5.0,
+            q_block_min=-1.0,
+            q_block_max=1.0,
+            b_block=0.5,
+            cost_inv_block=0.0,
+            startup_block_cost=startup_cost + 1.0,
+            shutdown_block_cost=shutdown_cost + 1.0,
+            e_block=2.0,
+        )
+        _uc_gscr_integration_add_block_fields!(
+            data["ne_storage"]["1"],
+            "gfl";
+            n0=0,
+            nmax=8,
+            na0=na0,
+            p_block_min=0.0,
+            p_block_max=5.0,
+            q_block_min=-1.0,
+            q_block_max=1.0,
+            b_block=0.0,
+            cost_inv_block=0.0,
+            startup_block_cost=startup_cost + 2.0,
+            shutdown_block_cost=shutdown_cost + 2.0,
+            e_block=2.0,
+        )
+    else
+        data["storage"] = Dict{String,Any}()
+        data["ne_storage"] = Dict{String,Any}()
+    end
+
+    _FP.add_dimension!(data, :hour, hours)
+    _FP.add_dimension!(data, :scenario, Dict(1 => Dict{String,Any}("probability" => 1.0)))
+    _FP.add_dimension!(data, :year, 1; metadata=Dict{String,Any}("scale_factor" => 1))
+    return _FP.make_multinetwork(data, Dict{String,Any}(); share_data=false)
+end
+
+"""
+    _uc_gscr_transition_pm(data; relax=true)
+
+Instantiates a DCP model fixture with UC/gSCR block variables on all snapshots.
+
+This helper is test-only and mutates only the created model.
+"""
+function _uc_gscr_transition_pm(data; relax::Bool=true)
+    pm = _PM.instantiate_model(
+        data,
+        _PM.DCPPowerModel,
+        pm -> nothing;
+        ref_extensions=[_FP.ref_add_ne_storage!, _FP.ref_add_uc_gscr_block!],
+    )
+    for nw in _FP.nw_ids(pm)
+        _FP.variable_uc_gscr_block(pm; nw, relax, report=false)
+    end
+    return pm
+end
+
+"""
+    _uc_gscr_block_ref_wrapper(nw_ref)
+
+Builds a minimal PowerModels reference wrapper for validation-error tests.
+
+This helper is test-only and mutates no data.
+"""
+function _uc_gscr_block_ref_wrapper(nw_ref)
+    return Dict{Symbol,Any}(
+        :it => Dict{Symbol,Any}(
+            _PM.pm_it_sym => Dict{Symbol,Any}(
+                :nw => Dict{Int,Any}(0 => nw_ref),
+            ),
+        ),
     )
 end
 
@@ -318,4 +446,123 @@ end
         tight_result = _FP.uc_gscr_block_integration(tight_data, _PM.DCPPowerModel, milp_optimizer)
         @test tight_result["termination_status"] == INFEASIBLE
     end
+
+    @testset "1 -> 4 transition gives su_block=3 and sd_block=0" begin
+        data = _uc_gscr_transition_fixture(; na0=1.0, startup_cost=1.0, shutdown_cost=1.0, include_storage=false, hours=2)
+        pm = _uc_gscr_transition_pm(data)
+
+        JuMP.fix(_PM.var(pm, 1, :na_block, (:gen, 1)), 1.0; force=true)
+        JuMP.fix(_PM.var(pm, 2, :na_block, (:gen, 1)), 4.0; force=true)
+        JuMP.@objective(pm.model, Min, _FP.calc_uc_gscr_block_startup_shutdown_cost(pm))
+        JuMP.set_optimizer(pm.model, HiGHS.Optimizer)
+        JuMP.set_silent(pm.model)
+        JuMP.optimize!(pm.model)
+
+        @test JuMP.termination_status(pm.model) == JuMP.MOI.OPTIMAL
+        @test JuMP.value(_PM.var(pm, 2, :su_block, (:gen, 1))) ≈ 3.0 atol=1e-6
+        @test JuMP.value(_PM.var(pm, 2, :sd_block, (:gen, 1))) ≈ 0.0 atol=1e-6
+    end
+
+    @testset "5 -> 2 transition gives su_block=0 and sd_block=3" begin
+        data = _uc_gscr_transition_fixture(; na0=5.0, startup_cost=1.0, shutdown_cost=1.0, include_storage=false, hours=2)
+        pm = _uc_gscr_transition_pm(data)
+
+        JuMP.fix(_PM.var(pm, 1, :na_block, (:gen, 1)), 5.0; force=true)
+        JuMP.fix(_PM.var(pm, 2, :na_block, (:gen, 1)), 2.0; force=true)
+        JuMP.@objective(pm.model, Min, _FP.calc_uc_gscr_block_startup_shutdown_cost(pm))
+        JuMP.set_optimizer(pm.model, HiGHS.Optimizer)
+        JuMP.set_silent(pm.model)
+        JuMP.optimize!(pm.model)
+
+        @test JuMP.termination_status(pm.model) == JuMP.MOI.OPTIMAL
+        @test JuMP.value(_PM.var(pm, 2, :su_block, (:gen, 1))) ≈ 0.0 atol=1e-6
+        @test JuMP.value(_PM.var(pm, 2, :sd_block, (:gen, 1))) ≈ 3.0 atol=1e-6
+    end
+
+    @testset "First-snapshot transition uses na0 explicitly" begin
+        data = _uc_gscr_transition_fixture(; na0=3.0, startup_cost=1.0, shutdown_cost=1.0, include_storage=false, hours=2)
+        pm = _uc_gscr_transition_pm(data)
+        con = _PM.con(pm, 1)[:block_count_transitions][(:gen, 1)]
+
+        @test JuMP.normalized_coefficient(con, _PM.var(pm, 1, :na_block, (:gen, 1))) == 1.0
+        @test JuMP.normalized_coefficient(con, _PM.var(pm, 1, :su_block, (:gen, 1))) == -1.0
+        @test JuMP.normalized_coefficient(con, _PM.var(pm, 1, :sd_block, (:gen, 1))) == 1.0
+        @test JuMP.normalized_rhs(con) == 3.0
+    end
+
+    @testset "Startup/shutdown objective term uses su_block/sd_block counts" begin
+        data = _uc_gscr_transition_fixture(; na0=1.0, startup_cost=10.0, shutdown_cost=20.0, include_storage=false, hours=2)
+        pm = _uc_gscr_transition_pm(data)
+        expr = _FP.calc_uc_gscr_block_startup_shutdown_cost(pm)
+
+        @test JuMP.coefficient(expr, _PM.var(pm, 1, :su_block, (:gen, 1))) == 10.0
+        @test JuMP.coefficient(expr, _PM.var(pm, 2, :sd_block, (:gen, 1))) == 20.0
+        @test JuMP.coefficient(expr, _PM.var(pm, 1, :na_block, (:gen, 1))) == 0.0
+
+        JuMP.fix(_PM.var(pm, 1, :na_block, (:gen, 1)), 4.0; force=true)
+        JuMP.fix(_PM.var(pm, 2, :na_block, (:gen, 1)), 2.0; force=true)
+        JuMP.@objective(pm.model, Min, expr)
+        JuMP.set_optimizer(pm.model, HiGHS.Optimizer)
+        JuMP.set_silent(pm.model)
+        JuMP.optimize!(pm.model)
+
+        @test JuMP.termination_status(pm.model) == JuMP.MOI.OPTIMAL
+        @test JuMP.objective_value(pm.model) ≈ 70.0 atol=1e-6
+    end
+
+    @testset "Compound keys remain collision-free across gen/storage/ne_storage" begin
+        data = _uc_gscr_transition_fixture(; na0=0.0, startup_cost=2.0, shutdown_cost=3.0, include_storage=true, hours=1)
+        pm = _uc_gscr_transition_pm(data)
+        expr = _FP.calc_uc_gscr_block_startup_shutdown_cost(pm)
+
+        @test Set(axes(_PM.var(pm, 1, :su_block), 1)) == Set([(:gen, 1), (:storage, 1), (:ne_storage, 1)])
+        @test Set(axes(_PM.var(pm, 1, :sd_block), 1)) == Set([(:gen, 1), (:storage, 1), (:ne_storage, 1)])
+        @test _PM.var(pm, 1, :su_block, (:gen, 1)) !== _PM.var(pm, 1, :su_block, (:storage, 1))
+        @test _PM.var(pm, 1, :su_block, (:gen, 1)) !== _PM.var(pm, 1, :su_block, (:ne_storage, 1))
+
+        @test JuMP.coefficient(expr, _PM.var(pm, 1, :su_block, (:gen, 1))) == 2.0
+        @test JuMP.coefficient(expr, _PM.var(pm, 1, :su_block, (:storage, 1))) == 3.0
+        @test JuMP.coefficient(expr, _PM.var(pm, 1, :su_block, (:ne_storage, 1))) == 4.0
+    end
+
+    @testset "Missing na0/startup/shutdown block fields raise explicit validation error" begin
+        bad_device = Dict{String,Any}(
+            "type" => "gfl",
+            "n0" => 1,
+            "nmax" => 3,
+            "p_block_min" => 0.0,
+            "p_block_max" => 10.0,
+            "q_block_min" => -1.0,
+            "q_block_max" => 1.0,
+            "b_block" => 0.0,
+            "gen_bus" => 1,
+        )
+        nw_ref = Dict{Symbol,Any}(
+            :bus => Dict{Int,Any}(1 => Dict{String,Any}("index" => 1)),
+            :gen => Dict{Int,Any}(1 => bad_device),
+            :branch => Dict{Int,Any}(),
+        )
+        missing = _FP._uc_gscr_missing_required_fields_report(nw_ref)
+
+        @test haskey(missing, (:gen, 1))
+        @test Set(missing[(:gen, 1)]) == Set(["na0", "startup_block_cost", "shutdown_block_cost"])
+        @test_throws ErrorException _FP.ref_add_uc_gscr_block!(_uc_gscr_block_ref_wrapper(nw_ref), Dict{String,Any}())
+    end
+
+    @testset "No-block cases remain backward compatible" begin
+        data = _FP.parse_file(normpath(@__DIR__, "data", "case2", "case2_d_strg.m"))
+        data["ne_storage"] = Dict{String,Any}()
+        _FP.add_dimension!(data, :hour, 2)
+        _FP.add_dimension!(data, :scenario, Dict(1 => Dict{String,Any}("probability" => 1.0)))
+        _FP.add_dimension!(data, :year, 1; metadata=Dict{String,Any}("scale_factor" => 1))
+        mn_data = _FP.make_multinetwork(data, Dict{String,Any}(); share_data=false)
+        pm = _uc_gscr_transition_pm(mn_data)
+
+        @test !haskey(_PM.var(pm, 1), :n_block)
+        @test !haskey(_PM.var(pm, 1), :na_block)
+        @test !haskey(_PM.var(pm, 1), :su_block)
+        @test !haskey(_PM.var(pm, 1), :sd_block)
+        @test JuMP.constant(_FP.calc_uc_gscr_block_startup_shutdown_cost(pm)) == 0.0
+    end
+
 end

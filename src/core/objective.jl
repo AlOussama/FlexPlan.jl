@@ -6,12 +6,15 @@
 Builds the single-model storage objective with investment and operation terms.
 
 This objective minimizes the sum of existing FlexPlan investment costs plus
-generation operation cost and the UC/gSCR block investment term
-`sum(cost_inv_block * p_block_max * (n_block - n0))` added once for the whole
-optimization problem. Argument `pm` is one PowerModels model with all network
-snapshots. Coefficients are used in their internal data base; `cost_inv_block`
-is objective-level and not base-scaled. This helper is formulation-independent
-and mutates only the JuMP objective.
+generation operation cost and UC/gSCR block terms: the investment contribution
+`sum(cost_inv_block * p_block_max * (n_block - n0))` and the startup/shutdown
+contribution
+`sum(startup_block_cost * su_block + shutdown_block_cost * sd_block)`.
+Argument `pm` is one PowerModels model with all network snapshots.
+Coefficients are used in their internal data base; `cost_inv_block`,
+`startup_block_cost`, and `shutdown_block_cost` are objective-level and not
+base-scaled. This helper is formulation-independent and mutates only the JuMP
+objective.
 """
 function objective_min_cost_storage(pm::_PM.AbstractPowerModel)
     cost = JuMP.AffExpr(0.0)
@@ -27,6 +30,7 @@ function objective_min_cost_storage(pm::_PM.AbstractPowerModel)
     for n in nw_ids(pm)
         JuMP.add_to_expression!(cost, calc_gen_cost(pm,n))
     end
+    JuMP.add_to_expression!(cost, calc_uc_gscr_block_startup_shutdown_cost(pm))
     JuMP.@objective(pm.model, Min, cost)
 end
 
@@ -36,11 +40,13 @@ end
 Builds the combined transmission-distribution storage objective.
 
 The objective sums transmission and distribution investment/operation costs and
-adds the UC/gSCR block investment term once per model:
-`sum(cost_inv_block * p_block_max * (n_block - n0))`. Arguments `t_pm` and
-`d_pm` are coupled PowerModels instances sharing one JuMP model. Coefficients
-are read in internal base and `cost_inv_block` is objective-level. This helper
-is formulation-independent and mutates only the JuMP objective.
+adds UC/gSCR block terms once per model:
+`sum(cost_inv_block * p_block_max * (n_block - n0))` and
+`sum(startup_block_cost * su_block + shutdown_block_cost * sd_block)`.
+Arguments `t_pm` and `d_pm` are coupled PowerModels instances sharing one JuMP
+model. Coefficients are read in internal base and block-cost coefficients are
+objective-level. This helper is formulation-independent and mutates only the
+JuMP objective.
 """
 function objective_min_cost_storage(t_pm::_PM.AbstractPowerModel, d_pm::_PM.AbstractPowerModel)
     cost = JuMP.AffExpr(0.0)
@@ -67,6 +73,8 @@ function objective_min_cost_storage(t_pm::_PM.AbstractPowerModel, d_pm::_PM.Abst
     for n in nw_ids(d_pm)
         JuMP.add_to_expression!(cost, calc_gen_cost(d_pm,n))
     end
+    JuMP.add_to_expression!(cost, calc_uc_gscr_block_startup_shutdown_cost(t_pm))
+    JuMP.add_to_expression!(cost, calc_uc_gscr_block_startup_shutdown_cost(d_pm))
     JuMP.@objective(t_pm.model, Min, cost) # Note: t_pm.model == d_pm.model
 end
 
@@ -81,9 +89,11 @@ Builds the single-model flexible-demand objective.
 When `investment` is true, this includes existing FlexPlan investment terms and
 the UC/gSCR block term `sum(cost_inv_block * p_block_max * (n_block - n0))`
 once for the whole optimization model. When `operation` is true, it adds
-generation and load operation costs. Coefficients use their internal base and
-`cost_inv_block` is objective-level. This helper is formulation-independent and
-mutates only the JuMP objective.
+generation/load operation costs and block startup/shutdown cost
+`sum(startup_block_cost * su_block + shutdown_block_cost * sd_block)`.
+Coefficients use their internal base and block-cost coefficients are objective-
+level. This helper is formulation-independent and mutates only the JuMP
+objective.
 """
 function objective_min_cost_flex(pm::_PM.AbstractPowerModel; investment=true, operation=true)
     cost = JuMP.AffExpr(0.0)
@@ -104,6 +114,7 @@ function objective_min_cost_flex(pm::_PM.AbstractPowerModel; investment=true, op
             JuMP.add_to_expression!(cost, calc_gen_cost(pm,n))
             JuMP.add_to_expression!(cost, calc_load_operation_cost(pm,n))
         end
+        JuMP.add_to_expression!(cost, calc_uc_gscr_block_startup_shutdown_cost(pm))
     end
     JuMP.@objective(pm.model, Min, cost)
 end
@@ -114,11 +125,12 @@ end
 Builds the combined transmission-distribution flexible-demand objective.
 
 The objective sums transmission and distribution investment/operation terms and
-adds UC/gSCR block investment once per model via
-`sum(cost_inv_block * p_block_max * (n_block - n0))`. Inputs `t_pm` and `d_pm`
-share one JuMP model. Coefficients use their internal base and
-`cost_inv_block` is objective-level. This helper is formulation-independent and
-mutates only the JuMP objective.
+adds UC/gSCR block terms once per model:
+`sum(cost_inv_block * p_block_max * (n_block - n0))` and
+`sum(startup_block_cost * su_block + shutdown_block_cost * sd_block)`.
+Inputs `t_pm` and `d_pm` share one JuMP model. Coefficients use their internal
+base and block-cost coefficients are objective-level. This helper is
+formulation-independent and mutates only the JuMP objective.
 """
 function objective_min_cost_flex(t_pm::_PM.AbstractPowerModel, d_pm::_PM.AbstractPowerModel)
     cost = JuMP.AffExpr(0.0)
@@ -149,6 +161,8 @@ function objective_min_cost_flex(t_pm::_PM.AbstractPowerModel, d_pm::_PM.Abstrac
         JuMP.add_to_expression!(cost, calc_gen_cost(d_pm,n))
         JuMP.add_to_expression!(cost, calc_load_operation_cost(d_pm,n))
     end
+    JuMP.add_to_expression!(cost, calc_uc_gscr_block_startup_shutdown_cost(t_pm))
+    JuMP.add_to_expression!(cost, calc_uc_gscr_block_startup_shutdown_cost(d_pm))
     JuMP.@objective(t_pm.model, Min, cost) # Note: t_pm.model == d_pm.model
 end
 
@@ -163,9 +177,12 @@ Builds the single-model stochastic flexible-demand objective.
 Investment terms are added on canonical investment snapshots and include one
 UC/gSCR block term `sum(cost_inv_block * p_block_max * (n_block - n0))` for
 the whole optimization model when `investment` is true. Operation terms are
-probability-weighted by scenario when `operation` is true. Coefficients use
-their internal base and `cost_inv_block` is objective-level. This helper is
-formulation-independent and mutates only the JuMP objective.
+probability-weighted by scenario when `operation` is true and include block
+startup/shutdown cost
+`sum(startup_block_cost * su_block + shutdown_block_cost * sd_block)`.
+Coefficients use their internal base and block-cost coefficients are
+objective-level. This helper is formulation-independent and mutates only the
+JuMP objective.
 """
 function objective_stoch_flex(pm::_PM.AbstractPowerModel; investment=true, operation=true)
     cost = JuMP.AffExpr(0.0)
@@ -189,6 +206,7 @@ function objective_stoch_flex(pm::_PM.AbstractPowerModel; investment=true, opera
                 JuMP.add_to_expression!(cost, scenario_probability, calc_load_operation_cost(pm,n))
             end
         end
+        JuMP.add_to_expression!(cost, calc_uc_gscr_block_startup_shutdown_cost(pm))
     end
     JuMP.@objective(pm.model, Min, cost)
 end
@@ -199,11 +217,12 @@ end
 Builds the combined transmission-distribution stochastic objective.
 
 The objective includes investment terms on canonical snapshots, scenario-
-weighted operation terms, and UC/gSCR block investment once per model via
-`sum(cost_inv_block * p_block_max * (n_block - n0))`. Inputs `t_pm` and `d_pm`
-share one JuMP model. Coefficients use their internal base and
-`cost_inv_block` is objective-level. This helper is formulation-independent and
-mutates only the JuMP objective.
+weighted operation terms, and UC/gSCR block terms once per model:
+`sum(cost_inv_block * p_block_max * (n_block - n0))` and
+`sum(startup_block_cost * su_block + shutdown_block_cost * sd_block)`.
+Inputs `t_pm` and `d_pm` share one JuMP model. Coefficients use their internal
+base and block-cost coefficients are objective-level. This helper is
+formulation-independent and mutates only the JuMP objective.
 """
 function objective_stoch_flex(t_pm::_PM.AbstractPowerModel, d_pm::_PM.AbstractPowerModel)
     cost = JuMP.AffExpr(0.0)
@@ -240,6 +259,8 @@ function objective_stoch_flex(t_pm::_PM.AbstractPowerModel, d_pm::_PM.AbstractPo
             JuMP.add_to_expression!(cost, scenario_probability, calc_load_operation_cost(d_pm,n))
         end
     end
+    JuMP.add_to_expression!(cost, calc_uc_gscr_block_startup_shutdown_cost(t_pm))
+    JuMP.add_to_expression!(cost, calc_uc_gscr_block_startup_shutdown_cost(d_pm))
     JuMP.@objective(t_pm.model, Min, cost) # Note: t_pm.model == d_pm.model
 end
 
@@ -281,6 +302,45 @@ function calc_uc_gscr_block_investment_cost(pm::_PM.AbstractPowerModel)
         coeff = device["cost_inv_block"] * device["p_block_max"]
         JuMP.add_to_expression!(cost, coeff, n_block[device_key])
         JuMP.add_to_expression!(cost, -coeff * device["n0"])
+    end
+    return cost
+end
+
+"""
+    calc_uc_gscr_block_startup_shutdown_cost(pm)
+
+Builds the UC/gSCR startup/shutdown block-cost contribution across snapshots.
+
+Implements:
+`sum_{k,t} startup_block_cost[k] * su_block[k,t] + shutdown_block_cost[k] * sd_block[k,t]`
+using compound keys `(table_name, device_id)` over `gen`, `storage`, and
+`ne_storage`. This expression is accumulated over all network snapshots where
+the UC/gSCR block reference extension and `su_block`/`sd_block` variables are
+present. Required fields `startup_block_cost` and `shutdown_block_cost` are
+taken explicitly from device data; no silent defaults are inferred.
+
+If no UC/gSCR block reference data or no startup/shutdown variables exist,
+this returns zero. This helper is formulation-independent and mutates no model
+state.
+"""
+function calc_uc_gscr_block_startup_shutdown_cost(pm::_PM.AbstractPowerModel)
+    cost = JuMP.AffExpr(0.0)
+    for nw in nw_ids(pm)
+        if !_has_uc_gscr_block_ref(pm, nw)
+            continue
+        end
+        if !haskey(_PM.var(pm, nw), :su_block) || !haskey(_PM.var(pm, nw), :sd_block)
+            continue
+        end
+
+        su_block = _PM.var(pm, nw, :su_block)
+        sd_block = _PM.var(pm, nw, :sd_block)
+        for device_key in _uc_gscr_block_device_keys(pm, nw)
+            startup_coeff = _PM.ref(pm, nw, device_key[1], device_key[2], "startup_block_cost")
+            shutdown_coeff = _PM.ref(pm, nw, device_key[1], device_key[2], "shutdown_block_cost")
+            JuMP.add_to_expression!(cost, startup_coeff, su_block[device_key])
+            JuMP.add_to_expression!(cost, shutdown_coeff, sd_block[device_key])
+        end
     end
     return cost
 end
