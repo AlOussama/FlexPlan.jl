@@ -116,6 +116,8 @@ The active block variable \(n_a(t)\) is snapshot-specific.
 | `cost_inv_block` | investment cost per added block |
 | `startup_block_cost` | startup cost per started block |
 | `shutdown_block_cost` | shutdown cost per shut-down block |
+| `min_up_block_time` | minimum online duration after startup, in snapshots |
+| `min_down_block_time` | minimum offline duration after shutdown, in snapshots |
 
 ### Unit and base conventions for block fields
 
@@ -169,6 +171,16 @@ are:
 - `na0`;
 - `startup_block_cost`;
 - `shutdown_block_cost`.
+
+For block minimum up/down-time constraints (count-based UC extension), the
+feature is enabled when these fields are provided on block devices, and then
+both are required explicitly:
+
+- `min_up_block_time`;
+- `min_down_block_time`.
+
+They are integer numbers of snapshots and are not inferred from hourly
+durations.
 
 ## 3. Global security fields
 

@@ -1,12 +1,13 @@
 """
-    _uc_gscr_integration_add_block_fields!(device, type; n0, nmax, na0, p_block_min, p_block_max, q_block_min, q_block_max, b_block, cost_inv_block, startup_block_cost, shutdown_block_cost, e_block=nothing)
+    _uc_gscr_integration_add_block_fields!(device, type; n0, nmax, na0, p_block_min, p_block_max, q_block_min, q_block_max, b_block, cost_inv_block, startup_block_cost, shutdown_block_cost, e_block=nothing, min_up_block_time=nothing, min_down_block_time=nothing)
 
 Adds UC/gSCR block schema fields to one synthetic integration-test device.
 
 This helper is test-only and mutates `device` in place. Optional `e_block`
-is added for storage-capable devices.
+is added for storage-capable devices. Minimum up/down-time fields are added
+only when explicitly provided.
 """
-function _uc_gscr_integration_add_block_fields!(device, type; n0, nmax, na0, p_block_min, p_block_max, q_block_min, q_block_max, b_block, cost_inv_block, startup_block_cost, shutdown_block_cost, e_block=nothing)
+function _uc_gscr_integration_add_block_fields!(device, type; n0, nmax, na0, p_block_min, p_block_max, q_block_min, q_block_max, b_block, cost_inv_block, startup_block_cost, shutdown_block_cost, e_block=nothing, min_up_block_time=nothing, min_down_block_time=nothing)
     device["type"] = type
     device["n0"] = n0
     device["nmax"] = nmax
@@ -24,11 +25,17 @@ function _uc_gscr_integration_add_block_fields!(device, type; n0, nmax, na0, p_b
     if !isnothing(e_block)
         device["e_block"] = e_block
     end
+    if !isnothing(min_up_block_time)
+        device["min_up_block_time"] = min_up_block_time
+    end
+    if !isnothing(min_down_block_time)
+        device["min_down_block_time"] = min_down_block_time
+    end
     return device
 end
 
 """
-    _uc_gscr_synthetic_integration_data(; g_min)
+    _uc_gscr_synthetic_integration_data(; g_min, min_up_block_time=nothing, min_down_block_time=nothing)
 
 Builds a 2-bus, 2-hour AC-only multinetwork fixture for UC/gSCR integration.
 
@@ -36,7 +43,7 @@ The fixture includes one GFL generator, one GFM generator, and one storage
 unit with block fields. `g_min` is written as case-level global threshold.
 This helper is test-only and mutates only local fixture data.
 """
-function _uc_gscr_synthetic_integration_data(; g_min)
+function _uc_gscr_synthetic_integration_data(; g_min, min_up_block_time=nothing, min_down_block_time=nothing)
     data = _FP.parse_file(normpath(@__DIR__, "data", "case2", "case2_d_strg.m"))
 
     data["ne_storage"] = Dict{String,Any}()
@@ -61,6 +68,8 @@ function _uc_gscr_synthetic_integration_data(; g_min)
         cost_inv_block=1.0,
         startup_block_cost=1.0,
         shutdown_block_cost=1.0,
+        min_up_block_time=min_up_block_time,
+        min_down_block_time=min_down_block_time,
     )
 
     gfm = deepcopy(gfl)
@@ -83,6 +92,8 @@ function _uc_gscr_synthetic_integration_data(; g_min)
         cost_inv_block=7.0,
         startup_block_cost=1.0,
         shutdown_block_cost=1.0,
+        min_up_block_time=min_up_block_time,
+        min_down_block_time=min_down_block_time,
     )
     data["gen"]["2"] = gfm
 
@@ -101,6 +112,8 @@ function _uc_gscr_synthetic_integration_data(; g_min)
         startup_block_cost=1.0,
         shutdown_block_cost=1.0,
         e_block=1.0,
+        min_up_block_time=min_up_block_time,
+        min_down_block_time=min_down_block_time,
     )
 
     data["g_min"] = g_min
@@ -243,7 +256,7 @@ function _uc_gscr_build_integration_pm(data)
 end
 
 """
-    _uc_gscr_transition_fixture(; na0=1.0, startup_cost=1.0, shutdown_cost=1.0, include_storage=false, hours=2)
+    _uc_gscr_transition_fixture(; na0=1.0, n0=0.0, nmax=8.0, startup_cost=1.0, shutdown_cost=1.0, include_storage=false, hours=2, min_up_block_time=nothing, min_down_block_time=nothing)
 
 Builds a deterministic UC/gSCR block fixture used by startup/shutdown tests.
 
@@ -251,15 +264,15 @@ The returned multinetwork can include only a generator block device or all
 three component tables (`gen`, `storage`, `ne_storage`) to validate compound
 keys. The helper is test-only and mutates only local fixture data.
 """
-function _uc_gscr_transition_fixture(; na0::Float64=1.0, startup_cost::Float64=1.0, shutdown_cost::Float64=1.0, include_storage::Bool=false, hours::Int=2)
+function _uc_gscr_transition_fixture(; na0::Float64=1.0, n0::Float64=0.0, nmax::Float64=8.0, startup_cost::Float64=1.0, shutdown_cost::Float64=1.0, include_storage::Bool=false, hours::Int=2, min_up_block_time::Union{Nothing,Int}=nothing, min_down_block_time::Union{Nothing,Int}=nothing)
     data = _FP.parse_file(normpath(@__DIR__, "data", "case2", "case2_d_strg.m"))
     data["g_min"] = 0.0
 
     _uc_gscr_integration_add_block_fields!(
         data["gen"]["1"],
         "gfl";
-        n0=0,
-        nmax=8,
+        n0=n0,
+        nmax=nmax,
         na0=na0,
         p_block_min=0.0,
         p_block_max=20.0,
@@ -269,14 +282,16 @@ function _uc_gscr_transition_fixture(; na0::Float64=1.0, startup_cost::Float64=1
         cost_inv_block=0.0,
         startup_block_cost=startup_cost,
         shutdown_block_cost=shutdown_cost,
+        min_up_block_time=min_up_block_time,
+        min_down_block_time=min_down_block_time,
     )
 
     if include_storage
         _uc_gscr_integration_add_block_fields!(
             data["storage"]["1"],
             "gfm";
-            n0=0,
-            nmax=8,
+            n0=n0,
+            nmax=nmax,
             na0=na0,
             p_block_min=0.0,
             p_block_max=5.0,
@@ -287,12 +302,14 @@ function _uc_gscr_transition_fixture(; na0::Float64=1.0, startup_cost::Float64=1
             startup_block_cost=startup_cost + 1.0,
             shutdown_block_cost=shutdown_cost + 1.0,
             e_block=2.0,
+            min_up_block_time=min_up_block_time,
+            min_down_block_time=min_down_block_time,
         )
         _uc_gscr_integration_add_block_fields!(
             data["ne_storage"]["1"],
             "gfl";
-            n0=0,
-            nmax=8,
+            n0=n0,
+            nmax=nmax,
             na0=na0,
             p_block_min=0.0,
             p_block_max=5.0,
@@ -303,6 +320,8 @@ function _uc_gscr_transition_fixture(; na0::Float64=1.0, startup_cost::Float64=1
             startup_block_cost=startup_cost + 2.0,
             shutdown_block_cost=shutdown_cost + 2.0,
             e_block=2.0,
+            min_up_block_time=min_up_block_time,
+            min_down_block_time=min_down_block_time,
         )
     else
         data["storage"] = Dict{String,Any}()
@@ -447,6 +466,33 @@ end
         @test tight_result["termination_status"] == INFEASIBLE
     end
 
+    @testset "Integration path with min-up/min-down keeps existing objective and gSCR behavior" begin
+        data = _uc_gscr_synthetic_integration_data(; g_min=0.1, min_up_block_time=3, min_down_block_time=3)
+        pm = _uc_gscr_build_integration_pm(data)
+
+        objective = JuMP.objective_function(pm.model)
+        @test JuMP.coefficient(objective, _PM.var(pm, 1, :n_block, (:gen, 1))) == 5.0
+        @test JuMP.coefficient(objective, _PM.var(pm, 1, :su_block, (:gen, 1))) == 1.0
+        @test JuMP.coefficient(objective, _PM.var(pm, 1, :sd_block, (:gen, 1))) == 1.0
+
+        gscr_con = _PM.con(pm, 1)[:gscr_gershgorin_sufficient][1]
+        @test JuMP.normalized_coefficient(gscr_con, _PM.var(pm, 1, :na_block, (:gen, 2))) == 1.0
+        @test JuMP.normalized_coefficient(gscr_con, _PM.var(pm, 1, :na_block, (:gen, 1))) == -0.5
+
+        JuMP.set_optimizer(pm.model, HiGHS.Optimizer)
+        JuMP.set_silent(pm.model)
+        JuMP.optimize!(pm.model)
+        @test JuMP.termination_status(pm.model) == JuMP.MOI.OPTIMAL
+
+        violating_pm = _uc_gscr_build_integration_pm(data)
+        JuMP.fix(_PM.var(violating_pm, 1, :su_block, (:gen, 1)), 2.0; force=true)
+        JuMP.fix(_PM.var(violating_pm, 2, :na_block, (:gen, 1)), 0.0; force=true)
+        JuMP.set_optimizer(violating_pm.model, HiGHS.Optimizer)
+        JuMP.set_silent(violating_pm.model)
+        JuMP.optimize!(violating_pm.model)
+        @test JuMP.termination_status(violating_pm.model) == JuMP.MOI.INFEASIBLE
+    end
+
     @testset "1 -> 4 transition gives su_block=3 and sd_block=0" begin
         data = _uc_gscr_transition_fixture(; na0=1.0, startup_cost=1.0, shutdown_cost=1.0, include_storage=false, hours=2)
         pm = _uc_gscr_transition_pm(data)
@@ -525,6 +571,197 @@ end
         @test JuMP.coefficient(expr, _PM.var(pm, 1, :su_block, (:ne_storage, 1))) == 4.0
     end
 
+    @testset "Minimum up-time prevents early shutdown" begin
+        tol = 1e-6
+        data = _uc_gscr_transition_fixture(;
+            na0=0.0,
+            n0=5.0,
+            nmax=5.0,
+            startup_cost=0.0,
+            shutdown_cost=0.0,
+            include_storage=false,
+            hours=3,
+            min_up_block_time=3,
+            min_down_block_time=1,
+        )
+        pm = _uc_gscr_transition_pm(data; relax=false)
+        JuMP.fix(_PM.var(pm, 1, :su_block, (:gen, 1)), 2.0; force=true)
+        JuMP.fix(_PM.var(pm, 1, :sd_block, (:gen, 1)), 0.0; force=true)
+        JuMP.@objective(pm.model, Min, 0.0)
+        JuMP.set_optimizer(pm.model, HiGHS.Optimizer)
+        JuMP.set_silent(pm.model)
+        JuMP.optimize!(pm.model)
+        @test JuMP.termination_status(pm.model) == JuMP.MOI.OPTIMAL
+        @test JuMP.value(_PM.var(pm, 1, :na_block, (:gen, 1))) >= 2.0 - tol
+        @test JuMP.value(_PM.var(pm, 2, :na_block, (:gen, 1))) >= 2.0 - tol
+        @test JuMP.value(_PM.var(pm, 3, :na_block, (:gen, 1))) >= 2.0 - tol
+
+        violating_pm = _uc_gscr_transition_pm(data; relax=false)
+        JuMP.fix(_PM.var(violating_pm, 1, :su_block, (:gen, 1)), 2.0; force=true)
+        JuMP.fix(_PM.var(violating_pm, 1, :sd_block, (:gen, 1)), 0.0; force=true)
+        JuMP.fix(_PM.var(violating_pm, 3, :na_block, (:gen, 1)), 0.0; force=true)
+        JuMP.@objective(violating_pm.model, Min, 0.0)
+        JuMP.set_optimizer(violating_pm.model, HiGHS.Optimizer)
+        JuMP.set_silent(violating_pm.model)
+        JuMP.optimize!(violating_pm.model)
+        @test JuMP.termination_status(violating_pm.model) == JuMP.MOI.INFEASIBLE
+    end
+
+    @testset "Minimum down-time prevents early restart" begin
+        tol = 1e-6
+        data = _uc_gscr_transition_fixture(;
+            na0=5.0,
+            n0=5.0,
+            nmax=5.0,
+            startup_cost=0.0,
+            shutdown_cost=0.0,
+            include_storage=false,
+            hours=3,
+            min_up_block_time=1,
+            min_down_block_time=3,
+        )
+        pm = _uc_gscr_transition_pm(data; relax=false)
+        JuMP.fix(_PM.var(pm, 1, :su_block, (:gen, 1)), 0.0; force=true)
+        JuMP.fix(_PM.var(pm, 1, :sd_block, (:gen, 1)), 2.0; force=true)
+        JuMP.@objective(pm.model, Min, 0.0)
+        JuMP.set_optimizer(pm.model, HiGHS.Optimizer)
+        JuMP.set_silent(pm.model)
+        JuMP.optimize!(pm.model)
+        @test JuMP.termination_status(pm.model) == JuMP.MOI.OPTIMAL
+        @test JuMP.value(_PM.var(pm, 1, :n_block, (:gen, 1)) - _PM.var(pm, 1, :na_block, (:gen, 1))) >= 2.0 - tol
+        @test JuMP.value(_PM.var(pm, 2, :n_block, (:gen, 1)) - _PM.var(pm, 2, :na_block, (:gen, 1))) >= 2.0 - tol
+        @test JuMP.value(_PM.var(pm, 3, :n_block, (:gen, 1)) - _PM.var(pm, 3, :na_block, (:gen, 1))) >= 2.0 - tol
+
+        violating_pm = _uc_gscr_transition_pm(data; relax=false)
+        JuMP.fix(_PM.var(violating_pm, 1, :su_block, (:gen, 1)), 0.0; force=true)
+        JuMP.fix(_PM.var(violating_pm, 1, :sd_block, (:gen, 1)), 2.0; force=true)
+        JuMP.fix(_PM.var(violating_pm, 3, :na_block, (:gen, 1)), 5.0; force=true)
+        JuMP.@objective(violating_pm.model, Min, 0.0)
+        JuMP.set_optimizer(violating_pm.model, HiGHS.Optimizer)
+        JuMP.set_silent(violating_pm.model)
+        JuMP.optimize!(violating_pm.model)
+        @test JuMP.termination_status(violating_pm.model) == JuMP.MOI.INFEASIBLE
+    end
+
+    @testset "Count-based startup behavior is preserved (1 -> 4 implies three started blocks)" begin
+        data = _uc_gscr_transition_fixture(;
+            na0=1.0,
+            n0=5.0,
+            nmax=5.0,
+            startup_cost=1.0,
+            shutdown_cost=1.0,
+            include_storage=false,
+            hours=3,
+            min_up_block_time=2,
+            min_down_block_time=1,
+        )
+        pm = _uc_gscr_transition_pm(data; relax=false)
+        JuMP.fix(_PM.var(pm, 1, :na_block, (:gen, 1)), 1.0; force=true)
+        JuMP.fix(_PM.var(pm, 2, :na_block, (:gen, 1)), 4.0; force=true)
+        JuMP.@objective(pm.model, Min, _FP.calc_uc_gscr_block_startup_shutdown_cost(pm))
+        JuMP.set_optimizer(pm.model, HiGHS.Optimizer)
+        JuMP.set_silent(pm.model)
+        JuMP.optimize!(pm.model)
+        @test JuMP.termination_status(pm.model) == JuMP.MOI.OPTIMAL
+        @test JuMP.value(_PM.var(pm, 2, :su_block, (:gen, 1))) ≈ 3.0 atol=1e-6
+        @test JuMP.value(_PM.var(pm, 3, :na_block, (:gen, 1))) >= 3.0 - 1e-6
+
+        violating_pm = _uc_gscr_transition_pm(data; relax=false)
+        JuMP.fix(_PM.var(violating_pm, 1, :na_block, (:gen, 1)), 1.0; force=true)
+        JuMP.fix(_PM.var(violating_pm, 2, :na_block, (:gen, 1)), 4.0; force=true)
+        JuMP.fix(_PM.var(violating_pm, 3, :na_block, (:gen, 1)), 1.0; force=true)
+        JuMP.@objective(violating_pm.model, Min, _FP.calc_uc_gscr_block_startup_shutdown_cost(violating_pm))
+        JuMP.set_optimizer(violating_pm.model, HiGHS.Optimizer)
+        JuMP.set_silent(violating_pm.model)
+        JuMP.optimize!(violating_pm.model)
+        @test JuMP.termination_status(violating_pm.model) == JuMP.MOI.INFEASIBLE
+    end
+
+    @testset "Minimum down-time uses installed blocks n_block - na_block" begin
+        data = _uc_gscr_transition_fixture(;
+            na0=3.0,
+            n0=3.0,
+            nmax=5.0,
+            startup_cost=0.0,
+            shutdown_cost=0.0,
+            include_storage=false,
+            hours=2,
+            min_up_block_time=1,
+            min_down_block_time=2,
+        )
+        pm = _uc_gscr_transition_pm(data; relax=false)
+        con = _PM.con(pm, 2)[:block_minimum_down_time][(:gen, 1)]
+        @test JuMP.normalized_coefficient(con, _PM.var(pm, 1, :sd_block, (:gen, 1))) == 1.0
+        @test JuMP.normalized_coefficient(con, _PM.var(pm, 2, :sd_block, (:gen, 1))) == 1.0
+        @test JuMP.normalized_coefficient(con, _PM.var(pm, 2, :na_block, (:gen, 1))) == 1.0
+        @test JuMP.normalized_coefficient(con, _PM.var(pm, 2, :n_block, (:gen, 1))) == -1.0
+
+        JuMP.fix(_PM.var(pm, 1, :n_block, (:gen, 1)), 3.0; force=true)
+        JuMP.fix(_PM.var(pm, 1, :su_block, (:gen, 1)), 0.0; force=true)
+        JuMP.fix(_PM.var(pm, 1, :sd_block, (:gen, 1)), 2.0; force=true)
+        JuMP.fix(_PM.var(pm, 2, :na_block, (:gen, 1)), 3.0; force=true)
+        JuMP.@objective(pm.model, Min, 0.0)
+        JuMP.set_optimizer(pm.model, HiGHS.Optimizer)
+        JuMP.set_silent(pm.model)
+        JuMP.optimize!(pm.model)
+        @test JuMP.termination_status(pm.model) == JuMP.MOI.INFEASIBLE
+    end
+
+    @testset "Boundary truncation at first snapshots is correct for min-up/min-down" begin
+        data = _uc_gscr_transition_fixture(;
+            na0=2.0,
+            n0=5.0,
+            nmax=5.0,
+            startup_cost=0.0,
+            shutdown_cost=0.0,
+            include_storage=false,
+            hours=3,
+            min_up_block_time=3,
+            min_down_block_time=3,
+        )
+        pm = _uc_gscr_transition_pm(data; relax=false)
+        su1 = _PM.var(pm, 1, :su_block, (:gen, 1))
+        su2 = _PM.var(pm, 2, :su_block, (:gen, 1))
+        sd1 = _PM.var(pm, 1, :sd_block, (:gen, 1))
+        sd2 = _PM.var(pm, 2, :sd_block, (:gen, 1))
+
+        up_t1 = _PM.con(pm, 1)[:block_minimum_up_time][(:gen, 1)]
+        up_t2 = _PM.con(pm, 2)[:block_minimum_up_time][(:gen, 1)]
+        down_t1 = _PM.con(pm, 1)[:block_minimum_down_time][(:gen, 1)]
+        down_t2 = _PM.con(pm, 2)[:block_minimum_down_time][(:gen, 1)]
+
+        @test JuMP.normalized_coefficient(up_t1, su1) == 1.0
+        @test JuMP.normalized_coefficient(up_t1, su2) == 0.0
+        @test JuMP.normalized_coefficient(up_t2, su1) == 1.0
+        @test JuMP.normalized_coefficient(up_t2, su2) == 1.0
+
+        @test JuMP.normalized_coefficient(down_t1, sd1) == 1.0
+        @test JuMP.normalized_coefficient(down_t1, sd2) == 0.0
+        @test JuMP.normalized_coefficient(down_t2, sd1) == 1.0
+        @test JuMP.normalized_coefficient(down_t2, sd2) == 1.0
+    end
+
+    @testset "Min-up/min-down constraints remain collision-free across compound keys" begin
+        data = _uc_gscr_transition_fixture(;
+            na0=0.0,
+            n0=4.0,
+            nmax=4.0,
+            startup_cost=0.0,
+            shutdown_cost=0.0,
+            include_storage=true,
+            hours=2,
+            min_up_block_time=2,
+            min_down_block_time=2,
+        )
+        pm = _uc_gscr_transition_pm(data; relax=false)
+
+        @test Set(keys(_PM.con(pm, 1)[:block_minimum_up_time])) == Set([(:gen, 1), (:storage, 1), (:ne_storage, 1)])
+        @test Set(keys(_PM.con(pm, 1)[:block_minimum_down_time])) == Set([(:gen, 1), (:storage, 1), (:ne_storage, 1)])
+        @test _PM.con(pm, 1)[:block_minimum_up_time][(:gen, 1)] !== _PM.con(pm, 1)[:block_minimum_up_time][(:storage, 1)]
+        @test _PM.con(pm, 1)[:block_minimum_down_time][(:gen, 1)] !== _PM.con(pm, 1)[:block_minimum_down_time][(:ne_storage, 1)]
+        @test JuMP.normalized_coefficient(_PM.con(pm, 2)[:block_minimum_up_time][(:gen, 1)], _PM.var(pm, 1, :su_block, (:storage, 1))) == 0.0
+    end
+
     @testset "Missing na0/startup/shutdown block fields raise explicit validation error" begin
         bad_device = Dict{String,Any}(
             "type" => "gfl",
@@ -562,6 +799,8 @@ end
         @test !haskey(_PM.var(pm, 1), :na_block)
         @test !haskey(_PM.var(pm, 1), :su_block)
         @test !haskey(_PM.var(pm, 1), :sd_block)
+        @test !haskey(_PM.con(pm, 1), :block_minimum_up_time)
+        @test !haskey(_PM.con(pm, 1), :block_minimum_down_time)
         @test JuMP.constant(_FP.calc_uc_gscr_block_startup_shutdown_cost(pm)) == 0.0
     end
 
