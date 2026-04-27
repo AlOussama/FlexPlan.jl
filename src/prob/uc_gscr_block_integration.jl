@@ -36,11 +36,13 @@ Builds the minimal integrated UC/gSCR block model on one PowerModels instance.
 
 Per snapshot, this builder creates existing generator/storage variables,
 candidate-storage variables, UC/gSCR block variables, block dispatch bounds,
-storage block bounds, standard dcline variables/constraints, the Gershgorin
-sufficient gSCR condition, and a standard bus-wise active-power balance
-(`constraint_power_balance`) that includes AC branch terms and dcline terms.
-Across hours, it applies existing storage state constraints and
-candidate-storage activation coupling.
+storage block bounds, standard dcline variables/loss constraints, the
+Gershgorin sufficient gSCR condition, and a standard bus-wise active-power
+balance (`constraint_power_balance`) that includes AC branch terms and dcline
+terms. Dcline active-power limits are enforced by the bounded
+`variable_dcline_power` variables in active-power formulations. Across hours,
+it applies existing storage state constraints and candidate-storage activation
+coupling.
 
 This builder is formulation-specific to active-power formulations in this
 repository workflow and mutates the JuMP model plus PowerModels variable and
@@ -71,8 +73,6 @@ function build_uc_gscr_block_integration(pm::_PM.AbstractActivePowerModel; objec
     for n in nw_ids(pm)
         for i in _PM.ids(pm, n, :dcline)
             _PM.constraint_dcline_power_losses(pm, i; nw=n)
-            _PM.constraint_dcline_power_to_bounds(pm, i; nw=n)
-            _PM.constraint_dcline_power_from_bounds(pm, i; nw=n)
         end
         constraint_uc_gscr_block_bus_active_balance(pm; nw=n)
 
@@ -189,10 +189,12 @@ standard active-balance template:
 
 `constraint_power_balance(pm, i; nw=nw)`, for each bus `i`.
 
-This balance includes AC branch terms, storage terms, generator terms, load
-terms, and dcline terms through `bus_arcs_dc` with the PowerModels sign
-convention. It is formulation-specific to active-power models and mutates only
-the JuMP model and PowerModels constraint dictionaries.
+This helper formulates no custom balance equation. It only loops over buses
+and calls the standard PowerModels balance, which includes AC branch terms,
+storage terms, generator terms, load terms, and dcline terms through
+`bus_arcs_dc` with the PowerModels sign convention. It is formulation-specific
+to active-power models and mutates only the JuMP model and PowerModels
+constraint dictionaries.
 """
 function constraint_uc_gscr_block_bus_active_balance(pm::_PM.AbstractActivePowerModel; nw::Int=_PM.nw_id_default)
     if haskey(_PM.con(pm, nw), :uc_gscr_block_bus_active_balance)
@@ -204,8 +206,6 @@ function constraint_uc_gscr_block_bus_active_balance(pm::_PM.AbstractActivePower
         _PM.constraint_power_balance(pm, i; nw=nw)
         constraints[i] = nothing
     end
-    # Backward-compatibility alias for legacy diagnostics/scripts.
-    _PM.con(pm, nw)[:uc_gscr_block_system_active_balance] = constraints
     return constraints
 end
 
@@ -213,8 +213,11 @@ end
     constraint_uc_gscr_block_system_active_balance(pm; nw=nw_id_default)
 
 Backward-compatible alias to `constraint_uc_gscr_block_bus_active_balance`.
+It creates any missing standard branch/dcline variables needed by the standard
+PowerModels balance, but it does not add dcline setpoint constraints.
 """
 function constraint_uc_gscr_block_system_active_balance(pm::_PM.AbstractActivePowerModel; nw::Int=_PM.nw_id_default)
+    Memento.warn(_LOGGER, "constraint_uc_gscr_block_system_active_balance is deprecated; use constraint_uc_gscr_block_bus_active_balance.")
     if !haskey(_PM.var(pm, nw), :p)
         _PM.variable_branch_power(pm; nw=nw)
     end
@@ -222,7 +225,6 @@ function constraint_uc_gscr_block_system_active_balance(pm::_PM.AbstractActivePo
         _PM.variable_dcline_power(pm; nw=nw)
         for i in _PM.ids(pm, nw, :dcline)
             _PM.constraint_dcline_power_losses(pm, i; nw=nw)
-            _PM.constraint_dcline_setpoint_active(pm, i; nw=nw)
         end
     end
     return constraint_uc_gscr_block_bus_active_balance(pm; nw=nw)

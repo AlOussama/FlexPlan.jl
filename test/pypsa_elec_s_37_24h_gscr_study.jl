@@ -883,7 +883,7 @@ function _build_uc_block_no_gscr(pm::_PM.AbstractActivePowerModel; objective::Bo
         _FP.objective_min_cost_uc_gscr_block_integration(pm)
     end
     for n in _FP.nw_ids(pm)
-        _FP.constraint_uc_gscr_block_system_active_balance(pm; nw=n)
+        _FP.constraint_uc_gscr_block_bus_active_balance(pm; nw=n)
         _FP.constraint_uc_gscr_block_dispatch(pm; nw=n)
         _FP.constraint_uc_gscr_block_storage_bounds(pm; nw=n)
         for i in _PM.ids(pm, :storage, nw=n)

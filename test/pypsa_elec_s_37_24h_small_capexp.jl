@@ -304,6 +304,74 @@ function _set_mode_nmax_policy!(data::Dict{String,Any}, mode::String)
     return data
 end
 
+function _apply_existing_storage_initial_energy_policy!(data::Dict{String,Any}, policy::Union{Nothing,String})
+    if isnothing(policy)
+        return Dict{String,Any}(
+            "policy" => "none",
+            "existing_storage_rows_modified" => 0,
+            "existing_storage_energy_over_rating_min" => nothing,
+            "existing_storage_energy_over_rating_mean" => nothing,
+            "existing_storage_energy_over_rating_max" => nothing,
+            "candidate_battery_rows_forced_zero" => 0,
+            "candidate_battery_energy_all_zero" => true,
+            "candidate_battery_energy_abs_max" => 0.0,
+        )
+    end
+
+    if policy != "half_energy_rating"
+        error("Unsupported existing_storage_initial_energy_policy: $(policy)")
+    end
+
+    modified_existing = 0
+    forced_candidate_zero = 0
+    ratio_vals = Float64[]
+    candidate_energy_abs_max = 0.0
+
+    for nw in values(data["nw"])
+        for st in values(get(nw, "storage", Dict{String,Any}()))
+            if _is_battery_candidate(st)
+                n0 = float(get(st, "n_block0", get(st, "n0", 0.0)))
+                na0 = float(get(st, "na0", 0.0))
+                if abs(n0) <= _EPS && abs(na0) <= _EPS
+                    old_energy = float(get(st, "energy", 0.0))
+                    if abs(old_energy) > _EPS
+                        forced_candidate_zero += 1
+                    end
+                    st["energy"] = 0.0
+                end
+                candidate_energy_abs_max = max(candidate_energy_abs_max, abs(float(get(st, "energy", 0.0))))
+                continue
+            end
+
+            energy_rating = float(get(st, "energy_rating", get(st, "energy", 0.0)))
+            target = 0.5 * energy_rating
+            old = float(get(st, "energy", 0.0))
+            if abs(old - target) > _EPS
+                modified_existing += 1
+            end
+            st["energy"] = target
+            if abs(energy_rating) > _EPS
+                push!(ratio_vals, target / energy_rating)
+            end
+        end
+    end
+
+    ratio_min = isempty(ratio_vals) ? nothing : minimum(ratio_vals)
+    ratio_mean = isempty(ratio_vals) ? nothing : (sum(ratio_vals) / length(ratio_vals))
+    ratio_max = isempty(ratio_vals) ? nothing : maximum(ratio_vals)
+
+    return Dict{String,Any}(
+        "policy" => policy,
+        "existing_storage_rows_modified" => modified_existing,
+        "existing_storage_energy_over_rating_min" => ratio_min,
+        "existing_storage_energy_over_rating_mean" => ratio_mean,
+        "existing_storage_energy_over_rating_max" => ratio_max,
+        "candidate_battery_rows_forced_zero" => forced_candidate_zero,
+        "candidate_battery_energy_all_zero" => candidate_energy_abs_max <= _EPS,
+        "candidate_battery_energy_abs_max" => candidate_energy_abs_max,
+    )
+end
+
 function _pmax_pu(dev::Dict{String,Any})
     return float(get(dev, "p_max_pu", get(dev, "p_block_max_pu", 1.0)))
 end
@@ -510,7 +578,7 @@ function _build_uc_block_no_gscr(pm::_PM.AbstractActivePowerModel; objective::Bo
         _FP.objective_min_cost_uc_gscr_block_integration(pm)
     end
     for n in _FP.nw_ids(pm)
-        _FP.constraint_uc_gscr_block_system_active_balance(pm; nw=n)
+        _FP.constraint_uc_gscr_block_bus_active_balance(pm; nw=n)
         _FP.constraint_uc_gscr_block_dispatch(pm; nw=n)
         _FP.constraint_uc_gscr_block_storage_bounds(pm; nw=n)
         for i in _PM.ids(pm, :storage, nw=n)
@@ -843,16 +911,27 @@ function _solve_with_pm(data::Dict{String,Any}, builder)
     )
 end
 
-function _run_mode(raw::Dict{String,Any}, scenario::String, mode_name::String; g_min_value::Float64=0.0, mutator=nothing, builder=:standard)
+function _run_mode(
+    raw::Dict{String,Any},
+    scenario::String,
+    mode_name::String;
+    g_min_value::Float64=0.0,
+    mutator=nothing,
+    builder=:standard,
+    existing_storage_initial_energy_policy::Union{Nothing,String}=nothing,
+)
     base_mode = mode_name == "uc_only" ? :uc : :capexp
     data = _prepare_solver_data(raw; mode=base_mode)
     _set_mode_nmax_policy!(data, mode_name)
+    policy_stats = _apply_existing_storage_initial_energy_policy!(data, existing_storage_initial_energy_policy)
     _inject_g_min!(data, g_min_value)
     if !(mutator === nothing)
         mutator(data)
     end
     bfun = _resolve_builder(builder)
     result = _solve_active_with_builder(data, scenario, mode_name, bfun)
+    result["existing_storage_initial_energy_policy"] = isnothing(existing_storage_initial_energy_policy) ? "none" : existing_storage_initial_energy_policy
+    result["existing_storage_initial_energy_policy_stats"] = policy_stats
     if result["status"] in _ACTIVE_OK
         pre_rows = _collect_candidate_presolve_rows(data)
         pm = _PM.instantiate_model(
@@ -1433,8 +1512,11 @@ function _one_snapshot_balance_visibility_audit(raw::Dict{String,Any}, snapshot_
         ref_extensions=[_FP.ref_add_gen!, _FP.ref_add_storage!, _FP.ref_add_ne_storage!, _FP.ref_add_uc_gscr_block!],
     )
     nw = first(sort(collect(_FP.nw_ids(pm))))
-    con_present = haskey(_PM.con(pm, nw), :uc_gscr_block_system_active_balance)
-    balance_includes_dclines = false
+    con_present = haskey(_PM.con(pm, nw), :uc_gscr_block_system_active_balance) ||
+                  haskey(_PM.con(pm, nw), :uc_gscr_block_bus_active_balance)
+    balance_includes_dclines = haskey(_PM.var(pm, nw), :p_dc) &&
+                               haskey(_PM.ref(pm, nw), :bus_arcs_dc) &&
+                               sum(length(_PM.ref(pm, nw, :bus_arcs_dc, b)) for b in _PM.ids(pm, nw, :bus)) > 0
     balance_includes_storage = haskey(_PM.var(pm, nw), :ps) || haskey(_PM.var(pm, nw), :sc) || haskey(_PM.var(pm, nw), :sd)
     candidate_in_storage_set = all(sid in _PM.ids(pm, nw, :storage) for sid in _candidate_storage_ids_in_nw(_PM.ref(pm, nw)))
     bus_ids = Set(_PM.ids(pm, nw, :bus))
@@ -1505,6 +1587,8 @@ function _standard_dcline_support_audit()
     variable_methods = [string(m) for m in methods(_PM.variable_dcline_power)]
     con_loss_methods = [string(m) for m in methods(_PM.constraint_dcline_power_losses)]
     con_setpoint_methods = [string(m) for m in methods(_PM.constraint_dcline_setpoint_active)]
+    con_fr_bound_methods = isdefined(_PM, :constraint_dcline_power_fr_bounds) ? [string(m) for m in methods(_PM.constraint_dcline_power_fr_bounds)] : String[]
+    con_to_bound_methods = isdefined(_PM, :constraint_dcline_power_to_bounds) ? [string(m) for m in methods(_PM.constraint_dcline_power_to_bounds)] : String[]
     balance_methods = [string(m) for m in methods(_PM.constraint_power_balance)]
 
     opf_file = joinpath(dirname(pathof(_PM)), "prob", "opf.jl")
@@ -1519,12 +1603,15 @@ function _standard_dcline_support_audit()
         "standard_variable_functions" => variable_methods,
         "standard_constraint_dcline_losses_functions" => con_loss_methods,
         "standard_constraint_dcline_setpoint_functions" => con_setpoint_methods,
+        "standard_constraint_dcline_fr_bound_functions" => con_fr_bound_methods,
+        "standard_constraint_dcline_to_bound_functions" => con_to_bound_methods,
         "standard_constraint_power_balance_functions" => balance_methods,
         "standard_builder_opf_calls" => opf_calls,
         "variable_names" => ["p_dc", "q_dc"],
-        "constraint_names" => ["constraint_dcline_power_losses", "constraint_dcline_setpoint_active", "constraint_power_balance"],
+        "constraint_names" => ["constraint_dcline_power_losses", "constraint_power_balance"],
         "loss_model" => "(1-loss1)*p_fr + (p_to-loss0) == 0",
         "dcline_efficiency_modeled" => true,
+        "dcline_limits_mode" => "DCPPowerModel uses bounds set by variable_dcline_power; explicit dcline bound templates are not dispatched for DCP in this PowerModels version.",
     )
 end
 
@@ -1532,13 +1619,18 @@ function _active_path_dcline_call_audit()
     path = normpath(@__DIR__, "..", "src", "prob", "uc_gscr_block_integration.jl")
     calls_variable_dcline = _find_lines(path, "variable_dcline_power(")
     calls_con_dcline_losses = _find_lines(path, "constraint_dcline_power_losses(")
+    calls_con_dcline_setpoint = _find_lines(path, "constraint_dcline_setpoint_active(")
+    calls_con_dcline_fr_bounds = _find_lines(path, "constraint_dcline_power_fr_bounds(")
+    calls_con_dcline_to_bounds = _find_lines(path, "constraint_dcline_power_to_bounds(")
     calls_pm_bus_balance = _find_lines(path, "constraint_power_balance(")
     calls_custom_balance = _find_lines(path, "constraint_uc_gscr_block_system_active_balance(pm;")
     custom_balance_def = _find_lines(path, "function constraint_uc_gscr_block_system_active_balance(")
 
-    class = "G. active custom balance bypasses standard PowerModels dcline support"
-    if isempty(calls_custom_balance)
-        class = "unknown"
+    class = "standard PowerModels bus-wise active balance with standard dcline variables and loss equations"
+    if isempty(calls_pm_bus_balance) || isempty(calls_variable_dcline) || isempty(calls_con_dcline_losses)
+        class = "missing standard active balance or dcline support calls"
+    elseif !isempty(calls_con_dcline_setpoint)
+        class = "dcline setpoint constraints still present on active CAPEXP path"
     end
 
     return Dict{String,Any}(
@@ -1547,9 +1639,15 @@ function _active_path_dcline_call_audit()
         "calls_custom_system_balance" => !isempty(calls_custom_balance),
         "calls_standard_dcline_variable_function" => !isempty(calls_variable_dcline),
         "calls_standard_dcline_constraint_function" => !isempty(calls_con_dcline_losses),
+        "calls_dcline_setpoint_active" => !isempty(calls_con_dcline_setpoint),
+        "calls_dcline_fr_bound_constraints" => !isempty(calls_con_dcline_fr_bounds),
+        "calls_dcline_to_bound_constraints" => !isempty(calls_con_dcline_to_bounds),
         "standard_opf_bus_balance_call_lines" => calls_pm_bus_balance,
         "custom_system_balance_call_lines" => calls_custom_balance,
         "custom_system_balance_definition_lines" => custom_balance_def,
+        "dcline_setpoint_active_call_lines" => calls_con_dcline_setpoint,
+        "dcline_fr_bound_call_lines" => calls_con_dcline_fr_bounds,
+        "dcline_to_bound_call_lines" => calls_con_dcline_to_bounds,
         "missing_calls" => Dict(
             "variable_dcline_power" => calls_variable_dcline,
             "constraint_dcline_power_losses" => calls_con_dcline_losses,
@@ -1563,7 +1661,7 @@ function _active_path_dcline_call_audit()
             "line_hint_custom_balance_def" => isempty(custom_balance_def) ? nothing : first(custom_balance_def),
         ),
         "recommended_minimal_fix" =>
-            "In `build_uc_gscr_block_integration`, add standard dcline variable/constraint calls and replace or augment system balance with per-bus `constraint_power_balance` path including `bus_arcs_dc`.",
+            "Keep active CAPEXP on standard `variable_dcline_power`, `constraint_dcline_power_losses`, and per-bus `constraint_power_balance`; do not add dcline setpoint constraints.",
     )
 end
 
@@ -1588,12 +1686,11 @@ function _runtime_dcline_count_audit(raw::Dict{String,Any}, snapshot_id::Int)
     ref_count = length(_PM.ids(pm, nw, :dcline))
     var_count = haskey(_PM.var(pm, nw), :p_dc) ? length(keys(_PM.var(pm, nw, :p_dc))) : 0
 
-    dcline_con_count = 0
-    for (k, v) in _PM.con(pm, nw)
-        if occursin("dcline", String(k))
-            dcline_con_count += _count_constraint_refs(v)
-        end
-    end
+    active_path = _active_path_dcline_call_audit()
+    loss_constraint_count = active_path["calls_standard_dcline_constraint_function"] ? ref_count : 0
+    explicit_bound_constraint_count = active_path["calls_dcline_fr_bound_constraints"] || active_path["calls_dcline_to_bound_constraints"] ? 2 * ref_count : 0
+    variable_bound_count = var_count
+    setpoint_constraint_count = active_path["calls_dcline_setpoint_active"] ? 2 * ref_count : 0
 
     bus_balance_dcline_terms = haskey(_PM.ref(pm, nw), :bus_arcs_dc) ?
         sum(length(_PM.ref(pm, nw, :bus_arcs_dc, b)) for b in _PM.ids(pm, nw, :bus)) : 0
@@ -1605,7 +1702,10 @@ function _runtime_dcline_count_audit(raw::Dict{String,Any}, snapshot_id::Int)
             Dict("stage" => "solver-copy data after adapter", "dcline_count" => solver_count),
             Dict("stage" => "PowerModels ref", "dcline_count" => ref_count),
             Dict("stage" => "model variables (p_dc)", "dcline_count" => var_count),
-            Dict("stage" => "dcline constraints", "dcline_count" => dcline_con_count),
+            Dict("stage" => "dcline loss constraints", "dcline_count" => loss_constraint_count),
+            Dict("stage" => "dcline explicit bound constraints", "dcline_count" => explicit_bound_constraint_count),
+            Dict("stage" => "dcline variable bounds", "dcline_count" => variable_bound_count),
+            Dict("stage" => "dcline setpoint constraints", "dcline_count" => setpoint_constraint_count),
             Dict("stage" => "bus balance dcline terms", "dcline_count" => bus_balance_dcline_terms),
         ],
         "expected" => Dict(
@@ -1613,7 +1713,8 @@ function _runtime_dcline_count_audit(raw::Dict{String,Any}, snapshot_id::Int)
             "solver_copy" => 43,
             "ref" => 43,
             "model_variables_gt_zero" => true,
-            "dcline_constraints_gt_zero" => true,
+            "dcline_loss_constraints_gt_zero" => true,
+            "dcline_setpoint_constraints_expected" => 0,
             "bus_balance_terms_expected" => 86,
         ),
     )
@@ -1663,9 +1764,1038 @@ function _bus_balance_expression_audit(raw::Dict{String,Any}, snapshot_id::Int, 
     return Dict{String,Any}(
         "sample_dclines" => sample_dclines,
         "deficit_bus_components_in_ref" => comp,
-        "active_balance_constraint" => "sum(pg) - sum(ps) - sum(ps_ne) == sum(pd)",
-        "active_balance_contains_dcline_terms" => false,
-        "active_balance_contains_bus_terms" => false,
+        "active_balance_constraint" => "PowerModels.constraint_power_balance(pm, i; nw=nw)",
+        "active_balance_contains_dcline_terms" => haskey(_PM.var(pm, nw), :p_dc) && comp["dcline_terms_count"] > 0,
+        "active_balance_contains_bus_terms" => true,
+    )
+end
+
+const _UC_GSCR_LOCAL_BLOCK_FIELDS = Set([
+    "type",
+    "n0",
+    "nmax",
+    "n_block0",
+    "n_block_max",
+    "na0",
+    "p_block_min",
+    "p_block_max",
+    "p_block_max_pu",
+    "p_block_min_pu",
+    "q_block_min",
+    "q_block_max",
+    "b_block",
+    "startup_block_cost",
+    "shutdown_block_cost",
+    "min_up_block_time",
+    "min_down_block_time",
+    "H",
+    "s_block",
+    "e_block",
+    "cost_inv_block",
+])
+
+function _strip_uc_gscr_block_fields!(d::Dict{String,Any})
+    for k in _UC_GSCR_LOCAL_BLOCK_FIELDS
+        if haskey(d, k)
+            delete!(d, k)
+        end
+    end
+    return d
+end
+
+function _filter_ablation_storage!(data::Dict{String,Any}; include_storage::Bool, include_candidates::Bool, strip_non_candidate_block::Bool=true)
+    for nw in values(data["nw"])
+        if !include_storage
+            nw["storage"] = Dict{String,Any}()
+            nw["ne_storage"] = Dict{String,Any}()
+            continue
+        end
+
+        filtered = Dict{String,Any}()
+        for (sid, st0) in get(nw, "storage", Dict{String,Any}())
+            st = deepcopy(st0)
+            is_candidate = _is_battery_candidate(st)
+            if is_candidate && !include_candidates
+                continue
+            end
+            if !is_candidate && strip_non_candidate_block
+                _strip_uc_gscr_block_fields!(st)
+            end
+            filtered[sid] = st
+        end
+        nw["storage"] = filtered
+        nw["ne_storage"] = Dict{String,Any}()
+    end
+    return data
+end
+
+function _one_snapshot_ablation_data(
+    raw::Dict{String,Any},
+    snapshot_id::Int;
+    include_storage::Bool,
+    include_candidates::Bool,
+    mutator=nothing,
+    existing_storage_initial_energy_policy::Union{Nothing,String}=nothing,
+)
+    raw1 = _make_single_snapshot_raw(raw, snapshot_id)
+    data = _prepare_solver_data(raw1; mode=:capexp)
+    _set_mode_nmax_policy!(data, "full_capexp")
+    _apply_existing_storage_initial_energy_policy!(data, existing_storage_initial_energy_policy)
+    _inject_g_min!(data, 0.0)
+    _filter_ablation_storage!(data; include_storage, include_candidates)
+    if !(mutator === nothing)
+        mutator(data)
+    end
+    return data
+end
+
+function _build_ablation_variant(pm::_PM.AbstractActivePowerModel; variant::Symbol)
+    include_storage = variant != :core_gen_balance_only
+    candidate_storage = variant in (
+        :core_gen_plus_candidate_storage_no_standard_storage_constraints,
+        :add_standard_storage_thermal_limits,
+        :add_standard_storage_losses,
+        :add_storage_state_constraints,
+        :add_startup_shutdown_transitions,
+        :add_gscr_gmin0,
+        :add_startup_shutdown_without_storage_state,
+        :add_gscr_gmin0_without_storage_state,
+        :add_startup_shutdown_and_gscr_without_storage_state,
+        :storage_state_initial_only,
+        :storage_state_no_final,
+        :storage_state_relaxed_final,
+        :storage_state_half_energy_rating_initial,
+        :add_storage_state_constraints_with_half_energy_rating,
+        :existing_storage_state_only,
+        :candidate_storage_state_only,
+        :existing_storage_state_only_exclude_zero_energy_rating,
+        :candidate_storage_state_from_blocks,
+    )
+    use_unbounded_storage_vars = variant in (
+        :core_gen_plus_candidate_storage_no_standard_storage_constraints,
+        :add_standard_storage_thermal_limits,
+        :add_standard_storage_losses,
+        :add_storage_state_constraints,
+        :add_startup_shutdown_transitions,
+        :add_gscr_gmin0,
+        :add_startup_shutdown_without_storage_state,
+        :add_gscr_gmin0_without_storage_state,
+        :add_startup_shutdown_and_gscr_without_storage_state,
+        :storage_state_initial_only,
+        :storage_state_no_final,
+        :storage_state_relaxed_final,
+        :storage_state_half_energy_rating_initial,
+        :add_storage_state_constraints_with_half_energy_rating,
+        :existing_storage_state_only,
+        :candidate_storage_state_only,
+        :existing_storage_state_only_exclude_zero_energy_rating,
+        :candidate_storage_state_from_blocks,
+    )
+    add_storage_thermal = variant in (
+        :add_standard_storage_thermal_limits,
+        :add_standard_storage_losses,
+        :add_storage_state_constraints,
+        :add_startup_shutdown_transitions,
+        :add_gscr_gmin0,
+        :add_startup_shutdown_without_storage_state,
+        :add_gscr_gmin0_without_storage_state,
+        :add_startup_shutdown_and_gscr_without_storage_state,
+        :storage_state_initial_only,
+        :storage_state_no_final,
+        :storage_state_relaxed_final,
+        :storage_state_half_energy_rating_initial,
+        :add_storage_state_constraints_with_half_energy_rating,
+        :existing_storage_state_only,
+        :candidate_storage_state_only,
+        :existing_storage_state_only_exclude_zero_energy_rating,
+        :candidate_storage_state_from_blocks,
+    )
+    add_storage_losses = variant in (
+        :add_standard_storage_losses,
+        :add_storage_state_constraints,
+        :add_startup_shutdown_transitions,
+        :add_gscr_gmin0,
+        :add_startup_shutdown_without_storage_state,
+        :add_gscr_gmin0_without_storage_state,
+        :add_startup_shutdown_and_gscr_without_storage_state,
+        :storage_state_initial_only,
+        :storage_state_no_final,
+        :storage_state_relaxed_final,
+        :storage_state_half_energy_rating_initial,
+        :add_storage_state_constraints_with_half_energy_rating,
+        :existing_storage_state_only,
+        :candidate_storage_state_only,
+        :existing_storage_state_only_exclude_zero_energy_rating,
+        :candidate_storage_state_from_blocks,
+    )
+    add_storage_state = variant in (
+        :add_storage_state_constraints,
+        :add_startup_shutdown_transitions,
+        :add_gscr_gmin0,
+        :storage_state_initial_only,
+        :storage_state_no_final,
+        :storage_state_relaxed_final,
+        :storage_state_half_energy_rating_initial,
+        :add_storage_state_constraints_with_half_energy_rating,
+        :existing_storage_state_only,
+        :candidate_storage_state_only,
+        :existing_storage_state_only_exclude_zero_energy_rating,
+        :candidate_storage_state_from_blocks,
+    )
+    add_transitions = variant in (
+        :add_startup_shutdown_transitions,
+        :add_gscr_gmin0,
+        :add_startup_shutdown_without_storage_state,
+        :add_startup_shutdown_and_gscr_without_storage_state,
+    )
+    add_gscr = variant in (
+        :add_gscr_gmin0,
+        :add_gscr_gmin0_without_storage_state,
+        :add_startup_shutdown_and_gscr_without_storage_state,
+    )
+
+    for n in _FP.nw_ids(pm)
+        _PM.variable_branch_power(pm; nw=n)
+        _PM.variable_gen_power(pm; nw=n)
+        _PM.variable_dcline_power(pm; nw=n)
+        if include_storage
+            _PM.variable_storage_power(pm; nw=n, bounded=!use_unbounded_storage_vars)
+            _FP.variable_absorbed_energy(pm; nw=n)
+            if use_unbounded_storage_vars
+                if haskey(_PM.var(pm, n), :ps)
+                    for v in values(_PM.var(pm, n, :ps))
+                        if !JuMP.has_lower_bound(v)
+                            JuMP.set_lower_bound(v, -1.0e9)
+                        end
+                        if !JuMP.has_upper_bound(v)
+                            JuMP.set_upper_bound(v, 1.0e9)
+                        end
+                    end
+                end
+                for sym in (:se, :sc, :sd)
+                    if haskey(_PM.var(pm, n), sym)
+                        for v in values(_PM.var(pm, n, sym))
+                            if !JuMP.has_lower_bound(v) || JuMP.lower_bound(v) < 0.0
+                                JuMP.set_lower_bound(v, 0.0)
+                            end
+                        end
+                    end
+                end
+            end
+        end
+
+        _FP.variable_installed_blocks(pm; nw=n, relax=true)
+        _FP.variable_active_blocks(pm; nw=n, relax=true)
+        _FP.constraint_active_blocks_le_installed(pm; nw=n)
+        if add_transitions
+            _FP.variable_block_startup_shutdown_counts(pm; nw=n, relax=true)
+            _FP.constraint_block_count_transitions(pm; nw=n)
+        end
+    end
+
+    JuMP.@objective(pm.model, Min, 0.0)
+
+    for n in _FP.nw_ids(pm)
+        for i in _PM.ids(pm, n, :dcline)
+            _PM.constraint_dcline_power_losses(pm, i; nw=n)
+        end
+        _FP.constraint_uc_gscr_block_bus_active_balance(pm; nw=n)
+        _FP.constraint_uc_gscr_block_active_dispatch_bounds(pm; nw=n)
+
+        if candidate_storage
+            _FP.constraint_uc_gscr_block_storage_bounds(pm; nw=n)
+        end
+        if add_storage_thermal
+            for i in _PM.ids(pm, :storage, nw=n)
+                _PM.constraint_storage_thermal_limit(pm, i, nw=n)
+            end
+        end
+        if add_storage_losses
+            for i in _PM.ids(pm, :storage, nw=n)
+                _PM.constraint_storage_losses(pm, i, nw=n)
+            end
+        end
+        if add_storage_state
+            for i in _PM.ids(pm, :storage, nw=n)
+                st = _PM.ref(pm, n, :storage, i)
+                is_candidate = _is_battery_candidate(st)
+                energy_rating = float(get(st, "energy_rating", 0.0))
+                apply_state = true
+                if variant == :existing_storage_state_only
+                    apply_state = !is_candidate
+                elseif variant == :candidate_storage_state_only || variant == :candidate_storage_state_from_blocks
+                    apply_state = is_candidate
+                elseif variant == :existing_storage_state_only_exclude_zero_energy_rating
+                    apply_state = !is_candidate && energy_rating > _EPS
+                end
+                if apply_state
+                    _FP.constraint_storage_state(pm, i, nw=n)
+                end
+            end
+        end
+        if add_gscr
+            _FP.constraint_gscr_gershgorin_sufficient(pm; nw=n)
+        end
+    end
+end
+
+function _ablation_builder(variant::Symbol)
+    return pm -> _build_ablation_variant(pm; variant)
+end
+
+function _safe_var_count(pm, nw::Int, sym::Symbol)::Int
+    return haskey(_PM.var(pm, nw), sym) ? length(keys(_PM.var(pm, nw, sym))) : 0
+end
+
+function _ablation_variable_counts(pm, nw::Int)
+    return Dict{String,Any}(
+        "pg" => _safe_var_count(pm, nw, :pg),
+        "ps" => _safe_var_count(pm, nw, :ps),
+        "sc" => _safe_var_count(pm, nw, :sc),
+        "sd" => _safe_var_count(pm, nw, :sd),
+        "se" => _safe_var_count(pm, nw, :se),
+        "p_dc" => _safe_var_count(pm, nw, :p_dc),
+        "p_branch" => _safe_var_count(pm, nw, :p),
+        "n_block" => _safe_var_count(pm, nw, :n_block),
+        "na_block" => _safe_var_count(pm, nw, :na_block),
+        "su_block" => _safe_var_count(pm, nw, :su_block),
+        "sd_block" => _safe_var_count(pm, nw, :sd_block),
+    )
+end
+
+function _filtered_constraint_ref_count(pm, nw::Int, sym::Symbol, table::Union{Nothing,Symbol}=nothing)
+    if !haskey(_PM.con(pm, nw), sym)
+        return 0
+    end
+    c = _PM.con(pm, nw, sym)
+    if isnothing(table) || !(c isa AbstractDict)
+        return _count_constraint_refs(c)
+    end
+    return _count_constraint_refs(Dict(k => v for (k, v) in c if k isa Tuple && !isempty(k) && k[1] == table))
+end
+
+function _ablation_constraint_counts(pm, nw::Int, variant::Symbol)
+    storage_state_enabled = variant in (
+        :add_storage_state_constraints,
+        :add_storage_state_constraints_with_half_energy_rating,
+        :add_startup_shutdown_transitions,
+        :add_gscr_gmin0,
+        :storage_state_initial_only,
+        :storage_state_no_final,
+        :storage_state_relaxed_final,
+        :storage_state_half_energy_rating_initial,
+        :existing_storage_state_only,
+        :candidate_storage_state_only,
+        :existing_storage_state_only_exclude_zero_energy_rating,
+        :candidate_storage_state_from_blocks,
+    )
+    storage_state_count = 0
+    if storage_state_enabled
+        for i in _PM.ids(pm, nw, :storage)
+            st = _PM.ref(pm, nw, :storage, i)
+            is_candidate = _is_battery_candidate(st)
+            energy_rating = float(get(st, "energy_rating", 0.0))
+            apply_state = true
+            if variant == :existing_storage_state_only
+                apply_state = !is_candidate
+            elseif variant == :candidate_storage_state_only || variant == :candidate_storage_state_from_blocks
+                apply_state = is_candidate
+            elseif variant == :existing_storage_state_only_exclude_zero_energy_rating
+                apply_state = !is_candidate && energy_rating > _EPS
+            end
+            storage_state_count += apply_state ? 1 : 0
+        end
+    end
+    storage_thermal_enabled = variant != :core_gen_balance_only && variant != :core_gen_plus_storage_existing_no_candidates && variant != :core_gen_plus_candidate_storage_no_standard_storage_constraints
+    storage_losses_enabled = !(variant in (:core_gen_balance_only, :core_gen_plus_storage_existing_no_candidates, :core_gen_plus_candidate_storage_no_standard_storage_constraints, :add_standard_storage_thermal_limits))
+    return Dict{String,Any}(
+        "bus_balance" => length(_PM.ids(pm, nw, :bus)),
+        "dcline_loss" => length(_PM.ids(pm, nw, :dcline)),
+        "gen_block_dispatch" => _filtered_constraint_ref_count(pm, nw, :uc_gscr_block_active_dispatch_bounds, :gen),
+        "storage_bounds" =>
+            _filtered_constraint_ref_count(pm, nw, :uc_gscr_block_storage_energy_capacity) +
+            _filtered_constraint_ref_count(pm, nw, :uc_gscr_block_storage_charge_discharge_bounds),
+        "storage_thermal" => storage_thermal_enabled ? length(_PM.ids(pm, nw, :storage)) : 0,
+        "storage_losses" => storage_losses_enabled ? length(_PM.ids(pm, nw, :storage)) : 0,
+        "storage_state" => storage_state_count,
+        "startup_shutdown" => _filtered_constraint_ref_count(pm, nw, :block_count_transitions),
+        "gSCR" => _filtered_constraint_ref_count(pm, nw, :gscr_gershgorin_sufficient),
+    )
+end
+
+function _sum_var_values(pm, nw::Int, sym::Symbol)
+    if !haskey(_PM.var(pm, nw), sym)
+        return 0.0
+    end
+    return sum((JuMP.value(v) for v in values(_PM.var(pm, nw, sym))); init=0.0)
+end
+
+function _sum_abs_var_values(pm, nw::Int, sym::Symbol)
+    if !haskey(_PM.var(pm, nw), sym)
+        return 0.0
+    end
+    return sum((abs(JuMP.value(v)) for v in values(_PM.var(pm, nw, sym))); init=0.0)
+end
+
+function _ablation_bus_balance_residual(pm, nw::Int)
+    max_res = 0.0
+    for i in _PM.ids(pm, nw, :bus)
+        lhs = 0.0
+        if haskey(_PM.var(pm, nw), :p)
+            lhs += sum((JuMP.value(_PM.var(pm, nw, :p, a)) for a in _PM.ref(pm, nw, :bus_arcs, i)); init=0.0)
+        end
+        if haskey(_PM.var(pm, nw), :p_dc)
+            lhs += sum((JuMP.value(_PM.var(pm, nw, :p_dc, a)) for a in _PM.ref(pm, nw, :bus_arcs_dc, i)); init=0.0)
+        end
+        if haskey(_PM.var(pm, nw), :psw) && haskey(_PM.ref(pm, nw), :bus_arcs_sw)
+            lhs += sum((JuMP.value(_PM.var(pm, nw, :psw, a)) for a in _PM.ref(pm, nw, :bus_arcs_sw, i)); init=0.0)
+        end
+        rhs = sum((JuMP.value(_PM.var(pm, nw, :pg, g)) for g in _PM.ref(pm, nw, :bus_gens, i)); init=0.0)
+        if haskey(_PM.var(pm, nw), :ps)
+            rhs -= sum((JuMP.value(_PM.var(pm, nw, :ps, s)) for s in _PM.ref(pm, nw, :bus_storage, i)); init=0.0)
+        end
+        rhs -= sum((get(_PM.ref(pm, nw, :load, l), "pd", 0.0) for l in _PM.ref(pm, nw, :bus_loads, i)); init=0.0)
+        if haskey(_PM.ref(pm, nw), :bus_shunts)
+            rhs -= sum((get(_PM.ref(pm, nw, :shunt, sh), "gs", 0.0) for sh in _PM.ref(pm, nw, :bus_shunts, i)); init=0.0)
+        end
+        max_res = max(max_res, abs(lhs - rhs))
+    end
+    return max_res
+end
+
+function _ablation_investment_by_carrier(pm, nw::Int)
+    out = Dict{String,Float64}()
+    if !haskey(_PM.var(pm, nw), :n_block)
+        return out
+    end
+    for key in keys(_PM.var(pm, nw, :n_block))
+        device_key = key[1]
+        d = _PM.ref(pm, nw, device_key[1], device_key[2])
+        carrier = String(get(d, "carrier", "unknown"))
+        n0 = float(get(d, "n0", get(d, "n_block0", 0.0)))
+        dn = JuMP.value(_PM.var(pm, nw, :n_block, device_key)) - n0
+        out[carrier] = get(out, carrier, 0.0) + dn
+    end
+    return out
+end
+
+function _ablation_feasible_metrics(pm, nw::Int)
+    total_invested = 0.0
+    if haskey(_PM.var(pm, nw), :n_block)
+        for key in keys(_PM.var(pm, nw, :n_block))
+            device_key = key[1]
+            d = _PM.ref(pm, nw, device_key[1], device_key[2])
+            n0 = float(get(d, "n0", get(d, "n_block0", 0.0)))
+            total_invested += JuMP.value(_PM.var(pm, nw, :n_block, device_key)) - n0
+        end
+    end
+    return Dict{String,Any}(
+        "total_generation_dispatch" => _sum_var_values(pm, nw, :pg),
+        "total_storage_discharge" => _sum_var_values(pm, nw, :sd),
+        "total_storage_charge" => _sum_var_values(pm, nw, :sc),
+        "total_dcline_transfer_abs_sum" => _sum_abs_var_values(pm, nw, :p_dc),
+        "total_invested_blocks" => total_invested,
+        "investment_by_carrier" => _ablation_investment_by_carrier(pm, nw),
+        "bus_balance_residual_max" => _ablation_bus_balance_residual(pm, nw),
+        "bus_balance_residual_small" => _ablation_bus_balance_residual(pm, nw) <= 1e-5,
+    )
+end
+
+function _var_bound_summary(vdict)
+    if isnothing(vdict) || isempty(vdict)
+        return Dict{String,Any}("count" => 0, "lb_min" => nothing, "lb_max" => nothing, "ub_min" => nothing, "ub_max" => nothing, "lb_gt_ub_count" => 0)
+    end
+    lbs = Float64[]
+    ubs = Float64[]
+    bad = 0
+    for v in values(vdict)
+        lb = try _var_lb(v) catch; -Inf end
+        ub = try _var_ub(v) catch; Inf end
+        push!(lbs, lb)
+        push!(ubs, ub)
+        if isfinite(lb) && isfinite(ub) && lb > ub + _EPS
+            bad += 1
+        end
+    end
+    return Dict{String,Any}(
+        "count" => length(lbs),
+        "lb_min" => minimum(lbs),
+        "lb_max" => maximum(lbs),
+        "ub_min" => minimum(ubs),
+        "ub_max" => maximum(ubs),
+        "lb_gt_ub_count" => bad,
+    )
+end
+
+function _ablation_bounds_audit(pm, nw::Int)
+    load_sum = sum((get(_PM.ref(pm, nw, :load, l), "pd", 0.0) for l in _PM.ids(pm, nw, :load)); init=0.0)
+    gen_block_ub = 0.0
+    if haskey(_PM.ref(pm, nw), :uc_gscr_block_devices)
+        for key in _PM.ref(pm, nw, :uc_gscr_block_devices)
+            if key[1] == :gen
+                d = _PM.ref(pm, nw, key[1], key[2])
+                gen_block_ub += float(get(d, "p_block_max", 0.0)) * float(get(d, "nmax", get(d, "n_block_max", 0.0)))
+            end
+        end
+    end
+
+    isolated_load_buses = Int[]
+    for b in _PM.ids(pm, nw, :bus)
+        has_load = !isempty(_PM.ref(pm, nw, :bus_loads, b))
+        has_supply = !isempty(_PM.ref(pm, nw, :bus_gens, b)) || !isempty(_PM.ref(pm, nw, :bus_storage, b))
+        has_network = !isempty(_PM.ref(pm, nw, :bus_arcs, b)) || !isempty(_PM.ref(pm, nw, :bus_arcs_dc, b))
+        if has_load && !has_supply && !has_network
+            push!(isolated_load_buses, b)
+        end
+    end
+
+    varmap = _PM.var(pm, nw)
+    invalid_vars = Dict{String,Any}()
+    for sym in (:pg, :ps, :sc, :sd, :se, :p_dc, :p, :n_block, :na_block)
+        if haskey(varmap, sym)
+            s = _var_bound_summary(varmap[sym])
+            if s["lb_gt_ub_count"] > 0
+                invalid_vars[String(sym)] = s
+            end
+        end
+    end
+
+    return Dict{String,Any}(
+        "load_sum_pm_units" => load_sum,
+        "gen_pg_bounds" => _var_bound_summary(get(varmap, :pg, nothing)),
+        "gen_block_dispatch_upper_bound_sum" => gen_block_ub,
+        "branch_p_bounds" => _var_bound_summary(get(varmap, :p, nothing)),
+        "dcline_p_dc_bounds" => _var_bound_summary(get(varmap, :p_dc, nothing)),
+        "storage_ps_bounds" => _var_bound_summary(get(varmap, :ps, nothing)),
+        "storage_sc_bounds" => _var_bound_summary(get(varmap, :sc, nothing)),
+        "storage_sd_bounds" => _var_bound_summary(get(varmap, :sd, nothing)),
+        "storage_se_bounds" => _var_bound_summary(get(varmap, :se, nothing)),
+        "variables_with_lb_gt_ub" => invalid_vars,
+        "buses_with_load_no_supply_no_incident_branch_or_dcline" => isolated_load_buses,
+    )
+end
+
+function _solve_one_snapshot_ablation_variant(
+    raw::Dict{String,Any},
+    snapshot_id::Int,
+    label::String,
+    variant::Symbol;
+    include_storage::Bool,
+    include_candidates::Bool,
+    mutator=nothing,
+    return_pm::Bool=false,
+    existing_storage_initial_energy_policy::Union{Nothing,String}=nothing,
+)
+    data = _one_snapshot_ablation_data(
+        raw,
+        snapshot_id;
+        include_storage,
+        include_candidates,
+        mutator,
+        existing_storage_initial_energy_policy,
+    )
+    pm = _PM.instantiate_model(
+        data,
+        _PM.DCPPowerModel,
+        _ablation_builder(variant);
+        ref_extensions=[_FP.ref_add_gen!, _FP.ref_add_storage!, _FP.ref_add_ne_storage!, _FP.ref_add_uc_gscr_block!],
+    )
+    nw = first(sort(collect(_FP.nw_ids(pm))))
+    JuMP.set_optimizer(pm.model, HiGHS.Optimizer)
+    JuMP.set_silent(pm.model)
+    t0 = time()
+    JuMP.optimize!(pm.model)
+    status = _status_str(JuMP.termination_status(pm.model))
+    out = Dict{String,Any}(
+        "label" => label,
+        "status" => status,
+        "objective" => (status in _ACTIVE_OK ? JuMP.objective_value(pm.model) : nothing),
+        "solve_time_sec" => time() - t0,
+        "variables" => _ablation_variable_counts(pm, nw),
+        "constraints" => _ablation_constraint_counts(pm, nw, variant),
+        "feasible_metrics" => Dict{String,Any}(),
+        "bounds_audit" => Dict{String,Any}(),
+        "existing_storage_initial_energy_policy" => isnothing(existing_storage_initial_energy_policy) ? "none" : existing_storage_initial_energy_policy,
+        "skipped_existing_storage_zero_energy_rating_rows" => Dict{String,Any}[],
+        "standard_balance_reference" => "PowerModels.constraint_power_balance(pm, i; nw=n)",
+        "dcline_setpoint_constraints" => 0,
+    )
+    if variant == :existing_storage_state_only_exclude_zero_energy_rating
+        skipped = Dict{String,Any}[]
+        for (sid, st) in sort(collect(get(data["nw"]["1"], "storage", Dict{String,Any}())); by=x -> parse(Int, x.first))
+            if _is_battery_candidate(st)
+                continue
+            end
+            er = float(get(st, "energy_rating", 0.0))
+            if er <= _EPS
+                push!(skipped, Dict(
+                    "id" => sid,
+                    "bus" => Int(get(st, "storage_bus", -1)),
+                    "carrier" => String(get(st, "carrier", "")),
+                    "energy" => float(get(st, "energy", 0.0)),
+                    "energy_rating" => er,
+                ))
+            end
+        end
+        out["skipped_existing_storage_zero_energy_rating_rows"] = skipped
+    end
+    if status in _ACTIVE_OK
+        out["feasible_metrics"] = _ablation_feasible_metrics(pm, nw)
+    else
+        out["bounds_audit"] = _ablation_bounds_audit(pm, nw)
+    end
+    if return_pm
+        out["pm"] = pm
+        out["nw"] = nw
+        out["data"] = data
+    end
+    return out
+end
+
+function _one_snapshot_constraint_family_ablation(raw::Dict{String,Any}, snapshot_id::Int)
+    specs = [
+        ("core_gen_balance_only", :core_gen_balance_only, false, false),
+        ("core_gen_plus_storage_existing_no_candidates", :core_gen_plus_storage_existing_no_candidates, true, false),
+        ("core_gen_plus_candidate_storage_no_standard_storage_constraints", :core_gen_plus_candidate_storage_no_standard_storage_constraints, true, true),
+        ("add_standard_storage_thermal_limits", :add_standard_storage_thermal_limits, true, true),
+        ("add_standard_storage_losses", :add_standard_storage_losses, true, true),
+        ("add_storage_state_constraints", :add_storage_state_constraints, true, true),
+        ("add_storage_state_constraints_with_half_energy_rating", :add_storage_state_constraints_with_half_energy_rating, true, true),
+        ("add_startup_shutdown_transitions", :add_startup_shutdown_transitions, true, true),
+        ("add_gscr_gmin0", :add_gscr_gmin0, true, true),
+    ]
+    variants = Dict{String,Any}[]
+    for (label, variant, include_storage, include_candidates) in specs
+        push!(variants, _solve_one_snapshot_ablation_variant(
+            raw,
+            snapshot_id,
+            label,
+            variant;
+            include_storage,
+            include_candidates,
+            existing_storage_initial_energy_policy="half_energy_rating",
+        ))
+    end
+
+    first_infeasible = nothing
+    last_feasible = nothing
+    first_infeasible_after_feasible = nothing
+    feasible_before_regression = nothing
+    for v in variants
+        if v["status"] in _ACTIVE_OK
+            last_feasible = v
+            if isnothing(first_infeasible_after_feasible)
+                feasible_before_regression = v
+            end
+        else
+            if isnothing(first_infeasible)
+                first_infeasible = v
+            end
+            if !isnothing(feasible_before_regression) && isnothing(first_infeasible_after_feasible)
+                first_infeasible_after_feasible = v
+            end
+        end
+    end
+
+    likely = "no infeasible ablation variant"
+    decision_variant = isnothing(first_infeasible_after_feasible) ? first_infeasible : first_infeasible_after_feasible
+    if !isnothing(decision_variant)
+        label = String(decision_variant["label"])
+        if label == "core_gen_balance_only"
+            likely = "not storage; inspect generator/block dispatch bounds, branch/dcline balance, or units"
+        elseif label == "core_gen_plus_candidate_storage_no_standard_storage_constraints"
+            likely = "candidate storage block path"
+        elseif label in ("add_standard_storage_thermal_limits", "add_standard_storage_losses", "add_storage_state_constraints")
+            likely = "standard storage constraints incompatible with candidate/block storage representation"
+        elseif label == "add_startup_shutdown_transitions"
+            likely = "startup/shutdown transition constraints, likely su/sd bounds or initial active counts"
+        elseif label == "add_gscr_gmin0"
+            likely = "gSCR implementation issue at g_min=0"
+        else
+            likely = "constraint family identified by first infeasible ablation variant"
+        end
+    end
+
+    return Dict{String,Any}(
+        "snapshot_id" => snapshot_id,
+        "g_min" => 0.0,
+        "standard_balance_reference" => "PowerModels.constraint_power_balance(pm, i; nw=n)",
+        "dclines_active" => true,
+        "dcline_setpoint_constraints_on_path" => 0,
+        "variants" => variants,
+        "first_infeasible_variant" => isnothing(first_infeasible) ? nothing : first_infeasible["label"],
+        "last_feasible_variant" => isnothing(last_feasible) ? nothing : last_feasible["label"],
+        "last_feasible_before_regression" => isnothing(feasible_before_regression) ? nothing : feasible_before_regression["label"],
+        "first_infeasible_after_feasible_variant" => isnothing(first_infeasible_after_feasible) ? nothing : first_infeasible_after_feasible["label"],
+        "likely_root_cause" => likely,
+        "all_variants_infeasible" => all(!(v["status"] in _ACTIVE_OK) for v in variants),
+    )
+end
+
+function _mutate_existing_storage_half_energy_rating!(data::Dict{String,Any})
+    for nw in values(data["nw"])
+        for st in values(get(nw, "storage", Dict{String,Any}()))
+            if !_is_battery_candidate(st)
+                st["energy"] = 0.5 * float(get(st, "energy_rating", get(st, "energy", 0.0)))
+            end
+        end
+    end
+    return data
+end
+
+function _mutate_candidate_energy_zero!(data::Dict{String,Any})
+    for nw in values(data["nw"])
+        for st in values(get(nw, "storage", Dict{String,Any}()))
+            if _is_battery_candidate(st)
+                st["energy"] = 0.0
+            end
+        end
+    end
+    return data
+end
+
+function _mutate_candidate_storage_ratings_from_blocks!(data::Dict{String,Any})
+    for nw in values(data["nw"])
+        for st in values(get(nw, "storage", Dict{String,Any}()))
+            if _is_battery_candidate(st)
+                nmax = float(get(st, "n_block_max", get(st, "nmax", 0.0)))
+                pblk = float(get(st, "p_block_max", 0.0))
+                eblk = float(get(st, "e_block", 0.0))
+                st["energy_rating"] = nmax * eblk
+                st["charge_rating"] = nmax * pblk
+                st["discharge_rating"] = nmax * pblk
+                st["thermal_rating"] = nmax * pblk
+                st["energy"] = 0.0
+            end
+        end
+    end
+    return data
+end
+
+function _storage_kind(d::Dict{String,Any})
+    if _is_battery_gfl(d)
+        return "battery_gfl candidate"
+    elseif _is_battery_gfm(d)
+        return "battery_gfm candidate"
+    elseif _is_battery_candidate(d)
+        return "battery candidate"
+    end
+    return "existing storage"
+end
+
+function _storage_type_counts_from_ref(pm, nw::Int)
+    counts = Dict("existing storage" => 0, "battery_gfl candidate" => 0, "battery_gfm candidate" => 0, "battery candidate" => 0)
+    for sid in _PM.ids(pm, nw, :storage)
+        kind = _storage_kind(_PM.ref(pm, nw, :storage, sid))
+        counts[kind] = get(counts, kind, 0) + 1
+    end
+    return counts
+end
+
+function _storage_state_equation_audit(raw::Dict{String,Any}, snapshot_id::Int)
+    solved = _solve_one_snapshot_ablation_variant(
+        raw,
+        snapshot_id,
+        "storage_state_equation_audit_model",
+        :storage_state_initial_only;
+        include_storage=true,
+        include_candidates=true,
+        return_pm=true,
+        existing_storage_initial_energy_policy="half_energy_rating",
+    )
+    pm = solved["pm"]
+    nw = solved["nw"]
+    ids_storage = _PM.ids(pm, nw, :storage)
+    bounded_absorption_ids = haskey(_PM.ref(pm, nw), :storage_bounded_absorption) ? collect(keys(_PM.ref(pm, nw, :storage_bounded_absorption))) : Int[]
+
+    return Dict{String,Any}(
+        "variant" => "add_storage_state_constraints / storage_state_initial_only",
+        "storage_type_counts" => _storage_type_counts_from_ref(pm, nw),
+        "functions_called_in_focused_ablation" => Dict(
+            "constraint_storage_state" => length(ids_storage),
+            "constraint_storage_state_final" => 0,
+            "constraint_storage_state_ne" => 0,
+            "constraint_storage_state_final_ne" => 0,
+            "constraint_maximum_absorption" => 0,
+            "constraint_maximum_absorption_ne" => 0,
+        ),
+        "functions_called_in_active_builder_first_snapshot" => Dict(
+            "constraint_storage_state" => length(ids_storage),
+            "constraint_storage_state_final" => 0,
+            "constraint_storage_state_ne" => 0,
+            "constraint_storage_state_final_ne" => 0,
+            "constraint_maximum_absorption" => length(bounded_absorption_ids),
+            "constraint_maximum_absorption_ne" => 0,
+        ),
+        "initial_state_active_one_snapshot" => true,
+        "final_state_active_one_snapshot" => false,
+        "initial_equation" => "se[t] = (1-self_discharge_rate)^time_elapsed * energy + time_elapsed*(charge_efficiency*sc[t] - sd[t]/discharge_efficiency + stationary_energy_inflow - stationary_energy_outflow)",
+        "final_equation_if_called" => "se[t] >= energy",
+        "final_state_policy" => "not active in the one-snapshot first-snapshot branch; when called elsewhere it is a lower bound to the storage data field `energy`, not an equality",
+        "bounded_absorption_storage_ids" => sort(collect(bounded_absorption_ids)),
+    )
+end
+
+function _nonzero_storage_dispatch_rows(pm, nw::Int; tol::Float64=1e-6, policy::String="none")
+    rows = Dict{String,Any}[]
+    for sid in sort(collect(_PM.ids(pm, nw, :storage)))
+        st = _PM.ref(pm, nw, :storage, sid)
+        ps = haskey(_PM.var(pm, nw), :ps) ? JuMP.value(_PM.var(pm, nw, :ps, sid)) : 0.0
+        sc = haskey(_PM.var(pm, nw), :sc) ? JuMP.value(_PM.var(pm, nw, :sc, sid)) : 0.0
+        sd = haskey(_PM.var(pm, nw), :sd) ? JuMP.value(_PM.var(pm, nw, :sd, sid)) : 0.0
+        if max(abs(ps), abs(sc), abs(sd)) <= tol
+            continue
+        end
+        key = (:storage, sid)
+        has_block = haskey(_PM.var(pm, nw), :n_block) && _var_has_index(_PM.var(pm, nw, :n_block), key)
+        n_val = has_block ? JuMP.value(_PM.var(pm, nw, :n_block, key)) : nothing
+        na_val = haskey(_PM.var(pm, nw), :na_block) && _var_has_index(_PM.var(pm, nw, :na_block), key) ? JuMP.value(_PM.var(pm, nw, :na_block, key)) : nothing
+        discharge_eff = float(get(st, "discharge_efficiency", 1.0))
+        time_elapsed = float(get(_PM.ref(pm, nw), :time_elapsed, 1.0))
+        required_discharge_energy = time_elapsed * sd / discharge_eff
+        energy = float(get(st, "energy", 0.0))
+        energy_rating = float(get(st, "energy_rating", 0.0))
+        energy_over_rating = abs(energy_rating) > _EPS ? energy / energy_rating : nothing
+        policy_applied = true
+        if policy == "half_energy_rating"
+            if !_is_battery_candidate(st)
+                policy_applied = energy_rating <= _EPS ? true : abs(energy - 0.5 * energy_rating) <= _EPS
+            else
+                n0 = float(get(st, "n_block0", get(st, "n0", 0.0)))
+                na0 = float(get(st, "na0", 0.0))
+                if abs(n0) <= _EPS && abs(na0) <= _EPS
+                    policy_applied = abs(energy) <= _EPS
+                end
+            end
+        end
+        push!(rows, Dict{String,Any}(
+            "id" => sid,
+            "bus" => Int(get(st, "storage_bus", -1)),
+            "carrier" => String(get(st, "carrier", "")),
+            "type" => String(get(st, "type", "")),
+            "kind" => _storage_kind(st),
+            "ps" => ps,
+            "sc" => sc,
+            "sd" => sd,
+            "se" => haskey(_PM.var(pm, nw), :se) ? JuMP.value(_PM.var(pm, nw, :se, sid)) : nothing,
+            "energy" => energy,
+            "energy_rating" => energy_rating,
+            "energy_over_energy_rating" => energy_over_rating,
+            "policy_applied_flag" => policy_applied,
+            "charge_rating" => float(get(st, "charge_rating", 0.0)),
+            "discharge_rating" => float(get(st, "discharge_rating", 0.0)),
+            "p_block_max" => float(get(st, "p_block_max", 0.0)),
+            "e_block" => float(get(st, "e_block", 0.0)),
+            "n_block0" => float(get(st, "n_block0", get(st, "n0", 0.0))),
+            "n_block_max" => float(get(st, "n_block_max", get(st, "nmax", 0.0))),
+            "na_block" => na_val,
+            "n_block" => n_val,
+            "initial_energy" => float(get(st, "energy", 0.0)),
+            "required_discharge_energy" => required_discharge_energy,
+            "charge_efficiency" => float(get(st, "charge_efficiency", 1.0)),
+            "discharge_efficiency" => discharge_eff,
+            "stationary_energy_inflow" => float(get(st, "stationary_energy_inflow", 0.0)),
+            "stationary_energy_outflow" => float(get(st, "stationary_energy_outflow", 0.0)),
+            "self_discharge_rate" => float(get(st, "self_discharge_rate", 0.0)),
+            "time_elapsed" => time_elapsed,
+        ))
+    end
+    return rows
+end
+
+function _storage_dispatch_audit_last_feasible(raw::Dict{String,Any}, snapshot_id::Int)
+    solved = _solve_one_snapshot_ablation_variant(
+        raw,
+        snapshot_id,
+        "add_standard_storage_losses",
+        :add_standard_storage_losses;
+        include_storage=true,
+        include_candidates=true,
+        return_pm=true,
+        existing_storage_initial_energy_policy="half_energy_rating",
+    )
+    pm = solved["pm"]
+    nw = solved["nw"]
+    rows = _nonzero_storage_dispatch_rows(pm, nw; policy="half_energy_rating")
+    sorted_users = sort(rows; by=r -> -abs(float(r["required_discharge_energy"])))
+    total_discharge = sum((float(r["sd"]) for r in rows); init=0.0)
+    total_charge = sum((float(r["sc"]) for r in rows); init=0.0)
+    net_energy_used = sum((float(r["required_discharge_energy"]) - float(r["sc"]) * float(get(_PM.ref(pm, nw, :storage, Int(r["id"])), "charge_efficiency", 1.0)) for r in rows); init=0.0)
+    required_exceeds_initial = any(float(r["required_discharge_energy"]) > float(r["initial_energy"]) + _EPS for r in rows)
+    out = deepcopy(solved)
+    delete!(out, "pm")
+    delete!(out, "data")
+    delete!(out, "nw")
+    out["nonzero_storage_rows"] = rows
+    out["nonzero_storage_count"] = length(rows)
+    out["total_storage_discharge"] = total_discharge
+    out["total_storage_charge"] = total_charge
+    out["net_storage_energy_used"] = net_energy_used
+    out["largest_storage_energy_users"] = sorted_users[1:min(length(sorted_users), 10)]
+    out["required_energy_exceeds_initial_available_energy"] = required_exceeds_initial
+    out["existing_storage_initial_energy_policy"] = "half_energy_rating"
+    return out
+end
+
+function _storage_state_algebraic_check(dispatch_audit::Dict{String,Any})
+    rows = Dict{String,Any}[]
+    feasible = true
+    failing_conditions = Set{String}()
+    policy_consistency_violations = 0
+    for r in dispatch_audit["nonzero_storage_rows"]
+        charge_eff = float(get(r, "charge_efficiency", 1.0))
+        discharge_eff = float(get(r, "discharge_efficiency", 1.0))
+        self_discharge = float(get(r, "self_discharge_rate", 0.0))
+        inflow = float(get(r, "stationary_energy_inflow", 0.0))
+        outflow = float(get(r, "stationary_energy_outflow", 0.0))
+        dt = float(get(r, "time_elapsed", 1.0))
+        initial = float(r["initial_energy"])
+        sc = float(r["sc"])
+        sd = float(r["sd"])
+        se_required = ((1.0 - self_discharge)^dt) * initial + dt * (charge_eff * sc - sd / discharge_eff + inflow - outflow)
+        finite_energy_rating = float(r["energy_rating"])
+        n_block = isnothing(r["n_block"]) ? 0.0 : float(r["n_block"])
+        e_block = float(r["e_block"])
+        block_capacity = e_block > 0.0 ? e_block * n_block : Inf
+        upper_capacity = min(isfinite(finite_energy_rating) && finite_energy_rating > 0.0 ? finite_energy_rating : Inf, block_capacity)
+
+        condition = "ok"
+        if se_required < -_EPS
+            condition = "initial energy too small"
+            push!(failing_conditions, condition)
+            feasible = false
+        elseif isfinite(upper_capacity) && se_required > upper_capacity + _EPS
+            condition = e_block > 0.0 ? "candidate n_block/e_block coupling" : "energy_rating too small"
+            push!(failing_conditions, condition)
+            feasible = false
+        end
+        final_active = false
+        final_condition_ok = true
+
+        push!(rows, Dict{String,Any}(
+            "id" => r["id"],
+            "kind" => r["kind"],
+            "energy" => r["energy"],
+            "initial_energy" => initial,
+            "energy_rating" => r["energy_rating"],
+            "energy_over_energy_rating" => r["energy_over_energy_rating"],
+            "policy_applied_flag" => r["policy_applied_flag"],
+            "sc" => sc,
+            "sd" => sd,
+            "se_required_by_initial_state" => se_required,
+            "block_energy_capacity" => block_capacity,
+            "upper_capacity_checked" => upper_capacity,
+            "condition" => condition,
+            "final_condition_active" => final_active,
+            "final_condition_ok" => final_condition_ok,
+        ))
+        if !Bool(r["policy_applied_flag"])
+            policy_consistency_violations += 1
+        end
+    end
+    return Dict{String,Any}(
+        "feasible_against_last_feasible_dispatch" => feasible,
+        "half_energy_policy_consistency_ok" => policy_consistency_violations == 0,
+        "half_energy_policy_consistency_violations" => policy_consistency_violations,
+        "failing_conditions" => sort(collect(failing_conditions)),
+        "rows" => rows,
+        "note" => "This checks the last-feasible dispatch against the one-snapshot initial-state equation. It is not an IIS; it identifies whether that dispatch can satisfy storage dynamics.",
+    )
+end
+
+function _storage_state_variant_runs(raw::Dict{String,Any}, snapshot_id::Int)
+    specs = [
+        ("add_storage_state_constraints_with_half_energy_rating", :add_storage_state_constraints_with_half_energy_rating, nothing),
+        ("storage_state_initial_only", :storage_state_initial_only, nothing),
+        ("storage_state_no_final", :storage_state_no_final, nothing),
+        ("storage_state_relaxed_final", :storage_state_relaxed_final, nothing),
+        ("storage_state_half_energy_rating_initial", :storage_state_half_energy_rating_initial, _mutate_existing_storage_half_energy_rating!),
+        ("existing_storage_state_only", :existing_storage_state_only, nothing),
+        ("candidate_storage_state_only", :candidate_storage_state_only, _mutate_candidate_energy_zero!),
+        ("candidate_storage_state_from_blocks", :candidate_storage_state_from_blocks, _mutate_candidate_storage_ratings_from_blocks!),
+        ("existing_storage_state_only_exclude_zero_energy_rating", :existing_storage_state_only_exclude_zero_energy_rating, nothing),
+    ]
+    out = Dict{String,Any}[]
+    for (label, variant, mutator) in specs
+        push!(out, _solve_one_snapshot_ablation_variant(
+            raw,
+            snapshot_id,
+            label,
+            variant;
+            include_storage=true,
+            include_candidates=true,
+            mutator,
+            existing_storage_initial_energy_policy="half_energy_rating",
+        ))
+    end
+    return out
+end
+
+function _storage_state_diagnostic(raw::Dict{String,Any}, snapshot_id::Int)
+    isolated = [
+        _solve_one_snapshot_ablation_variant(raw, snapshot_id, "add_startup_shutdown_without_storage_state", :add_startup_shutdown_without_storage_state; include_storage=true, include_candidates=true, existing_storage_initial_energy_policy="half_energy_rating"),
+        _solve_one_snapshot_ablation_variant(raw, snapshot_id, "add_gscr_gmin0_without_storage_state", :add_gscr_gmin0_without_storage_state; include_storage=true, include_candidates=true, existing_storage_initial_energy_policy="half_energy_rating"),
+        _solve_one_snapshot_ablation_variant(raw, snapshot_id, "add_startup_shutdown_and_gscr_without_storage_state", :add_startup_shutdown_and_gscr_without_storage_state; include_storage=true, include_candidates=true, existing_storage_initial_energy_policy="half_energy_rating"),
+    ]
+    equation_audit = _storage_state_equation_audit(raw, snapshot_id)
+    dispatch_audit = _storage_dispatch_audit_last_feasible(raw, snapshot_id)
+    algebraic_check = _storage_state_algebraic_check(dispatch_audit)
+    variants = _storage_state_variant_runs(raw, snapshot_id)
+
+    status_by_label = Dict(v["label"] => v["status"] for v in variants)
+    isolated_by_label = Dict(v["label"] => v["status"] for v in isolated)
+    first_failing = "none"
+    recommended = "No storage-state-specific blocker isolated."
+    if get(status_by_label, "existing_storage_state_only", "") in _ACTIVE_OK &&
+       !(get(status_by_label, "candidate_storage_state_only", "") in _ACTIVE_OK)
+        first_failing = "candidate storage state representation"
+        recommended = "Candidate-only storage-state variant is infeasible while existing-only is feasible."
+    elseif !(get(status_by_label, "existing_storage_state_only", "") in _ACTIVE_OK)
+        first_failing = "existing storage state data/policy"
+        recommended = "Existing-only storage-state variant remains infeasible under half-energy policy."
+    elseif get(status_by_label, "candidate_storage_state_from_blocks", "") in _ACTIVE_OK
+        first_failing = "zero standard candidate ratings"
+        recommended = "Candidate storage-state becomes feasible when ratings are derived from n_block_max*block sizes."
+    elseif get(status_by_label, "storage_state_no_final", "") in _ACTIVE_OK
+        first_failing = "terminal/final storage condition"
+        recommended = "Relax or remove terminal storage requirements for representative one-snapshot diagnostics."
+    elseif get(status_by_label, "storage_state_half_energy_rating_initial", "") in _ACTIVE_OK
+        first_failing = "initial storage energy policy"
+        recommended = "Initialize existing storage from a calibrated state-of-charge fraction of energy_rating instead of p_nom/2."
+    elseif get(status_by_label, "candidate_storage_state_from_blocks", "") in _ACTIVE_OK
+        first_failing = "candidate standard storage ratings/state"
+        recommended = "For block-CAPEXP candidate storage, bind storage energy/rating to block variables or set solver-copy candidate ratings from n_block_max for diagnostics."
+    elseif !isempty(algebraic_check["failing_conditions"])
+        first_failing = join(algebraic_check["failing_conditions"], ", ")
+        recommended = "Inspect storage initial energy and one-snapshot state equation sign convention; the last feasible dispatch cannot satisfy the state equation."
+    end
+
+    return Dict{String,Any}(
+        "snapshot_id" => snapshot_id,
+        "existing_storage_initial_energy_policy" => "half_energy_rating",
+        "isolated_startup_gscr_without_storage_state" => isolated,
+        "storage_state_equation_audit" => equation_audit,
+        "last_feasible_storage_dispatch" => dispatch_audit,
+        "storage_state_feasibility_check_from_last_feasible_dispatch" => algebraic_check,
+        "storage_state_variants" => variants,
+        "first_failing_storage_condition" => first_failing,
+        "recommended_model_fix" => recommended,
+        "startup_shutdown_independently_feasible_without_storage_state" => get(isolated_by_label, "add_startup_shutdown_without_storage_state", "") in _ACTIVE_OK,
+        "gscr_gmin0_independently_feasible_without_storage_state" => get(isolated_by_label, "add_gscr_gmin0_without_storage_state", "") in _ACTIVE_OK,
+        "startup_shutdown_and_gscr_feasible_without_storage_state" => get(isolated_by_label, "add_startup_shutdown_and_gscr_without_storage_state", "") in _ACTIVE_OK,
+        "final_storage_state_is_blocker" => get(status_by_label, "storage_state_no_final", "") in _ACTIVE_OK,
+        "initial_energy_policy_is_blocker" => get(status_by_label, "storage_state_half_energy_rating_initial", "") in _ACTIVE_OK,
+        "candidate_storage_state_coupling_is_blocker" => get(status_by_label, "candidate_storage_state_from_blocks", "") in _ACTIVE_OK,
+        "add_storage_state_constraints_with_half_energy_rating_status" => get(status_by_label, "add_storage_state_constraints_with_half_energy_rating", "MISSING"),
+        "existing_storage_state_only_status" => get(status_by_label, "existing_storage_state_only", "MISSING"),
+        "candidate_storage_state_only_status" => get(status_by_label, "candidate_storage_state_only", "MISSING"),
+        "candidate_storage_state_from_blocks_status" => get(status_by_label, "candidate_storage_state_from_blocks", "MISSING"),
+        "existing_storage_state_only_exclude_zero_energy_rating_status" => get(status_by_label, "existing_storage_state_only_exclude_zero_energy_rating", "MISSING"),
+        "all_split_variants_optimal" =>
+            get(status_by_label, "existing_storage_state_only", "") == "OPTIMAL" &&
+            get(status_by_label, "candidate_storage_state_only", "") == "OPTIMAL" &&
+            get(status_by_label, "candidate_storage_state_from_blocks", "") == "OPTIMAL" &&
+            get(status_by_label, "existing_storage_state_only_exclude_zero_energy_rating", "") == "OPTIMAL",
     )
 end
 
@@ -1681,8 +2811,33 @@ function _one_snapshot_deep_diagnostic(raw::Dict{String,Any}, adequacy::Dict{Str
     active_path_dcline_calls = _active_path_dcline_call_audit()
     runtime_dcline_counts = _runtime_dcline_count_audit(raw, snapshot_id)
     bus_balance_expr = _bus_balance_expression_audit(raw, snapshot_id, island_audit)
+    constraint_family_ablation = _one_snapshot_constraint_family_ablation(raw, snapshot_id)
+    storage_state_diag = _storage_state_diagnostic(raw, snapshot_id)
 
-    full_one_snapshot = _run_mode(_make_single_snapshot_raw(raw, snapshot_id), "one_snapshot_full", "full_capexp"; g_min_value=0.0)
+    full_one_snapshot = _run_mode(
+        _make_single_snapshot_raw(raw, snapshot_id),
+        "one_snapshot_full",
+        "full_capexp";
+        g_min_value=0.0,
+        existing_storage_initial_energy_policy="half_energy_rating",
+    )
+
+    split_decision = "undetermined"
+    eso = get(storage_state_diag, "existing_storage_state_only_status", "")
+    cso = get(storage_state_diag, "candidate_storage_state_only_status", "")
+    csfb = get(storage_state_diag, "candidate_storage_state_from_blocks_status", "")
+    all_split_opt = get(storage_state_diag, "all_split_variants_optimal", false)
+    if eso in _ACTIVE_OK && !(cso in _ACTIVE_OK)
+        split_decision = "candidate storage state representation"
+    elseif !(eso in _ACTIVE_OK)
+        split_decision = "existing storage state data or policy still inconsistent"
+    elseif all_split_opt && !(full_one_snapshot["status"] in _ACTIVE_OK)
+        split_decision = "interaction with startup/shutdown, gSCR, or full builder order"
+    elseif (full_one_snapshot["status"] in _ACTIVE_OK) && !(gate["status"] in _ACTIVE_OK)
+        split_decision = "multi-snapshot storage trajectory/final condition"
+    elseif csfb in _ACTIVE_OK
+        split_decision = "zero standard candidate ratings"
+    end
 
     likely = ""
     if any(r["margin_negative"] for r in island_audit["islands"])
@@ -1709,6 +2864,9 @@ function _one_snapshot_deep_diagnostic(raw::Dict{String,Any}, adequacy::Dict{Str
         "active_path_dcline_call_audit" => active_path_dcline_calls,
         "runtime_dcline_count_audit" => runtime_dcline_counts,
         "bus_balance_expression_audit" => bus_balance_expr,
+        "constraint_family_ablation" => constraint_family_ablation,
+        "storage_state_diagnostic" => storage_state_diag,
+        "split_storage_state_root_cause_decision" => split_decision,
         "likely_root_cause" => likely,
     )
 end
@@ -2106,6 +3264,51 @@ function _first_failing_layer(gate::Dict{String,Any}, one_snapshot::Dict{String,
     return "none", "no failing layer detected in requested ladder"
 end
 
+function _run_existing_storage_initial_energy_policy_sequence(raw::Dict{String,Any}, snapshot_id::Int)
+    policy = "half_energy_rating"
+    one_snapshot_raw = _make_single_snapshot_raw(raw, snapshot_id)
+
+    one_snapshot_g0 = _run_mode(
+        one_snapshot_raw,
+        "one_snapshot_g0_existing_storage_half_energy_rating",
+        "full_capexp";
+        g_min_value=0.0,
+        existing_storage_initial_energy_policy=policy,
+    )
+
+    run_24h_g0 = _run_mode(
+        raw,
+        "full_24h_g0_existing_storage_half_energy_rating",
+        "full_capexp";
+        g_min_value=0.0,
+        existing_storage_initial_energy_policy=policy,
+    )
+
+    positive_run_executed = run_24h_g0["status"] == "OPTIMAL"
+    run_24h_g05 = nothing
+    if positive_run_executed
+        run_24h_g05 = _run_mode(
+            raw,
+            "full_24h_g05_existing_storage_half_energy_rating",
+            "full_capexp";
+            g_min_value=0.5,
+            existing_storage_initial_energy_policy=policy,
+        )
+    end
+
+    return Dict{String,Any}(
+        "old_policy" => "p_nom/2",
+        "diagnostic_result" => "p_nom/2 too small",
+        "new_solver_copy_policy" => "0.5 * energy_rating",
+        "existing_storage_initial_energy_policy" => policy,
+        "one_snapshot_id" => snapshot_id,
+        "one_snapshot_g_min_0" => one_snapshot_g0,
+        "full_24h_g_min_0" => run_24h_g0,
+        "positive_g_min_run_executed" => positive_run_executed,
+        "full_24h_g_min_0_5" => isnothing(run_24h_g05) ? Dict{String,Any}() : run_24h_g05,
+    )
+end
+
 function _write_report(
     schema::Dict{String,Any},
     adequacy::Dict{String,Any},
@@ -2113,6 +3316,7 @@ function _write_report(
     diag::Union{Nothing,Dict{String,Any}},
     deep_diag::Dict{String,Any},
     presolve_candidates::Vector{Dict{String,Any}},
+    existing_storage_policy_runs::Dict{String,Any},
 )
     mkpath(dirname(_REPORT_PATH))
     open(_REPORT_PATH, "w") do io
@@ -2192,6 +3396,43 @@ function _write_report(
         else
             for (bus, val) in sort(collect(gate["investment_by_bus"]); by=first)
                 println(io, "- bus ", bus, ": ", _fmt(val))
+            end
+        end
+        println(io)
+
+        println(io, "## Existing Storage Initial Energy Policy")
+        policy = existing_storage_policy_runs
+        one_g0 = policy["one_snapshot_g_min_0"]
+        run24_g0 = policy["full_24h_g_min_0"]
+        run24_g05 = policy["full_24h_g_min_0_5"]
+        pol_stats = run24_g0["existing_storage_initial_energy_policy_stats"]
+        println(io, "- old policy: ", policy["old_policy"])
+        println(io, "- diagnostic result: ", policy["diagnostic_result"])
+        println(io, "- new solver-copy policy: ", policy["new_solver_copy_policy"])
+        println(io, "- modified storage count: ", pol_stats["existing_storage_rows_modified"])
+        println(io, "- existing storage energy/energy_rating after policy (min/mean/max): ", _fmt(pol_stats["existing_storage_energy_over_rating_min"]), " / ", _fmt(pol_stats["existing_storage_energy_over_rating_mean"]), " / ", _fmt(pol_stats["existing_storage_energy_over_rating_max"]))
+        println(io, "- candidate battery energy policy: set to 0 for battery_gfl/battery_gfm with n_block0=0 and na0=0")
+        println(io, "- candidate battery energy remains zero: ", pol_stats["candidate_battery_energy_all_zero"], " (max abs=", _fmt(pol_stats["candidate_battery_energy_abs_max"]), ", forced_rows=", pol_stats["candidate_battery_rows_forced_zero"], ")")
+        println(io, "- one-snapshot g_min=0 status: ", one_g0["status"], " (snapshot=", policy["one_snapshot_id"], ")")
+        println(io, "- 24h g_min=0 status: ", run24_g0["status"])
+        println(io, "- positive g_min run executed: ", policy["positive_g_min_run_executed"])
+        if policy["positive_g_min_run_executed"]
+            println(io, "- g_min=0.5 status: ", run24_g05["status"])
+            println(io, "- g_min=0.5 investment by carrier:")
+            if isempty(run24_g05["investment_by_carrier"])
+                println(io, "  - none")
+            else
+                for (carrier, val) in sort(collect(run24_g05["investment_by_carrier"]); by=first)
+                    println(io, "  - ", carrier, ": ", _fmt(val))
+                end
+            end
+            println(io, "- g_min=0.5 investment by bus:")
+            if isempty(run24_g05["investment_by_bus"])
+                println(io, "  - none")
+            else
+                for (bus, val) in sort(collect(run24_g05["investment_by_bus"]); by=first)
+                    println(io, "  - bus ", bus, ": ", _fmt(val))
+                end
             end
         end
         println(io)
@@ -2296,7 +3537,207 @@ function _write_report(
         println(io, "- infeasibility changed vs one-snapshot full base: ", (cr["status"] != one_deep["one_snapshot_full_status"]))
         println(io)
 
-        println(io, "### 5.6 Balance-Equation Visibility Audit")
+        println(io, "### 5.6 One-Snapshot Constraint-Family Ablation")
+        cfa = one_deep["constraint_family_ablation"]
+        println(io, "- snapshot: ", cfa["snapshot_id"])
+        println(io, "- g_min: ", _fmt(cfa["g_min"]))
+        println(io, "- standard balance reference: `", cfa["standard_balance_reference"], "`")
+        println(io, "- dclines active: ", cfa["dclines_active"])
+        println(io, "- dcline setpoint constraints on path: ", cfa["dcline_setpoint_constraints_on_path"])
+        println(io, "- first infeasible variant overall: ", isnothing(cfa["first_infeasible_variant"]) ? "none" : cfa["first_infeasible_variant"])
+        println(io, "- last feasible variant overall: ", isnothing(cfa["last_feasible_variant"]) ? "none" : cfa["last_feasible_variant"])
+        println(io, "- last feasible variant before regression: ", isnothing(cfa["last_feasible_before_regression"]) ? "none" : cfa["last_feasible_before_regression"])
+        println(io, "- first infeasible variant after a feasible variant: ", isnothing(cfa["first_infeasible_after_feasible_variant"]) ? "none" : cfa["first_infeasible_after_feasible_variant"])
+        println(io, "- likely root cause: ", cfa["likely_root_cause"])
+        println(io)
+        println(io, "| variant | policy | status | objective | solve_time_s | pg | ps | sc | sd | se | p_dc | p_branch | n_block | na_block | su_block | sd_block | bus_balance | dcline_loss | gen_block_dispatch | storage_bounds | storage_thermal | storage_losses | storage_state | startup_shutdown | gSCR | balance_residual | gen_dispatch | storage_discharge | storage_charge | dcline_abs_sum | invested_blocks |")
+        println(io, "|---|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|")
+        for v in cfa["variants"]
+            vc = v["variables"]
+            cc = v["constraints"]
+            fm = get(v, "feasible_metrics", Dict{String,Any}())
+            println(
+                io,
+                "| ", v["label"],
+                " | ", v["existing_storage_initial_energy_policy"],
+                " | ", v["status"],
+                " | ", _fmt(v["objective"]),
+                " | ", _fmt(v["solve_time_sec"]),
+                " | ", vc["pg"],
+                " | ", vc["ps"],
+                " | ", vc["sc"],
+                " | ", vc["sd"],
+                " | ", vc["se"],
+                " | ", vc["p_dc"],
+                " | ", vc["p_branch"],
+                " | ", vc["n_block"],
+                " | ", vc["na_block"],
+                " | ", vc["su_block"],
+                " | ", vc["sd_block"],
+                " | ", cc["bus_balance"],
+                " | ", cc["dcline_loss"],
+                " | ", cc["gen_block_dispatch"],
+                " | ", cc["storage_bounds"],
+                " | ", cc["storage_thermal"],
+                " | ", cc["storage_losses"],
+                " | ", cc["storage_state"],
+                " | ", cc["startup_shutdown"],
+                " | ", cc["gSCR"],
+                " | ", _fmt(get(fm, "bus_balance_residual_max", nothing)),
+                " | ", _fmt(get(fm, "total_generation_dispatch", nothing)),
+                " | ", _fmt(get(fm, "total_storage_discharge", nothing)),
+                " | ", _fmt(get(fm, "total_storage_charge", nothing)),
+                " | ", _fmt(get(fm, "total_dcline_transfer_abs_sum", nothing)),
+                " | ", _fmt(get(fm, "total_invested_blocks", nothing)),
+                " |",
+            )
+        end
+        println(io)
+        println(io, "#### Feasible Variant Investment by Carrier")
+        for v in cfa["variants"]
+            if !(v["status"] in _ACTIVE_OK)
+                continue
+            end
+            inv = get(get(v, "feasible_metrics", Dict{String,Any}()), "investment_by_carrier", Dict{String,Any}())
+            if isempty(inv)
+                println(io, "- ", v["label"], ": none")
+            else
+                parts = ["$(carrier)=$(_fmt(val))" for (carrier, val) in sort(collect(inv); by=first)]
+                println(io, "- ", v["label"], ": ", join(parts, ", "))
+            end
+        end
+        if cfa["all_variants_infeasible"]
+            println(io)
+            println(io, "#### Unit and Bounds Audit (All Variants Infeasible)")
+            for v in cfa["variants"]
+                ba = get(v, "bounds_audit", Dict{String,Any}())
+                if isempty(ba)
+                    continue
+                end
+                println(io, "- ", v["label"], ": load_sum=", _fmt(ba["load_sum_pm_units"]), ", gen_block_dispatch_ub_sum=", _fmt(ba["gen_block_dispatch_upper_bound_sum"]), ", isolated_load_buses=", join(string.(ba["buses_with_load_no_supply_no_incident_branch_or_dcline"]), ","))
+                for key in ("gen_pg_bounds", "branch_p_bounds", "dcline_p_dc_bounds", "storage_ps_bounds", "storage_sc_bounds", "storage_sd_bounds", "storage_se_bounds")
+                    bs = ba[key]
+                    println(io, "  - ", key, ": count=", bs["count"], ", lb=[", _fmt(bs["lb_min"]), ",", _fmt(bs["lb_max"]), "], ub=[", _fmt(bs["ub_min"]), ",", _fmt(bs["ub_max"]), "], lb_gt_ub=", bs["lb_gt_ub_count"])
+                end
+                println(io, "  - variables with lb > ub: ", isempty(ba["variables_with_lb_gt_ub"]) ? "none" : ba["variables_with_lb_gt_ub"])
+            end
+        end
+        println(io)
+
+        println(io, "## Storage State Constraint Diagnostic")
+        ssd = one_deep["storage_state_diagnostic"]
+        println(io, "- snapshot: ", ssd["snapshot_id"])
+        println(io, "- startup/shutdown independently feasible without storage state: ", ssd["startup_shutdown_independently_feasible_without_storage_state"])
+        println(io, "- gSCR at g_min=0 independently feasible without storage state: ", ssd["gscr_gmin0_independently_feasible_without_storage_state"])
+        println(io, "- startup/shutdown and gSCR feasible together without storage state: ", ssd["startup_shutdown_and_gscr_feasible_without_storage_state"])
+        println(io, "- final storage state is blocker: ", ssd["final_storage_state_is_blocker"])
+        println(io, "- initial energy policy is blocker: ", ssd["initial_energy_policy_is_blocker"])
+        println(io, "- candidate storage state coupling is blocker: ", ssd["candidate_storage_state_coupling_is_blocker"])
+        println(io, "- first failing storage condition: ", ssd["first_failing_storage_condition"])
+        println(io, "- recommended model fix: ", ssd["recommended_model_fix"])
+        println(io)
+
+        println(io, "### Isolated Startup/gSCR Variants Without Storage State")
+        println(io, "| variant | policy | status | objective | solve_time_s | startup_shutdown_constraints | gSCR_constraints |")
+        println(io, "|---|---|---|---:|---:|---:|---:|")
+        for v in ssd["isolated_startup_gscr_without_storage_state"]
+            cc = v["constraints"]
+            println(io, "| ", v["label"], " | ", v["existing_storage_initial_energy_policy"], " | ", v["status"], " | ", _fmt(v["objective"]), " | ", _fmt(v["solve_time_sec"]), " | ", cc["startup_shutdown"], " | ", cc["gSCR"], " |")
+        end
+        println(io)
+
+        println(io, "### Storage-State Equation Audit")
+        sea = ssd["storage_state_equation_audit"]
+        println(io, "- focused ablation variant: ", sea["variant"])
+        println(io, "- storage type counts: ", sea["storage_type_counts"])
+        println(io, "- initial state active in one-snapshot case: ", sea["initial_state_active_one_snapshot"])
+        println(io, "- final state active in one-snapshot case: ", sea["final_state_active_one_snapshot"])
+        println(io, "- initial equation: `", sea["initial_equation"], "`")
+        println(io, "- final equation if called: `", sea["final_equation_if_called"], "`")
+        println(io, "- final state policy: ", sea["final_state_policy"])
+        println(io, "| function | focused ablation calls | active builder first-snapshot calls |")
+        println(io, "|---|---:|---:|")
+        for fname in sort(collect(keys(sea["functions_called_in_focused_ablation"])))
+            println(io, "| ", fname, " | ", sea["functions_called_in_focused_ablation"][fname], " | ", sea["functions_called_in_active_builder_first_snapshot"][fname], " |")
+        end
+        println(io)
+
+        println(io, "### Last Feasible Storage Dispatch (`add_standard_storage_losses`)")
+        lfs = ssd["last_feasible_storage_dispatch"]
+        println(io, "- status: ", lfs["status"])
+        println(io, "- policy used: ", lfs["existing_storage_initial_energy_policy"])
+        println(io, "- total storage discharge: ", _fmt(lfs["total_storage_discharge"]))
+        println(io, "- total storage charge: ", _fmt(lfs["total_storage_charge"]))
+        println(io, "- net storage energy used: ", _fmt(lfs["net_storage_energy_used"]))
+        println(io, "- nonzero storage units: ", lfs["nonzero_storage_count"])
+        println(io, "- required energy exceeds initial available energy: ", lfs["required_energy_exceeds_initial_available_energy"])
+        println(io, "| id | bus | kind | carrier | type | ps | sc | sd | se | energy | energy_rating | charge_rating | discharge_rating | p_block_max | e_block | n_block0 | n_block_max | na_block | n_block | initial_energy | required_discharge_energy |")
+        println(io, "|---:|---:|---|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|")
+        for r in lfs["nonzero_storage_rows"]
+            println(io, "| ", r["id"], " | ", r["bus"], " | ", r["kind"], " | ", r["carrier"], " | ", r["type"], " | ", _fmt(r["ps"]), " | ", _fmt(r["sc"]), " | ", _fmt(r["sd"]), " | ", _fmt(r["se"]), " | ", _fmt(r["energy"]), " | ", _fmt(r["energy_rating"]), " | ", _fmt(r["charge_rating"]), " | ", _fmt(r["discharge_rating"]), " | ", _fmt(r["p_block_max"]), " | ", _fmt(r["e_block"]), " | ", _fmt(r["n_block0"]), " | ", _fmt(r["n_block_max"]), " | ", _fmt(r["na_block"]), " | ", _fmt(r["n_block"]), " | ", _fmt(r["initial_energy"]), " | ", _fmt(r["required_discharge_energy"]), " |")
+        end
+        println(io)
+
+        println(io, "### Storage-State Feasibility Check Outside Full Model")
+        sf = ssd["storage_state_feasibility_check_from_last_feasible_dispatch"]
+        println(io, "- feasible against last feasible dispatch: ", sf["feasible_against_last_feasible_dispatch"])
+        println(io, "- half-energy policy consistency ok: ", sf["half_energy_policy_consistency_ok"], " (violations=", sf["half_energy_policy_consistency_violations"], ")")
+        println(io, "- failing conditions: ", isempty(sf["failing_conditions"]) ? "none" : join(sf["failing_conditions"], ", "))
+        println(io, "- note: ", sf["note"])
+        println(io, "| id | kind | energy | energy_rating | energy/energy_rating | policy_applied_flag | initial_energy | sc | sd | se_required | block_energy_capacity | checked_upper_capacity | condition | final_active | final_ok |")
+        println(io, "|---:|---|---:|---:|---:|---|---:|---:|---:|---:|---:|---:|---|---|---|")
+        for r in sf["rows"]
+            println(io, "| ", r["id"], " | ", r["kind"], " | ", _fmt(r["energy"]), " | ", _fmt(r["energy_rating"]), " | ", _fmt(r["energy_over_energy_rating"]), " | ", r["policy_applied_flag"], " | ", _fmt(r["initial_energy"]), " | ", _fmt(r["sc"]), " | ", _fmt(r["sd"]), " | ", _fmt(r["se_required_by_initial_state"]), " | ", _fmt(r["block_energy_capacity"]), " | ", _fmt(r["upper_capacity_checked"]), " | ", r["condition"], " | ", r["final_condition_active"], " | ", r["final_condition_ok"], " |")
+        end
+        println(io)
+
+        println(io, "### Storage-State Diagnostic Variants")
+        println(io, "| variant | policy | status | objective | solve_time_s | storage_state_constraints | note |")
+        println(io, "|---|---|---|---:|---:|---:|---|")
+        skipped_zero_energy_rows = Dict{String,Any}[]
+        for v in ssd["storage_state_variants"]
+            note = ""
+            if v["label"] == "storage_state_no_final"
+                note = "final/terminal constraints skipped"
+            elseif v["label"] == "storage_state_relaxed_final"
+                note = "equivalent to no-final in one-snapshot active branch"
+            elseif v["label"] == "storage_state_half_energy_rating_initial"
+                note = "existing storage energy set to 0.5 * energy_rating in solver copy"
+            elseif v["label"] == "add_storage_state_constraints_with_half_energy_rating"
+                note = "full storage-state constraints with global half-energy policy"
+            elseif v["label"] == "existing_storage_state_only"
+                note = "storage-state constraints only for existing storage"
+            elseif v["label"] == "candidate_storage_state_only"
+                note = "storage-state constraints only for battery_gfl/battery_gfm; candidate energy=0"
+            elseif v["label"] == "candidate_storage_state_from_blocks"
+                note = "candidate ratings set from n_block_max and block sizes in solver copy"
+            elseif v["label"] == "existing_storage_state_only_exclude_zero_energy_rating"
+                note = "existing-only storage-state with energy_rating>0 filter"
+            end
+            println(io, "| ", v["label"], " | ", v["existing_storage_initial_energy_policy"], " | ", v["status"], " | ", _fmt(v["objective"]), " | ", _fmt(v["solve_time_sec"]), " | ", v["constraints"]["storage_state"], " | ", note, " |")
+            if v["label"] == "existing_storage_state_only_exclude_zero_energy_rating"
+                skipped_zero_energy_rows = v["skipped_existing_storage_zero_energy_rating_rows"]
+            end
+        end
+        println(io)
+        println(io, "- existing_storage_state_only_exclude_zero_energy_rating skipped rows: ", length(skipped_zero_energy_rows))
+        if !isempty(skipped_zero_energy_rows)
+            println(io, "- skipped row ids: ", join([s["id"] for s in skipped_zero_energy_rows], ","))
+        end
+        println(io)
+
+        println(io, "## Half-Energy Policy Consistency and Split Storage-State Diagnostic")
+        println(io, "- policy used for one-snapshot storage-state ablations: ", ssd["existing_storage_initial_energy_policy"])
+        println(io, "- add_storage_state_constraints_with_half_energy_rating: ", ssd["add_storage_state_constraints_with_half_energy_rating_status"])
+        println(io, "- existing_storage_state_only: ", ssd["existing_storage_state_only_status"])
+        println(io, "- candidate_storage_state_only: ", ssd["candidate_storage_state_only_status"])
+        println(io, "- candidate_storage_state_from_blocks: ", ssd["candidate_storage_state_from_blocks_status"])
+        println(io, "- existing_storage_state_only_exclude_zero_energy_rating: ", ssd["existing_storage_state_only_exclude_zero_energy_rating_status"])
+        println(io, "- split-variant all-optimal flag: ", ssd["all_split_variants_optimal"])
+        println(io, "- decision logic result: ", one_deep["split_storage_state_root_cause_decision"])
+        println(io)
+
+        println(io, "### 5.7 Balance-Equation Visibility Audit")
         bva = one_deep["balance_visibility"]
         println(io, "- balance constraint present: ", bva["balance_constraint_present"])
         println(io, "- dclines included in active balance: ", bva["dclines_included_in_active_balance"])
@@ -2330,6 +3771,14 @@ function _write_report(
         for s in sdsa["standard_constraint_dcline_setpoint_functions"]
             println(io, "  - ", s)
         end
+        println(io, "- standard dcline from-bound constraint functions:")
+        for s in sdsa["standard_constraint_dcline_fr_bound_functions"]
+            println(io, "  - ", s)
+        end
+        println(io, "- standard dcline to-bound constraint functions:")
+        for s in sdsa["standard_constraint_dcline_to_bound_functions"]
+            println(io, "  - ", s)
+        end
         println(io, "- standard power-balance functions (contain bus_arcs_dc):")
         for s in sdsa["standard_constraint_power_balance_functions"]
             println(io, "  - ", s)
@@ -2337,6 +3786,7 @@ function _write_report(
         println(io, "- variable names used: ", join(sdsa["variable_names"], ", "))
         println(io, "- constraint names used: ", join(sdsa["constraint_names"], ", "))
         println(io, "- dcline losses/efficiency modeled: ", sdsa["dcline_efficiency_modeled"], " (", sdsa["loss_model"], ")")
+        println(io, "- dcline limits mode: ", sdsa["dcline_limits_mode"])
         println(io, "- standard OPF builder call lines: variable_dcline_power=", join(string.(sdsa["standard_builder_opf_calls"]["build_opf_variable_dcline_power_lines"]), ","), ", constraint_power_balance=", join(string.(sdsa["standard_builder_opf_calls"]["build_opf_constraint_power_balance_lines"]), ","), ", constraint_dcline_power_losses=", join(string.(sdsa["standard_builder_opf_calls"]["build_opf_constraint_dcline_power_losses_lines"]), ","))
         println(io)
 
@@ -2346,6 +3796,9 @@ function _write_report(
         println(io, "- calls custom system balance: ", apda["calls_custom_system_balance"])
         println(io, "- calls standard dcline variable function: ", apda["calls_standard_dcline_variable_function"])
         println(io, "- calls standard dcline constraints: ", apda["calls_standard_dcline_constraint_function"])
+        println(io, "- calls dcline setpoint-active constraints: ", apda["calls_dcline_setpoint_active"])
+        println(io, "- calls explicit dcline from-bound constraints: ", apda["calls_dcline_fr_bound_constraints"])
+        println(io, "- calls explicit dcline to-bound constraints: ", apda["calls_dcline_to_bound_constraints"])
         println(io, "- classification: ", apda["classification"])
         println(io, "- exact missing call/location: builder=", apda["exact_missing_location"]["builder_function"], ", line(custom balance call)=", _fmt(apda["exact_missing_location"]["line_hint_calls_custom_balance"]; digits=0), ", line(custom balance def)=", _fmt(apda["exact_missing_location"]["line_hint_custom_balance_def"]; digits=0))
         println(io, "- recommended minimal fix: ", apda["recommended_minimal_fix"])
@@ -2376,7 +3829,7 @@ function _write_report(
 
         println(io, "### 5) Missing-piece classification")
         println(io, "- classification result: ", apda["classification"])
-        println(io, "- interpreted as: G (active custom balance bypasses standard dcline support path)")
+        println(io, "- interpreted as: active path uses standard bus-wise balance and no dcline setpoint constraints")
         println(io)
 
         println(io, "## 6) Synthetic One-Bus Generator Sanity")
@@ -2438,7 +3891,13 @@ function _write_report(
         println(io)
 
         println(io, "## 10) Positive g_min")
-        println(io, "- Skipped by design for this diagnostic phase.")
+        println(io, "- Executed only if 24h g_min=0 reached OPTIMAL under existing-storage half-energy policy.")
+        println(io, "- executed: ", existing_storage_policy_runs["positive_g_min_run_executed"])
+        if existing_storage_policy_runs["positive_g_min_run_executed"]
+            run24_g05 = existing_storage_policy_runs["full_24h_g_min_0_5"]
+            println(io, "- g_min=0.5 status: ", run24_g05["status"])
+            println(io, "- g_min=0.5 objective: ", _fmt(run24_g05["objective"]))
+        end
         println(io)
 
         println(io, "## 11) Storage Candidate Audit Inside FlexPlan")
@@ -2468,6 +3927,8 @@ function _write_report(
         one_deep = deep_diag["one_snapshot_deep"]
         bva = one_deep["balance_visibility"]
         cr = one_deep["one_snapshot_candidate_ratings_from_blocks"]
+        cfa = one_deep["constraint_family_ablation"]
+        ssd = one_deep["storage_state_diagnostic"]
         println(io, "- Did schema validation pass? ", schema["multinetwork"] && schema["snapshot_count"] == 24 && schema["bus_count"] == 37 && schema["branch_count"] == 52 && schema["dcline_count"] == 43 && schema["battery_gfl_count"] == 37 && schema["battery_gfm_count"] == 37 && schema["expected_gfl_ok"] && schema["expected_gfm_ok"] && schema["cost_ratio_ok"] && schema["invariant_ok"])
         println(io, "- Is fixed-capacity infeasibility expected from installed availability? ", adequacy["fixed_capacity_infeasible_expected"])
         println(io, "- Is full CAPEXP at g_min=0 feasible? ", gate_feasible, " (status=", gate["status"], ")")
@@ -2486,6 +3947,7 @@ function _write_report(
         println(io, "- dclines included in active balance: ", bva["dclines_included_in_active_balance"])
         println(io, "- active UC/CAPEXP/gSCR calls standard dcline variable functions: ", apda["calls_standard_dcline_variable_function"])
         println(io, "- active UC/CAPEXP/gSCR calls standard dcline constraints: ", apda["calls_standard_dcline_constraint_function"])
+        println(io, "- active UC/CAPEXP/gSCR calls dcline setpoint-active constraints: ", apda["calls_dcline_setpoint_active"])
         println(io, "- exact missing call/location: ", apda["exact_missing_location"]["file"], " @ custom balance call line ", _fmt(apda["exact_missing_location"]["line_hint_calls_custom_balance"]; digits=0))
         println(io, "- recommended minimal fix: ", apda["recommended_minimal_fix"])
         println(io, "- synthetic generator sanity status: ", sgen["status"], " (passes=", sgen["passes_expected"], ")")
@@ -2494,11 +3956,22 @@ function _write_report(
         println(io, "- first failing layer: ", deep_diag["first_failing_layer"])
         println(io, "- likely root cause (layered): ", deep_diag["likely_root_cause"])
         println(io, "- likely root cause (one-snapshot decision logic): ", one_deep["likely_root_cause"])
+        println(io, "- constraint-family ablation first infeasible variant overall: ", isnothing(cfa["first_infeasible_variant"]) ? "none" : cfa["first_infeasible_variant"])
+        println(io, "- constraint-family ablation last feasible variant overall: ", isnothing(cfa["last_feasible_variant"]) ? "none" : cfa["last_feasible_variant"])
+        println(io, "- constraint-family ablation last feasible variant before regression: ", isnothing(cfa["last_feasible_before_regression"]) ? "none" : cfa["last_feasible_before_regression"])
+        println(io, "- constraint-family ablation first infeasible variant after feasible: ", isnothing(cfa["first_infeasible_after_feasible_variant"]) ? "none" : cfa["first_infeasible_after_feasible_variant"])
+        println(io, "- constraint-family ablation likely root cause: ", cfa["likely_root_cause"])
+        println(io, "- startup/shutdown feasible without storage state: ", ssd["startup_shutdown_independently_feasible_without_storage_state"])
+        println(io, "- gSCR g_min=0 feasible without storage state: ", ssd["gscr_gmin0_independently_feasible_without_storage_state"])
+        println(io, "- storage final state blocker: ", ssd["final_storage_state_is_blocker"])
+        println(io, "- storage initial-energy policy blocker: ", ssd["initial_energy_policy_is_blocker"])
+        println(io, "- candidate storage state coupling blocker: ", ssd["candidate_storage_state_coupling_is_blocker"])
+        println(io, "- storage-state recommended fix: ", ssd["recommended_model_fix"])
         println(io, "- If feasible, how much expansion is built? total blocks=", _fmt(gate["total_invested_blocks"]), ", generator blocks=", _fmt(gate["invested_generator_blocks"]), ", storage blocks=", _fmt(gate["invested_storage_blocks"]))
         println(io, "- Are battery_gfl and battery_gfm used? gfl=", _fmt(gate["invested_battery_gfl_blocks"]), ", gfm=", _fmt(gate["invested_battery_gfm_blocks"]))
         println(io, "- Does g_min=0 invest only for adequacy/economics, not for gSCR? ", gate_feasible ? true : "not testable (infeasible)")
-        println(io, "- Were positive g_min runs executed? false")
-        println(io, "- Should next run proceed to a positive g_min sweep? ", gate_optimal)
+        println(io, "- Were positive g_min runs executed? ", existing_storage_policy_runs["positive_g_min_run_executed"])
+        println(io, "- Should next run proceed to a positive g_min sweep? ", gate_optimal && existing_storage_policy_runs["positive_g_min_run_executed"])
     end
     return _REPORT_PATH
 end
@@ -2510,6 +3983,7 @@ function _write_results_bundle(
     diag::Union{Nothing,Dict{String,Any}},
     deep_diag::Dict{String,Any},
     presolve_candidates::Vector{Dict{String,Any}},
+    existing_storage_policy_runs::Dict{String,Any},
 )
     mkpath(dirname(_RESULTS_PATH))
     bundle = Dict{String,Any}(
@@ -2517,7 +3991,8 @@ function _write_results_bundle(
         "dataset_path" => _CASE_PATH,
         "investment_cost_scale_24h" => _INVESTMENT_COST_SCALE_24H,
         "run_flag" => _RUN_FLAG,
-        "positive_g_min_runs_skipped" => true,
+        "positive_g_min_runs_skipped" => !existing_storage_policy_runs["positive_g_min_run_executed"],
+        "existing_storage_initial_energy_policy" => existing_storage_policy_runs,
         "schema" => schema,
         "adequacy" => adequacy,
         "gate_g_min_0" => gate,
@@ -2544,8 +4019,10 @@ function main()
     schema = _schema_validation(raw)
     adequacy = _capacity_adequacy_audit(raw)
     presolve_candidates = _collect_candidate_presolve_rows(raw)
+    snapshot_id = Int(adequacy["worst_snapshot"]["snapshot"])
+    existing_storage_policy_runs = _run_existing_storage_initial_energy_policy_sequence(raw, snapshot_id)
 
-    gate = _run_mode(raw, "gate_g0", "full_capexp"; g_min_value=0.0)
+    gate = existing_storage_policy_runs["full_24h_g_min_0"]
     diag = nothing
 
     if gate["status"] == "INFEASIBLE"
@@ -2568,8 +4045,8 @@ function main()
         "likely_root_cause" => layered_root_cause,
     )
 
-    report = _write_report(schema, adequacy, gate, diag, deep_diag, presolve_candidates)
-    results_path = _write_results_bundle(schema, adequacy, gate, diag, deep_diag, presolve_candidates)
+    report = _write_report(schema, adequacy, gate, diag, deep_diag, presolve_candidates, existing_storage_policy_runs)
+    results_path = _write_results_bundle(schema, adequacy, gate, diag, deep_diag, presolve_candidates, existing_storage_policy_runs)
     println("Wrote report: ", report)
     println("Wrote results JSON: ", results_path)
 end
