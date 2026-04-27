@@ -126,14 +126,16 @@ end
 
 Adds the UC/gSCR block dispatch-bound equations on network `nw`:
 
-`p_block_min * na_block <= p <= p_block_max * na_block`
+`p_min_pu * p_block_max * na_block <= p <= p_max_pu * p_block_max * na_block`
 
 `q_block_min * na_block <= q <= q_block_max * na_block`.
 
-This template applies both active and reactive dispatch bounds to every
-block-annotated device (`gen`, `storage`, `ne_storage`) using compound keys
-`(table_name, device_id)`. It is formulation-independent and a no-op when
-UC/gSCR block references are absent.
+Active dispatch bounds apply only to block-annotated generators. Storage and
+candidate storage active dispatch are governed by standard storage equations
+plus block-scaled storage charge/discharge limits. Reactive dispatch bounds
+remain applied to block-annotated devices where reactive variables exist.
+This template is formulation-independent and a no-op when UC/gSCR block
+references are absent.
 """
 function constraint_uc_gscr_block_dispatch(pm::_PM.AbstractPowerModel; nw::Int=_PM.nw_id_default)
     constraint_uc_gscr_block_active_dispatch_bounds(pm; nw)
@@ -145,12 +147,14 @@ end
 
 Adds the UC/gSCR active-power dispatch-bound equation on network `nw`:
 
-`p_block_min * na_block <= p <= p_block_max * na_block`.
+`p_min_pu * p_block_max * na_block <= p <= p_max_pu * p_block_max * na_block`.
 
-The bound is added for each block-annotated `gen`, `storage`, and
-`ne_storage` device via the formulation-specific implementation. This
-template is formulation-independent and a no-op when UC/gSCR block references
-are absent.
+The bound is added only for block-annotated `gen` devices via the
+formulation-specific implementation. `p_min_pu` defaults to `0.0` when
+missing; `p_max_pu` defaults to `1.0` when missing. Deprecated `p_block_min`
+is ignored in this active dispatch formulation.
+This template is formulation-independent and a no-op when UC/gSCR block
+references are absent.
 """
 function constraint_uc_gscr_block_active_dispatch_bounds(pm::_PM.AbstractPowerModel; nw::Int=_PM.nw_id_default)
     if !_has_uc_gscr_block_ref(pm, nw)
@@ -163,14 +167,58 @@ function constraint_uc_gscr_block_active_dispatch_bounds(pm::_PM.AbstractPowerMo
 
     constraints = _PM.con(pm, nw)[:uc_gscr_block_active_dispatch_bounds] = Dict{Tuple{Symbol,Any},Tuple{JuMP.ConstraintRef,JuMP.ConstraintRef}}()
 
-    for device_key in _uc_gscr_block_device_keys(pm, nw)
+    for device_key in _uc_gscr_block_generator_device_keys(pm, nw)
         device = _PM.ref(pm, nw, device_key[1], device_key[2])
+        p_min_pu = _uc_gscr_block_pu_value(device, "p_min_pu", nw; default=0.0)
+        p_max_pu = _uc_gscr_block_pu_value(device, "p_max_pu", nw; default=1.0)
         constraints[device_key] = constraint_uc_gscr_block_active_dispatch_bounds(
-            pm, nw, device_key, device["p_block_min"], device["p_block_max"]
+            pm, nw, device_key, p_min_pu, p_max_pu, device["p_block_max"]
         )
     end
 
     return constraints
+end
+
+"""
+    _uc_gscr_block_pu_value(device, field, nw; default)
+
+Returns the per-snapshot per-unit scalar for a UC/gSCR block field.
+
+Accepted field shapes are:
+- scalar number,
+- vector/tuple indexed by snapshot `nw`,
+- dictionary keyed by `nw` (integer) or `string(nw)`.
+
+If the field is missing or has an unsupported shape, `default` is returned.
+This helper is used for `p_min_pu`/`p_max_pu` extraction so renewable
+time-series profiles can be honored per snapshot.
+"""
+function _uc_gscr_block_pu_value(device::Dict{String,<:Any}, field::String, nw::Int; default::Float64)
+    if !haskey(device, field)
+        return default
+    end
+
+    value = device[field]
+    if value isa Number
+        return float(value)
+    elseif value isa AbstractVector || value isa Tuple
+        series = collect(value)
+        if 1 <= nw <= length(series) && series[nw] isa Number
+            return float(series[nw])
+        else
+            return default
+        end
+    elseif value isa AbstractDict
+        if haskey(value, nw) && value[nw] isa Number
+            return float(value[nw])
+        elseif haskey(value, string(nw)) && value[string(nw)] isa Number
+            return float(value[string(nw)])
+        else
+            return default
+        end
+    else
+        return default
+    end
 end
 
 """
@@ -228,15 +276,15 @@ Adds UC/gSCR storage block constraints on network `nw`:
 
 `0 <= e <= e_block * n_block`
 
-`sc <= p_ch_block_max * na_block`
+`sc <= p_block_max * na_block`
 
-`sd <= p_dch_block_max * na_block`.
+`sd <= p_block_max * na_block`.
 
 This template applies only to `storage` and `ne_storage` devices with block
 fields, using compound keys `(table_name, device_id)` to keep indexing
 collision-free. In this codebase, `e/sc/sd` map to `se/sc/sd` for `storage`
-and `se_ne/sc_ne/sd_ne` for `ne_storage`; `p_ch_block_max` and
-`p_dch_block_max` map to `charge_rating` and `discharge_rating`.
+and `se_ne/sc_ne/sd_ne` for `ne_storage`, and active storage capability is
+scaled with block nameplate `p_block_max`.
 
 This function is formulation-independent, calls formulation-specific methods,
 and mutates the JuMP model plus PowerModels constraint dictionaries. It is a
@@ -286,15 +334,14 @@ end
 
 Adds UC/gSCR storage charge/discharge block-power equations on network `nw`:
 
-`sc[k,t] <= p_ch_block_max[k] * na_block[k,t]`
+`sc[k,t] <= p_block_max[k] * na_block[k,t]`
 
-`sd[k,t] <= p_dch_block_max[k] * na_block[k,t]`.
+`sd[k,t] <= p_block_max[k] * na_block[k,t]`.
 
 This template applies only to block-annotated `storage` and `ne_storage`
-devices using compound keys. In this FlexPlan model,
-`p_ch_block_max = charge_rating` and `p_dch_block_max = discharge_rating`.
+devices using compound keys.
 It calls the formulation-specific method
-`constraint_uc_gscr_block_storage_charge_discharge_bounds(pm, nw, device_key, p_ch_block_max, p_dch_block_max)`.
+`constraint_uc_gscr_block_storage_charge_discharge_bounds(pm, nw, device_key, p_block_max)`.
 
 This function is formulation-independent and mutates the model constraint
 dictionary. It is a no-op when UC/gSCR block references are absent.
@@ -313,7 +360,7 @@ function constraint_uc_gscr_block_storage_charge_discharge_bounds(pm::_PM.Abstra
     for device_key in _uc_gscr_block_storage_device_keys(pm, nw)
         device = _PM.ref(pm, nw, device_key[1], device_key[2])
         constraints[device_key] = constraint_uc_gscr_block_storage_charge_discharge_bounds(
-            pm, nw, device_key, device["charge_rating"], device["discharge_rating"]
+            pm, nw, device_key, device["p_block_max"]
         )
     end
 
@@ -331,6 +378,18 @@ and mutates no data or model state.
 """
 function _uc_gscr_block_storage_device_keys(pm::_PM.AbstractPowerModel, nw::Int)
     return [device_key for device_key in _uc_gscr_block_device_keys(pm, nw) if device_key[1] == :storage || device_key[1] == :ne_storage]
+end
+
+"""
+    _uc_gscr_block_generator_device_keys(pm, nw)
+
+Returns deterministic UC/gSCR block generator compound keys for network `nw`.
+
+Keys are filtered from `_uc_gscr_block_device_keys(pm, nw)` and include only
+`(:gen, i)` entries.
+"""
+function _uc_gscr_block_generator_device_keys(pm::_PM.AbstractPowerModel, nw::Int)
+    return [device_key for device_key in _uc_gscr_block_device_keys(pm, nw) if device_key[1] == :gen]
 end
 
 

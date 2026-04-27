@@ -1,0 +1,18 @@
+{
+  "case_path": "D:\\Projekte\\Code\\pypsatomatpowerx_clean_battery_policy\\data\\flexplan_block_gscr\\elec_s_37_24h_from_0301\\case.json",
+  "snapshot_id": 1,
+  "out_dir": "D:\\Projekte\\Code\\FlexPlan_UC_GSCR\\results\\powermodels_single_snapshot_exports\\snapshot_1_20260427_174734",
+  "counts": {
+    "gen_candidates": 125,
+    "bus": 37,
+    "storage_candidates": 74,
+    "ne_storage": 0,
+    "dcline": 43,
+    "gen": 285,
+    "branch": 52,
+    "shunt": 0,
+    "storage": 126,
+    "load": 37,
+    "switch": 0
+  }
+}

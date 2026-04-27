@@ -428,7 +428,7 @@ function _bench_transition_fixture_all_components(; hours::Int=3)
     _bench_set_block_fields!(
         data["gen"]["1"],
         "gfl";
-        n0=0,
+        n0=1,
         nmax=8,
         na0=1,
         p_block_min=0.0,
@@ -444,7 +444,7 @@ function _bench_transition_fixture_all_components(; hours::Int=3)
     _bench_set_block_fields!(
         data["storage"]["1"],
         "gfm";
-        n0=0,
+        n0=1,
         nmax=8,
         na0=1,
         p_block_min=0.0,
@@ -461,7 +461,7 @@ function _bench_transition_fixture_all_components(; hours::Int=3)
     _bench_set_block_fields!(
         data["ne_storage"]["1"],
         "gfl";
-        n0=0,
+        n0=1,
         nmax=8,
         na0=1,
         p_block_min=0.0,

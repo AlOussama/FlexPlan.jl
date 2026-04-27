@@ -111,21 +111,21 @@ end
 ## UC/gSCR block dispatch bounds
 
 """
-    constraint_uc_gscr_block_active_dispatch_bounds(pm, n, device_key, p_block_min, p_block_max)
+    constraint_uc_gscr_block_active_dispatch_bounds(pm, n, device_key, p_min_pu, p_max_pu, p_block_max)
 
 Implements the UC/gSCR active-power dispatch equation for one block device:
 
-`p_block_min * na_block <= p <= p_block_max * na_block`.
+`p_min_pu * p_block_max * na_block <= p <= p_max_pu * p_block_max * na_block`.
 
 This formulation-specific method targets generic PowerModels formulations with
 active-power dispatch variables and stores no extra state.
 """
-function constraint_uc_gscr_block_active_dispatch_bounds(pm::_PM.AbstractPowerModel, n::Int, device_key::Tuple{Symbol,Any}, p_block_min, p_block_max)
+function constraint_uc_gscr_block_active_dispatch_bounds(pm::_PM.AbstractPowerModel, n::Int, device_key::Tuple{Symbol,Any}, p_min_pu, p_max_pu, p_block_max)
     p = _uc_gscr_block_dispatch_variable(pm, n, device_key, :p)
     na = _PM.var(pm, n, :na_block, device_key)
 
-    lower = JuMP.@constraint(pm.model, p >= p_block_min * na)
-    upper = JuMP.@constraint(pm.model, p <= p_block_max * na)
+    lower = JuMP.@constraint(pm.model, p >= p_min_pu * p_block_max * na)
+    upper = JuMP.@constraint(pm.model, p <= p_max_pu * p_block_max * na)
 
     return (lower, upper)
 end
@@ -213,14 +213,14 @@ function constraint_uc_gscr_block_storage_energy_capacity(pm::_PM.AbstractPowerM
 end
 
 """
-    constraint_uc_gscr_block_storage_charge_discharge_bounds(pm, n, device_key, p_ch_block_max, p_dch_block_max)
+    constraint_uc_gscr_block_storage_charge_discharge_bounds(pm, n, device_key, p_block_max)
 
 Implements UC/gSCR storage charge/discharge block-power equations for one
 block device:
 
-`sc[k,t] <= p_ch_block_max[k] * na_block[k,t]`
+`sc[k,t] <= p_block_max[k] * na_block[k,t]`
 
-`sd[k,t] <= p_dch_block_max[k] * na_block[k,t]`.
+`sd[k,t] <= p_block_max[k] * na_block[k,t]`.
 
 This formulation-specific method targets generic PowerModels formulations with
 storage charge/discharge variables. It assumes `na_block` exists on compound
@@ -228,13 +228,13 @@ key `(table_name, device_id)` and uses FlexPlan mapping:
 `storage -> (sc, sd)`, `ne_storage -> (sc_ne, sd_ne)`. The function mutates
 only the JuMP model by adding two upper-bound constraints.
 """
-function constraint_uc_gscr_block_storage_charge_discharge_bounds(pm::_PM.AbstractPowerModel, n::Int, device_key::Tuple{Symbol,Any}, p_ch_block_max, p_dch_block_max)
+function constraint_uc_gscr_block_storage_charge_discharge_bounds(pm::_PM.AbstractPowerModel, n::Int, device_key::Tuple{Symbol,Any}, p_block_max)
     sc = _uc_gscr_block_storage_variable(pm, n, device_key, :charge)
     sd = _uc_gscr_block_storage_variable(pm, n, device_key, :discharge)
     na = _PM.var(pm, n, :na_block, device_key)
 
-    charge_bound = JuMP.@constraint(pm.model, sc <= p_ch_block_max * na)
-    discharge_bound = JuMP.@constraint(pm.model, sd <= p_dch_block_max * na)
+    charge_bound = JuMP.@constraint(pm.model, sc <= p_block_max * na)
+    discharge_bound = JuMP.@constraint(pm.model, sd <= p_block_max * na)
 
     return (charge_bound, discharge_bound)
 end

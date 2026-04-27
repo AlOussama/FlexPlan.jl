@@ -251,7 +251,7 @@ The returned multinetwork can include only a generator block device or all
 three component tables (`gen`, `storage`, `ne_storage`) to validate compound
 keys. The helper is test-only and mutates only local fixture data.
 """
-function _uc_gscr_transition_fixture(; na0::Float64=1.0, n0::Float64=0.0, nmax::Float64=8.0, startup_cost::Float64=1.0, shutdown_cost::Float64=1.0, include_storage::Bool=false, hours::Int=2)
+function _uc_gscr_transition_fixture(; na0::Float64=1.0, n0::Float64=1.0, nmax::Float64=8.0, startup_cost::Float64=1.0, shutdown_cost::Float64=1.0, include_storage::Bool=false, hours::Int=2)
     data = _FP.parse_file(normpath(@__DIR__, "data", "case2", "case2_d_strg.m"))
     data["g_min"] = 0.0
 
@@ -637,7 +637,7 @@ end
     end
 
     @testset "5 -> 2 transition gives su_block=0 and sd_block=3" begin
-        data = _uc_gscr_transition_fixture(; na0=5.0, startup_cost=1.0, shutdown_cost=1.0, include_storage=false, hours=2)
+        data = _uc_gscr_transition_fixture(; na0=5.0, n0=5.0, startup_cost=1.0, shutdown_cost=1.0, include_storage=false, hours=2)
         pm = _uc_gscr_transition_pm(data)
 
         JuMP.fix(_PM.var(pm, 1, :na_block, (:gen, 1)), 5.0; force=true)
@@ -653,7 +653,7 @@ end
     end
 
     @testset "First-snapshot transition uses na0 explicitly" begin
-        data = _uc_gscr_transition_fixture(; na0=3.0, startup_cost=1.0, shutdown_cost=1.0, include_storage=false, hours=2)
+        data = _uc_gscr_transition_fixture(; na0=3.0, n0=3.0, startup_cost=1.0, shutdown_cost=1.0, include_storage=false, hours=2)
         pm = _uc_gscr_transition_pm(data)
         con = _PM.con(pm, 1)[:block_count_transitions][(:gen, 1)]
 

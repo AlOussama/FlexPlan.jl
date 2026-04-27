@@ -564,6 +564,8 @@ end
 
 function _build_uc_block_no_gscr(pm::_PM.AbstractActivePowerModel; objective::Bool=true, intertemporal_constraints::Bool=true)
     for n in _FP.nw_ids(pm)
+        _PM.variable_branch_power(pm; nw=n)
+        _PM.variable_dcline_power(pm; nw=n)
         _PM.variable_gen_power(pm; nw=n)
         _FP.expression_gen_curtailment(pm; nw=n)
         _PM.variable_storage_power(pm; nw=n)
@@ -645,6 +647,170 @@ function _build_uc_block_no_gscr(pm::_PM.AbstractActivePowerModel; objective::Bo
             end
         end
     end
+end
+
+function _build_uc_block_with_final_policy(
+    pm::_PM.AbstractActivePowerModel;
+    objective::Bool=true,
+    intertemporal_constraints::Bool=true,
+    final_policy::Symbol=:with_final,
+    include_existing_storage_state::Bool=true,
+    include_candidate_storage_state::Bool=true,
+)
+    for n in _FP.nw_ids(pm)
+        _PM.variable_branch_power(pm; nw=n)
+        _PM.variable_gen_power(pm; nw=n)
+        _FP.expression_gen_curtailment(pm; nw=n)
+        _PM.variable_dcline_power(pm; nw=n)
+
+        _PM.variable_storage_power(pm; nw=n)
+        _FP.variable_absorbed_energy(pm; nw=n)
+        if _FP._has_uc_gscr_candidate_storage(pm, n)
+            _FP.variable_storage_power_ne(pm; nw=n)
+            _FP.variable_absorbed_energy_ne(pm; nw=n)
+        end
+
+        _FP.variable_uc_gscr_block(pm; nw=n, relax=true)
+    end
+
+    if objective
+        _FP.objective_min_cost_uc_gscr_block_integration(pm)
+    end
+
+    for n in _FP.nw_ids(pm)
+        for i in _PM.ids(pm, n, :dcline)
+            _PM.constraint_dcline_power_losses(pm, i; nw=n)
+        end
+        _FP.constraint_uc_gscr_block_bus_active_balance(pm; nw=n)
+        _FP.constraint_uc_gscr_block_dispatch(pm; nw=n)
+        _FP.constraint_uc_gscr_block_storage_bounds(pm; nw=n)
+        _FP.constraint_gscr_gershgorin_sufficient(pm; nw=n)
+
+        for i in _PM.ids(pm, :storage, nw=n)
+            _FP.constraint_storage_excl_slack(pm, i, nw=n)
+            _PM.constraint_storage_thermal_limit(pm, i, nw=n)
+            _PM.constraint_storage_losses(pm, i, nw=n)
+        end
+        if _FP._has_uc_gscr_candidate_storage(pm, n)
+            for i in _PM.ids(pm, :ne_storage, nw=n)
+                _FP.constraint_storage_excl_slack_ne(pm, i, nw=n)
+                _FP.constraint_storage_thermal_limit_ne(pm, i, nw=n)
+                _FP.constraint_storage_losses_ne(pm, i, nw=n)
+                _FP.constraint_storage_bounds_ne(pm, i, nw=n)
+            end
+        end
+
+        if intertemporal_constraints
+            if _FP.is_first_id(pm, n, :hour)
+                for i in _PM.ids(pm, :storage, nw=n)
+                    st = _PM.ref(pm, n, :storage, i)
+                    is_candidate = _is_battery_candidate(st)
+                    apply_state = is_candidate ? include_candidate_storage_state : include_existing_storage_state
+                    if apply_state
+                        _FP.constraint_storage_state(pm, i, nw=n)
+                    end
+                end
+                for i in _PM.ids(pm, :storage_bounded_absorption, nw=n)
+                    st = _PM.ref(pm, n, :storage, i)
+                    is_candidate = _is_battery_candidate(st)
+                    apply_state = is_candidate ? include_candidate_storage_state : include_existing_storage_state
+                    if apply_state
+                        _FP.constraint_maximum_absorption(pm, i, nw=n)
+                    end
+                end
+                if _FP._has_uc_gscr_candidate_storage(pm, n)
+                    if include_candidate_storage_state
+                        for i in _PM.ids(pm, :ne_storage, nw=n)
+                            _FP.constraint_storage_state_ne(pm, i, nw=n)
+                        end
+                        for i in _PM.ids(pm, :ne_storage_bounded_absorption, nw=n)
+                            _FP.constraint_maximum_absorption_ne(pm, i, nw=n)
+                        end
+                    end
+                end
+            else
+                if _FP.is_last_id(pm, n, :hour)
+                    if final_policy == :with_final
+                        for i in _PM.ids(pm, :storage, nw=n)
+                            st = _PM.ref(pm, n, :storage, i)
+                            is_candidate = _is_battery_candidate(st)
+                            apply_state = is_candidate ? include_candidate_storage_state : include_existing_storage_state
+                            if apply_state
+                                _FP.constraint_storage_state_final(pm, i, nw=n)
+                            end
+                        end
+                        if _FP._has_uc_gscr_candidate_storage(pm, n) && include_candidate_storage_state
+                            for i in _PM.ids(pm, :ne_storage, nw=n)
+                                _FP.constraint_storage_state_final_ne(pm, i, nw=n)
+                            end
+                        end
+                    elseif final_policy == :relaxed_final
+                        for i in _PM.ids(pm, :storage, nw=n)
+                            st = _PM.ref(pm, n, :storage, i)
+                            is_candidate = _is_battery_candidate(st)
+                            apply_state = is_candidate ? include_candidate_storage_state : include_existing_storage_state
+                            if apply_state
+                                _FP.constraint_storage_state_final(pm, n, i, 0.0)
+                            end
+                        end
+                        if _FP._has_uc_gscr_candidate_storage(pm, n) && include_candidate_storage_state
+                            for i in _PM.ids(pm, :ne_storage, nw=n)
+                                _FP.constraint_storage_state_final_ne(pm, n, i, 0.0)
+                            end
+                        end
+                    end
+                end
+
+                prev_n = _FP.prev_id(pm, n, :hour)
+                for i in _PM.ids(pm, :storage, nw=n)
+                    st = _PM.ref(pm, n, :storage, i)
+                    is_candidate = _is_battery_candidate(st)
+                    apply_state = is_candidate ? include_candidate_storage_state : include_existing_storage_state
+                    if apply_state
+                        _FP.constraint_storage_state(pm, i, prev_n, n)
+                    end
+                end
+                for i in _PM.ids(pm, :storage_bounded_absorption, nw=n)
+                    st = _PM.ref(pm, n, :storage, i)
+                    is_candidate = _is_battery_candidate(st)
+                    apply_state = is_candidate ? include_candidate_storage_state : include_existing_storage_state
+                    if apply_state
+                        _FP.constraint_maximum_absorption(pm, i, prev_n, n)
+                    end
+                end
+                if _FP._has_uc_gscr_candidate_storage(pm, n) && include_candidate_storage_state
+                    for i in _PM.ids(pm, :ne_storage, nw=n)
+                        _FP.constraint_storage_state_ne(pm, i, prev_n, n)
+                    end
+                    for i in _PM.ids(pm, :ne_storage_bounded_absorption, nw=n)
+                        _FP.constraint_maximum_absorption_ne(pm, i, prev_n, n)
+                    end
+                end
+            end
+        end
+
+        if _FP.is_first_id(pm, n, :hour) && _FP._has_uc_gscr_candidate_storage(pm, n)
+            prev_nws = _FP.prev_ids(pm, n, :year)
+            for i in _PM.ids(pm, :ne_storage; nw=n)
+                _FP.constraint_ne_storage_activation(pm, i, prev_nws, n)
+            end
+        end
+    end
+end
+
+function _builder_with_final_policy(
+    final_policy::Symbol;
+    intertemporal_constraints::Bool=true,
+    include_existing_storage_state::Bool=true,
+    include_candidate_storage_state::Bool=true,
+)
+    return pm -> _build_uc_block_with_final_policy(
+        pm;
+        final_policy=final_policy,
+        intertemporal_constraints=intertemporal_constraints,
+        include_existing_storage_state=include_existing_storage_state,
+        include_candidate_storage_state=include_candidate_storage_state,
+    )
 end
 
 function _collect_candidate_presolve_rows(raw::Dict{String,Any})
@@ -3309,6 +3475,560 @@ function _run_existing_storage_initial_energy_policy_sequence(raw::Dict{String,A
     )
 end
 
+function _final_storage_initial_energy_sum(pm)
+    first_nw = first(sort(collect(_FP.nw_ids(pm))))
+    total = 0.0
+    for i in _PM.ids(pm, :storage, nw=first_nw)
+        total += float(get(_PM.ref(pm, first_nw, :storage, i), "energy", 0.0))
+    end
+    if haskey(_PM.ref(pm, first_nw), :ne_storage)
+        for i in _PM.ids(pm, :ne_storage, nw=first_nw)
+            total += float(get(_PM.ref(pm, first_nw, :ne_storage, i), "energy", 0.0))
+        end
+    end
+    return total
+end
+
+function _run_24h_final_storage_state_variant(
+    raw::Dict{String,Any},
+    scenario::String;
+    final_policy::Symbol=:with_final,
+    existing_storage_initial_energy_policy::Union{Nothing,String}="half_energy_rating",
+)
+    data = _prepare_solver_data(raw; mode=:capexp)
+    _set_mode_nmax_policy!(data, "full_capexp")
+    policy_stats = _apply_existing_storage_initial_energy_policy!(data, existing_storage_initial_energy_policy)
+    _inject_g_min!(data, 0.0)
+
+    solved = _solve_with_pm(data, _builder_with_final_policy(final_policy))
+    pm = solved["pm"]
+    status = solved["status"]
+    nws = sort(collect(_FP.nw_ids(pm)))
+    first_nw = first(nws)
+    last_nw = last(nws)
+
+    storage_final_count = 0
+    storage_final_ne_count = 0
+    if final_policy != :no_final && length(nws) > 1
+        storage_final_count = length(_PM.ids(pm, :storage, nw=last_nw))
+        if haskey(_PM.ref(pm, last_nw), :ne_storage)
+            storage_final_ne_count = length(_PM.ids(pm, :ne_storage, nw=last_nw))
+        end
+    end
+
+    initial_energy_sum = _final_storage_initial_energy_sum(pm)
+    final_energy_sum = nothing
+    binding_at_final_lb = nothing
+    total_sd = nothing
+    total_sc = nothing
+
+    if status in _ACTIVE_OK
+        se_sum = 0.0
+        for i in _PM.ids(pm, :storage, nw=last_nw)
+            se_sum += JuMP.value(_PM.var(pm, last_nw, :se, i))
+        end
+        if haskey(_PM.var(pm, last_nw), :se_ne)
+            for i in _PM.ids(pm, :ne_storage, nw=last_nw)
+                se_sum += JuMP.value(_PM.var(pm, last_nw, :se_ne, i))
+            end
+        end
+        final_energy_sum = se_sum
+
+        bind_count = 0
+        tol = 1e-6
+        if final_policy != :no_final && length(nws) > 1
+            for i in _PM.ids(pm, :storage, nw=last_nw)
+                lb = final_policy == :relaxed_final ? 0.0 : float(get(_PM.ref(pm, last_nw, :storage, i), "energy", 0.0))
+                se = JuMP.value(_PM.var(pm, last_nw, :se, i))
+                bind_count += abs(se - lb) <= tol ? 1 : 0
+            end
+            if haskey(_PM.var(pm, last_nw), :se_ne)
+                for i in _PM.ids(pm, :ne_storage, nw=last_nw)
+                    z = haskey(_PM.var(pm, last_nw), :z_strg_ne) ? JuMP.value(_PM.var(pm, last_nw, :z_strg_ne, i)) : 1.0
+                    lb = final_policy == :relaxed_final ? 0.0 : float(get(_PM.ref(pm, last_nw, :ne_storage, i), "energy", 0.0)) * z
+                    se = JuMP.value(_PM.var(pm, last_nw, :se_ne, i))
+                    bind_count += abs(se - lb) <= tol ? 1 : 0
+                end
+            end
+        end
+        binding_at_final_lb = bind_count
+
+        discharge = 0.0
+        charge = 0.0
+        for n in nws
+            if haskey(_PM.var(pm, n), :sd)
+                for i in _PM.ids(pm, :storage, nw=n)
+                    discharge += JuMP.value(_PM.var(pm, n, :sd, i))
+                end
+            end
+            if haskey(_PM.var(pm, n), :sc)
+                for i in _PM.ids(pm, :storage, nw=n)
+                    charge += JuMP.value(_PM.var(pm, n, :sc, i))
+                end
+            end
+            if haskey(_PM.var(pm, n), :sd_ne)
+                for i in _PM.ids(pm, :ne_storage, nw=n)
+                    discharge += JuMP.value(_PM.var(pm, n, :sd_ne, i))
+                end
+            end
+            if haskey(_PM.var(pm, n), :sc_ne)
+                for i in _PM.ids(pm, :ne_storage, nw=n)
+                    charge += JuMP.value(_PM.var(pm, n, :sc_ne, i))
+                end
+            end
+        end
+        total_sd = discharge
+        total_sc = charge
+    end
+
+    return Dict{String,Any}(
+        "scenario" => scenario,
+        "status" => status,
+        "objective" => solved["objective"],
+        "solve_time_sec" => solved["solve_time_sec"],
+        "existing_storage_initial_energy_policy" => isnothing(existing_storage_initial_energy_policy) ? "none" : existing_storage_initial_energy_policy,
+        "existing_storage_initial_energy_policy_stats" => policy_stats,
+        "constraint_storage_state_final_count" => storage_final_count,
+        "constraint_storage_state_final_ne_count" => storage_final_ne_count,
+        "aggregate_initial_storage_energy" => initial_energy_sum,
+        "aggregate_final_storage_energy" => final_energy_sum,
+        "storage_units_binding_final_lower_bound" => binding_at_final_lb,
+        "total_storage_discharge_over_horizon" => total_sd,
+        "total_storage_charge_over_horizon" => total_sc,
+    )
+end
+
+function _run_24h_final_storage_state_diagnostic(raw::Dict{String,Any})
+    with_final = _run_24h_final_storage_state_variant(
+        raw,
+        "full_24h_with_storage_state_and_final";
+        final_policy=:with_final,
+    )
+    no_final = _run_24h_final_storage_state_variant(
+        raw,
+        "full_24h_with_storage_state_no_final";
+        final_policy=:no_final,
+    )
+    relaxed_final = _run_24h_final_storage_state_variant(
+        raw,
+        "full_24h_storage_state_relaxed_final";
+        final_policy=:relaxed_final,
+    )
+
+    decision = if no_final["status"] in _ACTIVE_OK
+        "final state is the blocker"
+    else
+        "storage trajectory or per-period state coupling is the blocker"
+    end
+
+    return Dict{String,Any}(
+        "g_min" => 0.0,
+        "full_24h_with_storage_state_and_final" => with_final,
+        "full_24h_with_storage_state_no_final" => no_final,
+        "full_24h_storage_state_relaxed_final" => relaxed_final,
+        "decision" => decision,
+    )
+end
+
+function _make_growing_horizon_raw(raw::Dict{String,Any}, h::Int)
+    out = deepcopy(raw)
+    nw_new = Dict{String,Any}()
+    for t in 1:h
+        nw_new[string(t)] = deepcopy(raw["nw"][string(t)])
+    end
+    out["nw"] = nw_new
+    out["multinetwork"] = true
+    if haskey(out, "dim")
+        delete!(out, "dim")
+    end
+    return out
+end
+
+function _sum_load_over_horizon(data::Dict{String,Any})
+    total = 0.0
+    for nw in values(data["nw"])
+        total += sum((float(get(l, "pd", 0.0)) for l in values(get(nw, "load", Dict{String,Any}())) if get(l, "status", 1) != 0); init=0.0)
+    end
+    return total
+end
+
+function _mutate_candidate_one_block_installed!(data::Dict{String,Any})
+    for nw in values(data["nw"])
+        for st in values(get(nw, "storage", Dict{String,Any}()))
+            if _is_battery_candidate(st)
+                pblk = float(get(st, "p_block_max", 0.0))
+                eblk = float(get(st, "e_block", 0.0))
+                st["n_block0"] = 1.0
+                st["na0"] = 1.0
+                st["n_block_max"] = max(float(get(st, "n_block_max", 0.0)), 1.0)
+                st["n0"] = 1.0
+                st["nmax"] = max(float(get(st, "nmax", get(st, "n_block_max", 0.0))), 1.0)
+                st["energy"] = 0.5 * eblk
+                st["energy_rating"] = eblk
+                st["charge_rating"] = pblk
+                st["discharge_rating"] = pblk
+                st["thermal_rating"] = pblk
+            end
+        end
+    end
+    return data
+end
+
+function _collect_temporal_metrics(pm)
+    nws = sort(collect(_FP.nw_ids(pm)))
+    first_nw = first(nws)
+    last_nw = last(nws)
+
+    total_gen = 0.0
+    total_sd = 0.0
+    total_sc = 0.0
+    su_total = 0.0
+    sd_total = 0.0
+    max_balance = 0.0
+    max_state_res = 0.0
+    min_margin = Inf
+    agg_energy_by_nw = Float64[]
+    transition_max = 0.0
+
+    for n in nws
+        if haskey(_PM.var(pm, n), :pg)
+            total_gen += sum((JuMP.value(v) for v in values(_PM.var(pm, n, :pg))); init=0.0)
+        end
+        if haskey(_PM.var(pm, n), :sd)
+            total_sd += sum((JuMP.value(v) for v in values(_PM.var(pm, n, :sd))); init=0.0)
+        end
+        if haskey(_PM.var(pm, n), :sc)
+            total_sc += sum((JuMP.value(v) for v in values(_PM.var(pm, n, :sc))); init=0.0)
+        end
+        if haskey(_PM.var(pm, n), :sd_ne)
+            total_sd += sum((JuMP.value(v) for v in values(_PM.var(pm, n, :sd_ne))); init=0.0)
+        end
+        if haskey(_PM.var(pm, n), :sc_ne)
+            total_sc += sum((JuMP.value(v) for v in values(_PM.var(pm, n, :sc_ne))); init=0.0)
+        end
+
+        if haskey(_PM.var(pm, n), :su_block)
+            su_total += sum((JuMP.value(v) for v in values(_PM.var(pm, n, :su_block))); init=0.0)
+        end
+        if haskey(_PM.var(pm, n), :sd_block)
+            sd_total += sum((JuMP.value(v) for v in values(_PM.var(pm, n, :sd_block))); init=0.0)
+        end
+
+        max_balance = max(max_balance, _ablation_bus_balance_residual(pm, n))
+
+        agg_e = 0.0
+        if haskey(_PM.var(pm, n), :se)
+            agg_e += sum((JuMP.value(v) for v in values(_PM.var(pm, n, :se))); init=0.0)
+        end
+        if haskey(_PM.var(pm, n), :se_ne)
+            agg_e += sum((JuMP.value(v) for v in values(_PM.var(pm, n, :se_ne))); init=0.0)
+        end
+        push!(agg_energy_by_nw, agg_e)
+
+        if haskey(_PM.ref(pm, n), :g_min)
+            for bus in _PM.ids(pm, n, :bus)
+                sigma0 = _PM.ref(pm, n, :gscr_sigma0_gershgorin_margin, bus)
+                g_min = _PM.ref(pm, n, :g_min)
+                lhs = sigma0 + sum(
+                    _PM.ref(pm, n, key[1], key[2], "b_block") * JuMP.value(_PM.var(pm, n, :na_block, key))
+                    for key in _PM.ref(pm, n, :bus_gfm_devices, bus); init=0.0,
+                )
+                rhs = g_min * sum(
+                    _PM.ref(pm, n, key[1], key[2], "p_block_max") * JuMP.value(_PM.var(pm, n, :na_block, key))
+                    for key in _PM.ref(pm, n, :bus_gfl_devices, bus); init=0.0,
+                )
+                min_margin = min(min_margin, lhs - rhs)
+            end
+        end
+
+        for i in _PM.ids(pm, :storage, nw=n)
+            st = _PM.ref(pm, n, :storage, i)
+            dt = float(get(_PM.ref(pm, n), :time_elapsed, 1.0))
+            ce = float(get(st, "charge_efficiency", 1.0))
+            de = float(get(st, "discharge_efficiency", 1.0))
+            inflow = float(get(st, "stationary_energy_inflow", 0.0))
+            outflow = float(get(st, "stationary_energy_outflow", 0.0))
+            selfd = float(get(st, "self_discharge_rate", 0.0))
+            se = JuMP.value(_PM.var(pm, n, :se, i))
+            sc = JuMP.value(_PM.var(pm, n, :sc, i))
+            sd = JuMP.value(_PM.var(pm, n, :sd, i))
+            if _FP.is_first_id(pm, n, :hour)
+                e0 = float(get(st, "energy", 0.0))
+                rhs = ((1 - selfd)^dt) * e0 + dt * (ce * sc - sd / de + inflow - outflow)
+                max_state_res = max(max_state_res, abs(se - rhs))
+            else
+                prev_n = _FP.prev_id(pm, n, :hour)
+                se_prev = JuMP.value(_PM.var(pm, prev_n, :se, i))
+                rhs = ((1 - selfd)^dt) * se_prev + dt * (ce * sc - sd / de + inflow - outflow)
+                max_state_res = max(max_state_res, abs(se - rhs))
+            end
+        end
+
+        if haskey(_PM.var(pm, n), :se_ne)
+            for i in _PM.ids(pm, :ne_storage, nw=n)
+                st = _PM.ref(pm, n, :ne_storage, i)
+                dt = float(get(_PM.ref(pm, n), :time_elapsed, 1.0))
+                ce = float(get(st, "charge_efficiency", 1.0))
+                de = float(get(st, "discharge_efficiency", 1.0))
+                inflow = float(get(st, "stationary_energy_inflow", 0.0))
+                outflow = float(get(st, "stationary_energy_outflow", 0.0))
+                selfd = float(get(st, "self_discharge_rate", 0.0))
+                se = JuMP.value(_PM.var(pm, n, :se_ne, i))
+                sc = JuMP.value(_PM.var(pm, n, :sc_ne, i))
+                sd = JuMP.value(_PM.var(pm, n, :sd_ne, i))
+                z = haskey(_PM.var(pm, n), :z_strg_ne) ? JuMP.value(_PM.var(pm, n, :z_strg_ne, i)) : 1.0
+                if _FP.is_first_id(pm, n, :hour)
+                    e0 = float(get(st, "energy", 0.0))
+                    rhs = ((1 - selfd)^dt) * e0 * z + dt * (ce * sc - sd / de + inflow * z - outflow * z)
+                    max_state_res = max(max_state_res, abs(se - rhs))
+                else
+                    prev_n = _FP.prev_id(pm, n, :hour)
+                    se_prev = JuMP.value(_PM.var(pm, prev_n, :se_ne, i))
+                    rhs = ((1 - selfd)^dt) * se_prev + dt * (ce * sc - sd / de + inflow * z - outflow * z)
+                    max_state_res = max(max_state_res, abs(se - rhs))
+                end
+            end
+        end
+
+        if haskey(_PM.var(pm, n), :na_block) && haskey(_PM.var(pm, n), :su_block) && haskey(_PM.var(pm, n), :sd_block)
+            for key in keys(_PM.var(pm, n, :na_block))
+                device_key = key[1]
+                d = _PM.ref(pm, n, device_key[1], device_key[2])
+                na = JuMP.value(_PM.var(pm, n, :na_block, device_key))
+                su = JuMP.value(_PM.var(pm, n, :su_block, device_key))
+                sdv = JuMP.value(_PM.var(pm, n, :sd_block, device_key))
+                prev_na = _FP.is_first_id(pm, n, :hour) ? float(get(d, "na0", 0.0)) : JuMP.value(_PM.var(pm, _FP.prev_id(pm, n, :hour), :na_block, device_key))
+                transition_max = max(transition_max, abs((na - prev_na) - (su - sdv)))
+            end
+        end
+    end
+
+    return Dict{String,Any}(
+        "total_generation_dispatch" => total_gen,
+        "total_storage_discharge" => total_sd,
+        "total_storage_charge" => total_sc,
+        "final_aggregate_storage_energy" => agg_energy_by_nw[end],
+        "minimum_aggregate_storage_energy" => minimum(agg_energy_by_nw),
+        "startup_total" => su_total,
+        "shutdown_total" => sd_total,
+        "max_active_balance_residual" => max_balance,
+        "max_storage_state_residual" => max_state_res,
+        "max_startup_shutdown_transition_residual" => transition_max,
+        "min_gscr_margin" => isfinite(min_margin) ? min_margin : nothing,
+    )
+end
+
+function _run_growing_horizon_row(raw::Dict{String,Any}, h::Int)
+    raw_h = _make_growing_horizon_raw(raw, h)
+    data = _prepare_solver_data(raw_h; mode=:capexp)
+    _set_mode_nmax_policy!(data, "full_capexp")
+    _apply_existing_storage_initial_energy_policy!(data, "half_energy_rating")
+    _mutate_candidate_energy_zero!(data)
+    _inject_g_min!(data, 0.0)
+
+    load_sum = _sum_load_over_horizon(data)
+    solved = _solve_with_pm(data, _builder_with_final_policy(:no_final))
+    status = solved["status"]
+    row = Dict{String,Any}(
+        "horizon" => h,
+        "status" => status,
+        "objective" => solved["objective"],
+        "solve_time_sec" => solved["solve_time_sec"],
+        "total_load_over_horizon" => load_sum,
+        "final_storage_policy" => "short_horizon_relaxed",
+        "constraint_storage_state_final_count" => 0,
+        "constraint_storage_state_final_ne_count" => 0,
+    )
+
+    if status in _ACTIVE_OK
+        pm = solved["pm"]
+        nw1 = first(sort(collect(_FP.nw_ids(pm))))
+        merge!(row, _collect_temporal_metrics(pm))
+        row["invested_blocks_by_carrier"] = _ablation_investment_by_carrier(pm, nw1)
+    end
+    return row
+end
+
+function _first_failing_hour_storage_audit(raw::Dict{String,Any}, hstar::Int, last_feasible_h::Int)
+    out = Dict{String,Any}("hstar" => hstar, "last_feasible_horizon" => last_feasible_h)
+    if hstar <= 0
+        return out
+    end
+    nw_star = raw["nw"][string(hstar)]
+    load_h = sum((float(get(l, "pd", 0.0)) for l in values(get(nw_star, "load", Dict{String,Any}())) if get(l, "status", 1) != 0); init=0.0)
+    installed_gen = sum((float(get(g, "n_block0", 0.0)) * float(get(g, "p_block_max", 0.0)) * _pmax_pu(g) for g in values(get(nw_star, "gen", Dict{String,Any}())) if haskey(g, "type")); init=0.0)
+    max_gen = sum((float(get(g, "n_block_max", get(g, "n_block0", 0.0))) * float(get(g, "p_block_max", 0.0)) * _pmax_pu(g) for g in values(get(nw_star, "gen", Dict{String,Any}())) if haskey(g, "type")); init=0.0)
+
+    ppu_bad = Dict{String,Any}[]
+    for (id, g) in get(nw_star, "gen", Dict{String,Any}())
+        if !haskey(g, "type")
+            continue
+        end
+        pminpu = float(get(g, "p_min_pu", 0.0))
+        pmaxpu = float(get(g, "p_max_pu", 1.0))
+        if pminpu > pmaxpu + _EPS || pmaxpu < -_EPS || pmaxpu > 1.0 + _EPS || pminpu < -1.0 - _EPS
+            push!(ppu_bad, Dict("id" => id, "p_min_pu" => pminpu, "p_max_pu" => pmaxpu))
+        end
+    end
+
+    branch_anom = Dict{String,Any}[]
+    for (id, br) in get(nw_star, "branch", Dict{String,Any}())
+        status = get(br, "br_status", get(br, "status", 1))
+        rate_a = float(get(br, "rate_a", 0.0))
+        if status == 0 || rate_a <= 0.0
+            push!(branch_anom, Dict("id" => id, "status" => status, "rate_a" => rate_a))
+        end
+    end
+    dcline_anom = Dict{String,Any}[]
+    for (id, dc) in get(nw_star, "dcline", Dict{String,Any}())
+        status = get(dc, "br_status", get(dc, "status", 1))
+        cap = max(abs(float(get(dc, "pmaxf", 0.0))), abs(float(get(dc, "pminf", 0.0))), abs(float(get(dc, "pmaxt", 0.0))), abs(float(get(dc, "pmint", 0.0))))
+        if status == 0 || cap <= 0.0
+            push!(dcline_anom, Dict("id" => id, "status" => status, "max_abs_cap" => cap))
+        end
+    end
+
+    out["load_at_hstar"] = load_h
+    out["installed_available_generation_at_hstar"] = installed_gen
+    out["max_expandable_generation_at_hstar"] = max_gen
+    out["p_min_pu_p_max_pu_anomalies"] = ppu_bad
+    out["branch_availability_anomalies"] = branch_anom
+    out["dcline_availability_anomalies"] = dcline_anom
+
+    if last_feasible_h > 0
+        raw_f = _make_growing_horizon_raw(raw, last_feasible_h)
+        data_f = _prepare_solver_data(raw_f; mode=:capexp)
+        _set_mode_nmax_policy!(data_f, "full_capexp")
+        _apply_existing_storage_initial_energy_policy!(data_f, "half_energy_rating")
+        _mutate_candidate_energy_zero!(data_f)
+        _inject_g_min!(data_f, 0.0)
+        solved_f = _solve_with_pm(data_f, _builder_with_final_policy(:no_final))
+        if solved_f["status"] in _ACTIVE_OK
+            pm = solved_f["pm"]
+            nws = sort(collect(_FP.nw_ids(pm)))
+            last_nw = last(nws)
+            prev_nw = length(nws) > 1 ? nws[end-1] : last_nw
+            existing_energy_start = 0.0
+            lb_bind = 0
+            ub_bind = 0
+            charge_opp = 0.0
+            total_discharge = 0.0
+            for i in _PM.ids(pm, :storage, nw=last_nw)
+                st = _PM.ref(pm, last_nw, :storage, i)
+                if _is_battery_candidate(st)
+                    continue
+                end
+                se_prev = JuMP.value(_PM.var(pm, prev_nw, :se, i))
+                se_last = JuMP.value(_PM.var(pm, last_nw, :se, i))
+                existing_energy_start += se_prev
+                cap = float(get(st, "energy_rating", 0.0))
+                lb_bind += se_last <= _EPS ? 1 : 0
+                ub_bind += cap > _EPS && abs(se_last - cap) <= _EPS ? 1 : 0
+                if haskey(_PM.var(pm, prev_nw), :sc)
+                    sc_prev = JuMP.value(_PM.var(pm, prev_nw, :sc, i))
+                    sc_ub = _var_ub(_PM.var(pm, prev_nw, :sc, i))
+                    if isfinite(sc_ub)
+                        charge_opp += max(0.0, sc_ub - sc_prev)
+                    end
+                end
+                if haskey(_PM.var(pm, prev_nw), :sd)
+                    total_discharge += JuMP.value(_PM.var(pm, prev_nw, :sd, i))
+                end
+            end
+            out["existing_storage_energy_available_at_start_of_hstar"] = existing_energy_start
+            out["aggregate_storage_discharge_requirement_last_feasible_horizon"] = total_discharge
+            out["storage_units_at_lower_energy_bound_last_feasible"] = lb_bind
+            out["storage_units_at_upper_energy_bound_last_feasible"] = ub_bind
+            out["storage_charge_opportunity_before_hstar"] = charge_opp
+        end
+    end
+    return out
+end
+
+function _run_temporal_ablation_variant(raw::Dict{String,Any}, hstar::Int, label::String; builder, mutator=nothing)
+    raw_h = _make_growing_horizon_raw(raw, hstar)
+    data = _prepare_solver_data(raw_h; mode=:capexp)
+    _set_mode_nmax_policy!(data, "full_capexp")
+    _apply_existing_storage_initial_energy_policy!(data, "half_energy_rating")
+    _mutate_candidate_energy_zero!(data)
+    _inject_g_min!(data, 0.0)
+    if !(mutator === nothing)
+        mutator(data)
+    end
+    solved = _solve_with_pm(data, builder)
+    return Dict{String,Any}(
+        "label" => label,
+        "status" => solved["status"],
+        "objective" => solved["objective"],
+        "solve_time_sec" => solved["solve_time_sec"],
+    )
+end
+
+function _run_growing_horizon_storage_diagnostic(raw::Dict{String,Any})
+    rows = Dict{String,Any}[]
+    for h in 1:24
+        push!(rows, _run_growing_horizon_row(raw, h))
+    end
+    feasible_h = [r["horizon"] for r in rows if r["status"] in _ACTIVE_OK]
+    infeasible_h = [r["horizon"] for r in rows if !(r["status"] in _ACTIVE_OK)]
+    last_feasible = isempty(feasible_h) ? nothing : maximum(feasible_h)
+    first_infeasible = isempty(infeasible_h) ? nothing : minimum(infeasible_h)
+    first_failing_hour = first_infeasible
+
+    audit = _first_failing_hour_storage_audit(raw, isnothing(first_infeasible) ? 0 : first_infeasible, isnothing(last_feasible) ? 0 : last_feasible)
+
+    ablations = Dict{String,Any}[]
+    if !isnothing(first_infeasible)
+        hstar = first_infeasible
+        push!(ablations, _run_temporal_ablation_variant(raw, hstar, "Hstar_without_storage_state"; builder=_builder_with_final_policy(:no_final; intertemporal_constraints=false)))
+        push!(ablations, _run_temporal_ablation_variant(raw, hstar, "Hstar_without_final_storage"; builder=_builder_with_final_policy(:no_final)))
+        push!(ablations, _run_temporal_ablation_variant(raw, hstar, "Hstar_without_existing_storage_state"; builder=_builder_with_final_policy(:no_final; include_existing_storage_state=false, include_candidate_storage_state=true)))
+        push!(ablations, _run_temporal_ablation_variant(raw, hstar, "Hstar_without_candidate_storage_state"; builder=_builder_with_final_policy(:no_final; include_existing_storage_state=true, include_candidate_storage_state=false)))
+        push!(ablations, _run_temporal_ablation_variant(raw, hstar, "Hstar_with_candidate_initial_soc_half"; builder=_builder_with_final_policy(:no_final), mutator=data -> begin
+            for nw in values(data["nw"])
+                for st in values(get(nw, "storage", Dict{String,Any}()))
+                    if _is_battery_candidate(st)
+                        st["energy"] = 0.5 * float(get(st, "e_block", 0.0)) * float(get(st, "n_block0", 0.0))
+                    end
+                end
+            end
+        end))
+        push!(ablations, _run_temporal_ablation_variant(raw, hstar, "Hstar_candidate_one_block_installed"; builder=_builder_with_final_policy(:no_final), mutator=_mutate_candidate_one_block_installed!))
+    end
+
+    decision = "no infeasible horizon found"
+    if !isempty(ablations)
+        status_by = Dict(String(v["label"]) => String(v["status"]) for v in ablations)
+        if get(status_by, "Hstar_without_storage_state", "") in _ACTIVE_OK
+            decision = "storage trajectory is confirmed blocker"
+        elseif get(status_by, "Hstar_without_final_storage", "") in _ACTIVE_OK
+            decision = "final state policy is blocker"
+        elseif get(status_by, "Hstar_without_existing_storage_state", "") in _ACTIVE_OK
+            decision = "existing storage trajectory is blocker"
+        elseif get(status_by, "Hstar_without_candidate_storage_state", "") in _ACTIVE_OK
+            decision = "candidate storage trajectory is blocker"
+        elseif get(status_by, "Hstar_candidate_one_block_installed", "") in _ACTIVE_OK
+            decision = "greenfield candidate initial trajectory is blocker"
+        else
+            decision = "temporal coupling remains blocker under all tested ablations"
+        end
+    end
+
+    return Dict{String,Any}(
+        "g_min" => 0.0,
+        "final_storage_policy" => "short_horizon_relaxed",
+        "existing_storage_initial_energy_policy" => "half_energy_rating",
+        "candidate_battery_energy_policy" => "0",
+        "horizon_rows" => rows,
+        "last_feasible_horizon" => last_feasible,
+        "first_infeasible_horizon" => first_infeasible,
+        "first_failing_hour" => first_failing_hour,
+        "first_failing_hour_audit" => audit,
+        "temporal_ablations_at_hstar" => ablations,
+        "conclusion" => decision,
+    )
+end
+
 function _write_report(
     schema::Dict{String,Any},
     adequacy::Dict{String,Any},
@@ -3317,6 +4037,8 @@ function _write_report(
     deep_diag::Dict{String,Any},
     presolve_candidates::Vector{Dict{String,Any}},
     existing_storage_policy_runs::Dict{String,Any},
+    final_storage_24h_diag::Dict{String,Any},
+    growing_horizon_diag::Dict{String,Any},
 )
     mkpath(dirname(_REPORT_PATH))
     open(_REPORT_PATH, "w") do io
@@ -3435,6 +4157,68 @@ function _write_report(
                 end
             end
         end
+        println(io)
+
+        println(io, "## 24h Final Storage-State Diagnostic (g_min = 0)")
+        println(io, "| variant | status | constraint_storage_state_final | constraint_storage_state_final_ne | aggregate initial storage energy | aggregate final storage energy | storage units binding at final lower bound | total storage discharge over horizon | total storage charge over horizon |")
+        println(io, "|---|---|---:|---:|---:|---:|---:|---:|---:|")
+        for key in ("full_24h_with_storage_state_and_final", "full_24h_with_storage_state_no_final", "full_24h_storage_state_relaxed_final")
+            r = final_storage_24h_diag[key]
+            println(
+                io,
+                "| ", r["scenario"],
+                " | ", r["status"],
+                " | ", r["constraint_storage_state_final_count"],
+                " | ", r["constraint_storage_state_final_ne_count"],
+                " | ", _fmt(r["aggregate_initial_storage_energy"]),
+                " | ", _fmt(r["aggregate_final_storage_energy"]),
+                " | ", _fmt(r["storage_units_binding_final_lower_bound"]),
+                " | ", _fmt(r["total_storage_discharge_over_horizon"]),
+                " | ", _fmt(r["total_storage_charge_over_horizon"]),
+                " |",
+            )
+        end
+        println(io, "- decision: ", final_storage_24h_diag["decision"])
+        println(io)
+
+        println(io, "## Growing-Horizon Storage Dynamics Diagnostic")
+        println(io, "- g_min: 0")
+        println(io, "- final storage policy: ", growing_horizon_diag["final_storage_policy"])
+        println(io, "- existing storage initial energy policy: ", growing_horizon_diag["existing_storage_initial_energy_policy"])
+        println(io, "- candidate battery energy policy: ", growing_horizon_diag["candidate_battery_energy_policy"])
+        println(io)
+        println(io, "| H | status | objective | solve_time_s | total_load | total_gen_dispatch | total_storage_discharge | total_storage_charge | final_aggregate_storage_energy | minimum_aggregate_storage_energy | startup_total | shutdown_total | max_active_balance_residual | max_storage_state_residual | max_startup_shutdown_transition_residual | min_gSCR_margin |")
+        println(io, "|---:|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|")
+        for r in growing_horizon_diag["horizon_rows"]
+            println(io, "| ", r["horizon"], " | ", r["status"], " | ", _fmt(r["objective"]), " | ", _fmt(r["solve_time_sec"]), " | ", _fmt(r["total_load_over_horizon"]), " | ", _fmt(get(r, "total_generation_dispatch", nothing)), " | ", _fmt(get(r, "total_storage_discharge", nothing)), " | ", _fmt(get(r, "total_storage_charge", nothing)), " | ", _fmt(get(r, "final_aggregate_storage_energy", nothing)), " | ", _fmt(get(r, "minimum_aggregate_storage_energy", nothing)), " | ", _fmt(get(r, "startup_total", nothing)), " | ", _fmt(get(r, "shutdown_total", nothing)), " | ", _fmt(get(r, "max_active_balance_residual", nothing)), " | ", _fmt(get(r, "max_storage_state_residual", nothing)), " | ", _fmt(get(r, "max_startup_shutdown_transition_residual", nothing)), " | ", _fmt(get(r, "min_gscr_margin", nothing)), " |")
+        end
+        println(io, "- last feasible horizon: ", growing_horizon_diag["last_feasible_horizon"])
+        println(io, "- first infeasible horizon: ", growing_horizon_diag["first_infeasible_horizon"])
+        println(io, "- first failing hour: ", growing_horizon_diag["first_failing_hour"])
+        println(io)
+
+        fha = growing_horizon_diag["first_failing_hour_audit"]
+        println(io, "### First-Failing-Hour Storage Audit")
+        println(io, "- load at H*: ", _fmt(get(fha, "load_at_hstar", nothing)))
+        println(io, "- installed available generation at H*: ", _fmt(get(fha, "installed_available_generation_at_hstar", nothing)))
+        println(io, "- max expandable generation at H*: ", _fmt(get(fha, "max_expandable_generation_at_hstar", nothing)))
+        println(io, "- existing storage energy available at start of H*: ", _fmt(get(fha, "existing_storage_energy_available_at_start_of_hstar", nothing)))
+        println(io, "- aggregate storage discharge requirement in last feasible horizon: ", _fmt(get(fha, "aggregate_storage_discharge_requirement_last_feasible_horizon", nothing)))
+        println(io, "- storage units at lower energy bound in last feasible solution: ", _fmt(get(fha, "storage_units_at_lower_energy_bound_last_feasible", nothing)))
+        println(io, "- storage units at upper energy bound in last feasible solution: ", _fmt(get(fha, "storage_units_at_upper_energy_bound_last_feasible", nothing)))
+        println(io, "- storage charge opportunity before H*: ", _fmt(get(fha, "storage_charge_opportunity_before_hstar", nothing)))
+        println(io, "- p_min_pu/p_max_pu anomalies at H*: ", length(get(fha, "p_min_pu_p_max_pu_anomalies", Dict{String,Any}[])))
+        println(io, "- branch availability anomalies at H*: ", length(get(fha, "branch_availability_anomalies", Dict{String,Any}[])))
+        println(io, "- dcline availability anomalies at H*: ", length(get(fha, "dcline_availability_anomalies", Dict{String,Any}[])))
+        println(io)
+
+        println(io, "### Temporal Constraint Ablations at H*")
+        println(io, "| variant | status | objective | solve_time_s |")
+        println(io, "|---|---|---:|---:|")
+        for v in growing_horizon_diag["temporal_ablations_at_hstar"]
+            println(io, "| ", v["label"], " | ", v["status"], " | ", _fmt(v["objective"]), " | ", _fmt(v["solve_time_sec"]), " |")
+        end
+        println(io, "- conclusion: ", growing_horizon_diag["conclusion"])
         println(io)
 
         println(io, "## 4) Diagnostics If g_min=0 Full CAPEXP Is Infeasible")
@@ -3984,6 +4768,8 @@ function _write_results_bundle(
     deep_diag::Dict{String,Any},
     presolve_candidates::Vector{Dict{String,Any}},
     existing_storage_policy_runs::Dict{String,Any},
+    final_storage_24h_diag::Dict{String,Any},
+    growing_horizon_diag::Dict{String,Any},
 )
     mkpath(dirname(_RESULTS_PATH))
     bundle = Dict{String,Any}(
@@ -3993,6 +4779,8 @@ function _write_results_bundle(
         "run_flag" => _RUN_FLAG,
         "positive_g_min_runs_skipped" => !existing_storage_policy_runs["positive_g_min_run_executed"],
         "existing_storage_initial_energy_policy" => existing_storage_policy_runs,
+        "final_storage_state_24h_diagnostic" => final_storage_24h_diag,
+        "growing_horizon_storage_dynamics_diagnostic" => growing_horizon_diag,
         "schema" => schema,
         "adequacy" => adequacy,
         "gate_g_min_0" => gate,
@@ -4021,6 +4809,8 @@ function main()
     presolve_candidates = _collect_candidate_presolve_rows(raw)
     snapshot_id = Int(adequacy["worst_snapshot"]["snapshot"])
     existing_storage_policy_runs = _run_existing_storage_initial_energy_policy_sequence(raw, snapshot_id)
+    final_storage_24h_diag = _run_24h_final_storage_state_diagnostic(raw)
+    growing_horizon_diag = _run_growing_horizon_storage_diagnostic(raw)
 
     gate = existing_storage_policy_runs["full_24h_g_min_0"]
     diag = nothing
@@ -4045,8 +4835,8 @@ function main()
         "likely_root_cause" => layered_root_cause,
     )
 
-    report = _write_report(schema, adequacy, gate, diag, deep_diag, presolve_candidates, existing_storage_policy_runs)
-    results_path = _write_results_bundle(schema, adequacy, gate, diag, deep_diag, presolve_candidates, existing_storage_policy_runs)
+    report = _write_report(schema, adequacy, gate, diag, deep_diag, presolve_candidates, existing_storage_policy_runs, final_storage_24h_diag, growing_horizon_diag)
+    results_path = _write_results_bundle(schema, adequacy, gate, diag, deep_diag, presolve_candidates, existing_storage_policy_runs, final_storage_24h_diag, growing_horizon_diag)
     println("Wrote report: ", report)
     println("Wrote results JSON: ", results_path)
 end
