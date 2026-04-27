@@ -4029,6 +4029,765 @@ function _run_growing_horizon_storage_diagnostic(raw::Dict{String,Any})
     )
 end
 
+function _collect_preflight_interface_audit(
+    raw::Dict{String,Any},
+    prepared::Dict{String,Any},
+    final_storage_24h_diag::Dict{String,Any},
+)
+    raw_block_rows = 0
+    adapted_block_rows = 0
+    max_abs_n0_diff = 0.0
+    max_abs_nmax_diff = 0.0
+    invariant_count = 0
+    invariant_violations = Dict{String,Any}[]
+
+    for nw_id in _sorted_nw_ids(raw)
+        nw_raw = raw["nw"][string(nw_id)]
+        nw_prepared = prepared["nw"][string(nw_id)]
+        for table in ("gen", "storage", "ne_storage")
+            raw_tbl = get(nw_raw, table, Dict{String,Any}())
+            prep_tbl = get(nw_prepared, table, Dict{String,Any}())
+            for (id, d_raw) in raw_tbl
+                if !haskey(d_raw, "type")
+                    continue
+                end
+                if haskey(d_raw, "n_block0") && haskey(d_raw, "n_block_max")
+                    raw_block_rows += 1
+                end
+                if !haskey(prep_tbl, id)
+                    continue
+                end
+                d_prepared = prep_tbl[id]
+                if haskey(d_prepared, "n0") && haskey(d_prepared, "nmax")
+                    adapted_block_rows += 1
+                end
+                if haskey(d_raw, "n_block0") && haskey(d_prepared, "n0")
+                    max_abs_n0_diff = max(max_abs_n0_diff, abs(float(d_prepared["n0"]) - float(d_raw["n_block0"])))
+                end
+                if haskey(d_raw, "n_block_max") && haskey(d_prepared, "nmax")
+                    max_abs_nmax_diff = max(max_abs_nmax_diff, abs(float(d_prepared["nmax"]) - float(d_raw["n_block_max"])))
+                end
+                na0 = float(get(d_prepared, "na0", NaN))
+                n0 = float(get(d_prepared, "n0", NaN))
+                nmax = float(get(d_prepared, "nmax", NaN))
+                if isfinite(na0) && isfinite(n0) && isfinite(nmax)
+                    invariant_count += 1
+                    if !(0.0 <= na0 <= n0 <= nmax)
+                        push!(invariant_violations, Dict(
+                            "snapshot" => nw_id,
+                            "table" => table,
+                            "id" => id,
+                            "na0" => na0,
+                            "n0" => n0,
+                            "nmax" => nmax,
+                        ))
+                    end
+                end
+            end
+        end
+    end
+
+    nw1_raw = raw["nw"]["1"]
+    nw1_prepared = prepared["nw"]["1"]
+    raw_links = get(nw1_raw, "link", Dict{String,Any}())
+    dc_links = count(l -> lowercase(String(get(l, "carrier", ""))) == "dc", values(raw_links))
+    non_dc_links = length(raw_links) - dc_links
+    dcline_count_pm = length(get(nw1_prepared, "dcline", Dict{String,Any}()))
+
+    candidate_rows = Dict{String,Any}[]
+    for (sid, st) in get(nw1_prepared, "storage", Dict{String,Any}())
+        if _is_battery_candidate(st)
+            push!(candidate_rows, Dict(
+                "id" => sid,
+                "carrier" => String(get(st, "carrier", "")),
+                "energy_rating" => float(get(st, "energy_rating", NaN)),
+                "charge_rating" => float(get(st, "charge_rating", NaN)),
+                "discharge_rating" => float(get(st, "discharge_rating", NaN)),
+            ))
+        end
+    end
+    battery_count = length(candidate_rows)
+    energy_zero_count = count(r -> isfinite(r["energy_rating"]) && abs(r["energy_rating"]) <= _EPS, candidate_rows)
+    charge_zero_count = count(r -> isfinite(r["charge_rating"]) && abs(r["charge_rating"]) <= _EPS, candidate_rows)
+    discharge_zero_count = count(r -> isfinite(r["discharge_rating"]) && abs(r["discharge_rating"]) <= _EPS, candidate_rows)
+
+    relaxed = final_storage_24h_diag["full_24h_storage_state_relaxed_final"]
+    strict = final_storage_24h_diag["full_24h_with_storage_state_and_final"]
+
+    return Dict{String,Any}(
+        "block_field_adapter" => Dict(
+            "raw_block_enabled_rows_n_block" => raw_block_rows,
+            "adapted_block_enabled_rows_n" => adapted_block_rows,
+            "max_abs_n0_minus_n_block0" => max_abs_n0_diff,
+            "max_abs_nmax_minus_n_block_max" => max_abs_nmax_diff,
+            "invariant_count_0_le_na0_le_n0_le_nmax" => invariant_count,
+            "invariant_violation_count" => length(invariant_violations),
+            "invariant_violations" => invariant_violations,
+        ),
+        "link_dcline_mapping" => Dict(
+            "dcline_count_powermodels_case" => dcline_count_pm,
+            "raw_dc_link_count_if_available" => dc_links,
+            "raw_non_dc_link_count_ignored_if_available" => non_dc_links,
+            "dcline_setpoint_constraints_used" => false,
+        ),
+        "candidate_storage_zero_rating_audit" => Dict(
+            "battery_candidate_count" => battery_count,
+            "energy_rating_zero_count" => energy_zero_count,
+            "charge_rating_zero_count" => charge_zero_count,
+            "discharge_rating_zero_count" => discharge_zero_count,
+            "block_scaled_storage_bounds_active" => true,
+            "block_scaled_storage_bounds_reference" => [
+                "se <= e_block*n_block",
+                "sc <= p_block_max*na_block",
+                "sd <= p_block_max*na_block",
+            ],
+        ),
+        "storage_terminal_policy" => Dict(
+            "selected_final_storage_policy" => "short_horizon_relaxed",
+            "number_of_final_storage_constraints" => get(relaxed, "constraint_storage_state_final_count", 0),
+            "number_of_final_candidate_storage_constraints" => get(relaxed, "constraint_storage_state_final_ne_count", 0),
+            "aggregate_initial_storage_energy" => get(relaxed, "aggregate_initial_storage_energy", nothing),
+            "strict_final_would_be_infeasible_from_previous_diagnostic" => String(get(strict, "status", "")) == "INFEASIBLE",
+        ),
+        "acceptance_caveat" => "base_s_5 PyPSA acceptance UC/CAPEXP remains unresolved and is out of scope for this elec_s_37 result",
+    )
+end
+
+function _collect_candidate_extendability_audit(raw::Dict{String,Any}, prepared::Dict{String,Any})
+    carriers = ["onwind", "offwind-ac", "offwind-dc", "solar", "battery_gfl", "battery_gfm"]
+    nws = _sorted_nw_ids(prepared)
+    nw1 = prepared["nw"]["1"]
+    rows = Dict{String,Any}[]
+
+    for carrier in carriers
+        row_count = 0
+        sum_n0 = 0.0
+        sum_nmax = 0.0
+        expandable_blocks = 0.0
+        p_block_vals = Float64[]
+        ppu_vals = Float64[]
+        effective_max_expand = 0.0
+
+        for table in ("gen", "storage", "ne_storage")
+            tbl = get(nw1, table, Dict{String,Any}())
+            for (id, d1) in tbl
+                if !haskey(d1, "type") || String(get(d1, "carrier", "")) != carrier
+                    continue
+                end
+                row_count += 1
+                n0 = float(get(d1, "n0", get(d1, "n_block0", 0.0)))
+                nmax = float(get(d1, "nmax", get(d1, "n_block_max", n0)))
+                dn = max(0.0, nmax - n0)
+                pblk = float(get(d1, "p_block_max", 0.0))
+                sum_n0 += n0
+                sum_nmax += nmax
+                expandable_blocks += dn
+                push!(p_block_vals, pblk)
+
+                ppu_by_time = Float64[]
+                for nw_id in nws
+                    dnw = get(get(prepared["nw"][string(nw_id)], table, Dict{String,Any}()), id, nothing)
+                    if isnothing(dnw)
+                        continue
+                    end
+                    push!(ppu_by_time, _pmax_pu(dnw))
+                end
+                if !isempty(ppu_by_time)
+                    append!(ppu_vals, ppu_by_time)
+                    effective_max_expand += dn * pblk * maximum(ppu_by_time)
+                end
+            end
+        end
+
+        p_block_max = isempty(p_block_vals) ? nothing : maximum(p_block_vals)
+        ppu_min = isempty(ppu_vals) ? nothing : minimum(ppu_vals)
+        ppu_mean = isempty(ppu_vals) ? nothing : sum(ppu_vals) / length(ppu_vals)
+        ppu_max = isempty(ppu_vals) ? nothing : maximum(ppu_vals)
+        carrier_expandable = expandable_blocks > _EPS
+        available_horizon = (carrier in ("battery_gfl", "battery_gfm")) || (!isnothing(ppu_max) && ppu_max > _EPS)
+
+        push!(rows, Dict(
+            "carrier" => carrier,
+            "row_count" => row_count,
+            "sum_n0" => sum_n0,
+            "sum_nmax" => sum_nmax,
+            "sum_expandable_blocks" => expandable_blocks,
+            "p_block_max" => p_block_max,
+            "p_max_pu_max_over_24h" => ppu_max,
+            "p_max_pu_min" => ppu_min,
+            "p_max_pu_mean" => ppu_mean,
+            "p_max_pu_max" => ppu_max,
+            "effective_max_available_expansion_over_24h" => effective_max_expand,
+            "expandable" => carrier_expandable,
+            "available_in_horizon" => available_horizon,
+        ))
+    end
+    return Dict{String,Any}("rows" => rows)
+end
+
+function _extract_component_id(key)
+    if key isa Int
+        return key
+    elseif key isa Tuple
+        for item in key
+            cid = _extract_component_id(item)
+            if cid > 0
+                return cid
+            end
+        end
+    elseif key isa AbstractVector
+        for item in key
+            cid = _extract_component_id(item)
+            if cid > 0
+                return cid
+            end
+        end
+    end
+    return -1
+end
+
+function _max_bound_residual(v)
+    try
+        lb = _var_lb(v)
+        ub = _var_ub(v)
+        x = JuMP.value(v)
+        return max(max(0.0, lb - x), max(0.0, x - ub))
+    catch
+        return 0.0
+    end
+end
+
+function _device_kind_from_type(d::Dict{String,Any})
+    t = lowercase(String(get(d, "type", "")))
+    if t == "gfm"
+        return :gfm
+    elseif t == "gfl"
+        return :gfl
+    end
+    return :other
+end
+
+_axis_keys(vdict::Dict) = keys(vdict)
+_axis_keys(vdict) = axes(vdict, 1)
+_has_axis_key(vdict::Dict, k) = haskey(vdict, k)
+_has_axis_key(vdict, k) = k in axes(vdict, 1)
+
+function _compute_storage_state_residuals(pm)
+    max_res = 0.0
+    nws = sort(collect(_FP.nw_ids(pm)))
+    for n in nws
+        dt = float(get(_PM.ref(pm, n), :time_elapsed, 1.0))
+        if haskey(_PM.var(pm, n), :se)
+            for i in _PM.ids(pm, :storage, nw=n)
+                st = _PM.ref(pm, n, :storage, i)
+                ce = float(get(st, "charge_efficiency", 1.0))
+                de = float(get(st, "discharge_efficiency", 1.0))
+                inflow = float(get(st, "stationary_energy_inflow", 0.0))
+                outflow = float(get(st, "stationary_energy_outflow", 0.0))
+                selfd = float(get(st, "self_discharge_rate", 0.0))
+                se = JuMP.value(_PM.var(pm, n, :se, i))
+                sc = JuMP.value(_PM.var(pm, n, :sc, i))
+                sd = JuMP.value(_PM.var(pm, n, :sd, i))
+                rhs = if _FP.is_first_id(pm, n, :hour)
+                    e0 = float(get(st, "energy", 0.0))
+                    ((1 - selfd)^dt) * e0 + dt * (ce * sc - sd / de + inflow - outflow)
+                else
+                    prev_n = _FP.prev_id(pm, n, :hour)
+                    se_prev = JuMP.value(_PM.var(pm, prev_n, :se, i))
+                    ((1 - selfd)^dt) * se_prev + dt * (ce * sc - sd / de + inflow - outflow)
+                end
+                max_res = max(max_res, abs(se - rhs))
+            end
+        end
+        if haskey(_PM.var(pm, n), :se_ne)
+            for i in _PM.ids(pm, :ne_storage, nw=n)
+                st = _PM.ref(pm, n, :ne_storage, i)
+                ce = float(get(st, "charge_efficiency", 1.0))
+                de = float(get(st, "discharge_efficiency", 1.0))
+                inflow = float(get(st, "stationary_energy_inflow", 0.0))
+                outflow = float(get(st, "stationary_energy_outflow", 0.0))
+                selfd = float(get(st, "self_discharge_rate", 0.0))
+                se = JuMP.value(_PM.var(pm, n, :se_ne, i))
+                sc = JuMP.value(_PM.var(pm, n, :sc_ne, i))
+                sd = JuMP.value(_PM.var(pm, n, :sd_ne, i))
+                z = haskey(_PM.var(pm, n), :z_strg_ne) ? JuMP.value(_PM.var(pm, n, :z_strg_ne, i)) : 1.0
+                rhs = if _FP.is_first_id(pm, n, :hour)
+                    e0 = float(get(st, "energy", 0.0))
+                    ((1 - selfd)^dt) * e0 * z + dt * (ce * sc - sd / de + inflow * z - outflow * z)
+                else
+                    prev_n = _FP.prev_id(pm, n, :hour)
+                    se_prev = JuMP.value(_PM.var(pm, prev_n, :se_ne, i))
+                    ((1 - selfd)^dt) * se_prev + dt * (ce * sc - sd / de + inflow * z - outflow * z)
+                end
+                max_res = max(max_res, abs(se - rhs))
+            end
+        end
+    end
+    return max_res
+end
+
+function _collect_controlled_case_metrics(pm, g_min_value::Float64, status::String)
+    out = Dict{String,Any}(
+        "g_min" => g_min_value,
+        "status" => status,
+        "objective" => nothing,
+        "investment_cost" => nothing,
+        "startup_cost" => nothing,
+        "shutdown_cost" => nothing,
+        "investment_by_carrier" => Dict{String,Float64}(),
+        "investment_by_bus" => Dict{Int,Float64}(),
+        "battery_gfl_invested_blocks" => nothing,
+        "battery_gfm_invested_blocks" => nothing,
+        "generator_invested_blocks" => nothing,
+        "storage_invested_blocks" => nothing,
+        "online_gfm_blocks_by_snapshot" => Dict{Int,Float64}(),
+        "online_gfl_blocks_by_snapshot" => Dict{Int,Float64}(),
+        "generation_by_carrier" => Dict{String,Float64}(),
+        "storage_discharge_by_carrier" => Dict{String,Float64}(),
+        "storage_charge_by_carrier" => Dict{String,Float64}(),
+        "aggregate_initial_storage_energy" => nothing,
+        "aggregate_final_storage_energy" => nothing,
+        "final_storage_depletion_ratio" => nothing,
+        "physical_plausibility" => Dict{String,Any}(),
+        "gscr_detail" => Dict{String,Any}(),
+    )
+    if !(status in _ACTIVE_OK)
+        return out
+    end
+
+    out["objective"] = JuMP.objective_value(pm.model)
+    nws = sort(collect(_FP.nw_ids(pm)))
+    first_nw = first(nws)
+    last_nw = last(nws)
+
+    investment_cost = 0.0
+    startup_cost = 0.0
+    shutdown_cost = 0.0
+    invested_gfl = 0.0
+    invested_gfm = 0.0
+    invested_gen = 0.0
+    invested_storage = 0.0
+
+    if haskey(_PM.var(pm, first_nw), :n_block)
+        for key in keys(_PM.var(pm, first_nw, :n_block))
+            dev_key = key[1]
+            d = _PM.ref(pm, first_nw, dev_key[1], dev_key[2])
+            n0 = float(get(d, "n0", get(d, "n_block0", 0.0)))
+            n = JuMP.value(_PM.var(pm, first_nw, :n_block, dev_key))
+            dn = n - n0
+            coeff = float(get(d, "cost_inv_block", 0.0)) * float(get(d, "p_block_max", 0.0))
+            investment_cost += coeff * dn
+            carrier = String(get(d, "carrier", "unknown"))
+            bus = dev_key[1] == :gen ? Int(get(d, "gen_bus", -1)) : Int(get(d, "storage_bus", -1))
+            out["investment_by_carrier"][carrier] = get(out["investment_by_carrier"], carrier, 0.0) + dn
+            out["investment_by_bus"][bus] = get(out["investment_by_bus"], bus, 0.0) + dn
+            if dev_key[1] == :gen
+                invested_gen += dn
+            else
+                invested_storage += dn
+                if _is_battery_gfl(d)
+                    invested_gfl += dn
+                elseif _is_battery_gfm(d)
+                    invested_gfm += dn
+                end
+            end
+        end
+    end
+    for n in nws
+        if haskey(_PM.var(pm, n), :su_block)
+            for key in keys(_PM.var(pm, n, :su_block))
+                dev_key = key[1]
+                d = _PM.ref(pm, n, dev_key[1], dev_key[2])
+                startup_cost += float(get(d, "startup_block_cost", 0.0)) * JuMP.value(_PM.var(pm, n, :su_block, dev_key))
+            end
+        end
+        if haskey(_PM.var(pm, n), :sd_block)
+            for key in keys(_PM.var(pm, n, :sd_block))
+                dev_key = key[1]
+                d = _PM.ref(pm, n, dev_key[1], dev_key[2])
+                shutdown_cost += float(get(d, "shutdown_block_cost", 0.0)) * JuMP.value(_PM.var(pm, n, :sd_block, dev_key))
+            end
+        end
+    end
+    out["investment_cost"] = investment_cost
+    out["startup_cost"] = startup_cost
+    out["shutdown_cost"] = shutdown_cost
+    out["battery_gfl_invested_blocks"] = invested_gfl
+    out["battery_gfm_invested_blocks"] = invested_gfm
+    out["generator_invested_blocks"] = invested_gen
+    out["storage_invested_blocks"] = invested_storage
+
+    ac_entries = Dict{Tuple{Int,Int},Float64}()
+    ac_overloaded = Set{Tuple{Int,Int}}()
+    max_ac_loading = 0.0
+    max_branch_bound_res = 0.0
+    if haskey(_PM.var(pm, first_nw), :p)
+        for n in nws
+            pvar = _PM.var(pm, n, :p)
+            for k in _axis_keys(pvar)
+                v = pvar[k]
+                bid = _extract_component_id(k)
+                if bid <= 0 || !haskey(get(_PM.ref(pm, n), :branch, Dict{Int,Any}()), bid)
+                    continue
+                end
+                branch = _PM.ref(pm, n, :branch, bid)
+                f = abs(JuMP.value(v))
+                rate = float(get(branch, "rate_a", 0.0))
+                loading = rate > _EPS ? f / rate : 0.0
+                key = (n, bid)
+                ac_entries[key] = max(get(ac_entries, key, 0.0), loading)
+                max_ac_loading = max(max_ac_loading, loading)
+                if loading > 1.0 + 1e-6
+                    push!(ac_overloaded, key)
+                end
+                max_branch_bound_res = max(max_branch_bound_res, _max_bound_residual(v))
+            end
+        end
+    end
+    ac_sorted = sort(collect(ac_entries); by=x -> x[2], rev=true)
+    ac_top10 = [Dict("snapshot" => k[1], "branch" => k[2], "loading" => v) for (k, v) in ac_sorted[1:min(10, length(ac_sorted))]]
+
+    dc_entries = Dict{Tuple{Int,Int},Float64}()
+    dc_overloaded = Set{Tuple{Int,Int}}()
+    max_dc_loading = 0.0
+    max_dcline_bound_res = 0.0
+    max_dcline_loss_res = 0.0
+    if haskey(_PM.var(pm, first_nw), :p_dc)
+        for n in nws
+            pdc = _PM.var(pm, n, :p_dc)
+            for k in _axis_keys(pdc)
+                v = pdc[k]
+                did = _extract_component_id(k)
+                if did <= 0 || !haskey(get(_PM.ref(pm, n), :dcline, Dict{Int,Any}()), did)
+                    continue
+                end
+                dc = _PM.ref(pm, n, :dcline, did)
+                f = abs(JuMP.value(v))
+                cap = max(
+                    abs(float(get(dc, "pmaxf", 0.0))),
+                    abs(float(get(dc, "pminf", 0.0))),
+                    abs(float(get(dc, "pmaxt", 0.0))),
+                    abs(float(get(dc, "pmint", 0.0))),
+                )
+                loading = cap > _EPS ? f / cap : 0.0
+                key = (n, did)
+                dc_entries[key] = max(get(dc_entries, key, 0.0), loading)
+                max_dc_loading = max(max_dc_loading, loading)
+                if loading > 1.0 + 1e-6
+                    push!(dc_overloaded, key)
+                end
+                max_dcline_bound_res = max(max_dcline_bound_res, _max_bound_residual(v))
+            end
+            for did in _PM.ids(pm, n, :dcline)
+                dc = _PM.ref(pm, n, :dcline, did)
+                fbus = Int(get(dc, "f_bus", -1))
+                tbus = Int(get(dc, "t_bus", -1))
+                key_ft = (did, fbus, tbus)
+                key_tf = (did, tbus, fbus)
+                if _has_axis_key(pdc, key_ft) && _has_axis_key(pdc, key_tf)
+                    pf = JuMP.value(pdc[key_ft])
+                    pt = JuMP.value(pdc[key_tf])
+                    loss0 = float(get(dc, "loss0", 0.0))
+                    loss1 = float(get(dc, "loss1", 0.0))
+                    max_dcline_loss_res = max(max_dcline_loss_res, abs(pt + (1 - loss1) * pf - loss0))
+                end
+            end
+        end
+    end
+    dc_sorted = sort(collect(dc_entries); by=x -> x[2], rev=true)
+    dc_top10 = [Dict("snapshot" => k[1], "dcline" => k[2], "loading" => v) for (k, v) in dc_sorted[1:min(10, length(dc_sorted))]]
+
+    max_bus_balance_res = 0.0
+    worst_bus = -1
+    worst_bus_nw = -1
+    max_system_balance_res = 0.0
+    for n in nws
+        sys_load = sum((float(get(_PM.ref(pm, n, :load, l), "pd", 0.0)) for l in _PM.ids(pm, n, :load)); init=0.0)
+        sys_pg = haskey(_PM.var(pm, n), :pg) ? sum((JuMP.value(v) for v in values(_PM.var(pm, n, :pg))); init=0.0) : 0.0
+        sys_ps = haskey(_PM.var(pm, n), :ps) ? sum((JuMP.value(v) for v in values(_PM.var(pm, n, :ps))); init=0.0) : 0.0
+        sys_ps_ne = haskey(_PM.var(pm, n), :ps_ne) ? sum((JuMP.value(v) for v in values(_PM.var(pm, n, :ps_ne))); init=0.0) : 0.0
+        max_system_balance_res = max(max_system_balance_res, abs(sys_pg - sys_ps - sys_ps_ne - sys_load))
+        for b in _PM.ids(pm, n, :bus)
+            lhs = 0.0
+            if haskey(_PM.var(pm, n), :p)
+                lhs += sum((JuMP.value(_PM.var(pm, n, :p, a)) for a in _PM.ref(pm, n, :bus_arcs, b)); init=0.0)
+            end
+            if haskey(_PM.var(pm, n), :p_dc)
+                lhs += sum((JuMP.value(_PM.var(pm, n, :p_dc, a)) for a in _PM.ref(pm, n, :bus_arcs_dc, b)); init=0.0)
+            end
+            rhs = sum((JuMP.value(_PM.var(pm, n, :pg, g)) for g in _PM.ref(pm, n, :bus_gens, b)); init=0.0)
+            if haskey(_PM.var(pm, n), :ps)
+                rhs -= sum((JuMP.value(_PM.var(pm, n, :ps, s)) for s in _PM.ref(pm, n, :bus_storage, b)); init=0.0)
+            end
+            rhs -= sum((float(get(_PM.ref(pm, n, :load, l), "pd", 0.0)) for l in _PM.ref(pm, n, :bus_loads, b)); init=0.0)
+            r = abs(lhs - rhs)
+            if r > max_bus_balance_res
+                max_bus_balance_res = r
+                worst_bus = b
+                worst_bus_nw = n
+            end
+        end
+    end
+
+    max_gen_lb_res = 0.0
+    max_gen_ub_res = 0.0
+    if haskey(_PM.var(pm, first_nw), :pg)
+        for n in nws
+            for v in values(_PM.var(pm, n, :pg))
+                lb = _var_lb(v)
+                ub = _var_ub(v)
+                x = JuMP.value(v)
+                max_gen_lb_res = max(max_gen_lb_res, max(0.0, lb - x))
+                max_gen_ub_res = max(max_gen_ub_res, max(0.0, x - ub))
+            end
+        end
+    end
+
+    max_storage_charge_bound_res = 0.0
+    max_storage_discharge_bound_res = 0.0
+    max_storage_energy_bound_res = 0.0
+    if haskey(_PM.var(pm, first_nw), :sc)
+        for n in nws
+            for v in values(_PM.var(pm, n, :sc))
+                max_storage_charge_bound_res = max(max_storage_charge_bound_res, _max_bound_residual(v))
+            end
+        end
+    end
+    if haskey(_PM.var(pm, first_nw), :sd)
+        for n in nws
+            for v in values(_PM.var(pm, n, :sd))
+                max_storage_discharge_bound_res = max(max_storage_discharge_bound_res, _max_bound_residual(v))
+            end
+        end
+    end
+    if haskey(_PM.var(pm, first_nw), :se)
+        for n in nws
+            for v in values(_PM.var(pm, n, :se))
+                max_storage_energy_bound_res = max(max_storage_energy_bound_res, _max_bound_residual(v))
+            end
+        end
+    end
+
+    max_transition_res = 0.0
+    if haskey(_PM.var(pm, first_nw), :na_block) && haskey(_PM.var(pm, first_nw), :su_block) && haskey(_PM.var(pm, first_nw), :sd_block)
+        for n in nws
+            for key in keys(_PM.var(pm, n, :na_block))
+                dev_key = key[1]
+                d = _PM.ref(pm, n, dev_key[1], dev_key[2])
+                na = JuMP.value(_PM.var(pm, n, :na_block, dev_key))
+                su = JuMP.value(_PM.var(pm, n, :su_block, dev_key))
+                sd = JuMP.value(_PM.var(pm, n, :sd_block, dev_key))
+                prev_na = _FP.is_first_id(pm, n, :hour) ? float(get(d, "na0", 0.0)) : JuMP.value(_PM.var(pm, _FP.prev_id(pm, n, :hour), :na_block, dev_key))
+                max_transition_res = max(max_transition_res, abs((na - prev_na) - (su - sd)))
+            end
+        end
+    end
+    max_storage_state_res = _compute_storage_state_residuals(pm)
+
+    min_margin = Inf
+    near_binding = 0
+    gscr_recon_res = 0.0
+    weak_bus = -1
+    weak_nw = -1
+    weak_gfm_contrib = Dict{String,Float64}()
+    weak_gfl_rhs_contrib = Dict{String,Float64}()
+    battery_gfm_strength = 0.0
+    for n in nws
+        if !haskey(_PM.ref(pm, n), :g_min)
+            continue
+        end
+        gmin = float(get(_PM.ref(pm, n), :g_min, g_min_value))
+        for b in _PM.ids(pm, n, :bus)
+            sigma0 = _PM.ref(pm, n, :gscr_sigma0_gershgorin_margin, b)
+            lhs = sigma0
+            rhs = 0.0
+            local_gfm = Dict{String,Float64}()
+            local_gfl = Dict{String,Float64}()
+            for key in _PM.ref(pm, n, :bus_gfm_devices, b)
+                d = _PM.ref(pm, n, key[1], key[2])
+                carrier = String(get(d, "carrier", "unknown"))
+                v = JuMP.value(_PM.var(pm, n, :na_block, key))
+                c = float(get(d, "b_block", 0.0)) * v
+                lhs += c
+                local_gfm[carrier] = get(local_gfm, carrier, 0.0) + c
+                if _is_battery_gfm(d)
+                    battery_gfm_strength += c
+                end
+            end
+            for key in _PM.ref(pm, n, :bus_gfl_devices, b)
+                d = _PM.ref(pm, n, key[1], key[2])
+                carrier = String(get(d, "carrier", "unknown"))
+                v = JuMP.value(_PM.var(pm, n, :na_block, key))
+                c = gmin * float(get(d, "p_block_max", 0.0)) * v
+                rhs += c
+                local_gfl[carrier] = get(local_gfl, carrier, 0.0) + c
+            end
+            margin = lhs - rhs
+            gscr_recon_res = max(gscr_recon_res, max(0.0, rhs - lhs))
+            if margin <= _NEAR
+                near_binding += 1
+            end
+            if margin < min_margin
+                min_margin = margin
+                weak_bus = b
+                weak_nw = n
+                weak_gfm_contrib = local_gfm
+                weak_gfl_rhs_contrib = local_gfl
+            end
+        end
+    end
+
+    gen_by_carrier = Dict{String,Float64}()
+    storage_discharge_by_carrier = Dict{String,Float64}()
+    storage_charge_by_carrier = Dict{String,Float64}()
+    for n in nws
+        gfm_online = 0.0
+        gfl_online = 0.0
+        if haskey(_PM.var(pm, n), :pg)
+            for gid in _PM.ids(pm, n, :gen)
+                g = _PM.ref(pm, n, :gen, gid)
+                carrier = String(get(g, "carrier", "unknown"))
+                gen_by_carrier[carrier] = get(gen_by_carrier, carrier, 0.0) + JuMP.value(_PM.var(pm, n, :pg, gid))
+            end
+        end
+        for sid in _PM.ids(pm, n, :storage)
+            st = _PM.ref(pm, n, :storage, sid)
+            carrier = String(get(st, "carrier", "unknown"))
+            if haskey(_PM.var(pm, n), :sd)
+                storage_discharge_by_carrier[carrier] = get(storage_discharge_by_carrier, carrier, 0.0) + JuMP.value(_PM.var(pm, n, :sd, sid))
+            end
+            if haskey(_PM.var(pm, n), :sc)
+                storage_charge_by_carrier[carrier] = get(storage_charge_by_carrier, carrier, 0.0) + JuMP.value(_PM.var(pm, n, :sc, sid))
+            end
+        end
+        if haskey(_PM.var(pm, n), :na_block)
+            for key in keys(_PM.var(pm, n, :na_block))
+                dev_key = key[1]
+                d = _PM.ref(pm, n, dev_key[1], dev_key[2])
+                kind = _device_kind_from_type(d)
+                v = JuMP.value(_PM.var(pm, n, :na_block, dev_key))
+                if kind == :gfm
+                    gfm_online += v
+                elseif kind == :gfl
+                    gfl_online += v
+                end
+            end
+        end
+        out["online_gfm_blocks_by_snapshot"][n] = gfm_online
+        out["online_gfl_blocks_by_snapshot"][n] = gfl_online
+    end
+    out["generation_by_carrier"] = gen_by_carrier
+    out["storage_discharge_by_carrier"] = storage_discharge_by_carrier
+    out["storage_charge_by_carrier"] = storage_charge_by_carrier
+
+    e0 = 0.0
+    for sid in _PM.ids(pm, :storage, nw=first_nw)
+        e0 += float(get(_PM.ref(pm, first_nw, :storage, sid), "energy", 0.0))
+    end
+    if haskey(_PM.ref(pm, first_nw), :ne_storage)
+        for sid in _PM.ids(pm, :ne_storage, nw=first_nw)
+            e0 += float(get(_PM.ref(pm, first_nw, :ne_storage, sid), "energy", 0.0))
+        end
+    end
+    eT = 0.0
+    if haskey(_PM.var(pm, last_nw), :se)
+        for sid in _PM.ids(pm, :storage, nw=last_nw)
+            eT += JuMP.value(_PM.var(pm, last_nw, :se, sid))
+        end
+    end
+    if haskey(_PM.var(pm, last_nw), :se_ne)
+        for sid in _PM.ids(pm, :ne_storage, nw=last_nw)
+            eT += JuMP.value(_PM.var(pm, last_nw, :se_ne, sid))
+        end
+    end
+    out["aggregate_initial_storage_energy"] = e0
+    out["aggregate_final_storage_energy"] = eT
+    out["final_storage_depletion_ratio"] = e0 > _EPS ? eT / e0 : nothing
+
+    weak_local_investment = weak_bus < 0 ? 0.0 : get(out["investment_by_bus"], weak_bus, 0.0)
+    out["physical_plausibility"] = Dict(
+        "ac_max_branch_loading" => max_ac_loading,
+        "ac_overloaded_branch_count" => length(ac_overloaded),
+        "ac_top10_branch_loadings" => ac_top10,
+        "ac_branch_flow_bound_residual" => max_branch_bound_res,
+        "dcline_max_loading" => max_dc_loading,
+        "dcline_overloaded_count" => length(dc_overloaded),
+        "dcline_top10_loadings" => dc_top10,
+        "dcline_bound_residual" => max_dcline_bound_res,
+        "dcline_loss_residual" => max_dcline_loss_res,
+        "max_bus_active_balance_residual" => max_bus_balance_res,
+        "max_system_active_balance_residual" => max_system_balance_res,
+        "worst_balance_bus_snapshot" => Dict("bus" => worst_bus, "snapshot" => worst_bus_nw, "residual" => max_bus_balance_res),
+        "max_generator_lower_bound_residual" => max_gen_lb_res,
+        "max_generator_upper_bound_residual" => max_gen_ub_res,
+        "max_storage_charge_bound_residual" => max_storage_charge_bound_res,
+        "max_storage_discharge_bound_residual" => max_storage_discharge_bound_res,
+        "max_storage_energy_bound_residual" => max_storage_energy_bound_res,
+        "max_storage_state_residual" => max_storage_state_res,
+        "max_startup_shutdown_transition_residual" => max_transition_res,
+        "gscr_reconstruction_residual" => gscr_recon_res,
+        "min_gscr_margin" => isfinite(min_margin) ? min_margin : nothing,
+        "weakest_bus_snapshot" => Dict("bus" => weak_bus, "snapshot" => weak_nw),
+        "near_binding_count" => near_binding,
+    )
+    out["gscr_detail"] = Dict(
+        "min_gscr_margin" => isfinite(min_margin) ? min_margin : nothing,
+        "weakest_bus_snapshot" => Dict("bus" => weak_bus, "snapshot" => weak_nw),
+        "near_binding_count" => near_binding,
+        "gfm_strength_contribution_by_carrier_at_weakest_bus" => weak_gfm_contrib,
+        "gfl_rhs_contribution_by_carrier_at_weakest_bus" => weak_gfl_rhs_contrib,
+        "battery_gfm_contribution_at_weakest_bus" => get(weak_gfm_contrib, "battery_gfm", 0.0),
+        "investment_local_to_weak_bus" => weak_local_investment > _EPS,
+    )
+    return out
+end
+
+function _run_controlled_24h_relaxed_capexp_study(raw::Dict{String,Any}, final_storage_24h_diag::Dict{String,Any})
+    prepared = _prepare_solver_data(raw; mode=:capexp)
+    _set_mode_nmax_policy!(prepared, "full_capexp")
+    _apply_existing_storage_initial_energy_policy!(prepared, "half_energy_rating")
+    preflight = _collect_preflight_interface_audit(raw, prepared, final_storage_24h_diag)
+    extendability = _collect_candidate_extendability_audit(raw, prepared)
+
+    run_rows = Dict{String,Any}[]
+    gate_failed = false
+    for g in (0.0, 1.0, 1.5)
+        if gate_failed
+            push!(run_rows, Dict("g_min" => g, "status" => "SKIPPED_BY_GATE"))
+            continue
+        end
+        data = _prepare_solver_data(raw; mode=:capexp)
+        _set_mode_nmax_policy!(data, "full_capexp")
+        _apply_existing_storage_initial_energy_policy!(data, "half_energy_rating")
+        _inject_g_min!(data, g)
+        solved = _solve_with_pm(data, _builder_with_final_policy(:relaxed_final))
+        status = solved["status"]
+        metrics = _collect_controlled_case_metrics(solved["pm"], g, status)
+        metrics["solve_time_sec"] = solved["solve_time_sec"]
+        push!(run_rows, metrics)
+        if g == 0.0 && !(status in _ACTIVE_OK)
+            gate_failed = true
+        elseif g == 1.0 && !(status in _ACTIVE_OK)
+            gate_failed = true
+        end
+    end
+
+    return Dict{String,Any}(
+        "study_name" => "24h CAPEXP Study with Relaxed Final Storage Policy",
+        "final_storage_policy" => "short_horizon_relaxed",
+        "preflight_audit" => preflight,
+        "candidate_extendability_audit" => extendability,
+        "runs" => run_rows,
+        "pending_pypsa_interface_caveats" => [
+            "Raw block-field naming still needs adapter mapping: n_block0/n_block_max -> n0/nmax in solver copy.",
+            "Link interface is partial: only carrier==DC is mapped to PowerModels dcline; non-DC links are ignored.",
+            "Candidate storage standard ratings are zero for battery candidates; block-scaled storage envelopes are therefore required.",
+            "Initial/final storage policy remains dataset-interface sensitive: strict final infeasible, relaxed/no-final feasible.",
+            "base_s_5 PyPSA acceptance datasets remain infeasible in UC/gSCR and CAPEXP/gSCR; no general PyPSA compatibility claim.",
+        ],
+    )
+end
+
 function _write_report(
     schema::Dict{String,Any},
     adequacy::Dict{String,Any},
@@ -4039,6 +4798,7 @@ function _write_report(
     existing_storage_policy_runs::Dict{String,Any},
     final_storage_24h_diag::Dict{String,Any},
     growing_horizon_diag::Dict{String,Any},
+    controlled_study::Dict{String,Any},
 )
     mkpath(dirname(_REPORT_PATH))
     open(_REPORT_PATH, "w") do io
@@ -4704,6 +5464,115 @@ function _write_report(
         end
         println(io)
 
+        println(io, "## 24h CAPEXP Study with Relaxed Final Storage Policy")
+        println(io, "- final_storage_policy: ", controlled_study["final_storage_policy"])
+        println(io)
+        println(io, "### 1) Pending PyPSA Interface Caveats")
+        for c in controlled_study["pending_pypsa_interface_caveats"]
+            println(io, "- ", c)
+        end
+        println(io)
+
+        pf = controlled_study["preflight_audit"]
+        bfa = pf["block_field_adapter"]
+        ldm = pf["link_dcline_mapping"]
+        csz = pf["candidate_storage_zero_rating_audit"]
+        stp = pf["storage_terminal_policy"]
+        println(io, "### 2) Interface Preflight Audit")
+        println(io, "- block-enabled rows with n_block0/n_block_max: ", bfa["raw_block_enabled_rows_n_block"])
+        println(io, "- block-enabled rows with n0/nmax after adapter: ", bfa["adapted_block_enabled_rows_n"])
+        println(io, "- max |n0 - n_block0|: ", _fmt(bfa["max_abs_n0_minus_n_block0"]))
+        println(io, "- max |nmax - n_block_max|: ", _fmt(bfa["max_abs_nmax_minus_n_block_max"]))
+        println(io, "- invariant count (0 <= na0 <= n0 <= nmax): ", bfa["invariant_count_0_le_na0_le_n0_le_nmax"])
+        println(io, "- invariant violations: ", bfa["invariant_violation_count"])
+        println(io, "- dcline count in PowerModels case: ", ldm["dcline_count_powermodels_case"])
+        println(io, "- DC-link count (raw): ", ldm["raw_dc_link_count_if_available"])
+        println(io, "- non-DC link count ignored (raw): ", ldm["raw_non_dc_link_count_ignored_if_available"])
+        println(io, "- dcline setpoint constraints used: ", ldm["dcline_setpoint_constraints_used"])
+        println(io, "- battery_gfl/battery_gfm candidate count: ", csz["battery_candidate_count"])
+        println(io, "- candidates with energy_rating=0: ", csz["energy_rating_zero_count"])
+        println(io, "- candidates with charge_rating=0: ", csz["charge_rating_zero_count"])
+        println(io, "- candidates with discharge_rating=0: ", csz["discharge_rating_zero_count"])
+        println(io, "- block-scaled storage bounds active: ", csz["block_scaled_storage_bounds_active"], " (", join(csz["block_scaled_storage_bounds_reference"], "; "), ")")
+        println(io, "- selected final_storage_policy: ", stp["selected_final_storage_policy"])
+        println(io, "- number of final storage constraints: ", stp["number_of_final_storage_constraints"])
+        println(io, "- number of final candidate storage constraints: ", stp["number_of_final_candidate_storage_constraints"])
+        println(io, "- aggregate initial storage energy: ", _fmt(stp["aggregate_initial_storage_energy"]))
+        println(io, "- strict final would be infeasible per previous diagnostic: ", stp["strict_final_would_be_infeasible_from_previous_diagnostic"])
+        println(io, "- acceptance caveat: ", pf["acceptance_caveat"])
+        println(io)
+
+        println(io, "### 3) Candidate Extendability Audit")
+        println(io, "| carrier | row_count | sum_n0 | sum_nmax | sum_expandable_blocks | p_block_max | p_max_pu_min | p_max_pu_mean | p_max_pu_max | effective_max_available_expansion_over_24h | expandable | available_in_horizon |")
+        println(io, "|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---|---|")
+        for r in controlled_study["candidate_extendability_audit"]["rows"]
+            println(io, "| ", r["carrier"], " | ", r["row_count"], " | ", _fmt(r["sum_n0"]), " | ", _fmt(r["sum_nmax"]), " | ", _fmt(r["sum_expandable_blocks"]), " | ", _fmt(r["p_block_max"]), " | ", _fmt(r["p_max_pu_min"]), " | ", _fmt(r["p_max_pu_mean"]), " | ", _fmt(r["p_max_pu_max"]), " | ", _fmt(r["effective_max_available_expansion_over_24h"]), " | ", r["expandable"], " | ", r["available_in_horizon"], " |")
+        end
+        println(io)
+
+        println(io, "### 4) g_min Run Status Table")
+        println(io, "| g_min | status | objective | solve_time_s |")
+        println(io, "|---:|---|---:|---:|")
+        for r in controlled_study["runs"]
+            println(io, "| ", _fmt(r["g_min"]; digits=1), " | ", r["status"], " | ", _fmt(get(r, "objective", nothing)), " | ", _fmt(get(r, "solve_time_sec", nothing)), " |")
+        end
+        println(io)
+
+        println(io, "### 5) Investment Table")
+        println(io, "| g_min | investment_cost | startup_cost | shutdown_cost | battery_gfl_blocks | battery_gfm_blocks | generator_blocks | storage_blocks |")
+        println(io, "|---:|---:|---:|---:|---:|---:|---:|---:|")
+        for r in controlled_study["runs"]
+            println(io, "| ", _fmt(r["g_min"]; digits=1), " | ", _fmt(get(r, "investment_cost", nothing)), " | ", _fmt(get(r, "startup_cost", nothing)), " | ", _fmt(get(r, "shutdown_cost", nothing)), " | ", _fmt(get(r, "battery_gfl_invested_blocks", nothing)), " | ", _fmt(get(r, "battery_gfm_invested_blocks", nothing)), " | ", _fmt(get(r, "generator_invested_blocks", nothing)), " | ", _fmt(get(r, "storage_invested_blocks", nothing)), " |")
+        end
+        println(io)
+
+        println(io, "### 6) Dispatch Table")
+        println(io, "| g_min | total_online_gfm_blocks | total_online_gfl_blocks | total_generation | total_storage_discharge | total_storage_charge |")
+        println(io, "|---:|---:|---:|---:|---:|---:|")
+        for r in controlled_study["runs"]
+            ogfm = haskey(r, "online_gfm_blocks_by_snapshot") ? sum(values(r["online_gfm_blocks_by_snapshot"])) : nothing
+            ogfl = haskey(r, "online_gfl_blocks_by_snapshot") ? sum(values(r["online_gfl_blocks_by_snapshot"])) : nothing
+            tg = haskey(r, "generation_by_carrier") ? sum(values(r["generation_by_carrier"])) : nothing
+            tsd = haskey(r, "storage_discharge_by_carrier") ? sum(values(r["storage_discharge_by_carrier"])) : nothing
+            tsc = haskey(r, "storage_charge_by_carrier") ? sum(values(r["storage_charge_by_carrier"])) : nothing
+            println(io, "| ", _fmt(r["g_min"]; digits=1), " | ", _fmt(ogfm), " | ", _fmt(ogfl), " | ", _fmt(tg), " | ", _fmt(tsd), " | ", _fmt(tsc), " |")
+        end
+        println(io)
+
+        println(io, "### 7) Physical Flow Plausibility Table")
+        println(io, "| g_min | ac_max_loading | ac_overloaded | dcline_max_loading | dcline_overloaded | max_bus_balance_residual | max_system_balance_residual | dcline_loss_residual |")
+        println(io, "|---:|---:|---:|---:|---:|---:|---:|---:|")
+        for r in controlled_study["runs"]
+            pp = get(r, "physical_plausibility", Dict{String,Any}())
+            println(io, "| ", _fmt(r["g_min"]; digits=1), " | ", _fmt(get(pp, "ac_max_branch_loading", nothing)), " | ", _fmt(get(pp, "ac_overloaded_branch_count", nothing)), " | ", _fmt(get(pp, "dcline_max_loading", nothing)), " | ", _fmt(get(pp, "dcline_overloaded_count", nothing)), " | ", _fmt(get(pp, "max_bus_active_balance_residual", nothing)), " | ", _fmt(get(pp, "max_system_active_balance_residual", nothing)), " | ", _fmt(get(pp, "dcline_loss_residual", nothing)), " |")
+        end
+        println(io)
+
+        println(io, "### 8) gSCR Binding Table")
+        println(io, "| g_min | min_gscr_margin | weak_bus | weak_snapshot | near_binding_count | battery_gfm_contribution_at_weakest_bus | investment_local_to_weak_bus |")
+        println(io, "|---:|---:|---:|---:|---:|---:|---|")
+        for r in controlled_study["runs"]
+            gd = get(r, "gscr_detail", Dict{String,Any}())
+            weak = get(gd, "weakest_bus_snapshot", Dict{String,Any}())
+            println(io, "| ", _fmt(r["g_min"]; digits=1), " | ", _fmt(get(gd, "min_gscr_margin", nothing)), " | ", _fmt(get(weak, "bus", nothing); digits=0), " | ", _fmt(get(weak, "snapshot", nothing); digits=0), " | ", _fmt(get(gd, "near_binding_count", nothing); digits=0), " | ", _fmt(get(gd, "battery_gfm_contribution_at_weakest_bus", nothing)), " | ", get(gd, "investment_local_to_weak_bus", nothing), " |")
+        end
+        println(io)
+
+        println(io, "### 9) Storage Final Energy Table")
+        println(io, "| g_min | aggregate_initial_storage_energy | aggregate_final_storage_energy | final_storage_depletion_ratio |")
+        println(io, "|---:|---:|---:|---:|")
+        for r in controlled_study["runs"]
+            println(io, "| ", _fmt(r["g_min"]; digits=1), " | ", _fmt(get(r, "aggregate_initial_storage_energy", nothing)), " | ", _fmt(get(r, "aggregate_final_storage_energy", nothing)), " | ", _fmt(get(r, "final_storage_depletion_ratio", nothing)), " |")
+        end
+        println(io)
+
+        feasible_10 = any(r -> abs(float(get(r, "g_min", -1.0)) - 1.0) <= 1e-9 && (String(get(r, "status", "")) in _ACTIVE_OK), controlled_study["runs"])
+        feasible_15 = any(r -> abs(float(get(r, "g_min", -1.0)) - 1.5) <= 1e-9 && (String(get(r, "status", "")) in _ACTIVE_OK), controlled_study["runs"])
+        println(io, "### 10) Controlled-Study Conclusion")
+        println(io, "- g_min=1.0 feasible/plausible: ", feasible_10)
+        println(io, "- g_min=1.5 feasible/plausible: ", feasible_15)
+        println(io)
+
         println(io, "## 12) Conclusions")
         gate_optimal = gate["status"] == "OPTIMAL"
         gate_feasible = gate["status"] in _ACTIVE_OK
@@ -4770,6 +5639,7 @@ function _write_results_bundle(
     existing_storage_policy_runs::Dict{String,Any},
     final_storage_24h_diag::Dict{String,Any},
     growing_horizon_diag::Dict{String,Any},
+    controlled_study::Dict{String,Any},
 )
     mkpath(dirname(_RESULTS_PATH))
     bundle = Dict{String,Any}(
@@ -4781,6 +5651,7 @@ function _write_results_bundle(
         "existing_storage_initial_energy_policy" => existing_storage_policy_runs,
         "final_storage_state_24h_diagnostic" => final_storage_24h_diag,
         "growing_horizon_storage_dynamics_diagnostic" => growing_horizon_diag,
+        "controlled_24h_relaxed_final_storage_study" => controlled_study,
         "schema" => schema,
         "adequacy" => adequacy,
         "gate_g_min_0" => gate,
@@ -4811,6 +5682,7 @@ function main()
     existing_storage_policy_runs = _run_existing_storage_initial_energy_policy_sequence(raw, snapshot_id)
     final_storage_24h_diag = _run_24h_final_storage_state_diagnostic(raw)
     growing_horizon_diag = _run_growing_horizon_storage_diagnostic(raw)
+    controlled_study = _run_controlled_24h_relaxed_capexp_study(raw, final_storage_24h_diag)
 
     gate = existing_storage_policy_runs["full_24h_g_min_0"]
     diag = nothing
@@ -4835,8 +5707,8 @@ function main()
         "likely_root_cause" => layered_root_cause,
     )
 
-    report = _write_report(schema, adequacy, gate, diag, deep_diag, presolve_candidates, existing_storage_policy_runs, final_storage_24h_diag, growing_horizon_diag)
-    results_path = _write_results_bundle(schema, adequacy, gate, diag, deep_diag, presolve_candidates, existing_storage_policy_runs, final_storage_24h_diag, growing_horizon_diag)
+    report = _write_report(schema, adequacy, gate, diag, deep_diag, presolve_candidates, existing_storage_policy_runs, final_storage_24h_diag, growing_horizon_diag, controlled_study)
+    results_path = _write_results_bundle(schema, adequacy, gate, diag, deep_diag, presolve_candidates, existing_storage_policy_runs, final_storage_24h_diag, growing_horizon_diag, controlled_study)
     println("Wrote report: ", report)
     println("Wrote results JSON: ", results_path)
 end

@@ -10,7 +10,7 @@
       "objective": 18567.167818716,
       "n_shared_residual_max": 0.0,
       "near_binding": 2,
-      "solve_time_sec": 0.4240000247955322,
+      "solve_time_sec": 0.6589999198913574,
       "total_invested_blocks": 0.0,
       "scenario": "one_snapshot_g0_existing_storage_half_energy_rating",
       "status": "OPTIMAL",
@@ -1954,7 +1954,7 @@
       "mode": "full_capexp",
       "objective": null,
       "near_binding": null,
-      "solve_time_sec": 1.0429999828338623,
+      "solve_time_sec": 0.8399999141693115,
       "total_invested_blocks": null,
       "scenario": "full_24h_g0_existing_storage_half_energy_rating",
       "status": "INFEASIBLE",
@@ -3812,6 +3812,1084 @@
     "branch_count": 52,
     "gen_count": 285
   },
+  "controlled_24h_relaxed_final_storage_study": {
+    "study_name": "24h CAPEXP Study with Relaxed Final Storage Policy",
+    "final_storage_policy": "short_horizon_relaxed",
+    "candidate_extendability_audit": {
+      "rows": [
+        {
+          "sum_nmax": 175396.0,
+          "available_in_horizon": true,
+          "effective_max_available_expansion_over_24h": 3.0786456022589165e6,
+          "expandable": true,
+          "p_max_pu_max_over_24h": 1.0,
+          "p_max_pu_min": 0.0,
+          "carrier": "onwind",
+          "sum_n0": 3604.0,
+          "p_max_pu_max": 1.0,
+          "sum_expandable_blocks": 171792.0,
+          "p_max_pu_mean": 0.20770161826901892,
+          "p_block_max": 50.0,
+          "row_count": 37
+        },
+        {
+          "sum_nmax": 3636.0,
+          "available_in_horizon": true,
+          "effective_max_available_expansion_over_24h": 218978.6093590999,
+          "expandable": true,
+          "p_max_pu_max_over_24h": 0.8855,
+          "p_max_pu_min": 0.0,
+          "carrier": "offwind-ac",
+          "sum_n0": 84.0,
+          "p_max_pu_max": 0.8855,
+          "sum_expandable_blocks": 3552.0,
+          "p_max_pu_mean": 0.4036214358102067,
+          "p_block_max": 100.0,
+          "row_count": 28
+        },
+        {
+          "sum_nmax": 2183.0,
+          "available_in_horizon": true,
+          "effective_max_available_expansion_over_24h": 157494.45746272497,
+          "expandable": true,
+          "p_max_pu_max_over_24h": 0.8855000000000002,
+          "p_max_pu_min": 0.0,
+          "carrier": "offwind-dc",
+          "sum_n0": 164.0,
+          "p_max_pu_max": 0.8855000000000002,
+          "sum_expandable_blocks": 2019.0,
+          "p_max_pu_mean": 0.5726508892159964,
+          "p_block_max": 100.0,
+          "row_count": 23
+        },
+        {
+          "sum_nmax": 211369.0,
+          "available_in_horizon": true,
+          "effective_max_available_expansion_over_24h": 3.5288078039733563e6,
+          "expandable": true,
+          "p_max_pu_max_over_24h": 0.7637011863835693,
+          "p_max_pu_min": 0.0,
+          "carrier": "solar",
+          "sum_n0": 3047.0,
+          "p_max_pu_max": 0.7637011863835693,
+          "sum_expandable_blocks": 208322.0,
+          "p_max_pu_mean": 0.10046195382187445,
+          "p_block_max": 50.0,
+          "row_count": 37
+        },
+        {
+          "sum_nmax": 37000.0,
+          "available_in_horizon": true,
+          "effective_max_available_expansion_over_24h": 3.7e6,
+          "expandable": true,
+          "p_max_pu_max_over_24h": 1.0,
+          "p_max_pu_min": 1.0,
+          "carrier": "battery_gfl",
+          "sum_n0": 0.0,
+          "p_max_pu_max": 1.0,
+          "sum_expandable_blocks": 37000.0,
+          "p_max_pu_mean": 1.0,
+          "p_block_max": 100.0,
+          "row_count": 37
+        },
+        {
+          "sum_nmax": 37000.0,
+          "available_in_horizon": true,
+          "effective_max_available_expansion_over_24h": 3.7e6,
+          "expandable": true,
+          "p_max_pu_max_over_24h": 1.0,
+          "p_max_pu_min": 1.0,
+          "carrier": "battery_gfm",
+          "sum_n0": 0.0,
+          "p_max_pu_max": 1.0,
+          "sum_expandable_blocks": 37000.0,
+          "p_max_pu_mean": 1.0,
+          "p_block_max": 100.0,
+          "row_count": 37
+        }
+      ]
+    },
+    "runs": [
+      {
+        "gscr_detail": {
+          "min_gscr_margin": 0.0,
+          "gfm_strength_contribution_by_carrier_at_weakest_bus": {
+            "battery_gfm": 0.0,
+            "CCGT": 0.0,
+            "OCGT": 0.0
+          },
+          "weakest_bus_snapshot": {
+            "bus": 28,
+            "snapshot": 1
+          },
+          "near_binding_count": 48,
+          "battery_gfm_contribution_at_weakest_bus": 0.0,
+          "investment_local_to_weak_bus": false,
+          "gfl_rhs_contribution_by_carrier_at_weakest_bus": {
+            "solar": 0.0,
+            "onwind": 0.0,
+            "battery_gfl": 0.0
+          }
+        },
+        "battery_gfl_invested_blocks": 0.0,
+        "objective": 18641.49390129659,
+        "online_gfl_blocks_by_snapshot": {
+          "5": 1150.666515228443,
+          "16": 1551.3722362781014,
+          "20": 1555.512811841933,
+          "12": 1543.0179408176905,
+          "24": 1555.512811841933,
+          "8": 1520.3063501574572,
+          "17": 1552.2379803654799,
+          "1": 337.00927215721066,
+          "19": 1554.9956624164133,
+          "22": 1555.512811841933,
+          "23": 1555.512811841933,
+          "6": 1182.181426157536,
+          "11": 1543.0179408176905,
+          "9": 1535.9861705270728,
+          "14": 1549.2863634983644,
+          "3": 764.4661215856906,
+          "7": 1237.1771005088274,
+          "4": 1091.5530334744979,
+          "13": 1543.568440865889,
+          "15": 1551.2476365566808,
+          "2": 598.0082193630583,
+          "10": 1541.2192280293052,
+          "18": 1554.9956624164133,
+          "21": 1555.512811841933
+        },
+        "generation_by_carrier": {
+          "offwind-dc": 176874.03273263763,
+          "ror": 290617.8297888573,
+          "coal": 390522.87982297107,
+          "onwind": 490900.73078280716,
+          "geothermal": 640.0,
+          "biomass": 276631.1381554775,
+          "CCGT": 3.085563039363056e6,
+          "offwind-ac": 51270.46684191556,
+          "oil": 31880.0,
+          "solar": 197548.9945262616,
+          "nuclear": 1.0291770339999984e6,
+          "lignite": 621731.1089559981,
+          "OCGT": 867.5599999999996
+        },
+        "solve_time_sec": 1.319000005722046,
+        "storage_charge_by_carrier": {
+          "battery_gfm": 0.0,
+          "PHS": 0.0,
+          "battery_gfl": 0.0,
+          "hydro": 0.0
+        },
+        "aggregate_initial_storage_energy": 5.485110756687964e8,
+        "status": "OPTIMAL",
+        "shutdown_cost": 0.0,
+        "investment_by_bus": {
+          "5": 0.0,
+          "16": 0.0,
+          "20": 0.0,
+          "35": 0.0,
+          "12": 0.0,
+          "24": 0.0,
+          "28": 0.0,
+          "30": 0.0,
+          "17": 0.0,
+          "37": 0.0,
+          "1": 0.0,
+          "19": 0.0,
+          "22": 0.0,
+          "23": 0.0,
+          "32": 0.0,
+          "6": 0.0,
+          "8": 0.0,
+          "36": 0.0,
+          "11": 0.0,
+          "31": 0.0,
+          "9": 0.0,
+          "14": 0.0,
+          "3": 0.0,
+          "29": 0.0,
+          "33": 0.0,
+          "25": 0.0,
+          "7": 0.0,
+          "34": 0.0,
+          "4": 0.0,
+          "15": 0.0,
+          "21": 0.0,
+          "2": 0.0,
+          "27": 0.0,
+          "18": 0.0,
+          "26": 0.0,
+          "10": 0.0,
+          "13": 0.0
+        },
+        "final_storage_depletion_ratio": 0.9925755982529251,
+        "online_gfm_blocks_by_snapshot": {
+          "5": 6675.409923361376,
+          "16": 6737.989753595626,
+          "20": 6740.989753595627,
+          "12": 6737.715130133309,
+          "24": 6740.989753595626,
+          "8": 6731.2335404255255,
+          "17": 6740.989753595626,
+          "1": 6077.332922212216,
+          "19": 6740.989753595626,
+          "22": 6740.989753595626,
+          "23": 6740.989753595626,
+          "6": 6683.942081320962,
+          "11": 6731.715130133309,
+          "9": 6731.2335404255255,
+          "14": 6737.96210594608,
+          "3": 6517.589143780853,
+          "7": 6712.869968929346,
+          "4": 6662.421335740788,
+          "13": 6737.96210594608,
+          "15": 6737.96210594608,
+          "2": 6488.63129742887,
+          "10": 6731.677257833984,
+          "18": 6740.989753595626,
+          "21": 6740.989753595626
+        },
+        "battery_gfm_invested_blocks": 0.0,
+        "storage_discharge_by_carrier": {
+          "battery_gfm": 0.0,
+          "PHS": 1.3012458504479781e6,
+          "battery_gfl": 0.0,
+          "hydro": 2.3128355739685246e6
+        },
+        "physical_plausibility": {
+          "near_binding_count": 48,
+          "dcline_top10_loadings": [
+            {
+              "dcline": 15,
+              "loading": 1.0,
+              "snapshot": 24
+            },
+            {
+              "dcline": 12,
+              "loading": 1.0,
+              "snapshot": 17
+            },
+            {
+              "dcline": 16,
+              "loading": 1.0,
+              "snapshot": 19
+            },
+            {
+              "dcline": 9,
+              "loading": 1.0,
+              "snapshot": 22
+            },
+            {
+              "dcline": 26,
+              "loading": 1.0,
+              "snapshot": 2
+            },
+            {
+              "dcline": 17,
+              "loading": 1.0,
+              "snapshot": 10
+            },
+            {
+              "dcline": 24,
+              "loading": 1.0,
+              "snapshot": 18
+            },
+            {
+              "dcline": 26,
+              "loading": 1.0,
+              "snapshot": 20
+            },
+            {
+              "dcline": 39,
+              "loading": 1.0,
+              "snapshot": 12
+            },
+            {
+              "dcline": 31,
+              "loading": 1.0,
+              "snapshot": 15
+            }
+          ],
+          "ac_top10_branch_loadings": [
+            {
+              "loading": 1.0,
+              "branch": 15,
+              "snapshot": 24
+            },
+            {
+              "loading": 1.0,
+              "branch": 12,
+              "snapshot": 17
+            },
+            {
+              "loading": 1.0,
+              "branch": 51,
+              "snapshot": 9
+            },
+            {
+              "loading": 1.0,
+              "branch": 45,
+              "snapshot": 12
+            },
+            {
+              "loading": 1.0,
+              "branch": 48,
+              "snapshot": 14
+            },
+            {
+              "loading": 1.0,
+              "branch": 17,
+              "snapshot": 10
+            },
+            {
+              "loading": 1.0,
+              "branch": 24,
+              "snapshot": 18
+            },
+            {
+              "loading": 1.0,
+              "branch": 8,
+              "snapshot": 16
+            },
+            {
+              "loading": 1.0,
+              "branch": 39,
+              "snapshot": 12
+            },
+            {
+              "loading": 1.0,
+              "branch": 49,
+              "snapshot": 3
+            }
+          ],
+          "dcline_bound_residual": 0.0,
+          "ac_overloaded_branch_count": 0,
+          "max_generator_lower_bound_residual": 0.0,
+          "gscr_reconstruction_residual": 0.0,
+          "ac_max_branch_loading": 1.0,
+          "max_storage_discharge_bound_residual": 0.0,
+          "min_gscr_margin": 0.0,
+          "weakest_bus_snapshot": {
+            "bus": 28,
+            "snapshot": 1
+          },
+          "ac_branch_flow_bound_residual": 0.0,
+          "max_startup_shutdown_transition_residual": 1.8207657603852567e-13,
+          "max_storage_state_residual": 1.4901161193847656e-8,
+          "worst_balance_bus_snapshot": {
+            "bus": 1,
+            "snapshot": 11,
+            "residual": 2.1827872842550278e-11
+          },
+          "dcline_loss_residual": 0.0,
+          "max_bus_active_balance_residual": 2.1827872842550278e-11,
+          "max_system_active_balance_residual": 1.7462298274040222e-10,
+          "max_storage_charge_bound_residual": 0.0,
+          "dcline_max_loading": 1.0,
+          "max_storage_energy_bound_residual": 0.0,
+          "dcline_overloaded_count": 0,
+          "max_generator_upper_bound_residual": 0.0
+        },
+        "startup_cost": 18641.49398534659,
+        "generator_invested_blocks": 0.0,
+        "investment_cost": 0.0,
+        "storage_invested_blocks": 0.0,
+        "aggregate_final_storage_energy": 5.444387090803111e8,
+        "g_min": 0.0,
+        "investment_by_carrier": {
+          "battery_gfl": 0.0,
+          "battery_gfm": 0.0,
+          "offwind-dc": 0.0,
+          "coal": 0.0,
+          "ror": 0.0,
+          "onwind": 0.0,
+          "geothermal": 0.0,
+          "CCGT": 0.0,
+          "biomass": 0.0,
+          "offwind-ac": 0.0,
+          "oil": 0.0,
+          "PHS": 0.0,
+          "nuclear": 0.0,
+          "solar": 0.0,
+          "lignite": 0.0,
+          "OCGT": 0.0,
+          "hydro": 0.0
+        }
+      },
+      {
+        "gscr_detail": {
+          "min_gscr_margin": -2.000888343900442e-11,
+          "gfm_strength_contribution_by_carrier_at_weakest_bus": {
+            "battery_gfm": 0.0,
+            "biomass": 22.5,
+            "CCGT": 1950.0,
+            "ror": 109.01160810282654,
+            "PHS": 360.0,
+            "OCGT": 0.0,
+            "hydro": 202.0
+          },
+          "weakest_bus_snapshot": {
+            "bus": 22,
+            "snapshot": 21
+          },
+          "near_binding_count": 544,
+          "battery_gfm_contribution_at_weakest_bus": 0.0,
+          "investment_local_to_weak_bus": false,
+          "gfl_rhs_contribution_by_carrier_at_weakest_bus": {
+            "battery_gfl": 0.0,
+            "offwind-dc": 0.0,
+            "solar": 287.63652178946467,
+            "offwind-ac": 0.0,
+            "geothermal": 40.0,
+            "onwind": 2315.875086313382
+          }
+        },
+        "battery_gfl_invested_blocks": 0.0,
+        "objective": 2.914674834655941e6,
+        "online_gfl_blocks_by_snapshot": {
+          "5": 189.90886534904553,
+          "16": 354.90562886823153,
+          "20": 356.9929142411783,
+          "12": 355.45223867199655,
+          "24": 356.9929142411782,
+          "8": 351.35066346698056,
+          "17": 354.90562886823125,
+          "1": 84.35726978951979,
+          "19": 359.4998948786885,
+          "22": 356.99291424117837,
+          "23": 356.9929142411782,
+          "6": 224.42311317956404,
+          "11": 359.0840829955146,
+          "9": 353.29466253667056,
+          "14": 355.3257828900626,
+          "3": 172.8425777223824,
+          "7": 237.29315017799422,
+          "4": 187.2128536079884,
+          "13": 355.410746707767,
+          "15": 354.91074670776743,
+          "2": 167.8767860346038,
+          "10": 359.0434048272523,
+          "18": 359.79835581213126,
+          "21": 356.9929142411784
+        },
+        "generation_by_carrier": {
+          "offwind-dc": 48259.553139665404,
+          "ror": 317001.3609431383,
+          "coal": 524420.1889449819,
+          "onwind": 55348.938153989606,
+          "geothermal": 240.0,
+          "biomass": 313497.6629851521,
+          "CCGT": 3.2338243571494007e6,
+          "offwind-ac": 8642.806198134376,
+          "oil": 40900.0,
+          "solar": 13368.479290945583,
+          "nuclear": 1.2913489853588934e6,
+          "lignite": 796467.2028056788,
+          "OCGT": 905.2799999999996
+        },
+        "solve_time_sec": 2.0849997997283936,
+        "storage_charge_by_carrier": {
+          "battery_gfm": 0.0,
+          "PHS": 0.0,
+          "battery_gfl": 0.0,
+          "hydro": 2975.493276010906
+        },
+        "aggregate_initial_storage_energy": 5.485110756687964e8,
+        "status": "OPTIMAL",
+        "shutdown_cost": 0.0,
+        "investment_by_bus": {
+          "5": 0.0,
+          "16": 0.0,
+          "20": 0.0,
+          "35": 0.0,
+          "12": 0.0,
+          "24": 0.0,
+          "28": 0.0,
+          "30": 0.0,
+          "17": 0.0,
+          "37": 0.0,
+          "1": 0.0,
+          "19": 0.0,
+          "22": 0.0,
+          "23": 25.06980637510301,
+          "32": 0.0,
+          "6": 0.0,
+          "8": 0.0,
+          "36": 0.0,
+          "11": 0.0,
+          "31": 0.0,
+          "9": 0.0,
+          "14": 0.0,
+          "3": 0.0,
+          "29": 0.0,
+          "33": 0.0,
+          "25": 0.0,
+          "7": 0.0,
+          "34": 0.0,
+          "4": 0.0,
+          "15": 0.0,
+          "21": 0.0,
+          "2": 0.0,
+          "27": 0.0,
+          "18": 0.0,
+          "26": 0.0,
+          "10": 0.0,
+          "13": 0.0
+        },
+        "final_storage_depletion_ratio": 0.992569570838372,
+        "online_gfm_blocks_by_snapshot": {
+          "5": 6737.64823984044,
+          "16": 7083.0560750359455,
+          "20": 7126.5367833281725,
+          "12": 7083.270507852033,
+          "24": 7118.083154735681,
+          "8": 7085.041006891806,
+          "17": 7083.0560750359455,
+          "1": 6143.835864453014,
+          "19": 7151.606589703276,
+          "22": 7126.150283328173,
+          "23": 7126.150283328173,
+          "6": 6750.952498391476,
+          "11": 7107.234659807589,
+          "9": 7107.435188189819,
+          "14": 7083.0560750359455,
+          "3": 6639.620748813046,
+          "7": 6972.565631857359,
+          "4": 6669.043703327021,
+          "13": 7083.0560750359455,
+          "15": 7083.0560750359455,
+          "2": 6495.205648800925,
+          "10": 7107.234659807589,
+          "18": 7151.606589703276,
+          "21": 7126.150283328173
+        },
+        "battery_gfm_invested_blocks": 25.06980637510301,
+        "storage_discharge_by_carrier": {
+          "battery_gfm": 0.0,
+          "PHS": 1.3012458504479781e6,
+          "battery_gfl": 0.0,
+          "hydro": 2.3158110672445353e6
+        },
+        "physical_plausibility": {
+          "near_binding_count": 544,
+          "dcline_top10_loadings": [
+            {
+              "dcline": 15,
+              "loading": 1.0,
+              "snapshot": 24
+            },
+            {
+              "dcline": 14,
+              "loading": 1.0,
+              "snapshot": 19
+            },
+            {
+              "dcline": 16,
+              "loading": 1.0,
+              "snapshot": 19
+            },
+            {
+              "dcline": 9,
+              "loading": 1.0,
+              "snapshot": 22
+            },
+            {
+              "dcline": 26,
+              "loading": 1.0,
+              "snapshot": 2
+            },
+            {
+              "dcline": 17,
+              "loading": 1.0,
+              "snapshot": 10
+            },
+            {
+              "dcline": 24,
+              "loading": 1.0,
+              "snapshot": 18
+            },
+            {
+              "dcline": 26,
+              "loading": 1.0,
+              "snapshot": 20
+            },
+            {
+              "dcline": 8,
+              "loading": 1.0,
+              "snapshot": 16
+            },
+            {
+              "dcline": 39,
+              "loading": 1.0,
+              "snapshot": 12
+            }
+          ],
+          "ac_top10_branch_loadings": [
+            {
+              "loading": 1.0,
+              "branch": 15,
+              "snapshot": 24
+            },
+            {
+              "loading": 1.0,
+              "branch": 12,
+              "snapshot": 17
+            },
+            {
+              "loading": 1.0,
+              "branch": 51,
+              "snapshot": 9
+            },
+            {
+              "loading": 1.0,
+              "branch": 45,
+              "snapshot": 12
+            },
+            {
+              "loading": 1.0,
+              "branch": 17,
+              "snapshot": 10
+            },
+            {
+              "loading": 1.0,
+              "branch": 24,
+              "snapshot": 18
+            },
+            {
+              "loading": 1.0,
+              "branch": 8,
+              "snapshot": 16
+            },
+            {
+              "loading": 1.0,
+              "branch": 39,
+              "snapshot": 12
+            },
+            {
+              "loading": 1.0,
+              "branch": 44,
+              "snapshot": 15
+            },
+            {
+              "loading": 1.0,
+              "branch": 33,
+              "snapshot": 3
+            }
+          ],
+          "dcline_bound_residual": 0.0,
+          "ac_overloaded_branch_count": 0,
+          "max_generator_lower_bound_residual": 1.7763568394002505e-13,
+          "gscr_reconstruction_residual": 2.000888343900442e-11,
+          "ac_max_branch_loading": 1.0,
+          "max_storage_discharge_bound_residual": 0.0,
+          "min_gscr_margin": -2.000888343900442e-11,
+          "weakest_bus_snapshot": {
+            "bus": 22,
+            "snapshot": 21
+          },
+          "ac_branch_flow_bound_residual": 0.0,
+          "max_startup_shutdown_transition_residual": 9.103828801926284e-13,
+          "max_storage_state_residual": 1.4901161193847656e-8,
+          "worst_balance_bus_snapshot": {
+            "bus": 15,
+            "snapshot": 8,
+            "residual": 2.546585164964199e-11
+          },
+          "dcline_loss_residual": 0.0,
+          "max_bus_active_balance_residual": 2.546585164964199e-11,
+          "max_system_active_balance_residual": 1.7462298274040222e-10,
+          "max_storage_charge_bound_residual": 0.0,
+          "dcline_max_loading": 1.0,
+          "max_storage_energy_bound_residual": 0.0,
+          "dcline_overloaded_count": 0,
+          "max_generator_upper_bound_residual": 0.0
+        },
+        "startup_cost": 22289.32867799428,
+        "generator_invested_blocks": 0.0,
+        "investment_cost": 2.892385506061997e6,
+        "storage_invested_blocks": 25.06980637510301,
+        "aggregate_final_storage_energy": 5.444354029766711e8,
+        "g_min": 1.0,
+        "investment_by_carrier": {
+          "battery_gfl": 0.0,
+          "battery_gfm": 25.06980637510301,
+          "offwind-dc": 0.0,
+          "coal": 0.0,
+          "ror": 0.0,
+          "onwind": 0.0,
+          "geothermal": 0.0,
+          "CCGT": 0.0,
+          "biomass": 0.0,
+          "offwind-ac": 0.0,
+          "oil": 0.0,
+          "PHS": 0.0,
+          "nuclear": 0.0,
+          "solar": 0.0,
+          "lignite": 0.0,
+          "OCGT": 0.0,
+          "hydro": 0.0
+        }
+      },
+      {
+        "gscr_detail": {
+          "min_gscr_margin": -1.5518253349000588e-11,
+          "gfm_strength_contribution_by_carrier_at_weakest_bus": {
+            "battery_gfm": 0.0,
+            "CCGT": 14.9999999999937,
+            "PHS": 7.5,
+            "ror": 21.637830933552948,
+            "nuclear": 55.86216906643696,
+            "lignite": 45.00000000000802,
+            "OCGT": 0.0,
+            "hydro": 5.0
+          },
+          "weakest_bus_snapshot": {
+            "bus": 36,
+            "snapshot": 22
+          },
+          "near_binding_count": 643,
+          "battery_gfm_contribution_at_weakest_bus": 0.0,
+          "investment_local_to_weak_bus": false,
+          "gfl_rhs_contribution_by_carrier_at_weakest_bus": {
+            "solar": 75.0000000000105,
+            "offwind-ac": 0.0,
+            "onwind": 74.99999999999665,
+            "battery_gfl": 0.0
+          }
+        },
+        "battery_gfl_invested_blocks": 0.0,
+        "objective": 4.990617876909578e6,
+        "online_gfl_blocks_by_snapshot": {
+          "5": 236.10640982574807,
+          "16": 295.4176592101348,
+          "20": 297.30854713011564,
+          "12": 294.58260722670514,
+          "24": 297.18393161770916,
+          "8": 270.8976566984254,
+          "17": 295.4176592101348,
+          "1": 100.18604496410626,
+          "19": 300.1788611009592,
+          "22": 297.30854713011564,
+          "23": 297.3085471301155,
+          "6": 257.0366306299276,
+          "11": 297.4790224222609,
+          "9": 297.5115540840219,
+          "14": 295.41765921013484,
+          "3": 191.58191685219847,
+          "7": 263.50632435667444,
+          "4": 236.73285763323838,
+          "13": 294.17313303048604,
+          "15": 296.4176592101348,
+          "2": 135.7485424582327,
+          "10": 297.4722477272393,
+          "18": 300.20893227451097,
+          "21": 297.3085471301157
+        },
+        "generation_by_carrier": {
+          "offwind-dc": 3061.162598068118,
+          "ror": 314262.2216638049,
+          "coal": 533971.9794969492,
+          "onwind": 67247.4308659228,
+          "geothermal": 240.0,
+          "biomass": 305332.8674304099,
+          "CCGT": 3.197410403715393e6,
+          "offwind-ac": 3386.0514070356503,
+          "oil": 39399.999999999985,
+          "solar": 7900.085234167791,
+          "nuclear": 1.3937658892290338e6,
+          "lignite": 777416.8833291953,
+          "OCGT": 829.8399999999996
+        },
+        "solve_time_sec": 2.5219998359680176,
+        "storage_charge_by_carrier": {
+          "battery_gfm": 0.0,
+          "PHS": 0.0,
+          "battery_gfl": 0.0,
+          "hydro": 2975.493276010906
+        },
+        "aggregate_initial_storage_energy": 5.485110756687964e8,
+        "status": "OPTIMAL",
+        "shutdown_cost": 0.0,
+        "investment_by_bus": {
+          "5": 0.0,
+          "16": 0.0,
+          "20": 0.0,
+          "35": 0.0,
+          "12": 0.0,
+          "24": 0.0,
+          "28": 0.0,
+          "30": 0.0,
+          "17": 0.0,
+          "37": 0.0,
+          "1": 0.0,
+          "19": 0.0,
+          "22": 0.0,
+          "23": 43.05470956265454,
+          "32": 0.0,
+          "6": 0.0,
+          "8": 0.0,
+          "36": 0.0,
+          "11": 0.0,
+          "31": 0.0,
+          "9": 0.0,
+          "14": 0.0,
+          "3": 0.0,
+          "29": 0.0,
+          "33": 0.0,
+          "25": 0.0,
+          "7": 0.0,
+          "34": 0.0,
+          "4": 0.0,
+          "15": 0.0,
+          "21": 0.0,
+          "2": 0.0,
+          "27": 0.0,
+          "18": 0.0,
+          "26": 0.0,
+          "10": 0.0,
+          "13": 0.0
+        },
+        "final_storage_depletion_ratio": 0.992569570838372,
+        "online_gfm_blocks_by_snapshot": {
+          "5": 6952.6055855071245,
+          "16": 7230.166043271316,
+          "20": 7229.7795432713165,
+          "12": 7138.708138521357,
+          "24": 7228.694432479868,
+          "8": 7147.565134584246,
+          "17": 7230.166043271316,
+          "1": 6017.294547634449,
+          "19": 7273.22075283397,
+          "22": 7228.9820067392675,
+          "23": 7228.9820067392675,
+          "6": 6961.358123033857,
+          "11": 7174.654366454691,
+          "9": 7175.12731797694,
+          "14": 7230.150223077771,
+          "3": 6805.029554968667,
+          "7": 7132.1933157663825,
+          "4": 6830.864448020056,
+          "13": 7132.8144376883065,
+          "15": 7230.150223077771,
+          "2": 6655.043171209043,
+          "10": 7174.604666699364,
+          "18": 7273.22075283397,
+          "21": 7229.7795432713165
+        },
+        "battery_gfm_invested_blocks": 43.05470956265454,
+        "storage_discharge_by_carrier": {
+          "battery_gfm": 0.0,
+          "PHS": 1.3012458504479781e6,
+          "battery_gfl": 0.0,
+          "hydro": 2.3158110672445353e6
+        },
+        "physical_plausibility": {
+          "near_binding_count": 643,
+          "dcline_top10_loadings": [
+            {
+              "dcline": 15,
+              "loading": 1.0,
+              "snapshot": 24
+            },
+            {
+              "dcline": 12,
+              "loading": 1.0,
+              "snapshot": 17
+            },
+            {
+              "dcline": 14,
+              "loading": 1.0,
+              "snapshot": 19
+            },
+            {
+              "dcline": 16,
+              "loading": 1.0,
+              "snapshot": 19
+            },
+            {
+              "dcline": 9,
+              "loading": 1.0,
+              "snapshot": 22
+            },
+            {
+              "dcline": 26,
+              "loading": 1.0,
+              "snapshot": 2
+            },
+            {
+              "dcline": 17,
+              "loading": 1.0,
+              "snapshot": 10
+            },
+            {
+              "dcline": 24,
+              "loading": 1.0,
+              "snapshot": 18
+            },
+            {
+              "dcline": 26,
+              "loading": 1.0,
+              "snapshot": 20
+            },
+            {
+              "dcline": 8,
+              "loading": 1.0,
+              "snapshot": 16
+            }
+          ],
+          "ac_top10_branch_loadings": [
+            {
+              "loading": 1.0,
+              "branch": 15,
+              "snapshot": 24
+            },
+            {
+              "loading": 1.0,
+              "branch": 12,
+              "snapshot": 17
+            },
+            {
+              "loading": 1.0,
+              "branch": 51,
+              "snapshot": 9
+            },
+            {
+              "loading": 1.0,
+              "branch": 16,
+              "snapshot": 19
+            },
+            {
+              "loading": 1.0,
+              "branch": 45,
+              "snapshot": 12
+            },
+            {
+              "loading": 1.0,
+              "branch": 48,
+              "snapshot": 14
+            },
+            {
+              "loading": 1.0,
+              "branch": 17,
+              "snapshot": 10
+            },
+            {
+              "loading": 1.0,
+              "branch": 24,
+              "snapshot": 18
+            },
+            {
+              "loading": 1.0,
+              "branch": 8,
+              "snapshot": 16
+            },
+            {
+              "loading": 1.0,
+              "branch": 39,
+              "snapshot": 12
+            }
+          ],
+          "dcline_bound_residual": 0.0,
+          "ac_overloaded_branch_count": 0,
+          "max_generator_lower_bound_residual": 2.8421709430404007e-13,
+          "gscr_reconstruction_residual": 1.5518253349000588e-11,
+          "ac_max_branch_loading": 1.0,
+          "max_storage_discharge_bound_residual": 0.0,
+          "min_gscr_margin": -1.5518253349000588e-11,
+          "weakest_bus_snapshot": {
+            "bus": 36,
+            "snapshot": 22
+          },
+          "ac_branch_flow_bound_residual": 0.0,
+          "max_startup_shutdown_transition_residual": 4.199973702156967e-13,
+          "max_storage_state_residual": 1.4901161193847656e-8,
+          "worst_balance_bus_snapshot": {
+            "bus": 35,
+            "snapshot": 11,
+            "residual": 3.2741809263825417e-11
+          },
+          "dcline_loss_residual": 0.0,
+          "max_bus_active_balance_residual": 3.2741809263825417e-11,
+          "max_system_active_balance_residual": 1.7462298274040222e-10,
+          "max_storage_charge_bound_residual": 0.0,
+          "dcline_max_loading": 1.0,
+          "max_storage_energy_bound_residual": 0.0,
+          "dcline_overloaded_count": 0,
+          "max_generator_upper_bound_residual": 0.0
+        },
+        "startup_cost": 23255.303726878596,
+        "generator_invested_blocks": 0.0,
+        "investment_cost": 4.967362573266748e6,
+        "storage_invested_blocks": 43.05470956265454,
+        "aggregate_final_storage_energy": 5.444354029766711e8,
+        "g_min": 1.5,
+        "investment_by_carrier": {
+          "battery_gfl": 0.0,
+          "battery_gfm": 43.05470956265454,
+          "offwind-dc": 0.0,
+          "coal": 0.0,
+          "ror": 0.0,
+          "onwind": 0.0,
+          "geothermal": 0.0,
+          "CCGT": 0.0,
+          "biomass": 0.0,
+          "offwind-ac": 0.0,
+          "oil": 0.0,
+          "PHS": 0.0,
+          "nuclear": 0.0,
+          "solar": 0.0,
+          "lignite": 0.0,
+          "OCGT": 0.0,
+          "hydro": 0.0
+        }
+      }
+    ],
+    "pending_pypsa_interface_caveats": [
+      "Raw block-field naming still needs adapter mapping: n_block0/n_block_max -> n0/nmax in solver copy.",
+      "Link interface is partial: only carrier==DC is mapped to PowerModels dcline; non-DC links are ignored.",
+      "Candidate storage standard ratings are zero for battery candidates; block-scaled storage envelopes are therefore required.",
+      "Initial/final storage policy remains dataset-interface sensitive: strict final infeasible, relaxed/no-final feasible.",
+      "base_s_5 PyPSA acceptance datasets remain infeasible in UC/gSCR and CAPEXP/gSCR; no general PyPSA compatibility claim."
+    ],
+    "preflight_audit": {
+      "link_dcline_mapping": {
+        "raw_dc_link_count_if_available": 43,
+        "dcline_setpoint_constraints_used": false,
+        "raw_non_dc_link_count_ignored_if_available": 0,
+        "dcline_count_powermodels_case": 43
+      },
+      "storage_terminal_policy": {
+        "aggregate_initial_storage_energy": 5.485110756687964e8,
+        "number_of_final_candidate_storage_constraints": 0,
+        "number_of_final_storage_constraints": 126,
+        "selected_final_storage_policy": "short_horizon_relaxed",
+        "strict_final_would_be_infeasible_from_previous_diagnostic": true
+      },
+      "acceptance_caveat": "base_s_5 PyPSA acceptance UC/CAPEXP remains unresolved and is out of scope for this elec_s_37 result",
+      "candidate_storage_zero_rating_audit": {
+        "energy_rating_zero_count": 74,
+        "block_scaled_storage_bounds_reference": [
+          "se <= e_block*n_block",
+          "sc <= p_block_max*na_block",
+          "sd <= p_block_max*na_block"
+        ],
+        "block_scaled_storage_bounds_active": true,
+        "battery_candidate_count": 74,
+        "discharge_rating_zero_count": 74,
+        "charge_rating_zero_count": 74
+      },
+      "block_field_adapter": {
+        "invariant_count_0_le_na0_le_n0_le_nmax": 9864,
+        "adapted_block_enabled_rows_n": 9864,
+        "max_abs_nmax_minus_n_block_max": 0.0,
+        "max_abs_n0_minus_n_block0": 0.0,
+        "invariant_violation_count": 0,
+        "raw_block_enabled_rows_n_block": 9864,
+        "invariant_violations": []
+      }
+    }
+  },
   "run_flag": "RUN_ELEC37_24H_CAPEXP",
   "dataset_path": "D:\\Projekte\\Code\\pypsatomatpowerx_clean_battery_policy\\data\\flexplan_block_gscr\\elec_s_37_24h_from_0301\\case.json",
   "final_storage_state_24h_diagnostic": {
@@ -3828,7 +4906,7 @@
         "existing_storage_energy_over_rating_max": 0.5,
         "candidate_battery_energy_all_zero": true
       },
-      "solve_time_sec": 1.2990000247955322,
+      "solve_time_sec": 1.4059998989105225,
       "scenario": "full_24h_with_storage_state_no_final",
       "aggregate_initial_storage_energy": 5.485110756687964e8,
       "constraint_storage_state_final_ne_count": 0,
@@ -3853,7 +4931,7 @@
         "existing_storage_energy_over_rating_max": 0.5,
         "candidate_battery_energy_all_zero": true
       },
-      "solve_time_sec": 1.5780000686645508,
+      "solve_time_sec": 1.2089998722076416,
       "scenario": "full_24h_storage_state_relaxed_final",
       "aggregate_initial_storage_energy": 5.485110756687964e8,
       "constraint_storage_state_final_ne_count": 0,
@@ -3878,7 +4956,7 @@
         "existing_storage_energy_over_rating_max": 0.5,
         "candidate_battery_energy_all_zero": true
       },
-      "solve_time_sec": 0.750999927520752,
+      "solve_time_sec": 0.8379998207092285,
       "scenario": "full_24h_with_storage_state_and_final",
       "aggregate_initial_storage_energy": 5.485110756687964e8,
       "constraint_storage_state_final_ne_count": 0,
@@ -3907,7 +4985,7 @@
         "objective": 11422.00545003941,
         "max_startup_shutdown_transition_residual": 1.7763568394002505e-15,
         "max_active_balance_residual": 1.0913936421275139e-11,
-        "solve_time_sec": 0.024000167846679688,
+        "solve_time_sec": 0.026000022888183594,
         "total_load_over_horizon": 360968.1689864865,
         "max_storage_state_residual": 0.0,
         "shutdown_total": 0.0,
@@ -3947,7 +5025,7 @@
         "objective": 11422.00545003941,
         "max_startup_shutdown_transition_residual": 2.842170943040401e-14,
         "max_active_balance_residual": 1.3642420526593924e-11,
-        "solve_time_sec": 0.05299997329711914,
+        "solve_time_sec": 0.053999900817871094,
         "total_load_over_horizon": 712357.7149378378,
         "max_storage_state_residual": 0.0,
         "shutdown_total": 7.762679496704867,
@@ -3987,7 +5065,7 @@
         "objective": 11422.00545003941,
         "max_startup_shutdown_transition_residual": 2.2737367544323206e-13,
         "max_active_balance_residual": 1.4551915228366852e-11,
-        "solve_time_sec": 0.0839998722076416,
+        "solve_time_sec": 0.10700011253356934,
         "total_load_over_horizon": 1.0587472465297296e6,
         "max_storage_state_residual": 0.0,
         "shutdown_total": 0.0,
@@ -4027,7 +5105,7 @@
         "objective": 11422.005450039409,
         "max_startup_shutdown_transition_residual": 2.842170943040401e-14,
         "max_active_balance_residual": 1.4551915228366852e-11,
-        "solve_time_sec": 0.40000009536743164,
+        "solve_time_sec": 0.11999988555908203,
         "total_load_over_horizon": 1.4073589901378378e6,
         "max_storage_state_residual": 0.0,
         "shutdown_total": 11.12227004509472,
@@ -4067,7 +5145,7 @@
         "objective": 11726.683675798855,
         "max_startup_shutdown_transition_residual": 5.684341886080802e-14,
         "max_active_balance_residual": 7.275957614183426e-12,
-        "solve_time_sec": 0.16000008583068848,
+        "solve_time_sec": 0.22500014305114746,
         "total_load_over_horizon": 1.7716780969675677e6,
         "max_storage_state_residual": 0.0,
         "shutdown_total": 0.0,
@@ -4107,7 +5185,7 @@
         "objective": 13437.19881188154,
         "max_startup_shutdown_transition_residual": 1.4210854715202004e-14,
         "max_active_balance_residual": 1.0913936421275139e-11,
-        "solve_time_sec": 0.18499994277954102,
+        "solve_time_sec": 0.21700000762939453,
         "total_load_over_horizon": 2.172354023589189e6,
         "max_storage_state_residual": 2.3283064365386963e-10,
         "shutdown_total": 0.0,
@@ -4147,7 +5225,7 @@
         "objective": 15104.255227882926,
         "max_startup_shutdown_transition_residual": 7.105427357601002e-15,
         "max_active_balance_residual": 1.000444171950221e-11,
-        "solve_time_sec": 0.24399995803833008,
+        "solve_time_sec": 0.2720000743865967,
         "total_load_over_horizon": 2.609755968186486e6,
         "max_storage_state_residual": 3.725290298461914e-9,
         "shutdown_total": 0.0,
@@ -4187,7 +5265,7 @@
         "objective": 15997.290394025875,
         "max_startup_shutdown_transition_residual": 1.4210854715202004e-14,
         "max_active_balance_residual": 2.9103830456733704e-11,
-        "solve_time_sec": 0.25300002098083496,
+        "solve_time_sec": 0.25800013542175293,
         "total_load_over_horizon": 3.073535852651351e6,
         "max_storage_state_residual": 2.3283064365386963e-10,
         "shutdown_total": 0.0,
@@ -4227,7 +5305,7 @@
         "objective": 15997.290394025877,
         "max_startup_shutdown_transition_residual": 6.039613253960852e-14,
         "max_active_balance_residual": 9.094947017729282e-12,
-        "solve_time_sec": 0.2869999408721924,
+        "solve_time_sec": 0.3560001850128174,
         "total_load_over_horizon": 3.5477468920486486e6,
         "max_storage_state_residual": 7.450580596923828e-9,
         "shutdown_total": 0.003650665556998948,
@@ -4267,7 +5345,7 @@
         "objective": 15997.290394025875,
         "max_startup_shutdown_transition_residual": 1.4210854715202004e-14,
         "max_active_balance_residual": 8.185452315956354e-12,
-        "solve_time_sec": 0.3320000171661377,
+        "solve_time_sec": 0.35899996757507324,
         "total_load_over_horizon": 4.0245431806378374e6,
         "max_storage_state_residual": 1.4901161193847656e-8,
         "shutdown_total": 0.4939958219814185,
@@ -4307,7 +5385,7 @@
         "objective": 15997.290394025875,
         "max_startup_shutdown_transition_residual": 6.039613253960852e-14,
         "max_active_balance_residual": 1.0913936421275139e-11,
-        "solve_time_sec": 0.38299989700317383,
+        "solve_time_sec": 0.5230000019073486,
         "total_load_over_horizon": 4.5005080192756755e6,
         "max_storage_state_residual": 7.450580596923828e-9,
         "shutdown_total": 2.220446049250313e-15,
@@ -4347,7 +5425,7 @@
         "objective": 15997.290394025877,
         "max_startup_shutdown_transition_residual": 1.4210854715202004e-14,
         "max_active_balance_residual": 2.091837814077735e-11,
-        "solve_time_sec": 0.4049999713897705,
+        "solve_time_sec": 0.4700000286102295,
         "total_load_over_horizon": 4.9696639024405405e6,
         "max_storage_state_residual": 0.0,
         "shutdown_total": 0.0,
@@ -4387,7 +5465,7 @@
         "objective": 15997.290394025877,
         "max_startup_shutdown_transition_residual": 2.842170943040401e-14,
         "max_active_balance_residual": 1.7280399333685637e-11,
-        "solve_time_sec": 0.5080001354217529,
+        "solve_time_sec": 0.5780000686645508,
         "total_load_over_horizon": 5.4326723736000005e6,
         "max_storage_state_residual": 7.450580596923828e-9,
         "shutdown_total": 5.50900304580275,
@@ -4427,7 +5505,7 @@
         "objective": 15997.290394025878,
         "max_startup_shutdown_transition_residual": 1.4210854715202004e-14,
         "max_active_balance_residual": 1.4551915228366852e-11,
-        "solve_time_sec": 0.5639998912811279,
+        "solve_time_sec": 0.6789999008178711,
         "total_load_over_horizon": 5.886505688081081e6,
         "max_storage_state_residual": 0.0,
         "shutdown_total": 0.0,
@@ -4467,7 +5545,7 @@
         "objective": 15997.290394025877,
         "max_startup_shutdown_transition_residual": 1.7763568394002505e-14,
         "max_active_balance_residual": 1.2732925824820995e-11,
-        "solve_time_sec": 0.7560000419616699,
+        "solve_time_sec": 0.7110002040863037,
         "total_load_over_horizon": 6.334229466391891e6,
         "max_storage_state_residual": 2.3283064365386963e-10,
         "shutdown_total": 0.0,
@@ -4507,7 +5585,7 @@
         "objective": 15997.290394025877,
         "max_startup_shutdown_transition_residual": 7.105427357601002e-14,
         "max_active_balance_residual": 1.4551915228366852e-11,
-        "solve_time_sec": 0.7409999370574951,
+        "solve_time_sec": 0.7460000514984131,
         "total_load_over_horizon": 6.778918924835135e6,
         "max_storage_state_residual": 1.4901161193847656e-8,
         "shutdown_total": 52.475967404445655,
@@ -4547,7 +5625,7 @@
         "objective": 16245.383412565554,
         "max_startup_shutdown_transition_residual": 1.2789769243681803e-13,
         "max_active_balance_residual": 2.000888343900442e-11,
-        "solve_time_sec": 0.7939999103546143,
+        "solve_time_sec": 0.747999906539917,
         "total_load_over_horizon": 7.232902268281081e6,
         "max_storage_state_residual": 1.4901161193847656e-8,
         "shutdown_total": 0.0,
@@ -4587,7 +5665,7 @@
         "objective": 18598.435950149862,
         "max_startup_shutdown_transition_residual": 1.4210854715202004e-14,
         "max_active_balance_residual": 1.4551915228366852e-11,
-        "solve_time_sec": 0.754000186920166,
+        "solve_time_sec": 0.8870000839233398,
         "total_load_over_horizon": 7.707651518148649e6,
         "max_storage_state_residual": 0.0,
         "shutdown_total": 0.0,
@@ -4627,7 +5705,7 @@
         "objective": 18641.493901296588,
         "max_startup_shutdown_transition_residual": 2.842170943040401e-14,
         "max_active_balance_residual": 1.4551915228366852e-11,
-        "solve_time_sec": 0.8650000095367432,
+        "solve_time_sec": 1.25,
         "total_load_over_horizon": 8.183657290829729e6,
         "max_storage_state_residual": 1.4901161193847656e-8,
         "shutdown_total": -3.1086244689504383e-15,
@@ -4667,7 +5745,7 @@
         "objective": 18641.493901296584,
         "max_startup_shutdown_transition_residual": 1.4210854715202004e-14,
         "max_active_balance_residual": 1.7280399333685637e-11,
-        "solve_time_sec": 0.9790000915527344,
+        "solve_time_sec": 1.3420000076293945,
         "total_load_over_horizon": 8.63936216491081e6,
         "max_storage_state_residual": 2.3283064365386963e-10,
         "shutdown_total": 4.440892098500626e-16,
@@ -4707,7 +5785,7 @@
         "objective": 18641.49390129659,
         "max_startup_shutdown_transition_residual": 1.4210854715202004e-14,
         "max_active_balance_residual": 1.546140993013978e-11,
-        "solve_time_sec": 1.0390000343322754,
+        "solve_time_sec": 1.1319999694824219,
         "total_load_over_horizon": 9.073220785216214e6,
         "max_storage_state_residual": 0.0,
         "shutdown_total": 0.0,
@@ -4747,7 +5825,7 @@
         "objective": 18641.493901296584,
         "max_startup_shutdown_transition_residual": 1.4210854715202004e-14,
         "max_active_balance_residual": 1.6370904631912708e-11,
-        "solve_time_sec": 1.1130001544952393,
+        "solve_time_sec": 1.1749999523162842,
         "total_load_over_horizon": 9.492064363427026e6,
         "max_storage_state_residual": 0.0,
         "shutdown_total": 0.0,
@@ -4787,7 +5865,7 @@
         "objective": 18641.493901296588,
         "max_startup_shutdown_transition_residual": 4.547473508864641e-13,
         "max_active_balance_residual": 1.9099388737231493e-11,
-        "solve_time_sec": 1.1540000438690186,
+        "solve_time_sec": 1.503000020980835,
         "total_load_over_horizon": 9.887914604062162e6,
         "max_storage_state_residual": 2.3283064365386963e-10,
         "shutdown_total": 0.6447845723762384,
@@ -4827,7 +5905,7 @@
         "objective": 18641.493901296584,
         "max_startup_shutdown_transition_residual": 1.7763568394002505e-14,
         "max_active_balance_residual": 1.4551915228366852e-11,
-        "solve_time_sec": 1.1670000553131104,
+        "solve_time_sec": 1.2330000400543213,
         "total_load_over_horizon": 1.0258306239386488e7,
         "max_storage_state_residual": 2.3283064365386963e-10,
         "shutdown_total": 0.6326093574810585,
@@ -4874,7 +5952,7 @@
     "mode": "full_capexp",
     "objective": null,
     "near_binding": null,
-    "solve_time_sec": 1.0429999828338623,
+    "solve_time_sec": 0.8399999141693115,
     "total_invested_blocks": null,
     "scenario": "full_24h_g0_existing_storage_half_energy_rating",
     "status": "INFEASIBLE",
@@ -5028,7 +6106,7 @@
       "dispatch_covers_load": true,
       "objective": 2.6940639269406392,
       "load": 100.0,
-      "solve_time_sec": 0.0009999275207519531,
+      "solve_time_sec": 0.003000020980834961,
       "sd": 100.0,
       "ps": -100.0
     },
@@ -5164,7 +6242,7 @@
               "gen_block_dispatch_upper_bound_sum": 0.0
             },
             "objective": null,
-            "solve_time_sec": 0.009999990463256836,
+            "solve_time_sec": 0.013000011444091797,
             "feasible_metrics": {},
             "variables": {
               "p_dc": 86,
@@ -5200,7 +6278,7 @@
             "skipped_existing_storage_zero_energy_rating_rows": [],
             "bounds_audit": {},
             "objective": 0.0,
-            "solve_time_sec": 0.012000083923339844,
+            "solve_time_sec": 0.013000011444091797,
             "feasible_metrics": {
               "bus_balance_residual_max": 1.9099388737231493e-11,
               "total_generation_dispatch": 362661.9473183866,
@@ -5259,7 +6337,7 @@
             "skipped_existing_storage_zero_energy_rating_rows": [],
             "bounds_audit": {},
             "objective": 0.0,
-            "solve_time_sec": 0.00800013542175293,
+            "solve_time_sec": 0.021999835968017578,
             "feasible_metrics": {
               "bus_balance_residual_max": 9.76961018750444e-8,
               "total_generation_dispatch": 270143.04155555874,
@@ -5320,7 +6398,7 @@
             "skipped_existing_storage_zero_energy_rating_rows": [],
             "bounds_audit": {},
             "objective": 0.0,
-            "solve_time_sec": 0.017999887466430664,
+            "solve_time_sec": 0.023999929428100586,
             "feasible_metrics": {
               "bus_balance_residual_max": 1.4551915228366852e-11,
               "total_generation_dispatch": 353948.9605086897,
@@ -5381,7 +6459,7 @@
             "skipped_existing_storage_zero_energy_rating_rows": [],
             "bounds_audit": {},
             "objective": 0.0,
-            "solve_time_sec": 0.023000001907348633,
+            "solve_time_sec": 0.02499985694885254,
             "feasible_metrics": {
               "bus_balance_residual_max": 7.275957614183426e-12,
               "total_generation_dispatch": 370986.788976799,
@@ -5442,7 +6520,7 @@
             "skipped_existing_storage_zero_energy_rating_rows": [],
             "bounds_audit": {},
             "objective": 0.0,
-            "solve_time_sec": 0.01900005340576172,
+            "solve_time_sec": 0.0280001163482666,
             "feasible_metrics": {
               "bus_balance_residual_max": 7.275957614183426e-12,
               "total_generation_dispatch": 372610.72741624736,
@@ -5503,7 +6581,7 @@
             "skipped_existing_storage_zero_energy_rating_rows": [],
             "bounds_audit": {},
             "objective": 0.0,
-            "solve_time_sec": 0.04900002479553223,
+            "solve_time_sec": 0.02500009536743164,
             "feasible_metrics": {
               "bus_balance_residual_max": 7.275957614183426e-12,
               "total_generation_dispatch": 372610.72741624736,
@@ -5564,7 +6642,7 @@
             "skipped_existing_storage_zero_energy_rating_rows": [],
             "bounds_audit": {},
             "objective": 0.0,
-            "solve_time_sec": 0.06599998474121094,
+            "solve_time_sec": 0.03099989891052246,
             "feasible_metrics": {
               "bus_balance_residual_max": 1.6370904631912708e-11,
               "total_generation_dispatch": 372610.72741624736,
@@ -5625,7 +6703,7 @@
             "skipped_existing_storage_zero_energy_rating_rows": [],
             "bounds_audit": {},
             "objective": 0.0,
-            "solve_time_sec": 0.02499985694885254,
+            "solve_time_sec": 0.029999971389770508,
             "feasible_metrics": {
               "bus_balance_residual_max": 1.4551915228366852e-11,
               "total_generation_dispatch": 372790.72741624736,
@@ -5779,7 +6857,7 @@
         "sc_ub_positive": true,
         "status": "INFEASIBLE",
         "objective": null,
-        "solve_time_sec": 0.021000146865844727,
+        "solve_time_sec": 0.03600001335144043,
         "sd_ub_positive": true
       },
       "bus_balance_expression_audit": {
@@ -6986,7 +8064,7 @@
             "skipped_existing_storage_zero_energy_rating_rows": [],
             "bounds_audit": {},
             "objective": 0.0,
-            "solve_time_sec": 0.03299999237060547,
+            "solve_time_sec": 0.031000137329101562,
             "feasible_metrics": {
               "bus_balance_residual_max": 1.4551915228366852e-11,
               "total_generation_dispatch": 371899.3893289383,
@@ -7047,7 +8125,7 @@
             "skipped_existing_storage_zero_energy_rating_rows": [],
             "bounds_audit": {},
             "objective": 0.0,
-            "solve_time_sec": 0.019999980926513672,
+            "solve_time_sec": 0.023999929428100586,
             "feasible_metrics": {
               "bus_balance_residual_max": 7.275957614183426e-12,
               "total_generation_dispatch": 372080.3893289383,
@@ -7108,7 +8186,7 @@
             "skipped_existing_storage_zero_energy_rating_rows": [],
             "bounds_audit": {},
             "objective": 0.0,
-            "solve_time_sec": 0.0409998893737793,
+            "solve_time_sec": 0.03099989891052246,
             "feasible_metrics": {
               "bus_balance_residual_max": 6.366462912410498e-12,
               "total_generation_dispatch": 370651.33313687507,
@@ -7171,7 +8249,7 @@
             "skipped_existing_storage_zero_energy_rating_rows": [],
             "bounds_audit": {},
             "objective": 0.0,
-            "solve_time_sec": 0.02200007438659668,
+            "solve_time_sec": 0.023999929428100586,
             "feasible_metrics": {
               "bus_balance_residual_max": 7.275957614183426e-12,
               "total_generation_dispatch": 372610.72741624736,
@@ -7232,7 +8310,7 @@
             "skipped_existing_storage_zero_energy_rating_rows": [],
             "bounds_audit": {},
             "objective": 0.0,
-            "solve_time_sec": 0.017999887466430664,
+            "solve_time_sec": 0.0279998779296875,
             "feasible_metrics": {
               "bus_balance_residual_max": 7.275957614183426e-12,
               "total_generation_dispatch": 372610.72741624736,
@@ -7293,7 +8371,7 @@
             "skipped_existing_storage_zero_energy_rating_rows": [],
             "bounds_audit": {},
             "objective": 0.0,
-            "solve_time_sec": 0.04900002479553223,
+            "solve_time_sec": 0.031999826431274414,
             "feasible_metrics": {
               "bus_balance_residual_max": 7.275957614183426e-12,
               "total_generation_dispatch": 372610.72741624736,
@@ -7354,7 +8432,7 @@
             "skipped_existing_storage_zero_energy_rating_rows": [],
             "bounds_audit": {},
             "objective": 0.0,
-            "solve_time_sec": 0.019999980926513672,
+            "solve_time_sec": 0.024000167846679688,
             "feasible_metrics": {
               "bus_balance_residual_max": 7.275957614183426e-12,
               "total_generation_dispatch": 372610.72741624736,
@@ -7415,7 +8493,7 @@
             "skipped_existing_storage_zero_energy_rating_rows": [],
             "bounds_audit": {},
             "objective": 0.0,
-            "solve_time_sec": 0.018999814987182617,
+            "solve_time_sec": 0.026000022888183594,
             "feasible_metrics": {
               "bus_balance_residual_max": 7.275957614183426e-12,
               "total_generation_dispatch": 372610.72741624736,
@@ -7476,7 +8554,7 @@
             "skipped_existing_storage_zero_energy_rating_rows": [],
             "bounds_audit": {},
             "objective": 0.0,
-            "solve_time_sec": 0.018000125885009766,
+            "solve_time_sec": 0.026999950408935547,
             "feasible_metrics": {
               "bus_balance_residual_max": 9.094947017729282e-12,
               "total_generation_dispatch": 372610.72741624736,
@@ -7537,7 +8615,7 @@
             "skipped_existing_storage_zero_energy_rating_rows": [],
             "bounds_audit": {},
             "objective": 0.0,
-            "solve_time_sec": 0.023999929428100586,
+            "solve_time_sec": 0.023000001907348633,
             "feasible_metrics": {
               "bus_balance_residual_max": 1.4551915228366852e-11,
               "total_generation_dispatch": 370892.2527029472,
@@ -7598,7 +8676,7 @@
             "skipped_existing_storage_zero_energy_rating_rows": [],
             "bounds_audit": {},
             "objective": 0.0,
-            "solve_time_sec": 0.019999980926513672,
+            "solve_time_sec": 0.026999950408935547,
             "feasible_metrics": {
               "bus_balance_residual_max": 1.4551915228366852e-11,
               "total_generation_dispatch": 370892.2527029472,
@@ -7667,7 +8745,7 @@
             ],
             "bounds_audit": {},
             "objective": 0.0,
-            "solve_time_sec": 0.029000043869018555,
+            "solve_time_sec": 0.021999835968017578,
             "feasible_metrics": {
               "bus_balance_residual_max": 9.094947017729282e-12,
               "total_generation_dispatch": 372610.72741624736,
@@ -9248,7 +10326,7 @@
           ],
           "standard_balance_reference": "PowerModels.constraint_power_balance(pm, i; nw=n)",
           "objective": 0.0,
-          "solve_time_sec": 0.016000032424926758,
+          "solve_time_sec": 0.020000219345092773,
           "variables": {
             "na_block": 359,
             "pg": 285,
@@ -10582,13 +11660,13 @@
       "objective": 0.273972602739726,
       "dispatch_covers_load": true,
       "load": 100.0,
-      "solve_time_sec": 0.0
+      "solve_time_sec": 0.002000093460083008
     },
     "first_failing_layer": "none",
     "one_snapshot": {
       "candidate_dispatch_positive": false,
       "objective": null,
-      "solve_time_sec": 0.023000001907348633,
+      "solve_time_sec": 0.02200007438659668,
       "total_load": 476005.7726810811,
       "na_block_increased_in_solution": false,
       "candidate_dispatch_positive_abs": false,
@@ -10615,7 +11693,7 @@
           "mode": "full_capexp",
           "objective": null,
           "near_binding": null,
-          "solve_time_sec": 1.0429999828338623,
+          "solve_time_sec": 0.8399999141693115,
           "total_invested_blocks": null,
           "scenario": "full_24h_g0_existing_storage_half_energy_rating",
           "status": "INFEASIBLE",
@@ -10660,7 +11738,7 @@
           "mode": "full_capexp",
           "objective": null,
           "near_binding": null,
-          "solve_time_sec": 1.0910000801086426,
+          "solve_time_sec": 1.0920000076293945,
           "total_invested_blocks": null,
           "scenario": "diag_no_gscr",
           "status": "INFEASIBLE",
@@ -10705,7 +11783,7 @@
           "mode": "full_capexp",
           "objective": null,
           "near_binding": null,
-          "solve_time_sec": 0.8510000705718994,
+          "solve_time_sec": 1.2780001163482666,
           "total_invested_blocks": null,
           "scenario": "diag_candidate_ratings",
           "status": "INFEASIBLE",
@@ -10750,7 +11828,7 @@
           "mode": "full_capexp",
           "objective": null,
           "near_binding": null,
-          "solve_time_sec": 0.8340001106262207,
+          "solve_time_sec": 1.187999963760376,
           "total_invested_blocks": null,
           "scenario": "diag_no_dclines",
           "status": "INFEASIBLE",
@@ -10795,7 +11873,7 @@
           "mode": "full_capexp",
           "objective": null,
           "near_binding": null,
-          "solve_time_sec": 1.1700000762939453,
+          "solve_time_sec": 1.6050000190734863,
           "total_invested_blocks": null,
           "scenario": "diag_relaxed_dclines",
           "status": "INFEASIBLE",
@@ -10840,7 +11918,7 @@
           "mode": "full_capexp",
           "objective": null,
           "near_binding": null,
-          "solve_time_sec": 1.0780000686645508,
+          "solve_time_sec": 0.9429998397827148,
           "total_invested_blocks": null,
           "scenario": "diag_pminpu_zero",
           "status": "INFEASIBLE",
@@ -10886,7 +11964,7 @@
           "objective": 18641.493901296584,
           "n_shared_residual_max": 0.0,
           "near_binding": 48,
-          "solve_time_sec": 1.428999900817871,
+          "solve_time_sec": 1.4039998054504395,
           "total_invested_blocks": 0.0,
           "scenario": "diag_storage_dyn_relaxed",
           "status": "OPTIMAL",
@@ -12838,7 +13916,7 @@
           "mode": "full_capexp",
           "objective": null,
           "near_binding": null,
-          "solve_time_sec": 0.871999979019165,
+          "solve_time_sec": 1.2160000801086426,
           "total_invested_blocks": null,
           "scenario": "diag_only_battery_expand",
           "status": "INFEASIBLE",
@@ -12886,7 +13964,7 @@
         "objective": 18641.493901296584,
         "n_shared_residual_max": 0.0,
         "near_binding": 48,
-        "solve_time_sec": 1.428999900817871,
+        "solve_time_sec": 1.4039998054504395,
         "total_invested_blocks": 0.0,
         "scenario": "diag_storage_dyn_relaxed",
         "status": "OPTIMAL",
@@ -14829,7 +15907,7 @@
       "feasible": true
     }
   },
-  "generated_at": "2026-04-27 17:32:25",
+  "generated_at": "2026-04-27 18:58:22",
   "presolve_candidate_rows": [
     {
       "n_block_max": 1000.0,
