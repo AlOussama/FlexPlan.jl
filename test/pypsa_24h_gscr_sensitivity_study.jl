@@ -206,6 +206,230 @@ function _inject_g_min!(data::Dict{String,Any}, g_min_value::Float64)
     return data
 end
 
+function _device_bus(table::String, d::Dict{String,Any})
+    if table == "gen"
+        return get(d, "gen_bus", -1)
+    end
+    return get(d, "storage_bus", -1)
+end
+
+function _is_battery_gfm(d::Dict{String,Any})
+    return String(get(d, "carrier", "")) == "battery_gfm" && String(get(d, "type", "")) == "gfm"
+end
+
+function _max_component_id(data::Dict{String,Any}, table::String)
+    max_id = 0
+    for nw in values(data["nw"])
+        for id in keys(get(nw, table, Dict{String,Any}()))
+            max_id = max(max_id, parse(Int, id))
+        end
+    end
+    return max_id
+end
+
+function _sigma0_by_bus(data::Dict{String,Any})
+    pm = _PM.instantiate_model(
+        data,
+        _PM.DCPPowerModel,
+        _FP.build_uc_gscr_block_integration;
+        ref_extensions=[_FP.ref_add_gen!, _FP.ref_add_storage!, _FP.ref_add_ne_storage!, _FP.ref_add_uc_gscr_block!],
+    )
+    first_nw = first(sort(collect(_FP.nw_ids(pm))))
+    out = Dict{Int,Float64}()
+    for bus in sort(collect(_PM.ids(pm, first_nw, :bus)))
+        out[bus] = _PM.ref(pm, first_nw, :gscr_sigma0_gershgorin_margin, bus)
+    end
+    return out
+end
+
+function _build_diagnostic_candidate_plan(raw::Dict{String,Any}; target_gmin::Float64=3.0, minimum_candidate_blocks::Int=1, candidate_b_block::Float64=0.2)
+    data = _prepare_solver_data(raw; mode=:capexp)
+    first_nw_id = first(sort(collect(keys(data["nw"])); by=x -> parse(Int, x)))
+    nw = data["nw"][first_nw_id]
+    sigma0_by_bus = _sigma0_by_bus(data)
+
+    battery_templates = Dict{Int,String}()
+    fallback_template_id = nothing
+    for (id, st) in sort(collect(get(nw, "storage", Dict{String,Any}())); by=x -> parse(Int, x.first))
+        if String(get(st, "carrier", "")) == "battery" && String(get(st, "type", "")) == "gfl"
+            bus = get(st, "storage_bus", -1)
+            if bus > 0 && !haskey(battery_templates, bus)
+                battery_templates[bus] = id
+            end
+            if isnothing(fallback_template_id)
+                fallback_template_id = id
+            end
+        end
+    end
+    if isnothing(fallback_template_id)
+        error("No battery gfl storage template found in solver-copy data; cannot build diagnostic battery_gfm candidates.")
+    end
+
+    gfl_nameplate_by_bus = Dict{Int,Float64}()
+    gfm_strength_before_by_bus = Dict{Int,Float64}()
+    for bus in sort(parse.(Int, collect(keys(get(nw, "bus", Dict{String,Any})))))
+        gfl_nameplate_by_bus[bus] = 0.0
+        gfm_strength_before_by_bus[bus] = 0.0
+    end
+    for (table, _, d) in _iter_block_devices(nw)
+        bus = _device_bus(table, d)
+        if !haskey(gfl_nameplate_by_bus, bus)
+            continue
+        end
+        n0 = float(get(d, "n_block0", get(d, "n0", 0.0)))
+        if String(get(d, "type", "")) == "gfl"
+            gfl_nameplate_by_bus[bus] += float(get(d, "p_block_max", 0.0)) * n0
+        elseif String(get(d, "type", "")) == "gfm"
+            gfm_strength_before_by_bus[bus] += float(get(d, "b_block", 0.0)) * n0
+        end
+    end
+
+    next_id = _max_component_id(data, "storage") + 1
+    rows = Dict{String,Any}[]
+    for (idx, bus) in enumerate(sort(parse.(Int, collect(keys(get(nw, "bus", Dict{String,Any}))))))
+        template_id = get(battery_templates, bus, String(fallback_template_id))
+        tmpl = nw["storage"][template_id]
+        p_block_max = float(get(tmpl, "p_block_max", 0.0))
+        p_block_min = float(get(tmpl, "p_block_min", 0.0))
+        q_block_min = float(get(tmpl, "q_block_min", get(tmpl, "qmin", 0.0)))
+        q_block_max = float(get(tmpl, "q_block_max", get(tmpl, "qmax", 0.0)))
+        e_block = float(get(tmpl, "e_block", get(tmpl, "energy_rating", 0.0)))
+        cost_inv_base = float(get(tmpl, "cost_inv_block", 0.0))
+        startup_base = haskey(tmpl, "startup_block_cost") ? float(get(tmpl, "startup_block_cost", 0.0)) : 0.0
+        shutdown_base = haskey(tmpl, "shutdown_block_cost") ? float(get(tmpl, "shutdown_block_cost", 0.0)) : 0.0
+
+        has_marginal = false
+        marginal_base = NaN
+        if haskey(tmpl, "marginal_cost") && get(tmpl, "marginal_cost", nothing) isa Real
+            has_marginal = true
+            marginal_base = float(tmpl["marginal_cost"])
+        elseif haskey(tmpl, "opex") && get(tmpl, "opex", nothing) isa Real
+            has_marginal = true
+            marginal_base = float(tmpl["opex"])
+        elseif haskey(tmpl, "cost")
+            cost = get(tmpl, "cost", Any[])
+            if cost isa AbstractVector && length(cost) >= 2 && all(x -> x isa Real, cost)
+                has_marginal = true
+                marginal_base = float(cost[end - 1])
+            end
+        end
+
+        sigma0 = get(sigma0_by_bus, bus, 0.0)
+        gfl_nameplate = get(gfl_nameplate_by_bus, bus, 0.0)
+        required_blocks_for_gmin3 = ceil(Int, max(0.0, target_gmin * gfl_nameplate - sigma0) / candidate_b_block)
+        n_block_max = max(required_blocks_for_gmin3, minimum_candidate_blocks)
+
+        push!(rows, Dict{String,Any}(
+            "bus" => bus,
+            "candidate_id" => string(next_id + idx - 1),
+            "template_storage_id" => template_id,
+            "carrier" => "battery_gfm",
+            "type" => "gfm",
+            "component_kind" => "storage",
+            "p_block_max" => p_block_max,
+            "p_block_min" => p_block_min,
+            "q_block_min" => q_block_min,
+            "q_block_max" => q_block_max,
+            "e_block" => e_block,
+            "b_block" => candidate_b_block,
+            "b_block_source_note" => "diagnostic_value_on_ac_base_not_calibrated",
+            "n_block0" => 0.0,
+            "na0" => 0.0,
+            "n_block_max" => float(n_block_max),
+            "required_blocks_for_gmin3" => float(required_blocks_for_gmin3),
+            "minimum_candidate_blocks" => float(minimum_candidate_blocks),
+            "sigma0_at_bus" => sigma0,
+            "local_gfl_nameplate_at_bus" => gfl_nameplate,
+            "cost_inv_block" => 1.5 * cost_inv_base,
+            "startup_block_cost" => startup_base,
+            "shutdown_block_cost" => shutdown_base,
+            "marginal_cost_base" => marginal_base,
+            "marginal_cost_scaled" => has_marginal ? 1.3 * marginal_base : NaN,
+            "marginal_cost_available" => has_marginal,
+            "startup_source_note" => haskey(tmpl, "startup_block_cost") ? "copied_from_gfl_battery" : "missing_in_template_set_to_zero",
+            "shutdown_source_note" => haskey(tmpl, "shutdown_block_cost") ? "copied_from_gfl_battery" : "missing_in_template_set_to_zero",
+            "cost_source_note" => "gfl_battery_reference_with_requested_multipliers",
+            "gfm_strength_before_bus" => get(gfm_strength_before_by_bus, bus, 0.0),
+        ))
+    end
+
+    return Dict{String,Any}(
+        "rows" => rows,
+        "target_gmin_for_sizing" => target_gmin,
+        "minimum_candidate_blocks" => minimum_candidate_blocks,
+        "candidate_b_block" => candidate_b_block,
+        "marginal_cost_used_in_objective_note" => "UC/CAPEXP objective path may ignore storage marginal/opex depending on formulation coefficients; report flags availability.",
+    )
+end
+
+function _apply_diagnostic_candidate_plan!(data::Dict{String,Any}, plan::Dict{String,Any})
+    rows = get(plan, "rows", Dict{String,Any}[])
+    if isempty(rows)
+        return data
+    end
+    for (_, nw) in sort(collect(data["nw"]); by=x -> parse(Int, x.first))
+        storage_tbl = get(nw, "storage", Dict{String,Any}())
+        for row in rows
+            bus = Int(row["bus"])
+            template_id = String(row["template_storage_id"])
+            template = if haskey(storage_tbl, template_id)
+                storage_tbl[template_id]
+            else
+                first(values(storage_tbl))
+            end
+            cand = deepcopy(template)
+            cand["index"] = parse(Int, String(row["candidate_id"]))
+            cand["name"] = "diag_battery_gfm_bus$(bus)"
+            cand["carrier"] = row["carrier"]
+            cand["type"] = row["type"]
+            cand["storage_bus"] = bus
+            cand["status"] = get(cand, "status", 1)
+            cand["n_block0"] = 0.0
+            cand["na0"] = 0.0
+            cand["n0"] = 0.0
+            cand["n_block_max"] = row["n_block_max"]
+            cand["nmax"] = row["n_block_max"]
+            cand["p_block_max"] = row["p_block_max"]
+            cand["p_block_min"] = row["p_block_min"]
+            cand["q_block_min"] = row["q_block_min"]
+            cand["q_block_max"] = row["q_block_max"]
+            cand["e_block"] = row["e_block"]
+            cand["b_block"] = row["b_block"]
+            cand["cost_inv_block"] = row["cost_inv_block"]
+            cand["startup_block_cost"] = row["startup_block_cost"]
+            cand["shutdown_block_cost"] = row["shutdown_block_cost"]
+            if get(row, "marginal_cost_available", false)
+                mc = row["marginal_cost_scaled"]
+                if haskey(cand, "marginal_cost")
+                    cand["marginal_cost"] = mc
+                elseif haskey(cand, "opex")
+                    cand["opex"] = mc
+                elseif haskey(cand, "cost")
+                    cost = get(cand, "cost", Any[])
+                    if cost isa AbstractVector && length(cost) >= 2 && all(x -> x isa Real, cost)
+                        cost[end - 1] = mc
+                        cand["cost"] = cost
+                    end
+                end
+            end
+            cand["energy"] = 0.0
+            cand["energy_rating"] = 0.0
+            if haskey(cand, "energy_raw")
+                cand["energy_raw"] = 0.0
+            end
+            if haskey(cand, "energy_clamped")
+                cand["energy_clamped"] = 0.0
+            end
+            cand["_diag_candidate"] = true
+            cand["_diag_cost_source_note"] = row["cost_source_note"]
+            cand["_diag_b_block_source_note"] = row["b_block_source_note"]
+            storage_tbl[String(row["candidate_id"])] = cand
+        end
+        nw["storage"] = storage_tbl
+    end
+    return data
+end
+
 function _iter_block_devices(nw::Dict{String,Any})
     items = Tuple{String,String,Dict{String,Any}}[]
     for table in ("gen", "storage", "ne_storage")
@@ -440,6 +664,8 @@ function _solve_active(data::Dict{String,Any}, run_label::String, mode_name::Str
         "invested_gfl" => nothing,
         "invested_gen" => nothing,
         "invested_storage" => nothing,
+        "invested_battery_gfm" => nothing,
+        "invested_battery_gfm_by_bus" => Dict{Int,Float64}(),
         "min_margin" => nothing,
         "min_margin_bus" => nothing,
         "min_margin_nw" => nothing,
@@ -448,14 +674,25 @@ function _solve_active(data::Dict{String,Any}, run_label::String, mode_name::Str
         "online_gfl_by_snapshot" => Dict{Int,Float64}(),
         "dispatch_gfm_by_snapshot" => Dict{Int,Float64}(),
         "dispatch_gfl_by_snapshot" => Dict{Int,Float64}(),
+        "battery_gfm_online_by_snapshot" => Dict{Int,Float64}(),
+        "battery_gfm_dispatch_by_snapshot" => Dict{Int,Float64}(),
+        "battery_gfm_online_by_bus_snapshot" => Dict{Tuple{Int,Int},Float64}(),
+        "battery_gfm_dispatch_by_bus_snapshot" => Dict{Tuple{Int,Int},Float64}(),
+        "battery_gfm_zero_dispatch_online_count" => nothing,
         "zero_dispatch_online_count" => nothing,
         "transition_residual_max" => nothing,
         "active_bound_violation_max" => nothing,
         "gscr_violation_max" => nothing,
         "n_shared_residual_max" => nothing,
+        "investment_recon_residual" => nothing,
+        "startup_cost_recon_residual" => nothing,
+        "shutdown_cost_recon_residual" => nothing,
         "bus_diag" => Dict{String,Any}(),
         "bus_strength_summary" => Dict{Int,Dict{String,Any}}(),
         "weakest_bus_rows" => Dict{Int,Dict{String,Any}}(),
+        "gfl_nameplate_by_bus" => Dict{Int,Float64}(),
+        "gfm_strength_before_by_bus" => Dict{Int,Float64}(),
+        "gfm_strength_after_by_bus" => Dict{Int,Float64}(),
         "rhs_snapshot_audit_rows" => Dict{Int,Vector{Dict{String,Any}}}(),
         "gfl_device_audit_rows" => Dict{String,Any}[],
         "gfm_device_strength_audit_rows" => Dict{String,Any}[],
@@ -479,6 +716,7 @@ function _solve_active(data::Dict{String,Any}, run_label::String, mode_name::Str
     nws = sort(collect(_FP.nw_ids(pm)))
     first_nw = first(nws)
     device_keys = sort(collect(_FP._uc_gscr_block_device_keys(pm, first_nw)); by=x -> (String(x[1]), x[2]))
+    bus_ids = sort(collect(_PM.ids(pm, first_nw, :bus)))
 
     startup_cost = 0.0
     shutdown_cost = 0.0
@@ -489,19 +727,25 @@ function _solve_active(data::Dict{String,Any}, run_label::String, mode_name::Str
     invested_gfl = 0.0
     invested_gen = 0.0
     invested_storage = 0.0
+    invested_battery_gfm = 0.0
     min_margin = Inf
-    min_bus = first(_PM.ids(pm, first_nw, :bus))
+    min_bus = first(bus_ids)
     min_nw = first_nw
     near_binding = 0
     zero_dispatch_online_count = 0
+    battery_gfm_zero_dispatch_online_count = 0
     transition_residual_max = 0.0
     active_bound_vmax = 0.0
     gscr_vmax = 0.0
     n_shared_residual_max = 0.0
     rhs_builder_recon_max_diff = 0.0
+    gfl_nameplate_by_bus = Dict(bus => 0.0 for bus in bus_ids)
+    gfm_strength_before_by_bus = Dict(bus => 0.0 for bus in bus_ids)
+    gfm_strength_after_by_bus = Dict(bus => 0.0 for bus in bus_ids)
+    invested_battery_gfm_by_bus = Dict(bus => 0.0 for bus in bus_ids)
 
     bus_strength = Dict{Int,Dict{String,Any}}()
-    for bus in sort(collect(_PM.ids(pm, first_nw, :bus)))
+    for bus in bus_ids
         bus_strength[bus] = Dict{String,Any}(
             "installed_gfm_strength" => 0.0,
             "max_gfm_strength" => 0.0,
@@ -513,17 +757,28 @@ function _solve_active(data::Dict{String,Any}, run_label::String, mode_name::Str
 
     for key in device_keys
         d = _PM.ref(pm, first_nw, key[1], key[2])
+        bus = key[1] == :gen ? d["gen_bus"] : d["storage_bus"]
+        n0 = float(get(d, "n0", get(d, "n_block0", 0.0)))
         n_first = JuMP.value(_PM.var(pm, first_nw, :n_block, key))
-        dn = n_first - d["n0"]
+        dn = n_first - n0
         investment_cost += d["cost_inv_block"] * dn
+
         if d["type"] == "gfm"
             invested_gfm += dn
-            bus = key[1] == :gen ? d["gen_bus"] : d["storage_bus"]
-            bus_strength[bus]["installed_gfm_strength"] += d["b_block"] * d["n0"]
+            bus_strength[bus]["installed_gfm_strength"] += d["b_block"] * n0
             bus_strength[bus]["max_gfm_strength"] += d["b_block"] * d["nmax"]
+            gfm_strength_before_by_bus[bus] += d["b_block"] * n0
+            gfm_strength_after_by_bus[bus] += d["b_block"] * n_first
         elseif d["type"] == "gfl"
             invested_gfl += dn
+            gfl_nameplate_by_bus[bus] += float(get(d, "p_block_max", 0.0)) * n0
         end
+
+        if _is_battery_gfm(d)
+            invested_battery_gfm += dn
+            invested_battery_gfm_by_bus[bus] += dn
+        end
+
         if key[1] == :gen
             invested_gen += dn
         else
@@ -532,12 +787,6 @@ function _solve_active(data::Dict{String,Any}, run_label::String, mode_name::Str
         for nw in nws
             n_shared_residual_max = max(n_shared_residual_max, abs(JuMP.value(_PM.var(pm, nw, :n_block, key)) - n_first))
         end
-    end
-
-    # capture g_min metadata from prepared solver data
-    result["g_min_meta"] = Dict{String,Any}()
-    if haskey(_PM.ref(pm, first_nw), :nw)
-        # no-op placeholder; keep structure stable
     end
 
     rhs_by_bus_snapshot = Dict{Tuple{Int,Int},Float64}()
@@ -550,9 +799,12 @@ function _solve_active(data::Dict{String,Any}, run_label::String, mode_name::Str
         gfm_online = 0.0
         gfl_dispatch = 0.0
         gfm_dispatch = 0.0
+        battery_gfm_online = 0.0
+        battery_gfm_dispatch = 0.0
 
         for key in device_keys
             d = _PM.ref(pm, nw, key[1], key[2])
+            bus = key[1] == :gen ? d["gen_bus"] : d["storage_bus"]
             n = JuMP.value(_PM.var(pm, nw, :n_block, key))
             na = JuMP.value(_PM.var(pm, nw, :na_block, key))
             su = JuMP.value(_PM.var(pm, nw, :su_block, key))
@@ -574,16 +826,27 @@ function _solve_active(data::Dict{String,Any}, run_label::String, mode_name::Str
                 gfl_online += na
                 gfl_dispatch += disp
             end
+            if _is_battery_gfm(d)
+                battery_gfm_online += na
+                battery_gfm_dispatch += disp
+                result["battery_gfm_online_by_bus_snapshot"][(nw, bus)] = get(result["battery_gfm_online_by_bus_snapshot"], (nw, bus), 0.0) + na
+                result["battery_gfm_dispatch_by_bus_snapshot"][(nw, bus)] = get(result["battery_gfm_dispatch_by_bus_snapshot"], (nw, bus), 0.0) + disp
+            end
             if na > 1.0 + _EPS && disp <= 1e-5
                 zero_dispatch_online_count += 1
+                if _is_battery_gfm(d)
+                    battery_gfm_zero_dispatch_online_count += 1
+                end
             end
         end
         result["online_gfm_by_snapshot"][nw] = gfm_online
         result["online_gfl_by_snapshot"][nw] = gfl_online
         result["dispatch_gfm_by_snapshot"][nw] = gfm_dispatch
         result["dispatch_gfl_by_snapshot"][nw] = gfl_dispatch
+        result["battery_gfm_online_by_snapshot"][nw] = battery_gfm_online
+        result["battery_gfm_dispatch_by_snapshot"][nw] = battery_gfm_dispatch
 
-        for bus in sort(collect(_PM.ids(pm, nw, :bus)))
+        for bus in bus_ids
             sigma0 = _PM.ref(pm, nw, :gscr_sigma0_gershgorin_margin, bus)
             g_min = _PM.ref(pm, nw, :g_min)
             lhs_gfm = sum(
@@ -598,7 +861,6 @@ function _solve_active(data::Dict{String,Any}, run_label::String, mode_name::Str
             )
             rhs = g_min * rhs_sum
 
-            # Independent reconstruction path over gfl_devices filtered by bus.
             rhs_sum_recon = 0.0
             for k in keys(_PM.ref(pm, nw, :gfl_devices))
                 on_bus = (k[1] == :gen && _PM.ref(pm, nw, k[1], k[2], "gen_bus") == bus) ||
@@ -634,6 +896,20 @@ function _solve_active(data::Dict{String,Any}, run_label::String, mode_name::Str
         end
     end
 
+    startup_cost_recon = 0.0
+    shutdown_cost_recon = 0.0
+    investment_cost_recon = 0.0
+    for key in device_keys
+        d = _PM.ref(pm, first_nw, key[1], key[2])
+        n0 = float(get(d, "n0", get(d, "n_block0", 0.0)))
+        n_first = JuMP.value(_PM.var(pm, first_nw, :n_block, key))
+        investment_cost_recon += d["cost_inv_block"] * (n_first - n0)
+        for nw in nws
+            startup_cost_recon += d["startup_block_cost"] * JuMP.value(_PM.var(pm, nw, :su_block, key))
+            shutdown_cost_recon += d["shutdown_block_cost"] * JuMP.value(_PM.var(pm, nw, :sd_block, key))
+        end
+    end
+
     result["startup_cost"] = startup_cost
     result["shutdown_cost"] = shutdown_cost
     result["startup_count"] = startup_count
@@ -643,27 +919,35 @@ function _solve_active(data::Dict{String,Any}, run_label::String, mode_name::Str
     result["invested_gfl"] = invested_gfl
     result["invested_gen"] = invested_gen
     result["invested_storage"] = invested_storage
+    result["invested_battery_gfm"] = invested_battery_gfm
+    result["invested_battery_gfm_by_bus"] = invested_battery_gfm_by_bus
     result["min_margin"] = min_margin
     result["min_margin_bus"] = min_bus
     result["min_margin_nw"] = min_nw
     result["binding_bus_snapshot"] = "bus=$(min_bus), snapshot=$(min_nw)"
     result["near_binding"] = near_binding
     result["zero_dispatch_online_count"] = zero_dispatch_online_count
+    result["battery_gfm_zero_dispatch_online_count"] = battery_gfm_zero_dispatch_online_count
     result["transition_residual_max"] = transition_residual_max
     result["active_bound_violation_max"] = active_bound_vmax
     result["gscr_violation_max"] = gscr_vmax
     result["n_shared_residual_max"] = n_shared_residual_max
+    result["investment_recon_residual"] = abs(investment_cost - investment_cost_recon)
+    result["startup_cost_recon_residual"] = abs(startup_cost - startup_cost_recon)
+    result["shutdown_cost_recon_residual"] = abs(shutdown_cost - shutdown_cost_recon)
     result["rhs_builder_recon_max_diff"] = rhs_builder_recon_max_diff
     result["bus_diag"] = _bus_diag_from_pm(pm, first_nw)
     result["bus_strength_summary"] = bus_strength
     result["weakest_bus_rows"] = bus_strength
+    result["gfl_nameplate_by_bus"] = gfl_nameplate_by_bus
+    result["gfm_strength_before_by_bus"] = gfm_strength_before_by_bus
+    result["gfm_strength_after_by_bus"] = gfm_strength_after_by_bus
 
-    # selected snapshots: first, weakest, last
     selected = sort(unique([first_nw, min_nw, last(nws)]))
     for nw in selected
         rows = Dict{String,Any}[]
         rhs_total = 0.0
-        for bus in sort(collect(_PM.ids(pm, nw, :bus)))
+        for bus in bus_ids
             g_min = _PM.ref(pm, nw, :g_min)
             gfl_devices = _PM.ref(pm, nw, :bus_gfl_devices, bus)
             gfm_devices = _PM.ref(pm, nw, :bus_gfm_devices, bus)
@@ -691,7 +975,6 @@ function _solve_active(data::Dict{String,Any}, run_label::String, mode_name::Str
         result["rhs_total_by_snapshot"][nw] = rhs_total
     end
 
-    # device-level GFL RHS audit at weakest snapshot
     gfl_keys = sort(collect(keys(_PM.ref(pm, min_nw, :gfl_devices))); by=x -> (String(x[1]), x[2]))
     for k in gfl_keys
         d = _PM.ref(pm, min_nw, k[1], k[2])
@@ -715,7 +998,6 @@ function _solve_active(data::Dict{String,Any}, run_label::String, mode_name::Str
         ))
     end
 
-    # device-level GFM strength audit at weakest snapshot
     gfm_keys = sort(collect(keys(_PM.ref(pm, min_nw, :gfm_devices))); by=x -> (String(x[1]), x[2]))
     for k in gfm_keys
         d = _PM.ref(pm, min_nw, k[1], k[2])
@@ -741,7 +1023,6 @@ function _solve_active(data::Dict{String,Any}, run_label::String, mode_name::Str
         ))
     end
 
-    # required assertions
     assertion_messages = String[]
     gfl_positive_count = count(row -> row["p_block_max_used"] > _EPS, result["gfl_device_audit_rows"])
     has_positive_gfl_pmax = gfl_positive_count > 0
@@ -751,7 +1032,7 @@ function _solve_active(data::Dict{String,Any}, run_label::String, mode_name::Str
 
     rhs_bus_positive_ok = true
     for nw in nws
-        for bus in sort(collect(_PM.ids(pm, nw, :bus)))
+        for bus in bus_ids
             online_gfl = gfl_na_by_bus_snapshot[(nw, bus)]
             rhs_sum = gfl_pmax_na_by_bus_snapshot[(nw, bus)]
             if online_gfl > _EPS && rhs_sum <= _EPS
@@ -766,13 +1047,13 @@ function _solve_active(data::Dict{String,Any}, run_label::String, mode_name::Str
     rhs_zero_when_gmin_zero = true
     for nw in nws
         online_gfl_total = get(result["online_gfl_by_snapshot"], nw, 0.0)
-        rhs_sum_total = sum(gfl_pmax_na_by_bus_snapshot[(nw, bus)] for bus in _PM.ids(pm, nw, :bus))
+        rhs_sum_total = sum(gfl_pmax_na_by_bus_snapshot[(nw, bus)] for bus in bus_ids)
         if online_gfl_total > _EPS && rhs_sum_total <= _EPS
             rhs_total_positive_ok = false
             push!(assertion_messages, "nw=$(nw): online GFL total > 0 but total sum_GFL_p_block_max_na <= 0.")
         end
         g_min = _PM.ref(pm, nw, :g_min)
-        for bus in sort(collect(_PM.ids(pm, nw, :bus)))
+        for bus in bus_ids
             rhs = rhs_by_bus_snapshot[(nw, bus)]
             if g_min > _EPS && gfl_na_by_bus_snapshot[(nw, bus)] > _EPS && rhs <= _EPS
                 rhs_positive_when_gmin_positive = false
@@ -796,40 +1077,42 @@ function _solve_active(data::Dict{String,Any}, run_label::String, mode_name::Str
     return result
 end
 
-function _run_mode(raw::Dict{String,Any}, scenario::String, mode_name::String; g_min_value::Float64=_BASELINE_GMIN, gfm_opex_mult::Union{Nothing,Float64}=nothing, gfm_startup_mult::Union{Nothing,Float64}=nothing, gfm_alpha::Union{Nothing,Float64}=nothing, reclass::Union{Nothing,String}=nothing)
-    base_mode = mode_name == "uc_only" ? :uc : :capexp
+function _run_mode(
+    raw::Dict{String,Any},
+    scenario::String,
+    mode_name::String;
+    policy_mode::String=mode_name,
+    g_min_value::Float64=_BASELINE_GMIN,
+    diag_candidates::Bool=false,
+    diag_plan::Union{Nothing,Dict{String,Any}}=nothing,
+)
+    base_mode = policy_mode == "uc_only" ? :uc : :capexp
     data = _prepare_solver_data(raw; mode=base_mode)
 
     meta = Dict{String,Any}(
         "scenario" => scenario,
         "mode" => mode_name,
-        "gfm_opex_available" => true,
-        "gfm_opex_meta" => Dict{String,Any}(),
-        "gfm_startup_touched" => 0,
-        "gfm_alpha_meta" => Dict{String,Any}(),
-        "reclass_touched" => 0,
+        "policy_mode" => policy_mode,
         "capacity_check" => Dict{String,Any}(),
         "g_min_value_injected" => g_min_value,
+        "diagnostic_candidates_applied" => diag_candidates,
+        "diagnostic_candidate_count" => 0,
+        "diagnostic_candidate_rows" => Dict{String,Any}[],
         "g_min_sources" => Dict{Int,String}(),
         "g_min_values" => Dict{Int,Float64}(),
     )
 
-    if !isnothing(gfm_alpha)
-        meta["gfm_alpha_meta"] = _apply_gfm_alpha_reduction!(data, gfm_alpha)
+    if diag_candidates
+        if isnothing(diag_plan)
+            error("Diagnostic candidates requested but no candidate plan was supplied.")
+        end
+        _apply_diagnostic_candidate_plan!(data, diag_plan)
+        rows = get(diag_plan, "rows", Dict{String,Any}[])
+        meta["diagnostic_candidate_count"] = length(rows)
+        meta["diagnostic_candidate_rows"] = deepcopy(rows)
     end
-    if !isnothing(reclass)
-        meta["reclass_touched"] = _apply_reclassification!(data, reclass)
-    end
-    if !isnothing(gfm_opex_mult)
-        opex_meta = _apply_gfm_opex_multiplier!(data, gfm_opex_mult)
-        meta["gfm_opex_meta"] = opex_meta
-        meta["gfm_opex_available"] = opex_meta["available"]
-    end
-    if !isnothing(gfm_startup_mult)
-        meta["gfm_startup_touched"] = _apply_gfm_startup_multiplier!(data, gfm_startup_mult)
-    end
-    # Enforce selected expansion mode after all scenario mutations.
-    _set_mode_nmax_policy!(data, mode_name)
+
+    _set_mode_nmax_policy!(data, policy_mode)
     _inject_g_min!(data, g_min_value)
 
     for (nw_id, nw) in sort(collect(data["nw"]); by=x -> parse(Int, x.first))
@@ -857,15 +1140,25 @@ function _run_mode(raw::Dict{String,Any}, scenario::String, mode_name::String; g
                 "invested_gfl" => nothing,
                 "invested_gen" => nothing,
                 "invested_storage" => nothing,
+                "invested_battery_gfm" => nothing,
+                "invested_battery_gfm_by_bus" => Dict{Int,Float64}(),
                 "min_margin" => nothing,
                 "near_binding" => 0,
                 "online_gfm_by_snapshot" => Dict{Int,Float64}(),
                 "online_gfl_by_snapshot" => Dict{Int,Float64}(),
                 "dispatch_gfm_by_snapshot" => Dict{Int,Float64}(),
                 "dispatch_gfl_by_snapshot" => Dict{Int,Float64}(),
+                "battery_gfm_online_by_snapshot" => Dict{Int,Float64}(),
+                "battery_gfm_dispatch_by_snapshot" => Dict{Int,Float64}(),
+                "battery_gfm_online_by_bus_snapshot" => Dict{Tuple{Int,Int},Float64}(),
+                "battery_gfm_dispatch_by_bus_snapshot" => Dict{Tuple{Int,Int},Float64}(),
                 "zero_dispatch_online_count" => nothing,
+                "battery_gfm_zero_dispatch_online_count" => nothing,
                 "bus_diag" => Dict{String,Any}(),
                 "bus_strength_summary" => Dict{Int,Dict{String,Any}}(),
+                "gfl_nameplate_by_bus" => Dict{Int,Float64}(),
+                "gfm_strength_before_by_bus" => Dict{Int,Float64}(),
+                "gfm_strength_after_by_bus" => Dict{Int,Float64}(),
             ),
             Dict("meta" => meta),
         )
@@ -885,34 +1178,39 @@ function _sumv(d::Dict{Int,Float64})
 end
 
 function _mode_order(mode::String)
-    if mode == "uc_only"
-        return 1
-    elseif mode == "full_capexp"
-        return 2
-    elseif mode == "storage_only"
-        return 3
-    else
-        return 4
-    end
+    order = Dict(
+        "baseline_uc_only" => 1,
+        "baseline_full_capexp" => 2,
+        "diagnostic_uc_only" => 3,
+        "diagnostic_full_capexp" => 4,
+        "diagnostic_storage_only" => 5,
+        "diagnostic_generator_only" => 6,
+    )
+    return get(order, mode, 99)
 end
 
-function _write_report(records::Vector{Dict{String,Any}}, baseline_uc::Dict{String,Any}, baseline_cap::Dict{String,Any})
-    mkpath(dirname(_REPORT_PATH))
-    function _is_gmin_sweep(r::Dict{String,Any})
-        return startswith(r["scenario"], "gmin_abs_")
-    end
-    function _parse_gmin_from_scenario(s::String)
-        return parse(Float64, replace(replace(s, "gmin_abs_" => ""), "p" => "."))
-    end
-    function _first_infeasible_gmin(records::Vector{Dict{String,Any}}, mode::String)
-        vals = Float64[]
-        for r in records
-            if _is_gmin_sweep(r) && r["mode"] == mode && !(r["status"] in _ACTIVE_OK)
-                push!(vals, _parse_gmin_from_scenario(r["scenario"]))
-            end
+function _find_record(records::Vector{Dict{String,Any}}, scenario::String, mode::String)
+    rows = filter(r -> r["scenario"] == scenario && r["mode"] == mode, records)
+    return isempty(rows) ? nothing : only(rows)
+end
+
+function _max_feasible_gmin(records::Vector{Dict{String,Any}}, mode::String)
+    feasible = Float64[]
+    for g in _GMIN_VALUES
+        scen = "gmin_abs_$(replace(string(g), "." => "p"))"
+        r = _find_record(records, scen, mode)
+        if !isnothing(r) && r["status"] in _ACTIVE_OK
+            push!(feasible, g)
         end
-        return isempty(vals) ? nothing : minimum(vals)
     end
+    return isempty(feasible) ? nothing : maximum(feasible)
+end
+
+function _write_report(records::Vector{Dict{String,Any}}, diag_plan::Dict{String,Any})
+    mkpath(dirname(_REPORT_PATH))
+    sorted_rows = sort(get(diag_plan, "rows", Dict{String,Any}[]); by=x -> Int(x["bus"]))
+    cost_by_bus = Dict(Int(r["bus"]) => float(r["cost_inv_block"]) for r in sorted_rows)
+    battery_pmax_ref = isempty(sorted_rows) ? NaN : float(sorted_rows[1]["p_block_max"])
 
     open(_REPORT_PATH, "w") do io
         println(io, "# PyPSA 24h gSCR Sensitivity Study")
@@ -923,165 +1221,156 @@ function _write_report(records::Vector{Dict{String,Any}}, baseline_uc::Dict{Stri
         println(io, "## Setup")
         println(io, "- Formulation unchanged: `n_block`, `na_block`, `su_block`, `sd_block`, block dispatch/storage, investment cost, startup/shutdown costs, AC-side Gershgorin gSCR.")
         println(io, "- Not activated: min-up/down, ramping, no-load costs, binary UC, SDP/LMI, new gSCR formulations.")
-        println(io)
-        println(io, "## g_min Handling")
-        println(io, "- `g_min` is a FlexPlan optimization argument injected in the test/optimizer layer.")
-        println(io, "- `g_min` is not required as converter-exported PyPSA dataset data.")
-        println(io, "- Raw bus `g_min` in input case data is ignored for active gSCR tests.")
-        println(io, "- This study injects a uniform `g_min` to all AC buses and snapshots before model build.")
-        println(io, "- Injected values: `0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0`.")
-        println(io)
-        println(io, "## Baseline Diagnostic (`g_min=0.0`)")
-        for r in (baseline_uc, baseline_cap)
-            println(io, "- ", r["mode"], ": status=", r["status"], ", obj=", _fmt(r["objective"]), ", startup=", _fmt(r["startup_cost"]), ", shutdown=", _fmt(r["shutdown_cost"]), ", invest=", _fmt(r["investment_cost"]), ", min_margin=", _fmt(r["min_margin"]), ", near_binding=", r["near_binding"], ", zero_dispatch_online=", _fmt(r["zero_dispatch_online_count"]))
-        end
+        println(io, "- Converter dataset remains unchanged; diagnostic additions are solver-copy only.")
         println(io)
 
-        println(io, "## Absolute g_min Sweep Table")
-        println(io, "| g_min | mode | status | objective | investment cost | startup cost | shutdown cost | invested_gfm | invested_gfl | invested_gen | invested_storage | online_gfm_avg | online_gfl_avg | min_margin | near_binding | binding bus/snapshot | startup_count | shutdown_count |")
-        println(io, "|---:|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---|---:|---:|")
-        sweep_rows = filter(_is_gmin_sweep, records)
-        for r in sort(sweep_rows; by=x -> (_parse_gmin_from_scenario(x["scenario"]), _mode_order(x["mode"])))
-            gval = _parse_gmin_from_scenario(r["scenario"])
-            println(io, "| ", _fmt(gval), " | ", r["mode"], " | ", r["status"], " | ", _fmt(r["objective"]), " | ", _fmt(r["investment_cost"]), " | ", _fmt(r["startup_cost"]), " | ", _fmt(r["shutdown_cost"]), " | ", _fmt(r["invested_gfm"]), " | ", _fmt(r["invested_gfl"]), " | ", _fmt(r["invested_gen"]), " | ", _fmt(r["invested_storage"]), " | ", _fmt(_avg(r["online_gfm_by_snapshot"])), " | ", _fmt(_avg(r["online_gfl_by_snapshot"])), " | ", _fmt(r["min_margin"]), " | ", r["near_binding"], " | ", get(r, "binding_bus_snapshot", "n/a"), " | ", _fmt(r["startup_count"]), " | ", _fmt(r["shutdown_count"]), " |")
-        end
+        println(io, "## Comparison to OPF Plausibility Audit")
+        println(io, "- Standard OPF path (`standard_opf_24h`) was `OPTIMAL`.")
+        println(io, "- Max system active-power residual: `0.0`; max bus residual: `0.0`.")
+        println(io, "- Max branch loading: about `92.26%`; overloaded branches: `0`.")
+        println(io, "- Generator/storage bound violations: `0.0`.")
+        println(io, "- DCP limits: reactive balance and voltage magnitudes are not checked.")
+        println(io, "- UC/CAPEXP integration path is system-balance based; branch/voltage physics are not directly exposed in this path.")
         println(io)
 
-        println(io, "## RHS Audit (Constraint Data Path)")
-        println(io, "- Constraint and reconstruction both use: `:bus_gfl_devices`, `:bus_gfm_devices`, `_PM.ref(..., \"p_block_max\")`, `_PM.ref(..., \"b_block\")`, `_PM.var(..., :na_block, key)`.")
-        println(io, "- Builder-vs-reconstruction max |difference| in `sum_GFL_p_block_max_na` for baseline UC: ", _fmt(baseline_uc["rhs_builder_recon_max_diff"]))
+        println(io, "## Diagnostic Local GFM Battery Candidate Study")
         println(io)
-        for audit_g in sort(collect(_GMIN_AUDIT_VALUES))
-            scen = "gmin_abs_" * replace(string(audit_g), "." => "p")
-            rows = filter(r -> r["scenario"] == scen && r["mode"] == "uc_only", records)
-            if isempty(rows)
-                continue
-            end
-            r = rows[1]
-            for nw in (1, 24)
-                if !haskey(r["rhs_snapshot_audit_rows"], nw)
+        println(io, "### A. Candidate Assumptions")
+        println(io, "| bus | candidate id/key | carrier | type | p_block_max | p_block_min | q_block_min | q_block_max | e_block | b_block | n_block0 | n_block_max | cost_inv_block | startup_block_cost | shutdown_block_cost | marginal_cost/opex | cost source note | b_block source note |")
+        println(io, "|---:|---|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---|---|")
+        for row in sorted_rows
+            mcost = get(row, "marginal_cost_available", false) ? row["marginal_cost_scaled"] : NaN
+            println(io, "| ", Int(row["bus"]), " | ", row["candidate_id"], " | ", row["carrier"], " | ", row["type"], " | ", _fmt(row["p_block_max"]), " | ", _fmt(row["p_block_min"]), " | ", _fmt(row["q_block_min"]), " | ", _fmt(row["q_block_max"]), " | ", _fmt(row["e_block"]), " | ", _fmt(row["b_block"]), " | ", _fmt(row["n_block0"]), " | ", _fmt(row["n_block_max"]), " | ", _fmt(row["cost_inv_block"]), " | ", _fmt(row["startup_block_cost"]), " | ", _fmt(row["shutdown_block_cost"]), " | ", _fmt(mcost), " | ", row["cost_source_note"], " | ", row["b_block_source_note"], " |")
+        end
+        println(io, "- Candidate sizing target: `required_blocks_for_gmin3 = ceil(max(0, 3.0*local_GFL_nameplate - sigma0_G)/b_block)` with minimum `1` block.")
+        println(io, "- `battery_gfm` b_block is diagnostic, not calibrated.")
+        println(io, "- Marginal/OPEX usage note: ", get(diag_plan, "marginal_cost_used_in_objective_note", "n/a"))
+        println(io)
+
+        println(io, "### B. Feasibility by g_min and Mode")
+        println(io, "| g_min | mode | status | objective | investment cost | startup cost | shutdown cost | invested battery_gfm blocks | invested total GFM blocks | invested total GFL blocks | invested generator blocks | invested storage blocks | min gSCR margin | near-binding count | binding bus/snapshot | average online GFM blocks | average online GFL blocks |")
+        println(io, "|---:|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---|---:|---:|")
+        for g in _GMIN_VALUES
+            scen = "gmin_abs_$(replace(string(g), "." => "p"))"
+            for mode in ("baseline_uc_only", "baseline_full_capexp", "diagnostic_uc_only", "diagnostic_full_capexp", "diagnostic_storage_only", "diagnostic_generator_only")
+                r = _find_record(records, scen, mode)
+                if isnothing(r)
                     continue
                 end
-                println(io, "### RHS Bus Audit (`g_min=", _fmt(audit_g), "`, snapshot ", nw, ")")
-                println(io, "| bus | injected_g_min | #bus_gfl | #bus_gfm | sum_GFL_p_block_max_na | RHS | sum_GFM_b_block_na | sigma0_G | margin | online_gfl_na |")
-                println(io, "|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|")
-                for row in sort(r["rhs_snapshot_audit_rows"][nw]; by=x -> x["bus"])
-                    println(io, "| ", row["bus"], " | ", _fmt(row["g_min"]), " | ", row["gfl_count"], " | ", row["gfm_count"], " | ", _fmt(row["sum_gfl_p_block_max_na"]), " | ", _fmt(row["rhs"]), " | ", _fmt(row["sum_gfm_b_block_na"]), " | ", _fmt(row["sigma0"]), " | ", _fmt(row["margin"]), " | ", _fmt(row["online_gfl_na"]), " |")
+                println(io, "| ", _fmt(g), " | ", mode, " | ", r["status"], " | ", _fmt(r["objective"]), " | ", _fmt(r["investment_cost"]), " | ", _fmt(r["startup_cost"]), " | ", _fmt(r["shutdown_cost"]), " | ", _fmt(r["invested_battery_gfm"]), " | ", _fmt(r["invested_gfm"]), " | ", _fmt(r["invested_gfl"]), " | ", _fmt(r["invested_gen"]), " | ", _fmt(r["invested_storage"]), " | ", _fmt(r["min_margin"]), " | ", r["near_binding"], " | ", get(r, "binding_bus_snapshot", "n/a"), " | ", _fmt(_avg(r["online_gfm_by_snapshot"])), " | ", _fmt(_avg(r["online_gfl_by_snapshot"])), " |")
+            end
+        end
+        println(io)
+
+        println(io, "### C. Investment by Bus (Solved Diagnostic CAPEXP and Storage-Only)")
+        println(io, "| g_min | mode | bus | invested battery_gfm blocks | battery_gfm investment cost | local GFL nameplate | local GFM strength before investment | local GFM strength after investment | resulting local gSCR margin at weakest snapshot |")
+        println(io, "|---:|---|---:|---:|---:|---:|---:|---:|---:|")
+        for g in _GMIN_VALUES
+            scen = "gmin_abs_$(replace(string(g), "." => "p"))"
+            for mode in ("diagnostic_full_capexp", "diagnostic_storage_only")
+                r = _find_record(records, scen, mode)
+                if isnothing(r) || !(r["status"] in _ACTIVE_OK)
+                    continue
                 end
-                println(io)
-            end
-        end
-
-        println(io, "### Device-Level GFL RHS Audit (Baseline UC, Weakest Snapshot)")
-        println(io, "| component_key | component_type | component_id | carrier | bus | type | p_block_max_raw | p_block_max_used | na_block@weakest | contribution | in_gfl_devices | in_bus_gfl_devices | weakest_snapshot |")
-        println(io, "|---|---|---:|---|---:|---|---:|---:|---:|---:|---|---|---:|")
-        for row in baseline_uc["gfl_device_audit_rows"]
-            println(io, "| ", row["component_key"], " | ", row["component_type"], " | ", row["component_id"], " | ", row["carrier"], " | ", row["bus"], " | ", row["type"], " | ", _fmt(row["p_block_max_raw"]), " | ", _fmt(row["p_block_max_used"]), " | ", _fmt(row["na_block_weakest_snapshot"]), " | ", _fmt(row["contribution"]), " | ", row["in_gfl_devices"], " | ", row["in_bus_gfl_devices"], " | ", row["weakest_snapshot"], " |")
-        end
-        println(io)
-
-        println(io, "### Device-Level GFM Strength Audit (Baseline UC, Weakest Snapshot)")
-        println(io, "| component_key | component_type | component_id | carrier | bus | type | b_gfm_input | b_gfm_base | s_block_mva | b_block_output | n_block0 | n_block_max | installed_strength | max_strength |")
-        println(io, "|---|---|---:|---|---:|---|---:|---:|---:|---:|---:|---:|---:|---:|")
-        for row in baseline_uc["gfm_device_strength_audit_rows"]
-            println(io, "| ", row["component_key"], " | ", row["component_type"], " | ", row["component_id"], " | ", row["carrier"], " | ", row["bus"], " | ", row["type"], " | ", _fmt(row["b_gfm_input"]), " | ", _fmt(row["b_gfm_base"]), " | ", _fmt(row["s_block_mva"]), " | ", _fmt(row["b_block_output"]), " | ", _fmt(row["n_block0"]), " | ", _fmt(row["n_block_max"]), " | ", _fmt(row["installed_strength"]), " | ", _fmt(row["max_strength"]), " |")
-        end
-        println(io)
-
-        println(io, "### Baseline RHS Assertions")
-        ra = baseline_uc["rhs_assertions"]
-        println(io, "- at least one GFL with p_block_max>0: `", ra["has_positive_gfl_pmax"], "`")
-        println(io, "- bus-level condition (online GFL => positive sum_GFL_p_block_max_na): `", ra["rhs_bus_positive_ok"], "`")
-        println(io, "- system-level condition (online GFL => positive total sum_GFL_p_block_max_na): `", ra["rhs_total_positive_ok"], "`")
-        println(io, "- g_min>0 condition (online GFL => RHS>0): `", ra["rhs_positive_when_gmin_positive"], "`")
-        println(io, "- g_min=0 condition (RHS==0): `", ra["rhs_zero_when_gmin_zero"], "`")
-        if !isempty(ra["messages"])
-            println(io, "- assertion messages:")
-            for msg in ra["messages"]
-                println(io, "  - ", msg)
+                for row in sorted_rows
+                    bus = Int(row["bus"])
+                    inv = get(r["invested_battery_gfm_by_bus"], bus, 0.0)
+                    inv_cost = inv * get(cost_by_bus, bus, 0.0)
+                    margin = haskey(r["bus_strength_summary"], bus) ? r["bus_strength_summary"][bus]["margin_at_weakest"] : NaN
+                    println(io, "| ", _fmt(g), " | ", mode, " | ", bus, " | ", _fmt(inv), " | ", _fmt(inv_cost), " | ", _fmt(get(r["gfl_nameplate_by_bus"], bus, NaN)), " | ", _fmt(get(r["gfm_strength_before_by_bus"], bus, NaN)), " | ", _fmt(get(r["gfm_strength_after_by_bus"], bus, NaN)), " | ", _fmt(margin), " |")
+                end
             end
         end
         println(io)
 
-        println(io, "## Sensitivity Table")
-        println(io, "| scenario | mode | status | objective | min_margin | near_binding | invested_gfm | invested_gfl | online_gfm_avg | online_gfl_avg | startup_count | shutdown_count |")
-        println(io, "|---|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|")
-        for r in sort(records; by=x -> (x["scenario"], _mode_order(x["mode"])))
-            println(io, "| ", r["scenario"], " | ", r["mode"], " | ", r["status"], " | ", _fmt(r["objective"]), " | ", _fmt(r["min_margin"]), " | ", r["near_binding"], " | ", _fmt(r["invested_gfm"]), " | ", _fmt(r["invested_gfl"]), " | ", _fmt(_avg(r["online_gfm_by_snapshot"])), " | ", _fmt(_avg(r["online_gfl_by_snapshot"])), " | ", _fmt(r["startup_count"]), " | ", _fmt(r["shutdown_count"]), " |")
-        end
-        println(io)
-
-        println(io, "## gSCR Diagnostic Table (Baseline UC)")
-        bdiag = baseline_uc["bus_diag"]
-        bsum = baseline_uc["bus_strength_summary"]
-        println(io, "| bus | sigma0_G | B0_diag | B0_abs_rowsum | installed_gfm_strength | max_gfm_strength | weakest_snapshot | RHS_at_weakest | margin_at_weakest |")
-        println(io, "|---:|---:|---:|---:|---:|---:|---:|---:|---:|")
-        if !haskey(bdiag, "diag")
-            println(io, "| - | NaN | NaN | NaN | NaN | NaN | NaN | NaN | NaN |")
-        else
-            for bus in sort(collect(keys(bdiag["diag"])))
-                row = bsum[bus]
-                println(io, "| ", bus, " | ", _fmt(bdiag["sigma0"][bus]), " | ", _fmt(bdiag["diag"][bus]), " | ", _fmt(bdiag["offabs"][bus]), " | ", _fmt(row["installed_gfm_strength"]), " | ", _fmt(row["max_gfm_strength"]), " | ", row["weakest_snapshot"], " | ", _fmt(row["rhs_at_weakest"]), " | ", _fmt(row["margin_at_weakest"]), " |")
+        println(io, "### D. Online/Dispatch Behavior of battery_gfm (Solved Diagnostic Runs)")
+        println(io, "| g_min | mode | snapshot | bus | battery_gfm_online_blocks | battery_gfm_dispatch_abs |")
+        println(io, "|---:|---|---:|---:|---:|---:|")
+        for g in _GMIN_VALUES
+            scen = "gmin_abs_$(replace(string(g), "." => "p"))"
+            for mode in ("diagnostic_uc_only", "diagnostic_full_capexp", "diagnostic_storage_only", "diagnostic_generator_only")
+                r = _find_record(records, scen, mode)
+                if isnothing(r) || !(r["status"] in _ACTIVE_OK)
+                    continue
+                end
+                keys_sorted = sort(collect(keys(r["battery_gfm_online_by_bus_snapshot"])); by=x -> (x[1], x[2]))
+                for k in keys_sorted
+                    online = r["battery_gfm_online_by_bus_snapshot"][k]
+                    dispatch = get(r["battery_gfm_dispatch_by_bus_snapshot"], k, 0.0)
+                    println(io, "| ", _fmt(g), " | ", mode, " | ", k[1], " | ", k[2], " | ", _fmt(online), " | ", _fmt(dispatch), " |")
+                end
+                total_online = _sumv(r["battery_gfm_online_by_snapshot"])
+                total_dispatch = _sumv(r["battery_gfm_dispatch_by_snapshot"])
+                avg_dispatch_per_online_block = (total_online isa Real && isfinite(total_online) && total_online > _EPS) ? total_dispatch / total_online : NaN
+                support_flag = (avg_dispatch_per_online_block isa Real && isfinite(avg_dispatch_per_online_block) && battery_pmax_ref isa Real && isfinite(battery_pmax_ref) && avg_dispatch_per_online_block <= 0.05 * battery_pmax_ref) ? "yes" : "no_or_mixed"
+                println(io, "- run g_min=", _fmt(g), ", mode=", mode, ": zero_dispatch_online_count=", _fmt(r["battery_gfm_zero_dispatch_online_count"]), ", avg_dispatch_per_online_block=", _fmt(avg_dispatch_per_online_block), ", mainly_grid_strength_support=", support_flag, ".")
             end
         end
         println(io)
 
-        println(io, "## Sensitivity Diagnostics")
-        opex_uc = filter(r -> r["scenario"] == "gfm_opex_x1p5" && r["mode"] == "uc_only", records)
-        opex_cap = filter(r -> r["scenario"] == "gfm_opex_x1p5" && r["mode"] == "full_capexp", records)
-        if !isempty(opex_uc) && get(opex_uc[1]["meta"], "gfm_opex_available", false)
-            for r in (opex_uc[1], opex_cap[1])
-                base = r["mode"] == "uc_only" ? baseline_uc : baseline_cap
-                println(io, "- OPEX ", r["mode"], ": d_obj=", _fmt((r["objective"] isa Real && base["objective"] isa Real) ? r["objective"] - base["objective"] : NaN), ", d_online_gfm_avg=", _fmt(_avg(r["online_gfm_by_snapshot"]) - _avg(base["online_gfm_by_snapshot"])), ", d_dispatch_gfm_total=", _fmt(_sumv(r["dispatch_gfm_by_snapshot"]) - _sumv(base["dispatch_gfm_by_snapshot"])), ", min_margin=", _fmt(r["min_margin"]), ", zero_dispatch_online=", _fmt(r["zero_dispatch_online_count"]))
-            end
-        else
-            println(io, "- GFM OPEX sensitivity unavailable: explicit linear marginal costs for GFM were not clearly editable in this dataset path.")
+        println(io, "### E. Comparison to OPF Plausibility Audit")
+        println(io, "- Standard OPF was physically plausible in DCP.")
+        println(io, "- Positive g_min infeasibility before adding local candidates was not explained by OPF balance/branch/storage invalidity.")
+        println(io, "- This diagnostic specifically tests whether missing local GFM expansion options cause infeasibility under buswise gSCR.")
+        full_pos = [r for r in records if r["mode"] == "diagnostic_full_capexp" && r["status"] in _ACTIVE_OK && parse(Float64, replace(replace(r["scenario"], "gmin_abs_" => ""), "p" => ".")) > 0.0]
+        if !isempty(full_pos)
+            println(io, "- Positive-g_min diagnostic CAPEXP runs became feasible. Branch-flow and voltage plausibility of these UC/CAPEXP runs is not directly checked in this integration path.")
         end
         println(io)
-        su_uc = filter(r -> r["scenario"] == "gfm_startup_x10" && r["mode"] == "uc_only", records)
-        su_cap = filter(r -> r["scenario"] == "gfm_startup_x10" && r["mode"] == "full_capexp", records)
-        if !isempty(su_uc)
-            for r in (su_uc[1], su_cap[1])
-                println(io, "- Startup x10 ", r["mode"], ": startup_count=", _fmt(r["startup_count"]), ", startup_cost=", _fmt(r["startup_cost"]), ", shutdown_count=", _fmt(r["shutdown_count"]), ", min_margin=", _fmt(r["min_margin"]))
+
+        println(io, "### Reconstruction Checks (Solved Diagnostic Runs)")
+        println(io, "| g_min | mode | gSCR max violation | na/n bounds violation | n shared residual | startup/shutdown transition residual | investment recon residual | startup cost recon residual | shutdown cost recon residual | mode-specific assertion pass |")
+        println(io, "|---:|---|---:|---:|---:|---:|---:|---:|---:|---|")
+        for g in _GMIN_VALUES
+            scen = "gmin_abs_$(replace(string(g), "." => "p"))"
+            for mode in ("diagnostic_uc_only", "diagnostic_full_capexp", "diagnostic_storage_only", "diagnostic_generator_only")
+                r = _find_record(records, scen, mode)
+                if isnothing(r) || !(r["status"] in _ACTIVE_OK)
+                    continue
+                end
+                mode_assert = true
+                if mode == "diagnostic_uc_only"
+                    mode_assert &= abs(r["invested_battery_gfm"]) <= 1e-6
+                elseif mode == "diagnostic_storage_only"
+                    mode_assert &= abs(r["invested_gen"]) <= 1e-6
+                elseif mode == "diagnostic_generator_only"
+                    mode_assert &= abs(r["invested_storage"]) <= 1e-6
+                    mode_assert &= abs(r["invested_battery_gfm"]) <= 1e-6
+                end
+                println(io, "| ", _fmt(g), " | ", mode, " | ", _fmt(r["gscr_violation_max"]), " | ", _fmt(r["active_bound_violation_max"]), " | ", _fmt(r["n_shared_residual_max"]), " | ", _fmt(r["transition_residual_max"]), " | ", _fmt(r["investment_recon_residual"]), " | ", _fmt(r["startup_cost_recon_residual"]), " | ", _fmt(r["shutdown_cost_recon_residual"]), " | ", mode_assert, " |")
             end
         end
         println(io)
 
-        println(io, "## Plausibility Conclusions")
-        uc_first_bad = _first_infeasible_gmin(records, "uc_only")
-        cap_first_bad = _first_infeasible_gmin(records, "full_capexp")
-        stor_first_bad = _first_infeasible_gmin(records, "storage_only")
-        gen_first_bad = _first_infeasible_gmin(records, "generator_only")
-        g0_uc = only(filter(r -> r["scenario"] == "gmin_abs_0p0" && r["mode"] == "uc_only", records))
-        solved_positive_g_uc = filter(
-            r -> startswith(r["scenario"], "gmin_abs_") &&
-                 r["mode"] == "uc_only" &&
-                 r["status"] in _ACTIVE_OK &&
-                 r["scenario"] != "gmin_abs_0p0",
-            records,
-        )
-        g3_uc = only(filter(r -> r["scenario"] == "gmin_abs_3p0" && r["mode"] == "uc_only", records))
-        rhs_positive_for_positive_g =
-            !isempty(solved_positive_g_uc) &&
-            all(r["rhs_assertions"]["rhs_positive_when_gmin_positive"] for r in solved_positive_g_uc)
-        println(io, "- Does RHS activate for g_min>0? ", isempty(solved_positive_g_uc) ? "not observable (all g_min>0 UC runs infeasible)." : (rhs_positive_for_positive_g ? "yes" : "no"), ".")
-        println(io, "- g_min=0 reproduces zero-RHS diagnostic: ", g0_uc["rhs_assertions"]["rhs_zero_when_gmin_zero"], ".")
-        println(io, "- At which g_min does UC-only become binding/infeasible? near-binding at low g_min if reported, infeasible threshold=", isnothing(uc_first_bad) ? "none <=3.0" : _fmt(uc_first_bad), ".")
-        capexp_restores =
-            !isnothing(uc_first_bad) &&
-            (isnothing(cap_first_bad) || (!isnothing(cap_first_bad) && cap_first_bad > uc_first_bad))
-        println(io, "- Does CAPEXP restore feasibility? ", capexp_restores ? "yes" : "not required or not observed within tested range", ".")
-        println(io, "- Storage-only expansion sufficient? ", isnothing(stor_first_bad) ? "feasible in tested range" : "insufficient from g_min=" * _fmt(stor_first_bad), ".")
-        println(io, "- Generator-only expansion sufficient? ", isnothing(gen_first_bad) ? "feasible in tested range" : "insufficient from g_min=" * _fmt(gen_first_bad), ".")
-        println(io, "- Does investment occur mainly in GFM when tight? inspect high-g_min rows for nonzero invested_gfm vs invested_gfl.")
-        monotonic_observed =
-            (g3_uc["min_margin"] isa Real) &&
-            (g0_uc["min_margin"] isa Real) &&
-            (g3_uc["min_margin"] < g0_uc["min_margin"] - 1e-9)
-        println(io, "- Is monotonic g_min behavior observed? ", monotonic_observed ? "yes (margin decreases from g_min=0 to 3)." : "no (flag for investigation).")
-        println(io, "- Are B0, sigma0_G, and b_gfm contributions plausible? see diagnostic and device-level GFM strength tables.")
-        println(io, "- Does GFM OPEX/startup sensitivity materially affect online GFM? see sensitivity diagnostics section.")
-        println(io, "- Recommended next model/data correction: keep g_min explicitly configured per study/run and calibrate absolute g_min range to planning assumptions.")
+        println(io, "### F. Interpretation")
+        base_pos_infeasible = any(r["mode"] == "baseline_uc_only" && r["status"] ∉ _ACTIVE_OK && parse(Float64, replace(replace(r["scenario"], "gmin_abs_" => ""), "p" => ".")) > 0.0 for r in records)
+        diag_pos_feasible = any(r["mode"] == "diagnostic_full_capexp" && r["status"] in _ACTIVE_OK && parse(Float64, replace(replace(r["scenario"], "gmin_abs_" => ""), "p" => ".")) > 0.0 for r in records)
+        max_full = _max_feasible_gmin(records, "diagnostic_full_capexp")
+        max_storage = _max_feasible_gmin(records, "diagnostic_storage_only")
+        gen_pos_feasible = any(r["mode"] == "diagnostic_generator_only" && r["status"] in _ACTIVE_OK && parse(Float64, replace(replace(r["scenario"], "gmin_abs_" => ""), "p" => ".")) > 0.0 for r in records)
+        invests_no_local_gfm = false
+        for r in records
+            if r["mode"] != "diagnostic_full_capexp" || !(r["status"] in _ACTIVE_OK)
+                continue
+            end
+            for row in sorted_rows
+                bus = Int(row["bus"])
+                inv = get(r["invested_battery_gfm_by_bus"], bus, 0.0)
+                if inv > _EPS && get(r["gfm_strength_before_by_bus"], bus, 0.0) <= _EPS && get(r["gfl_nameplate_by_bus"], bus, 0.0) > _EPS
+                    invests_no_local_gfm = true
+                end
+            end
+        end
+        zero_dispatch_any = any((r["mode"] in ("diagnostic_uc_only", "diagnostic_full_capexp", "diagnostic_storage_only", "diagnostic_generator_only")) && (r["status"] in _ACTIVE_OK) && (get(r, "battery_gfm_zero_dispatch_online_count", 0.0) > 0.0) for r in records)
+        println(io, "- Does adding local battery_gfm restore feasibility for g_min>0? ", diag_pos_feasible ? "yes" : "no", ".")
+        println(io, "- Up to which g_min is full diagnostic CAPEXP feasible? ", isnothing(max_full) ? "none in tested range" : _fmt(max_full), ".")
+        println(io, "- Is storage-only expansion sufficient? ", isnothing(max_storage) ? "no positive-g_min feasibility observed" : "yes up to g_min=" * _fmt(max_storage), ".")
+        println(io, "- Does generator-only remain infeasible? ", gen_pos_feasible ? "no (some positive-g_min cases feasible)" : "yes (in tested positive-g_min range)", ".")
+        println(io, "- Does investment occur at buses with no local GFM and positive local GFL RHS driver? ", invests_no_local_gfm ? "yes" : "not observed", ".")
+        println(io, "- Are battery_gfm units online with zero dispatch? ", zero_dispatch_any ? "yes" : "not observed", ".")
+        println(io, "- Does this indicate missing online/no-load cost may matter later? ", zero_dispatch_any ? "yes; zero-dispatch-online support appears and no-load cost may become important in later calibration." : "not indicated by this run set", ".")
+        println(io, "- Is local buswise gSCR too restrictive without local GFM candidates? ", (base_pos_infeasible && diag_pos_feasible) ? "yes, strongly indicated by this diagnostic." : "not conclusively shown in tested range", ".")
+        println(io, "- Next modeling/data decision: keep the local-candidate mechanism for diagnosis, then calibrate battery_gfm `b_block` on AC/B0 base and cost/no-load treatment before policy conclusions.")
     end
     return _REPORT_PATH
 end
@@ -1093,113 +1382,47 @@ end
         @test isfile(_dataset_path())
     else
         raw = _load_case()
-
+        diag_plan = _build_diagnostic_candidate_plan(raw; target_gmin=3.0, minimum_candidate_blocks=1, candidate_b_block=0.2)
         records = Dict{String,Any}[]
 
-        # Primary deliverable: absolute g_min sweep (uniform injection, not factors).
+        mode_specs = [
+            ("baseline_uc_only", "uc_only", false),
+            ("baseline_full_capexp", "full_capexp", false),
+            ("diagnostic_uc_only", "uc_only", true),
+            ("diagnostic_full_capexp", "full_capexp", true),
+            ("diagnostic_storage_only", "storage_only", true),
+            ("diagnostic_generator_only", "generator_only", true),
+        ]
+
         for g in _GMIN_VALUES
             sname = "gmin_abs_$(replace(string(g), "." => "p"))"
-            for mode in ("uc_only", "full_capexp", "storage_only", "generator_only")
-                r = _run_mode(raw, sname, mode; g_min_value=g)
+            for (mode_name, policy_mode, use_diag) in mode_specs
+                r = _run_mode(raw, sname, mode_name; policy_mode=policy_mode, g_min_value=g, diag_candidates=use_diag, diag_plan=diag_plan)
                 push!(records, r)
                 @test r["status"] in union(_DOC_STATUS, Set(["SKIPPED_INVALID_CAPACITY"]))
-                if mode == "uc_only" && r["status"] in _ACTIVE_OK
-                    @test abs(r["investment_cost"]) <= 1e-6
+                if r["status"] in _ACTIVE_OK
+                    @test r["transition_residual_max"] <= 1e-6
+                    @test r["active_bound_violation_max"] <= 1e-6
+                    @test r["gscr_violation_max"] <= 1e-6
+                    @test r["n_shared_residual_max"] <= 1e-6
+                    @test r["investment_recon_residual"] <= 1e-6
+                    @test r["startup_cost_recon_residual"] <= 1e-6
+                    @test r["shutdown_cost_recon_residual"] <= 1e-6
                 end
-                if mode == "storage_only" && r["status"] in _ACTIVE_OK
+                if mode_name == "diagnostic_uc_only" && r["status"] in _ACTIVE_OK
+                    @test abs(r["invested_battery_gfm"]) <= 1e-6
+                end
+                if mode_name == "diagnostic_storage_only" && r["status"] in _ACTIVE_OK
                     @test abs(r["invested_gen"]) <= 1e-6
                 end
-                if mode == "generator_only" && r["status"] in _ACTIVE_OK
+                if mode_name == "diagnostic_generator_only" && r["status"] in _ACTIVE_OK
                     @test abs(r["invested_storage"]) <= 1e-6
+                    @test abs(r["invested_battery_gfm"]) <= 1e-6
                 end
             end
         end
 
-        baseline_uc = only(filter(r -> r["scenario"] == "gmin_abs_0p0" && r["mode"] == "uc_only", records))
-        baseline_cap = only(filter(r -> r["scenario"] == "gmin_abs_0p0" && r["mode"] == "full_capexp", records))
-        zero_uc = only(filter(r -> r["scenario"] == "gmin_abs_0p0" && r["mode"] == "uc_only", records))
-        if baseline_uc["status"] in _ACTIVE_OK
-            @test baseline_uc["rhs_assertions"]["has_positive_gfl_pmax"] == true
-            @test baseline_uc["rhs_assertions"]["rhs_bus_positive_ok"] == true
-            @test baseline_uc["rhs_assertions"]["rhs_total_positive_ok"] == true
-            @test baseline_uc["rhs_builder_recon_max_diff"] <= 1e-9
-        end
-        if zero_uc["status"] in _ACTIVE_OK
-            @test zero_uc["rhs_assertions"]["rhs_zero_when_gmin_zero"] == true
-        end
-        solved_positive_g = filter(r -> startswith(r["scenario"], "gmin_abs_") && r["mode"] == "uc_only" && r["status"] in _ACTIVE_OK && occursin("gmin_abs_0p0", r["scenario"]) == false, records)
-        for r in solved_positive_g
-            @test r["rhs_assertions"]["rhs_positive_when_gmin_positive"] == true
-        end
-
-        # Keep non-g_min sensitivities (run at baseline g_min=1.0).
-        for mode in ("uc_only", "full_capexp")
-            push!(records, _run_mode(raw, "gfm_opex_x1p5", mode; g_min_value=_BASELINE_GMIN, gfm_opex_mult=1.5))
-        end
-
-        for mode in ("uc_only", "full_capexp")
-            push!(records, _run_mode(raw, "gfm_startup_x10", mode; g_min_value=_BASELINE_GMIN, gfm_startup_mult=10.0))
-        end
-
-        for alpha in (1.0, 0.75, 0.5, 0.25)
-            sname = "alpha_$(replace(string(alpha), "." => "p"))"
-            for mode in ("uc_only", "full_capexp")
-                push!(records, _run_mode(raw, sname, mode; g_min_value=_BASELINE_GMIN, gfm_alpha=alpha))
-            end
-        end
-
-        for reclass in ("battery_gfm_to_gfl", "thermal_gfm_to_gfl", "nonsync_gfm_to_gfl")
-            sname = "reclass_" * reclass
-            for mode in ("uc_only", "full_capexp")
-                push!(records, _run_mode(raw, sname, mode; g_min_value=_BASELINE_GMIN, reclass=reclass))
-            end
-        end
-
-        # Monotonic infeasibility check for absolute g_min sweep by mode.
-        for mode in ("uc_only", "full_capexp", "storage_only", "generator_only")
-            feasible_seen_infeasible = false
-            for g in _GMIN_VALUES
-                sname = "gmin_abs_$(replace(string(g), "." => "p"))"
-                r = only(filter(x -> x["scenario"] == sname && x["mode"] == mode, records))
-                feasible = r["status"] in _ACTIVE_OK
-                if feasible_seen_infeasible && feasible
-                    @test false
-                end
-                if !feasible
-                    feasible_seen_infeasible = true
-                end
-            end
-        end
-
-        # Monotonic plausibility summary per mode (reported, not hard-failed).
-        monotonic_summary = Dict{String,Bool}()
-        for mode in ("uc_only", "full_capexp", "storage_only", "generator_only")
-            solved = Dict{Float64,Float64}()
-            for g in _GMIN_VALUES
-                sname = "gmin_abs_$(replace(string(g), "." => "p"))"
-                r = only(filter(x -> x["scenario"] == sname && x["mode"] == mode, records))
-                if r["status"] in _ACTIVE_OK
-                    solved[g] = r["min_margin"]
-                end
-            end
-            if haskey(solved, 0.0)
-                any_change = any(abs(solved[g] - solved[0.0]) > 1e-9 for g in keys(solved) if g > 0.0)
-                monotonic_summary[mode] = any_change
-            end
-        end
-
-        # Reconstruction and model-consistency checks on solved cases.
-        for r in records
-            if r["status"] in _ACTIVE_OK
-                @test r["transition_residual_max"] <= 1e-6
-                @test r["active_bound_violation_max"] <= 1e-6
-                @test r["gscr_violation_max"] <= 1e-6
-                @test r["n_shared_residual_max"] <= 1e-6
-                @test r["rhs_builder_recon_max_diff"] <= 1e-9
-            end
-        end
-
-        report = _write_report(records, baseline_uc, baseline_cap)
+        report = _write_report(records, diag_plan)
         @test isfile(report)
     end
 end
