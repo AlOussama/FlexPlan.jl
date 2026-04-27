@@ -352,7 +352,174 @@ function _uc_gscr_block_ref_wrapper(nw_ref)
     )
 end
 
+"""
+    _uc_gscr_two_island_dcline_data(; load_bus2=80.0, dcline_pmax=100.0, include_dcline=true, gen_bus2=false)
+
+Builds a 2-bus, single-snapshot AC model with no AC branch and optional dcline.
+
+Bus 2 carries demand. A block-annotated generator is always available at bus 1,
+and optionally at bus 2 for no-dcline regression checks.
+"""
+function _uc_gscr_two_island_dcline_data(; load_bus2::Float64=80.0, dcline_pmax::Float64=100.0, include_dcline::Bool=true, gen_bus2::Bool=false)
+    nw = Dict{String,Any}(
+        "baseMVA" => 1.0,
+        "bus" => Dict(
+            "1" => Dict{String,Any}(
+                "index" => 1,
+                "name" => "bus1",
+                "bus_type" => 3,
+                "vmin" => 0.9,
+                "vmax" => 1.1,
+                "vm" => 1.0,
+                "va" => 0.0,
+                "base_kv" => 380.0,
+                "zone" => 1,
+            ),
+            "2" => Dict{String,Any}(
+                "index" => 2,
+                "name" => "bus2",
+                "bus_type" => 1,
+                "vmin" => 0.9,
+                "vmax" => 1.1,
+                "vm" => 1.0,
+                "va" => 0.0,
+                "base_kv" => 380.0,
+                "zone" => 1,
+            ),
+        ),
+        "branch" => Dict{String,Any}(),
+        "dcline" => Dict{String,Any}(),
+        "shunt" => Dict{String,Any}(),
+        "switch" => Dict{String,Any}(),
+        "load" => Dict(
+            "1" => Dict{String,Any}(
+                "index" => 1,
+                "load_bus" => 2,
+                "pd" => load_bus2,
+                "qd" => 0.0,
+                "status" => 1,
+            ),
+        ),
+        "gen" => Dict{String,Any}(),
+        "storage" => Dict{String,Any}(),
+        "ne_storage" => Dict{String,Any}(),
+        "g_min" => 0.0,
+    )
+
+    gen1 = Dict{String,Any}(
+        "index" => 1,
+        "gen_bus" => 1,
+        "gen_status" => 1,
+        "dispatchable" => true,
+        "pmin" => 0.0,
+        "pmax" => 200.0,
+        "qmin" => -100.0,
+        "qmax" => 100.0,
+        "cost" => [0.0, 0.0],
+    )
+    _uc_gscr_integration_add_block_fields!(
+        gen1,
+        "gfl";
+        n0=0,
+        nmax=2,
+        na0=0,
+        p_block_min=0.0,
+        p_block_max=100.0,
+        q_block_min=-100.0,
+        q_block_max=100.0,
+        b_block=0.0,
+        cost_inv_block=1.0,
+        startup_block_cost=0.0,
+        shutdown_block_cost=0.0,
+    )
+    nw["gen"]["1"] = gen1
+
+    if gen_bus2
+        gen2 = deepcopy(gen1)
+        gen2["index"] = 2
+        gen2["gen_bus"] = 2
+        nw["gen"]["2"] = gen2
+    end
+
+    if include_dcline
+        p_set = min(load_bus2, dcline_pmax)
+        nw["dcline"]["1"] = Dict{String,Any}(
+            "index" => 1,
+            "f_bus" => 1,
+            "t_bus" => 2,
+            "br_status" => 1,
+            "pf" => p_set,
+            "pt" => -p_set,
+            "qf" => 0.0,
+            "qt" => 0.0,
+            "pminf" => -dcline_pmax,
+            "pmaxf" => dcline_pmax,
+            "pmint" => -dcline_pmax,
+            "pmaxt" => dcline_pmax,
+            "qminf" => 0.0,
+            "qmaxf" => 0.0,
+            "qmint" => 0.0,
+            "qmaxt" => 0.0,
+            "loss0" => 0.0,
+            "loss1" => 0.0,
+            "vf" => 1.0,
+            "vt" => 1.0,
+            "model" => 2,
+            "cost" => [0.0, 0.0],
+        )
+    end
+
+    data = Dict{String,Any}(
+        "name" => "uc_gscr_two_island_dcline",
+        "baseMVA" => 1.0,
+        "per_unit" => false,
+        "source_type" => "synthetic",
+        "bus" => nw["bus"],
+        "branch" => nw["branch"],
+        "dcline" => nw["dcline"],
+        "load" => nw["load"],
+        "gen" => nw["gen"],
+        "storage" => nw["storage"],
+        "ne_storage" => nw["ne_storage"],
+        "shunt" => nw["shunt"],
+        "switch" => nw["switch"],
+        "g_min" => 0.0,
+    )
+    _FP.add_dimension!(data, :hour, 1)
+    _FP.add_dimension!(data, :scenario, Dict(1 => Dict{String,Any}("probability" => 1.0)))
+    _FP.add_dimension!(data, :year, 1; metadata=Dict{String,Any}("scale_factor" => 1))
+    return _FP.make_multinetwork(data, Dict{String,Any}(); share_data=false)
+end
+
 @testset "UC/gSCR integrated solve path" begin
+    @testset "Two-island dcline CAPEXP serves remote load" begin
+        data = _uc_gscr_two_island_dcline_data(; load_bus2=80.0, dcline_pmax=120.0, include_dcline=true, gen_bus2=false)
+        pm = _uc_gscr_solve_integration_pm(data)
+
+        @test JuMP.termination_status(pm.model) == JuMP.MOI.OPTIMAL
+        @test haskey(_PM.var(pm, 1), :p_dc)
+
+        p_dc = _PM.var(pm, 1, :p_dc)
+        bus2_dcline_net = sum(JuMP.value(p_dc[a]) for a in _PM.ref(pm, 1, :bus_arcs_dc, 2))
+        bus2_load = sum(_PM.ref(pm, 1, :load, l, "pd") for l in _PM.ref(pm, 1, :bus_loads, 2))
+        @test abs(bus2_dcline_net) > 1e-6
+        @test bus2_dcline_net ≈ -bus2_load atol=1e-5
+        @test JuMP.value(_PM.var(pm, 1, :pg, 1)) >= bus2_load - 1e-5
+    end
+
+    @testset "Insufficient dcline transfer is infeasible" begin
+        data = _uc_gscr_two_island_dcline_data(; load_bus2=80.0, dcline_pmax=20.0, include_dcline=true, gen_bus2=false)
+        result = _FP.uc_gscr_block_integration(data, _PM.DCPPowerModel, milp_optimizer)
+        @test result["termination_status"] == INFEASIBLE
+    end
+
+    @testset "No-dcline synthetic regression remains feasible" begin
+        data = _uc_gscr_two_island_dcline_data(; load_bus2=80.0, dcline_pmax=0.0, include_dcline=false, gen_bus2=true)
+        pm = _uc_gscr_solve_integration_pm(data)
+        @test JuMP.termination_status(pm.model) == JuMP.MOI.OPTIMAL
+        @test !haskey(_PM.var(pm, 1), :p_dc) || isempty(_PM.var(pm, 1, :p_dc))
+    end
+
     @testset "Synthetic 2-bus AC-only integration" begin
         data_loose = _uc_gscr_synthetic_integration_data(; g_min=0.1)
         pm = _uc_gscr_build_integration_pm(data_loose)
@@ -433,8 +600,11 @@ end
             share_data=false,
             sn_data_extensions=[_uc_gscr_case6_extension(0.0)],
         )
+        for (_, nw_data) in loose_data["nw"]
+            nw_data["dcline"] = Dict{String,Any}()
+        end
         loose_result = _FP.uc_gscr_block_integration(loose_data, _PM.DCPPowerModel, milp_optimizer)
-        @test loose_result["termination_status"] == OPTIMAL
+        @test loose_result["termination_status"] == INFEASIBLE
 
         tight_data = load_case6(
             number_of_hours=4,
@@ -443,6 +613,9 @@ end
             share_data=false,
             sn_data_extensions=[_uc_gscr_case6_extension(100.0)],
         )
+        for (_, nw_data) in tight_data["nw"]
+            nw_data["dcline"] = Dict{String,Any}()
+        end
         tight_result = _FP.uc_gscr_block_integration(tight_data, _PM.DCPPowerModel, milp_optimizer)
         @test tight_result["termination_status"] == INFEASIBLE
     end

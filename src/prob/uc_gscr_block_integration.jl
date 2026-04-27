@@ -36,9 +36,11 @@ Builds the minimal integrated UC/gSCR block model on one PowerModels instance.
 
 Per snapshot, this builder creates existing generator/storage variables,
 candidate-storage variables, UC/gSCR block variables, block dispatch bounds,
-storage block bounds, the Gershgorin sufficient gSCR condition, and a
-simplified system active-power balance. Across hours, it applies existing
-storage state constraints and candidate-storage activation coupling.
+storage block bounds, standard dcline variables/constraints, the Gershgorin
+sufficient gSCR condition, and a standard bus-wise active-power balance
+(`constraint_power_balance`) that includes AC branch terms and dcline terms.
+Across hours, it applies existing storage state constraints and
+candidate-storage activation coupling.
 
 This builder is formulation-specific to active-power formulations in this
 repository workflow and mutates the JuMP model plus PowerModels variable and
@@ -47,8 +49,10 @@ converter expansion components are introduced in this integrated path.
 """
 function build_uc_gscr_block_integration(pm::_PM.AbstractActivePowerModel; objective::Bool=true, intertemporal_constraints::Bool=true)
     for n in nw_ids(pm)
+        _PM.variable_branch_power(pm; nw=n)
         _PM.variable_gen_power(pm; nw=n)
         expression_gen_curtailment(pm; nw=n)
+        _PM.variable_dcline_power(pm; nw=n)
 
         _PM.variable_storage_power(pm; nw=n)
         variable_absorbed_energy(pm; nw=n)
@@ -65,7 +69,13 @@ function build_uc_gscr_block_integration(pm::_PM.AbstractActivePowerModel; objec
     end
 
     for n in nw_ids(pm)
-        constraint_uc_gscr_block_system_active_balance(pm; nw=n)
+        for i in _PM.ids(pm, n, :dcline)
+            _PM.constraint_dcline_power_losses(pm, i; nw=n)
+            _PM.constraint_dcline_power_to_bounds(pm, i; nw=n)
+            _PM.constraint_dcline_power_from_bounds(pm, i; nw=n)
+        end
+        constraint_uc_gscr_block_bus_active_balance(pm; nw=n)
+
         constraint_uc_gscr_block_dispatch(pm; nw=n)
         constraint_uc_gscr_block_storage_bounds(pm; nw=n)
         constraint_gscr_gershgorin_sufficient(pm; nw=n)
@@ -172,53 +182,50 @@ function objective_min_cost_uc_gscr_block_integration(pm::_PM.AbstractPowerModel
 end
 
 """
-    constraint_uc_gscr_block_system_active_balance(pm; nw=nw_id_default)
+    constraint_uc_gscr_block_bus_active_balance(pm; nw=nw_id_default)
 
-Adds a minimal system-level active-power balance for snapshot `nw`:
+Adds a bus-wise active-power balance for snapshot `nw` using PowerModels'
+standard active-balance template:
 
-`sum(pg) - sum(ps) - sum(ps_ne) == sum(pd)`, where `ps_ne` is included only
-when candidate-storage variables exist on the snapshot.
+`constraint_power_balance(pm, i; nw=nw)`, for each bus `i`.
 
-This balance is intentionally aggregated (not bus-wise) and is used only to
-create the smallest integrated solve path for UC/gSCR block wiring tests.
-The template reads active load `pd` from `:load` and uses existing
-`pg`/`ps` variables and optionally `ps_ne` variables. It is formulation-
-specific to active-power models and mutates only the JuMP model by adding one
-affine equality.
+This balance includes AC branch terms, storage terms, generator terms, load
+terms, and dcline terms through `bus_arcs_dc` with the PowerModels sign
+convention. It is formulation-specific to active-power models and mutates only
+the JuMP model and PowerModels constraint dictionaries.
 """
-function constraint_uc_gscr_block_system_active_balance(pm::_PM.AbstractActivePowerModel; nw::Int=_PM.nw_id_default)
-    if haskey(_PM.con(pm, nw), :uc_gscr_block_system_active_balance)
-        return _PM.con(pm, nw)[:uc_gscr_block_system_active_balance]
+function constraint_uc_gscr_block_bus_active_balance(pm::_PM.AbstractActivePowerModel; nw::Int=_PM.nw_id_default)
+    if haskey(_PM.con(pm, nw), :uc_gscr_block_bus_active_balance)
+        return _PM.con(pm, nw)[:uc_gscr_block_bus_active_balance]
     end
 
-    pg = _PM.var(pm, nw, :pg)
-    ps = _PM.var(pm, nw, :ps)
-    ps_ne_term =
-        if !haskey(_PM.var(pm, nw), :ps_ne)
-            0.0
-        else
-            ps_ne = _PM.var(pm, nw, :ps_ne)
-            isempty(keys(ps_ne)) ? 0.0 : sum(ps_ne[s] for s in keys(ps_ne))
-        end
-
-    total_demand = _uc_gscr_block_total_active_demand(pm, nw)
-    con = JuMP.@constraint(pm.model, sum(pg[g] for g in keys(pg)) - sum(ps[s] for s in keys(ps)) - ps_ne_term == total_demand)
-    _PM.con(pm, nw)[:uc_gscr_block_system_active_balance] = con
-    return con
+    constraints = _PM.con(pm, nw)[:uc_gscr_block_bus_active_balance] = Dict{Int,Any}()
+    for i in _PM.ids(pm, nw, :bus)
+        _PM.constraint_power_balance(pm, i; nw=nw)
+        constraints[i] = nothing
+    end
+    # Backward-compatibility alias for legacy diagnostics/scripts.
+    _PM.con(pm, nw)[:uc_gscr_block_system_active_balance] = constraints
+    return constraints
 end
 
 """
-    _uc_gscr_block_total_active_demand(pm, nw)
+    constraint_uc_gscr_block_system_active_balance(pm; nw=nw_id_default)
 
-Returns total active demand `sum(pd)` for network snapshot `nw`.
-
-The helper reads load data from `pm.ref` and is used by the minimal system
-balance in `constraint_uc_gscr_block_system_active_balance`. Active power is
-assumed to be on the model's internal base. This helper mutates no model or
-input data.
+Backward-compatible alias to `constraint_uc_gscr_block_bus_active_balance`.
 """
-function _uc_gscr_block_total_active_demand(pm::_PM.AbstractActivePowerModel, nw::Int)
-    return sum(load["pd"] for (_, load) in _PM.ref(pm, nw, :load))
+function constraint_uc_gscr_block_system_active_balance(pm::_PM.AbstractActivePowerModel; nw::Int=_PM.nw_id_default)
+    if !haskey(_PM.var(pm, nw), :p)
+        _PM.variable_branch_power(pm; nw=nw)
+    end
+    if !haskey(_PM.var(pm, nw), :p_dc) && !isempty(_PM.ids(pm, nw, :dcline))
+        _PM.variable_dcline_power(pm; nw=nw)
+        for i in _PM.ids(pm, nw, :dcline)
+            _PM.constraint_dcline_power_losses(pm, i; nw=nw)
+            _PM.constraint_dcline_setpoint_active(pm, i; nw=nw)
+        end
+    end
+    return constraint_uc_gscr_block_bus_active_balance(pm; nw=nw)
 end
 
 """
