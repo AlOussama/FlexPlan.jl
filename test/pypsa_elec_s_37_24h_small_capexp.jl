@@ -758,6 +758,30 @@ function _build_uc_block_with_final_policy(
                                 _FP.constraint_storage_state_final_ne(pm, n, i, 0.0)
                             end
                         end
+                    elseif final_policy == :aggregate_equal_final
+                        first_n = _FP.first_id(pm, n, :hour)
+                        expr = JuMP.AffExpr(0.0)
+                        initial_total = 0.0
+
+                        for i in _PM.ids(pm, :storage, nw=n)
+                            st = _PM.ref(pm, n, :storage, i)
+                            is_candidate = _is_battery_candidate(st)
+                            apply_state = is_candidate ? include_candidate_storage_state : include_existing_storage_state
+                            if !apply_state
+                                continue
+                            end
+                            JuMP.add_to_expression!(expr, _PM.var(pm, n, :se, i))
+                            initial_total += float(get(_PM.ref(pm, first_n, :storage, i), "energy", 0.0))
+                        end
+
+                        if _FP._has_uc_gscr_candidate_storage(pm, n) && include_candidate_storage_state
+                            for i in _PM.ids(pm, :ne_storage, nw=n)
+                                JuMP.add_to_expression!(expr, _PM.var(pm, n, :se_ne, i))
+                                initial_total += float(get(_PM.ref(pm, first_n, :ne_storage, i), "energy", 0.0))
+                            end
+                        end
+
+                        JuMP.@constraint(pm.model, expr == initial_total)
                     end
                 end
 
@@ -3509,7 +3533,10 @@ function _run_24h_final_storage_state_variant(
 
     storage_final_count = 0
     storage_final_ne_count = 0
-    if final_policy != :no_final && length(nws) > 1
+    if final_policy == :aggregate_equal_final && length(nws) > 1
+        storage_final_count = 1
+        storage_final_ne_count = 0
+    elseif final_policy != :no_final && length(nws) > 1
         storage_final_count = length(_PM.ids(pm, :storage, nw=last_nw))
         if haskey(_PM.ref(pm, last_nw), :ne_storage)
             storage_final_ne_count = length(_PM.ids(pm, :ne_storage, nw=last_nw))
@@ -3536,7 +3563,7 @@ function _run_24h_final_storage_state_variant(
 
         bind_count = 0
         tol = 1e-6
-        if final_policy != :no_final && length(nws) > 1
+        if final_policy != :no_final && final_policy != :aggregate_equal_final && length(nws) > 1
             for i in _PM.ids(pm, :storage, nw=last_nw)
                 lb = final_policy == :relaxed_final ? 0.0 : float(get(_PM.ref(pm, last_nw, :storage, i), "energy", 0.0))
                 se = JuMP.value(_PM.var(pm, last_nw, :se, i))
@@ -3614,6 +3641,11 @@ function _run_24h_final_storage_state_diagnostic(raw::Dict{String,Any})
         "full_24h_storage_state_relaxed_final";
         final_policy=:relaxed_final,
     )
+    aggregate_equal_final = _run_24h_final_storage_state_variant(
+        raw,
+        "full_24h_storage_state_aggregate_equal_final";
+        final_policy=:aggregate_equal_final,
+    )
 
     decision = if no_final["status"] in _ACTIVE_OK
         "final state is the blocker"
@@ -3626,6 +3658,7 @@ function _run_24h_final_storage_state_diagnostic(raw::Dict{String,Any})
         "full_24h_with_storage_state_and_final" => with_final,
         "full_24h_with_storage_state_no_final" => no_final,
         "full_24h_storage_state_relaxed_final" => relaxed_final,
+        "full_24h_storage_state_aggregate_equal_final" => aggregate_equal_final,
         "decision" => decision,
     )
 end
@@ -4922,7 +4955,7 @@ function _write_report(
         println(io, "## 24h Final Storage-State Diagnostic (g_min = 0)")
         println(io, "| variant | status | constraint_storage_state_final | constraint_storage_state_final_ne | aggregate initial storage energy | aggregate final storage energy | storage units binding at final lower bound | total storage discharge over horizon | total storage charge over horizon |")
         println(io, "|---|---|---:|---:|---:|---:|---:|---:|---:|")
-        for key in ("full_24h_with_storage_state_and_final", "full_24h_with_storage_state_no_final", "full_24h_storage_state_relaxed_final")
+        for key in ("full_24h_with_storage_state_and_final", "full_24h_with_storage_state_no_final", "full_24h_storage_state_relaxed_final", "full_24h_storage_state_aggregate_equal_final")
             r = final_storage_24h_diag[key]
             println(
                 io,
