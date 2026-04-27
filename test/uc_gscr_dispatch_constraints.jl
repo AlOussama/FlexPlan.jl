@@ -162,6 +162,35 @@ end
         @test JuMP.normalized_coefficient(upper, na) == -0.35 * _PM.ref(pm, 2, :gen, 1, "p_block_max")
     end
 
+    @testset "Time-series p_max_pu shorter than horizon falls back to default 1.0" begin
+        # Validates: _uc_gscr_block_pu_value returns default=1.0 and does not error
+        # when the vector length is shorter than the snapshot index nw.
+        device = Dict{String,Any}("p_max_pu" => [0.7, 0.5])  # length 2
+        result = _FP._uc_gscr_block_pu_value(device, "p_max_pu", 5; default=1.0)
+        @test result == 1.0
+    end
+
+    @testset "Time-series p_min_pu shorter than horizon falls back to default 0.0" begin
+        # Validates: _uc_gscr_block_pu_value returns default=0.0 for p_min_pu when out of range.
+        device = Dict{String,Any}("p_min_pu" => [0.1])  # length 1, nw=3 is out of range
+        result = _FP._uc_gscr_block_pu_value(device, "p_min_pu", 3; default=0.0)
+        @test result == 0.0
+    end
+
+    @testset "Time-series p_max_pu dict missing snapshot key falls back to default 1.0" begin
+        # Validates: _uc_gscr_block_pu_value returns default=1.0 when Dict key nw is absent.
+        device = Dict{String,Any}("p_max_pu" => Dict{Int,Any}(1 => 0.9, 2 => 0.7))
+        result = _FP._uc_gscr_block_pu_value(device, "p_max_pu", 5; default=1.0)
+        @test result == 1.0
+    end
+
+    @testset "Unsupported p_max_pu type falls back to default 1.0" begin
+        # Validates: _uc_gscr_block_pu_value returns default=1.0 for unsupported types.
+        device = Dict{String,Any}("p_max_pu" => "bad_value")
+        result = _FP._uc_gscr_block_pu_value(device, "p_max_pu", 1; default=1.0)
+        @test result == 1.0
+    end
+
     @testset "Deprecated p_block_min does not affect active lower bound" begin
         pm = _uc_gscr_dispatch_test_pm(_PM.DCPPowerModel)
         _PM.ref(pm, 1, :gen, 1)["p_block_min"] = 9.99

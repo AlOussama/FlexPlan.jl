@@ -194,7 +194,10 @@ When `min_up_down_enabled=true`, `min_up_block_time` and
 `min_down_block_time` are additionally required and must be nonnegative
 integers (snapshot counts). No defaults are inferred for these mathematical
 fields. Block counts must satisfy `0 <= na0 <= n0 <= nmax`. Optional fields `H`, `s_block`, and `e_block` are only read when
-present. This function is formulation-independent and mutates no data.
+present. For block-annotated `ne_storage` devices, a warning is emitted when
+`charge_rating` or `discharge_rating` is smaller than `p_block_max`, since the
+standard rating creates a hard variable upper bound that may bind before the
+block-scaled constraint. This function is formulation-independent and mutates no data.
 Missing required fields are reported explicitly and then raise a hard
 validation error.
 """
@@ -258,6 +261,48 @@ function _validate_uc_gscr_block_devices(nw_ref::Dict{Symbol,<:Any}; min_up_down
                 Memento.error(_LOGGER, "$(uppercase(string(table_name))) device $(device_id) has invalid `min_down_block_time=$(min_down_block_time)`. Expected a nonnegative integer number of snapshots.")
             end
         end
+
+        if table_name == :ne_storage && p_block_max > 0
+            _warn_uc_gscr_storage_rating_conflict(device, device_id, p_block_max, nmax)
+        end
+    end
+end
+
+"""
+    _warn_uc_gscr_storage_rating_conflict(device, device_id, p_block_max, nmax)
+
+Warns when a block-annotated `ne_storage` device has standard charge or
+discharge ratings smaller than `p_block_max`.
+
+The standard `charge_rating` and `discharge_rating` fields set hard variable
+upper bounds that also appear in `constraint_storage_bounds_ne`. When these
+ratings are smaller than `p_block_max`, they are binding before the
+block-scaled constraint `sc <= p_block_max * na_block` takes effect, silently
+limiting storage capability below the block-scaled design. Users must set
+`charge_rating >= p_block_max` and `discharge_rating >= p_block_max` (or
+equivalently `>= p_block_max * nmax` for block counts above 1) to avoid this
+conflict. This function is formulation-independent and mutates no data.
+"""
+function _warn_uc_gscr_storage_rating_conflict(device::Dict{String,<:Any}, device_id, p_block_max::Real, nmax::Real)
+    charge_rating = get(device, "charge_rating", Inf)
+    discharge_rating = get(device, "discharge_rating", Inf)
+    if charge_rating < p_block_max
+        Memento.warn(
+            _LOGGER,
+            "NE_STORAGE device $(device_id) has charge_rating=$(charge_rating) < p_block_max=$(p_block_max). " *
+            "The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne " *
+            "that will be binding before the block-scaled bound sc <= p_block_max * na_block. " *
+            "Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=$(nmax)) to avoid this conflict.",
+        )
+    end
+    if discharge_rating < p_block_max
+        Memento.warn(
+            _LOGGER,
+            "NE_STORAGE device $(device_id) has discharge_rating=$(discharge_rating) < p_block_max=$(p_block_max). " *
+            "The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne " *
+            "that will be binding before the block-scaled bound sd <= p_block_max * na_block. " *
+            "Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=$(nmax)) to avoid this conflict.",
+        )
     end
 end
 

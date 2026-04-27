@@ -206,6 +206,12 @@ function _uc_gscr_block_pu_value(device::Dict{String,<:Any}, field::String, nw::
         if 1 <= nw <= length(series) && series[nw] isa Number
             return float(series[nw])
         else
+            Memento.warn(
+                _LOGGER,
+                "UC/gSCR block field `$(field)` is a time series of length $(length(series)) " *
+                "but snapshot index nw=$(nw) is out of range or non-numeric. " *
+                "Using default $(default). Check that the time-series length matches the horizon.",
+            )
             return default
         end
     elseif value isa AbstractDict
@@ -214,9 +220,20 @@ function _uc_gscr_block_pu_value(device::Dict{String,<:Any}, field::String, nw::
         elseif haskey(value, string(nw)) && value[string(nw)] isa Number
             return float(value[string(nw)])
         else
+            Memento.warn(
+                _LOGGER,
+                "UC/gSCR block field `$(field)` is a Dict but snapshot key nw=$(nw) (or \"$(nw)\") " *
+                "is missing or non-numeric. Using default $(default). " *
+                "Check that all snapshot keys are present in the time-series Dict.",
+            )
             return default
         end
     else
+        Memento.warn(
+            _LOGGER,
+            "UC/gSCR block field `$(field)` has unsupported type $(typeof(value)). " *
+            "Expected Number, Vector, Tuple, or Dict. Using default $(default).",
+        )
         return default
     end
 end
