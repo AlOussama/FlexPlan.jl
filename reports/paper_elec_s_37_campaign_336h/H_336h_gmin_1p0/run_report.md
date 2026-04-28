@@ -1,0 +1,22 @@
+# H_336h_gmin_1p0
+
+- status: OPTIMAL
+- objective_raw_horizon: 1.7477678329740625e11
+- total_annual_system_cost_BEUR_per_year: 174.77729222677635
+- solve_time_sec: 344.36899995803833
+- scenario_name: gSCR-GERSH-1p0
+- optimization_g_min: 1.0
+- posthoc_alpha_paper: 1.5
+- selected_weeks_policy: two_weeks_from_0301_with_preprocessed_fossil_exclusion
+- excluded_carriers: coal, lignite, oil
+- removed_generator_records_total: 10752
+- startup_shutdown_policy: su_block/sd_block only for conventional non-renewable synchronous generators after excluding coal/lignite/oil
+- min_gSCR_margin: -4.547473508864641e-13
+- min_mu_t_alpha_1p5: -1858.9632164030609
+- min_gSCR_t: 0.9999999999999423
+- own_target_mu_t: -5.924731322266323e-13
+- weakest_bus/snapshot: 8 / 1
+- max_AC_branch_loading: 1.0
+- max_dcline_loading: 1.0
+- max_bus_balance_residual: 3.2014213502407074e-10
+- max_storage_state_residual: 2.0372681319713593e-9

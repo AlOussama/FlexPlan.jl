@@ -1,0 +1,28 @@
+scenario_name,panel,technology_or_carrier,value,unit
+BASE,expansion_mix,Wind,0.0,GW
+BASE,expansion_mix,Solar PV,0.0,GW
+BASE,expansion_mix,Gas,0.0,GW
+BASE,expansion_mix,BESS-GFL,0.0,GW
+BASE,expansion_mix,BESS-GFM,21443.4,GW
+BASE,energy_mix,Wind,1338.9646924968836,TWh_per_year_equiv
+BASE,energy_mix,Solar PV,1003.176483374705,TWh_per_year_equiv
+BASE,energy_mix,Gas,86.43703107211186,TWh_per_year_equiv
+BASE,energy_mix,BESS discharge,120153.702916,TWh_per_year_equiv
+gSCR-GERSH-1.0,expansion_mix,Wind,0.0,GW
+gSCR-GERSH-1.0,expansion_mix,Solar PV,0.0,GW
+gSCR-GERSH-1.0,expansion_mix,Gas,0.0,GW
+gSCR-GERSH-1.0,expansion_mix,BESS-GFL,0.0,GW
+gSCR-GERSH-1.0,expansion_mix,BESS-GFM,21443.4,GW
+gSCR-GERSH-1.0,energy_mix,Wind,1557.6347974803734,TWh_per_year_equiv
+gSCR-GERSH-1.0,energy_mix,Solar PV,1154.9963266296518,TWh_per_year_equiv
+gSCR-GERSH-1.0,energy_mix,Gas,66.23441273949432,TWh_per_year_equiv
+gSCR-GERSH-1.0,energy_mix,BESS discharge,124937.55747199999,TWh_per_year_equiv
+gSCR-GERSH-1.5,expansion_mix,Wind,0.0,GW
+gSCR-GERSH-1.5,expansion_mix,Solar PV,0.0,GW
+gSCR-GERSH-1.5,expansion_mix,Gas,0.0,GW
+gSCR-GERSH-1.5,expansion_mix,BESS-GFL,0.0,GW
+gSCR-GERSH-1.5,expansion_mix,BESS-GFM,21443.4,GW
+gSCR-GERSH-1.5,energy_mix,Wind,1534.857976739792,TWh_per_year_equiv
+gSCR-GERSH-1.5,energy_mix,Solar PV,1142.8577790795546,TWh_per_year_equiv
+gSCR-GERSH-1.5,energy_mix,Gas,70.77605950975747,TWh_per_year_equiv
+gSCR-GERSH-1.5,energy_mix,BESS discharge,103605.225542,TWh_per_year_equiv

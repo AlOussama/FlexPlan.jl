@@ -1,0 +1,6 @@
+region_id,region_name,region_code,legend_label,selection_reason,wind_exposure_sum,solar_exposure_sum,gfl_exposure_sum,max_local_utilization,max_local_rho_dec
+15,FR1 0,FR,FR,top_wind_exposure,904650.0,721500.0,1.62615e6,0.9997598174612705,1.0002402402402402
+9,DK1 0,DK,DK,top_wind_exposure,903250.0,105050.0,1.0083e6,1.0,8.25
+4,BE1 0,BE,BE,top_solar_exposure,389500.0,688200.0,1.0777e6,0.9998095600837935,35.00666666666667
+8,DE1 0,DE,DE,top_solar_exposure,802900.0,631900.0,1.4348e6,0.9995746490854955,6.717142857142857
+3,BA1 0,BA,BA,top_local_utilization,3850.0,4250.0,8100.0,1.0,2.0

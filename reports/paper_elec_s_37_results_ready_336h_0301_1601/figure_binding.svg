@@ -1,0 +1,121 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="720" viewBox="0 0 900 720">
+<rect width="100%" height="100%" fill="white"/>
+<text x="450.0" y="25" font-size="18" font-family="Arial" text-anchor="middle">Binding frequency and GFM-BESS deployment (gSCR-GERSH)</text>
+<text x="10" y="75" font-size="10" font-family="Arial" text-anchor="start">1. FR1 0</text>
+<rect x="190" y="63" width="560.0" height="10" fill="#4477aa"/>
+<circle cx="766.0" cy="68" r="7.842755940078226" fill="#cc6677" fill-opacity="0.75"/>
+<text x="784.0" y="73" font-size="10" font-family="Arial" text-anchor="start">22.85 GW</text>
+<text x="10" y="91" font-size="10" font-family="Arial" text-anchor="start">2. GR1 0</text>
+<rect x="190" y="79" width="560.0" height="10" fill="#4477aa"/>
+<circle cx="766.0" cy="84" r="9.416091248440171" fill="#cc6677" fill-opacity="0.75"/>
+<text x="784.0" y="89" font-size="10" font-family="Arial" text-anchor="start">40.10 GW</text>
+<text x="10" y="107" font-size="10" font-family="Arial" text-anchor="start">3. BE1 0</text>
+<rect x="190" y="95" width="556.6666666666666" height="10" fill="#4477aa"/>
+<circle cx="762.6666666666666" cy="100" r="10.201930928258793" fill="#cc6677" fill-opacity="0.75"/>
+<text x="780.6666666666666" y="105" font-size="10" font-family="Arial" text-anchor="start">50.53 GW</text>
+<text x="10" y="123" font-size="10" font-family="Arial" text-anchor="start">4. GB0 0</text>
+<rect x="190" y="111" width="556.6666666666666" height="10" fill="#4477aa"/>
+<circle cx="762.6666666666666" cy="116" r="8.952711957267963" fill="#cc6677" fill-opacity="0.75"/>
+<text x="780.6666666666666" y="121" font-size="10" font-family="Arial" text-anchor="start">34.52 GW</text>
+<text x="10" y="139" font-size="10" font-family="Arial" text-anchor="start">5. FI2 0</text>
+<rect x="190" y="127" width="555.0" height="10" fill="#4477aa"/>
+<circle cx="761.0" cy="132" r="8.399051789456703" fill="#cc6677" fill-opacity="0.75"/>
+<text x="779.0" y="137" font-size="10" font-family="Arial" text-anchor="start">28.40 GW</text>
+<text x="10" y="155" font-size="10" font-family="Arial" text-anchor="start">6. SE2 0</text>
+<rect x="190" y="143" width="555.0" height="10" fill="#4477aa"/>
+<circle cx="761.0" cy="148" r="8.050834366188834" fill="#cc6677" fill-opacity="0.75"/>
+<text x="10" y="171" font-size="10" font-family="Arial" text-anchor="start">7. AT1 0</text>
+<rect x="190" y="159" width="550.0" height="10" fill="#4477aa"/>
+<circle cx="756.0" cy="164" r="9.267027043068175" fill="#cc6677" fill-opacity="0.75"/>
+<text x="10" y="187" font-size="10" font-family="Arial" text-anchor="start">8. DE1 0</text>
+<rect x="190" y="175" width="550.0" height="10" fill="#4477aa"/>
+<circle cx="756.0" cy="180" r="8.249935235754162" fill="#cc6677" fill-opacity="0.75"/>
+<text x="10" y="203" font-size="10" font-family="Arial" text-anchor="start">9. NL1 0</text>
+<rect x="190" y="191" width="548.3333333333333" height="10" fill="#4477aa"/>
+<circle cx="754.3333333333333" cy="196" r="8.886517795376818" fill="#cc6677" fill-opacity="0.75"/>
+<text x="10" y="219" font-size="10" font-family="Arial" text-anchor="start">10. ES1 0</text>
+<rect x="190" y="207" width="546.6666666666666" height="10" fill="#4477aa"/>
+<circle cx="752.6666666666666" cy="212" r="3.0" fill="#cc6677" fill-opacity="0.75"/>
+<text x="10" y="235" font-size="10" font-family="Arial" text-anchor="start">11. DK1 0</text>
+<rect x="190" y="223" width="541.6666666666666" height="10" fill="#4477aa"/>
+<circle cx="747.6666666666666" cy="228" r="9.294801959101992" fill="#cc6677" fill-opacity="0.75"/>
+<text x="10" y="251" font-size="10" font-family="Arial" text-anchor="start">12. IT3 0</text>
+<rect x="190" y="239" width="538.3333333333334" height="10" fill="#4477aa"/>
+<circle cx="744.3333333333334" cy="244" r="9.005137689399351" fill="#cc6677" fill-opacity="0.75"/>
+<text x="10" y="267" font-size="10" font-family="Arial" text-anchor="start">13. CH1 0</text>
+<rect x="190" y="255" width="536.6666666666667" height="10" fill="#4477aa"/>
+<circle cx="742.6666666666667" cy="260" r="8.841313646393903" fill="#cc6677" fill-opacity="0.75"/>
+<text x="10" y="283" font-size="10" font-family="Arial" text-anchor="start">14. RO1 0</text>
+<rect x="190" y="271" width="535.0" height="10" fill="#4477aa"/>
+<circle cx="741.0" cy="276" r="9.644872553239313" fill="#cc6677" fill-opacity="0.75"/>
+<text x="10" y="299" font-size="10" font-family="Arial" text-anchor="start">15. HU1 0</text>
+<rect x="190" y="287" width="533.3333333333333" height="10" fill="#4477aa"/>
+<circle cx="739.3333333333333" cy="292" r="9.11054542437639" fill="#cc6677" fill-opacity="0.75"/>
+<text x="10" y="315" font-size="10" font-family="Arial" text-anchor="start">16. PL1 0</text>
+<rect x="190" y="303" width="525.0" height="10" fill="#4477aa"/>
+<circle cx="731.0" cy="308" r="11.0" fill="#cc6677" fill-opacity="0.75"/>
+<text x="10" y="331" font-size="10" font-family="Arial" text-anchor="start">17. IT1 0</text>
+<rect x="190" y="319" width="511.66666666666663" height="10" fill="#4477aa"/>
+<circle cx="717.6666666666666" cy="324" r="8.508315978022239" fill="#cc6677" fill-opacity="0.75"/>
+<text x="10" y="347" font-size="10" font-family="Arial" text-anchor="start">18. CZ1 0</text>
+<rect x="190" y="335" width="510.0" height="10" fill="#4477aa"/>
+<circle cx="716.0" cy="340" r="8.725614031360067" fill="#cc6677" fill-opacity="0.75"/>
+<text x="10" y="363" font-size="10" font-family="Arial" text-anchor="start">19. BG1 0</text>
+<rect x="190" y="351" width="490.0" height="10" fill="#4477aa"/>
+<circle cx="696.0" cy="356" r="8.055505698582923" fill="#cc6677" fill-opacity="0.75"/>
+<text x="10" y="379" font-size="10" font-family="Arial" text-anchor="start">20. GB5 0</text>
+<rect x="190" y="367" width="356.66666666666663" height="10" fill="#4477aa"/>
+<circle cx="562.6666666666666" cy="372" r="9.277389790068646" fill="#cc6677" fill-opacity="0.75"/>
+<text x="10" y="395" font-size="10" font-family="Arial" text-anchor="start">21. NO2 0</text>
+<rect x="190" y="383" width="271.6666666666667" height="10" fill="#4477aa"/>
+<circle cx="477.6666666666667" cy="388" r="6.68521006385229" fill="#cc6677" fill-opacity="0.75"/>
+<text x="10" y="411" font-size="10" font-family="Arial" text-anchor="start">22. HR1 0</text>
+<rect x="190" y="399" width="251.66666666666669" height="10" fill="#4477aa"/>
+<circle cx="457.6666666666667" cy="404" r="6.905182254970551" fill="#cc6677" fill-opacity="0.75"/>
+<text x="10" y="427" font-size="10" font-family="Arial" text-anchor="start">23. IE5 0</text>
+<rect x="190" y="415" width="230.0" height="10" fill="#4477aa"/>
+<circle cx="436.0" cy="420" r="8.51711389261497" fill="#cc6677" fill-opacity="0.75"/>
+<text x="10" y="443" font-size="10" font-family="Arial" text-anchor="start">24. DK2 0</text>
+<rect x="190" y="431" width="126.66666666666667" height="10" fill="#4477aa"/>
+<circle cx="332.6666666666667" cy="436" r="7.821334404664678" fill="#cc6677" fill-opacity="0.75"/>
+<text x="10" y="459" font-size="10" font-family="Arial" text-anchor="start">25. LT6 0</text>
+<rect x="190" y="447" width="75.0" height="10" fill="#4477aa"/>
+<circle cx="281.0" cy="452" r="6.670883759343289" fill="#cc6677" fill-opacity="0.75"/>
+<text x="10" y="475" font-size="10" font-family="Arial" text-anchor="start">26. PT1 0</text>
+<rect x="190" y="463" width="15.0" height="10" fill="#4477aa"/>
+<circle cx="221.0" cy="468" r="3.0" fill="#cc6677" fill-opacity="0.75"/>
+<text x="10" y="491" font-size="10" font-family="Arial" text-anchor="start">27. RS1 0</text>
+<rect x="190" y="479" width="13.333333333333332" height="10" fill="#4477aa"/>
+<circle cx="219.33333333333334" cy="484" r="5.693442504904702" fill="#cc6677" fill-opacity="0.75"/>
+<text x="10" y="507" font-size="10" font-family="Arial" text-anchor="start">28. SI1 0</text>
+<rect x="190" y="495" width="8.333333333333332" height="10" fill="#4477aa"/>
+<circle cx="214.33333333333334" cy="500" r="5.2081838222008034" fill="#cc6677" fill-opacity="0.75"/>
+<text x="10" y="523" font-size="10" font-family="Arial" text-anchor="start">29. ME1 0</text>
+<rect x="190" y="511" width="6.666666666666666" height="10" fill="#4477aa"/>
+<circle cx="212.66666666666666" cy="516" r="4.5399067012731855" fill="#cc6677" fill-opacity="0.75"/>
+<text x="10" y="539" font-size="10" font-family="Arial" text-anchor="start">30. SK1 0</text>
+<rect x="190" y="527" width="5.0" height="10" fill="#4477aa"/>
+<circle cx="211.0" cy="532" r="6.758353584289686" fill="#cc6677" fill-opacity="0.75"/>
+<text x="10" y="555" font-size="10" font-family="Arial" text-anchor="start">31. AL1 0</text>
+<rect x="190" y="543" width="3.333333333333333" height="10" fill="#4477aa"/>
+<circle cx="209.33333333333334" cy="548" r="3.0320396983776767" fill="#cc6677" fill-opacity="0.75"/>
+<text x="10" y="571" font-size="10" font-family="Arial" text-anchor="start">32. BA1 0</text>
+<rect x="190" y="559" width="3.333333333333333" height="10" fill="#4477aa"/>
+<circle cx="209.33333333333334" cy="564" r="4.06263657914912" fill="#cc6677" fill-opacity="0.75"/>
+<text x="10" y="587" font-size="10" font-family="Arial" text-anchor="start">33. EE6 0</text>
+<rect x="190" y="575" width="3.333333333333333" height="10" fill="#4477aa"/>
+<circle cx="209.33333333333334" cy="580" r="6.302270641321882" fill="#cc6677" fill-opacity="0.75"/>
+<text x="10" y="603" font-size="10" font-family="Arial" text-anchor="start">34. LU1 0</text>
+<rect x="190" y="591" width="3.333333333333333" height="10" fill="#4477aa"/>
+<circle cx="209.33333333333334" cy="596" r="6.337361780304551" fill="#cc6677" fill-opacity="0.75"/>
+<text x="10" y="619" font-size="10" font-family="Arial" text-anchor="start">35. LV6 0</text>
+<rect x="190" y="607" width="3.333333333333333" height="10" fill="#4477aa"/>
+<circle cx="209.33333333333334" cy="612" r="3.7848091253798573" fill="#cc6677" fill-opacity="0.75"/>
+<text x="10" y="635" font-size="10" font-family="Arial" text-anchor="start">36. MK1 0</text>
+<rect x="190" y="623" width="3.333333333333333" height="10" fill="#4477aa"/>
+<circle cx="209.33333333333334" cy="628" r="4.754886553711517" fill="#cc6677" fill-opacity="0.75"/>
+<text x="10" y="651" font-size="10" font-family="Arial" text-anchor="start">37. ES4 0</text>
+<rect x="190" y="639" width="1.6666666666666665" height="10" fill="#4477aa"/>
+<circle cx="207.66666666666666" cy="644" r="3.0" fill="#cc6677" fill-opacity="0.75"/>
+<text x="190" y="700" font-size="11" font-family="Arial" text-anchor="start">x-axis: binding frequency beta_i; red markers scale with installed BESS-GFM capacity</text>
+</svg>

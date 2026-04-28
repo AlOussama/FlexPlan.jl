@@ -1,0 +1,22 @@
+# H_336h_gmin_0p0_integer_blocks
+
+- status: OPTIMAL
+- objective_raw_horizon: 0.078125
+- total_annual_system_cost_BEUR_per_year: 2.03125e-9
+- solve_time_sec: 40.44199991226196
+- scenario_name: BASE-INTEGER
+- optimization_g_min: 0.0
+- posthoc_alpha_paper: 1.5
+- selected_weeks_policy: two_weeks_from_0301_with_preprocessed_fossil_exclusion
+- excluded_carriers: coal, lignite, oil
+- removed_generator_records_total: 10752
+- startup_shutdown_policy: su_block/sd_block only for conventional non-renewable synchronous generators after excluding coal/lignite/oil
+- min_gSCR_margin: 0.0
+- min_mu_t_alpha_1p5: -172400.6820624249
+- min_gSCR_t: 0.003422952395491217
+- own_target_mu_t: 13.342760953515246
+- weakest_bus/snapshot: 28 / 1
+- max_AC_branch_loading: 1.0
+- max_dcline_loading: 1.0
+- max_bus_balance_residual: 9.339230473415228e-7
+- max_storage_state_residual: 2.16066837310791e-6

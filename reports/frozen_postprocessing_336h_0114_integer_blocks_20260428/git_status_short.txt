@@ -1,0 +1,25 @@
+ M Project.toml
+ M src/prob/uc_gscr_block_integration.jl
+ M test/pypsa_elec_s_37_24h_small_capexp.jl
+?? reports/frozen_postprocessing_336h_0114_integer_blocks_20260428/
+?? reports/paper_elec_s_37_campaign_336h/
+?? reports/paper_elec_s_37_campaign_336h_0114_integer_blocks/
+?? reports/paper_elec_s_37_campaign_336h_0114_integer_blocks_console.err.log
+?? reports/paper_elec_s_37_campaign_336h_0114_integer_blocks_console.out.log
+?? reports/paper_elec_s_37_campaign_336h_console.err.log
+?? reports/paper_elec_s_37_campaign_336h_console.out.log
+?? reports/paper_elec_s_37_campaign_336h_integer_blocks/
+?? reports/paper_elec_s_37_campaign_336h_integer_blocks_console.err.log
+?? reports/paper_elec_s_37_campaign_336h_integer_blocks_console.out.log
+?? reports/paper_elec_s_37_campaign_336h_integer_blocks_v2/
+?? reports/paper_elec_s_37_campaign_336h_integer_blocks_v2_console.err.log
+?? reports/paper_elec_s_37_campaign_336h_integer_blocks_v2_console.out.log
+?? reports/paper_elec_s_37_campaign_dryrun_24h/
+?? reports/paper_elec_s_37_results_ready_336h_0301_1601/
+?? test/scripts/postprocess_paper_results_336h_0301_1601.jl
+?? test/scripts/render_paper_result_pngs.ps1
+?? test/scripts/run_paper_elec_s37_336h_0114_integer_blocks_campaign.jl
+?? test/scripts/run_paper_elec_s37_336h_campaign.jl
+?? test/scripts/run_paper_elec_s37_336h_gmin2_only.jl
+?? test/scripts/run_paper_elec_s37_336h_integer_blocks_campaign.jl
+?? test/scripts/run_paper_elec_s37_dryrun_24h_campaign.jl

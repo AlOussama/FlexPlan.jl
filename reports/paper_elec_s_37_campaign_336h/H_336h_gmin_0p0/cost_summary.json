@@ -1,0 +1,14 @@
+{
+  "shutdown_cost_raw_horizon": 0.0,
+  "total_annual_system_cost": 0.0,
+  "annualized_operation_cost": 0.0,
+  "annual_operation_scaling_factor": 26.0,
+  "annualized_shutdown_cost": 0.0,
+  "number_of_weeks": 2.0,
+  "annualized_startup_cost": 0.0,
+  "startup_cost_raw_horizon": 0.0,
+  "investment_cost": 0.0,
+  "operation_cost_raw_horizon": 0.0,
+  "total_annual_system_cost_BEUR_per_year": 0.0,
+  "horizon_hours": 336
+}

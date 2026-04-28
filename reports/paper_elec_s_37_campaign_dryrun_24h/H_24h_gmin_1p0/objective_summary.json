@@ -1,0 +1,9 @@
+{
+  "status": "OPTIMAL",
+  "startup_cost": 15281.979472545567,
+  "shutdown_cost": 0.0,
+  "objective": 6.63510002580406e8,
+  "investment_cost": 6.634947205877174e8,
+  "solve_time_sec": 5.630000114440918,
+  "build_time_sec": 2.9670000076293945
+}

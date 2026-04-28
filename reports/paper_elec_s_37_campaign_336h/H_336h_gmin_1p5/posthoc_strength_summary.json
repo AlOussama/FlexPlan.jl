@@ -1,0 +1,74 @@
+{
+  "posthoc_alpha": 1.5,
+  "own_target_mu_t": -1.3848668464392223e-12,
+  "violating_snapshots_percent_alpha_1p5": 0.0,
+  "min_relative_margin_rG": -3.2566542055671256e-14,
+  "max_relative_margin_rG": 3.138230416273776e-14,
+  "mean_relative_margin_rG": -4.762504323888072e-16,
+  "number_of_snapshots_with_mu_negative": 0,
+  "own_target_number_of_snapshots_with_mu_negative": 0,
+  "min_mu_t": -1.3848668464392223e-12,
+  "binding_epsilon": 1.0e-5,
+  "top_5_most_binding_regions": [
+    {
+      "region_name": "FR1 0",
+      "gfm_bess_capacity_GW": 22.845902922676704,
+      "GFL_exposure_peak": 2992.86343075589,
+      "beta_i": 1.0,
+      "mean_kappa": 8.120488408686859e-15,
+      "p05_kappa": 0.0,
+      "bus": 15,
+      "GFM_strength_installed": 4489.295146133835,
+      "min_kappa": 0.0
+    },
+    {
+      "region_name": "GR1 0",
+      "gfm_bess_capacity_GW": 40.10183314009429,
+      "GFL_exposure_peak": 1575.3944380031433,
+      "beta_i": 1.0,
+      "mean_kappa": -2.4361465226060576e-14,
+      "p05_kappa": -4.547473508864641e-13,
+      "bus": 18,
+      "GFM_strength_installed": 2363.0916570047148,
+      "min_kappa": -4.547473508864641e-13
+    },
+    {
+      "region_name": "BE1 0",
+      "gfm_bess_capacity_GW": 50.52671526878539,
+      "GFL_exposure_peak": 1884.8905089595128,
+      "beta_i": 0.9940476190476191,
+      "mean_kappa": 1.7142857142857157,
+      "p05_kappa": 0.0,
+      "bus": 4,
+      "GFM_strength_installed": 2827.335763439269,
+      "min_kappa": 0.0
+    },
+    {
+      "region_name": "GB0 0",
+      "gfm_bess_capacity_GW": 34.51857815128285,
+      "GFL_exposure_peak": 2866.285938376095,
+      "beta_i": 0.9940476190476191,
+      "mean_kappa": 16.739333994287417,
+      "p05_kappa": 0.0,
+      "bus": 16,
+      "GFM_strength_installed": 4299.428907564143,
+      "min_kappa": -9.094947017729282e-13
+    },
+    {
+      "region_name": "FI2 0",
+      "gfm_bess_capacity_GW": 28.396064162736497,
+      "GFL_exposure_peak": 1227.5354720912167,
+      "beta_i": 0.9910714285714286,
+      "mean_kappa": 1.3221204560429547,
+      "p05_kappa": -2.2737367544323206e-13,
+      "bus": 14,
+      "GFM_strength_installed": 1841.3032081368249,
+      "min_kappa": -2.2737367544323206e-13
+    }
+  ],
+  "posthoc_alpha_paper": 1.5,
+  "number_of_snapshots_with_gSCR_below_alpha": 0,
+  "min_gSCR_t": 1.4999999999999512,
+  "optimization_g_min": 1.5,
+  "min_mu_t_alpha_1p5": -1.3848668464392223e-12
+}

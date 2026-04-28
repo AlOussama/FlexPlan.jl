@@ -1,0 +1,74 @@
+{
+  "posthoc_alpha": 1.5,
+  "own_target_mu_t": 13.342760953515246,
+  "violating_snapshots_percent_alpha_1p5": 100.0,
+  "min_relative_margin_rG": -0.9977180317363392,
+  "max_relative_margin_rG": -0.9961712481298163,
+  "mean_relative_margin_rG": -0.997673718544711,
+  "number_of_snapshots_with_mu_negative": 336,
+  "own_target_number_of_snapshots_with_mu_negative": 0,
+  "min_mu_t": -172400.6820624249,
+  "binding_epsilon": 1.0e-5,
+  "top_5_most_binding_regions": [
+    {
+      "region_name": "AT1 0",
+      "gfm_bess_capacity_GW": 0.0,
+      "GFL_exposure_peak": 5400.0,
+      "beta_i": 1.0,
+      "mean_kappa": -7458.0,
+      "p05_kappa": -7458.0,
+      "bus": 2,
+      "GFM_strength_installed": 642.0,
+      "min_kappa": -7458.0
+    },
+    {
+      "region_name": "BA1 0",
+      "gfm_bess_capacity_GW": 0.0,
+      "GFL_exposure_peak": 100.0,
+      "beta_i": 1.0,
+      "mean_kappa": -55.0,
+      "p05_kappa": -55.0,
+      "bus": 3,
+      "GFM_strength_installed": 95.0,
+      "min_kappa": -55.0
+    },
+    {
+      "region_name": "BE1 0",
+      "gfm_bess_capacity_GW": 0.0,
+      "GFL_exposure_peak": 10300.0,
+      "beta_i": 1.0,
+      "mean_kappa": -15371.5,
+      "p05_kappa": -15371.5,
+      "bus": 4,
+      "GFM_strength_installed": 78.5,
+      "min_kappa": -15371.5
+    },
+    {
+      "region_name": "BG1 0",
+      "gfm_bess_capacity_GW": 0.0,
+      "GFL_exposure_peak": 1750.0,
+      "beta_i": 1.0,
+      "mean_kappa": -2485.532738095238,
+      "p05_kappa": -2486.5,
+      "bus": 5,
+      "GFM_strength_installed": 203.5,
+      "min_kappa": -2486.5
+    },
+    {
+      "region_name": "CH1 0",
+      "gfm_bess_capacity_GW": 0.0,
+      "GFL_exposure_peak": 3000.0,
+      "beta_i": 1.0,
+      "mean_kappa": -3541.5,
+      "p05_kappa": -3541.5,
+      "bus": 6,
+      "GFM_strength_installed": 958.5,
+      "min_kappa": -3541.5
+    }
+  ],
+  "posthoc_alpha_paper": 1.5,
+  "number_of_snapshots_with_gSCR_below_alpha": 336,
+  "min_gSCR_t": 0.003422952395491217,
+  "optimization_g_min": 0.0,
+  "min_mu_t_alpha_1p5": -172400.6820624249
+}

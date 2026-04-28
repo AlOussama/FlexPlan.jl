@@ -1,0 +1,58 @@
+{
+  "min_mu_t": -2.466697568290812e-13,
+  "binding_epsilon": 1.0e-5,
+  "max_relative_margin_rG": 6.661338147750939e-16,
+  "number_of_snapshots_with_mu_negative": 0,
+  "number_of_snapshots_with_gSCR_below_alpha": 0,
+  "top_5_most_binding_regions": [
+    {
+      "region_name": "BE1 0",
+      "gfm_bess_capacity_GW": 0.0,
+      "mean_kappa": 0.0,
+      "beta_i": 1.0,
+      "p05_kappa": 0.0,
+      "bus": 4,
+      "min_kappa": 0.0
+    },
+    {
+      "region_name": "DK1 0",
+      "gfm_bess_capacity_GW": 0.0,
+      "mean_kappa": 0.0,
+      "beta_i": 1.0,
+      "p05_kappa": 0.0,
+      "bus": 9,
+      "min_kappa": 0.0
+    },
+    {
+      "region_name": "DK2 0",
+      "gfm_bess_capacity_GW": 0.0,
+      "mean_kappa": 0.0,
+      "beta_i": 1.0,
+      "p05_kappa": 0.0,
+      "bus": 10,
+      "min_kappa": 0.0
+    },
+    {
+      "region_name": "EE6 0",
+      "gfm_bess_capacity_GW": 0.0,
+      "mean_kappa": 0.0,
+      "beta_i": 1.0,
+      "p05_kappa": 0.0,
+      "bus": 11,
+      "min_kappa": 0.0
+    },
+    {
+      "region_name": "GB5 0",
+      "gfm_bess_capacity_GW": 0.0,
+      "mean_kappa": 0.0,
+      "beta_i": 1.0,
+      "p05_kappa": 0.0,
+      "bus": 17,
+      "min_kappa": 0.0
+    }
+  ],
+  "min_gSCR_t": 0.999999999999996,
+  "posthoc_alpha": 1.0,
+  "mean_relative_margin_rG": -6.337523098901935e-16,
+  "min_relative_margin_rG": -3.9968028886505635e-15
+}

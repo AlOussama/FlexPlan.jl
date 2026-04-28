@@ -1,0 +1,18 @@
+\begin{table}[!t]
+\centering
+\caption{Post-Hoc Global gSCR Validation at \(\alpha=1.5\)}
+\label{tab:strength_validation}
+\renewcommand{\arraystretch}{1.08}
+\begin{tabular}{lrrr}
+\toprule
+Metric & BASE & gSCR-1.0 & gSCR-1.5 \\
+\midrule
+\(\min_t \mathrm{gSCR}_t\)                  & 0.004 & 0.918 & 1.388 \\
+Snapshots with \(\mathrm{gSCR}_t<1.5\) (\%) & 100.0 & 49.7 & 6.5 \\
+\(\min_t \mu_t^{1.5}\)                      & -6.407e+04 & -1.88e+03 & -178 \\
+Snapshots with \(\mu_t^{1.5}<0\) (\%)       & 100.0 & 50.0 & 6.5 \\
+\(\max_{i,t} u_{i,t}^{1.5}\)                & 483.50 & 1.73 & 1.12 \\
+Total local deficit \(D^{\mathrm{def}}\)    & 3.572e+07 & 1.384e+05 & 2.39e+03 \\
+\bottomrule
+\end{tabular}
+\end{table}

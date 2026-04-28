@@ -1,0 +1,58 @@
+{
+  "min_mu_t": -82117.39786476237,
+  "binding_epsilon": 1.0e-5,
+  "max_relative_margin_rG": -0.9894848992009739,
+  "number_of_snapshots_with_mu_negative": 24,
+  "number_of_snapshots_with_gSCR_below_alpha": 24,
+  "top_5_most_binding_regions": [
+    {
+      "region_name": "BE1 0",
+      "gfm_bess_capacity_GW": 0.0,
+      "mean_kappa": -9758.51975300019,
+      "beta_i": 1.0,
+      "p05_kappa": -10219.0,
+      "bus": 4,
+      "min_kappa": -10219.0
+    },
+    {
+      "region_name": "BG1 0",
+      "gfm_bess_capacity_GW": 0.0,
+      "mean_kappa": -1259.0,
+      "beta_i": 1.0,
+      "p05_kappa": -1509.0,
+      "bus": 5,
+      "min_kappa": -1509.0
+    },
+    {
+      "region_name": "CZ1 0",
+      "gfm_bess_capacity_GW": 0.0,
+      "mean_kappa": -2128.25,
+      "beta_i": 1.0,
+      "p05_kappa": -2159.5,
+      "bus": 7,
+      "min_kappa": -2159.5
+    },
+    {
+      "region_name": "DE1 0",
+      "gfm_bess_capacity_GW": 0.0,
+      "mean_kappa": -77129.0226225551,
+      "beta_i": 1.0,
+      "p05_kappa": -82648.36349674014,
+      "bus": 8,
+      "min_kappa": -82648.36349674014
+    },
+    {
+      "region_name": "DK1 0",
+      "gfm_bess_capacity_GW": 0.0,
+      "mean_kappa": -2127.9166666666665,
+      "beta_i": 1.0,
+      "p05_kappa": -2317.5,
+      "bus": 9,
+      "min_kappa": -2317.5
+    }
+  ],
+  "min_gSCR_t": 0.009669771597605641,
+  "posthoc_alpha": 1.0,
+  "mean_relative_margin_rG": -0.9899517080454797,
+  "min_relative_margin_rG": -0.9903302284023944
+}

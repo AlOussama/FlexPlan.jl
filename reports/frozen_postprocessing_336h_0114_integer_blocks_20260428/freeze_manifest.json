@@ -1,0 +1,43 @@
+{
+  "frozen_at": "2026-04-28 Europe/Berlin",
+  "project_root": "D:\\Projekte\\Code\\FlexPlan_UC_GSCR",
+  "git_branch": "feature/post_processing",
+  "git_head": "f0792ee91c1bb3ab83c6b8cbee8bf4329572b87d",
+  "selected_result_source": "reports/paper_elec_s_37_campaign_336h_0114_integer_blocks",
+  "frozen_result_copy": "reports/frozen_postprocessing_336h_0114_integer_blocks_20260428/results",
+  "dataset_case": "D:\\Projekte\\Code\\pypsatomatpowerx\\data\\flexplan_block_gscr\\elec_s_37_2weeks_from_0114\\case.json",
+  "dataset_period": "2013-01-14 00:00:00 to 2013-01-27 23:00:00",
+  "horizon_hours": 336,
+  "number_of_weeks": 2,
+  "annual_operation_scaling_factor": 26,
+  "block_integrality": "integer block variables; relax_block_variables=false",
+  "scenarios": [
+    {
+      "scenario_name": "BASE-INTEGER",
+      "optimization_g_min": 0.0,
+      "solver_status": "OPTIMAL",
+      "total_annual_system_cost_BEUR_per_year": 7.23003125E-06,
+      "min_mu_t_alpha_1p5": 222.7459915986271,
+      "min_gSCR_t": 2.9999999999999956,
+      "solver_wallclock_min": 0.4022166689236959
+    },
+    {
+      "scenario_name": "gSCR-GERSH-1p0-INTEGER",
+      "optimization_g_min": 1.0,
+      "solver_status": "OPTIMAL",
+      "total_annual_system_cost_BEUR_per_year": 7.23003125E-06,
+      "min_mu_t_alpha_1p5": 222.74590977191215,
+      "min_gSCR_t": 2.999999999999998,
+      "solver_wallclock_min": 1.0232833305994669
+    },
+    {
+      "scenario_name": "gSCR-GERSH-1p5-INTEGER",
+      "optimization_g_min": 1.5,
+      "solver_status": "OPTIMAL",
+      "total_annual_system_cost_BEUR_per_year": 7.23003125E-06,
+      "min_mu_t_alpha_1p5": 222.747225996884,
+      "min_gSCR_t": 2.999999999999997,
+      "solver_wallclock_min": 5.118016668160757
+    }
+  ]
+}

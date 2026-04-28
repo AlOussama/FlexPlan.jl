@@ -1,0 +1,12 @@
+{
+  "qs_ne_bounded_or_not_created": true,
+  "z_strg_ne_present": false,
+  "z_strg_ne_investment_present": false,
+  "uses_standard_candidate_build_variables": false,
+  "uses_standard_candidate_investment_cost": false,
+  "ps_ne_coupled_not_free": true,
+  "pg_not_free": false,
+  "qg_not_free": true,
+  "max_storage_state_residual": 2.0372681319713593e-9,
+  "block_storage_envelopes_active": true
+}

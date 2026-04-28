@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="520" viewBox="0 0 900 520">
+<rect width="100%" height="100%" fill="white"/>
+<text x="450.0" y="25" font-size="18" font-family="Arial" text-anchor="middle">Post-hoc gSCR margin and local Gershgorin slack</text>
+<text x="245.0" y="55" font-size="13" font-family="Arial" text-anchor="middle">Global margin gSCR_t - alpha</text>
+<line x1="95" y1="92.54556707803033" x2="395" y2="92.54556707803033" stroke="#555" stroke-dasharray="4 4"/>
+<line x1="150" y1="430.0" x2="150" y2="429.60179489458403" stroke="#333"/>
+<rect x="128" y="429.60179489458403" width="44" height="0.0" fill="#88ccee" stroke="#333"/>
+<line x1="128" y1="429.60179489458403" x2="172" y2="429.60179489458403" stroke="#000"/>
+<text x="150" y="455" font-size="11" font-family="Arial" text-anchor="middle">BASE</text>
+<line x1="240" y1="92.54556707804136" x2="240" y2="92.54556707801976" stroke="#333"/>
+<rect x="218" y="92.54556707803044" width="44" height="1.1368683772161603e-13" fill="#88ccee" stroke="#333"/>
+<line x1="218" y1="92.54556707803044" x2="262" y2="92.54556707803044" stroke="#000"/>
+<text x="240" y="455" font-size="11" font-family="Arial" text-anchor="middle">gSCR-GERSH</text>
+<text x="685.0" y="55" font-size="13" font-family="Arial" text-anchor="middle">Minimum local kappa_i,t (gSCR-GERSH)</text>
+<line x1="535" y1="429.9999999967258" x2="835" y2="429.9999999967258" stroke="#555" stroke-dasharray="4 4"/>
+<line x1="685.0" y1="430.0" x2="685.0" y2="429.99999999754436" stroke="#333"/>
+<rect x="649.0" y="429.99999999754436" width="72" height="2.4556356947869062e-9" fill="#ddcc77" stroke="#333"/>
+<line x1="649.0" y1="429.9999999983629" x2="721.0" y2="429.9999999983629" stroke="#000"/>
+<text x="450.0" y="502" font-size="11" font-family="Arial" text-anchor="middle">Box plots show min, quartiles, median, and max; horizontal dashed lines mark zero.</text>
+</svg>

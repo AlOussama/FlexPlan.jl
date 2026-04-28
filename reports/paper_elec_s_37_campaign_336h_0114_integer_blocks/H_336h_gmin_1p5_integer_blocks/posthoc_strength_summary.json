@@ -1,0 +1,74 @@
+{
+  "posthoc_alpha": 1.5,
+  "own_target_mu_t": 222.747225996884,
+  "violating_snapshots_percent_alpha_1p5": 0.0,
+  "min_relative_margin_rG": 0.9999999999999979,
+  "max_relative_margin_rG": 1.0038303715946535,
+  "mean_relative_margin_rG": 1.0029218602193033,
+  "number_of_snapshots_with_mu_negative": 0,
+  "own_target_number_of_snapshots_with_mu_negative": 0,
+  "min_mu_t": 222.747225996884,
+  "binding_epsilon": 1.0e-5,
+  "top_5_most_binding_regions": [
+    {
+      "region_name": "AL1 0",
+      "gfm_bess_capacity_GW": 0.0,
+      "GFL_exposure_peak": 50.0,
+      "beta_i": 0.0,
+      "mean_kappa": 161.5,
+      "p05_kappa": 161.5,
+      "bus": 1,
+      "GFM_strength_installed": 236.5,
+      "min_kappa": 161.5
+    },
+    {
+      "region_name": "AT1 0",
+      "gfm_bess_capacity_GW": 0.0,
+      "GFL_exposure_peak": 5400.0,
+      "beta_i": 0.0,
+      "mean_kappa": 8742.0,
+      "p05_kappa": 8742.0,
+      "bus": 2,
+      "GFM_strength_installed": 16842.0,
+      "min_kappa": 8742.0
+    },
+    {
+      "region_name": "BA1 0",
+      "gfm_bess_capacity_GW": 0.0,
+      "GFL_exposure_peak": 100.0,
+      "beta_i": 0.0,
+      "mean_kappa": 245.0,
+      "p05_kappa": 245.0,
+      "bus": 3,
+      "GFM_strength_installed": 395.0,
+      "min_kappa": 245.0
+    },
+    {
+      "region_name": "BE1 0",
+      "gfm_bess_capacity_GW": 0.0,
+      "GFL_exposure_peak": 10300.0,
+      "beta_i": 0.0,
+      "mean_kappa": 15528.514880952382,
+      "p05_kappa": 15516.0,
+      "bus": 4,
+      "GFM_strength_installed": 30981.0,
+      "min_kappa": 15513.5
+    },
+    {
+      "region_name": "BG1 0",
+      "gfm_bess_capacity_GW": 0.0,
+      "GFL_exposure_peak": 1750.0,
+      "beta_i": 0.0,
+      "mean_kappa": 2828.5,
+      "p05_kappa": 2828.5,
+      "bus": 5,
+      "GFM_strength_installed": 5453.5,
+      "min_kappa": 2828.5
+    }
+  ],
+  "posthoc_alpha_paper": 1.5,
+  "number_of_snapshots_with_gSCR_below_alpha": 0,
+  "min_gSCR_t": 2.999999999999997,
+  "optimization_g_min": 1.5,
+  "min_mu_t_alpha_1p5": 222.747225996884
+}

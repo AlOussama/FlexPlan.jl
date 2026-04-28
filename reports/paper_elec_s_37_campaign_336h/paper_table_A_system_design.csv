@@ -1,0 +1,10 @@
+metric,unit,BASE,gSCR-GERSH-1.0,gSCR-GERSH-1.5,delta_gSCR_1p5_vs_BASE,delta_gSCR_1p5_vs_BASE_percent
+Delta cost vs BASE,B€/a,--,0.0,0.0,--,n/a
+Delta cost vs BASE (%),%,--,0.0,0.0,--,n/a
+BESS-GFM,GW,21443.4,21443.4,21443.4,0.0,0.0
+BESS-GFL,GW,0.0,0.0,0.0,0.0,n/a
+Wind,GW,0.0,0.0,0.0,0.0,n/a
+Solar PV,GW,0.0,0.0,0.0,0.0,n/a
+Gas,GW,0.0,0.0,0.0,0.0,n/a
+Total BESS,GW,21443.4,21443.4,21443.4,0.0,0.0
+Solve time,min,0.4022166689236959,1.0232833305994669,5.118016668160757,4.715799999237061,1172.4526514170127

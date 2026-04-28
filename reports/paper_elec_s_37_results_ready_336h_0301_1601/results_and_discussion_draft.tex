@@ -1,0 +1,46 @@
+\section{Numerical Results}
+\label{sec:results}
+
+\subsection{System Cost and Capacity Expansion}
+
+Table II compares BASE and gSCR-GERSH for the 336 h study period. BASE has no explicit system-strength constraint and obtains a total annualized system cost of 0.00 B€/a. The gSCR-GERSH case enforces the decentralized gSCR condition with $g_{\min}=1.5$ and increases the annualized cost to 345.81 B€/a. Because the BASE cost is zero in the exported planning-cost accounting, the relative cost increase is undefined and is reported as n/a.
+
+The gSCR-GERSH case installs 821.15 GW of BESS-GFM capacity, compared with 0.00 GW in BASE. BESS-GFL capacity remains negligible (0.001 GW). Wind+PV capacity is 0.007 GW in gSCR-GERSH and 0.000 GW in BASE, while CCGT gas capacity is zero in both cases.
+
+Post-hoc validation shows that BASE violates the paper threshold in all snapshots, with minimum $\mu_t = -172415.68$ and minimum gSCR of 0.003. In contrast, gSCR-GERSH has minimum $\mu_t = -1.38e-12$ within numerical tolerance, zero violating snapshots, and minimum gSCR of 1.500. Solver wall-clock times are 0.45 min for BASE and 0.52 min for gSCR-GERSH. The intermediate gSCR-1 case is retained only as a sensitivity case.
+
+\subsection{Spatial Binding Pattern}
+
+Figure 1 reports the regional binding frequency $$\beta_i$$ for gSCR-GERSH together with installed GFM-BESS capacity. Coordinates are unavailable in the input artifacts, so the figure uses a ranked regional binding plot rather than a geographic map. The five most frequently binding regions are FR1 0, GR1 0, BE1 0, GB0 0, FI2 0. These regions also receive substantial GFM-BESS deployment in the optimized solution, consistent with the local nature of the Gershgorin constraint.
+
+\subsection{Conservatism of the Linear Constraint}
+
+Figure 2 compares the post-hoc global gSCR margin $gSCR_t-$\alpha$$ for BASE and gSCR-GERSH and reports the available local Gershgorin slack information for gSCR-GERSH. BASE is evaluated against the same threshold and remains below it throughout the study horizon. For gSCR-GERSH, the minimum global matrix eigenvalue margin is non-negative within numerical tolerance and the minimum gSCR equals the enforced threshold. The local slack distribution shows that the sufficient constraints are frequently active, which is expected for a pure branch-Laplacian network where diagonal dominance must be supplied locally by online GFM strength.
+
+
+\section{Discussion}
+\label{sec:discussion}
+
+\noindent\textit{Network decoupling and conservatism.}\;
+
+The implemented Gershgorin constraint is local and sufficient. For each snapshot, post-hoc validation considers
+
+\end{equation}math
+M_t = B_t - \alpha S_t, \qquad \mu_t = \lambda_{\min}(M_t).
+\end{equation}
+
+The local constraint slack is
+
+\end{equation}math
+\kappa_{i,t} = \sigma_i^G + \Delta b_{i,t} - \alpha P_{i,t}^{GFL}.
+\end{equation}
+
+For a pure lossless branch Laplacian, the Gershgorin network margin may be zero at each node. The diagonal-dominance margin must then be supplied locally by online GFM strength. This makes the condition transparent but conservative, because it does not fully exploit support from the meshed network. The post-hoc eigenvalue analysis quantifies the gap between local sufficient constraints and the global matrix-strength condition.
+
+\noindent\textit{Computational tractability.}\;
+
+The method preserves the MILP structure of the clustered generation-expansion problem. It requires no SDP solver and no repeated eigenvalue-gradient update inside branch-and-bound. Each scenario is solved as a single MILP. In the completed 336 h campaign, the BASE and gSCR-GERSH solve times were 0.45 min and 0.52 min, respectively.
+
+\noindent\textit{Planning interpretation and limitations.}\;
+
+The gSCR constraint is a planning-level system-strength proxy. It does not replace converter-dynamic or electromagnetic-transient simulations, and the threshold must be calibrated against the converter controls and stability criteria of interest. The two-week period 03.01--16.01 is the selected stress window used in this study and should not be interpreted as full-year chronological validation.

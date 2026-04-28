@@ -1,0 +1,15 @@
+carrier,installed_capacity_GW
+CCGT,0.0
+OCGT,0.0
+PHS,0.0
+battery_gfl,0.002
+battery_gfm,414.8031829821719
+biomass,0.0
+geothermal,0.0
+hydro,0.0
+nuclear,0.0
+offwind-ac,0.0
+offwind-dc,0.0
+onwind,0.0
+ror,0.0
+solar,0.05460000000000001

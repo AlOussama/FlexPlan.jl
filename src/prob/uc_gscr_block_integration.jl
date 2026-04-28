@@ -54,6 +54,7 @@ function build_uc_gscr_block_integration(
     objective::Bool=true,
     intertemporal_constraints::Bool=true,
     final_storage_policy::Symbol=:short_horizon_relaxed,
+    relax_block_variables::Bool=true,
 )
     for n in nw_ids(pm)
         _PM.variable_branch_power(pm; nw=n)
@@ -68,7 +69,7 @@ function build_uc_gscr_block_integration(
             variable_absorbed_energy_ne(pm; nw=n)
         end
 
-        variable_uc_gscr_block(pm; nw=n, relax=true)
+        variable_uc_gscr_block(pm; nw=n, relax=relax_block_variables)
         _relax_standard_bounds_for_block_enabled_devices!(pm, n)
     end
 
