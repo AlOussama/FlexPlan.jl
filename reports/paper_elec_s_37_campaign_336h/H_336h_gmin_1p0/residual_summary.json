@@ -1,0 +1,42 @@
+{
+  "max_dcline_loading": 1.0,
+  "gscr_reconstruction_residual": 4.547473508864641e-13,
+  "AC_overload_count": 0,
+  "max_AC_branch_loading": 1.0,
+  "balance": {
+    "residual_normalized_by_total_load": 1.7186318770078418e-18,
+    "dcline_contribution_included": true,
+    "max_bus_active_power_balance_residual": 3.2014213502407074e-10,
+    "max_system_active_power_balance_residual": 2.3283064365386963e-10,
+    "storage_contribution_included": true,
+    "max_bus_balance_bus": 15,
+    "max_bus_balance_snapshot": 275
+  },
+  "gscr": {
+    "gscr_reconstruction_residual": 4.547473508864641e-13,
+    "min_gscr_margin": -4.547473508864641e-13
+  },
+  "max_startup_shutdown_transition_residual": 1.4210854715202004e-14,
+  "dcline_overload_count": 0,
+  "storage_final_initial_energy_ratio": 0.9282138965784487,
+  "max_storage_state_residual": 2.0372681319713593e-9,
+  "max_bus_active_power_balance_residual": 3.2014213502407074e-10,
+  "max_system_active_power_balance_residual": 2.3283064365386963e-10,
+  "storage": {
+    "max_storage_charge_envelope_residual": 0.0,
+    "max_storage_state_residual": 2.0372681319713593e-9,
+    "max_storage_envelope_residual": 0.0,
+    "max_storage_discharge_envelope_residual": 0.0
+  },
+  "block": {
+    "startup_cost": 20357.15491769316,
+    "max_na_block_le_n_block_residual": 1.4210854715202004e-13,
+    "shutdown_cost": 0.0,
+    "max_startup_shutdown_transition_residual": 1.4210854715202004e-14,
+    "total_shutdown_count": 41173.03947964164,
+    "total_startup_count": 52811.21603361541,
+    "max_n_block_bound_residual": 0.0
+  },
+  "total_storage_charge": 4.772538472749868e7,
+  "total_storage_discharge": 7.901879989815952e7
+}

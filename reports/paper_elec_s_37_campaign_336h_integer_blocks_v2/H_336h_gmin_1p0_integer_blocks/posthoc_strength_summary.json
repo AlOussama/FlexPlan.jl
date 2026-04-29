@@ -1,0 +1,74 @@
+{
+  "posthoc_alpha": 1.5,
+  "own_target_mu_t": 1.534516972762066,
+  "violating_snapshots_percent_alpha_1p5": 100.0,
+  "min_relative_margin_rG": -0.3324358974358983,
+  "max_relative_margin_rG": -0.31907284351553794,
+  "mean_relative_margin_rG": -0.3302228260020622,
+  "number_of_snapshots_with_mu_negative": 336,
+  "own_target_number_of_snapshots_with_mu_negative": 0,
+  "min_mu_t": -3953.875719700078,
+  "binding_epsilon": 1.0e-5,
+  "top_5_most_binding_regions": [
+    {
+      "region_name": "PL1 0",
+      "gfm_bess_capacity_GW": 100.0,
+      "GFL_exposure_peak": 5200.0,
+      "beta_i": 0.9821428571428571,
+      "mean_kappa": -2448.1071428571427,
+      "p05_kappa": -2599.0,
+      "bus": 31,
+      "GFM_strength_installed": 5201.0,
+      "min_kappa": -2599.0
+    },
+    {
+      "region_name": "FR1 0",
+      "gfm_bess_capacity_GW": 99.1,
+      "GFL_exposure_peak": 8300.0,
+      "beta_i": 0.8898809523809523,
+      "mean_kappa": -2777.0178571428573,
+      "p05_kappa": -4148.0,
+      "bus": 15,
+      "GFM_strength_installed": 8302.0,
+      "min_kappa": -4148.0
+    },
+    {
+      "region_name": "NL1 0",
+      "gfm_bess_capacity_GW": 99.1,
+      "GFL_exposure_peak": 5500.0,
+      "beta_i": 0.8184523809523809,
+      "mean_kappa": -1197.142857142857,
+      "p05_kappa": -2750.0,
+      "bus": 29,
+      "GFM_strength_installed": 5500.0,
+      "min_kappa": -2750.0
+    },
+    {
+      "region_name": "IT3 0",
+      "gfm_bess_capacity_GW": 6.1,
+      "GFL_exposure_peak": 350.0,
+      "beta_i": 0.7946428571428571,
+      "mean_kappa": -76.07142857142857,
+      "p05_kappa": -172.5,
+      "bus": 23,
+      "GFM_strength_installed": 352.5,
+      "min_kappa": -172.5
+    },
+    {
+      "region_name": "DE1 0",
+      "gfm_bess_capacity_GW": 95.0,
+      "GFL_exposure_peak": 6800.0,
+      "beta_i": 0.75,
+      "mean_kappa": -875.125,
+      "p05_kappa": -3397.0,
+      "bus": 8,
+      "GFM_strength_installed": 6803.0,
+      "min_kappa": -3397.0
+    }
+  ],
+  "posthoc_alpha_paper": 1.5,
+  "number_of_snapshots_with_gSCR_below_alpha": 336,
+  "min_gSCR_t": 1.0013461538461526,
+  "optimization_g_min": 1.0,
+  "min_mu_t_alpha_1p5": -3953.875719700078
+}

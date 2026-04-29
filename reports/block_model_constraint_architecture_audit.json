@@ -1,0 +1,137 @@
+{
+  "audit_target": "block UC/CAPEXP + gSCR architecture",
+  "builder": {
+    "file": "src/prob/uc_gscr_block_integration.jl",
+    "function": "build_uc_gscr_block_integration",
+    "key_behavior": [
+      "uses standard PowerModels active bus balance",
+      "uses standard dcline variables and loss constraints",
+      "does not call dcline setpoint constraints",
+      "keeps standard storage dynamics",
+      "adds block dispatch/storage/gSCR constraints"
+    ]
+  },
+  "variables": [
+    {"name":"pg","component":"gen","bounds":"pmin..pmax","source":"standard","block_affected":true,"time_scope":"snapshot"},
+    {"name":"qg","component":"gen","bounds":"qmin..qmax","source":"standard","block_affected":true,"time_scope":"snapshot"},
+    {"name":"se","component":"storage","bounds":"0..energy_rating","source":"standard","block_affected":true,"time_scope":"snapshot"},
+    {"name":"sc","component":"storage","bounds":"0..charge_rating","source":"standard","block_affected":true,"time_scope":"snapshot"},
+    {"name":"sd","component":"storage","bounds":"0..discharge_rating","source":"standard","block_affected":true,"time_scope":"snapshot"},
+    {"name":"se_ne","component":"ne_storage","bounds":"0..energy_rating","source":"standard","block_affected":true,"time_scope":"snapshot"},
+    {"name":"sc_ne","component":"ne_storage","bounds":"0..charge_rating","source":"standard","block_affected":true,"time_scope":"snapshot"},
+    {"name":"sd_ne","component":"ne_storage","bounds":"0..discharge_rating","source":"standard","block_affected":true,"time_scope":"snapshot"},
+    {"name":"z_strg_ne","component":"ne_storage","bounds":"0..1 (relaxed)","source":"standard-candidate-build","block_affected":true,"time_scope":"investment-wide"},
+    {"name":"z_strg_ne_investment","component":"ne_storage","bounds":"0..1 (relaxed)","source":"standard-candidate-build","block_affected":true,"time_scope":"investment-wide"},
+    {"name":"n_block","component":"block-device","bounds":"n0..nmax","source":"block","block_affected":true,"time_scope":"investment-wide"},
+    {"name":"na_block","component":"block-device","bounds":">=0 and <=n_block","source":"block","block_affected":true,"time_scope":"snapshot"},
+    {"name":"su_block","component":"block-device","bounds":">=0","source":"block","block_affected":true,"time_scope":"snapshot"},
+    {"name":"sd_block","component":"block-device","bounds":">=0","source":"block","block_affected":true,"time_scope":"snapshot"},
+    {"name":"p_dc","component":"dcline","bounds":"pminf/pmaxf, pmint/pmaxt","source":"standard","block_affected":false,"time_scope":"snapshot"},
+    {"name":"p","component":"branch","bounds":"ref_calc_branch_flow_bounds","source":"standard","block_affected":false,"time_scope":"snapshot"}
+  ],
+  "conflict_matrix": [
+    {
+      "row": "pg standard pmax vs p_block_max * na_block",
+      "status": "both active",
+      "severity": "high",
+      "proposed_action": "modify variable upper bounds or skip standard bounds for block-enabled generators"
+    },
+    {
+      "row": "qg standard qmax/qmin vs q_block bounds",
+      "status": "both active in reactive formulations",
+      "severity": "medium",
+      "proposed_action": "skip standard q bounds for block-enabled devices or harmonize data"
+    },
+    {
+      "row": "se standard energy_rating vs e_block * n_block",
+      "status": "both active",
+      "severity": "high",
+      "proposed_action": "skip standard se upper bound for block-enabled storage"
+    },
+    {
+      "row": "sc standard charge_rating vs p_block_max * na_block",
+      "status": "both active",
+      "severity": "high",
+      "proposed_action": "skip standard sc upper bound for block-enabled storage"
+    },
+    {
+      "row": "sd standard discharge_rating vs p_block_max * na_block",
+      "status": "both active",
+      "severity": "high",
+      "proposed_action": "skip standard sd upper bound for block-enabled storage"
+    },
+    {
+      "row": "se_ne standard energy_rating*z_ne vs e_block*n_block",
+      "status": "both active; standard can force zero",
+      "severity": "critical",
+      "proposed_action": "replace standard candidate bounds with block-aware bounds for block-enabled candidates"
+    },
+    {
+      "row": "sc_ne standard charge_rating*z_ne vs p_block_max*na_block",
+      "status": "both active; standard can force zero",
+      "severity": "critical",
+      "proposed_action": "replace/skip standard candidate bounds for block-enabled candidates"
+    },
+    {
+      "row": "sd_ne standard discharge_rating*z_ne vs p_block_max*na_block",
+      "status": "both active; standard can force zero",
+      "severity": "critical",
+      "proposed_action": "replace/skip standard candidate bounds for block-enabled candidates"
+    },
+    {
+      "row": "z_strg_ne standard build logic vs n_block investment logic",
+      "status": "both present with no explicit coupling",
+      "severity": "high",
+      "proposed_action": "add explicit coupling or select one investment formalism"
+    },
+    {
+      "row": "standard ne_storage investment cost vs block investment cost",
+      "status": "both in objective",
+      "severity": "high",
+      "proposed_action": "remove one path for block-enabled ne_storage"
+    },
+    {
+      "row": "standard final storage constraint vs short_horizon_relaxed/no-final/aggregate policy",
+      "status": "strict final currently present in this builder",
+      "severity": "high",
+      "proposed_action": "policy-gated final constraints (modeling decision)"
+    },
+    {
+      "row": "standard UC status/startup logic vs su_block/sd_block if present",
+      "status": "standard UC status/startup not active in this builder",
+      "severity": "low",
+      "proposed_action": "keep"
+    }
+  ],
+  "objective_terms": [
+    {"term":"calc_gen_cost","status":"active"},
+    {"term":"calc_ne_storage_cost","status":"active","risk":"double-count with block investment"},
+    {"term":"calc_uc_gscr_block_investment_cost","status":"active"},
+    {"term":"calc_uc_gscr_block_startup_shutdown_cost","status":"active"}
+  ],
+  "required_conventions_check": {
+    "standard_power_balance_active": true,
+    "custom_power_balance_added": false,
+    "dcline_in_balance": true,
+    "dcline_in_gscr_b0": false,
+    "gscr_formulation_changed": false,
+    "storage_energy_balance_reimplemented": false
+  },
+  "proposed_regression_tests": [
+    "A. block-enabled ne_storage with zero standard ratings but positive block ratings can charge/discharge/store energy after investment",
+    "B. block-enabled generator with zero/small standard pmax but positive p_block_max is not limited by standard pmax",
+    "C. non-block storage still obeys standard energy/charge/discharge ratings",
+    "D. storage energy balance remains unchanged",
+    "E. block investment cost counted exactly once",
+    "F. standard ne_storage investment cost not double-counted with block investment cost",
+    "G. g_min=0 remains non-restrictive",
+    "H. gSCR reconstruction residual remains near zero for positive g_min"
+  ],
+  "open_modeling_decisions": [
+    "Should z_strg_ne remain or be replaced by pure n_block logic for block-enabled candidate storage?",
+    "If z_strg_ne remains, what explicit coupling to n_block is intended?",
+    "Should block-enabled storage ignore standard energy/charge/discharge ratings entirely?",
+    "Should block-enabled generators ignore standard pmax/qmax or keep conservative intersection?",
+    "Which final storage policy is default in 24h CAPEXP studies?"
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "min_adequacy_margin_gen_plus_storage": {
+    "gSCR-GERSH-1.0": 456906.91315141757,
+    "gSCR-GERSH-1.5": 863252.5046425036,
+    "BASE": 42101.73016924568
+  },
+  "bnet_zero_eigenvalue_count": 7,
+  "per_island_gscr_validation_succeeded": true,
+  "base_zero_cost_cause": "incremental candidate-investment objective, no existing fixed fleet cost, near-zero operation cost, storage/hydro/PHS energy contribution",
+  "scenarios_analyzed": [
+    "BASE",
+    "gSCR-GERSH-1.0",
+    "gSCR-GERSH-1.5"
+  ],
+  "output_directory": "D:\\Projekte\\Code\\FlexPlan_UC_GSCR\\reports\\paper_elec_s_37_campaign_336h\\plausibility_audit",
+  "online_zero_dispatch_events_gfm_bess": 22848,
+  "gfm_gfl_battery_premium_percent": {
+    "max": 6.25,
+    "min": 6.25,
+    "mean": 6.25
+  },
+  "load_vs_capability_plot_generated": true,
+  "recommended_next_action": "Add/verify per-component dispatch exports and report post-hoc gSCR per connected AC island or finite generalized eigenvalue support.",
+  "max_gscr_utilization_ratio": {
+    "gSCR-GERSH-1.0": 1.5000000000000004,
+    "gSCR-GERSH-1.5": 1.0000000000000002,
+    "BASE": 1500.0
+  },
+  "both_input_and_results_used": true,
+  "min_adequacy_margin_gen_only": {
+    "gSCR-GERSH-1.0": -110658.26983075438,
+    "gSCR-GERSH-1.5": -110658.26983075438,
+    "BASE": -110658.26983075438
+  },
+  "warnings": [
+    "Per-component and per-snapshot optimized dispatch was not present in the run artifacts; dispatch-utilization and online-zero-dispatch use aggregate dispatch or conservative missing markers.",
+    "Local gSCR LHS/RHS ratios are reconstructed from online strength/exposure with Delta_b set to 0 because full per-bus Delta_b time series is not saved.",
+    "The global gSCR island audit reconstructs Bnet from branch reactances and graph connectivity; it does not rerun the original posthoc generalized-eigenvalue implementation.",
+    "Mean GFM/GFL battery investment premium is below 10%, making GFM-BESS economically dominant when strength has no standby cost."
+  ],
+  "global_gscr_needs_reinterpretation": true,
+  "ac_island_count": 7
+}

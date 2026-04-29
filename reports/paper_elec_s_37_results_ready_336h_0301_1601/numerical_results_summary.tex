@@ -1,0 +1,18 @@
+\section{Numerical Results}
+\label{sec:results}
+
+\subsection{System Cost and Capacity Expansion}
+
+Table II compares BASE and gSCR-GERSH for the 336 h study period. BASE has no explicit system-strength constraint and obtains a total annualized system cost of 0.00 B€/a. The gSCR-GERSH case enforces the decentralized gSCR condition with $g_{\min}=1.5$ and increases the annualized cost to 345.81 B€/a. Because the BASE cost is zero in the exported planning-cost accounting, the relative cost increase is undefined and is reported as n/a.
+
+The gSCR-GERSH case installs 821.15 GW of BESS-GFM capacity, compared with 0.00 GW in BASE. BESS-GFL capacity remains negligible (0.001 GW). Wind+PV capacity is 0.007 GW in gSCR-GERSH and 0.000 GW in BASE, while CCGT gas capacity is zero in both cases.
+
+Post-hoc validation shows that BASE violates the paper threshold in all snapshots, with minimum $\mu_t = -172415.68$ and minimum gSCR of 0.003. In contrast, gSCR-GERSH has minimum $\mu_t = -1.38e-12$ within numerical tolerance, zero violating snapshots, and minimum gSCR of 1.500. Solver wall-clock times are 0.45 min for BASE and 0.52 min for gSCR-GERSH. The intermediate gSCR-1 case is retained only as a sensitivity case.
+
+\subsection{Spatial Binding Pattern}
+
+Figure 1 reports the regional binding frequency $$\beta_i$$ for gSCR-GERSH together with installed GFM-BESS capacity. Coordinates are unavailable in the input artifacts, so the figure uses a ranked regional binding plot rather than a geographic map. The five most frequently binding regions are FR1 0, GR1 0, BE1 0, GB0 0, FI2 0. These regions also receive substantial GFM-BESS deployment in the optimized solution, consistent with the local nature of the Gershgorin constraint.
+
+\subsection{Conservatism of the Linear Constraint}
+
+Figure 2 compares the post-hoc global gSCR margin $gSCR_t-$\alpha$$ for BASE and gSCR-GERSH and reports the available local Gershgorin slack information for gSCR-GERSH. BASE is evaluated against the same threshold and remains below it throughout the study horizon. For gSCR-GERSH, the minimum global matrix eigenvalue margin is non-negative within numerical tolerance and the minimum gSCR equals the enforced threshold. The local slack distribution shows that the sufficient constraints are frequently active, which is expected for a pure branch-Laplacian network where diagonal dominance must be supplied locally by online GFM strength.

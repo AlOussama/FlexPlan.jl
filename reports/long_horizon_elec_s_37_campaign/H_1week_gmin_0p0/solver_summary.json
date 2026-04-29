@@ -1,0 +1,16 @@
+{
+  "solve_time_sec": 183.20100021362305,
+  "node_count": -1,
+  "status": "OPTIMAL",
+  "objective_value": -0.0002918541431427002,
+  "num_variables": 384459,
+  "termination_status": "OPTIMAL",
+  "num_constraints": 761862,
+  "simplex_iterations": 98817,
+  "barrier_iterations": 0,
+  "build_time_sec": 17.578999996185303,
+  "solve_time_moi_sec": 60.5405592918396,
+  "dual_status": "FEASIBLE_POINT",
+  "primal_status": "FEASIBLE_POINT",
+  "relative_gap": 0.0
+}

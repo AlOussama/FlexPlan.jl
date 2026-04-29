@@ -292,4 +292,65 @@ end
     - Minimum up/down fields are conditionally required when enabled
     - Minimum up/down field validation accepts integer snapshots and rejects invalid values
     =#
+
+    @testset "ne_storage with charge_rating < p_block_max warns about rating conflict" begin
+        # Validates: _warn_uc_gscr_storage_rating_conflict emits a warn-level message
+        # containing "charge_rating" when ne_storage.charge_rating < p_block_max.
+        # The standard rating sets a hard variable upper bound (constraint_storage_bounds_ne)
+        # that will be binding before the block-scaled bound sc <= p_block_max * na_block.
+        ne_device = _uc_gscr_test_device("gfl", 1; table=:ne_storage, e_block=4.0)
+        ne_device["charge_rating"] = 0.5   # smaller than p_block_max=10.0
+        ne_device["discharge_rating"] = 10.0
+        Memento.TestUtils.@test_log(
+            Memento.getlogger(_FP), "warn", "charge_rating",
+            _FP._warn_uc_gscr_storage_rating_conflict(ne_device, 1, ne_device["p_block_max"], ne_device["nmax"])
+        )
+    end
+
+    @testset "ne_storage with discharge_rating < p_block_max warns about rating conflict" begin
+        # Validates: _warn_uc_gscr_storage_rating_conflict emits a warn-level message
+        # containing "discharge_rating" when ne_storage.discharge_rating < p_block_max.
+        ne_device = _uc_gscr_test_device("gfl", 1; table=:ne_storage, e_block=4.0)
+        ne_device["charge_rating"] = 10.0
+        ne_device["discharge_rating"] = 0.3  # smaller than p_block_max=10.0
+        Memento.TestUtils.@test_log(
+            Memento.getlogger(_FP), "warn", "discharge_rating",
+            _FP._warn_uc_gscr_storage_rating_conflict(ne_device, 1, ne_device["p_block_max"], ne_device["nmax"])
+        )
+    end
+
+    @testset "ne_storage with ratings >= p_block_max emits no warning" begin
+        # Validates: no warn-level message for "charge_rating" or "discharge_rating" when
+        # both ratings are at or above p_block_max (no conflict present).
+        ne_device = _uc_gscr_test_device("gfl", 1; table=:ne_storage, e_block=4.0)
+        ne_device["charge_rating"] = 10.0    # equal to p_block_max=10.0
+        ne_device["discharge_rating"] = 15.0
+        Memento.TestUtils.@test_nolog(
+            Memento.getlogger(_FP), "warn", "charge_rating",
+            _FP._warn_uc_gscr_storage_rating_conflict(ne_device, 1, ne_device["p_block_max"], ne_device["nmax"])
+        )
+    end
+
+    @testset "ref_add_uc_gscr_block! triggers rating conflict check for ne_storage" begin
+        # Validates: the conflict check is wired into ref_add_uc_gscr_block! via _validate_uc_gscr_block_devices.
+        # When charge_rating < p_block_max the full extension must still succeed (warning, not error)
+        # and gfl_devices is populated.
+        ne_device = _uc_gscr_test_device("gfl", 1; table=:ne_storage, e_block=4.0)
+        ne_device["charge_rating"] = 0.5   # triggers warning
+        ne_device["discharge_rating"] = 0.5
+        nw_ref = Dict{Symbol,Any}(
+            :bus => Dict{Int,Any}(
+                1 => Dict{String,Any}("index" => 1),
+                2 => Dict{String,Any}("index" => 2),
+            ),
+            :gen => Dict{Int,Any}(),
+            :ne_storage => Dict{Int,Any}(1 => ne_device),
+            :branch => Dict{Int,Any}(
+                1 => Dict{String,Any}("f_bus" => 1, "t_bus" => 2, "br_x" => 0.5, "br_status" => 1),
+            ),
+        )
+        ref = _uc_gscr_test_ref(nw_ref)
+        @test_nowarn _FP.ref_add_uc_gscr_block!(ref, Dict{String,Any}())
+        @test haskey(ref[:it][_PM.pm_it_sym][:nw][0], :gfl_devices)
+    end
 end

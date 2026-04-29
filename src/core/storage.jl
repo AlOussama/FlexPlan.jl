@@ -44,6 +44,25 @@ function variable_storage_power_ne(pm::_PM.AbstractPowerModel; investment::Bool=
     investment && variable_storage_investment(pm; kwargs...)
 end
 
+"""
+    variable_storage_power_ne_block(pm; kwargs...)
+
+Creates candidate-storage variables for the block-only UC/CAPEXP builder path.
+
+This variant does not create or use standard candidate build/investment
+variables (`z_strg_ne`, `z_strg_ne_investment`) and does not impose standard
+rating-based upper bounds on `se_ne`, `sc_ne`, or `sd_ne`.
+"""
+function variable_storage_power_ne_block(pm::_PM.AbstractPowerModel; kwargs...)
+    variable_storage_power_real_ne_block(pm; kwargs...)
+    variable_storage_power_imaginary_ne(pm; kwargs...)
+    variable_storage_power_control_imaginary_ne(pm; kwargs...)
+    variable_storage_current_ne(pm; kwargs...)
+    variable_storage_energy_ne_block(pm; kwargs...)
+    variable_storage_charge_ne_block(pm; kwargs...)
+    variable_storage_discharge_ne_block(pm; kwargs...)
+end
+
 function variable_storage_power_real_ne(pm::_PM.AbstractPowerModel; nw::Int=_PM.nw_id_default, bounded::Bool=true, report::Bool=true)
     ps = _PM.var(pm, nw)[:ps_ne] = JuMP.@variable(pm.model,
         [i in _PM.ids(pm, nw, :ne_storage)], base_name="$(nw)_ps_ne",
@@ -62,6 +81,24 @@ function variable_storage_power_real_ne(pm::_PM.AbstractPowerModel; nw::Int=_PM.
             end
         end
     end
+
+    report && _PM.sol_component_value(pm, nw, :ne_storage, :ps_ne, _PM.ids(pm, nw, :ne_storage), ps)
+end
+
+"""
+    variable_storage_power_real_ne_block(pm; nw=nw_id_default, bounded=true, report=true)
+
+Block-only candidate-storage active-power variable.
+
+Unlike `variable_storage_power_real_ne`, this does not apply standard
+injection bounds from candidate thermal/current ratings, preventing
+rating-based clipping in the block-only UC/CAPEXP path.
+"""
+function variable_storage_power_real_ne_block(pm::_PM.AbstractPowerModel; nw::Int=_PM.nw_id_default, bounded::Bool=true, report::Bool=true)
+    ps = _PM.var(pm, nw)[:ps_ne] = JuMP.@variable(pm.model,
+        [i in _PM.ids(pm, nw, :ne_storage)], base_name="$(nw)_ps_ne",
+        start = _PM.comp_start_value(_PM.ref(pm, nw, :ne_storage, i), "ps_start")
+    )
 
     report && _PM.sol_component_value(pm, nw, :ne_storage, :ps_ne, _PM.ids(pm, nw, :ne_storage), ps)
 end
@@ -137,6 +174,20 @@ function variable_storage_energy_ne(pm::_PM.AbstractPowerModel; nw::Int=_PM.nw_i
     report && _PM.sol_component_value(pm, nw, :ne_storage, :se_ne, _PM.ids(pm, nw, :ne_storage), se)
 end
 
+"""
+    variable_storage_energy_ne_block(pm; nw=nw_id_default, report=true)
+
+Block-only candidate-storage energy variable without standard rating UB.
+"""
+function variable_storage_energy_ne_block(pm::_PM.AbstractPowerModel; nw::Int=_PM.nw_id_default, report::Bool=true)
+    se = _PM.var(pm, nw)[:se_ne] = JuMP.@variable(pm.model,
+        [i in _PM.ids(pm, nw, :ne_storage)], base_name="$(nw)_se_ne",
+        lower_bound = 0.0,
+        start = _PM.comp_start_value(_PM.ref(pm, nw, :ne_storage, i), "se_start", 1)
+    )
+    report && _PM.sol_component_value(pm, nw, :ne_storage, :se_ne, _PM.ids(pm, nw, :ne_storage), se)
+end
+
 function variable_storage_charge_ne(pm::_PM.AbstractPowerModel; nw::Int=_PM.nw_id_default, bounded::Bool=true, report::Bool=true)
     sc = _PM.var(pm, nw)[:sc_ne] = JuMP.@variable(pm.model,
         [i in _PM.ids(pm, nw, :ne_storage)], base_name="$(nw)_sc_ne",
@@ -153,6 +204,20 @@ function variable_storage_charge_ne(pm::_PM.AbstractPowerModel; nw::Int=_PM.nw_i
     report && _PM.sol_component_value(pm, nw, :ne_storage, :sc_ne, _PM.ids(pm, nw, :ne_storage), sc)
 end
 
+"""
+    variable_storage_charge_ne_block(pm; nw=nw_id_default, report=true)
+
+Block-only candidate-storage charge variable without standard rating UB.
+"""
+function variable_storage_charge_ne_block(pm::_PM.AbstractPowerModel; nw::Int=_PM.nw_id_default, report::Bool=true)
+    sc = _PM.var(pm, nw)[:sc_ne] = JuMP.@variable(pm.model,
+        [i in _PM.ids(pm, nw, :ne_storage)], base_name="$(nw)_sc_ne",
+        lower_bound = 0.0,
+        start = _PM.comp_start_value(_PM.ref(pm, nw, :ne_storage, i), "sc_start", 1)
+    )
+    report && _PM.sol_component_value(pm, nw, :ne_storage, :sc_ne, _PM.ids(pm, nw, :ne_storage), sc)
+end
+
 function variable_storage_discharge_ne(pm::_PM.AbstractPowerModel; nw::Int=_PM.nw_id_default, bounded::Bool=true, report::Bool=true)
     sd = _PM.var(pm, nw)[:sd_ne] = JuMP.@variable(pm.model,
         [i in _PM.ids(pm, nw, :ne_storage)], base_name="$(nw)_sd_ne",
@@ -166,6 +231,20 @@ function variable_storage_discharge_ne(pm::_PM.AbstractPowerModel; nw::Int=_PM.n
         end
     end
 
+    report && _PM.sol_component_value(pm, nw, :ne_storage, :sd_ne, _PM.ids(pm, nw, :ne_storage), sd)
+end
+
+"""
+    variable_storage_discharge_ne_block(pm; nw=nw_id_default, report=true)
+
+Block-only candidate-storage discharge variable without standard rating UB.
+"""
+function variable_storage_discharge_ne_block(pm::_PM.AbstractPowerModel; nw::Int=_PM.nw_id_default, report::Bool=true)
+    sd = _PM.var(pm, nw)[:sd_ne] = JuMP.@variable(pm.model,
+        [i in _PM.ids(pm, nw, :ne_storage)], base_name="$(nw)_sd_ne",
+        lower_bound = 0.0,
+        start = _PM.comp_start_value(_PM.ref(pm, nw, :ne_storage, i), "sd_start", 1)
+    )
     report && _PM.sol_component_value(pm, nw, :ne_storage, :sd_ne, _PM.ids(pm, nw, :ne_storage), sd)
 end
 
@@ -236,6 +315,19 @@ function constraint_storage_bounds_ne(pm::_PM.AbstractPowerModel, i::Int; nw::In
     constraint_storage_bounds_ne(pm, nw, i)
 end
 
+"""
+    constraint_storage_bounds_ne_block(pm, i; nw=nw_id_default)
+
+No-op in block-only UC/CAPEXP path.
+
+Candidate-storage envelopes are imposed through UC/gSCR block constraints:
+`se_ne <= e_block*n_block`, `sc_ne <= p_block_max*na_block`,
+`sd_ne <= p_block_max*na_block`.
+"""
+function constraint_storage_bounds_ne_block(pm::_PM.AbstractPowerModel, i::Int; nw::Int=_PM.nw_id_default)
+    return nothing
+end
+
 
 function constraint_storage_state(pm::_PM.AbstractPowerModel, i::Int; nw::Int=_PM.nw_id_default)
     storage = _PM.ref(pm, nw, :storage, i)
@@ -259,6 +351,35 @@ function constraint_storage_state_ne(pm::_PM.AbstractPowerModel, i::Int; nw::Int
         time_elapsed = 1.0
     end
     constraint_storage_state_initial_ne(pm, nw, i, storage["energy"], storage["charge_efficiency"], storage["discharge_efficiency"], storage["stationary_energy_inflow"], storage["stationary_energy_outflow"], storage["self_discharge_rate"], time_elapsed)
+end
+
+"""
+    constraint_storage_state_ne_block(pm, i; nw=nw_id_default)
+
+Block-only candidate-storage initial state equation with unchanged physical
+storage dynamics and no `z_strg_ne` gating.
+"""
+function constraint_storage_state_ne_block(pm::_PM.AbstractPowerModel, i::Int; nw::Int=_PM.nw_id_default)
+    storage = _PM.ref(pm, nw, :ne_storage, i)
+
+    if haskey(_PM.ref(pm, nw), :time_elapsed)
+        time_elapsed = _PM.ref(pm, nw, :time_elapsed)
+    else
+        Memento.warn(_LOGGER, "network data should specify time_elapsed, using 1.0 as a default")
+        time_elapsed = 1.0
+    end
+    constraint_storage_state_initial_ne_block(
+        pm,
+        nw,
+        i,
+        storage["energy"],
+        storage["charge_efficiency"],
+        storage["discharge_efficiency"],
+        storage["stationary_energy_inflow"],
+        storage["stationary_energy_outflow"],
+        storage["self_discharge_rate"],
+        time_elapsed,
+    )
 end
 
 function constraint_storage_state(pm::_PM.AbstractPowerModel, i::Int, nw_1::Int, nw_2::Int)
@@ -299,6 +420,52 @@ function constraint_storage_state_ne(pm::_PM.AbstractPowerModel, i::Int, nw_1::I
     end
 end
 
+"""
+    constraint_storage_state_ne_block(pm, i, nw_1, nw_2)
+
+Block-only candidate-storage intertemporal state equation with unchanged
+physical storage dynamics and no `z_strg_ne` gating.
+"""
+function constraint_storage_state_ne_block(pm::_PM.AbstractPowerModel, i::Int, nw_1::Int, nw_2::Int)
+    storage = _PM.ref(pm, nw_2, :ne_storage, i)
+
+    if haskey(_PM.ref(pm, nw_2), :time_elapsed)
+        time_elapsed = _PM.ref(pm, nw_2, :time_elapsed)
+    else
+        Memento.warn(_LOGGER, "network $(nw_2) should specify time_elapsed, using 1.0 as a default")
+        time_elapsed = 1.0
+    end
+
+    if haskey(_PM.ref(pm, nw_1, :ne_storage), i)
+        constraint_storage_state_ne_block(
+            pm,
+            nw_1,
+            nw_2,
+            i,
+            storage["charge_efficiency"],
+            storage["discharge_efficiency"],
+            storage["stationary_energy_inflow"],
+            storage["stationary_energy_outflow"],
+            storage["self_discharge_rate"],
+            time_elapsed,
+        )
+    else
+        Memento.warn(_LOGGER, "storage component $(i) was not found in network $(nw_1) while building constraint_storage_state between networks $(nw_1) and $(nw_2). Using the energy value from the storage component in network $(nw_2) instead")
+        constraint_storage_state_initial_ne_block(
+            pm,
+            nw_2,
+            i,
+            storage["energy"],
+            storage["charge_efficiency"],
+            storage["discharge_efficiency"],
+            storage["stationary_energy_inflow"],
+            storage["stationary_energy_outflow"],
+            storage["self_discharge_rate"],
+            time_elapsed,
+        )
+    end
+end
+
 function constraint_storage_state_final(pm::_PM.AbstractPowerModel, i::Int; nw::Int=_PM.nw_id_default)
     storage = _PM.ref(pm, nw, :storage, i)
     constraint_storage_state_final(pm, nw, i, storage["energy"])
@@ -307,6 +474,17 @@ end
 function constraint_storage_state_final_ne(pm::_PM.AbstractPowerModel, i::Int; nw::Int=_PM.nw_id_default)
     storage = _PM.ref(pm, nw, :ne_storage, i)
     constraint_storage_state_final_ne(pm, nw, i, storage["energy"])
+end
+
+"""
+    constraint_storage_state_final_ne_block(pm, i; nw=nw_id_default)
+
+Block-only candidate-storage terminal state equation without `z_strg_ne`
+gating.
+"""
+function constraint_storage_state_final_ne_block(pm::_PM.AbstractPowerModel, i::Int; nw::Int=_PM.nw_id_default)
+    storage = _PM.ref(pm, nw, :ne_storage, i)
+    constraint_storage_state_final_ne_block(pm, nw, i, storage["energy"])
 end
 
 function constraint_storage_excl_slack(pm::_PM.AbstractPowerModel, i::Int; nw::Int=_PM.nw_id_default)
@@ -471,6 +649,14 @@ function constraint_storage_state_initial_ne(pm::_PM.AbstractPowerModel, n::Int,
     JuMP.@constraint(pm.model, se == ((1-self_discharge_rate)^time_elapsed)*energy*z + time_elapsed*(charge_eff*sc - sd/discharge_eff + inflow * z - outflow * z))
 end
 
+function constraint_storage_state_initial_ne_block(pm::_PM.AbstractPowerModel, n::Int, i::Int, energy, charge_eff, discharge_eff, inflow, outflow, self_discharge_rate, time_elapsed)
+    sc = _PM.var(pm, n, :sc_ne, i)
+    sd = _PM.var(pm, n, :sd_ne, i)
+    se = _PM.var(pm, n, :se_ne, i)
+
+    JuMP.@constraint(pm.model, se == ((1-self_discharge_rate)^time_elapsed)*energy + time_elapsed*(charge_eff*sc - sd/discharge_eff + inflow - outflow))
+end
+
 function constraint_storage_state(pm::_PM.AbstractPowerModel, n_1::Int, n_2::Int, i::Int, charge_eff, discharge_eff, inflow, outflow, self_discharge_rate, time_elapsed)
     sc_2 = _PM.var(pm, n_2, :sc, i)
     sd_2 = _PM.var(pm, n_2, :sd, i)
@@ -490,6 +676,15 @@ function constraint_storage_state_ne(pm::_PM.AbstractPowerModel, n_1::Int, n_2::
     JuMP.@constraint(pm.model, se_2 == ((1-self_discharge_rate)^time_elapsed)*se_1 + time_elapsed*(charge_eff*sc_2 - sd_2/discharge_eff + inflow * z - outflow * z))
 end
 
+function constraint_storage_state_ne_block(pm::_PM.AbstractPowerModel, n_1::Int, n_2::Int, i::Int, charge_eff, discharge_eff, inflow, outflow, self_discharge_rate, time_elapsed)
+    sc_2 = _PM.var(pm, n_2, :sc_ne, i)
+    sd_2 = _PM.var(pm, n_2, :sd_ne, i)
+    se_2 = _PM.var(pm, n_2, :se_ne, i)
+    se_1 = _PM.var(pm, n_1, :se_ne, i)
+
+    JuMP.@constraint(pm.model, se_2 == ((1-self_discharge_rate)^time_elapsed)*se_1 + time_elapsed*(charge_eff*sc_2 - sd_2/discharge_eff + inflow - outflow))
+end
+
 function constraint_storage_state_final(pm::_PM.AbstractPowerModel, n::Int, i::Int, energy)
     se = _PM.var(pm, n, :se, i)
 
@@ -501,6 +696,11 @@ function constraint_storage_state_final_ne(pm::_PM.AbstractPowerModel, n::Int, i
     z = _PM.var(pm, n, :z_strg_ne, i)
 
     JuMP.@constraint(pm.model, se >= energy * z)
+end
+
+function constraint_storage_state_final_ne_block(pm::_PM.AbstractPowerModel, n::Int, i::Int, energy)
+    se = _PM.var(pm, n, :se_ne, i)
+    JuMP.@constraint(pm.model, se >= energy)
 end
 
 function constraint_maximum_absorption_initial(pm::_PM.AbstractPowerModel, n::Int, i::Int, time_elapsed)

@@ -1,0 +1,74 @@
+{
+  "posthoc_alpha": 1.5,
+  "own_target_mu_t": -5.924731322266323e-13,
+  "violating_snapshots_percent_alpha_1p5": 100.0,
+  "min_relative_margin_rG": -0.33333333333337184,
+  "max_relative_margin_rG": -0.33333333333332577,
+  "mean_relative_margin_rG": -0.3333333333333344,
+  "number_of_snapshots_with_mu_negative": 336,
+  "own_target_number_of_snapshots_with_mu_negative": 0,
+  "min_mu_t": -1858.9632164030609,
+  "binding_epsilon": 1.0e-5,
+  "top_5_most_binding_regions": [
+    {
+      "region_name": "AT1 0",
+      "gfm_bess_capacity_GW": 16.30741926833019,
+      "GFL_exposure_peak": 1667.3709634165095,
+      "beta_i": 0.9970238095238095,
+      "mean_kappa": -819.2273331405513,
+      "p05_kappa": -833.6854817082547,
+      "bus": 2,
+      "GFM_strength_installed": 1667.3709634165095,
+      "min_kappa": -833.6854817082547
+    },
+    {
+      "region_name": "GB0 0",
+      "gfm_bess_capacity_GW": 15.336464483767259,
+      "GFL_exposure_peak": 3340.323224188363,
+      "beta_i": 0.9970238095238095,
+      "mean_kappa": -1640.9183566315173,
+      "p05_kappa": -1670.1616120941812,
+      "bus": 16,
+      "GFM_strength_installed": 3340.323224188363,
+      "min_kappa": -1670.1616120941812
+    },
+    {
+      "region_name": "FI2 0",
+      "gfm_bess_capacity_GW": 19.738328480199357,
+      "GFL_exposure_peak": 1408.4164240099678,
+      "beta_i": 0.9910714285714286,
+      "mean_kappa": -687.1050071643434,
+      "p05_kappa": -704.2082120049838,
+      "bus": 14,
+      "GFM_strength_installed": 1408.4164240099678,
+      "min_kappa": -704.2082120049838
+    },
+    {
+      "region_name": "FR1 0",
+      "gfm_bess_capacity_GW": 14.908767180838533,
+      "GFL_exposure_peak": 4092.4383590419266,
+      "beta_i": 0.9880952380952381,
+      "mean_kappa": -1966.0179927050451,
+      "p05_kappa": -2046.2191795209628,
+      "bus": 15,
+      "GFM_strength_installed": 4092.4383590419266,
+      "min_kappa": -2046.2191795209633
+    },
+    {
+      "region_name": "SE2 0",
+      "gfm_bess_capacity_GW": 13.618415450306856,
+      "GFL_exposure_peak": 1724.9207725153428,
+      "beta_i": 0.9880952380952381,
+      "mean_kappa": -837.3661585879241,
+      "p05_kappa": -862.4603862576714,
+      "bus": 35,
+      "GFM_strength_installed": 1724.9207725153428,
+      "min_kappa": -862.4603862576714
+    }
+  ],
+  "posthoc_alpha_paper": 1.5,
+  "number_of_snapshots_with_gSCR_below_alpha": 336,
+  "min_gSCR_t": 0.9999999999999423,
+  "optimization_g_min": 1.0,
+  "min_mu_t_alpha_1p5": -1858.9632164030609
+}

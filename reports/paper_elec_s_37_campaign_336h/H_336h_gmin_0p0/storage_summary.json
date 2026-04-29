@@ -1,0 +1,165 @@
+{
+  "max_discharge_envelope_residual": 0.0,
+  "top_storage_depletion_units": [
+    {
+      "carrier": "PHS",
+      "storage_id": 35,
+      "initial_energy": 227610.24675638057,
+      "final_energy": 0.0,
+      "final_to_initial_ratio": 0.0
+    },
+    {
+      "carrier": "PHS",
+      "storage_id": 30,
+      "initial_energy": 642664.2261356628,
+      "final_energy": 0.0,
+      "final_to_initial_ratio": 0.0
+    },
+    {
+      "carrier": "PHS",
+      "storage_id": 32,
+      "initial_energy": 13388.838044492975,
+      "final_energy": 0.0,
+      "final_to_initial_ratio": 0.0
+    },
+    {
+      "carrier": "PHS",
+      "storage_id": 6,
+      "initial_energy": 107110.7043559438,
+      "final_energy": 0.0,
+      "final_to_initial_ratio": 0.0
+    },
+    {
+      "carrier": "PHS",
+      "storage_id": 45,
+      "initial_energy": 53555.3521779719,
+      "final_energy": 0.0,
+      "final_to_initial_ratio": 0.0
+    },
+    {
+      "carrier": "PHS",
+      "storage_id": 4,
+      "initial_energy": 26777.67608898595,
+      "final_energy": 0.0,
+      "final_to_initial_ratio": 0.0
+    },
+    {
+      "carrier": "PHS",
+      "storage_id": 12,
+      "initial_energy": 93721.86631145082,
+      "final_energy": 0.0,
+      "final_to_initial_ratio": 0.0
+    },
+    {
+      "carrier": "PHS",
+      "storage_id": 28,
+      "initial_energy": 26777.67608898595,
+      "final_energy": 0.0,
+      "final_to_initial_ratio": 0.0
+    },
+    {
+      "carrier": "PHS",
+      "storage_id": 23,
+      "initial_energy": 53555.3521779719,
+      "final_energy": 0.0,
+      "final_to_initial_ratio": 0.0
+    },
+    {
+      "carrier": "PHS",
+      "storage_id": 36,
+      "initial_energy": 26777.67608898595,
+      "final_energy": 0.0,
+      "final_to_initial_ratio": 0.0
+    },
+    {
+      "carrier": "PHS",
+      "storage_id": 25,
+      "initial_energy": 13388.838044492975,
+      "final_energy": 0.0,
+      "final_to_initial_ratio": 0.0
+    },
+    {
+      "carrier": "PHS",
+      "storage_id": 34,
+      "initial_energy": 80333.02826695784,
+      "final_energy": 0.0,
+      "final_to_initial_ratio": 0.0
+    },
+    {
+      "carrier": "PHS",
+      "storage_id": 2,
+      "initial_energy": 441831.6554682682,
+      "final_energy": 0.0,
+      "final_to_initial_ratio": 0.0
+    },
+    {
+      "carrier": "PHS",
+      "storage_id": 10,
+      "initial_energy": 468609.33155725413,
+      "final_energy": 0.0,
+      "final_to_initial_ratio": 0.0
+    },
+    {
+      "carrier": "PHS",
+      "storage_id": 42,
+      "initial_energy": 321332.1130678314,
+      "final_energy": 0.0,
+      "final_to_initial_ratio": 0.0
+    },
+    {
+      "carrier": "PHS",
+      "storage_id": 16,
+      "initial_energy": 789941.4446250856,
+      "final_energy": 0.0,
+      "final_to_initial_ratio": 0.0
+    },
+    {
+      "carrier": "PHS",
+      "storage_id": 19,
+      "initial_energy": 441831.6554682682,
+      "final_energy": 0.0,
+      "final_to_initial_ratio": 0.0
+    },
+    {
+      "carrier": "PHS",
+      "storage_id": 49,
+      "initial_energy": 13388.838044492975,
+      "final_energy": 0.0,
+      "final_to_initial_ratio": 0.0
+    },
+    {
+      "carrier": "PHS",
+      "storage_id": 21,
+      "initial_energy": 26777.67608898595,
+      "final_energy": 0.0,
+      "final_to_initial_ratio": 0.0
+    },
+    {
+      "carrier": "PHS",
+      "storage_id": 38,
+      "initial_energy": 13388.838044492975,
+      "final_energy": 0.0,
+      "final_to_initial_ratio": 0.0
+    }
+  ],
+  "max_storage_energy_balance_residual": 2.9103830456733704e-11,
+  "storage_charge_by_carrier": {
+    "battery_gfm": 0.0,
+    "PHS": 133152.0207961351,
+    "battery_gfl": 0.0,
+    "hydro": 3.27005538916818e6
+  },
+  "final_initial_storage_ratio": 0.9311328131116224,
+  "aggregate_initial_storage_energy": 5.485110756687964e8,
+  "total_charge": 3.403207409964315e6,
+  "max_storage_energy_envelope_residual": 0.0,
+  "max_charge_envelope_residual": 0.0,
+  "storage_discharge_by_carrier": {
+    "battery_gfm": 0.0,
+    "PHS": 4.297280757871611e6,
+    "battery_gfl": 0.0,
+    "hydro": 2.9634889847689193e7
+  },
+  "total_discharge": 3.39321706055608e7,
+  "aggregate_final_storage_energy": 5.107366609103684e8
+}

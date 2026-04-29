@@ -1,0 +1,22 @@
+ERROR: LoadError: MethodError: Cannot `convert` an object of type Dict{String, Any} to an object of type Real
+The function `convert` exists, but no method is defined for this combination of argument types.
+
+Closest candidates are:
+  convert(::Type{T}, !Matched::T) where T
+   @ Base Base.jl:126
+  convert(::Type{T}, !Matched::CartesianIndex{1}) where T<:Number
+   @ Base multidimensional.jl:136
+  convert(::Type{T}, !Matched::AbstractChar) where T<:Number
+   @ Base char.jl:185
+  ...
+
+Stacktrace:
+ [1] setindex!(h::Dict{String, Real}, v0::Dict{String, Any}, key::String)
+   @ Base .\dict.jl:355
+ [2] _run_one_case(git::Dict{String, Any}, run_name::String, scenario_name::String, case_dir::String, horizon_hours::Int64, g_min::Float64)
+   @ Main D:\Projekte\Code\FlexPlan_UC_GSCR\test\scripts\run_paper_elec_s37_336h_integer_blocks_campaign.jl:865
+ [3] main()
+   @ Main D:\Projekte\Code\FlexPlan_UC_GSCR\test\scripts\run_paper_elec_s37_336h_integer_blocks_campaign.jl:1319
+ [4] top-level scope
+   @ D:\Projekte\Code\FlexPlan_UC_GSCR\test\scripts\run_paper_elec_s37_336h_integer_blocks_campaign.jl:1340
+in expression starting at D:\Projekte\Code\FlexPlan_UC_GSCR\test\scripts\run_paper_elec_s37_336h_integer_blocks_campaign.jl:1340

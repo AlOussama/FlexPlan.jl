@@ -1,0 +1,73 @@
+{
+  "smallest_eigenvalues": [
+    -9.00616738305906e-14,
+    -1.7893426580116564e-14,
+    -1.4899654495356942e-14,
+    2.2151075431269447e-14,
+    3.1959522753614664e-14,
+    3.7365221264496086e-14,
+    1.261712103931312e-13,
+    5.60873889290364,
+    9.592889657758292,
+    15.554840423437629
+  ],
+  "island_bus_lists": [
+    [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      12,
+      15,
+      18,
+      19,
+      20,
+      22,
+      25,
+      27,
+      28,
+      29,
+      31,
+      32,
+      33,
+      34,
+      36,
+      37
+    ],
+    [
+      10,
+      14,
+      30,
+      35
+    ],
+    [
+      11,
+      24,
+      26
+    ],
+    [
+      13
+    ],
+    [
+      16
+    ],
+    [
+      17,
+      21
+    ],
+    [
+      23
+    ]
+  ],
+  "notes": "Bnet was reconstructed as the AC branch susceptance Laplacian from active branches in case.json. Per-island gSCR values in the CSV are strength/exposure aggregate diagnostics, not a full recomputation of the saved generalized eigenvalue routine.",
+  "eig_zero_tol": 1.0e-8,
+  "zero_eigenvalue_count": 7,
+  "bus_count": 37,
+  "branch_count": 52,
+  "island_count_graph": 7
+}

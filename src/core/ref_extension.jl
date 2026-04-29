@@ -43,7 +43,6 @@ const _UC_GSCR_BLOCK_REQUIRED_FIELDS = [
     "n0",
     "nmax",
     "na0",
-    "p_block_min",
     "p_block_max",
     "q_block_min",
     "q_block_max",
@@ -53,7 +52,7 @@ const _UC_GSCR_BLOCK_REQUIRED_FIELDS = [
 ]
 
 const _UC_GSCR_BLOCK_MIN_UP_DOWN_FIELDS = ["min_up_block_time", "min_down_block_time"]
-const _UC_GSCR_BLOCK_OPTIONAL_FIELDS = ["H", "s_block", "e_block", _UC_GSCR_BLOCK_MIN_UP_DOWN_FIELDS...]
+const _UC_GSCR_BLOCK_OPTIONAL_FIELDS = ["H", "s_block", "e_block", "p_min_pu", "p_max_pu", "p_block_min", _UC_GSCR_BLOCK_MIN_UP_DOWN_FIELDS...]
 
 """
     ref_add_uc_gscr_block!(ref, data)
@@ -84,6 +83,7 @@ function ref_add_uc_gscr_block!(ref::Dict{Symbol,<:Any}, data::Dict{String,<:Any
         missing_report = _uc_gscr_missing_required_fields_report(nw_ref; min_up_down_enabled)
         _warn_uc_gscr_missing_required_fields(missing_report)
         _validate_uc_gscr_block_devices(nw_ref; min_up_down_enabled)
+        _warn_uc_gscr_deprecated_block_fields(nw_ref)
         _add_uc_gscr_device_maps!(nw_ref)
         _add_uc_gscr_row_metrics!(nw_ref)
         nw_ref[:uc_gscr_block_min_up_down_enabled] = min_up_down_enabled
@@ -193,8 +193,11 @@ per-active-block P/Q bounds, `b_block`, `startup_block_cost`, and
 When `min_up_down_enabled=true`, `min_up_block_time` and
 `min_down_block_time` are additionally required and must be nonnegative
 integers (snapshot counts). No defaults are inferred for these mathematical
-fields. Optional fields `H`, `s_block`, and `e_block` are only read when
-present. This function is formulation-independent and mutates no data.
+fields. Block counts must satisfy `0 <= na0 <= n0 <= nmax`. Optional fields `H`, `s_block`, and `e_block` are only read when
+present. For block-annotated `ne_storage` devices, a warning is emitted when
+`charge_rating` or `discharge_rating` is smaller than `p_block_max`, since the
+standard rating creates a hard variable upper bound that may bind before the
+block-scaled constraint. This function is formulation-independent and mutates no data.
 Missing required fields are reported explicitly and then raise a hard
 validation error.
 """
@@ -226,8 +229,25 @@ function _validate_uc_gscr_block_devices(nw_ref::Dict{Symbol,<:Any}; min_up_down
         end
 
         na0 = device["na0"]
-        if na0 < 0 || nmax < na0
-            Memento.error(_LOGGER, "$(uppercase(string(table_name))) device $(device_id) has invalid UC/gSCR active-block initial state: require 0 <= na0 <= nmax.")
+        if na0 < 0 || n0 < na0
+            Memento.error(_LOGGER, "$(uppercase(string(table_name))) device $(device_id) has invalid UC/gSCR active-block initial state: require 0 <= na0 <= n0 <= nmax.")
+        end
+
+        p_block_max = device["p_block_max"]
+        if p_block_max <= 0
+            if nmax > n0
+                Memento.warn(
+                    _LOGGER,
+                    "$(uppercase(string(table_name))) device $(device_id) has p_block_max=$(p_block_max) while nmax=$(nmax) > n0=$(n0). " *
+                    "This expandable candidate is non-physical and may be infeasible; treat as invalid data.",
+                )
+            elseif !(nmax == 0 && n0 == 0 && na0 == 0)
+                Memento.warn(
+                    _LOGGER,
+                    "$(uppercase(string(table_name))) device $(device_id) has p_block_max=$(p_block_max) with fixed nonzero baseline " *
+                    "(na0=$(na0), n0=$(n0), nmax=$(nmax)). This is treated as a legacy fixed block record.",
+                )
+            end
         end
 
         if min_up_down_enabled
@@ -241,7 +261,70 @@ function _validate_uc_gscr_block_devices(nw_ref::Dict{Symbol,<:Any}; min_up_down
                 Memento.error(_LOGGER, "$(uppercase(string(table_name))) device $(device_id) has invalid `min_down_block_time=$(min_down_block_time)`. Expected a nonnegative integer number of snapshots.")
             end
         end
+
+        if table_name == :ne_storage && p_block_max > 0
+            _warn_uc_gscr_storage_rating_conflict(device, device_id, p_block_max, nmax)
+        end
     end
+end
+
+"""
+    _warn_uc_gscr_storage_rating_conflict(device, device_id, p_block_max, nmax)
+
+Warns when a block-annotated `ne_storage` device has standard charge or
+discharge ratings smaller than `p_block_max`.
+
+The standard `charge_rating` and `discharge_rating` fields set hard variable
+upper bounds that also appear in `constraint_storage_bounds_ne`. When these
+ratings are smaller than `p_block_max`, they are binding before the
+block-scaled constraint `sc <= p_block_max * na_block` takes effect, silently
+limiting storage capability below the block-scaled design. Users must set
+`charge_rating >= p_block_max` and `discharge_rating >= p_block_max` (or
+equivalently `>= p_block_max * nmax` for block counts above 1) to avoid this
+conflict. This function is formulation-independent and mutates no data.
+"""
+function _warn_uc_gscr_storage_rating_conflict(device::Dict{String,<:Any}, device_id, p_block_max::Real, nmax::Real)
+    charge_rating = get(device, "charge_rating", Inf)
+    discharge_rating = get(device, "discharge_rating", Inf)
+    if charge_rating < p_block_max
+        Memento.warn(
+            _LOGGER,
+            "NE_STORAGE device $(device_id) has charge_rating=$(charge_rating) < p_block_max=$(p_block_max). " *
+            "The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne " *
+            "that will be binding before the block-scaled bound sc <= p_block_max * na_block. " *
+            "Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=$(nmax)) to avoid this conflict.",
+        )
+    end
+    if discharge_rating < p_block_max
+        Memento.warn(
+            _LOGGER,
+            "NE_STORAGE device $(device_id) has discharge_rating=$(discharge_rating) < p_block_max=$(p_block_max). " *
+            "The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne " *
+            "that will be binding before the block-scaled bound sd <= p_block_max * na_block. " *
+            "Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=$(nmax)) to avoid this conflict.",
+        )
+    end
+end
+
+"""
+    _warn_uc_gscr_deprecated_block_fields(nw_ref)
+
+Warns when deprecated UC/gSCR block fields are present.
+
+`p_block_min` is deprecated in the active block-dispatch formulation and is
+ignored there. Use `p_min_pu` with `p_block_max` instead.
+"""
+function _warn_uc_gscr_deprecated_block_fields(nw_ref::Dict{Symbol,<:Any})
+    for (table_name, device_id, device) in _uc_gscr_block_devices(nw_ref)
+        if haskey(device, "p_block_min")
+            Memento.warn(
+                _LOGGER,
+                "$(uppercase(string(table_name))) device $(device_id) sets deprecated field `p_block_min`. " *
+                "It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.",
+            )
+        end
+    end
+    return nothing
 end
 
 """
@@ -261,11 +344,30 @@ function _uc_gscr_block_devices(nw_ref::Dict{Symbol,<:Any})
         end
         for (device_id, device) in nw_ref[table_name]
             if any(haskey(device, field) for field in [_UC_GSCR_BLOCK_REQUIRED_FIELDS; _UC_GSCR_BLOCK_OPTIONAL_FIELDS])
+                if _uc_gscr_is_inactive_placeholder_device(device)
+                    continue
+                end
                 push!(devices, (table_name, device_id, device))
             end
         end
     end
     return devices
+end
+
+"""
+    _uc_gscr_is_inactive_placeholder_device(device)
+
+Returns whether a block record is an inactive placeholder that should be
+ignored by the UC/gSCR block extension.
+
+A placeholder has `p_block_max <= 0` and zero baseline block counts
+`na0 = n0 = nmax = 0`.
+"""
+function _uc_gscr_is_inactive_placeholder_device(device::Dict{String,<:Any})
+    if !(haskey(device, "p_block_max") && haskey(device, "n0") && haskey(device, "nmax") && haskey(device, "na0"))
+        return false
+    end
+    return device["p_block_max"] <= 0 && device["na0"] == 0 && device["n0"] == 0 && device["nmax"] == 0
 end
 
 """

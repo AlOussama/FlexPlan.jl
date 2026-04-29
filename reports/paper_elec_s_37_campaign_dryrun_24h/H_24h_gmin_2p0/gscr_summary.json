@@ -1,0 +1,477 @@
+{
+  "gscr_reconstruction_residual": 3.410605131648481e-13,
+  "min_gscr_margin": -3.410605131648481e-13,
+  "weakest_bus": 35,
+  "weakest_snapshot": 14,
+  "near_binding_count": 769,
+  "top_weakest_constraints": [
+    {
+      "battery_gfm_contribution": 0.0,
+      "lhs_sigma0_G": 0.0,
+      "rhs_gfl_exposure_by_carrier": {
+        "offwind-dc": 6.09646416053107,
+        "solar": 100.00000000000007,
+        "offwind-ac": 200.0,
+        "onwind": 412.90353583946916,
+        "battery_gfl": 0.0
+      },
+      "bus": 35,
+      "margin": -3.410605131648481e-13,
+      "snapshot": 14,
+      "lhs_gfm_contribution_by_carrier": {
+        "battery_gfm": 0.0,
+        "CCGT": 45.0,
+        "PHS": 7.5,
+        "nuclear": 65.0,
+        "ror": 62.5,
+        "OCGT": 0.0,
+        "hydro": 539.0
+      }
+    },
+    {
+      "battery_gfm_contribution": 0.0,
+      "lhs_sigma0_G": 0.0,
+      "rhs_gfl_exposure_by_carrier": {
+        "offwind-dc": 0.0,
+        "solar": 49.82508399142119,
+        "offwind-ac": 200.00000000000006,
+        "onwind": 100.00000000000023,
+        "battery_gfl": 0.0
+      },
+      "bus": 14,
+      "margin": -2.2737367544323206e-13,
+      "snapshot": 12,
+      "lhs_gfm_contribution_by_carrier": {
+        "battery_gfm": 0.0,
+        "biomass": 15.0,
+        "CCGT": 75.0,
+        "nuclear": 78.32508399142124,
+        "ror": 72.5,
+        "coal": 45.0,
+        "OCGT": 0.0,
+        "hydro": 64.0
+      }
+    },
+    {
+      "battery_gfm_contribution": 0.0,
+      "lhs_sigma0_G": 0.0,
+      "rhs_gfl_exposure_by_carrier": {
+        "offwind-dc": 0.0,
+        "solar": 49.82508399142119,
+        "offwind-ac": 200.00000000000006,
+        "onwind": 100.00000000000023,
+        "battery_gfl": 0.0
+      },
+      "bus": 14,
+      "margin": -2.2737367544323206e-13,
+      "snapshot": 13,
+      "lhs_gfm_contribution_by_carrier": {
+        "battery_gfm": 0.0,
+        "biomass": 15.0,
+        "CCGT": 75.0,
+        "nuclear": 78.32508399142124,
+        "ror": 72.5,
+        "coal": 45.0,
+        "OCGT": 0.0,
+        "hydro": 64.0
+      }
+    },
+    {
+      "battery_gfm_contribution": 0.0,
+      "lhs_sigma0_G": 0.0,
+      "rhs_gfl_exposure_by_carrier": {
+        "offwind-dc": 0.0,
+        "solar": 49.82508399142119,
+        "offwind-ac": 200.00000000000006,
+        "onwind": 100.00000000000023,
+        "battery_gfl": 0.0
+      },
+      "bus": 14,
+      "margin": -2.2737367544323206e-13,
+      "snapshot": 14,
+      "lhs_gfm_contribution_by_carrier": {
+        "battery_gfm": 0.0,
+        "biomass": 15.0,
+        "CCGT": 75.0,
+        "nuclear": 78.32508399142124,
+        "ror": 72.5,
+        "coal": 45.0,
+        "OCGT": 0.0,
+        "hydro": 64.0
+      }
+    },
+    {
+      "battery_gfm_contribution": 0.0,
+      "lhs_sigma0_G": 0.0,
+      "rhs_gfl_exposure_by_carrier": {
+        "offwind-dc": 0.0,
+        "solar": 49.82508399142119,
+        "offwind-ac": 200.00000000000006,
+        "onwind": 100.00000000000023,
+        "battery_gfl": 0.0
+      },
+      "bus": 14,
+      "margin": -2.2737367544323206e-13,
+      "snapshot": 15,
+      "lhs_gfm_contribution_by_carrier": {
+        "battery_gfm": 0.0,
+        "biomass": 15.0,
+        "CCGT": 75.0,
+        "nuclear": 78.32508399142124,
+        "ror": 72.5,
+        "coal": 45.0,
+        "OCGT": 0.0,
+        "hydro": 64.0
+      }
+    },
+    {
+      "battery_gfm_contribution": 0.0,
+      "lhs_sigma0_G": 0.0,
+      "rhs_gfl_exposure_by_carrier": {
+        "offwind-dc": 0.0,
+        "solar": 49.82508399142119,
+        "offwind-ac": 200.0,
+        "onwind": 100.00000000000023,
+        "battery_gfl": 0.0
+      },
+      "bus": 14,
+      "margin": -1.7053025658242404e-13,
+      "snapshot": 16,
+      "lhs_gfm_contribution_by_carrier": {
+        "battery_gfm": 0.0,
+        "biomass": 15.0,
+        "CCGT": 75.0,
+        "nuclear": 78.32508399142124,
+        "ror": 72.5,
+        "coal": 45.0,
+        "OCGT": 0.0,
+        "hydro": 64.0
+      }
+    },
+    {
+      "battery_gfm_contribution": 0.0,
+      "lhs_sigma0_G": 0.0,
+      "rhs_gfl_exposure_by_carrier": {
+        "offwind-dc": 0.0,
+        "solar": 100.0,
+        "offwind-ac": 200.0,
+        "onwind": 412.90353583946893,
+        "battery_gfl": 0.0
+      },
+      "bus": 35,
+      "margin": -1.1368683772161603e-13,
+      "snapshot": 2,
+      "lhs_gfm_contribution_by_carrier": {
+        "battery_gfm": 0.0,
+        "CCGT": 38.903535839468894,
+        "PHS": 7.5,
+        "nuclear": 65.0,
+        "ror": 62.5,
+        "OCGT": 0.0,
+        "hydro": 539.0
+      }
+    },
+    {
+      "battery_gfm_contribution": 0.0,
+      "lhs_sigma0_G": 0.0,
+      "rhs_gfl_exposure_by_carrier": {
+        "offwind-dc": 0.0,
+        "solar": 100.0,
+        "offwind-ac": 200.0,
+        "onwind": 412.90353583946893,
+        "battery_gfl": 0.0
+      },
+      "bus": 35,
+      "margin": -1.1368683772161603e-13,
+      "snapshot": 3,
+      "lhs_gfm_contribution_by_carrier": {
+        "battery_gfm": 0.0,
+        "CCGT": 38.903535839468894,
+        "PHS": 7.5,
+        "nuclear": 65.0,
+        "ror": 62.5,
+        "OCGT": 0.0,
+        "hydro": 539.0
+      }
+    },
+    {
+      "battery_gfm_contribution": 0.0,
+      "lhs_sigma0_G": 0.0,
+      "rhs_gfl_exposure_by_carrier": {
+        "offwind-dc": 0.0,
+        "solar": 100.0,
+        "offwind-ac": 200.0,
+        "onwind": 412.90353583946893,
+        "battery_gfl": 0.0
+      },
+      "bus": 35,
+      "margin": -1.1368683772161603e-13,
+      "snapshot": 4,
+      "lhs_gfm_contribution_by_carrier": {
+        "battery_gfm": 0.0,
+        "CCGT": 38.903535839468894,
+        "PHS": 7.5,
+        "nuclear": 65.0,
+        "ror": 62.5,
+        "OCGT": 0.0,
+        "hydro": 539.0
+      }
+    },
+    {
+      "battery_gfm_contribution": 0.0,
+      "lhs_sigma0_G": 0.0,
+      "rhs_gfl_exposure_by_carrier": {
+        "offwind-dc": 6.09646416053107,
+        "solar": 100.00000000000007,
+        "offwind-ac": 200.0,
+        "onwind": 412.90353583946893,
+        "battery_gfl": 0.0
+      },
+      "bus": 35,
+      "margin": -1.1368683772161603e-13,
+      "snapshot": 12,
+      "lhs_gfm_contribution_by_carrier": {
+        "battery_gfm": 0.0,
+        "CCGT": 45.0,
+        "PHS": 7.5,
+        "nuclear": 65.0,
+        "ror": 62.5,
+        "OCGT": 0.0,
+        "hydro": 539.0
+      }
+    },
+    {
+      "battery_gfm_contribution": 0.0,
+      "lhs_sigma0_G": 0.0,
+      "rhs_gfl_exposure_by_carrier": {
+        "offwind-dc": 6.09646416053107,
+        "solar": 100.00000000000007,
+        "offwind-ac": 200.0,
+        "onwind": 412.90353583946893,
+        "battery_gfl": 0.0
+      },
+      "bus": 35,
+      "margin": -1.1368683772161603e-13,
+      "snapshot": 13,
+      "lhs_gfm_contribution_by_carrier": {
+        "battery_gfm": 0.0,
+        "CCGT": 45.0,
+        "PHS": 7.5,
+        "nuclear": 65.0,
+        "ror": 62.5,
+        "OCGT": 0.0,
+        "hydro": 539.0
+      }
+    },
+    {
+      "battery_gfm_contribution": 0.0,
+      "lhs_sigma0_G": 0.0,
+      "rhs_gfl_exposure_by_carrier": {
+        "offwind-dc": 6.096464160530772,
+        "solar": 100.00000000000007,
+        "offwind-ac": 200.0,
+        "onwind": 412.90353583946916,
+        "battery_gfl": 0.0
+      },
+      "bus": 35,
+      "margin": -1.1368683772161603e-13,
+      "snapshot": 15,
+      "lhs_gfm_contribution_by_carrier": {
+        "battery_gfm": 0.0,
+        "CCGT": 45.0,
+        "PHS": 7.5,
+        "nuclear": 65.0,
+        "ror": 62.5,
+        "OCGT": 0.0,
+        "hydro": 539.0
+      }
+    },
+    {
+      "battery_gfm_contribution": 0.0,
+      "lhs_sigma0_G": 0.0,
+      "rhs_gfl_exposure_by_carrier": {
+        "offwind-dc": 6.096464160530772,
+        "solar": 100.00000000000007,
+        "offwind-ac": 200.0,
+        "onwind": 412.90353583946916,
+        "battery_gfl": 0.0
+      },
+      "bus": 35,
+      "margin": -1.1368683772161603e-13,
+      "snapshot": 16,
+      "lhs_gfm_contribution_by_carrier": {
+        "battery_gfm": 0.0,
+        "CCGT": 45.0,
+        "PHS": 7.5,
+        "nuclear": 65.0,
+        "ror": 62.5,
+        "OCGT": 0.0,
+        "hydro": 539.0
+      }
+    },
+    {
+      "battery_gfm_contribution": 0.0,
+      "lhs_sigma0_G": 0.0,
+      "rhs_gfl_exposure_by_carrier": {
+        "offwind-dc": 6.096464160530772,
+        "solar": 100.00000000000007,
+        "offwind-ac": 200.0,
+        "onwind": 412.90353583946916,
+        "battery_gfl": 0.0
+      },
+      "bus": 35,
+      "margin": -1.1368683772161603e-13,
+      "snapshot": 17,
+      "lhs_gfm_contribution_by_carrier": {
+        "battery_gfm": 0.0,
+        "CCGT": 45.0,
+        "PHS": 7.5,
+        "nuclear": 65.0,
+        "ror": 62.5,
+        "OCGT": 0.0,
+        "hydro": 539.0
+      }
+    },
+    {
+      "battery_gfm_contribution": 0.0,
+      "lhs_sigma0_G": 0.0,
+      "rhs_gfl_exposure_by_carrier": {
+        "offwind-dc": 6.096464160530772,
+        "solar": 100.00000000000007,
+        "offwind-ac": 200.0,
+        "onwind": 412.90353583946916,
+        "battery_gfl": 0.0
+      },
+      "bus": 35,
+      "margin": -1.1368683772161603e-13,
+      "snapshot": 18,
+      "lhs_gfm_contribution_by_carrier": {
+        "battery_gfm": 0.0,
+        "CCGT": 45.0,
+        "PHS": 7.5,
+        "nuclear": 65.0,
+        "ror": 62.5,
+        "OCGT": 0.0,
+        "hydro": 539.0
+      }
+    },
+    {
+      "battery_gfm_contribution": 0.0,
+      "lhs_sigma0_G": 0.0,
+      "rhs_gfl_exposure_by_carrier": {
+        "offwind-dc": 6.096464160530772,
+        "solar": 100.00000000000007,
+        "offwind-ac": 200.0,
+        "onwind": 412.90353583946916,
+        "battery_gfl": 0.0
+      },
+      "bus": 35,
+      "margin": -1.1368683772161603e-13,
+      "snapshot": 23,
+      "lhs_gfm_contribution_by_carrier": {
+        "battery_gfm": 0.0,
+        "CCGT": 45.0,
+        "PHS": 7.5,
+        "nuclear": 65.0,
+        "ror": 62.5,
+        "OCGT": 0.0,
+        "hydro": 539.0
+      }
+    },
+    {
+      "battery_gfm_contribution": 0.0,
+      "lhs_sigma0_G": 0.0,
+      "rhs_gfl_exposure_by_carrier": {
+        "offwind-dc": 6.096464160530772,
+        "solar": 100.00000000000007,
+        "offwind-ac": 200.0,
+        "onwind": 412.90353583946916,
+        "battery_gfl": 0.0
+      },
+      "bus": 35,
+      "margin": -1.1368683772161603e-13,
+      "snapshot": 24,
+      "lhs_gfm_contribution_by_carrier": {
+        "battery_gfm": 0.0,
+        "CCGT": 45.0,
+        "PHS": 7.5,
+        "nuclear": 65.0,
+        "ror": 62.5,
+        "OCGT": 0.0,
+        "hydro": 539.0
+      }
+    },
+    {
+      "battery_gfm_contribution": 212.05761938746946,
+      "lhs_sigma0_G": 0.0,
+      "rhs_gfl_exposure_by_carrier": {
+        "solar": 212.0576193874695,
+        "offwind-ac": 0.0,
+        "onwind": 54.50000000000001,
+        "battery_gfl": 0.0
+      },
+      "bus": 23,
+      "margin": -5.684341886080802e-14,
+      "snapshot": 18,
+      "lhs_gfm_contribution_by_carrier": {
+        "oil": 7.0,
+        "battery_gfm": 212.05761938746946,
+        "biomass": 2.5,
+        "CCGT": 30.0,
+        "ror": 2.5,
+        "PHS": 7.5,
+        "OCGT": 0.0,
+        "hydro": 5.0
+      }
+    },
+    {
+      "battery_gfm_contribution": 0.0,
+      "lhs_sigma0_G": 0.0,
+      "rhs_gfl_exposure_by_carrier": {
+        "offwind-dc": 0.0,
+        "solar": 99.99999999999997,
+        "offwind-ac": 200.00000000000006,
+        "onwind": 1.000000000000023,
+        "battery_gfl": 0.0
+      },
+      "bus": 4,
+      "margin": -5.684341886080802e-14,
+      "snapshot": 21,
+      "lhs_gfm_contribution_by_carrier": {
+        "battery_gfm": 0.0,
+        "CCGT": 225.0,
+        "biomass": 12.5,
+        "ror": 2.5,
+        "PHS": 60.0,
+        "OCGT": 0.0,
+        "hydro": 1.0
+      }
+    },
+    {
+      "battery_gfm_contribution": 0.0,
+      "lhs_sigma0_G": 0.0,
+      "rhs_gfl_exposure_by_carrier": {
+        "solar": 54.50000000000001,
+        "offwind-ac": 0.0,
+        "onwind": 0.0,
+        "battery_gfl": 0.0
+      },
+      "bus": 23,
+      "margin": -7.105427357601002e-15,
+      "snapshot": 1,
+      "lhs_gfm_contribution_by_carrier": {
+        "oil": 7.0,
+        "battery_gfm": 0.0,
+        "biomass": 2.5,
+        "CCGT": 30.0,
+        "ror": 2.5,
+        "PHS": 7.5,
+        "OCGT": 0.0,
+        "hydro": 5.0
+      }
+    }
+  ],
+  "battery_gfm_contribution_at_weakest_bus": 0.0,
+  "gfm_investment_local_to_weak_buses": true,
+  "violated_gscr_count": 0
+}

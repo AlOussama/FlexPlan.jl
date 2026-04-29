@@ -1,0 +1,35 @@
+{
+  "all_block_variables_integer_created": true,
+  "variables": {
+    "na_block": {
+      "continuous_count": 0,
+      "integer_count": 127344,
+      "value_count_checked": 127344,
+      "count": 127344,
+      "max_fractionality_after_solve": 0.0
+    },
+    "sd_block": {
+      "continuous_count": 0,
+      "integer_count": 127344,
+      "value_count_checked": 127344,
+      "count": 127344,
+      "max_fractionality_after_solve": 0.0
+    },
+    "n_block": {
+      "continuous_count": 0,
+      "integer_count": 127344,
+      "value_count_checked": 127344,
+      "count": 127344,
+      "max_fractionality_after_solve": 0.0
+    },
+    "su_block": {
+      "continuous_count": 0,
+      "integer_count": 127344,
+      "value_count_checked": 127344,
+      "count": 127344,
+      "max_fractionality_after_solve": 0.0
+    }
+  },
+  "expected_integer_block_variables": true,
+  "relax_block_variables": false
+}

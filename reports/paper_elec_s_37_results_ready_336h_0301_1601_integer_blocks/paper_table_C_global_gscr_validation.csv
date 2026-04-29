@@ -1,0 +1,7 @@
+metric,unit,BASE,gSCR-GERSH-1.0,gSCR-GERSH-1.5
+min_global_gSCR_t,p.u.,0.003422952395491217,1.0013461538461526,1.4999999999999984
+global_gSCR_violation_snapshots_percent_alpha_1p5,%,100.0,100.0,0.0
+min_mu_t_alpha_1p5,p.u.,-172400.6820624249,-3953.875719700078,-1.4886607656362923e-12
+mu_violation_snapshots_percent_alpha_1p5,%,100.0,100.0,0.0
+max_local_utilization_alpha_1p5,p.u.,780.0,1.5,1.0
+total_local_deficit_alpha_1p5,MW-equivalent,1.764019535e8,5.0545405e6,0.0

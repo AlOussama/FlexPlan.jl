@@ -1,0 +1,25 @@
+{
+  "git_branch": "fix/block-storage-bounds-and-pmin-policy",
+  "solver_options": {
+    "silent": true
+  },
+  "snapshot_count": 168,
+  "continue_on_infeasible": true,
+  "dataset_path": "D:\\Projekte\\Code\\pypsatomatpowerx_clean_battery_policy\\data\\flexplan_block_gscr\\elec_s_37_1week_from_0301\\case.json",
+  "horizon_length": "1 week",
+  "architecture_flags": {
+    "dcline_in_gscr": false,
+    "block_only": true,
+    "dcline_setpoints": false,
+    "standard_uc": false,
+    "standard_candidate_expansion": false
+  },
+  "git_commit": "9c1f3dbeebb276c5c012e962faca4ff00f9b3e14",
+  "git_tags": [
+    "block-only-capexp-uc-cleanup-v1"
+  ],
+  "final_storage_policy": "short_horizon_relaxed",
+  "timestamp": "2026-04-27T20:39:36",
+  "g_min": 1.0,
+  "solver_name": "HiGHS"
+}
