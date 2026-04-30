@@ -165,6 +165,7 @@ function build_uc_gscr_block_integration(
         end
     end
 
+    _validate_uc_gscr_block_storage_architecture!(pm)
     _record_uc_gscr_block_architecture_diagnostics!(pm; storage_terminal_policy, storage_terminal_fraction, final_storage_policy)
 end
 
@@ -263,6 +264,248 @@ function _is_uc_gscr_block_enabled_device(pm::_PM.AbstractPowerModel, nw::Int, t
     end
     device_key = (table, id)
     return haskey(_PM.ref(pm, nw, :gfl_devices), device_key) || haskey(_PM.ref(pm, nw, :gfm_devices), device_key)
+end
+
+const _UCGSCR_STANDARD_CANDIDATE_STORAGE_VARIABLES = (:z_strg_ne, :z_strg_ne_investment)
+const _UCGSCR_STANDARD_CANDIDATE_STORAGE_CONSTRAINTS = (
+    :ne_storage_activation,
+    :storage_bounds_ne,
+    :storage_state_ne,
+    :storage_state_final_ne,
+    :storage_excl_slack_ne,
+    :storage_thermal_limit_ne,
+)
+
+function _uc_gscr_block_enabled_device_ids(pm::_PM.AbstractPowerModel, nw::Int, table::Symbol)
+    if !haskey(_PM.ref(pm, nw), table)
+        return Any[]
+    end
+    return Any[i for i in _PM.ids(pm, nw, table) if _is_uc_gscr_block_enabled_device(pm, nw, table, i)]
+end
+
+function _uc_gscr_container_has_index(container, i)
+    try
+        container[i]
+        return true
+    catch err
+        if err isa KeyError || err isa BoundsError
+            return false
+        end
+        return true
+    end
+end
+
+function _uc_gscr_var_family_has_device(pm::_PM.AbstractPowerModel, nw::Int, family::Symbol, i)
+    if !haskey(_PM.var(pm, nw), family)
+        return false
+    end
+    return _uc_gscr_container_has_index(_PM.var(pm, nw)[family], i)
+end
+
+function _uc_gscr_con_family_offending_ids(pm::_PM.AbstractPowerModel, nw::Int, family::Symbol, block_enabled_ids)
+    if !haskey(_PM.con(pm, nw), family) || isempty(block_enabled_ids)
+        return Any[]
+    end
+
+    container = _PM.con(pm, nw)[family]
+    ids = Any[i for i in block_enabled_ids if _uc_gscr_container_has_index(container, i)]
+    return isempty(ids) ? collect(block_enabled_ids) : ids
+end
+
+function _uc_gscr_objective_uses_variable(pm::_PM.AbstractPowerModel, variable)
+    if !(variable isa JuMP.VariableRef)
+        return false
+    end
+    try
+        return !iszero(JuMP.coefficient(JuMP.objective_function(pm.model), variable))
+    catch
+        return false
+    end
+end
+
+function _uc_gscr_collect_block_storage_architecture_violations(pm::_PM.AbstractPowerModel)
+    violations = Dict{String,Vector{Dict{String,Any}}}(
+        "standard_candidate_build_variables" => Dict{String,Any}[],
+        "standard_candidate_activation_constraints" => Dict{String,Any}[],
+        "standard_candidate_investment_cost" => Dict{String,Any}[],
+        "standard_bound_conflicts" => Dict{String,Any}[],
+        "missing_block_native_storage_envelopes" => Dict{String,Any}[],
+    )
+
+    for nw in nw_ids(pm)
+        block_ne_ids = _uc_gscr_block_enabled_device_ids(pm, nw, :ne_storage)
+
+        for i in block_ne_ids
+            for family in _UCGSCR_STANDARD_CANDIDATE_STORAGE_VARIABLES
+                if _uc_gscr_var_family_has_device(pm, nw, family, i)
+                    push!(violations["standard_candidate_build_variables"], Dict(
+                        "nw" => nw,
+                        "table" => "ne_storage",
+                        "device_id" => i,
+                        "family" => String(family),
+                    ))
+                    variable = _PM.var(pm, nw)[family][i]
+                    if _uc_gscr_objective_uses_variable(pm, variable)
+                        push!(violations["standard_candidate_investment_cost"], Dict(
+                            "nw" => nw,
+                            "table" => "ne_storage",
+                            "device_id" => i,
+                            "family" => String(family),
+                        ))
+                    end
+                end
+            end
+        end
+
+        for family in _UCGSCR_STANDARD_CANDIDATE_STORAGE_CONSTRAINTS
+            for i in _uc_gscr_con_family_offending_ids(pm, nw, family, block_ne_ids)
+                push!(violations["standard_candidate_activation_constraints"], Dict(
+                    "nw" => nw,
+                    "table" => "ne_storage",
+                    "device_id" => i,
+                    "family" => String(family),
+                ))
+            end
+        end
+
+        if haskey(_PM.var(pm, nw), :pg) && haskey(_PM.con(pm, nw), :uc_gscr_block_active_dispatch_bounds)
+            for i in _uc_gscr_block_enabled_device_ids(pm, nw, :gen)
+                pg = _PM.var(pm, nw, :pg, i)
+                if JuMP.has_lower_bound(pg) || JuMP.has_upper_bound(pg)
+                    push!(violations["standard_bound_conflicts"], Dict(
+                        "nw" => nw,
+                        "table" => "gen",
+                        "device_id" => i,
+                        "family" => "pg",
+                    ))
+                end
+                if haskey(_PM.var(pm, nw), :qg)
+                    qg = _PM.var(pm, nw, :qg, i)
+                    if JuMP.has_lower_bound(qg) || JuMP.has_upper_bound(qg)
+                        push!(violations["standard_bound_conflicts"], Dict(
+                            "nw" => nw,
+                            "table" => "gen",
+                            "device_id" => i,
+                            "family" => "qg",
+                        ))
+                    end
+                end
+            end
+        end
+
+        for table in (:storage, :ne_storage)
+            for i in _uc_gscr_block_enabled_device_ids(pm, nw, table)
+                if !haskey(_PM.con(pm, nw), :uc_gscr_block_storage_energy_capacity)
+                    push!(violations["missing_block_native_storage_envelopes"], Dict(
+                        "nw" => nw,
+                        "table" => String(table),
+                        "device_id" => i,
+                        "family" => "uc_gscr_block_storage_energy_capacity",
+                    ))
+                end
+                if !haskey(_PM.con(pm, nw), :uc_gscr_block_storage_charge_discharge_bounds)
+                    push!(violations["missing_block_native_storage_envelopes"], Dict(
+                        "nw" => nw,
+                        "table" => String(table),
+                        "device_id" => i,
+                        "family" => "uc_gscr_block_storage_charge_discharge_bounds",
+                    ))
+                end
+
+                if haskey(_PM.con(pm, nw), :uc_gscr_block_storage_energy_capacity) &&
+                   haskey(_PM.con(pm, nw), :uc_gscr_block_storage_charge_discharge_bounds)
+                    if table == :storage
+                        variable_families = (:se, :sc, :sd)
+                    else
+                        variable_families = (:se_ne, :sc_ne, :sd_ne)
+                    end
+
+                    for family in variable_families
+                        if !haskey(_PM.var(pm, nw), family) || !_uc_gscr_container_has_index(_PM.var(pm, nw)[family], i)
+                            push!(violations["missing_block_native_storage_envelopes"], Dict(
+                                "nw" => nw,
+                                "table" => String(table),
+                                "device_id" => i,
+                                "family" => String(family),
+                            ))
+                            continue
+                        end
+                        variable = _PM.var(pm, nw, family, i)
+                        if JuMP.has_upper_bound(variable)
+                            push!(violations["standard_bound_conflicts"], Dict(
+                                "nw" => nw,
+                                "table" => String(table),
+                                "device_id" => i,
+                                "family" => String(family),
+                            ))
+                        end
+                    end
+
+                    device_key = (table, i)
+                    if !haskey(_PM.con(pm, nw)[:uc_gscr_block_storage_energy_capacity], device_key)
+                        push!(violations["missing_block_native_storage_envelopes"], Dict(
+                            "nw" => nw,
+                            "table" => String(table),
+                            "device_id" => i,
+                            "family" => "uc_gscr_block_storage_energy_capacity",
+                        ))
+                    end
+                    if !haskey(_PM.con(pm, nw)[:uc_gscr_block_storage_charge_discharge_bounds], device_key)
+                        push!(violations["missing_block_native_storage_envelopes"], Dict(
+                            "nw" => nw,
+                            "table" => String(table),
+                            "device_id" => i,
+                            "family" => "uc_gscr_block_storage_charge_discharge_bounds",
+                        ))
+                    end
+                end
+            end
+        end
+    end
+
+    return violations
+end
+
+function _uc_gscr_block_storage_architecture_guard_passed(violations::Dict{String,Vector{Dict{String,Any}}})
+    return all(isempty, values(violations))
+end
+
+function _uc_gscr_architecture_violation_message(kind::String, violation::Dict{String,Any})
+    return "table=$(violation["table"]) device=$(violation["device_id"]) nw=$(violation["nw"]) offending $(kind)=$(violation["family"])"
+end
+
+function _validate_uc_gscr_block_storage_architecture!(pm::_PM.AbstractPowerModel)
+    violations = _uc_gscr_collect_block_storage_architecture_violations(pm)
+    pm.ext[:uc_gscr_block_architecture_guard_violations] = violations
+    pm.ext[:uc_gscr_block_architecture_guard_passed] = _uc_gscr_block_storage_architecture_guard_passed(violations)
+    if pm.ext[:uc_gscr_block_architecture_guard_passed]
+        return nothing
+    end
+
+    messages = String[]
+    for violation in violations["standard_candidate_build_variables"]
+        push!(messages, _uc_gscr_architecture_violation_message("variable family", violation))
+    end
+    for violation in violations["standard_candidate_activation_constraints"]
+        push!(messages, _uc_gscr_architecture_violation_message("constraint family", violation))
+    end
+    for violation in violations["standard_candidate_investment_cost"]
+        push!(messages, _uc_gscr_architecture_violation_message("objective variable family", violation))
+    end
+    for violation in violations["standard_bound_conflicts"]
+        push!(messages, _uc_gscr_architecture_violation_message("standard bound", violation))
+    end
+    for violation in violations["missing_block_native_storage_envelopes"]
+        push!(messages, _uc_gscr_architecture_violation_message("missing block-native family", violation))
+    end
+
+    Memento.error(
+        _LOGGER,
+        "UC/gSCR block storage architecture guard failed. " *
+        "Block-enabled candidate storage must use block variables and block-scaled constraints only; " *
+        "standard FlexPlan candidate-storage binary investment/activation logic is forbidden. " *
+        join(messages, " | "),
+    )
 end
 
 function _relax_standard_bounds_for_block_enabled_devices!(pm::_PM.AbstractActivePowerModel, nw::Int)
@@ -405,9 +648,17 @@ function _record_uc_gscr_block_architecture_diagnostics!(
     if !isnothing(final_storage_policy)
         diagnostics["deprecated_final_storage_policy"] = String(final_storage_policy)
     end
-    diagnostics["uses_standard_candidate_build_variables"] = haskey(_PM.var(pm, nw), :z_strg_ne) || haskey(_PM.var(pm, nw), :z_strg_ne_investment)
-    diagnostics["uses_standard_candidate_activation_constraints"] = haskey(_PM.con(pm, nw), :ne_storage_activation)
-    diagnostics["uses_standard_candidate_investment_cost"] = false
+
+    violations = get(pm.ext, :uc_gscr_block_architecture_guard_violations, _uc_gscr_collect_block_storage_architecture_violations(pm))
+    guard_passed = _uc_gscr_block_storage_architecture_guard_passed(violations)
+    diagnostics["forbidden_candidate_storage_variables_checked"] = [String(family) for family in _UCGSCR_STANDARD_CANDIDATE_STORAGE_VARIABLES]
+    diagnostics["forbidden_candidate_storage_constraints_checked"] = [String(family) for family in _UCGSCR_STANDARD_CANDIDATE_STORAGE_CONSTRAINTS]
+    diagnostics["uses_standard_candidate_build_variables"] = !isempty(violations["standard_candidate_build_variables"])
+    diagnostics["uses_standard_candidate_activation_constraints"] = !isempty(violations["standard_candidate_activation_constraints"])
+    diagnostics["uses_standard_candidate_investment_cost"] = !isempty(violations["standard_candidate_investment_cost"])
+    diagnostics["standard_candidate_bound_conflicts"] = violations["standard_bound_conflicts"]
+    diagnostics["missing_block_native_storage_envelopes"] = violations["missing_block_native_storage_envelopes"]
+    diagnostics["block_architecture_guard_passed"] = guard_passed
 
     ne_rows = Vector{Any}()
     for i in _PM.ids(pm, :ne_storage, nw=nw)
