@@ -270,16 +270,16 @@ function _pypsa_diag_converter_flags(raw::Dict{String,Any}, solver_data::Dict{St
     flags = String[]
     for (nw_id, nw) in sort(collect(raw["nw"]); by=x -> parse(Int, x.first))
         for (id, gen) in nw["gen"]
-            if haskey(gen, "na0") && haskey(gen, "n_block0") && gen["na0"] > gen["n_block0"] + 1e-8
-                push!(flags, "nw $(nw_id) gen $(id): raw na0=$(gen["na0"]) > n_block0=$(gen["n_block0"])")
+            if haskey(gen, "na0") && haskey(gen, "n0") && gen["na0"] > gen["n0"] + 1e-8
+                push!(flags, "nw $(nw_id) gen $(id): raw na0=$(gen["na0"]) > n0=$(gen["n0"])")
             end
-            if get(gen, "p_block_max_pu", 1.0) < 1e-5 && get(gen, "pmax", 0.0) > 1e-6
-                push!(flags, "nw $(nw_id) gen $(id): p_block_max_pu very small while pmax positive")
+            if get(gen, "p_max_pu", 1.0) < 1e-5 && get(gen, "pmax", 0.0) > 1e-6
+                push!(flags, "nw $(nw_id) gen $(id): p_max_pu very small while pmax positive")
             end
         end
         for (id, storage) in nw["storage"]
-            if haskey(storage, "na0") && haskey(storage, "n_block0") && storage["na0"] > storage["n_block0"] + 1e-8
-                push!(flags, "nw $(nw_id) storage $(id): raw na0=$(storage["na0"]) > n_block0=$(storage["n_block0"])")
+            if haskey(storage, "na0") && haskey(storage, "n0") && storage["na0"] > storage["n0"] + 1e-8
+                push!(flags, "nw $(nw_id) storage $(id): raw na0=$(storage["na0"]) > n0=$(storage["n0"])")
             end
             if get(storage, "energy", 0.0) > get(storage, "energy_rating", Inf) + 1e-8
                 push!(flags, "nw $(nw_id) storage $(id): energy=$(storage["energy"]) > energy_rating=$(storage["energy_rating"]) before first-period dispatch")

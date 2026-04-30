@@ -14,19 +14,32 @@ const _PYPSA_ACCEPTANCE_DATASETS = [
 ]
 
 const _PYPSA_BLOCK_FIELDS = [
-    "type",
-    "n_block0",
-    "n_block_max",
+    "carrier",
+    "grid_control_mode",
+    "n0",
+    "nmax",
     "na0",
-    "p_block_min",
     "p_block_max",
     "q_block_min",
     "q_block_max",
-    "H",
     "b_block",
+    "cost_inv_per_mw",
+    "p_min_pu",
+    "p_max_pu",
+    "startup_cost_per_mw",
+    "shutdown_cost_per_mw",
+]
+
+# PyPSA acceptance consumes schema-v2 converted data directly. These v1 and
+# policy fields are rejected; no silent test adapter translates them.
+const _PYPSA_REJECTED_BLOCK_FIELDS = [
+    "type",
     "cost_inv_block",
     "startup_block_cost",
     "shutdown_block_cost",
+    "activation_policy",
+    "uc_policy",
+    "gscr_exposure_policy",
 ]
 
 const _PYPSA_ACTIVE_OK_STATUSES = Set(["OPTIMAL", "LOCALLY_SOLVED", "ALMOST_OPTIMAL"])
@@ -46,9 +59,9 @@ end
 
 function _pypsa_block_devices(nw::Dict{String,Any})
     devices = Tuple{String,String,Any}[]
-    for table in ("gen", "storage")
+    for table in ("gen", "storage", "ne_storage")
         for (id, device) in get(nw, table, Dict{String,Any}())
-            if haskey(device, "type")
+            if haskey(device, "grid_control_mode")
                 push!(devices, (table, id, device))
             end
         end
@@ -56,18 +69,49 @@ function _pypsa_block_devices(nw::Dict{String,Any})
     return devices
 end
 
+function _pypsa_assert_no_rejected_block_fields(data::Dict{String,Any}, dataset_name::String)
+    violations = String[]
+    for (nw_id, nw) in sort(collect(data["nw"]); by=x -> parse(Int, x.first))
+        for table in ("gen", "storage", "ne_storage")
+            for (component_id, component) in get(nw, table, Dict{String,Any}())
+                rejected = String[field for field in _PYPSA_REJECTED_BLOCK_FIELDS if haskey(component, field)]
+                if !isempty(rejected)
+                    push!(
+                        violations,
+                        "dataset=$(dataset_name) snapshot=$(nw_id) component_type=$(table) component_id=$(component_id) rejected_fields=$(join(rejected, ","))",
+                    )
+                end
+            end
+        end
+    end
+    if !isempty(violations)
+        shown = first(violations, min(length(violations), 20))
+        omitted = length(violations) - length(shown)
+        details = join(shown, "\n")
+        if omitted > 0
+            details *= "\n... $(omitted) additional rejected-field rows omitted"
+        end
+        error(
+            "UC/gSCR block schema v2 validation failed: PyPSA acceptance data contains rejected v1/policy fields. " *
+            "Use grid_control_mode, cost_inv_per_mw, startup_cost_per_mw, and shutdown_cost_per_mw. " *
+            "No v1 acceptance adapter is applied.\n" * details,
+        )
+    end
+    return nothing
+end
+
 function _pypsa_check_na0_invariants(data::Dict{String,Any}, dataset_name::String)
     violations = Dict{String,Any}[]
     for (nw_id, nw) in sort(collect(data["nw"]); by=x -> parse(Int, x.first))
         for table in ("gen", "storage", "ne_storage")
             for (component_id, component) in get(nw, table, Dict{String,Any}())
-                if !haskey(component, "type")
+                if !haskey(component, "grid_control_mode")
                     continue
                 end
                 na0 = component["na0"]
-                n_block0 = component["n_block0"]
-                n_block_max = component["n_block_max"]
-                valid = 0.0 <= na0 <= n_block0 <= n_block_max
+                n0 = component["n0"]
+                nmax = component["nmax"]
+                valid = 0.0 <= na0 <= n0 <= nmax
                 if !valid
                     push!(
                         violations,
@@ -78,8 +122,8 @@ function _pypsa_check_na0_invariants(data::Dict{String,Any}, dataset_name::Strin
                             "component_id" => component_id,
                             "carrier" => get(component, "carrier", ""),
                             "na0" => na0,
-                            "n_block0" => n_block0,
-                            "n_block_max" => n_block_max,
+                            "n0" => n0,
+                            "nmax" => nmax,
                         ),
                     )
                 end
@@ -96,21 +140,29 @@ function _pypsa_assert_no_na0_invariant_violations(data::Dict{String,Any}, datas
         for v in violations
             push!(
                 lines,
-                "dataset=$(v["dataset"]) snapshot=$(v["snapshot"]) component_type=$(v["component_type"]) component_id=$(v["component_id"]) carrier=$(v["carrier"]) na0=$(v["na0"]) n_block0=$(v["n_block0"]) n_block_max=$(v["n_block_max"])",
+                "dataset=$(v["dataset"]) snapshot=$(v["snapshot"]) component_type=$(v["component_type"]) component_id=$(v["component_id"]) carrier=$(v["carrier"]) na0=$(v["na0"]) n0=$(v["n0"]) nmax=$(v["nmax"])",
             )
         end
         error(
-            "na0 invariant violations found (require 0 <= na0 <= n_block0 <= n_block_max):\n" * join(lines, "\n")
+            "na0 invariant violations found (require 0 <= na0 <= n0 <= nmax):\n" * join(lines, "\n")
         )
     end
     return nothing
 end
 
+function _pypsa_has_schema_v2(data::Dict{String,Any})
+    expected = Dict{String,Any}("name" => "uc_gscr_block", "version" => "2.0")
+    if get(data, "block_model_schema", nothing) == expected
+        return true
+    end
+    return all(get(nw, "block_model_schema", nothing) == expected for nw in values(data["nw"]))
+end
+
 function _pypsa_schema_summary(data::Dict{String,Any}, expected_snapshots::Int)
     nw1 = data["nw"]["1"]
     devices = _pypsa_block_devices(nw1)
-    gfl_count = count(device -> device[3]["type"] == "gfl", devices)
-    gfm_count = count(device -> device[3]["type"] == "gfm", devices)
+    gfl_count = count(device -> device[3]["grid_control_mode"] == "gfl", devices)
+    gfm_count = count(device -> device[3]["grid_control_mode"] == "gfm", devices)
     return Dict{String,Any}(
         "multinetwork" => data["multinetwork"],
         "snapshots" => length(data["nw"]),
@@ -127,6 +179,8 @@ end
 function _pypsa_assert_schema(data::Dict{String,Any}, expected_snapshots::Int)
     @test data["multinetwork"] == true
     @test length(data["nw"]) == expected_snapshots
+    @test _pypsa_has_schema_v2(data)
+    @test all(get(nw, "operation_weight", nothing) !== nothing for nw in values(data["nw"]))
 
     nw1 = data["nw"]["1"]
     @test length(nw1["bus"]) == 5
@@ -135,17 +189,18 @@ function _pypsa_assert_schema(data::Dict{String,Any}, expected_snapshots::Int)
     @test length(nw1["storage"]) == 5
 
     devices = _pypsa_block_devices(nw1)
-    @test count(device -> device[3]["type"] == "gfl", devices) == 17
-    @test count(device -> device[3]["type"] == "gfm", devices) == 11
+    @test count(device -> device[3]["grid_control_mode"] == "gfl", devices) == 17
+    @test count(device -> device[3]["grid_control_mode"] == "gfm", devices) == 11
     @test all(haskey(bus, "g_min") for bus in values(nw1["bus"]))
     @test all(all(haskey(device, field) for field in _PYPSA_BLOCK_FIELDS) for (_, _, device) in devices)
-    @test all(haskey(storage, "e_block") for storage in values(nw1["storage"]))
+    @test all(all(!haskey(device, field) for field in _PYPSA_REJECTED_BLOCK_FIELDS) for (_, _, device) in devices)
+    @test all(haskey(device, "e_block") for (table, _, device) in devices if table in ("storage", "ne_storage"))
 end
 
 function _pypsa_strip_block_fields!(data::Dict{String,Any})
-    fields = Set([_PYPSA_BLOCK_FIELDS; ["p_block_min_pu", "p_block_max_pu", "gscr_rhs_uses_nameplate", "e_block"]])
+    fields = Set([_PYPSA_BLOCK_FIELDS; _PYPSA_REJECTED_BLOCK_FIELDS; ["p_block_min", "H", "s_block", "gscr_rhs_uses_nameplate", "e_block"]])
     for nw in values(data["nw"])
-        for table in ("gen", "storage")
+        for table in ("gen", "storage", "ne_storage")
             for device in values(get(nw, table, Dict{String,Any}()))
                 for field in fields
                     delete!(device, field)
@@ -155,7 +210,10 @@ function _pypsa_strip_block_fields!(data::Dict{String,Any})
         for bus in values(nw["bus"])
             delete!(bus, "g_min")
         end
+        delete!(nw, "operation_weight")
+        delete!(nw, "block_model_schema")
     end
+    delete!(data, "block_model_schema")
     return data
 end
 
@@ -223,6 +281,7 @@ end
 
 function _pypsa_prepare_solver_data(raw_data::Dict{String,Any}; mode::Symbol=:opf, strip_blocks::Bool=false, g_min_override=nothing)
     data = deepcopy(raw_data)
+    _pypsa_assert_no_rejected_block_fields(data, get(data, "name", "pypsa-flexplan-block-gscr"))
     data["per_unit"] = get(data, "per_unit", false)
     data["source_type"] = get(data, "source_type", "pypsa-flexplan-json")
     data["name"] = get(data, "name", "pypsa-flexplan-block-gscr")
@@ -252,7 +311,7 @@ function _pypsa_prepare_solver_data(raw_data::Dict{String,Any}; mode::Symbol=:op
             nw[table] = get(nw, table, Dict{String,Any}())
         end
 
-        for table in ("bus", "branch", "gen", "storage", "load")
+        for table in ("bus", "branch", "gen", "storage", "ne_storage", "load")
             for (id, component) in get(nw, table, Dict{String,Any}())
                 component["index"] = get(component, "index", parse(Int, id))
             end
@@ -282,24 +341,24 @@ function _pypsa_prepare_solver_data(raw_data::Dict{String,Any}; mode::Symbol=:op
             gen["dispatchable"] = get(gen, "dispatchable", true)
             gen["model"] = get(gen, "model", 2)
             gen["cost"] = get(gen, "cost", [0.0, 0.0])
-            if haskey(gen, "n_block0")
-                if !(0.0 <= gen["na0"] <= gen["n_block0"] <= gen["n_block_max"])
-                    error("Invariant violation in solver adapter for gen $(gen["index"]): require 0 <= na0 <= n_block0 <= n_block_max.")
+            if haskey(gen, "grid_control_mode")
+                if !(0.0 <= gen["na0"] <= gen["n0"] <= gen["nmax"])
+                    error("Invariant violation in PyPSA schema-v2 data for gen $(gen["index"]): require 0 <= na0 <= n0 <= nmax.")
                 end
-                # Value-preserving field mapping (except explicit UC-mode nmax override).
-                gen["n0"] = gen["n_block0"]
-                gen["nmax"] = mode == :uc ? gen["n0"] : gen["n_block_max"]
+                if mode == :uc
+                    gen["nmax"] = gen["n0"]
+                end
             end
         end
 
         for storage in values(nw["storage"])
-            if haskey(storage, "n_block0")
-                if !(0.0 <= storage["na0"] <= storage["n_block0"] <= storage["n_block_max"])
-                    error("Invariant violation in solver adapter for storage $(storage["index"]): require 0 <= na0 <= n_block0 <= n_block_max.")
+            if haskey(storage, "grid_control_mode")
+                if !(0.0 <= storage["na0"] <= storage["n0"] <= storage["nmax"])
+                    error("Invariant violation in PyPSA schema-v2 data for storage $(storage["index"]): require 0 <= na0 <= n0 <= nmax.")
                 end
-                # Value-preserving field mapping (except explicit UC-mode nmax override).
-                storage["n0"] = storage["n_block0"]
-                storage["nmax"] = mode == :uc ? storage["n0"] : storage["n_block_max"]
+                if mode == :uc
+                    storage["nmax"] = storage["n0"]
+                end
             end
             storage["r"] = get(storage, "r", 0.0)
             storage["x"] = get(storage, "x", 0.0)
@@ -313,6 +372,17 @@ function _pypsa_prepare_solver_data(raw_data::Dict{String,Any}; mode::Symbol=:op
             storage["energy_rating"] = get(storage, "energy_rating", get(storage, "energy", 1.0))
             storage["max_energy_absorption"] = get(storage, "max_energy_absorption", Inf)
             storage["self_discharge_rate"] = get(storage, "self_discharge_rate", 0.0)
+        end
+
+        for storage in values(nw["ne_storage"])
+            if haskey(storage, "grid_control_mode")
+                if !(0.0 <= storage["na0"] <= storage["n0"] <= storage["nmax"])
+                    error("Invariant violation in PyPSA schema-v2 data for ne_storage $(storage["index"]): require 0 <= na0 <= n0 <= nmax.")
+                end
+                if mode == :uc
+                    storage["nmax"] = storage["n0"]
+                end
+            end
         end
     end
 
@@ -381,8 +451,8 @@ function _pypsa_active_metrics(pm)
     for key in keys
         device = _PM.ref(pm, first_nw, key[1], key[2])
         n_val = JuMP.value(_PM.var(pm, first_nw, :n_block, key))
-        metrics["investment_cost"] += device["cost_inv_block"] * device["p_block_max"] * (n_val - device["n0"])
-        if device["type"] == "gfm"
+        metrics["investment_cost"] += device["cost_inv_per_mw"] * device["p_block_max"] * (n_val - device["n0"])
+        if device["grid_control_mode"] == "gfm"
             metrics["gfm_installed"] += n_val
         end
     end
@@ -396,10 +466,10 @@ function _pypsa_active_metrics(pm)
             sd_val = JuMP.value(_PM.var(pm, nw, :sd_block, key))
             prev_na = _FP.is_first_id(pm, nw, :hour) ? device["na0"] : JuMP.value(_PM.var(pm, _FP.prev_id(pm, nw, :hour), :na_block, key))
 
-            metrics["startup_shutdown_cost"] += device["startup_block_cost"] * su_val + device["shutdown_block_cost"] * sd_val
+            metrics["startup_shutdown_cost"] += device["startup_cost_per_mw"] * su_val + device["shutdown_cost_per_mw"] * sd_val
             metrics["max_transition_residual"] = max(metrics["max_transition_residual"], abs((na_val - prev_na) - (su_val - sd_val)))
             metrics["max_active_bound_violation"] = max(metrics["max_active_bound_violation"], max(0.0, -na_val, na_val - n_val))
-            if device["type"] == "gfm"
+            if device["grid_control_mode"] == "gfm"
                 metrics["gfm_online"] += na_val
             end
         end
@@ -458,8 +528,8 @@ function _pypsa_write_report(records::Vector{Dict{String,Any}}, context::Vector{
         println(io)
         println(io, "## Warnings and Unresolved Issues")
         println(io)
-        println(io, "- The raw PyPSA JSON uses `n_block0`/`n_block_max`; the current optimizer formulation reads `n0`/`nmax`, so the tests apply a solver-copy adapter.")
-        println(io, "- `na0` invariants are validated on raw data for every block-enabled component and snapshot: `0 <= na0 <= n_block0 <= n_block_max`.")
+        println(io, "- PyPSA JSON is required to be UC/gSCR block schema v2; v1 block fields are rejected and no v1 solver-copy adapter is applied.")
+        println(io, "- `na0` invariants are validated on raw data for every block-enabled component and snapshot: `0 <= na0 <= n0 <= nmax`.")
         println(io, "- PyPSA `link` entries with `carrier == \"DC\"` are mapped to PowerModels `dcline`; all other link carriers are ignored in solver copies.")
         println(io, "- Standard OPF is run through `solve_mn_opf_strg` because the datasets include storage.")
         println(io, "- Min-up/min-down, ramping, no-load costs, binary UC commitment variables, SDP/LMI constraints, and new gSCR formulations are not activated.")
@@ -475,8 +545,8 @@ end
         context = [
             "JSON datasets are loaded with JSON.parsefile as PowerModels-style dictionaries.",
             "Multinetwork cases are identified by `multinetwork=true` and processed through `data[\"nw\"]`; the active path receives explicit `:hour`, `:scenario`, and `:year` dimensions.",
-            "Raw block fields are schema-checked as `n_block0`/`n_block_max`; solver copies map them to the formulation fields `n0`/`nmax`.",
-            "Raw block-count invariants are hard-validated before solver-copy mapping: `0 <= na0 <= n_block0 <= n_block_max`.",
+            "Raw block fields are schema-checked with v2 names (`grid_control_mode`, `n0`, `nmax`, `cost_inv_per_mw`, `startup_cost_per_mw`, `shutdown_cost_per_mw`); v1 converted data is no longer accepted.",
+            "Raw block-count invariants are hard-validated before solver execution: `0 <= na0 <= n0 <= nmax`.",
             "PyPSA `link` records are mapped to PowerModels `dcline` only when `carrier == \"DC\"`; non-DC link carriers are ignored.",
             "gSCR constraints are activated only through `ref_add_uc_gscr_block!` and `constraint_gscr_gershgorin_sufficient` in `build_uc_gscr_block_integration`.",
             "UC/scheduling mode is selected in the test adapter by fixing `nmax=n0`; CAPEXP mode allows `nmax>n0` where available.",
@@ -486,6 +556,7 @@ end
         @testset "Load-only schema" begin
             for (name, snapshots) in _PYPSA_ACCEPTANCE_DATASETS
                 data = _pypsa_load_case(name)
+                _pypsa_assert_no_rejected_block_fields(data, name)
                 _pypsa_assert_schema(data, snapshots)
                 _pypsa_assert_no_na0_invariant_violations(data, name)
                 summary = _pypsa_schema_summary(data, snapshots)
