@@ -35,6 +35,7 @@ include("io/multinetwork.jl")
 include("io/plot_geo_data.jl")
 
 include("core/types.jl")
+include("core/block_template.jl")
 include("core/dimensions.jl")
 include("core/variable.jl")
 include("core/block_variable.jl")

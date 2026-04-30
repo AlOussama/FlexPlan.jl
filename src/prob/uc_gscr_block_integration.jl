@@ -1,5 +1,5 @@
 """
-    uc_gscr_block_integration(data, model_type, optimizer; kwargs...)
+    uc_gscr_block_integration(data, model_type, optimizer; template=nothing, kwargs...)
 
 Solves a minimal AC-side UC/gSCR block integration model on a multinetwork.
 
@@ -12,16 +12,20 @@ terms:
 
 Arguments are the input `data`, a PowerModels `model_type`, and a JuMP
 `optimizer`. Required dimensions are `:hour`, `:scenario`, and `:year`.
-This function is formulation-independent and mutates only the instantiated
-optimization model through `solve_model`.
+When `template` is supplied, the builder resolves and caches UC/gSCR block
+formulation assignments before the existing model components are created.
+This function otherwise preserves the current formulation-independent build
+behavior and mutates only the instantiated optimization model through
+`solve_model`.
 """
-function uc_gscr_block_integration(data::Dict{String,Any}, model_type::Type, optimizer; kwargs...)
+function uc_gscr_block_integration(data::Dict{String,Any}, model_type::Type, optimizer; template=nothing, kwargs...)
     require_dim(data, :hour, :scenario, :year)
+    build_method = isnothing(template) ? build_uc_gscr_block_integration : ((pm; build_kwargs...) -> build_uc_gscr_block_integration(pm; template, build_kwargs...))
     return _PM.solve_model(
         data,
         model_type,
         optimizer,
-        build_uc_gscr_block_integration;
+        build_method;
         ref_extensions=[ref_add_gen!, ref_add_storage!, ref_add_ne_storage!, ref_add_uc_gscr_block!],
         solution_processors=[_PM.sol_data_model!],
         multinetwork=true,
@@ -30,7 +34,7 @@ function uc_gscr_block_integration(data::Dict{String,Any}, model_type::Type, opt
 end
 
 """
-    build_uc_gscr_block_integration(pm; objective=true, intertemporal_constraints=true)
+    build_uc_gscr_block_integration(pm; objective=true, intertemporal_constraints=true, template=nothing)
 
 Builds the minimal integrated UC/gSCR block model on one PowerModels instance.
 
@@ -44,6 +48,10 @@ terms. Dcline active-power limits are enforced by the bounded
 it applies existing storage state constraints with an explicit terminal-storage
 policy gate.
 
+When `template` is supplied, this builder validates template compatibility and
+caches resolved formulation data in `pm.ext`; the cached sets are not yet used
+to change variables, constraints, or objective terms.
+
 This builder is formulation-specific to active-power formulations in this
 repository workflow and mutates the JuMP model plus PowerModels variable and
 constraint dictionaries. It assumes fixed topology: no AC/DC line or
@@ -55,7 +63,12 @@ function build_uc_gscr_block_integration(
     intertemporal_constraints::Bool=true,
     final_storage_policy::Symbol=:short_horizon_relaxed,
     relax_block_variables::Bool=true,
+    template=nothing,
 )
+    if !isnothing(template)
+        resolve_uc_gscr_block_template!(pm, template)
+    end
+
     for n in nw_ids(pm)
         _PM.variable_branch_power(pm; nw=n)
         _PM.variable_gen_power(pm; nw=n)
