@@ -72,10 +72,18 @@ end
     @testset "template type construction" begin
         base = _FP.UCGSCRBlockTemplate(Dict((:gen, "CCGT") => _FP.BlockThermalCommitment()), _FP.NoGSCR())
         gscr = _FP.UCGSCRBlockTemplate(Dict((:gen, "CCGT") => _FP.BlockThermalCommitment()), _FP.GershgorinGSCR(_FP.OnlineNameplateExposure()))
+        default_gscr = _FP.GershgorinGSCR()
 
+        @test _FP.BlockThermalCommitment() isa _FP.AbstractBlockDeviceFormulation
+        @test _FP.BlockRenewableParticipation() isa _FP.AbstractBlockDeviceFormulation
+        @test _FP.BlockFixedInstalled() isa _FP.AbstractBlockDeviceFormulation
+        @test _FP.BlockStorageParticipation() isa _FP.AbstractBlockDeviceFormulation
+        @test _FP.NoGSCR() isa _FP.AbstractGSCRFormulation
+        @test _FP.OnlineNameplateExposure() isa _FP.AbstractGSCRExposure
         @test base.gscr_formulation isa _FP.NoGSCR
         @test gscr.gscr_formulation isa _FP.GershgorinGSCR
         @test gscr.gscr_formulation.exposure isa _FP.OnlineNameplateExposure
+        @test default_gscr.exposure isa _FP.OnlineNameplateExposure
     end
 
     @testset "mapping by table and carrier resolves all block-enabled devices" begin
@@ -110,6 +118,13 @@ end
         @test_throws ErrorException _FP.resolve_uc_gscr_block_template!(pm, template)
     end
 
+    @testset "matching is table-specific without carrier-only fallback" begin
+        pm = _uc_gscr_template_pm(; carriers=["CCGT"])
+        template = _FP.UCGSCRBlockTemplate(Dict((:storage, "CCGT") => _FP.BlockFixedInstalled()))
+
+        @test_throws ErrorException _FP.resolve_uc_gscr_block_template!(pm, template)
+    end
+
     @testset "nonexistent exact override fails" begin
         pm = _uc_gscr_template_pm(; carriers=["CCGT"])
         template = _FP.UCGSCRBlockTemplate(
@@ -122,6 +137,13 @@ end
 
     @testset "unsupported carrier-assignment table fails" begin
         @test_throws ErrorException _FP.UCGSCRBlockTemplate(Dict((:load, "CCGT") => _FP.BlockThermalCommitment()))
+    end
+
+    @testset "unsupported device-override table fails" begin
+        @test_throws ErrorException _FP.UCGSCRBlockTemplate(
+            Dict((:gen, "CCGT") => _FP.BlockThermalCommitment());
+            device_formulations=Dict((:load, 1) => _FP.BlockFixedInstalled()),
+        )
     end
 
     @testset "thermal commitment requires startup and shutdown costs" begin
@@ -154,6 +176,23 @@ end
         @test_throws ErrorException _FP.resolve_uc_gscr_block_template!(pm, template)
     end
 
+    @testset "GershgorinGSCR validates against physical GFL and GFM maps" begin
+        pm = _uc_gscr_template_pm(; carriers=["wind", "BESS-GFM"], g_min=1.0)
+        template = _FP.UCGSCRBlockTemplate(
+            Dict(
+                (:gen, "wind") => _FP.BlockRenewableParticipation(),
+                (:gen, "BESS-GFM") => _FP.BlockFixedInstalled(),
+            ),
+            _FP.GershgorinGSCR(),
+        )
+
+        resolved = _FP.resolve_uc_gscr_block_template!(pm, template)
+        @test resolved[1][(:gen, 1)] isa _FP.BlockRenewableParticipation
+        @test resolved[1][(:gen, 2)] isa _FP.BlockFixedInstalled
+        @test haskey(_PM.ref(pm, 1, :gfl_devices), (:gen, 1))
+        @test haskey(_PM.ref(pm, 1, :gfm_devices), (:gen, 2))
+    end
+
     @testset "NoGSCR does not require g_min" begin
         pm = _uc_gscr_template_pm(; carriers=["CCGT"])
         template = _FP.UCGSCRBlockTemplate(Dict((:gen, "CCGT") => _FP.BlockThermalCommitment()), _FP.NoGSCR())
@@ -173,6 +212,8 @@ end
         _FP.resolve_uc_gscr_block_template!(pm, template)
         sets = pm.ext[:uc_gscr_block_device_sets]
         @test pm.ext[:uc_gscr_block_template] === template
+        @test haskey(pm.ext, :uc_gscr_block_formulations)
+        @test haskey(pm.ext, :uc_gscr_block_device_sets)
         @test Set(sets[:all]) == Set([(:gen, 1), (:gen, 2), (:gen, 3)])
         @test sets[:thermal_commitment] == [(:gen, 1)]
         @test sets[:renewable_participation] == [(:gen, 2)]
@@ -190,5 +231,19 @@ end
         for field in ("activation_policy", "uc_policy", "gscr_exposure_policy")
             @test !haskey(device, field)
         end
+    end
+
+    @testset "BlockStorageParticipation is only present when assigned" begin
+        pm = _uc_gscr_template_pm(; carriers=["CCGT"])
+        template = _FP.UCGSCRBlockTemplate(
+            Dict((:gen, "CCGT") => _FP.BlockThermalCommitment());
+            device_formulations=Dict((:gen, 1) => _FP.BlockStorageParticipation()),
+        )
+
+        _FP.resolve_uc_gscr_block_template!(pm, template)
+        sets = pm.ext[:uc_gscr_block_device_sets]
+        @test isempty(sets[:thermal_commitment])
+        @test isempty(sets[:startup_shutdown])
+        @test sets[:storage_participation] == [(:gen, 1)]
     end
 end
