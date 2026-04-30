@@ -7,14 +7,14 @@ Builds the single-model storage objective with investment and operation terms.
 
 This objective minimizes the sum of existing FlexPlan investment costs plus
 generation operation cost and UC/gSCR block terms: the investment contribution
-`sum(cost_inv_block * p_block_max * (n_block - n0))` and the startup/shutdown
+`sum(cost_inv_per_mw * p_block_max * (n_block - n0))` and the startup/shutdown
 contribution
-`sum(startup_block_cost * su_block + shutdown_block_cost * sd_block)`.
+`sum(startup_cost_per_mw * su_block + shutdown_cost_per_mw * sd_block)`.
 Argument `pm` is one PowerModels model with all network snapshots.
-Coefficients are used in their internal data base; `cost_inv_block`,
-`startup_block_cost`, and `shutdown_block_cost` are objective-level and not
-base-scaled. This helper is formulation-independent and mutates only the JuMP
-objective.
+Investment coefficients are used in their internal data base. Startup/shutdown
+per-MW coefficients are not yet scaled by `p_block_max` or `operation_weight`;
+that unit correction is deferred to the objective-units branch. This helper is
+formulation-independent and mutates only the JuMP objective.
 """
 function objective_min_cost_storage(pm::_PM.AbstractPowerModel)
     cost = JuMP.AffExpr(0.0)
@@ -41,8 +41,8 @@ Builds the combined transmission-distribution storage objective.
 
 The objective sums transmission and distribution investment/operation costs and
 adds UC/gSCR block terms once per model:
-`sum(cost_inv_block * p_block_max * (n_block - n0))` and
-`sum(startup_block_cost * su_block + shutdown_block_cost * sd_block)`.
+`sum(cost_inv_per_mw * p_block_max * (n_block - n0))` and
+`sum(startup_cost_per_mw * su_block + shutdown_cost_per_mw * sd_block)`.
 Arguments `t_pm` and `d_pm` are coupled PowerModels instances sharing one JuMP
 model. Coefficients are read in internal base and block-cost coefficients are
 objective-level. This helper is formulation-independent and mutates only the
@@ -87,12 +87,13 @@ end
 Builds the single-model flexible-demand objective.
 
 When `investment` is true, this includes existing FlexPlan investment terms and
-the UC/gSCR block term `sum(cost_inv_block * p_block_max * (n_block - n0))`
+the UC/gSCR block term `sum(cost_inv_per_mw * p_block_max * (n_block - n0))`
 once for the whole optimization model. When `operation` is true, it adds
 generation/load operation costs and block startup/shutdown cost
-`sum(startup_block_cost * su_block + shutdown_block_cost * sd_block)`.
-Coefficients use their internal base and block-cost coefficients are objective-
-level. This helper is formulation-independent and mutates only the JuMP
+`sum(startup_cost_per_mw * su_block + shutdown_cost_per_mw * sd_block)`.
+Startup/shutdown per-MW coefficients are not yet scaled by `p_block_max` or
+`operation_weight`; that unit correction is deferred to the objective-units
+branch. This helper is formulation-independent and mutates only the JuMP
 objective.
 """
 function objective_min_cost_flex(pm::_PM.AbstractPowerModel; investment=true, operation=true)
@@ -126,8 +127,8 @@ Builds the combined transmission-distribution flexible-demand objective.
 
 The objective sums transmission and distribution investment/operation terms and
 adds UC/gSCR block terms once per model:
-`sum(cost_inv_block * p_block_max * (n_block - n0))` and
-`sum(startup_block_cost * su_block + shutdown_block_cost * sd_block)`.
+`sum(cost_inv_per_mw * p_block_max * (n_block - n0))` and
+`sum(startup_cost_per_mw * su_block + shutdown_cost_per_mw * sd_block)`.
 Inputs `t_pm` and `d_pm` share one JuMP model. Coefficients use their internal
 base and block-cost coefficients are objective-level. This helper is
 formulation-independent and mutates only the JuMP objective.
@@ -175,11 +176,11 @@ end
 Builds the single-model stochastic flexible-demand objective.
 
 Investment terms are added on canonical investment snapshots and include one
-UC/gSCR block term `sum(cost_inv_block * p_block_max * (n_block - n0))` for
+UC/gSCR block term `sum(cost_inv_per_mw * p_block_max * (n_block - n0))` for
 the whole optimization model when `investment` is true. Operation terms are
 probability-weighted by scenario when `operation` is true and include block
 startup/shutdown cost
-`sum(startup_block_cost * su_block + shutdown_block_cost * sd_block)`.
+`sum(startup_cost_per_mw * su_block + shutdown_cost_per_mw * sd_block)`.
 Coefficients use their internal base and block-cost coefficients are
 objective-level. This helper is formulation-independent and mutates only the
 JuMP objective.
@@ -218,8 +219,8 @@ Builds the combined transmission-distribution stochastic objective.
 
 The objective includes investment terms on canonical snapshots, scenario-
 weighted operation terms, and UC/gSCR block terms once per model:
-`sum(cost_inv_block * p_block_max * (n_block - n0))` and
-`sum(startup_block_cost * su_block + shutdown_block_cost * sd_block)`.
+`sum(cost_inv_per_mw * p_block_max * (n_block - n0))` and
+`sum(startup_cost_per_mw * su_block + shutdown_cost_per_mw * sd_block)`.
 Inputs `t_pm` and `d_pm` share one JuMP model. Coefficients use their internal
 base and block-cost coefficients are objective-level. This helper is
 formulation-independent and mutates only the JuMP objective.
@@ -273,13 +274,13 @@ end
 Builds the UC/gSCR block-investment objective contribution once per model.
 
 Implements:
-`sum_k cost_inv_block[k] * p_block_max[k] * (n_block[k] - n0[k])`
+`sum_k cost_inv_per_mw[k] * p_block_max[k] * (n_block[k] - n0[k])`
 using compound keys `(table_name, device_id)` over `gen`, `storage`, and
-`ne_storage`. Required fields `cost_inv_block` and `p_block_max` are validated
+`ne_storage`. Required fields `cost_inv_per_mw` and `p_block_max` are validated
 with explicit error reporting; no silent defaults are inferred. If no UC/gSCR
 block reference data or no `n_block` variable exists, this returns zero. Units
 follow internal model base for `p_block_max` and objective-level coefficient
-for `cost_inv_block`. This helper is formulation-independent and mutates no
+for `cost_inv_per_mw`. This helper is formulation-independent and mutates no
 model state.
 """
 function calc_uc_gscr_block_investment_cost(pm::_PM.AbstractPowerModel)
@@ -312,11 +313,11 @@ end
 Builds the UC/gSCR startup/shutdown block-cost contribution across snapshots.
 
 Implements:
-`sum_{k,t} startup_block_cost[k] * su_block[k,t] + shutdown_block_cost[k] * sd_block[k,t]`
+`sum_{k,t} startup_cost_per_mw[k] * su_block[k,t] + shutdown_cost_per_mw[k] * sd_block[k,t]`
 using compound keys `(table_name, device_id)` over `gen`, `storage`, and
 `ne_storage`. This expression is accumulated over all network snapshots where
 the UC/gSCR block reference extension and `su_block`/`sd_block` variables are
-present. Required fields `startup_block_cost` and `shutdown_block_cost` are
+present. Required fields `startup_cost_per_mw` and `shutdown_cost_per_mw` are
 taken explicitly from device data; no silent defaults are inferred.
 
 If no UC/gSCR block reference data or no startup/shutdown variables exist,
@@ -372,7 +373,7 @@ end
 Validates objective-required UC/gSCR block fields on `device_keys`.
 
 For each compound key in `device_keys`, this checks presence of
-`cost_inv_block` and `p_block_max`, logs an explicit missing-field report, and
+`cost_inv_per_mw` and `p_block_max`, logs an explicit missing-field report, and
 raises a hard validation error when any are missing. No fallback values are
 inferred. This helper is formulation-independent and mutates no model state.
 """

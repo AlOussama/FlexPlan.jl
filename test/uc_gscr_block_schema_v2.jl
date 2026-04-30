@@ -108,6 +108,14 @@ end
         end
     end
 
+    @testset "old policy fields fail" begin
+        for field in ("activation_policy", "uc_policy", "gscr_exposure_policy")
+            bad = _schema_v2_device()
+            bad[field] = "policy"
+            @test_throws ErrorException _FP.ref_add_uc_gscr_block!(_schema_v2_ref(_schema_v2_nw_ref(; device=bad)), _schema_v2_data())
+        end
+    end
+
     @testset "invalid block counts fail" begin
         for (field, value) in (("na0", 2.0), ("n0", 3.0), ("nmax", -1.0))
             bad = _schema_v2_device()
@@ -116,14 +124,75 @@ end
         end
     end
 
+    @testset "invalid physical scalar fields fail" begin
+        for (field, value) in (
+            ("p_block_max", "10"),
+            ("q_block_min", "bad"),
+            ("q_block_max", "bad"),
+            ("b_block", "bad"),
+            ("cost_inv_per_mw", "bad"),
+            ("cost_inv_per_mw", -1.0),
+        )
+            bad = _schema_v2_device()
+            bad[field] = value
+            @test_throws ErrorException _FP.ref_add_uc_gscr_block!(_schema_v2_ref(_schema_v2_nw_ref(; device=bad)), _schema_v2_data())
+        end
+
+        bad_q = _schema_v2_device()
+        bad_q["q_block_min"] = 3.0
+        bad_q["q_block_max"] = 2.0
+        @test_throws ErrorException _FP.ref_add_uc_gscr_block!(_schema_v2_ref(_schema_v2_nw_ref(; device=bad_q)), _schema_v2_data())
+
+        bad_expandable = _schema_v2_device()
+        bad_expandable["p_block_max"] = 0.0
+        @test_throws ErrorException _FP.ref_add_uc_gscr_block!(_schema_v2_ref(_schema_v2_nw_ref(; device=bad_expandable)), _schema_v2_data())
+    end
+
+    @testset "active-power per-unit bounds validation" begin
+        bad_scalar = _schema_v2_device()
+        bad_scalar["p_min_pu"] = 0.7
+        bad_scalar["p_max_pu"] = 0.6
+        @test_throws ErrorException _FP.ref_add_uc_gscr_block!(_schema_v2_ref(_schema_v2_nw_ref(; device=bad_scalar)), _schema_v2_data())
+
+        bad_negative = _schema_v2_device()
+        bad_negative["p_min_pu"] = [-0.1, 0.0]
+        @test_throws ErrorException _FP.ref_add_uc_gscr_block!(_schema_v2_ref(_schema_v2_nw_ref(; device=bad_negative)), _schema_v2_data())
+
+        bad_vector = _schema_v2_device()
+        bad_vector["p_min_pu"] = [0.2, 0.9]
+        bad_vector["p_max_pu"] = [0.8, 0.7]
+        @test_throws ErrorException _FP.ref_add_uc_gscr_block!(_schema_v2_ref(_schema_v2_nw_ref(; device=bad_vector)), _schema_v2_data())
+
+        bad_dict = _schema_v2_device()
+        bad_dict["p_min_pu"] = Dict(1 => 0.2, 2 => 0.9)
+        bad_dict["p_max_pu"] = Dict(2 => 0.7)
+        @test_throws ErrorException _FP.ref_add_uc_gscr_block!(_schema_v2_ref(_schema_v2_nw_ref(; device=bad_dict)), _schema_v2_data())
+
+        bad_type = _schema_v2_device()
+        bad_type["p_max_pu"] = [1.0, "bad"]
+        @test_throws ErrorException _FP.ref_add_uc_gscr_block!(_schema_v2_ref(_schema_v2_nw_ref(; device=bad_type)), _schema_v2_data())
+
+        partial = _schema_v2_device()
+        partial["p_min_pu"] = [0.1]
+        partial["p_max_pu"] = [0.9, 0.8]
+        _FP.ref_add_uc_gscr_block!(_schema_v2_ref(_schema_v2_nw_ref(; device=partial)), _schema_v2_data())
+
+        partial_dict = _schema_v2_device()
+        partial_dict["p_min_pu"] = Dict(1 => 0.1)
+        partial_dict["p_max_pu"] = Dict(2 => 0.8)
+        _FP.ref_add_uc_gscr_block!(_schema_v2_ref(_schema_v2_nw_ref(; device=partial_dict)), _schema_v2_data())
+    end
+
     @testset "missing operation_weight on a snapshot fails for block data" begin
         @test_throws ErrorException _FP.ref_add_uc_gscr_block!(_schema_v2_ref(_schema_v2_nw_ref(; operation_weight=false)), _schema_v2_data())
     end
 
     @testset "storage block device missing e_block fails" begin
-        bad = _schema_v2_device(; table=:storage, mode="gfm")
-        delete!(bad, "e_block")
-        @test_throws ErrorException _FP.ref_add_uc_gscr_block!(_schema_v2_ref(_schema_v2_nw_ref(; table=:storage, device=bad)), _schema_v2_data())
+        for table in (:storage, :ne_storage)
+            bad = _schema_v2_device(; table=table, mode="gfm")
+            delete!(bad, "e_block")
+            @test_throws ErrorException _FP.ref_add_uc_gscr_block!(_schema_v2_ref(_schema_v2_nw_ref(; table=table, device=bad)), _schema_v2_data())
+        end
     end
 
     @testset "no-block legacy cases remain backward compatible" begin

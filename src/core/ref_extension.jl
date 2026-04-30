@@ -271,9 +271,10 @@ end
 Validates required UC/gSCR block fields on every block-annotated supported
 device in `nw_ref`.
 
-The required mathematical fields are `type`, `n0`, `nmax`, `na0`,
-per-active-block P/Q bounds, `b_block`, `startup_block_cost`, and
-`shutdown_block_cost`, with `type` restricted to `"gfl"` or `"gfm"`.
+The required schema-v2 fields include `carrier`, `grid_control_mode`, `n0`,
+`nmax`, `na0`, per-active-block P/Q bounds, `b_block`, `cost_inv_per_mw`,
+`p_min_pu`, and `p_max_pu`, with `grid_control_mode` restricted to `"gfl"` or
+`"gfm"`.
 When `min_up_down_enabled=true`, `min_up_block_time` and
 `min_down_block_time` are additionally required and must be nonnegative
 integers (snapshot counts). No defaults are inferred for these mathematical
@@ -364,8 +365,8 @@ end
 _uc_gscr_is_numeric(value) = value isa Real && isfinite(value)
 
 function _validate_uc_gscr_block_pu_bounds(table_name::Symbol, device_id, device::Dict{String,<:Any})
-    p_min_values = _uc_gscr_numeric_values(device["p_min_pu"])
-    p_max_values = _uc_gscr_numeric_values(device["p_max_pu"])
+    p_min_values = _uc_gscr_numeric_values(device["p_min_pu"], "p_min_pu")
+    p_max_values = _uc_gscr_numeric_values(device["p_max_pu"], "p_max_pu")
 
     if any(value < 0 for value in p_min_values)
         Memento.error(_LOGGER, "$(uppercase(string(table_name))) device $(device_id) has invalid `p_min_pu`: numeric values must be nonnegative.")
@@ -378,16 +379,9 @@ function _validate_uc_gscr_block_pu_bounds(table_name::Symbol, device_id, device
         Memento.error(_LOGGER, "$(uppercase(string(table_name))) device $(device_id) has invalid scalar active-power per-unit bounds: require 0 <= p_min_pu <= p_max_pu.")
     end
 
-    if device["p_min_pu"] isa AbstractVector && device["p_max_pu"] isa AbstractVector && length(device["p_min_pu"]) != length(device["p_max_pu"])
-        Memento.error(_LOGGER, "$(uppercase(string(table_name))) device $(device_id) has inconsistent p_min_pu/p_max_pu time-series lengths.")
-    end
-    if device["p_min_pu"] isa Dict && device["p_max_pu"] isa Dict && !issubset(keys(device["p_min_pu"]), keys(device["p_max_pu"]))
-        Memento.error(_LOGGER, "$(uppercase(string(table_name))) device $(device_id) has p_min_pu snapshot keys that are missing from p_max_pu.")
-    end
-
     if device["p_min_pu"] isa AbstractVector && device["p_max_pu"] isa AbstractVector
         for (p_min, p_max) in zip(device["p_min_pu"], device["p_max_pu"])
-            if p_min isa Real && p_max isa Real && p_min > p_max
+            if p_min > p_max
                 Memento.error(_LOGGER, "$(uppercase(string(table_name))) device $(device_id) has invalid vector active-power per-unit bounds: require p_min_pu <= p_max_pu at each comparable snapshot.")
             end
         end
@@ -395,7 +389,7 @@ function _validate_uc_gscr_block_pu_bounds(table_name::Symbol, device_id, device
         for key in intersect(keys(device["p_min_pu"]), keys(device["p_max_pu"]))
             p_min = device["p_min_pu"][key]
             p_max = device["p_max_pu"][key]
-            if p_min isa Real && p_max isa Real && p_min > p_max
+            if p_min > p_max
                 Memento.error(_LOGGER, "$(uppercase(string(table_name))) device $(device_id) has invalid snapshot-keyed active-power per-unit bounds at $(key): require p_min_pu <= p_max_pu.")
             end
         end
@@ -404,13 +398,30 @@ function _validate_uc_gscr_block_pu_bounds(table_name::Symbol, device_id, device
     return nothing
 end
 
-function _uc_gscr_numeric_values(value)
+function _uc_gscr_numeric_values(value, field_name::String)
     if value isa Real
+        if !isfinite(value)
+            Memento.error(_LOGGER, "UC/gSCR block schema v2 validation failed: $(field_name) values must be finite numeric values.")
+        end
         return Real[value]
     elseif value isa AbstractVector || value isa Tuple
-        return Real[item for item in value if item isa Real]
+        numeric_values = Real[]
+        for item in value
+            if !(item isa Real) || !isfinite(item)
+                Memento.error(_LOGGER, "UC/gSCR block schema v2 validation failed: $(field_name) time-series values must be finite numeric values.")
+            end
+            push!(numeric_values, item)
+        end
+        return numeric_values
     elseif value isa Dict
-        return Real[item for item in values(value) if item isa Real]
+        numeric_values = Real[]
+        for item in values(value)
+            if !(item isa Real) || !isfinite(item)
+                Memento.error(_LOGGER, "UC/gSCR block schema v2 validation failed: $(field_name) snapshot-keyed values must be finite numeric values.")
+            end
+            push!(numeric_values, item)
+        end
+        return numeric_values
     else
         Memento.error(_LOGGER, "UC/gSCR block schema v2 validation failed: p_min_pu and p_max_pu must be scalar, vector, tuple, or dict keyed by snapshot.")
     end
@@ -513,6 +524,9 @@ A placeholder has `p_block_max <= 0` and zero baseline block counts
 """
 function _uc_gscr_is_inactive_placeholder_device(device::Dict{String,<:Any})
     if !(haskey(device, "p_block_max") && haskey(device, "n0") && haskey(device, "nmax") && haskey(device, "na0"))
+        return false
+    end
+    if !_uc_gscr_is_numeric(device["p_block_max"])
         return false
     end
     return device["p_block_max"] <= 0 && device["na0"] == 0 && device["n0"] == 0 && device["nmax"] == 0
