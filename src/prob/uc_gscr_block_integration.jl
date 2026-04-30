@@ -36,7 +36,7 @@ function uc_gscr_block_integration(data::Dict{String,Any}, model_type::Type, opt
 end
 
 """
-    build_uc_gscr_block_integration(pm; objective=true, intertemporal_constraints=true, template=nothing)
+    build_uc_gscr_block_integration(pm; objective=true, intertemporal_constraints=true, storage_terminal_policy=:relaxed_cyclic, storage_terminal_fraction=1.0, template=nothing)
 
 Builds the minimal integrated UC/gSCR block model on one PowerModels instance.
 
@@ -65,10 +65,17 @@ function build_uc_gscr_block_integration(
     pm::_PM.AbstractActivePowerModel;
     objective::Bool=true,
     intertemporal_constraints::Bool=true,
-    final_storage_policy::Symbol=:short_horizon_relaxed,
+    storage_terminal_policy::Symbol=:relaxed_cyclic,
+    storage_terminal_fraction::Float64=1.0,
+    final_storage_policy::Union{Nothing,Symbol}=nothing,
     relax_block_variables::Bool=true,
     template=nothing,
 )
+    if !isnothing(final_storage_policy)
+        storage_terminal_policy = _uc_gscr_storage_terminal_policy_from_deprecated(final_storage_policy)
+    end
+    _validate_uc_gscr_storage_terminal_policy(storage_terminal_policy, storage_terminal_fraction)
+
     if !isnothing(template)
         resolve_uc_gscr_block_template!(pm, template)
     end
@@ -137,8 +144,6 @@ function build_uc_gscr_block_integration(
                     end
                 end
             else
-                _apply_uc_gscr_final_storage_policy!(pm, n, final_storage_policy)
-
                 prev_n = prev_id(pm, n, :hour)
                 for i in _PM.ids(pm, :storage, nw=n)
                     constraint_storage_state(pm, i, prev_n, n)
@@ -155,10 +160,12 @@ function build_uc_gscr_block_integration(
                     end
                 end
             end
+
+            _apply_uc_gscr_storage_terminal_policy!(pm, n, storage_terminal_policy, storage_terminal_fraction)
         end
     end
 
-    _record_uc_gscr_block_architecture_diagnostics!(pm; final_storage_policy)
+    _record_uc_gscr_block_architecture_diagnostics!(pm; storage_terminal_policy, storage_terminal_fraction, final_storage_policy)
 end
 
 """
@@ -288,31 +295,116 @@ function _relax_standard_bounds_for_block_enabled_devices!(pm::_PM.AbstractActiv
     end
 end
 
-function _apply_uc_gscr_final_storage_policy!(pm::_PM.AbstractPowerModel, nw::Int, final_storage_policy::Symbol)
-    if !is_last_id(pm, nw, :hour)
-        return
-    end
-
+function _uc_gscr_storage_terminal_policy_from_deprecated(final_storage_policy::Symbol)
+    Memento.warn(_LOGGER, "`final_storage_policy` is deprecated in build_uc_gscr_block_integration; use `storage_terminal_policy` instead.")
     if final_storage_policy == :strict
-        for i in _PM.ids(pm, :storage, nw=nw)
-            constraint_storage_state_final(pm, i, nw=nw)
-        end
-        if _has_uc_gscr_candidate_storage(pm, nw)
-            for i in _PM.ids(pm, :ne_storage, nw=nw)
-                constraint_storage_state_final_ne_block(pm, i, nw=nw)
-            end
-        end
+        return :fixed_initial
     elseif final_storage_policy == :short_horizon_relaxed || final_storage_policy == :no_final
-        return
+        return :none
     else
-        Memento.error(_LOGGER, "Unsupported final_storage_policy=`$(final_storage_policy)` in build_uc_gscr_block_integration.")
+        Memento.error(_LOGGER, "Unsupported deprecated final_storage_policy=`$(final_storage_policy)` in build_uc_gscr_block_integration.")
     end
 end
 
-function _record_uc_gscr_block_architecture_diagnostics!(pm::_PM.AbstractPowerModel; final_storage_policy::Symbol)
+function _validate_uc_gscr_storage_terminal_policy(storage_terminal_policy::Symbol, storage_terminal_fraction::Float64)
+    if !(storage_terminal_policy in (:cyclic, :fixed_initial, :relaxed_cyclic, :none))
+        Memento.error(_LOGGER, "Unsupported storage_terminal_policy=`$(storage_terminal_policy)` in build_uc_gscr_block_integration.")
+    end
+    if !isfinite(storage_terminal_fraction) || storage_terminal_fraction < 0.0 || storage_terminal_fraction > 1.0
+        Memento.error(_LOGGER, "Invalid storage_terminal_fraction=$(storage_terminal_fraction) in build_uc_gscr_block_integration; expected a finite value in [0, 1].")
+    end
+    return nothing
+end
+
+function _apply_uc_gscr_storage_terminal_policy!(
+    pm::_PM.AbstractPowerModel,
+    nw::Int,
+    storage_terminal_policy::Symbol,
+    storage_terminal_fraction::Float64,
+)
+    if !is_last_id(pm, nw, :hour)
+        return
+    end
+    _validate_uc_gscr_storage_terminal_policy(storage_terminal_policy, storage_terminal_fraction)
+
+    if storage_terminal_policy == :none
+        return
+    end
+
+    device_keys = Tuple{Symbol,Any}[]
+    append!(device_keys, [(:storage, i) for i in _PM.ids(pm, :storage, nw=nw)])
+    if _has_uc_gscr_candidate_storage(pm, nw)
+        append!(device_keys, [(:ne_storage, i) for i in _PM.ids(pm, :ne_storage, nw=nw)])
+    end
+    if isempty(device_keys)
+        return
+    end
+
+    if haskey(_PM.con(pm, nw), :uc_gscr_storage_terminal)
+        return _PM.con(pm, nw)[:uc_gscr_storage_terminal]
+    end
+
+    first_nw = first_id(pm, nw, :hour)
+    constraints = _PM.con(pm, nw)[:uc_gscr_storage_terminal] = Dict{Tuple{Symbol,Any},JuMP.ConstraintRef}()
+
+    for device_key in device_keys
+        table, i = device_key
+        se_final = _uc_gscr_storage_energy_variable(pm, nw, table, i)
+        if storage_terminal_policy == :cyclic
+            se_initial_snapshot = _uc_gscr_storage_energy_variable(pm, first_nw, table, i)
+            constraints[device_key] = JuMP.@constraint(pm.model, se_final == se_initial_snapshot)
+        elseif storage_terminal_policy == :fixed_initial
+            initial_energy = _uc_gscr_storage_initial_energy(pm, first_nw, table, i)
+            constraints[device_key] = JuMP.@constraint(pm.model, se_final == initial_energy)
+        elseif storage_terminal_policy == :relaxed_cyclic
+            se_initial_snapshot = _uc_gscr_storage_energy_variable(pm, first_nw, table, i)
+            constraints[device_key] = JuMP.@constraint(pm.model, se_final >= storage_terminal_fraction * se_initial_snapshot)
+        end
+    end
+
+    return constraints
+end
+
+function _uc_gscr_storage_energy_variable(pm::_PM.AbstractPowerModel, nw::Int, table::Symbol, i)
+    if table == :storage
+        return _PM.var(pm, nw, :se, i)
+    elseif table == :ne_storage
+        return _PM.var(pm, nw, :se_ne, i)
+    else
+        Memento.error(_LOGGER, "Unsupported storage terminal device table `$(table)` in UC/gSCR block integration.")
+    end
+end
+
+function _uc_gscr_storage_initial_energy(pm::_PM.AbstractPowerModel, nw::Int, table::Symbol, i)
+    device = _PM.ref(pm, nw, table, i)
+    if !haskey(device, "energy")
+        if table == :ne_storage
+            Memento.error(_LOGGER, "storage_terminal_policy=:fixed_initial requires candidate storage $(i) field `energy`.")
+        else
+            Memento.error(_LOGGER, "storage_terminal_policy=:fixed_initial requires storage $(i) field `energy`.")
+        end
+    end
+    energy = device["energy"]
+    if !(energy isa Real) || !isfinite(float(energy))
+        Memento.error(_LOGGER, "storage_terminal_policy=:fixed_initial requires numeric finite `energy` for $(table) $(i).")
+    end
+    return energy
+end
+
+function _record_uc_gscr_block_architecture_diagnostics!(
+    pm::_PM.AbstractPowerModel;
+    storage_terminal_policy::Symbol,
+    storage_terminal_fraction::Float64,
+    final_storage_policy::Union{Nothing,Symbol},
+)
     nw = first(nw_ids(pm))
     diagnostics = Dict{String,Any}()
-    diagnostics["final_storage_policy"] = String(final_storage_policy)
+    diagnostics["storage_terminal_policy"] = String(storage_terminal_policy)
+    diagnostics["storage_terminal_fraction"] = storage_terminal_fraction
+    diagnostics["final_storage_policy"] = String(storage_terminal_policy)
+    if !isnothing(final_storage_policy)
+        diagnostics["deprecated_final_storage_policy"] = String(final_storage_policy)
+    end
     diagnostics["uses_standard_candidate_build_variables"] = haskey(_PM.var(pm, nw), :z_strg_ne) || haskey(_PM.var(pm, nw), :z_strg_ne_investment)
     diagnostics["uses_standard_candidate_activation_constraints"] = haskey(_PM.con(pm, nw), :ne_storage_activation)
     diagnostics["uses_standard_candidate_investment_cost"] = false
