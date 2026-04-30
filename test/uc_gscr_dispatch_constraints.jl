@@ -8,7 +8,8 @@ test-only.
 """
 function _add_uc_gscr_dispatch_test_fields!(device, type; pmin, pmax, qmin, qmax, pmin_pu=0.0, pmax_pu=1.0)
     merge!(device, Dict{String,Any}(
-        "type" => type,
+        "carrier" => "test-carrier",
+        "grid_control_mode" => type,
         "n0" => 1,
         "nmax" => 4,
         "na0" => 1,
@@ -19,8 +20,9 @@ function _add_uc_gscr_dispatch_test_fields!(device, type; pmin, pmax, qmin, qmax
         "q_block_min" => qmin,
         "q_block_max" => qmax,
         "b_block" => type == "gfm" ? 0.5 : 0.0,
-        "startup_block_cost" => 1.0,
-        "shutdown_block_cost" => 1.0,
+        "cost_inv_per_mw" => 1.0,
+        "startup_cost_per_mw" => 1.0,
+        "shutdown_cost_per_mw" => 1.0,
     ))
     return device
 end
@@ -58,6 +60,8 @@ function _uc_gscr_dispatch_test_pm(model_type; gen_n0=1, gen_na0=1, gen_nmax=4, 
     data["ne_storage"]["1"]["pmax"] = 2.5
     _add_uc_gscr_storage_block_test_fields!(data["storage"]["1"], "gfm"; eblock=4.0)
     _add_uc_gscr_storage_block_test_fields!(data["ne_storage"]["1"], "gfl"; eblock=6.0)
+    data["block_model_schema"] = Dict{String,Any}("name" => "uc_gscr_block", "version" => "2.0")
+    data["operation_weight"] = 1.0
 
     _FP.add_dimension!(data, :hour, hours)
     mn_data = _FP.make_multinetwork(data, Dict{String,Any}())

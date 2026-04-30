@@ -8,6 +8,9 @@ The helper validates reference-extension wiring rules on deterministic
 single-network data. It is test-only and mutates no input data.
 """
 function _uc_gscr_test_ref(nw_ref)
+    nw_ref[:block_model_schema] = Dict{String,Any}("name" => "uc_gscr_block", "version" => "2.0")
+    nw_ref[:operation_weight] = get(nw_ref, :operation_weight, 1.0)
+    nw_ref[:time_elapsed] = get(nw_ref, :time_elapsed, 1.0)
     return Dict{Symbol,Any}(
         :it => Dict{Symbol,Any}(
             _PM.pm_it_sym => Dict{Symbol,Any}(
@@ -28,7 +31,8 @@ PowerModels field name for `table`. It is test-only and mutates no data.
 """
 function _uc_gscr_test_device(type, bus; kwargs...)
     device = Dict{String,Any}(
-        "type" => type,
+        "carrier" => "test-carrier",
+        "grid_control_mode" => type,
         "n0" => 1,
         "nmax" => 3,
         "na0" => 1,
@@ -37,8 +41,11 @@ function _uc_gscr_test_device(type, bus; kwargs...)
         "q_block_min" => -2.0,
         "q_block_max" => 2.0,
         "b_block" => type == "gfm" ? 0.5 : 0.0,
-        "startup_block_cost" => 1.0,
-        "shutdown_block_cost" => 1.0,
+        "cost_inv_per_mw" => 1.0,
+        "p_min_pu" => 0.0,
+        "p_max_pu" => 1.0,
+        "startup_cost_per_mw" => 1.0,
+        "shutdown_cost_per_mw" => 1.0,
     )
     table = get(kwargs, :table, :gen)
     if table == :gen
@@ -66,7 +73,7 @@ end
                 3 => _uc_gscr_test_device("gfl", 2; table=:storage, e_block=40.0),
             ),
             :ne_storage => Dict{Int,Any}(
-                4 => _uc_gscr_test_device("gfm", 1; table=:ne_storage, H=5.0, s_block=10.0),
+                4 => _uc_gscr_test_device("gfm", 1; table=:ne_storage, H=5.0, s_block=10.0, e_block=20.0),
             ),
             :branch => Dict{Int,Any}(),
         )

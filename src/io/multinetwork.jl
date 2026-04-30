@@ -20,7 +20,7 @@ Generate a multinetwork data structure from a single network and a time series.
 function make_multinetwork(
         sn_data::Dict{String,Any},
         time_series::Dict{String,Any};
-        global_keys = ["dim","multinetwork","name","per_unit","source_type","source_version"],
+        global_keys = ["dim","multinetwork","name","per_unit","source_type","source_version","block_model_schema"],
         number_of_nws::Int = length(dim(sn_data)[:li]),
         nw_id_offset::Int = dim(sn_data)[:offset],
         share_data::Bool = true,
@@ -54,7 +54,7 @@ Generate a multinetwork data structure - having only one `nw` - from a single ne
 """
 function make_multinetwork(
         sn_data::Dict{String,Any};
-        global_keys = ["dim","name","per_unit","source_type","source_version"],
+        global_keys = ["dim","name","per_unit","source_type","source_version","block_model_schema"],
         check_dim::Bool = true
     )
 

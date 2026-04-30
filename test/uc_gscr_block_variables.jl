@@ -27,7 +27,8 @@ function _uc_gscr_block_variable_data(; block::Bool=true, hours::Int=2)
 
     if block
         merge!(gen, Dict{String,Any}(
-            "type" => "gfl",
+            "carrier" => "test-carrier",
+            "grid_control_mode" => "gfl",
             "n0" => 1,
             "nmax" => 4,
             "na0" => 1,
@@ -36,8 +37,11 @@ function _uc_gscr_block_variable_data(; block::Bool=true, hours::Int=2)
             "q_block_min" => -2.0,
             "q_block_max" => 2.0,
             "b_block" => 0.0,
-            "startup_block_cost" => 1.0,
-            "shutdown_block_cost" => 1.0,
+            "cost_inv_per_mw" => 1.0,
+            "p_min_pu" => 0.0,
+            "p_max_pu" => 1.0,
+            "startup_cost_per_mw" => 1.0,
+            "shutdown_cost_per_mw" => 1.0,
         ))
     end
 
@@ -54,7 +58,11 @@ function _uc_gscr_block_variable_data(; block::Bool=true, hours::Int=2)
         "switch" => Dict{String,Any}(),
         "dcline" => Dict{String,Any}(),
         "per_unit" => true,
+        "operation_weight" => 1.0,
     )
+    if block
+        data["block_model_schema"] = Dict{String,Any}("name" => "uc_gscr_block", "version" => "2.0")
+    end
 
     _FP.add_dimension!(data, :hour, hours)
     return _FP.make_multinetwork(data, Dict{String,Any}())
@@ -89,7 +97,8 @@ mutates `device`.
 """
 function _add_uc_gscr_block_test_fields!(device, type)
     merge!(device, Dict{String,Any}(
-        "type" => type,
+        "carrier" => "test-carrier",
+        "grid_control_mode" => type,
         "n0" => 1,
         "nmax" => 4,
         "na0" => 1,
@@ -98,8 +107,11 @@ function _add_uc_gscr_block_test_fields!(device, type)
         "q_block_min" => -2.0,
         "q_block_max" => 2.0,
         "b_block" => type == "gfm" ? 0.5 : 0.0,
-        "startup_block_cost" => 1.0,
-        "shutdown_block_cost" => 1.0,
+        "cost_inv_per_mw" => 1.0,
+        "p_min_pu" => 0.0,
+        "p_max_pu" => 1.0,
+        "startup_cost_per_mw" => 1.0,
+        "shutdown_cost_per_mw" => 1.0,
     ))
     return device
 end
@@ -118,7 +130,11 @@ function _uc_gscr_block_collision_pm(; hours::Int=1)
     data = _FP.parse_file(normpath(@__DIR__, "data", "case2", "case2_d_strg.m"))
     _add_uc_gscr_block_test_fields!(data["gen"]["1"], "gfl")
     _add_uc_gscr_block_test_fields!(data["storage"]["1"], "gfm")
+    data["storage"]["1"]["e_block"] = 1.0
     _add_uc_gscr_block_test_fields!(data["ne_storage"]["1"], "gfl")
+    data["ne_storage"]["1"]["e_block"] = 1.0
+    data["block_model_schema"] = Dict{String,Any}("name" => "uc_gscr_block", "version" => "2.0")
+    data["operation_weight"] = 1.0
     _FP.add_dimension!(data, :hour, hours)
 
     mn_data = _FP.make_multinetwork(data, Dict{String,Any}())

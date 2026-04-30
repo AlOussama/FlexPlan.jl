@@ -299,7 +299,7 @@ function calc_uc_gscr_block_investment_cost(pm::_PM.AbstractPowerModel)
     cost = JuMP.AffExpr(0.0)
     for device_key in device_keys
         device = _PM.ref(pm, first_nw, device_key[1], device_key[2])
-        coeff = device["cost_inv_block"] * device["p_block_max"]
+        coeff = device["cost_inv_per_mw"] * device["p_block_max"]
         JuMP.add_to_expression!(cost, coeff, n_block[device_key])
         JuMP.add_to_expression!(cost, -coeff * device["n0"])
     end
@@ -336,8 +336,11 @@ function calc_uc_gscr_block_startup_shutdown_cost(pm::_PM.AbstractPowerModel)
         su_block = _PM.var(pm, nw, :su_block)
         sd_block = _PM.var(pm, nw, :sd_block)
         for device_key in _uc_gscr_block_device_keys(pm, nw)
-            startup_coeff = _PM.ref(pm, nw, device_key[1], device_key[2], "startup_block_cost")
-            shutdown_coeff = _PM.ref(pm, nw, device_key[1], device_key[2], "shutdown_block_cost")
+            # TODO(feature/block-objective-units-and-weights): scale these
+            # per-MW coefficients by p_block_max and operation_weight when
+            # formulation-specific startup/shutdown objectives are refactored.
+            startup_coeff = _PM.ref(pm, nw, device_key[1], device_key[2], "startup_cost_per_mw")
+            shutdown_coeff = _PM.ref(pm, nw, device_key[1], device_key[2], "shutdown_cost_per_mw")
             JuMP.add_to_expression!(cost, startup_coeff, su_block[device_key])
             JuMP.add_to_expression!(cost, shutdown_coeff, sd_block[device_key])
         end
@@ -375,7 +378,7 @@ inferred. This helper is formulation-independent and mutates no model state.
 """
 function _validate_uc_gscr_block_objective_fields(pm::_PM.AbstractPowerModel, nw::Int, device_keys)
     missing_report = Dict{Tuple{Symbol,Any},Vector{String}}()
-    required_fields = ("cost_inv_block", "p_block_max")
+    required_fields = ("cost_inv_per_mw", "p_block_max")
 
     for device_key in device_keys
         device = _PM.ref(pm, nw, device_key[1], device_key[2])
@@ -401,7 +404,7 @@ function _validate_uc_gscr_block_objective_fields(pm::_PM.AbstractPowerModel, nw
             _LOGGER,
             "UC/gSCR block objective validation failed due to missing required fields. " *
             "Missing-field report: " * join(device_summaries, " | ") * ". " *
-            "The objective term uses cost_inv_block * p_block_max * (n_block - n0) and applies no silent defaults.",
+            "The objective term uses cost_inv_per_mw * p_block_max * (n_block - n0) and applies no silent defaults.",
         )
     end
 

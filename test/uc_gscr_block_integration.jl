@@ -7,7 +7,8 @@ This helper is test-only and mutates `device` in place. Optional `e_block`
 is added for storage-capable devices.
 """
 function _uc_gscr_integration_add_block_fields!(device, type; n0, nmax, na0, p_block_min, p_block_max, q_block_min, q_block_max, b_block, cost_inv_block, startup_block_cost, shutdown_block_cost, e_block=nothing)
-    device["type"] = type
+    device["carrier"] = get(device, "carrier", "test-carrier")
+    device["grid_control_mode"] = type
     device["n0"] = n0
     device["nmax"] = nmax
     device["na0"] = na0
@@ -16,11 +17,13 @@ function _uc_gscr_integration_add_block_fields!(device, type; n0, nmax, na0, p_b
     device["q_block_min"] = q_block_min
     device["q_block_max"] = q_block_max
     device["b_block"] = b_block
-    device["startup_block_cost"] = startup_block_cost
-    device["shutdown_block_cost"] = shutdown_block_cost
+    device["startup_cost_per_mw"] = startup_block_cost
+    device["shutdown_cost_per_mw"] = shutdown_block_cost
     device["H"] = 3.0
     device["s_block"] = max(abs(p_block_max), 1.0)
-    device["cost_inv_block"] = cost_inv_block
+    device["cost_inv_per_mw"] = cost_inv_block
+    device["p_min_pu"] = 0.0
+    device["p_max_pu"] = 1.0
     if !isnothing(e_block)
         device["e_block"] = e_block
     end
@@ -38,6 +41,8 @@ This helper is test-only and mutates only local fixture data.
 """
 function _uc_gscr_synthetic_integration_data(; g_min)
     data = _FP.parse_file(normpath(@__DIR__, "data", "case2", "case2_d_strg.m"))
+    data["block_model_schema"] = Dict{String,Any}("name" => "uc_gscr_block", "version" => "2.0")
+    data["operation_weight"] = 1.0
 
     data["ne_storage"] = Dict{String,Any}()
     data["storage"]["1"]["energy"] = 0.0
@@ -163,6 +168,8 @@ This helper is test-only and mutates one single-network input dictionary.
 """
 function _uc_gscr_case6_extension(g_min)
     return function (sn_data)
+        sn_data["block_model_schema"] = Dict{String,Any}("name" => "uc_gscr_block", "version" => "2.0")
+        sn_data["operation_weight"] = 1.0
         sn_data["g_min"] = g_min
 
         gen_ids = sort(collect(keys(sn_data["gen"])); by=id -> parse(Int, id))
@@ -208,7 +215,7 @@ function _uc_gscr_case6_extension(g_min)
                     nmax=2,
                     na0=0,
                     p_block_min=0.0,
-                    p_block_max=0.0,
+                    p_block_max=1.0,
                     q_block_min=gen["qmin"],
                     q_block_max=gen["qmax"],
                     b_block=1.0,
@@ -244,6 +251,8 @@ end
 
 function _uc_gscr_block_only_ne_storage_fixture()
     data = _FP.parse_file(normpath(@__DIR__, "data", "case2", "case2_d_strg.m"))
+    data["block_model_schema"] = Dict{String,Any}("name" => "uc_gscr_block", "version" => "2.0")
+    data["operation_weight"] = 1.0
     data["g_min"] = 0.0
     data["gen"] = Dict{String,Any}()
     data["load"] = Dict{String,Any}()
@@ -292,6 +301,8 @@ keys. The helper is test-only and mutates only local fixture data.
 """
 function _uc_gscr_transition_fixture(; na0::Float64=1.0, n0::Float64=1.0, nmax::Float64=8.0, startup_cost::Float64=1.0, shutdown_cost::Float64=1.0, include_storage::Bool=false, hours::Int=2)
     data = _FP.parse_file(normpath(@__DIR__, "data", "case2", "case2_d_strg.m"))
+    data["block_model_schema"] = Dict{String,Any}("name" => "uc_gscr_block", "version" => "2.0")
+    data["operation_weight"] = 1.0
     data["g_min"] = 0.0
 
     _uc_gscr_integration_add_block_fields!(
@@ -513,6 +524,8 @@ function _uc_gscr_two_island_dcline_data(; load_bus2::Float64=80.0, dcline_pmax:
         "baseMVA" => 1.0,
         "per_unit" => false,
         "source_type" => "synthetic",
+        "block_model_schema" => Dict{String,Any}("name" => "uc_gscr_block", "version" => "2.0"),
+        "operation_weight" => 1.0,
         "bus" => nw["bus"],
         "branch" => nw["branch"],
         "dcline" => nw["dcline"],
@@ -637,6 +650,7 @@ end
             number_of_scenarios=1,
             number_of_years=1,
             share_data=false,
+            init_data_extensions=[data -> data["block_model_schema"] = Dict{String,Any}("name" => "uc_gscr_block", "version" => "2.0")],
             sn_data_extensions=[_uc_gscr_case6_extension(0.0)],
         )
         for (_, nw_data) in loose_data["nw"]
@@ -650,6 +664,7 @@ end
             number_of_scenarios=1,
             number_of_years=1,
             share_data=false,
+            init_data_extensions=[data -> data["block_model_schema"] = Dict{String,Any}("name" => "uc_gscr_block", "version" => "2.0")],
             sn_data_extensions=[_uc_gscr_case6_extension(100.0)],
         )
         for (_, nw_data) in tight_data["nw"]
@@ -770,7 +785,8 @@ end
 
     @testset "Missing na0/startup/shutdown block fields raise explicit validation error" begin
         bad_device = Dict{String,Any}(
-            "type" => "gfl",
+            "carrier" => "test-carrier",
+            "grid_control_mode" => "gfl",
             "n0" => 1,
             "nmax" => 3,
             "p_block_min" => 0.0,
@@ -778,17 +794,23 @@ end
             "q_block_min" => -1.0,
             "q_block_max" => 1.0,
             "b_block" => 0.0,
+            "cost_inv_per_mw" => 1.0,
+            "p_min_pu" => 0.0,
+            "p_max_pu" => 1.0,
             "gen_bus" => 1,
         )
         nw_ref = Dict{Symbol,Any}(
             :bus => Dict{Int,Any}(1 => Dict{String,Any}("index" => 1)),
             :gen => Dict{Int,Any}(1 => bad_device),
             :branch => Dict{Int,Any}(),
+            :block_model_schema => Dict{String,Any}("name" => "uc_gscr_block", "version" => "2.0"),
+            :operation_weight => 1.0,
+            :time_elapsed => 1.0,
         )
         missing = _FP._uc_gscr_missing_required_fields_report(nw_ref)
 
         @test haskey(missing, (:gen, 1))
-        @test Set(missing[(:gen, 1)]) == Set(["na0", "startup_block_cost", "shutdown_block_cost"])
+        @test Set(missing[(:gen, 1)]) == Set(["na0"])
         @test_throws ErrorException _FP.ref_add_uc_gscr_block!(_uc_gscr_block_ref_wrapper(nw_ref), Dict{String,Any}())
     end
 

@@ -23,7 +23,8 @@ function _uc_gscr_gershgorin_device(type, bus; id=1, n0=0, nmax=1, pmax=1.0, bbl
         "shutdown" => 0.0,
         "ncost" => 2,
         "cost" => [0.0, 0.0],
-        "type" => type,
+        "carrier" => "test-carrier",
+        "grid_control_mode" => type,
         "n0" => n0,
         "nmax" => nmax,
         "na0" => n0,
@@ -32,8 +33,11 @@ function _uc_gscr_gershgorin_device(type, bus; id=1, n0=0, nmax=1, pmax=1.0, bbl
         "q_block_min" => -1.0,
         "q_block_max" => 1.0,
         "b_block" => bblock,
-        "startup_block_cost" => 1.0,
-        "shutdown_block_cost" => 1.0,
+        "cost_inv_per_mw" => 1.0,
+        "p_min_pu" => 0.0,
+        "p_max_pu" => 1.0,
+        "startup_cost_per_mw" => 1.0,
+        "shutdown_cost_per_mw" => 1.0,
     )
 end
 
@@ -66,7 +70,7 @@ function _uc_gscr_gershgorin_data(; g_min=2.0, include_g_min::Bool=true, gfm_b=3
             "1" => _uc_gscr_gershgorin_device("gfl", 1; id=1, n0=1, nmax=1, pmax=1.0, bblock=0.0),
             "2" => _uc_gscr_gershgorin_device("gfm", 1; id=2, n0=1, nmax=1, pmax=0.0, bblock=gfm_b),
             "3" => _uc_gscr_gershgorin_device("gfl", 2; id=3, n0=0, nmax=1, pmax=1.5, bblock=0.0),
-            "4" => _uc_gscr_gershgorin_device("gfm", 3; id=4, n0=0, nmax=1, pmax=0.0, bblock=0.7),
+            "4" => _uc_gscr_gershgorin_device("gfm", 3; id=4, n0=0, nmax=1, pmax=1.0, bblock=0.7),
         ),
         "load" => Dict{String,Any}(),
         "shunt" => Dict{String,Any}(),
@@ -74,6 +78,8 @@ function _uc_gscr_gershgorin_data(; g_min=2.0, include_g_min::Bool=true, gfm_b=3
         "switch" => Dict{String,Any}(),
         "dcline" => Dict{String,Any}(),
         "per_unit" => true,
+        "block_model_schema" => Dict{String,Any}("name" => "uc_gscr_block", "version" => "2.0"),
+        "operation_weight" => 1.0,
     )
 
     if include_g_min

@@ -39,7 +39,8 @@ end
 ## UC/gSCR block reference extension
 
 const _UC_GSCR_BLOCK_REQUIRED_FIELDS = [
-    "type",
+    "carrier",
+    "grid_control_mode",
     "n0",
     "nmax",
     "na0",
@@ -47,12 +48,29 @@ const _UC_GSCR_BLOCK_REQUIRED_FIELDS = [
     "q_block_min",
     "q_block_max",
     "b_block",
-    "startup_block_cost",
-    "shutdown_block_cost",
+    "cost_inv_per_mw",
+    "p_min_pu",
+    "p_max_pu",
 ]
 
 const _UC_GSCR_BLOCK_MIN_UP_DOWN_FIELDS = ["min_up_block_time", "min_down_block_time"]
-const _UC_GSCR_BLOCK_OPTIONAL_FIELDS = ["H", "s_block", "e_block", "p_min_pu", "p_max_pu", "p_block_min", _UC_GSCR_BLOCK_MIN_UP_DOWN_FIELDS...]
+const _UC_GSCR_BLOCK_STORAGE_REQUIRED_FIELDS = ["e_block"]
+const _UC_GSCR_BLOCK_OPTIONAL_FIELDS = ["H", "s_block", "startup_cost_per_mw", "shutdown_cost_per_mw", "p_block_min", _UC_GSCR_BLOCK_MIN_UP_DOWN_FIELDS...]
+const _UC_GSCR_BLOCK_REJECTED_FIELDS = [
+    "type",
+    "startup_block_cost",
+    "shutdown_block_cost",
+    "cost_inv_block",
+    "activation_policy",
+    "uc_policy",
+    "gscr_exposure_policy",
+]
+const _UC_GSCR_BLOCK_DETECTION_FIELDS = unique([
+    _UC_GSCR_BLOCK_REQUIRED_FIELDS;
+    _UC_GSCR_BLOCK_STORAGE_REQUIRED_FIELDS;
+    _UC_GSCR_BLOCK_OPTIONAL_FIELDS;
+    _UC_GSCR_BLOCK_REJECTED_FIELDS;
+])
 
 """
     ref_add_uc_gscr_block!(ref, data)
@@ -74,20 +92,61 @@ Block strengths are assumed to be in a per-unit base consistent with device
 power fields. This function is formulation-independent and mutates only `ref`.
 """
 function ref_add_uc_gscr_block!(ref::Dict{Symbol,<:Any}, data::Dict{String,<:Any})
+    any_block_data = any(_has_uc_gscr_block_data(nw_ref) for (_, nw_ref) in ref[:it][_PM.pm_it_sym][:nw])
+    if any_block_data
+        _validate_uc_gscr_block_schema_declaration(ref, data)
+    end
+
     for (nw, nw_ref) in ref[:it][_PM.pm_it_sym][:nw]
         if !_has_uc_gscr_block_data(nw_ref)
             continue
         end
 
+        _validate_uc_gscr_block_snapshot_fields(nw_ref, nw)
         min_up_down_enabled = _uc_gscr_block_min_up_down_enabled(nw_ref)
         missing_report = _uc_gscr_missing_required_fields_report(nw_ref; min_up_down_enabled)
         _warn_uc_gscr_missing_required_fields(missing_report)
+        _validate_uc_gscr_rejected_block_fields(nw_ref)
         _validate_uc_gscr_block_devices(nw_ref; min_up_down_enabled)
         _warn_uc_gscr_deprecated_block_fields(nw_ref)
         _add_uc_gscr_device_maps!(nw_ref)
         _add_uc_gscr_row_metrics!(nw_ref)
         nw_ref[:uc_gscr_block_min_up_down_enabled] = min_up_down_enabled
     end
+end
+
+function _validate_uc_gscr_block_schema_declaration(ref::Dict{Symbol,<:Any}, data::Dict{String,<:Any})
+    schema = if haskey(data, "block_model_schema")
+        data["block_model_schema"]
+    else
+        first_nw_ref = first(values(ref[:it][_PM.pm_it_sym][:nw]))
+        if haskey(first_nw_ref, :block_model_schema)
+            first_nw_ref[:block_model_schema]
+        else
+            nothing
+        end
+    end
+
+    if !(schema isa Dict)
+        Memento.error(_LOGGER, "UC/gSCR block schema v2 validation failed: block data requires block_model_schema.name=\"uc_gscr_block\" and version=\"2.0\".")
+    end
+    if get(schema, "name", nothing) != "uc_gscr_block"
+        Memento.error(_LOGGER, "UC/gSCR block schema v2 validation failed: block_model_schema.name must be \"uc_gscr_block\".")
+    end
+    if get(schema, "version", nothing) != "2.0"
+        Memento.error(_LOGGER, "UC/gSCR block schema v2 validation failed: block_model_schema.version must be \"2.0\".")
+    end
+    return nothing
+end
+
+function _validate_uc_gscr_block_snapshot_fields(nw_ref::Dict{Symbol,<:Any}, nw)
+    if !haskey(nw_ref, :operation_weight)
+        Memento.error(_LOGGER, "UC/gSCR block schema v2 validation failed: network snapshot $(nw) is missing required field `operation_weight`.")
+    end
+    if !haskey(nw_ref, :time_elapsed)
+        Memento.warn(_LOGGER, "UC/gSCR block schema v2 prefers explicit `time_elapsed`; continuing with existing storage default behavior for snapshot $(nw).")
+    end
+    return nothing
 end
 
 """
@@ -126,7 +185,7 @@ function _has_uc_gscr_block_data(nw_ref::Dict{Symbol,<:Any})
             continue
         end
         for (device_id, device) in nw_ref[table_name]
-            if any(haskey(device, field) for field in [_UC_GSCR_BLOCK_REQUIRED_FIELDS; _UC_GSCR_BLOCK_OPTIONAL_FIELDS])
+            if any(haskey(device, field) for field in _UC_GSCR_BLOCK_DETECTION_FIELDS)
                 return true
             end
         end
@@ -154,12 +213,37 @@ function _uc_gscr_missing_required_fields_report(nw_ref::Dict{Symbol,<:Any}; min
         _UC_GSCR_BLOCK_REQUIRED_FIELDS
     end
     for (table_name, device_id, device) in _uc_gscr_block_devices(nw_ref)
-        missing = String[field for field in required_fields if !haskey(device, field)]
+        device_required_fields = table_name in (:storage, :ne_storage) ? [required_fields; _UC_GSCR_BLOCK_STORAGE_REQUIRED_FIELDS] : required_fields
+        missing = String[field for field in device_required_fields if !haskey(device, field)]
         if !isempty(missing)
             report[(table_name, device_id)] = missing
         end
     end
     return report
+end
+
+function _validate_uc_gscr_rejected_block_fields(nw_ref::Dict{Symbol,<:Any})
+    rejected_report = Dict{Tuple{Symbol,Any},Vector{String}}()
+    for (table_name, device_id, device) in _uc_gscr_block_devices(nw_ref)
+        rejected = String[field for field in _UC_GSCR_BLOCK_REJECTED_FIELDS if haskey(device, field)]
+        if !isempty(rejected)
+            rejected_report[(table_name, device_id)] = rejected
+        end
+    end
+
+    if !isempty(rejected_report)
+        device_summaries = String[
+            "$(uppercase(string(table_name))) $(device_id): $(join(rejected_fields, ", "))"
+            for ((table_name, device_id), rejected_fields) in rejected_report
+        ]
+        Memento.error(
+            _LOGGER,
+            "UC/gSCR block schema v2 validation failed due to rejected old or policy fields. " *
+            "Rejected-field report: " * join(device_summaries, " | ") * ". " *
+            "Use grid_control_mode and cost_inv_per_mw, and provide formulation policy through a model template.",
+        )
+    end
+    return nothing
 end
 
 """
@@ -217,37 +301,46 @@ function _validate_uc_gscr_block_devices(nw_ref::Dict{Symbol,<:Any}; min_up_down
     end
 
     for (table_name, device_id, device) in _uc_gscr_block_devices(nw_ref)
-        device_type = device["type"]
-        if !(device_type in ("gfl", "gfm"))
-            Memento.error(_LOGGER, "$(uppercase(string(table_name))) device $(device_id) has invalid UC/gSCR block field `type=$(device_type)`. Expected `gfl` or `gfm`.")
+        grid_control_mode = device["grid_control_mode"]
+        if !(grid_control_mode in ("gfl", "gfm"))
+            Memento.error(_LOGGER, "$(uppercase(string(table_name))) device $(device_id) has invalid UC/gSCR block field `grid_control_mode=$(grid_control_mode)`. Expected `gfl` or `gfm`.")
         end
 
         n0 = device["n0"]
         nmax = device["nmax"]
-        if n0 < 0 || nmax < n0
-            Memento.error(_LOGGER, "$(uppercase(string(table_name))) device $(device_id) has invalid UC/gSCR block bounds: require 0 <= n0 <= nmax.")
+        if !_uc_gscr_is_numeric(n0) || !_uc_gscr_is_numeric(nmax) || n0 < 0 || nmax < n0
+            Memento.error(_LOGGER, "$(uppercase(string(table_name))) device $(device_id) has invalid UC/gSCR block bounds: require numeric 0 <= n0 <= nmax.")
         end
 
         na0 = device["na0"]
-        if na0 < 0 || n0 < na0
-            Memento.error(_LOGGER, "$(uppercase(string(table_name))) device $(device_id) has invalid UC/gSCR active-block initial state: require 0 <= na0 <= n0 <= nmax.")
+        if !_uc_gscr_is_numeric(na0) || na0 < 0 || n0 < na0
+            Memento.error(_LOGGER, "$(uppercase(string(table_name))) device $(device_id) has invalid UC/gSCR active-block initial state: require numeric 0 <= na0 <= n0 <= nmax.")
         end
 
         p_block_max = device["p_block_max"]
-        if p_block_max <= 0
-            if nmax > n0
-                Memento.warn(
-                    _LOGGER,
-                    "$(uppercase(string(table_name))) device $(device_id) has p_block_max=$(p_block_max) while nmax=$(nmax) > n0=$(n0). " *
-                    "This expandable candidate is non-physical and may be infeasible; treat as invalid data.",
-                )
-            elseif !(nmax == 0 && n0 == 0 && na0 == 0)
-                Memento.warn(
-                    _LOGGER,
-                    "$(uppercase(string(table_name))) device $(device_id) has p_block_max=$(p_block_max) with fixed nonzero baseline " *
-                    "(na0=$(na0), n0=$(n0), nmax=$(nmax)). This is treated as a legacy fixed block record.",
-                )
-            end
+        if !_uc_gscr_is_numeric(p_block_max)
+            Memento.error(_LOGGER, "$(uppercase(string(table_name))) device $(device_id) has invalid `p_block_max=$(p_block_max)`. Expected a numeric value.")
+        end
+        if nmax > n0 && p_block_max <= 0
+            Memento.error(_LOGGER, "$(uppercase(string(table_name))) device $(device_id) has invalid expandable UC/gSCR block capacity: require p_block_max > 0 when nmax > n0.")
+        end
+
+        if !_uc_gscr_is_numeric(device["q_block_min"]) || !_uc_gscr_is_numeric(device["q_block_max"])
+            Memento.error(_LOGGER, "$(uppercase(string(table_name))) device $(device_id) has invalid reactive block bounds: q_block_min and q_block_max must be numeric.")
+        end
+        if device["q_block_min"] > device["q_block_max"]
+            Memento.error(_LOGGER, "$(uppercase(string(table_name))) device $(device_id) has invalid reactive block bounds: require q_block_min <= q_block_max.")
+        end
+        if !_uc_gscr_is_numeric(device["b_block"])
+            Memento.error(_LOGGER, "$(uppercase(string(table_name))) device $(device_id) has invalid `b_block=$(device["b_block"])`. Expected a numeric value.")
+        end
+        if !_uc_gscr_is_numeric(device["cost_inv_per_mw"]) || device["cost_inv_per_mw"] < 0
+            Memento.error(_LOGGER, "$(uppercase(string(table_name))) device $(device_id) has invalid `cost_inv_per_mw=$(device["cost_inv_per_mw"])`. Expected a nonnegative numeric value.")
+        end
+        _validate_uc_gscr_block_pu_bounds(table_name, device_id, device)
+
+        if table_name in (:storage, :ne_storage) && !_uc_gscr_is_numeric(device["e_block"])
+            Memento.error(_LOGGER, "$(uppercase(string(table_name))) device $(device_id) has invalid `e_block=$(device["e_block"])`. Expected a numeric value.")
         end
 
         if min_up_down_enabled
@@ -262,9 +355,64 @@ function _validate_uc_gscr_block_devices(nw_ref::Dict{Symbol,<:Any}; min_up_down
             end
         end
 
-        if table_name == :ne_storage && p_block_max > 0
+        if table_name == :ne_storage && _uc_gscr_is_numeric(p_block_max) && p_block_max > 0
             _warn_uc_gscr_storage_rating_conflict(device, device_id, p_block_max, nmax)
         end
+    end
+end
+
+_uc_gscr_is_numeric(value) = value isa Real && isfinite(value)
+
+function _validate_uc_gscr_block_pu_bounds(table_name::Symbol, device_id, device::Dict{String,<:Any})
+    p_min_values = _uc_gscr_numeric_values(device["p_min_pu"])
+    p_max_values = _uc_gscr_numeric_values(device["p_max_pu"])
+
+    if any(value < 0 for value in p_min_values)
+        Memento.error(_LOGGER, "$(uppercase(string(table_name))) device $(device_id) has invalid `p_min_pu`: numeric values must be nonnegative.")
+    end
+    if any(value < 0 for value in p_max_values)
+        Memento.error(_LOGGER, "$(uppercase(string(table_name))) device $(device_id) has invalid `p_max_pu`: numeric values must be nonnegative.")
+    end
+
+    if device["p_min_pu"] isa Real && device["p_max_pu"] isa Real && device["p_min_pu"] > device["p_max_pu"]
+        Memento.error(_LOGGER, "$(uppercase(string(table_name))) device $(device_id) has invalid scalar active-power per-unit bounds: require 0 <= p_min_pu <= p_max_pu.")
+    end
+
+    if device["p_min_pu"] isa AbstractVector && device["p_max_pu"] isa AbstractVector && length(device["p_min_pu"]) != length(device["p_max_pu"])
+        Memento.error(_LOGGER, "$(uppercase(string(table_name))) device $(device_id) has inconsistent p_min_pu/p_max_pu time-series lengths.")
+    end
+    if device["p_min_pu"] isa Dict && device["p_max_pu"] isa Dict && !issubset(keys(device["p_min_pu"]), keys(device["p_max_pu"]))
+        Memento.error(_LOGGER, "$(uppercase(string(table_name))) device $(device_id) has p_min_pu snapshot keys that are missing from p_max_pu.")
+    end
+
+    if device["p_min_pu"] isa AbstractVector && device["p_max_pu"] isa AbstractVector
+        for (p_min, p_max) in zip(device["p_min_pu"], device["p_max_pu"])
+            if p_min isa Real && p_max isa Real && p_min > p_max
+                Memento.error(_LOGGER, "$(uppercase(string(table_name))) device $(device_id) has invalid vector active-power per-unit bounds: require p_min_pu <= p_max_pu at each comparable snapshot.")
+            end
+        end
+    elseif device["p_min_pu"] isa Dict && device["p_max_pu"] isa Dict
+        for key in intersect(keys(device["p_min_pu"]), keys(device["p_max_pu"]))
+            p_min = device["p_min_pu"][key]
+            p_max = device["p_max_pu"][key]
+            if p_min isa Real && p_max isa Real && p_min > p_max
+                Memento.error(_LOGGER, "$(uppercase(string(table_name))) device $(device_id) has invalid snapshot-keyed active-power per-unit bounds at $(key): require p_min_pu <= p_max_pu.")
+            end
+        end
+    end
+
+    return nothing
+end
+
+function _uc_gscr_numeric_values(value)
+    if value isa Real
+        return Real[value]
+    elseif value isa AbstractVector || value isa Tuple
+        return Real[item for item in value if item isa Real]
+    elseif value isa Dict
+        return Real[item for item in values(value) if item isa Real]
+    else
+        Memento.error(_LOGGER, "UC/gSCR block schema v2 validation failed: p_min_pu and p_max_pu must be scalar, vector, tuple, or dict keyed by snapshot.")
     end
 end
 
@@ -343,7 +491,7 @@ function _uc_gscr_block_devices(nw_ref::Dict{Symbol,<:Any})
             continue
         end
         for (device_id, device) in nw_ref[table_name]
-            if any(haskey(device, field) for field in [_UC_GSCR_BLOCK_REQUIRED_FIELDS; _UC_GSCR_BLOCK_OPTIONAL_FIELDS])
+            if any(haskey(device, field) for field in _UC_GSCR_BLOCK_DETECTION_FIELDS)
                 if _uc_gscr_is_inactive_placeholder_device(device)
                     continue
                 end
@@ -393,7 +541,7 @@ function _add_uc_gscr_device_maps!(nw_ref::Dict{Symbol,<:Any})
         end
 
         device_key = (table_name, device_id)
-        if device["type"] == "gfl"
+        if device["grid_control_mode"] == "gfl"
             gfl_devices[device_key] = device
             push!(bus_gfl_devices[bus_id], device_key)
         else
@@ -447,9 +595,9 @@ function _add_uc_gscr_row_metrics!(nw_ref::Dict{Symbol,<:Any})
     raw_rowsum = Dict{Any,Float64}()
     for bus_id in bus_ids
         diag_value = b0[(bus_id, bus_id)]
-        offdiag_abs = sum(abs(b0[(bus_id, other_bus_id)]) for other_bus_id in bus_ids if other_bus_id != bus_id)
+        offdiag_abs = sum((abs(b0[(bus_id, other_bus_id)]) for other_bus_id in bus_ids if other_bus_id != bus_id); init=0.0)
         margin[bus_id] = diag_value - offdiag_abs
-        raw_rowsum[bus_id] = sum(b0[(bus_id, other_bus_id)] for other_bus_id in bus_ids)
+        raw_rowsum[bus_id] = sum((b0[(bus_id, other_bus_id)] for other_bus_id in bus_ids); init=0.0)
     end
 
     nw_ref[:gscr_b0] = b0

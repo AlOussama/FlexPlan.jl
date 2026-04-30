@@ -1,17 +1,18 @@
 """
-    _set_uc_gscr_objective_fields!(device, type; n0, nmax, p_block_max, cost_inv_block)
+    _set_uc_gscr_objective_fields!(device, type; n0, nmax, p_block_max, cost_inv_per_mw)
 
 Adds deterministic UC/gSCR block objective fields to one test device.
 
 The helper sets the required block schema and objective fields used to validate
-`cost_inv_block * p_block_max * (n_block - n0)`. Argument `type` must be
+`cost_inv_per_mw * p_block_max * (n_block - n0)`. Argument `type` must be
 `"gfl"` or `"gfm"`. Values are interpreted on the model's internal base, with
-`cost_inv_block` treated as objective-level coefficient. This helper is
+`cost_inv_per_mw` treated as objective-level coefficient. This helper is
 formulation-independent and mutates `device`.
 """
-function _set_uc_gscr_objective_fields!(device, type; n0, nmax, p_block_max, cost_inv_block)
+function _set_uc_gscr_objective_fields!(device, type; n0, nmax, p_block_max, cost_inv_per_mw)
     merge!(device, Dict{String,Any}(
-        "type" => type,
+        "carrier" => "test-carrier",
+        "grid_control_mode" => type,
         "n0" => n0,
         "nmax" => nmax,
         "na0" => n0,
@@ -20,9 +21,11 @@ function _set_uc_gscr_objective_fields!(device, type; n0, nmax, p_block_max, cos
         "q_block_min" => -1.0,
         "q_block_max" => 1.0,
         "b_block" => type == "gfm" ? 0.6 : 0.0,
-        "cost_inv_block" => cost_inv_block,
-        "startup_block_cost" => 1.0,
-        "shutdown_block_cost" => 1.0,
+        "cost_inv_per_mw" => cost_inv_per_mw,
+        "p_min_pu" => 0.0,
+        "p_max_pu" => 1.0,
+        "startup_cost_per_mw" => 1.0,
+        "shutdown_cost_per_mw" => 1.0,
     ))
     return device
 end
@@ -42,16 +45,22 @@ function _uc_gscr_objective_test_data(; hours::Int=2, with_block::Bool=true, inc
     data = _FP.parse_file(normpath(@__DIR__, "data", "case2", "case2_d_strg.m"))
 
     if with_block
-        _set_uc_gscr_objective_fields!(data["gen"]["1"], "gfl"; n0=1, nmax=4, p_block_max=3.0, cost_inv_block=2.0)
-        _set_uc_gscr_objective_fields!(data["storage"]["1"], "gfm"; n0=2, nmax=5, p_block_max=4.0, cost_inv_block=5.0)
-        _set_uc_gscr_objective_fields!(data["ne_storage"]["1"], "gfl"; n0=0, nmax=3, p_block_max=1.5, cost_inv_block=7.0)
+        _set_uc_gscr_objective_fields!(data["gen"]["1"], "gfl"; n0=1, nmax=4, p_block_max=3.0, cost_inv_per_mw=2.0)
+        _set_uc_gscr_objective_fields!(data["storage"]["1"], "gfm"; n0=2, nmax=5, p_block_max=4.0, cost_inv_per_mw=5.0)
+        data["storage"]["1"]["e_block"] = 1.0
+        _set_uc_gscr_objective_fields!(data["ne_storage"]["1"], "gfl"; n0=0, nmax=3, p_block_max=1.5, cost_inv_per_mw=7.0)
+        data["ne_storage"]["1"]["e_block"] = 1.0
 
         if !include_cost_inv
-            delete!(data["storage"]["1"], "cost_inv_block")
+            delete!(data["storage"]["1"], "cost_inv_per_mw")
         end
         if !include_p_block_max
             delete!(data["gen"]["1"], "p_block_max")
         end
+    end
+    if with_block
+        data["block_model_schema"] = Dict{String,Any}("name" => "uc_gscr_block", "version" => "2.0")
+        data["operation_weight"] = 1.0
     end
 
     _FP.add_dimension!(data, :hour, hours)
@@ -95,7 +104,7 @@ end
         end
     end
 
-    @testset "Objective follows cost_inv_block * p_block_max * (n_block - n0)" begin
+    @testset "Objective follows cost_inv_per_mw * p_block_max * (n_block - n0)" begin
         pm = _uc_gscr_objective_test_pm()
         expr = _FP.calc_uc_gscr_block_investment_cost(pm)
         expected = Dict(
@@ -133,9 +142,7 @@ end
     end
 
     @testset "Missing objective fields fail via validation/reporting" begin
-        pm_missing_cost = _uc_gscr_objective_test_pm(; include_cost_inv=false)
-        @test_throws ErrorException _FP.calc_uc_gscr_block_investment_cost(pm_missing_cost)
-
+        @test_throws ErrorException _uc_gscr_objective_test_pm(; include_cost_inv=false)
         @test_throws ErrorException _uc_gscr_objective_test_pm(; include_p_block_max=false)
     end
 
@@ -148,12 +155,12 @@ end
         @test !haskey(_PM.var(pm, 1), :na_block)
     end
 
-    @testset "Objective coefficient equals cost_inv_block * p_block_max" begin
+    @testset "Objective coefficient equals cost_inv_per_mw * p_block_max" begin
         pm = _uc_gscr_objective_test_pm()
         expr = _FP.calc_uc_gscr_block_investment_cost(pm)
 
-        @test JuMP.coefficient(expr, _PM.var(pm, 1, :n_block, (:gen, 1))) == _PM.ref(pm, 1, :gen, 1, "cost_inv_block") * _PM.ref(pm, 1, :gen, 1, "p_block_max")
-        @test JuMP.coefficient(expr, _PM.var(pm, 1, :n_block, (:storage, 1))) == _PM.ref(pm, 1, :storage, 1, "cost_inv_block") * _PM.ref(pm, 1, :storage, 1, "p_block_max")
-        @test JuMP.coefficient(expr, _PM.var(pm, 1, :n_block, (:ne_storage, 1))) == _PM.ref(pm, 1, :ne_storage, 1, "cost_inv_block") * _PM.ref(pm, 1, :ne_storage, 1, "p_block_max")
+        @test JuMP.coefficient(expr, _PM.var(pm, 1, :n_block, (:gen, 1))) == _PM.ref(pm, 1, :gen, 1, "cost_inv_per_mw") * _PM.ref(pm, 1, :gen, 1, "p_block_max")
+        @test JuMP.coefficient(expr, _PM.var(pm, 1, :n_block, (:storage, 1))) == _PM.ref(pm, 1, :storage, 1, "cost_inv_per_mw") * _PM.ref(pm, 1, :storage, 1, "p_block_max")
+        @test JuMP.coefficient(expr, _PM.var(pm, 1, :n_block, (:ne_storage, 1))) == _PM.ref(pm, 1, :ne_storage, 1, "cost_inv_per_mw") * _PM.ref(pm, 1, :ne_storage, 1, "p_block_max")
     end
 end
