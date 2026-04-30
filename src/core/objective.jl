@@ -288,12 +288,13 @@ function calc_uc_gscr_block_investment_cost(pm::_PM.AbstractPowerModel)
     if isnothing(first_nw)
         return JuMP.AffExpr(0.0)
     end
+    _require_uc_gscr_block_template_resolved(pm, first_nw)
 
     if !haskey(_PM.var(pm, first_nw), :n_block)
         return JuMP.AffExpr(0.0)
     end
 
-    device_keys = _uc_gscr_block_device_keys(pm, first_nw)
+    device_keys = _uc_gscr_block_all_device_keys(pm, first_nw)
     _validate_uc_gscr_block_objective_fields(pm, first_nw, device_keys)
 
     n_block = _PM.var(pm, first_nw, :n_block)
@@ -314,11 +315,11 @@ Builds the UC/gSCR startup/shutdown block-cost contribution across snapshots.
 
 Implements:
 `sum_{k,t} startup_cost_per_mw[k] * su_block[k,t] + shutdown_cost_per_mw[k] * sd_block[k,t]`
-using compound keys `(table_name, device_id)` over `gen`, `storage`, and
-`ne_storage`. This expression is accumulated over all network snapshots where
-the UC/gSCR block reference extension and `su_block`/`sd_block` variables are
-present. Required fields `startup_cost_per_mw` and `shutdown_cost_per_mw` are
-taken explicitly from device data; no silent defaults are inferred.
+using compound keys `(table_name, device_id)` for devices that actually have
+`su_block`/`sd_block` variables. This is the resolved template
+`:startup_shutdown` device set. Required fields `startup_cost_per_mw` and
+`shutdown_cost_per_mw` are taken explicitly from those devices only; no silent
+defaults are inferred and no physical GFL/GFM fallback is used.
 
 If no UC/gSCR block reference data or no startup/shutdown variables exist,
 this returns zero. This helper is formulation-independent and mutates no model
@@ -330,13 +331,14 @@ function calc_uc_gscr_block_startup_shutdown_cost(pm::_PM.AbstractPowerModel)
         if !_has_uc_gscr_block_ref(pm, nw)
             continue
         end
+        _require_uc_gscr_block_template_resolved(pm, nw)
         if !haskey(_PM.var(pm, nw), :su_block) || !haskey(_PM.var(pm, nw), :sd_block)
             continue
         end
 
         su_block = _PM.var(pm, nw, :su_block)
         sd_block = _PM.var(pm, nw, :sd_block)
-        for device_key in _uc_gscr_block_device_keys(pm, nw)
+        for device_key in _uc_gscr_block_startup_shutdown_device_keys(pm, nw)
             # TODO(feature/block-objective-units-and-weights): scale these
             # per-MW coefficients by p_block_max and operation_weight when
             # formulation-specific startup/shutdown objectives are refactored.

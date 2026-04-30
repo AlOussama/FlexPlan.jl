@@ -68,6 +68,14 @@ function _uc_gscr_block_variable_data(; block::Bool=true, hours::Int=2)
     return _FP.make_multinetwork(data, Dict{String,Any}())
 end
 
+function _uc_gscr_block_variable_test_template()
+    return _FP.UCGSCRBlockTemplate(Dict(
+        (:gen, "test-carrier") => _FP.BlockThermalCommitment(),
+        (:storage, "test-carrier") => _FP.BlockThermalCommitment(),
+        (:ne_storage, "test-carrier") => _FP.BlockThermalCommitment(),
+    ))
+end
+
 """
     _uc_gscr_block_variable_pm(; block=true, relax=true, hours=2)
 
@@ -80,6 +88,9 @@ it creates.
 function _uc_gscr_block_variable_pm(; block::Bool=true, relax::Bool=true, hours::Int=2)
     data = _uc_gscr_block_variable_data(; block, hours)
     pm = _PM.instantiate_model(data, _PM.DCPPowerModel, pm -> nothing; ref_extensions=[_FP.ref_add_uc_gscr_block!])
+    if block
+        _FP.resolve_uc_gscr_block_template!(pm, _uc_gscr_block_variable_test_template())
+    end
     for nw in _FP.nw_ids(pm)
         _FP.variable_uc_gscr_block(pm; nw, relax)
     end
@@ -139,6 +150,7 @@ function _uc_gscr_block_collision_pm(; hours::Int=1)
 
     mn_data = _FP.make_multinetwork(data, Dict{String,Any}())
     pm = _PM.instantiate_model(mn_data, _PM.DCPPowerModel, pm -> nothing; ref_extensions=[_FP.ref_add_ne_storage!, _FP.ref_add_uc_gscr_block!])
+    _FP.resolve_uc_gscr_block_template!(pm, _uc_gscr_block_variable_test_template())
     for nw in _FP.nw_ids(pm)
         _FP.variable_uc_gscr_block(pm; nw, relax=true)
     end
@@ -205,6 +217,7 @@ end
     @testset "Variable constructors return existing and aliased containers consistently" begin
         data = _uc_gscr_block_variable_data(; block=true, hours=2)
         pm = _PM.instantiate_model(data, _PM.DCPPowerModel, pm -> nothing; ref_extensions=[_FP.ref_add_uc_gscr_block!])
+        _FP.resolve_uc_gscr_block_template!(pm, _uc_gscr_block_variable_test_template())
 
         n_alias = _FP.variable_installed_blocks(pm; nw=2, relax=true, report=false)
         @test n_alias === _PM.var(pm, 2)[:n_block]
@@ -297,6 +310,7 @@ end
     @testset "R3 solution reporting: report=false leaves solution dict empty" begin
         data = _uc_gscr_block_variable_data(; block=true, hours=2)
         pm = _PM.instantiate_model(data, _PM.DCPPowerModel, pm -> nothing; ref_extensions=[_FP.ref_add_uc_gscr_block!])
+        _FP.resolve_uc_gscr_block_template!(pm, _uc_gscr_block_variable_test_template())
         for nw in _FP.nw_ids(pm)
             _FP.variable_uc_gscr_block(pm; nw, relax=true, report=false)
         end

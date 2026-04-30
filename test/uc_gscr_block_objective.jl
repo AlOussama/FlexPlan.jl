@@ -67,6 +67,14 @@ function _uc_gscr_objective_test_data(; hours::Int=2, with_block::Bool=true, inc
     return _FP.make_multinetwork(data, Dict{String,Any}())
 end
 
+function _uc_gscr_objective_test_template()
+    return _FP.UCGSCRBlockTemplate(Dict(
+        (:gen, "test-carrier") => _FP.BlockThermalCommitment(),
+        (:storage, "test-carrier") => _FP.BlockThermalCommitment(),
+        (:ne_storage, "test-carrier") => _FP.BlockThermalCommitment(),
+    ))
+end
+
 """
     _uc_gscr_objective_test_pm(; kwargs...)
 
@@ -84,6 +92,9 @@ function _uc_gscr_objective_test_pm(; kwargs...)
         pm -> nothing;
         ref_extensions=[_FP.ref_add_ne_storage!, _FP.ref_add_uc_gscr_block!],
     )
+    if any(_FP._has_uc_gscr_block_ref(pm, nw) for nw in _FP.nw_ids(pm))
+        _FP.resolve_uc_gscr_block_template!(pm, _uc_gscr_objective_test_template())
+    end
     for nw in _FP.nw_ids(pm)
         _FP.variable_uc_gscr_block(pm; nw, relax=true, report=false)
     end

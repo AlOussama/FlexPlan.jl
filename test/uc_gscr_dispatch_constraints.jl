@@ -41,6 +41,14 @@ function _add_uc_gscr_storage_block_test_fields!(device, type; eblock)
     return device
 end
 
+function _uc_gscr_dispatch_test_template()
+    return _FP.UCGSCRBlockTemplate(Dict(
+        (:gen, "test-carrier") => _FP.BlockThermalCommitment(),
+        (:storage, "test-carrier") => _FP.BlockThermalCommitment(),
+        (:ne_storage, "test-carrier") => _FP.BlockThermalCommitment(),
+    ))
+end
+
 """
     _uc_gscr_dispatch_test_pm(model_type)
 
@@ -72,6 +80,7 @@ function _uc_gscr_dispatch_test_pm(model_type; gen_n0=1, gen_na0=1, gen_nmax=4, 
         pm -> nothing;
         ref_extensions=[_FP.ref_add_ne_storage!, _FP.ref_add_uc_gscr_block!],
     )
+    _FP.resolve_uc_gscr_block_template!(pm, _uc_gscr_dispatch_test_template())
 
     for nw in _FP.nw_ids(pm)
         _FP.variable_uc_gscr_block(pm; nw, relax=true, report=false)
