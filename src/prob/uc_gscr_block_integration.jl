@@ -5,7 +5,8 @@ Solves a minimal AC-side UC/gSCR block integration model on a multinetwork.
 
 The model wires together already-implemented UC/gSCR components: reference
 extension, installed/active/startup/shutdown block variables, block dispatch
-and storage bounds, Gershgorin sufficient gSCR constraints, and block objective
+and storage bounds, optional template-selected Gershgorin sufficient gSCR
+constraints, and block objective
 terms:
 `sum(cost_inv_per_mw * p_block_max * (n_block - n0))` and
 `sum(operation_weight * p_block_max * (startup_cost_per_mw * su_block + shutdown_cost_per_mw * sd_block))`.
@@ -41,8 +42,8 @@ Builds the minimal integrated UC/gSCR block model on one PowerModels instance.
 
 Per snapshot, this builder creates existing generator/storage variables,
 block-native candidate-storage variables, UC/gSCR block variables, block dispatch bounds,
-storage block bounds, standard dcline variables/loss constraints, the
-Gershgorin sufficient gSCR condition, and a standard bus-wise active-power
+storage block bounds, standard dcline variables/loss constraints, optional
+template-selected Gershgorin sufficient gSCR constraints, and a standard bus-wise active-power
 balance (`constraint_power_balance`) that includes AC branch terms and dcline
 terms. Dcline active-power limits are enforced by the bounded
 `variable_dcline_power` variables in active-power formulations. Across hours,
@@ -101,7 +102,9 @@ function build_uc_gscr_block_integration(
 
         constraint_uc_gscr_block_dispatch(pm; nw=n)
         constraint_uc_gscr_block_storage_bounds(pm; nw=n)
-        constraint_gscr_gershgorin_sufficient(pm; nw=n)
+        if _uc_gscr_block_requires_gscr_constraints(pm, n)
+            constraint_gscr_gershgorin_sufficient(pm; nw=n)
+        end
 
         for i in _PM.ids(pm, :storage, nw=n)
             if !_is_uc_gscr_block_enabled_device(pm, n, :storage, i)

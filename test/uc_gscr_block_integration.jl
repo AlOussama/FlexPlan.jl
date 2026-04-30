@@ -139,7 +139,15 @@ function _uc_gscr_integration_test_template()
         (:gen, "test-carrier") => _FP.BlockThermalCommitment(),
         (:storage, "test-carrier") => _FP.BlockThermalCommitment(),
         (:ne_storage, "test-carrier") => _FP.BlockThermalCommitment(),
-    ))
+    ), _FP.GershgorinGSCR(_FP.OnlineNameplateExposure()))
+end
+
+function _uc_gscr_integration_no_gscr_template()
+    return _FP.UCGSCRBlockTemplate(Dict(
+        (:gen, "test-carrier") => _FP.BlockThermalCommitment(),
+        (:storage, "test-carrier") => _FP.BlockThermalCommitment(),
+        (:ne_storage, "test-carrier") => _FP.BlockThermalCommitment(),
+    ), _FP.NoGSCR())
 end
 
 """
@@ -562,6 +570,48 @@ end
         @test_throws ErrorException _FP.uc_gscr_block_integration(data, _PM.DCPPowerModel, milp_optimizer)
     end
 
+    @testset "NoGSCR skips gSCR constraints and allows missing g_min" begin
+        data = _uc_gscr_synthetic_integration_data(; g_min=0.1)
+        for (_, nw_data) in data["nw"]
+            delete!(nw_data, "g_min")
+        end
+
+        pm = _uc_gscr_build_integration_pm(data; template=_uc_gscr_integration_no_gscr_template())
+
+        @test !haskey(_PM.ref(pm, 1), :g_min)
+        @test !haskey(_PM.con(pm, 1), :gscr_gershgorin_sufficient)
+        @test haskey(_PM.var(pm, 1), :n_block)
+        @test haskey(_PM.var(pm, 1), :na_block)
+        @test haskey(_PM.con(pm, 1), :uc_gscr_block_active_dispatch_bounds)
+        @test haskey(_PM.con(pm, 1), :uc_gscr_block_storage_energy_capacity)
+        @test JuMP.coefficient(JuMP.objective_function(pm.model), _PM.var(pm, 1, :n_block, (:gen, 1))) == 5.0
+    end
+
+    @testset "GershgorinGSCR creates gSCR constraints" begin
+        data = _uc_gscr_synthetic_integration_data(; g_min=0.1)
+        pm = _uc_gscr_build_integration_pm(data; template=_uc_gscr_integration_test_template())
+
+        @test haskey(_PM.con(pm, 1), :gscr_gershgorin_sufficient)
+        @test !isempty(_PM.con(pm, 1)[:gscr_gershgorin_sufficient])
+    end
+
+    @testset "GershgorinGSCR still requires g_min" begin
+        data = _uc_gscr_synthetic_integration_data(; g_min=0.1)
+        for (_, nw_data) in data["nw"]
+            delete!(nw_data, "g_min")
+        end
+
+        err = try
+            _uc_gscr_build_integration_pm(data; template=_uc_gscr_integration_test_template())
+            nothing
+        catch e
+            e
+        end
+        @test err isa ErrorException
+        @test occursin("GershgorinGSCR requires network", sprint(showerror, err))
+        @test occursin("`g_min`", sprint(showerror, err))
+    end
+
     @testset "Two-island dcline CAPEXP serves remote load" begin
         data = _uc_gscr_two_island_dcline_data(; load_bus2=80.0, dcline_pmax=120.0, include_dcline=true, gen_bus2=false)
         pm = _uc_gscr_solve_integration_pm(data)
@@ -848,6 +898,10 @@ end
         @test !haskey(_PM.con(pm, 1), :block_minimum_up_time)
         @test !haskey(_PM.con(pm, 1), :block_minimum_down_time)
         @test JuMP.constant(_FP.calc_uc_gscr_block_startup_shutdown_cost(pm)) == 0.0
+
+        built_pm = _uc_gscr_build_integration_pm(mn_data; template=nothing)
+        @test !haskey(_PM.con(built_pm, 1), :gscr_gershgorin_sufficient)
+        @test !haskey(_PM.var(built_pm, 1), :n_block)
     end
 
     @testset "Block-only candidate storage path removes standard candidate logic" begin
