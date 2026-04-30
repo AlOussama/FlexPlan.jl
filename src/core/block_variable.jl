@@ -26,6 +26,7 @@ function variable_uc_gscr_block(pm::_PM.AbstractPowerModel; nw::Int=_PM.nw_id_de
     variable_active_blocks(pm; nw, relax, report)
     variable_block_startup_shutdown_counts(pm; nw, relax, report)
     constraint_active_blocks_le_installed(pm; nw)
+    constraint_fixed_installed_active_equals_installed(pm; nw)
     constraint_block_count_transitions(pm; nw)
 end
 
@@ -70,7 +71,7 @@ function variable_installed_blocks(pm::_PM.AbstractPowerModel; nw::Int=_PM.nw_id
         return n_block
     end
 
-    device_keys = _uc_gscr_block_device_keys(pm, nw)
+    device_keys = _uc_gscr_block_all_device_keys(pm, nw)
     if relax
         n_block = _PM.var(pm, nw)[:n_block] = JuMP.@variable(pm.model,
             [device_key in device_keys], base_name="$(nw)_n_block",
@@ -121,7 +122,7 @@ function variable_active_blocks(pm::_PM.AbstractPowerModel; nw::Int=_PM.nw_id_de
         return na_block
     end
 
-    device_keys = _uc_gscr_block_device_keys(pm, nw)
+    device_keys = _uc_gscr_block_all_device_keys(pm, nw)
     if relax
         na_block = _PM.var(pm, nw)[:na_block] = JuMP.@variable(pm.model,
             [device_key in device_keys], base_name="$(nw)_na_block",
@@ -174,7 +175,7 @@ function variable_block_startup_shutdown_counts(pm::_PM.AbstractPowerModel; nw::
         return (su_block, sd_block)
     end
 
-    device_keys = _uc_gscr_block_device_keys(pm, nw)
+    device_keys = _uc_gscr_block_startup_shutdown_device_keys(pm, nw)
     if relax
         su_block = _PM.var(pm, nw)[:su_block] = JuMP.@variable(pm.model,
             [device_key in device_keys], base_name="$(nw)_su_block",
@@ -231,8 +232,39 @@ function constraint_active_blocks_le_installed(pm::_PM.AbstractPowerModel; nw::I
     na_block = _PM.var(pm, nw)[:na_block]
     constraints = _PM.con(pm, nw)[:active_blocks_le_installed] = Dict{Tuple{Symbol,Any},JuMP.ConstraintRef}()
 
-    for device_key in _uc_gscr_block_device_keys(pm, nw)
+    for device_key in _uc_gscr_block_all_device_keys(pm, nw)
         constraints[device_key] = JuMP.@constraint(pm.model, na_block[device_key] <= n_block[device_key])
+    end
+
+    return constraints
+end
+
+"""
+    constraint_fixed_installed_active_equals_installed(pm; nw=nw_id_default)
+
+Adds the fixed-installed block equation for `BlockFixedInstalled` devices:
+
+`na_block[k,t] == n_block[k]`.
+
+The device set is read from `pm.ext[:uc_gscr_block_device_sets]` after template
+resolution. Without a resolved template, this is a no-op so legacy
+formulation-independent tests keep their previous behavior.
+"""
+function constraint_fixed_installed_active_equals_installed(pm::_PM.AbstractPowerModel; nw::Int=_PM.nw_id_default)
+    if !_has_uc_gscr_block_ref(pm, nw)
+        return
+    end
+
+    if haskey(_PM.con(pm, nw), :fixed_installed_active_equals_installed)
+        return _PM.con(pm, nw)[:fixed_installed_active_equals_installed]
+    end
+
+    n_block = _PM.var(pm, nw)[:n_block]
+    na_block = _PM.var(pm, nw)[:na_block]
+    constraints = _PM.con(pm, nw)[:fixed_installed_active_equals_installed] = Dict{Tuple{Symbol,Any},JuMP.ConstraintRef}()
+
+    for device_key in _uc_gscr_block_fixed_installed_device_keys(pm, nw)
+        constraints[device_key] = JuMP.@constraint(pm.model, na_block[device_key] == n_block[device_key])
     end
 
     return constraints
@@ -269,14 +301,14 @@ function constraint_block_count_transitions(pm::_PM.AbstractPowerModel; nw::Int=
     constraints = _PM.con(pm, nw)[:block_count_transitions] = Dict{Tuple{Symbol,Any},JuMP.ConstraintRef}()
 
     if is_first_id(pm, nw, :hour)
-        for device_key in _uc_gscr_block_device_keys(pm, nw)
+        for device_key in _uc_gscr_block_startup_shutdown_device_keys(pm, nw)
             na0 = _PM.ref(pm, nw, device_key[1], device_key[2], "na0")
             constraints[device_key] = JuMP.@constraint(pm.model, na_block[device_key] - na0 == su_block[device_key] - sd_block[device_key])
         end
     else
         prev_nw = prev_id(pm, nw, :hour)
         na_prev = _PM.var(pm, prev_nw, :na_block)
-        for device_key in _uc_gscr_block_device_keys(pm, nw)
+        for device_key in _uc_gscr_block_startup_shutdown_device_keys(pm, nw)
             constraints[device_key] = JuMP.@constraint(pm.model, na_block[device_key] - na_prev[device_key] == su_block[device_key] - sd_block[device_key])
         end
     end
@@ -329,7 +361,7 @@ function constraint_block_minimum_up_time(pm::_PM.AbstractPowerModel; nw::Int=_P
     na_block = _PM.var(pm, nw, :na_block)
     constraints = _PM.con(pm, nw)[:block_minimum_up_time] = Dict{Tuple{Symbol,Any},JuMP.ConstraintRef}()
 
-    for device_key in _uc_gscr_block_device_keys(pm, nw)
+    for device_key in _uc_gscr_block_startup_shutdown_device_keys(pm, nw)
         min_up_block_time = _PM.ref(pm, nw, device_key[1], device_key[2], "min_up_block_time")
         window_nws = _uc_gscr_block_hour_window(pm, nw, min_up_block_time)
         su_window = sum(_PM.var(pm, window_nw, :su_block, device_key) for window_nw in window_nws)
@@ -366,7 +398,7 @@ function constraint_block_minimum_down_time(pm::_PM.AbstractPowerModel; nw::Int=
     na_block = _PM.var(pm, nw, :na_block)
     constraints = _PM.con(pm, nw)[:block_minimum_down_time] = Dict{Tuple{Symbol,Any},JuMP.ConstraintRef}()
 
-    for device_key in _uc_gscr_block_device_keys(pm, nw)
+    for device_key in _uc_gscr_block_startup_shutdown_device_keys(pm, nw)
         min_down_block_time = _PM.ref(pm, nw, device_key[1], device_key[2], "min_down_block_time")
         window_nws = _uc_gscr_block_hour_window(pm, nw, min_down_block_time)
         sd_window = sum(_PM.var(pm, window_nw, :sd_block, device_key) for window_nw in window_nws)
@@ -416,6 +448,82 @@ function _uc_gscr_block_min_up_down_enabled(pm::_PM.AbstractPowerModel, nw::Int)
 end
 
 """
+    _uc_gscr_block_all_device_keys(pm, nw)
+
+Returns resolved template device set `:all` for network `nw` when a UC/gSCR
+block template has been resolved into `pm.ext`. If no template is present, it
+falls back to legacy `_uc_gscr_block_device_keys(pm, nw)`, which returns all
+physical GFL/GFM block devices.
+"""
+function _uc_gscr_block_all_device_keys(pm::_PM.AbstractPowerModel, nw::Int)
+    return _uc_gscr_block_template_set_device_keys(pm, nw, :all; fallback=_uc_gscr_block_device_keys(pm, nw))
+end
+
+"""
+    _uc_gscr_block_startup_shutdown_device_keys(pm, nw)
+
+Returns devices assigned to `BlockThermalCommitment`, cached as
+`:startup_shutdown`/`:thermal_commitment` in `pm.ext`. Without a resolved
+template, this falls back to all physical block devices for legacy tests.
+"""
+function _uc_gscr_block_startup_shutdown_device_keys(pm::_PM.AbstractPowerModel, nw::Int)
+    return _uc_gscr_block_template_set_device_keys(pm, nw, :startup_shutdown; fallback=_uc_gscr_block_device_keys(pm, nw))
+end
+
+"""
+    _uc_gscr_block_fixed_installed_device_keys(pm, nw)
+
+Returns devices assigned to `BlockFixedInstalled`. Without a resolved template,
+the set is empty.
+"""
+function _uc_gscr_block_fixed_installed_device_keys(pm::_PM.AbstractPowerModel, nw::Int)
+    return _uc_gscr_block_template_set_device_keys(pm, nw, :fixed_installed; fallback=Tuple{Symbol,Any}[])
+end
+
+"""
+    _uc_gscr_block_renewable_participation_device_keys(pm, nw)
+
+Returns devices assigned to `BlockRenewableParticipation`. Without a resolved
+template, the set is empty.
+"""
+function _uc_gscr_block_renewable_participation_device_keys(pm::_PM.AbstractPowerModel, nw::Int)
+    return _uc_gscr_block_template_set_device_keys(pm, nw, :renewable_participation; fallback=Tuple{Symbol,Any}[])
+end
+
+"""
+    _uc_gscr_block_storage_participation_device_keys(pm, nw)
+
+Returns devices assigned to `BlockStorageParticipation`. Without a resolved
+template, the set is empty.
+"""
+function _uc_gscr_block_storage_participation_device_keys(pm::_PM.AbstractPowerModel, nw::Int)
+    return _uc_gscr_block_template_set_device_keys(pm, nw, :storage_participation; fallback=Tuple{Symbol,Any}[])
+end
+
+function _uc_gscr_block_template_set_device_keys(pm::_PM.AbstractPowerModel, nw::Int, set_key::Symbol; fallback)
+    if !_has_uc_gscr_block_ref(pm, nw)
+        return Tuple{Symbol,Any}[]
+    end
+    if !haskey(pm.ext, :uc_gscr_block_device_sets)
+        return copy(fallback)
+    end
+
+    device_sets = pm.ext[:uc_gscr_block_device_sets]
+    if !haskey(device_sets, set_key)
+        return Tuple{Symbol,Any}[]
+    end
+
+    device_keys = [device_key for device_key in device_sets[set_key] if _uc_gscr_block_has_device(pm, nw, device_key)]
+    sort!(device_keys; by=device_key -> (string(device_key[1]), string(device_key[2])))
+    return device_keys
+end
+
+function _uc_gscr_block_has_device(pm::_PM.AbstractPowerModel, nw::Int, device_key::Tuple{Symbol,Any})
+    table_name, device_id = device_key
+    return haskey(_PM.ref(pm, nw), table_name) && haskey(_PM.ref(pm, nw, table_name), device_id)
+end
+
+"""
     _uc_gscr_block_device_keys(pm, nw)
 
 Returns deterministic UC/gSCR block device keys for network `nw`.
@@ -423,7 +531,10 @@ Returns deterministic UC/gSCR block device keys for network `nw`.
 Device keys are `(table_name, device_id)` tuples collected from the
 formulation-independent `:gfl_devices` and `:gfm_devices` reference maps.
 The helper assumes `ref_add_uc_gscr_block!` has already populated those maps
-when block data is present. It mutates no data or model state.
+when block data is present. This is the legacy physical-device helper; new
+formulation-specific builders should use `_uc_gscr_block_all_device_keys`,
+`_uc_gscr_block_startup_shutdown_device_keys`, or the formulation-set helpers
+above. It mutates no data or model state.
 """
 function _uc_gscr_block_device_keys(pm::_PM.AbstractPowerModel, nw::Int)
     if !_has_uc_gscr_block_ref(pm, nw)
@@ -473,9 +584,17 @@ creates while checking report state.
 function _uc_gscr_block_report_ids(pm::_PM.AbstractPowerModel, nw::Int, table_name::Symbol, field_name::Symbol)
     return [
         device_id
-        for (device_table, device_id) in _uc_gscr_block_device_keys(pm, nw)
+        for (device_table, device_id) in _uc_gscr_block_report_device_keys(pm, nw, field_name)
         if device_table == table_name && !haskey(_PM.sol(pm, nw, table_name, device_id), field_name)
     ]
+end
+
+function _uc_gscr_block_report_device_keys(pm::_PM.AbstractPowerModel, nw::Int, field_name::Symbol)
+    if field_name == :su_block || field_name == :sd_block
+        return _uc_gscr_block_startup_shutdown_device_keys(pm, nw)
+    else
+        return _uc_gscr_block_all_device_keys(pm, nw)
+    end
 end
 
 """

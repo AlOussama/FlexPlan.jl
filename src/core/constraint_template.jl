@@ -260,7 +260,7 @@ function constraint_uc_gscr_block_reactive_dispatch_bounds(pm::_PM.AbstractPower
 
     constraints = _PM.con(pm, nw)[:uc_gscr_block_reactive_dispatch_bounds] = Dict{Tuple{Symbol,Any},Tuple{JuMP.ConstraintRef,JuMP.ConstraintRef}}()
 
-    for device_key in _uc_gscr_block_device_keys(pm, nw)
+    for device_key in _uc_gscr_block_all_device_keys(pm, nw)
         device = _PM.ref(pm, nw, device_key[1], device_key[2])
         constraints[device_key] = constraint_uc_gscr_block_reactive_dispatch_bounds(
             pm, nw, device_key, device["q_block_min"], device["q_block_max"]
@@ -389,12 +389,12 @@ end
 
 Returns deterministic UC/gSCR block storage compound keys for network `nw`.
 
-Keys are filtered from `_uc_gscr_block_device_keys(pm, nw)` and include only
+Keys are filtered from `_uc_gscr_block_all_device_keys(pm, nw)` and include only
 `(:storage, i)` and `(:ne_storage, i)`. This helper is formulation-independent
 and mutates no data or model state.
 """
 function _uc_gscr_block_storage_device_keys(pm::_PM.AbstractPowerModel, nw::Int)
-    return [device_key for device_key in _uc_gscr_block_device_keys(pm, nw) if device_key[1] == :storage || device_key[1] == :ne_storage]
+    return [device_key for device_key in _uc_gscr_block_all_device_keys(pm, nw) if device_key[1] == :storage || device_key[1] == :ne_storage]
 end
 
 """
@@ -402,11 +402,11 @@ end
 
 Returns deterministic UC/gSCR block generator compound keys for network `nw`.
 
-Keys are filtered from `_uc_gscr_block_device_keys(pm, nw)` and include only
+Keys are filtered from `_uc_gscr_block_all_device_keys(pm, nw)` and include only
 `(:gen, i)` entries.
 """
 function _uc_gscr_block_generator_device_keys(pm::_PM.AbstractPowerModel, nw::Int)
-    return [device_key for device_key in _uc_gscr_block_device_keys(pm, nw) if device_key[1] == :gen]
+    return [device_key for device_key in _uc_gscr_block_all_device_keys(pm, nw) if device_key[1] == :gen]
 end
 
 

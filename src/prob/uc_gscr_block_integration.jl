@@ -13,9 +13,10 @@ terms:
 Arguments are the input `data`, a PowerModels `model_type`, and a JuMP
 `optimizer`. Required dimensions are `:hour`, `:scenario`, and `:year`.
 When `template` is supplied, the builder resolves and caches UC/gSCR block
-formulation assignments before the existing model components are created.
-This function otherwise preserves the current formulation-independent build
-behavior and mutates only the instantiated optimization model through
+formulation assignments before variables and constraints are created. The
+formulation-specific block path expects callers to pass a template; omitting it
+keeps the legacy formulation-independent behavior for older tests and callers.
+This function mutates only the instantiated optimization model through
 `solve_model`.
 """
 function uc_gscr_block_integration(data::Dict{String,Any}, model_type::Type, optimizer; template=nothing, kwargs...)
@@ -49,8 +50,10 @@ it applies existing storage state constraints with an explicit terminal-storage
 policy gate.
 
 When `template` is supplied, this builder validates template compatibility and
-caches resolved formulation data in `pm.ext`; the cached sets are not yet used
-to change variables, constraints, or objective terms.
+caches resolved formulation data in `pm.ext`; block variables, transition
+constraints, fixed-installed constraints, and startup/shutdown objective terms
+consume those cached sets. Without a template, the builder falls back to the
+legacy all-block-device startup/shutdown behavior.
 
 This builder is formulation-specific to active-power formulations in this
 repository workflow and mutates the JuMP model plus PowerModels variable and
