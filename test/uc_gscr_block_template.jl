@@ -68,6 +68,8 @@ function _uc_gscr_template_pm(; carriers=["CCGT"], startup=true, g_min=nothing)
     return _PM.instantiate_model(data, _PM.DCPPowerModel, pm -> nothing; ref_extensions=[_FP.ref_add_uc_gscr_block!])
 end
 
+struct _UnsupportedTemplateGSCR <: _FP.AbstractGSCRFormulation end
+
 @testset "UC/gSCR block model template" begin
     @testset "template type construction" begin
         base = _FP.UCGSCRBlockTemplate(Dict((:gen, "CCGT") => _FP.BlockThermalCommitment()), _FP.NoGSCR())
@@ -199,6 +201,31 @@ end
 
         resolved = _FP.resolve_uc_gscr_block_template!(pm, template)
         @test resolved[1][(:gen, 1)] isa _FP.BlockThermalCommitment
+        @test _FP._uc_gscr_block_gscr_formulation(pm, 1) isa _FP.NoGSCR
+        @test !_FP._uc_gscr_block_requires_gscr_constraints(pm, 1)
+    end
+
+    @testset "GershgorinGSCR is selected from resolved template" begin
+        pm = _uc_gscr_template_pm(; carriers=["CCGT"], g_min=1.0)
+        template = _FP.UCGSCRBlockTemplate(Dict((:gen, "CCGT") => _FP.BlockThermalCommitment()), _FP.GershgorinGSCR())
+
+        _FP.resolve_uc_gscr_block_template!(pm, template)
+        @test _FP._uc_gscr_block_gscr_formulation(pm, 1) isa _FP.GershgorinGSCR
+        @test _FP._uc_gscr_block_requires_gscr_constraints(pm, 1)
+    end
+
+    @testset "unsupported gSCR formulation fails with clear error" begin
+        pm = _uc_gscr_template_pm(; carriers=["CCGT"])
+        template = _FP.UCGSCRBlockTemplate(Dict((:gen, "CCGT") => _FP.BlockThermalCommitment()), _UnsupportedTemplateGSCR())
+
+        err = try
+            _FP.resolve_uc_gscr_block_template!(pm, template)
+            nothing
+        catch e
+            e
+        end
+        @test err isa ErrorException
+        @test occursin("Unsupported UC/gSCR block template gSCR formulation", sprint(showerror, err))
     end
 
     @testset "resolved device sets are cached in pm.ext" begin
@@ -213,6 +240,7 @@ end
         sets = pm.ext[:uc_gscr_block_device_sets]
         @test pm.ext[:uc_gscr_block_template] === template
         @test haskey(pm.ext, :uc_gscr_block_formulations)
+        @test pm.ext[:uc_gscr_block_gscr_formulation] isa _FP.NoGSCR
         @test haskey(pm.ext, :uc_gscr_block_device_sets)
         @test Set(sets[:all]) == Set([(:gen, 1), (:gen, 2), (:gen, 3)])
         @test sets[:thermal_commitment] == [(:gen, 1)]

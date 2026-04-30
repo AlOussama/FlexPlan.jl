@@ -74,9 +74,62 @@ function resolve_uc_gscr_block_template!(pm::_PM.AbstractPowerModel, template::U
     end
 
     pm.ext[:uc_gscr_block_formulations] = resolved
+    pm.ext[:uc_gscr_block_gscr_formulation] = template.gscr_formulation
     pm.ext[:uc_gscr_block_device_sets] = _uc_gscr_block_template_device_sets(resolved)
     _validate_uc_gscr_block_template_gscr(pm, template.gscr_formulation)
     return resolved
+end
+
+"""
+    _uc_gscr_block_gscr_formulation(pm, nw)
+
+Returns the resolved UC/gSCR block gSCR formulation for network `nw`.
+
+Block-enabled schema-v2 models must resolve a `UCGSCRBlockTemplate` before
+formulation-specific model construction. No physical device fields or legacy
+policy fields are used to infer whether gSCR constraints should be active.
+"""
+function _uc_gscr_block_gscr_formulation(pm::_PM.AbstractPowerModel, nw::Int)
+    if !_has_uc_gscr_block_ref(pm, nw)
+        return NoGSCR()
+    end
+    _require_uc_gscr_block_template_resolved(pm, nw)
+
+    if haskey(pm.ext, :uc_gscr_block_gscr_formulation)
+        gscr = pm.ext[:uc_gscr_block_gscr_formulation]
+    elseif haskey(pm.ext, :uc_gscr_block_template)
+        template = pm.ext[:uc_gscr_block_template]
+        if !(template isa UCGSCRBlockTemplate)
+            Memento.error(_LOGGER, "Resolved UC/gSCR block template cache has unsupported type `$(typeof(template))`.")
+        end
+        gscr = template.gscr_formulation
+    else
+        Memento.error(
+            _LOGGER,
+            "UC/gSCR block formulation-specific model construction requires a resolved UCGSCRBlockTemplate for network $(nw). " *
+            "Pass `template=...` to `uc_gscr_block_integration` or call `resolve_uc_gscr_block_template!` before creating block variables or constraints.",
+        )
+    end
+
+    _validate_uc_gscr_block_gscr_formulation_supported(gscr)
+    return gscr
+end
+
+"""
+    _uc_gscr_block_requires_gscr_constraints(pm, nw)
+
+Returns whether the resolved UC/gSCR block template selects a gSCR constraint
+formulation for network `nw`.
+"""
+function _uc_gscr_block_requires_gscr_constraints(pm::_PM.AbstractPowerModel, nw::Int)
+    gscr = _uc_gscr_block_gscr_formulation(pm, nw)
+    if gscr isa NoGSCR
+        return false
+    elseif gscr isa GershgorinGSCR
+        return true
+    else
+        Memento.error(_LOGGER, "Unsupported UC/gSCR block template gSCR formulation `$(typeof(gscr))`.")
+    end
 end
 
 function _resolve_uc_gscr_block_template_network(pm::_PM.AbstractPowerModel, nw::Int, template::UCGSCRBlockTemplate)
@@ -124,10 +177,22 @@ function _validate_uc_gscr_block_template_device(pm::_PM.AbstractPowerModel, nw:
 end
 
 function _validate_uc_gscr_block_template_gscr(pm::_PM.AbstractPowerModel, gscr::AbstractGSCRFormulation)
+    _validate_uc_gscr_block_gscr_formulation_supported(gscr)
     if gscr isa NoGSCR
         return nothing
     elseif gscr isa GershgorinGSCR
         _validate_uc_gscr_block_template_gershgorin(pm, gscr)
+        return nothing
+    end
+end
+
+function _validate_uc_gscr_block_gscr_formulation_supported(gscr::AbstractGSCRFormulation)
+    if gscr isa NoGSCR
+        return nothing
+    elseif gscr isa GershgorinGSCR
+        if !(gscr.exposure isa OnlineNameplateExposure)
+            Memento.error(_LOGGER, "Unsupported GershgorinGSCR exposure `$(typeof(gscr.exposure))`.")
+        end
         return nothing
     else
         Memento.error(_LOGGER, "Unsupported UC/gSCR block template gSCR formulation `$(typeof(gscr))`.")
@@ -135,10 +200,6 @@ function _validate_uc_gscr_block_template_gscr(pm::_PM.AbstractPowerModel, gscr:
 end
 
 function _validate_uc_gscr_block_template_gershgorin(pm::_PM.AbstractPowerModel, gscr::GershgorinGSCR)
-    if !(gscr.exposure isa OnlineNameplateExposure)
-        Memento.error(_LOGGER, "Unsupported GershgorinGSCR exposure `$(typeof(gscr.exposure))`.")
-    end
-
     for nw in nw_ids(pm)
         if !_has_uc_gscr_block_ref(pm, nw)
             continue

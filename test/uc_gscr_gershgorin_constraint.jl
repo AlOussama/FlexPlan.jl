@@ -129,6 +129,7 @@ end
 @testset "UC/gSCR Gershgorin sufficient constraint" begin
     @testset "Builds the documented affine equation for all buses" begin
         pm = _uc_gscr_gershgorin_pm(; g_min=2.0)
+        _PM.ref(pm, 1, :gscr_sigma0_gershgorin_margin)[1] = 4.25
         _FP.constraint_gscr_gershgorin_sufficient(pm; nw=1)
 
         constraints = _PM.con(pm, 1)[:gscr_gershgorin_sufficient]
@@ -141,7 +142,7 @@ end
 
         @test JuMP.normalized_coefficient(constraints[1], na_gfm_1) == 3.0
         @test JuMP.normalized_coefficient(constraints[1], na_gfl_1) == -2.0
-        @test JuMP.normalized_rhs(constraints[1]) == 0.0
+        @test JuMP.normalized_rhs(constraints[1]) == -4.25
 
         @test JuMP.normalized_coefficient(constraints[2], na_gfl_2) == -3.0
         @test JuMP.normalized_rhs(constraints[2]) == 0.0
