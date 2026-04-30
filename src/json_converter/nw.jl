@@ -229,7 +229,15 @@ function optional_value(target::AbstractDict, target_key::String, source::Abstra
     end
 end
 
-const _UC_GSCR_BLOCK_OLD_FIELDS = ("type", "cost_inv_block", "startup_block_cost", "shutdown_block_cost")
+const _UC_GSCR_BLOCK_OLD_FIELDS = (
+    "type",
+    "cost_inv_block",
+    "startup_block_cost",
+    "shutdown_block_cost",
+    "activation_policy",
+    "uc_policy",
+    "gscr_exposure_policy",
+)
 const _UC_GSCR_BLOCK_REQUIRED_FIELDS = (
     "carrier",
     "grid_control_mode",

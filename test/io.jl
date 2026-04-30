@@ -258,8 +258,13 @@
             @test target["block_model_schema"] == Dict{String,Any}("name" => "uc_gscr_block", "version" => "2.0")
             @test target["operation_weight"] == 2.5
 
-            old_source = merge(copy(gen_source), Dict{String,Any}("type" => "gfm"))
-            @test_throws ErrorException _FP.JSONConverter.make_gen(old_source, 1, ["gridModelInputFile", "generators", "G1"], 1, 1; scale_gen=1.0)
+            missing_weight_source = Dict{String,Any}("genericParameters" => Dict{String,Any}())
+            @test_throws ErrorException _FP.JSONConverter.add_uc_gscr_block_schema_fields!(target, missing_weight_source, 1)
+
+            for field in ("type", "cost_inv_block", "startup_block_cost", "shutdown_block_cost", "activation_policy", "uc_policy", "gscr_exposure_policy")
+                old_source = merge(copy(gen_source), Dict{String,Any}(field => field == "type" ? "gfm" : 1.0))
+                @test_throws ErrorException _FP.JSONConverter.make_gen(old_source, 1, ["gridModelInputFile", "generators", "G1"], 1, 1; scale_gen=1.0)
+            end
         end
 
         @testset "cost_inv_per_mw remains objective-only and is not scaled by scale_data!" begin
