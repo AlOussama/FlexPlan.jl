@@ -42,7 +42,7 @@ Rescales UC/gSCR block fields on one parsed device to FlexPlan internal units.
 Power-like block fields (`p_block_*`, `q_block_*`, `e_block`, `s_block`) are
 mapped to the same p.u. base used by generator/storage power and energy fields.
 The admittance-like field `b_block` and non-power fields (for example `H`,
-`cost_inv_block`) are intentionally left unchanged.
+`cost_inv_per_mw`) are intentionally left unchanged.
 
 This helper is formulation-independent and mutates `device` in-place.
 """
@@ -107,7 +107,7 @@ Adds and normalizes storage and candidate-storage tables in parsed data.
 Existing FlexPlan storage fields are converted to the internal p.u. base, and
 UC/gSCR block power/energy/rating fields are converted with the same base.
 Admittance-style and non-power block fields (such as `b_block`, `H`,
-`cost_inv_block`) are not scaled here. The function mutates `data`.
+`cost_inv_per_mw`) are not scaled here. The function mutates `data`.
 """
 function _add_storage_data!(data)
     if haskey(data, "storage")

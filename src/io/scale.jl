@@ -132,7 +132,7 @@ The mapping follows existing FlexPlan internal quantity classes:
   `s_block` scale as power/energy (`rescale`);
 - `b_block` scales as per-unit admittance (`rescale`).
 
-Fields such as `H` and `cost_inv_block` are intentionally not scaled because
+Fields such as `H` and `cost_inv_per_mw` are intentionally not scaled because
 they do not depend on the MVA base convention. This helper mutates `device`.
 """
 function _rescale_uc_gscr_block_fields_mva_base!(device::Dict{String,<:Any}, rescale::Function)

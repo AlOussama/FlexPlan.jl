@@ -97,6 +97,8 @@ function nw(source::AbstractDict, lookup::AbstractDict, y::Int; oltc::Bool, scal
         target["storage"]["$index"] = make_storage(comp, index, source_id, storage_bus, y)
     end
 
+    add_uc_gscr_block_schema_fields!(target, source, y)
+
     return target
 end
 
@@ -203,6 +205,8 @@ function nw(source::AbstractDict, lookup::AbstractDict, cand_availability::Abstr
         end
     end
 
+    add_uc_gscr_block_schema_fields!(target, source, y)
+
     return target
 end
 
@@ -225,6 +229,129 @@ function optional_value(target::AbstractDict, target_key::String, source::Abstra
     end
 end
 
+const _UC_GSCR_BLOCK_OLD_FIELDS = ("type", "cost_inv_block", "startup_block_cost", "shutdown_block_cost")
+const _UC_GSCR_BLOCK_REQUIRED_FIELDS = (
+    "carrier",
+    "grid_control_mode",
+    "n0",
+    "nmax",
+    "na0",
+    "p_block_max",
+    "q_block_min",
+    "q_block_max",
+    "b_block",
+    "cost_inv_per_mw",
+    "p_min_pu",
+    "p_max_pu",
+)
+const _UC_GSCR_BLOCK_OPTIONAL_FIELDS = ("p_block_min", "H", "s_block", "startup_cost_per_mw", "shutdown_cost_per_mw", "min_up_block_time", "min_down_block_time")
+const _UC_GSCR_BLOCK_YEAR_FIELDS = (
+    "p_block_min",
+    "p_block_max",
+    "q_block_min",
+    "q_block_max",
+    "b_block",
+    "H",
+    "s_block",
+    "cost_inv_per_mw",
+    "startup_cost_per_mw",
+    "shutdown_cost_per_mw",
+    "e_block",
+)
+
+function _uc_gscr_block_source_id(source::AbstractDict)
+    id = get(source, "source_id", get(source, "id", "<unknown>"))
+    return id isa AbstractVector ? join(id, ".") : string(id)
+end
+
+function _uc_gscr_has_any_block_source_field(source::AbstractDict)
+    for field in Iterators.flatten((_UC_GSCR_BLOCK_REQUIRED_FIELDS, _UC_GSCR_BLOCK_OPTIONAL_FIELDS, ("e_block",), _UC_GSCR_BLOCK_OLD_FIELDS))
+        if haskey(source, field)
+            return true
+        end
+    end
+    return false
+end
+
+function _copy_uc_gscr_block_value!(target::AbstractDict, source::AbstractDict, field::String, y::Int)
+    if !haskey(source, field)
+        return
+    end
+    if field in _UC_GSCR_BLOCK_YEAR_FIELDS
+        value = source[field]
+        if value isa AbstractVector
+            if !isempty(value)
+                target[field] = value[y]
+            end
+        else
+            target[field] = value
+        end
+    else
+        optional_value(target, field, source, field)
+    end
+end
+
+function _validate_uc_gscr_block_source!(source::AbstractDict; is_storage::Bool)
+    for field in _UC_GSCR_BLOCK_OLD_FIELDS
+        if haskey(source, field)
+            Memento.error(_LOGGER, "UC/gSCR block schema v2 rejects source field `$field` on component $(_uc_gscr_block_source_id(source)). Use schema-v2 names only.")
+        end
+    end
+    if !_uc_gscr_has_any_block_source_field(source)
+        return false
+    end
+    missing = String[]
+    for field in _UC_GSCR_BLOCK_REQUIRED_FIELDS
+        if !haskey(source, field)
+            push!(missing, field)
+        elseif field in _UC_GSCR_BLOCK_YEAR_FIELDS && source[field] isa AbstractVector && isempty(source[field])
+            push!(missing, field)
+        end
+    end
+    if is_storage && (!haskey(source, "e_block") || (source["e_block"] isa AbstractVector && isempty(source["e_block"])))
+        push!(missing, "e_block")
+    end
+    if !isempty(missing)
+        Memento.error(_LOGGER, "UC/gSCR block schema v2 source component $(_uc_gscr_block_source_id(source)) is missing required fields: $(join(missing, ", ")).")
+    end
+    return true
+end
+
+function _has_uc_gscr_block_output(target::AbstractDict)
+    for table in ("gen", "storage", "ne_storage")
+        for device in values(get(target, table, Dict{String,Any}()))
+            if haskey(device, "grid_control_mode")
+                return true
+            end
+        end
+    end
+    return false
+end
+
+function _operation_weight(source::AbstractDict, y::Int)
+    gp = get(source, "genericParameters", Dict{String,Any}())
+    if haskey(gp, "operation_weight")
+        value = gp["operation_weight"]
+    elseif haskey(gp, "operationWeight")
+        value = gp["operationWeight"]
+    else
+        Memento.error(_LOGGER, "UC/gSCR block schema v2 converter output requires `operation_weight`; provide `genericParameters.operation_weight` or `genericParameters.operationWeight` in the source data.")
+    end
+    if value isa AbstractVector
+        return value[y]
+    else
+        return value
+    end
+end
+
+function add_uc_gscr_block_schema_fields!(target::AbstractDict, source::AbstractDict, y::Int)
+    if _has_uc_gscr_block_output(target)
+        target["block_model_schema"] = Dict{String,Any}("name" => "uc_gscr_block", "version" => "2.0")
+        target["operation_weight"] = _operation_weight(source, y)
+    end
+    return target
+end
+
 """
     add_uc_gscr_block_fields!(target, source, y; is_storage)
 
@@ -236,25 +363,14 @@ the same JSON conversion path as existing per-year power/energy fields.
 This helper is formulation-independent and mutates `target` in-place.
 """
 function add_uc_gscr_block_fields!(target::AbstractDict, source::AbstractDict, y::Int; is_storage::Bool)
-    optional_value(target, "type", source, "type")
-    optional_value(target, "n0", source, "n0")
-    optional_value(target, "nmax", source, "nmax")
-    optional_value(target, "na0", source, "na0")
-
-    optional_value(target, "p_block_min", source, "p_block_min", y)
-    optional_value(target, "p_block_max", source, "p_block_max", y)
-    optional_value(target, "q_block_min", source, "q_block_min", y)
-    optional_value(target, "q_block_max", source, "q_block_max", y)
-    optional_value(target, "b_block", source, "b_block", y)
-    optional_value(target, "H", source, "H", y)
-    optional_value(target, "s_block", source, "s_block", y)
-    optional_value(target, "cost_inv_block", source, "cost_inv_block", y)
-    optional_value(target, "startup_block_cost", source, "startup_block_cost", y)
-    optional_value(target, "shutdown_block_cost", source, "shutdown_block_cost", y)
-    optional_value(target, "min_up_block_time", source, "min_up_block_time")
-    optional_value(target, "min_down_block_time", source, "min_down_block_time")
+    if !_validate_uc_gscr_block_source!(source; is_storage)
+        return target
+    end
+    for field in Iterators.flatten((_UC_GSCR_BLOCK_REQUIRED_FIELDS, _UC_GSCR_BLOCK_OPTIONAL_FIELDS))
+        _copy_uc_gscr_block_value!(target, source, field, y)
+    end
     if is_storage
-        optional_value(target, "e_block", source, "e_block", y)
+        _copy_uc_gscr_block_value!(target, source, "e_block", y)
     end
 
     return target

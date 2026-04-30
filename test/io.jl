@@ -61,7 +61,7 @@
                         "s_block" => 60.0,
                         "b_block" => 0.4,
                         "H" => 3.5,
-                        "cost_inv_block" => 1200.0,
+                        "cost_inv_per_mw" => 1200.0,
                     ),
                 ),
                 "storage" => Dict{String,Any}(
@@ -75,7 +75,7 @@
                         "s_block" => 50.0,
                         "H" => 4.0,
                         "b_block" => 0.1,
-                        "cost_inv_block" => 2200.0,
+                        "cost_inv_per_mw" => 2200.0,
                     ),
                 ),
                 "ne_storage" => Dict{String,Any}(
@@ -100,7 +100,7 @@
                         "s_block" => 45.0,
                         "H" => 5.0,
                         "b_block" => 0.2,
-                        "cost_inv_block" => 3200.0,
+                        "cost_inv_per_mw" => 3200.0,
                     ),
                 ),
             )
@@ -111,7 +111,7 @@
             @test parse_data["gen"]["1"]["p_block_max"] ≈ parse_data["gen"]["1"]["pmax"]
             @test parse_data["gen"]["1"]["q_block_max"] ≈ parse_data["gen"]["1"]["qmax"]
             @test parse_data["gen"]["1"]["H"] == 3.5
-            @test parse_data["gen"]["1"]["cost_inv_block"] == 1200.0
+            @test parse_data["gen"]["1"]["cost_inv_per_mw"] == 1200.0
 
             @test parse_data["storage"]["1"]["e_block"] ≈ 0.8
             @test parse_data["storage"]["1"]["p_block_max"] ≈ 0.4
@@ -121,7 +121,7 @@
             @test parse_data["ne_storage"]["1"]["p_block_max"] ≈ 0.3
             @test parse_data["ne_storage"]["1"]["q_block_max"] ≈ 0.25
             @test parse_data["ne_storage"]["1"]["H"] == 5.0
-            @test parse_data["ne_storage"]["1"]["cost_inv_block"] == 3200.0
+            @test parse_data["ne_storage"]["1"]["cost_inv_per_mw"] == 3200.0
         end
 
         @testset "MVA-base conversion keeps block admittance on the same base as network admittance terms" begin
@@ -149,7 +149,7 @@
                         "s_block" => 0.8,
                         "b_block" => 5.0,
                         "H" => 6.0,
-                        "cost_inv_block" => 1800.0,
+                        "cost_inv_per_mw" => 1800.0,
                         "cost" => [10.0, 0.0],
                     ),
                 ),
@@ -172,7 +172,7 @@
             @test mva_data["gen"]["1"]["s_block"] ≈ 0.4
             @test (b_block_after / b_block_before) ≈ (b_branch_after / b_branch_before)
             @test mva_data["gen"]["1"]["H"] == 6.0
-            @test mva_data["gen"]["1"]["cost_inv_block"] == 1800.0
+            @test mva_data["gen"]["1"]["cost_inv_per_mw"] == 1800.0
         end
 
         @testset "JSON converter copies block fields without guessing missing entries" begin
@@ -182,22 +182,38 @@
                 "generationCosts" => [5.0],
                 "minActivePower" => [0.0],
                 "maxActivePower" => [100.0],
-                "type" => "gfm",
+                "carrier" => "CCGT",
+                "grid_control_mode" => "gfm",
                 "n0" => 1.0,
                 "nmax" => 3.0,
+                "na0" => 1.0,
                 "p_block_min" => [0.0],
                 "p_block_max" => [60.0],
+                "q_block_min" => [-20.0],
                 "q_block_max" => [20.0],
                 "b_block" => [0.25],
                 "H" => [4.5],
                 "s_block" => [60.0],
-                "cost_inv_block" => [900.0],
+                "cost_inv_per_mw" => [900.0],
+                "p_min_pu" => 0.0,
+                "p_max_pu" => 1.0,
+                "startup_cost_per_mw" => [11.0],
+                "shutdown_cost_per_mw" => [7.0],
             )
             gen_target = _FP.JSONConverter.make_gen(gen_source, 1, ["gridModelInputFile", "generators", "G1"], 1, 1; scale_gen=1.0)
+            @test gen_target["carrier"] == "CCGT"
+            @test gen_target["grid_control_mode"] == "gfm"
             @test gen_target["p_block_max"] == 60.0
+            @test gen_target["q_block_min"] == -20.0
             @test gen_target["q_block_max"] == 20.0
             @test gen_target["H"] == 4.5
-            @test !haskey(gen_target, "q_block_min")
+            @test gen_target["cost_inv_per_mw"] == 900.0
+            @test gen_target["startup_cost_per_mw"] == 11.0
+            @test gen_target["shutdown_cost_per_mw"] == 7.0
+            @test !haskey(gen_target, "type")
+            @test !haskey(gen_target, "cost_inv_block")
+            @test !haskey(gen_target, "startup_block_cost")
+            @test !haskey(gen_target, "shutdown_block_cost")
 
             storage_source = Dict{String,Any}(
                 "maxEnergy" => [80.0],
@@ -208,26 +224,45 @@
                 "minReactivePowerExchange" => [-10.0],
                 "maxReactivePowerExchange" => [10.0],
                 "selfDischargeRate" => [0.0],
-                "type" => "gfl",
+                "carrier" => "BESS-GFL",
+                "grid_control_mode" => "gfl",
                 "n0" => 0.0,
                 "nmax" => 4.0,
+                "na0" => 0.0,
                 "p_block_max" => [20.0],
+                "q_block_min" => [-10.0],
                 "q_block_max" => [10.0],
                 "e_block" => [80.0],
                 "b_block" => [0.0],
                 "H" => [3.0],
                 "s_block" => [20.0],
-                "cost_inv_block" => [1500.0],
+                "cost_inv_per_mw" => [1500.0],
+                "p_min_pu" => 0.0,
+                "p_max_pu" => 1.0,
             )
             storage_target = _FP.JSONConverter.make_storage(storage_source, 1, ["gridModelInputFile", "storage", "S1"], 1, 1)
+            @test storage_target["carrier"] == "BESS-GFL"
+            @test storage_target["grid_control_mode"] == "gfl"
             @test storage_target["e_block"] == 80.0
             @test storage_target["p_block_max"] == 20.0
+            @test storage_target["q_block_min"] == -10.0
             @test storage_target["q_block_max"] == 10.0
             @test storage_target["H"] == 3.0
             @test !haskey(storage_target, "p_block_min")
+            @test !haskey(storage_target, "type")
+            @test !haskey(storage_target, "cost_inv_block")
+
+            target = Dict{String,Any}("gen" => Dict{String,Any}("1" => gen_target), "storage" => Dict{String,Any}(), "ne_storage" => Dict{String,Any}())
+            source = Dict{String,Any}("genericParameters" => Dict{String,Any}("operation_weight" => [2.5]))
+            _FP.JSONConverter.add_uc_gscr_block_schema_fields!(target, source, 1)
+            @test target["block_model_schema"] == Dict{String,Any}("name" => "uc_gscr_block", "version" => "2.0")
+            @test target["operation_weight"] == 2.5
+
+            old_source = merge(copy(gen_source), Dict{String,Any}("type" => "gfm"))
+            @test_throws ErrorException _FP.JSONConverter.make_gen(old_source, 1, ["gridModelInputFile", "generators", "G1"], 1, 1; scale_gen=1.0)
         end
 
-        @testset "cost_inv_block remains objective-only and is not scaled by scale_data!" begin
+        @testset "cost_inv_per_mw remains objective-only and is not scaled by scale_data!" begin
             scale_data = Dict{String,Any}(
                 "gen" => Dict{String,Any}(),
                 "load" => Dict{String,Any}(),
@@ -237,14 +272,14 @@
                         "eq_cost" => 100.0,
                         "inst_cost" => 20.0,
                         "co2_cost" => 0.0,
-                        "cost_inv_block" => 7.5,
+                        "cost_inv_per_mw" => 7.5,
                     ),
                 ),
             )
             _FP.scale_data!(scale_data; number_of_hours=1, year_scale_factor=1, number_of_years=10, year_idx=1, cost_scale_factor=2.0)
             @test scale_data["ne_storage"]["1"]["eq_cost"] ≈ 200.0
             @test scale_data["ne_storage"]["1"]["inst_cost"] ≈ 40.0
-            @test scale_data["ne_storage"]["1"]["cost_inv_block"] == 7.5
+            @test scale_data["ne_storage"]["1"]["cost_inv_per_mw"] == 7.5
         end
     end
 
