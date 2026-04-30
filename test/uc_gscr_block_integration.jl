@@ -1014,6 +1014,10 @@ end
         built_pm = _uc_gscr_build_integration_pm(mn_data; template=nothing)
         @test !haskey(_PM.con(built_pm, 1), :gscr_gershgorin_sufficient)
         @test !haskey(_PM.var(built_pm, 1), :n_block)
+        @test built_pm.ext[:uc_gscr_block_architecture_diagnostics]["block_architecture_guard_passed"] == true
+        @test built_pm.ext[:uc_gscr_block_architecture_diagnostics]["uses_standard_candidate_build_variables"] == false
+        @test built_pm.ext[:uc_gscr_block_architecture_diagnostics]["uses_standard_candidate_activation_constraints"] == false
+        @test built_pm.ext[:uc_gscr_block_architecture_diagnostics]["uses_standard_candidate_investment_cost"] == false
     end
 
     @testset "Block-only candidate storage path removes standard candidate logic" begin
@@ -1024,6 +1028,9 @@ end
         @test !haskey(_PM.var(pm, 1), :z_strg_ne_investment)
         @test !haskey(_PM.con(pm, 1), :ne_storage_activation)
 
+        @test haskey(_PM.var(pm, 1), :se_ne)
+        @test haskey(_PM.var(pm, 1), :sc_ne)
+        @test haskey(_PM.var(pm, 1), :sd_ne)
         se_ne = _PM.var(pm, 1, :se_ne, 1)
         sc_ne = _PM.var(pm, 1, :sc_ne, 1)
         sd_ne = _PM.var(pm, 1, :sd_ne, 1)
@@ -1033,12 +1040,25 @@ end
 
         @test haskey(_PM.con(pm, 1), :uc_gscr_block_storage_energy_capacity)
         @test haskey(_PM.con(pm, 1), :uc_gscr_block_storage_charge_discharge_bounds)
+        @test haskey(_PM.con(pm, 1)[:uc_gscr_block_storage_energy_capacity], (:ne_storage, 1))
+        @test haskey(_PM.con(pm, 1)[:uc_gscr_block_storage_charge_discharge_bounds], (:ne_storage, 1))
         @test !haskey(_PM.con(pm, 1), :storage_bounds_ne)
 
         obj = JuMP.objective_function(pm.model)
         @test JuMP.coefficient(obj, _PM.var(pm, 1, :n_block, (:ne_storage, 1))) == 10.0
         @test JuMP.coefficient(obj, _PM.var(pm, 1, :su_block, (:ne_storage, 1))) == 0.0
         @test JuMP.coefficient(obj, _PM.var(pm, 1, :sd_block, (:ne_storage, 1))) == 0.0
+        @test !haskey(_PM.var(pm, 1), :z_strg_ne)
+        @test !haskey(_PM.var(pm, 1), :z_strg_ne_investment)
+
+        diagnostics = pm.ext[:uc_gscr_block_architecture_diagnostics]
+        @test diagnostics["uses_standard_candidate_build_variables"] == false
+        @test diagnostics["uses_standard_candidate_activation_constraints"] == false
+        @test diagnostics["uses_standard_candidate_investment_cost"] == false
+        @test diagnostics["block_architecture_guard_passed"] == true
+        @test "z_strg_ne" in diagnostics["forbidden_candidate_storage_variables_checked"]
+        @test "z_strg_ne_investment" in diagnostics["forbidden_candidate_storage_variables_checked"]
+        @test "ne_storage_activation" in diagnostics["forbidden_candidate_storage_constraints_checked"]
 
         # A feasible dispatch with positive block investment and operation under
         # zero standard ratings must be possible in block-only mode.
@@ -1063,6 +1083,50 @@ end
         se2 = JuMP.value(_PM.var(pm, 2, :se_ne, 1))
         @test se1 > 0.0
         @test se2 >= 0.0
+    end
+
+    @testset "Architecture guard catches injected standard candidate variables" begin
+        for family in (:z_strg_ne, :z_strg_ne_investment)
+            data = _uc_gscr_block_only_ne_storage_fixture()
+            pm = _uc_gscr_build_integration_pm(data)
+            _PM.var(pm, 1)[family] = Dict(1 => nothing)
+
+            err = try
+                _FP._validate_uc_gscr_block_storage_architecture!(pm)
+                nothing
+            catch e
+                e
+            end
+            @test err isa ErrorException
+            msg = sprint(showerror, err)
+            @test occursin("UC/gSCR block storage architecture guard failed", msg)
+            @test occursin("table=ne_storage", msg)
+            @test occursin("device=1", msg)
+            @test occursin(String(family), msg)
+            @test pm.ext[:uc_gscr_block_architecture_guard_passed] == false
+        end
+    end
+
+    @testset "Architecture guard catches injected standard candidate activation constraints" begin
+        for family in (:ne_storage_activation, :storage_bounds_ne)
+            data = _uc_gscr_block_only_ne_storage_fixture()
+            pm = _uc_gscr_build_integration_pm(data)
+            _PM.con(pm, 1)[family] = Dict(1 => nothing)
+
+            err = try
+                _FP._validate_uc_gscr_block_storage_architecture!(pm)
+                nothing
+            catch e
+                e
+            end
+            @test err isa ErrorException
+            msg = sprint(showerror, err)
+            @test occursin("UC/gSCR block storage architecture guard failed", msg)
+            @test occursin("table=ne_storage", msg)
+            @test occursin("device=1", msg)
+            @test occursin(String(family), msg)
+            @test pm.ext[:uc_gscr_block_architecture_guard_passed] == false
+        end
     end
 
     @testset "Block-enabled generator ignores standard pmax clipping while non-block stays standard" begin
