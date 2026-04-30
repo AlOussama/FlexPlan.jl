@@ -307,10 +307,10 @@ The returned multinetwork can include only a generator block device or all
 three component tables (`gen`, `storage`, `ne_storage`) to validate compound
 keys. The helper is test-only and mutates only local fixture data.
 """
-function _uc_gscr_transition_fixture(; na0::Float64=1.0, n0::Float64=1.0, nmax::Float64=8.0, startup_cost::Float64=1.0, shutdown_cost::Float64=1.0, include_storage::Bool=false, hours::Int=2)
+function _uc_gscr_transition_fixture(; na0::Float64=1.0, n0::Float64=1.0, nmax::Float64=8.0, startup_cost::Float64=1.0, shutdown_cost::Float64=1.0, include_storage::Bool=false, hours::Int=2, p_block_max::Float64=20.0, operation_weight::Float64=1.0)
     data = _FP.parse_file(normpath(@__DIR__, "data", "case2", "case2_d_strg.m"))
     data["block_model_schema"] = Dict{String,Any}("name" => "uc_gscr_block", "version" => "2.0")
-    data["operation_weight"] = 1.0
+    data["operation_weight"] = operation_weight
     data["g_min"] = 0.0
 
     _uc_gscr_integration_add_block_fields!(
@@ -320,7 +320,7 @@ function _uc_gscr_transition_fixture(; na0::Float64=1.0, n0::Float64=1.0, nmax::
         nmax=nmax,
         na0=na0,
         p_block_min=0.0,
-        p_block_max=20.0,
+        p_block_max=p_block_max,
         q_block_min=-10.0,
         q_block_max=10.0,
         b_block=0.0,
@@ -736,12 +736,12 @@ end
     end
 
     @testset "Startup/shutdown objective term uses su_block/sd_block counts" begin
-        data = _uc_gscr_transition_fixture(; na0=1.0, startup_cost=10.0, shutdown_cost=20.0, include_storage=false, hours=2)
+        data = _uc_gscr_transition_fixture(; na0=1.0, startup_cost=10.0, shutdown_cost=20.0, include_storage=false, hours=2, p_block_max=5.0, operation_weight=26.0)
         pm = _uc_gscr_transition_pm(data)
         expr = _FP.calc_uc_gscr_block_startup_shutdown_cost(pm)
 
-        @test JuMP.coefficient(expr, _PM.var(pm, 1, :su_block, (:gen, 1))) == 10.0
-        @test JuMP.coefficient(expr, _PM.var(pm, 2, :sd_block, (:gen, 1))) == 20.0
+        @test JuMP.coefficient(expr, _PM.var(pm, 1, :su_block, (:gen, 1))) == 10.0 * 5.0 * 26.0
+        @test JuMP.coefficient(expr, _PM.var(pm, 2, :sd_block, (:gen, 1))) == 20.0 * 5.0 * 26.0
         @test JuMP.coefficient(expr, _PM.var(pm, 1, :na_block, (:gen, 1))) == 0.0
 
         JuMP.fix(_PM.var(pm, 1, :na_block, (:gen, 1)), 4.0; force=true)
@@ -752,7 +752,7 @@ end
         JuMP.optimize!(pm.model)
 
         @test JuMP.termination_status(pm.model) == JuMP.MOI.OPTIMAL
-        @test JuMP.objective_value(pm.model) ≈ 70.0 atol=1e-6
+        @test JuMP.objective_value(pm.model) ≈ 10.0 * 5.0 * 26.0 * 3.0 + 20.0 * 5.0 * 26.0 * 2.0 atol=1e-6
     end
 
     @testset "Compound keys remain collision-free across gen/storage/ne_storage" begin
@@ -765,9 +765,9 @@ end
         @test _PM.var(pm, 1, :su_block, (:gen, 1)) !== _PM.var(pm, 1, :su_block, (:storage, 1))
         @test _PM.var(pm, 1, :su_block, (:gen, 1)) !== _PM.var(pm, 1, :su_block, (:ne_storage, 1))
 
-        @test JuMP.coefficient(expr, _PM.var(pm, 1, :su_block, (:gen, 1))) == 2.0
-        @test JuMP.coefficient(expr, _PM.var(pm, 1, :su_block, (:storage, 1))) == 3.0
-        @test JuMP.coefficient(expr, _PM.var(pm, 1, :su_block, (:ne_storage, 1))) == 4.0
+        @test JuMP.coefficient(expr, _PM.var(pm, 1, :su_block, (:gen, 1))) == 2.0 * 20.0
+        @test JuMP.coefficient(expr, _PM.var(pm, 1, :su_block, (:storage, 1))) == 3.0 * 5.0
+        @test JuMP.coefficient(expr, _PM.var(pm, 1, :su_block, (:ne_storage, 1))) == 4.0 * 5.0
     end
 
     @testset "Stage path does not activate min-up/min-down constraints" begin

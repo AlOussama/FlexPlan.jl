@@ -231,8 +231,8 @@ end
         pm = _uc_gscr_formulation_pm()
         expr = _FP.calc_uc_gscr_block_startup_shutdown_cost(pm)
 
-        @test JuMP.coefficient(expr, _PM.var(pm, 1, :su_block, thermal_key)) == 10.0
-        @test JuMP.coefficient(expr, _PM.var(pm, 1, :sd_block, thermal_key)) == 20.0
+        @test JuMP.coefficient(expr, _PM.var(pm, 1, :su_block, thermal_key)) == 10.0 * 10.0
+        @test JuMP.coefficient(expr, _PM.var(pm, 1, :sd_block, thermal_key)) == 20.0 * 10.0
         @test !(wind_key in axes(_PM.var(pm, 1, :su_block), 1))
         @test !(bess_key in axes(_PM.var(pm, 1, :sd_block), 1))
     end

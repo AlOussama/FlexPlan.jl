@@ -8,7 +8,7 @@ extension, installed/active/startup/shutdown block variables, block dispatch
 and storage bounds, Gershgorin sufficient gSCR constraints, and block objective
 terms:
 `sum(cost_inv_per_mw * p_block_max * (n_block - n0))` and
-`sum(startup_cost_per_mw * su_block + shutdown_cost_per_mw * sd_block)`.
+`sum(operation_weight * p_block_max * (startup_cost_per_mw * su_block + shutdown_cost_per_mw * sd_block))`.
 
 Arguments are the input `data`, a PowerModels `model_type`, and a JuMP
 `optimizer`. Required dimensions are `:hour`, `:scenario`, and `:year`.
@@ -165,7 +165,7 @@ Builds the minimal objective used by `build_uc_gscr_block_integration`.
 
 The objective includes generation operating cost and UC/gSCR block terms:
 `sum(cost_inv_per_mw * p_block_max * (n_block - n0))` and
-`sum(startup_cost_per_mw * su_block + shutdown_cost_per_mw * sd_block)`.
+`sum(operation_weight * p_block_max * (startup_cost_per_mw * su_block + shutdown_cost_per_mw * sd_block))`.
 Block terms are each added once per model. The objective intentionally excludes
 AC/DC line and converter investment terms to keep topology fixed in this
 integrated path.
