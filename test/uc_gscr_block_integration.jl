@@ -256,13 +256,28 @@ Instantiates the minimal UC/gSCR integration model for structural assertions.
 This helper is test-only, uses the same build path as the public solve
 wrapper, and mutates only the instantiated model.
 """
-function _uc_gscr_build_integration_pm(data; template=_uc_gscr_integration_test_template())
+function _uc_gscr_build_integration_pm(data; template=_uc_gscr_integration_test_template(), kwargs...)
     return _PM.instantiate_model(
         data,
         _PM.DCPPowerModel,
-        pm -> _FP.build_uc_gscr_block_integration(pm; template);
+        pm -> _FP.build_uc_gscr_block_integration(pm; template, kwargs...);
         ref_extensions=[_FP.ref_add_gen!, _FP.ref_add_storage!, _FP.ref_add_ne_storage!, _FP.ref_add_uc_gscr_block!],
     )
+end
+
+function _uc_gscr_terminal_policy_fixture(; hours::Int=2, storage_energy::Float64=0.3, ne_storage_energy::Float64=0.4)
+    data = _uc_gscr_transition_fixture(; include_storage=true, hours)
+    for (_, nw_data) in data["nw"]
+        nw_data["storage"]["1"]["energy"] = storage_energy
+        nw_data["storage"]["1"]["self_discharge_rate"] = 0.0
+        nw_data["storage"]["1"]["stationary_energy_inflow"] = 0.0
+        nw_data["storage"]["1"]["stationary_energy_outflow"] = 0.0
+        nw_data["ne_storage"]["1"]["energy"] = ne_storage_energy
+        nw_data["ne_storage"]["1"]["self_discharge_rate"] = 0.0
+        nw_data["ne_storage"]["1"]["stationary_energy_inflow"] = 0.0
+        nw_data["ne_storage"]["1"]["stationary_energy_outflow"] = 0.0
+    end
+    return data
 end
 
 function _uc_gscr_block_only_ne_storage_fixture()
@@ -568,6 +583,103 @@ end
 
         @test_throws ErrorException _uc_gscr_build_integration_pm(data; template=nothing)
         @test_throws ErrorException _FP.uc_gscr_block_integration(data, _PM.DCPPowerModel, milp_optimizer)
+    end
+
+    @testset "Storage terminal policy none adds no terminal constraints" begin
+        data = _uc_gscr_terminal_policy_fixture()
+        pm = _uc_gscr_build_integration_pm(data; storage_terminal_policy=:none)
+
+        @test !haskey(_PM.con(pm, 2), :uc_gscr_storage_terminal)
+        @test haskey(_PM.var(pm, 2), :se)
+    end
+
+    @testset "Storage terminal policy cyclic links final to first snapshot" begin
+        data = _uc_gscr_terminal_policy_fixture()
+        pm = _uc_gscr_build_integration_pm(data; storage_terminal_policy=:cyclic)
+
+        terminal = _PM.con(pm, 2)[:uc_gscr_storage_terminal]
+        storage_con = terminal[(:storage, 1)]
+        ne_storage_con = terminal[(:ne_storage, 1)]
+
+        @test JuMP.normalized_coefficient(storage_con, _PM.var(pm, 2, :se, 1)) == 1.0
+        @test JuMP.normalized_coefficient(storage_con, _PM.var(pm, 1, :se, 1)) == -1.0
+        @test JuMP.normalized_rhs(storage_con) == 0.0
+
+        @test JuMP.normalized_coefficient(ne_storage_con, _PM.var(pm, 2, :se_ne, 1)) == 1.0
+        @test JuMP.normalized_coefficient(ne_storage_con, _PM.var(pm, 1, :se_ne, 1)) == -1.0
+        @test JuMP.normalized_rhs(ne_storage_con) == 0.0
+    end
+
+    @testset "Storage terminal policy fixed_initial fixes final to initial energy" begin
+        data = _uc_gscr_terminal_policy_fixture(; storage_energy=0.3, ne_storage_energy=0.4)
+        pm = _uc_gscr_build_integration_pm(data; storage_terminal_policy=:fixed_initial)
+
+        terminal = _PM.con(pm, 2)[:uc_gscr_storage_terminal]
+        storage_con = terminal[(:storage, 1)]
+        ne_storage_con = terminal[(:ne_storage, 1)]
+
+        @test JuMP.normalized_coefficient(storage_con, _PM.var(pm, 2, :se, 1)) == 1.0
+        @test JuMP.normalized_rhs(storage_con) == 0.3
+
+        @test JuMP.normalized_coefficient(ne_storage_con, _PM.var(pm, 2, :se_ne, 1)) == 1.0
+        @test JuMP.normalized_rhs(ne_storage_con) == 0.4
+    end
+
+    @testset "Storage terminal policy relaxed_cyclic enforces terminal fraction" begin
+        data = _uc_gscr_terminal_policy_fixture()
+        pm = _uc_gscr_build_integration_pm(data; storage_terminal_policy=:relaxed_cyclic, storage_terminal_fraction=0.8)
+
+        terminal = _PM.con(pm, 2)[:uc_gscr_storage_terminal]
+        storage_con = terminal[(:storage, 1)]
+        ne_storage_con = terminal[(:ne_storage, 1)]
+
+        @test JuMP.normalized_coefficient(storage_con, _PM.var(pm, 2, :se, 1)) == 1.0
+        @test JuMP.normalized_coefficient(storage_con, _PM.var(pm, 1, :se, 1)) == -0.8
+        @test JuMP.normalized_rhs(storage_con) == 0.0
+
+        @test JuMP.normalized_coefficient(ne_storage_con, _PM.var(pm, 2, :se_ne, 1)) == 1.0
+        @test JuMP.normalized_coefficient(ne_storage_con, _PM.var(pm, 1, :se_ne, 1)) == -0.8
+        @test JuMP.normalized_rhs(ne_storage_con) == 0.0
+    end
+
+    @testset "Storage terminal policy validation errors are explicit" begin
+        data = _uc_gscr_terminal_policy_fixture()
+
+        bad_policy = try
+            _uc_gscr_build_integration_pm(data; storage_terminal_policy=:bad_policy)
+            nothing
+        catch e
+            e
+        end
+        @test bad_policy isa ErrorException
+        @test occursin("Unsupported storage_terminal_policy", sprint(showerror, bad_policy))
+
+        negative_fraction = try
+            _uc_gscr_build_integration_pm(data; storage_terminal_policy=:relaxed_cyclic, storage_terminal_fraction=-0.1)
+            nothing
+        catch e
+            e
+        end
+        @test negative_fraction isa ErrorException
+        @test occursin("Invalid storage_terminal_fraction", sprint(showerror, negative_fraction))
+
+        too_large_fraction = try
+            _uc_gscr_build_integration_pm(data; storage_terminal_policy=:relaxed_cyclic, storage_terminal_fraction=1.1)
+            nothing
+        catch e
+            e
+        end
+        @test too_large_fraction isa ErrorException
+        @test occursin("Invalid storage_terminal_fraction", sprint(showerror, too_large_fraction))
+    end
+
+    @testset "Deprecated final_storage_policy aliases map to terminal policies" begin
+        data = _uc_gscr_terminal_policy_fixture()
+        pm = _uc_gscr_build_integration_pm(data; final_storage_policy=:no_final)
+
+        @test !haskey(_PM.con(pm, 2), :uc_gscr_storage_terminal)
+        @test pm.ext[:uc_gscr_block_architecture_diagnostics]["storage_terminal_policy"] == "none"
+        @test pm.ext[:uc_gscr_block_architecture_diagnostics]["deprecated_final_storage_policy"] == "no_final"
     end
 
     @testset "NoGSCR skips gSCR constraints and allows missing g_min" begin
