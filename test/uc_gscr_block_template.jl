@@ -1,37 +1,5 @@
 function _uc_gscr_template_gen(id; carrier="CCGT", mode="gfl", startup=true)
-    gen = Dict{String,Any}(
-        "index" => id,
-        "gen_bus" => 1,
-        "gen_status" => 1,
-        "pmin" => 0.0,
-        "pmax" => 10.0,
-        "qmin" => -2.0,
-        "qmax" => 2.0,
-        "vg" => 1.0,
-        "mbase" => 1.0,
-        "model" => 2,
-        "startup" => 0.0,
-        "shutdown" => 0.0,
-        "ncost" => 2,
-        "cost" => [0.0, 0.0],
-        "carrier" => carrier,
-        "grid_control_mode" => mode,
-        "n0" => 1,
-        "nmax" => 2,
-        "na0" => 1,
-        "p_block_max" => 10.0,
-        "q_block_min" => -2.0,
-        "q_block_max" => 2.0,
-        "b_block" => mode == "gfm" ? 1.0 : 0.0,
-        "cost_inv_per_mw" => 3.0,
-        "p_min_pu" => 0.0,
-        "p_max_pu" => 1.0,
-    )
-    if startup
-        gen["startup_cost_per_mw"] = 1.0
-        gen["shutdown_cost_per_mw"] = 1.0
-    end
-    return gen
+    return _uc_gscr_minimal_gen(id; carrier, mode, startup)
 end
 
 function _uc_gscr_template_data(; carriers=["CCGT"], startup=true, g_min=nothing)
@@ -54,7 +22,7 @@ function _uc_gscr_template_data(; carriers=["CCGT"], startup=true, g_min=nothing
         "per_unit" => true,
         "operation_weight" => 1.0,
         "time_elapsed" => 1.0,
-        "block_model_schema" => Dict{String,Any}("name" => "uc_gscr_block", "version" => "2.0"),
+        "block_model_schema" => _uc_gscr_block_schema_v2(),
     )
     if !isnothing(g_min)
         data["g_min"] = g_min

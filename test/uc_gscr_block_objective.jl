@@ -10,24 +10,18 @@ The helper sets the required block schema and objective fields used to validate
 formulation-independent and mutates `device`.
 """
 function _set_uc_gscr_objective_fields!(device, type; n0, nmax, p_block_max, cost_inv_per_mw)
-    merge!(device, Dict{String,Any}(
-        "carrier" => "test-carrier",
-        "grid_control_mode" => type,
-        "n0" => n0,
-        "nmax" => nmax,
-        "na0" => n0,
-        "p_block_min" => 0.0,
-        "p_block_max" => p_block_max,
-        "q_block_min" => -1.0,
-        "q_block_max" => 1.0,
-        "b_block" => type == "gfm" ? 0.6 : 0.0,
-        "cost_inv_per_mw" => cost_inv_per_mw,
-        "p_min_pu" => 0.0,
-        "p_max_pu" => 1.0,
-        "startup_cost_per_mw" => 1.0,
-        "shutdown_cost_per_mw" => 1.0,
-    ))
-    return device
+    return _uc_gscr_add_block_fields!(
+        device,
+        type;
+        n0,
+        nmax,
+        na0=n0,
+        p_block_max,
+        q_block_min=-1.0,
+        q_block_max=1.0,
+        b_block=(type == "gfm" ? 0.6 : 0.0),
+        cost_inv_per_mw,
+    )
 end
 
 """
@@ -59,7 +53,7 @@ function _uc_gscr_objective_test_data(; hours::Int=2, with_block::Bool=true, inc
         end
     end
     if with_block
-        data["block_model_schema"] = Dict{String,Any}("name" => "uc_gscr_block", "version" => "2.0")
+        data["block_model_schema"] = _uc_gscr_block_schema_v2()
         data["operation_weight"] = operation_weight
     end
 
@@ -93,7 +87,7 @@ function _stochastic_objective_weight_pm()
     data["load"] = Dict{String,Any}()
     data["storage"] = Dict{String,Any}()
     data["ne_storage"] = Dict{String,Any}()
-    data["block_model_schema"] = Dict{String,Any}("name" => "uc_gscr_block", "version" => "2.0")
+    data["block_model_schema"] = _uc_gscr_block_schema_v2()
     data["operation_weight"] = 1.0
     gen = data["gen"]["1"]
     gen["carrier"] = "test-carrier"
@@ -144,11 +138,7 @@ function _stochastic_objective_weight_pm()
 end
 
 function _uc_gscr_objective_test_template()
-    return _FP.UCGSCRBlockTemplate(Dict(
-        (:gen, "test-carrier") => _FP.BlockThermalCommitment(),
-        (:storage, "test-carrier") => _FP.BlockThermalCommitment(),
-        (:ne_storage, "test-carrier") => _FP.BlockThermalCommitment(),
-    ))
+    return _uc_gscr_common_test_template()
 end
 
 """

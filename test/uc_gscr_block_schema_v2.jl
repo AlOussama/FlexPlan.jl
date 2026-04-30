@@ -19,18 +19,20 @@ end
 function _schema_v2_device(; table=:gen, mode="gfl")
     device = Dict{String,Any}(
         "index" => 1,
-        "carrier" => "test-carrier",
-        "grid_control_mode" => mode,
-        "n0" => 1,
-        "nmax" => 2,
-        "na0" => 1,
-        "p_block_max" => 10.0,
-        "q_block_min" => -2.0,
-        "q_block_max" => 2.0,
-        "b_block" => mode == "gfm" ? 1.0 : 0.0,
-        "cost_inv_per_mw" => 3.0,
-        "p_min_pu" => 0.0,
-        "p_max_pu" => 1.0,
+    )
+    _uc_gscr_add_block_fields!(
+        device,
+        mode;
+        carrier="test-carrier",
+        n0=1,
+        nmax=2,
+        na0=1,
+        p_block_max=10.0,
+        q_block_min=-2.0,
+        q_block_max=2.0,
+        b_block=(mode == "gfm" ? 1.0 : 0.0),
+        cost_inv_per_mw=3.0,
+        include_startup_shutdown=false,
     )
     if table == :gen
         device["gen_bus"] = 1

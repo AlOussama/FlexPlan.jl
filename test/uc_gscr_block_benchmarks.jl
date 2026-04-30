@@ -1,22 +1,22 @@
 using Printf
 
 function _bench_set_block_fields!(device::Dict{String,Any}, type::String; n0, nmax, na0, p_block_min, p_block_max, q_block_min, q_block_max, b_block, cost_inv_block, startup_block_cost, shutdown_block_cost)
-    device["carrier"] = get(device, "carrier", "test-carrier")
-    device["grid_control_mode"] = type
-    device["n0"] = n0
-    device["nmax"] = nmax
-    device["na0"] = na0
-    device["p_block_min"] = p_block_min
-    device["p_block_max"] = p_block_max
-    device["q_block_min"] = q_block_min
-    device["q_block_max"] = q_block_max
-    device["b_block"] = b_block
-    device["cost_inv_per_mw"] = cost_inv_block
-    device["p_min_pu"] = 0.0
-    device["p_max_pu"] = 1.0
-    device["startup_cost_per_mw"] = startup_block_cost
-    device["shutdown_cost_per_mw"] = shutdown_block_cost
-    return device
+    return _uc_gscr_add_block_fields!(
+        device,
+        type;
+        carrier=get(device, "carrier", "test-carrier"),
+        n0,
+        nmax,
+        na0,
+        p_block_min,
+        p_block_max,
+        q_block_min,
+        q_block_max,
+        b_block,
+        cost_inv_per_mw=cost_inv_block,
+        startup_cost_per_mw=startup_block_cost,
+        shutdown_cost_per_mw=shutdown_block_cost,
+    )
 end
 
 function _bench_remove_block_fields!(device::Dict{String,Any})
@@ -32,11 +32,7 @@ function _bench_remove_block_fields!(device::Dict{String,Any})
 end
 
 function _bench_uc_gscr_template()
-    return _FP.UCGSCRBlockTemplate(Dict(
-        (:gen, "test-carrier") => _FP.BlockThermalCommitment(),
-        (:storage, "test-carrier") => _FP.BlockThermalCommitment(),
-        (:ne_storage, "test-carrier") => _FP.BlockThermalCommitment(),
-    ))
+    return _uc_gscr_common_test_template(gscr=_FP.GershgorinGSCR(_FP.OnlineNameplateExposure()))
 end
 
 function _bench_sorted_gen_ids(sn_data::Dict{String,Any})
@@ -89,7 +85,7 @@ function _bench_scale_loads!(sn_data::Dict{String,Any}; target_total_load::Float
 end
 
 function _bench_apply_uc_gscr_fields!(sn_data::Dict{String,Any}; mode::Symbol, profile::Symbol, g_min::Float64, target_total_load::Float64=1.0, include_min_up_down::Bool=false)
-    sn_data["block_model_schema"] = Dict{String,Any}("name" => "uc_gscr_block", "version" => "2.0")
+    sn_data["block_model_schema"] = _uc_gscr_block_schema_v2()
     sn_data["operation_weight"] = 1.0
     sn_data["g_min"] = g_min
     _bench_scale_loads!(sn_data; target_total_load)
@@ -198,7 +194,7 @@ function _bench_case6_data(; mode::Symbol, profile::Symbol, g_min::Float64)
         number_of_scenarios=1,
         number_of_years=1,
         share_data=false,
-        init_data_extensions=[data -> data["block_model_schema"] = Dict{String,Any}("name" => "uc_gscr_block", "version" => "2.0")],
+        init_data_extensions=[data -> data["block_model_schema"] = _uc_gscr_block_schema_v2()],
         sn_data_extensions=[sn_data -> _bench_apply_uc_gscr_fields!(sn_data; mode, profile, g_min, target_total_load=1.0)],
     )
 end
@@ -209,7 +205,7 @@ function _bench_case67_data(; mode::Symbol, profile::Symbol, g_min::Float64)
         number_of_scenarios=1,
         number_of_years=1,
         share_data=false,
-        init_data_extensions=[data -> data["block_model_schema"] = Dict{String,Any}("name" => "uc_gscr_block", "version" => "2.0")],
+        init_data_extensions=[data -> data["block_model_schema"] = _uc_gscr_block_schema_v2()],
         sn_data_extensions=[sn_data -> _bench_apply_uc_gscr_fields!(sn_data; mode, profile, g_min, target_total_load=1.0)],
     )
 end
@@ -438,7 +434,7 @@ end
 
 function _bench_transition_fixture_all_components(; hours::Int=3)
     data = _FP.parse_file(normpath(@__DIR__, "data", "case2", "case2_d_strg.m"))
-    data["block_model_schema"] = Dict{String,Any}("name" => "uc_gscr_block", "version" => "2.0")
+    data["block_model_schema"] = _uc_gscr_block_schema_v2()
     data["operation_weight"] = 1.0
     data["g_min"] = 0.0
 

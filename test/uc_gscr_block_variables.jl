@@ -26,23 +26,7 @@ function _uc_gscr_block_variable_data(; block::Bool=true, hours::Int=2)
     )
 
     if block
-        merge!(gen, Dict{String,Any}(
-            "carrier" => "test-carrier",
-            "grid_control_mode" => "gfl",
-            "n0" => 1,
-            "nmax" => 4,
-            "na0" => 1,
-            "p_block_min" => 0.0,
-            "p_block_max" => 10.0,
-            "q_block_min" => -2.0,
-            "q_block_max" => 2.0,
-            "b_block" => 0.0,
-            "cost_inv_per_mw" => 1.0,
-            "p_min_pu" => 0.0,
-            "p_max_pu" => 1.0,
-            "startup_cost_per_mw" => 1.0,
-            "shutdown_cost_per_mw" => 1.0,
-        ))
+        _uc_gscr_add_block_fields!(gen, "gfl"; n0=1, nmax=4, na0=1, p_block_max=10.0, b_block=0.0)
     end
 
     data = Dict{String,Any}(
@@ -61,7 +45,7 @@ function _uc_gscr_block_variable_data(; block::Bool=true, hours::Int=2)
         "operation_weight" => 1.0,
     )
     if block
-        data["block_model_schema"] = Dict{String,Any}("name" => "uc_gscr_block", "version" => "2.0")
+        data["block_model_schema"] = _uc_gscr_block_schema_v2()
     end
 
     _FP.add_dimension!(data, :hour, hours)
@@ -69,11 +53,7 @@ function _uc_gscr_block_variable_data(; block::Bool=true, hours::Int=2)
 end
 
 function _uc_gscr_block_variable_test_template()
-    return _FP.UCGSCRBlockTemplate(Dict(
-        (:gen, "test-carrier") => _FP.BlockThermalCommitment(),
-        (:storage, "test-carrier") => _FP.BlockThermalCommitment(),
-        (:ne_storage, "test-carrier") => _FP.BlockThermalCommitment(),
-    ))
+    return _uc_gscr_common_test_template()
 end
 
 """
@@ -107,24 +87,7 @@ by Task 02 tests. This helper is test-only, formulation-independent, and
 mutates `device`.
 """
 function _add_uc_gscr_block_test_fields!(device, type)
-    merge!(device, Dict{String,Any}(
-        "carrier" => "test-carrier",
-        "grid_control_mode" => type,
-        "n0" => 1,
-        "nmax" => 4,
-        "na0" => 1,
-        "p_block_min" => 0.0,
-        "p_block_max" => 10.0,
-        "q_block_min" => -2.0,
-        "q_block_max" => 2.0,
-        "b_block" => type == "gfm" ? 0.5 : 0.0,
-        "cost_inv_per_mw" => 1.0,
-        "p_min_pu" => 0.0,
-        "p_max_pu" => 1.0,
-        "startup_cost_per_mw" => 1.0,
-        "shutdown_cost_per_mw" => 1.0,
-    ))
-    return device
+    return _uc_gscr_add_block_fields!(device, type; n0=1, nmax=4, na0=1, p_block_max=10.0, b_block=(type == "gfm" ? 0.5 : 0.0))
 end
 
 """
@@ -144,7 +107,7 @@ function _uc_gscr_block_collision_pm(; hours::Int=1)
     data["storage"]["1"]["e_block"] = 1.0
     _add_uc_gscr_block_test_fields!(data["ne_storage"]["1"], "gfl")
     data["ne_storage"]["1"]["e_block"] = 1.0
-    data["block_model_schema"] = Dict{String,Any}("name" => "uc_gscr_block", "version" => "2.0")
+    data["block_model_schema"] = _uc_gscr_block_schema_v2()
     data["operation_weight"] = 1.0
     _FP.add_dimension!(data, :hour, hours)
 

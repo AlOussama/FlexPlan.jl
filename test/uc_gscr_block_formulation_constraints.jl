@@ -10,29 +10,23 @@ function _uc_gscr_formulation_set_block_fields!(
     e_block=nothing,
     startup=false,
 )
-    device["carrier"] = carrier
-    device["grid_control_mode"] = mode
-    device["n0"] = n0
-    device["nmax"] = nmax
-    device["na0"] = na0
-    device["p_block_max"] = p_block_max
-    device["q_block_min"] = -2.0
-    device["q_block_max"] = 2.0
-    device["b_block"] = isnothing(b_block) ? (mode == "gfm" ? 1.0 : 0.0) : b_block
-    device["cost_inv_per_mw"] = 1.0
-    device["p_min_pu"] = 0.0
-    device["p_max_pu"] = 1.0
-    if startup
-        device["startup_cost_per_mw"] = 10.0
-        device["shutdown_cost_per_mw"] = 20.0
-    else
-        delete!(device, "startup_cost_per_mw")
-        delete!(device, "shutdown_cost_per_mw")
-    end
-    if !isnothing(e_block)
-        device["e_block"] = e_block
-    end
-    return device
+    return _uc_gscr_add_block_fields!(
+        device,
+        mode;
+        carrier,
+        n0,
+        nmax,
+        na0,
+        p_block_max,
+        q_block_min=-2.0,
+        q_block_max=2.0,
+        b_block,
+        cost_inv_per_mw=1.0,
+        startup_cost_per_mw=10.0,
+        shutdown_cost_per_mw=20.0,
+        include_startup_shutdown=startup,
+        e_block,
+    )
 end
 
 function _uc_gscr_formulation_template()
@@ -59,7 +53,7 @@ end
 
 function _uc_gscr_formulation_data(; hours=2, thermal_n0=1.0, thermal_na0=1.0, thermal_nmax=6.0)
     data = _FP.parse_file(normpath(@__DIR__, "data", "case2", "case2_d_strg.m"))
-    data["block_model_schema"] = Dict{String,Any}("name" => "uc_gscr_block", "version" => "2.0")
+    data["block_model_schema"] = _uc_gscr_block_schema_v2()
     data["operation_weight"] = 1.0
     data["time_elapsed"] = 1.0
     data["storage"] = Dict{String,Any}()

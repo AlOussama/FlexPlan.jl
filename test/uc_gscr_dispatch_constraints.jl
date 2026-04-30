@@ -7,24 +7,20 @@ The helper fills the required block schema with deterministic bounds and is
 test-only.
 """
 function _add_uc_gscr_dispatch_test_fields!(device, type; pmin, pmax, qmin, qmax, pmin_pu=0.0, pmax_pu=1.0)
-    merge!(device, Dict{String,Any}(
-        "carrier" => "test-carrier",
-        "grid_control_mode" => type,
-        "n0" => 1,
-        "nmax" => 4,
-        "na0" => 1,
-        "p_block_min" => pmin,
-        "p_block_max" => pmax,
-        "p_min_pu" => pmin_pu,
-        "p_max_pu" => pmax_pu,
-        "q_block_min" => qmin,
-        "q_block_max" => qmax,
-        "b_block" => type == "gfm" ? 0.5 : 0.0,
-        "cost_inv_per_mw" => 1.0,
-        "startup_cost_per_mw" => 1.0,
-        "shutdown_cost_per_mw" => 1.0,
-    ))
-    return device
+    return _uc_gscr_add_block_fields!(
+        device,
+        type;
+        n0=1,
+        nmax=4,
+        na0=1,
+        p_block_min=pmin,
+        p_block_max=pmax,
+        p_min_pu=pmin_pu,
+        p_max_pu=pmax_pu,
+        q_block_min=qmin,
+        q_block_max=qmax,
+        b_block=(type == "gfm" ? 0.5 : 0.0),
+    )
 end
 
 """
@@ -42,11 +38,7 @@ function _add_uc_gscr_storage_block_test_fields!(device, type; eblock)
 end
 
 function _uc_gscr_dispatch_test_template()
-    return _FP.UCGSCRBlockTemplate(Dict(
-        (:gen, "test-carrier") => _FP.BlockThermalCommitment(),
-        (:storage, "test-carrier") => _FP.BlockThermalCommitment(),
-        (:ne_storage, "test-carrier") => _FP.BlockThermalCommitment(),
-    ))
+    return _uc_gscr_common_test_template()
 end
 
 """
@@ -68,7 +60,7 @@ function _uc_gscr_dispatch_test_pm(model_type; gen_n0=1, gen_na0=1, gen_nmax=4, 
     data["ne_storage"]["1"]["pmax"] = 2.5
     _add_uc_gscr_storage_block_test_fields!(data["storage"]["1"], "gfm"; eblock=4.0)
     _add_uc_gscr_storage_block_test_fields!(data["ne_storage"]["1"], "gfl"; eblock=6.0)
-    data["block_model_schema"] = Dict{String,Any}("name" => "uc_gscr_block", "version" => "2.0")
+    data["block_model_schema"] = _uc_gscr_block_schema_v2()
     data["operation_weight"] = 1.0
 
     _FP.add_dimension!(data, :hour, hours)

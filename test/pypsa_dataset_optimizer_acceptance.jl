@@ -32,6 +32,8 @@ const _PYPSA_BLOCK_FIELDS = [
 
 # PyPSA acceptance consumes schema-v2 converted data directly. These v1 and
 # policy fields are rejected; no silent test adapter translates them.
+# This test intentionally fails against old schema-v1 external fixtures until
+# pypsatomatpowerx regenerates schema-v2 case.json files.
 const _PYPSA_REJECTED_BLOCK_FIELDS = [
     "type",
     "cost_inv_block",
