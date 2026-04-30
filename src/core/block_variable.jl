@@ -1,23 +1,20 @@
 """
     variable_uc_gscr_block(pm; nw=nw_id_default, relax=false, report=true)
 
-Creates UC/gSCR installed/active/startup/shutdown block variables for
-network `nw`.
+Creates UC/gSCR block variables for network `nw`.
 
-This adds installed block counts `n_block[k]` satisfying
-`n0[k] <= n_block[k] <= nmax[k]`, active block counts `na_block[k,t]`
-satisfying `0 <= na_block[k,t]`, startup counts `su_block[k,t]`, shutdown
-counts `sd_block[k,t]`, and the linking/transition constraints:
-`na_block[k,t] <= n_block[k]`,
-`na_block[k,t] - na_block[k,t-1] = su_block[k,t] - sd_block[k,t]` for
-`t > 1`, and
-`na_block[k,1] - na0[k] = su_block[k,1] - sd_block[k,1]` for the first
-snapshot.
+This adds installed block counts `n_block[k]` and active block counts
+`na_block[k,t]` for all resolved block devices. Startup counts `su_block[k,t]`
+and shutdown counts `sd_block[k,t]` are created only for devices in the
+resolved startup/shutdown set. Linking constraints `na_block[k,t] <= n_block[k]`
+apply to all resolved block devices, while transition constraints apply only
+to startup/shutdown devices.
 
 The argument `relax` selects continuous variables when `true` and integer
 variables when `false`; `report` controls solution reporting on the original
 device tables under `n_block`, `na_block`, `su_block`, and `sd_block`.
-Block counts are dimensionless. This helper is formulation-independent and
+Block counts are dimensionless. Schema-v2 block data requires a resolved
+`UCGSCRBlockTemplate`; no physical GFL/GFM fallback is used. This helper
 mutates the JuMP model plus PowerModels variable, constraint, and solution-
 report dictionaries.
 """
@@ -53,6 +50,7 @@ function variable_installed_blocks(pm::_PM.AbstractPowerModel; nw::Int=_PM.nw_id
     if !_has_uc_gscr_block_ref(pm, nw)
         return
     end
+    _require_uc_gscr_block_template_resolved(pm, nw)
 
     first_nw = first(nw_id for nw_id in nw_ids(pm) if _has_uc_gscr_block_ref(pm, nw_id))
 
@@ -115,6 +113,7 @@ function variable_active_blocks(pm::_PM.AbstractPowerModel; nw::Int=_PM.nw_id_de
     if !_has_uc_gscr_block_ref(pm, nw)
         return
     end
+    _require_uc_gscr_block_template_resolved(pm, nw)
 
     if haskey(_PM.var(pm, nw), :na_block)
         na_block = _PM.var(pm, nw)[:na_block]
@@ -147,9 +146,9 @@ end
 
 Creates startup/shutdown UC/gSCR block count variables for network `nw`.
 
-For each UC/gSCR block device `k` and snapshot `t == nw`, this creates
-`su_block[k,t]` and `sd_block[k,t]` with `0 <= su_block[k,t]` and
-`0 <= sd_block[k,t]`. The inter-snapshot transition equations are added by
+For each resolved startup/shutdown device `k` and snapshot `t == nw`, this
+creates `su_block[k,t]` and `sd_block[k,t]` with lower bound `0`. The
+inter-snapshot transition equations are added by
 `constraint_block_count_transitions`.
 
 The argument `relax` selects continuous variables when `true` and integer
@@ -164,6 +163,7 @@ function variable_block_startup_shutdown_counts(pm::_PM.AbstractPowerModel; nw::
     if !_has_uc_gscr_block_ref(pm, nw)
         return
     end
+    _require_uc_gscr_block_template_resolved(pm, nw)
 
     if haskey(_PM.var(pm, nw), :su_block) && haskey(_PM.var(pm, nw), :sd_block)
         su_block = _PM.var(pm, nw)[:su_block]
@@ -223,6 +223,7 @@ function constraint_active_blocks_le_installed(pm::_PM.AbstractPowerModel; nw::I
     if !_has_uc_gscr_block_ref(pm, nw)
         return
     end
+    _require_uc_gscr_block_template_resolved(pm, nw)
 
     if haskey(_PM.con(pm, nw), :active_blocks_le_installed)
         return
@@ -247,13 +248,14 @@ Adds the fixed-installed block equation for `BlockFixedInstalled` devices:
 `na_block[k,t] == n_block[k]`.
 
 The device set is read from `pm.ext[:uc_gscr_block_device_sets]` after template
-resolution. Without a resolved template, this is a no-op so legacy
-formulation-independent tests keep their previous behavior.
+resolution. Block-enabled schema-v2 models without a resolved template raise an
+explicit error.
 """
 function constraint_fixed_installed_active_equals_installed(pm::_PM.AbstractPowerModel; nw::Int=_PM.nw_id_default)
     if !_has_uc_gscr_block_ref(pm, nw)
         return
     end
+    _require_uc_gscr_block_template_resolved(pm, nw)
 
     if haskey(_PM.con(pm, nw), :fixed_installed_active_equals_installed)
         return _PM.con(pm, nw)[:fixed_installed_active_equals_installed]
@@ -290,6 +292,7 @@ function constraint_block_count_transitions(pm::_PM.AbstractPowerModel; nw::Int=
     if !_has_uc_gscr_block_ref(pm, nw)
         return
     end
+    _require_uc_gscr_block_template_resolved(pm, nw)
 
     if haskey(_PM.con(pm, nw), :block_count_transitions)
         return _PM.con(pm, nw)[:block_count_transitions]
@@ -353,6 +356,7 @@ function constraint_block_minimum_up_time(pm::_PM.AbstractPowerModel; nw::Int=_P
     if !_has_uc_gscr_block_ref(pm, nw) || !_uc_gscr_block_min_up_down_enabled(pm, nw)
         return
     end
+    _require_uc_gscr_block_template_resolved(pm, nw)
 
     if haskey(_PM.con(pm, nw), :block_minimum_up_time)
         return _PM.con(pm, nw)[:block_minimum_up_time]
@@ -389,6 +393,7 @@ function constraint_block_minimum_down_time(pm::_PM.AbstractPowerModel; nw::Int=
     if !_has_uc_gscr_block_ref(pm, nw) || !_uc_gscr_block_min_up_down_enabled(pm, nw)
         return
     end
+    _require_uc_gscr_block_template_resolved(pm, nw)
 
     if haskey(_PM.con(pm, nw), :block_minimum_down_time)
         return _PM.con(pm, nw)[:block_minimum_down_time]
@@ -450,63 +455,57 @@ end
 """
     _uc_gscr_block_all_device_keys(pm, nw)
 
-Returns resolved template device set `:all` for network `nw` when a UC/gSCR
-block template has been resolved into `pm.ext`. If no template is present, it
-falls back to legacy `_uc_gscr_block_device_keys(pm, nw)`, which returns all
-physical GFL/GFM block devices.
+Returns resolved template device set `:all` for network `nw`.
+
+If UC/gSCR block data exists but no template has been resolved into `pm.ext`,
+this raises an explicit error. No physical GFL/GFM fallback is used.
 """
 function _uc_gscr_block_all_device_keys(pm::_PM.AbstractPowerModel, nw::Int)
-    return _uc_gscr_block_template_set_device_keys(pm, nw, :all; fallback=_uc_gscr_block_device_keys(pm, nw))
+    return _uc_gscr_block_template_set_device_keys(pm, nw, :all)
 end
 
 """
     _uc_gscr_block_startup_shutdown_device_keys(pm, nw)
 
 Returns devices assigned to `BlockThermalCommitment`, cached as
-`:startup_shutdown`/`:thermal_commitment` in `pm.ext`. Without a resolved
-template, this falls back to all physical block devices for legacy tests.
+`:startup_shutdown`/`:thermal_commitment` in `pm.ext`.
 """
 function _uc_gscr_block_startup_shutdown_device_keys(pm::_PM.AbstractPowerModel, nw::Int)
-    return _uc_gscr_block_template_set_device_keys(pm, nw, :startup_shutdown; fallback=_uc_gscr_block_device_keys(pm, nw))
+    return _uc_gscr_block_template_set_device_keys(pm, nw, :startup_shutdown)
 end
 
 """
     _uc_gscr_block_fixed_installed_device_keys(pm, nw)
 
-Returns devices assigned to `BlockFixedInstalled`. Without a resolved template,
-the set is empty.
+Returns devices assigned to `BlockFixedInstalled`.
 """
 function _uc_gscr_block_fixed_installed_device_keys(pm::_PM.AbstractPowerModel, nw::Int)
-    return _uc_gscr_block_template_set_device_keys(pm, nw, :fixed_installed; fallback=Tuple{Symbol,Any}[])
+    return _uc_gscr_block_template_set_device_keys(pm, nw, :fixed_installed)
 end
 
 """
     _uc_gscr_block_renewable_participation_device_keys(pm, nw)
 
-Returns devices assigned to `BlockRenewableParticipation`. Without a resolved
-template, the set is empty.
+Returns devices assigned to `BlockRenewableParticipation`.
 """
 function _uc_gscr_block_renewable_participation_device_keys(pm::_PM.AbstractPowerModel, nw::Int)
-    return _uc_gscr_block_template_set_device_keys(pm, nw, :renewable_participation; fallback=Tuple{Symbol,Any}[])
+    return _uc_gscr_block_template_set_device_keys(pm, nw, :renewable_participation)
 end
 
 """
     _uc_gscr_block_storage_participation_device_keys(pm, nw)
 
-Returns devices assigned to `BlockStorageParticipation`. Without a resolved
-template, the set is empty.
+Returns devices assigned to `BlockStorageParticipation`.
 """
 function _uc_gscr_block_storage_participation_device_keys(pm::_PM.AbstractPowerModel, nw::Int)
-    return _uc_gscr_block_template_set_device_keys(pm, nw, :storage_participation; fallback=Tuple{Symbol,Any}[])
+    return _uc_gscr_block_template_set_device_keys(pm, nw, :storage_participation)
 end
 
-function _uc_gscr_block_template_set_device_keys(pm::_PM.AbstractPowerModel, nw::Int, set_key::Symbol; fallback)
+function _uc_gscr_block_template_set_device_keys(pm::_PM.AbstractPowerModel, nw::Int, set_key::Symbol)
     if !_has_uc_gscr_block_ref(pm, nw)
         return Tuple{Symbol,Any}[]
     end
-    if !haskey(pm.ext, :uc_gscr_block_device_sets)
-        return copy(fallback)
-    end
+    _require_uc_gscr_block_template_resolved(pm, nw)
 
     device_sets = pm.ext[:uc_gscr_block_device_sets]
     if !haskey(device_sets, set_key)
@@ -524,6 +523,31 @@ function _uc_gscr_block_has_device(pm::_PM.AbstractPowerModel, nw::Int, device_k
 end
 
 """
+    _require_uc_gscr_block_template_resolved(pm, nw)
+
+Validates the UC/gSCR block template precondition for formulation-specific
+builders.
+
+Returns normally when network `nw` has no UC/gSCR block reference data, or when
+`pm.ext` contains resolved template formulations and device sets. Raises a
+clear error when block data exists but no `UCGSCRBlockTemplate` has been
+resolved.
+"""
+function _require_uc_gscr_block_template_resolved(pm::_PM.AbstractPowerModel, nw::Int)
+    if !_has_uc_gscr_block_ref(pm, nw)
+        return nothing
+    end
+    if haskey(pm.ext, :uc_gscr_block_device_sets) && haskey(pm.ext, :uc_gscr_block_formulations)
+        return nothing
+    end
+    Memento.error(
+        _LOGGER,
+        "UC/gSCR block formulation-specific model construction requires a resolved UCGSCRBlockTemplate for network $(nw). " *
+        "Pass `template=...` to `uc_gscr_block_integration` or call `resolve_uc_gscr_block_template!` before creating block variables or constraints.",
+    )
+end
+
+"""
     _uc_gscr_block_device_keys(pm, nw)
 
 Returns deterministic UC/gSCR block device keys for network `nw`.
@@ -531,10 +555,10 @@ Returns deterministic UC/gSCR block device keys for network `nw`.
 Device keys are `(table_name, device_id)` tuples collected from the
 formulation-independent `:gfl_devices` and `:gfm_devices` reference maps.
 The helper assumes `ref_add_uc_gscr_block!` has already populated those maps
-when block data is present. This is the legacy physical-device helper; new
-formulation-specific builders should use `_uc_gscr_block_all_device_keys`,
-`_uc_gscr_block_startup_shutdown_device_keys`, or the formulation-set helpers
-above. It mutates no data or model state.
+when block data is present. This is a physical-map helper for template
+resolution and diagnostics only; formulation-specific variable, constraint,
+and objective builders must read resolved template device sets from `pm.ext`.
+It mutates no data or model state.
 """
 function _uc_gscr_block_device_keys(pm::_PM.AbstractPowerModel, nw::Int)
     if !_has_uc_gscr_block_ref(pm, nw)

@@ -134,6 +134,14 @@ function _uc_gscr_solve_integration_pm(data)
     return pm
 end
 
+function _uc_gscr_integration_test_template()
+    return _FP.UCGSCRBlockTemplate(Dict(
+        (:gen, "test-carrier") => _FP.BlockThermalCommitment(),
+        (:storage, "test-carrier") => _FP.BlockThermalCommitment(),
+        (:ne_storage, "test-carrier") => _FP.BlockThermalCommitment(),
+    ))
+end
+
 """
     _uc_gscr_gershgorin_lhs_rhs(pm, bus_id; nw=1)
 
@@ -240,11 +248,11 @@ Instantiates the minimal UC/gSCR integration model for structural assertions.
 This helper is test-only, uses the same build path as the public solve
 wrapper, and mutates only the instantiated model.
 """
-function _uc_gscr_build_integration_pm(data)
+function _uc_gscr_build_integration_pm(data; template=_uc_gscr_integration_test_template())
     return _PM.instantiate_model(
         data,
         _PM.DCPPowerModel,
-        _FP.build_uc_gscr_block_integration;
+        pm -> _FP.build_uc_gscr_block_integration(pm; template);
         ref_extensions=[_FP.ref_add_gen!, _FP.ref_add_storage!, _FP.ref_add_ne_storage!, _FP.ref_add_uc_gscr_block!],
     )
 end
@@ -379,6 +387,9 @@ function _uc_gscr_transition_pm(data; relax::Bool=true)
         pm -> nothing;
         ref_extensions=[_FP.ref_add_ne_storage!, _FP.ref_add_uc_gscr_block!],
     )
+    if any(_FP._has_uc_gscr_block_ref(pm, nw) for nw in _FP.nw_ids(pm))
+        _FP.resolve_uc_gscr_block_template!(pm, _uc_gscr_integration_test_template())
+    end
     for nw in _FP.nw_ids(pm)
         _FP.variable_uc_gscr_block(pm; nw, relax, report=false)
     end
@@ -544,6 +555,13 @@ function _uc_gscr_two_island_dcline_data(; load_bus2::Float64=80.0, dcline_pmax:
 end
 
 @testset "UC/gSCR integrated solve path" begin
+    @testset "Block-enabled integration requires a template" begin
+        data = _uc_gscr_two_island_dcline_data(; load_bus2=80.0, dcline_pmax=120.0, include_dcline=true, gen_bus2=false)
+
+        @test_throws ErrorException _uc_gscr_build_integration_pm(data; template=nothing)
+        @test_throws ErrorException _FP.uc_gscr_block_integration(data, _PM.DCPPowerModel, milp_optimizer)
+    end
+
     @testset "Two-island dcline CAPEXP serves remote load" begin
         data = _uc_gscr_two_island_dcline_data(; load_bus2=80.0, dcline_pmax=120.0, include_dcline=true, gen_bus2=false)
         pm = _uc_gscr_solve_integration_pm(data)
@@ -561,7 +579,7 @@ end
 
     @testset "Insufficient dcline transfer is infeasible" begin
         data = _uc_gscr_two_island_dcline_data(; load_bus2=80.0, dcline_pmax=20.0, include_dcline=true, gen_bus2=false)
-        result = _FP.uc_gscr_block_integration(data, _PM.DCPPowerModel, milp_optimizer)
+        result = _FP.uc_gscr_block_integration(data, _PM.DCPPowerModel, milp_optimizer; template=_uc_gscr_integration_test_template())
         @test result["termination_status"] == INFEASIBLE
     end
 
@@ -601,11 +619,11 @@ end
         @test JuMP.coefficient(objective, n_gfl) == 5.0
         @test JuMP.coefficient(objective, _PM.var(pm, 2, :n_block, (:gen, 1))) == 5.0
 
-        result_loose = _FP.uc_gscr_block_integration(data_loose, _PM.DCPPowerModel, milp_optimizer)
+        result_loose = _FP.uc_gscr_block_integration(data_loose, _PM.DCPPowerModel, milp_optimizer; template=_uc_gscr_integration_test_template())
         @test result_loose["termination_status"] == OPTIMAL
 
         data_tight = _uc_gscr_synthetic_integration_data(; g_min=1.0)
-        result_tight = _FP.uc_gscr_block_integration(data_tight, _PM.DCPPowerModel, milp_optimizer)
+        result_tight = _FP.uc_gscr_block_integration(data_tight, _PM.DCPPowerModel, milp_optimizer; template=_uc_gscr_integration_test_template())
         @test result_tight["termination_status"] == INFEASIBLE
     end
 
@@ -640,7 +658,7 @@ end
         @test na_binding_gfl <= na_nonbinding_gfl + tol
 
         data_infeasible = _uc_gscr_synthetic_integration_data(; g_min=0.45)
-        result_infeasible = _FP.uc_gscr_block_integration(data_infeasible, _PM.DCPPowerModel, milp_optimizer)
+        result_infeasible = _FP.uc_gscr_block_integration(data_infeasible, _PM.DCPPowerModel, milp_optimizer; template=_uc_gscr_integration_test_template())
         @test result_infeasible["termination_status"] in [OPTIMAL, INFEASIBLE]
     end
 
@@ -656,7 +674,7 @@ end
         for (_, nw_data) in loose_data["nw"]
             nw_data["dcline"] = Dict{String,Any}()
         end
-        loose_result = _FP.uc_gscr_block_integration(loose_data, _PM.DCPPowerModel, milp_optimizer)
+        loose_result = _FP.uc_gscr_block_integration(loose_data, _PM.DCPPowerModel, milp_optimizer; template=_uc_gscr_integration_test_template())
         @test loose_result["termination_status"] == INFEASIBLE
 
         tight_data = load_case6(
@@ -670,7 +688,7 @@ end
         for (_, nw_data) in tight_data["nw"]
             nw_data["dcline"] = Dict{String,Any}()
         end
-        tight_result = _FP.uc_gscr_block_integration(tight_data, _PM.DCPPowerModel, milp_optimizer)
+        tight_result = _FP.uc_gscr_block_integration(tight_data, _PM.DCPPowerModel, milp_optimizer; template=_uc_gscr_integration_test_template())
         @test tight_result["termination_status"] == INFEASIBLE
     end
 
@@ -909,7 +927,7 @@ end
 
     @testset "g_min=0 remains non-restrictive in block-only path" begin
         data = _uc_gscr_synthetic_integration_data(; g_min=0.0)
-        result = _FP.uc_gscr_block_integration(data, _PM.DCPPowerModel, milp_optimizer)
+        result = _FP.uc_gscr_block_integration(data, _PM.DCPPowerModel, milp_optimizer; template=_uc_gscr_integration_test_template())
         @test result["termination_status"] == OPTIMAL
     end
 

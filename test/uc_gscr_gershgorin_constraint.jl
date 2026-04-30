@@ -90,6 +90,10 @@ function _uc_gscr_gershgorin_data(; g_min=2.0, include_g_min::Bool=true, gfm_b=3
     return _FP.make_multinetwork(data, Dict{String,Any}())
 end
 
+function _uc_gscr_gershgorin_test_template()
+    return _FP.UCGSCRBlockTemplate(Dict((:gen, "test-carrier") => _FP.BlockThermalCommitment()), _FP.NoGSCR())
+end
+
 """
     _uc_gscr_gershgorin_pm(; g_min=2.0, include_g_min=true, gfm_b=3.0)
 
@@ -102,6 +106,7 @@ mutates only the model it creates.
 function _uc_gscr_gershgorin_pm(; g_min=2.0, include_g_min::Bool=true, gfm_b=3.0)
     data = _uc_gscr_gershgorin_data(; g_min, include_g_min, gfm_b)
     pm = _PM.instantiate_model(data, _PM.DCPPowerModel, pm -> nothing; ref_extensions=[_FP.ref_add_uc_gscr_block!])
+    _FP.resolve_uc_gscr_block_template!(pm, _uc_gscr_gershgorin_test_template())
     _FP.variable_uc_gscr_block(pm; nw=1, relax=true, report=false)
     return pm
 end

@@ -31,6 +31,14 @@ function _bench_remove_block_fields!(device::Dict{String,Any})
     return device
 end
 
+function _bench_uc_gscr_template()
+    return _FP.UCGSCRBlockTemplate(Dict(
+        (:gen, "test-carrier") => _FP.BlockThermalCommitment(),
+        (:storage, "test-carrier") => _FP.BlockThermalCommitment(),
+        (:ne_storage, "test-carrier") => _FP.BlockThermalCommitment(),
+    ))
+end
+
 function _bench_sorted_gen_ids(sn_data::Dict{String,Any})
     return sort(
         collect(keys(sn_data["gen"]));
@@ -210,7 +218,7 @@ function _bench_build_and_solve_pm(data)
     pm = _PM.instantiate_model(
         data,
         _PM.DCPPowerModel,
-        _FP.build_uc_gscr_block_integration;
+        pm -> _FP.build_uc_gscr_block_integration(pm; template=_bench_uc_gscr_template());
         ref_extensions=[_FP.ref_add_gen!, _FP.ref_add_storage!, _FP.ref_add_ne_storage!, _FP.ref_add_uc_gscr_block!],
     )
     JuMP.set_optimizer(pm.model, HiGHS.Optimizer)
@@ -495,6 +503,7 @@ function _bench_transition_fixture_all_components(; hours::Int=3)
         pm -> nothing;
         ref_extensions=[_FP.ref_add_ne_storage!, _FP.ref_add_uc_gscr_block!],
     )
+    _FP.resolve_uc_gscr_block_template!(pm, _bench_uc_gscr_template())
     for nw in _FP.nw_ids(pm)
         _FP.variable_uc_gscr_block(pm; nw, relax=false, report=false)
     end
@@ -531,14 +540,14 @@ end
         end
 
         with_block_no_minud = _bench_uc_case2_data(; g_min=0.2, profile=:weak, include_min_up_down=false)
-        with_block_result = _FP.uc_gscr_block_integration(with_block_no_minud, _PM.DCPPowerModel, milp_optimizer)
+        with_block_result = _FP.uc_gscr_block_integration(with_block_no_minud, _PM.DCPPowerModel, milp_optimizer; template=_bench_uc_gscr_template())
         @test with_block_result["termination_status"] == OPTIMAL
 
         with_block_minud = _bench_uc_case2_data(; g_min=0.2, profile=:weak, include_min_up_down=true)
         pm_minud = _PM.instantiate_model(
             with_block_minud,
             _PM.DCPPowerModel,
-            _FP.build_uc_gscr_block_integration;
+            pm -> _FP.build_uc_gscr_block_integration(pm; template=_bench_uc_gscr_template());
             ref_extensions=[_FP.ref_add_gen!, _FP.ref_add_storage!, _FP.ref_add_ne_storage!, _FP.ref_add_uc_gscr_block!],
         )
         for nw in sort(collect(_FP.nw_ids(pm_minud)))

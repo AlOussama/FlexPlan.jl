@@ -138,6 +138,18 @@ end
     wind_key = (:gen, 2)
     bess_key = (:ne_storage, 1)
 
+    @testset "Block variables require a resolved template" begin
+        data = _uc_gscr_formulation_data()
+        pm = _PM.instantiate_model(
+            data,
+            _PM.DCPPowerModel,
+            pm -> nothing;
+            ref_extensions=[_FP.ref_add_ne_storage!, _FP.ref_add_uc_gscr_block!],
+        )
+
+        @test_throws ErrorException _FP.variable_uc_gscr_block(pm; nw=1, relax=true, report=false)
+    end
+
     @testset "Variables follow resolved formulation device sets" begin
         pm = _uc_gscr_formulation_pm()
 
