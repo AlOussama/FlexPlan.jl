@@ -12,7 +12,7 @@ Key design decisions:
 
 - The full original network is used. No Kron-reduced network is introduced.
 - The operational commitment variable is `na` (mathematically \(n_{a,k,t}\)) — the number of active/online blocks of device \(k\) at time period or scenario \(t\).
-- Device type (`"gfl"` or `"gfm"`) is data, not a model choice.
+- Grid control mode (`"gfl"` or `"gfm"`) is physical interface data, not a model choice.
 - First implementation uses `relax = true` (continuous \(n_a\)); integer block commitment follows via `relax = false`.
 - Two gSCR variants are documented and implemented:
   - global full-network SDP/LMI;

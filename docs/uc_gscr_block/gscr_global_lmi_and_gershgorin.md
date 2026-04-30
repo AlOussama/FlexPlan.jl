@@ -26,15 +26,16 @@ B^0
 \operatorname{diag}(B^{fm}_{1,t},\ldots,B^{fm}_{|\mathcal N|,t}).
 \]
 
-## 2. Device type
+## 2. Grid Control Mode
 
-Each controllable device has data:
+Each block-enabled controllable device has physical AC-grid interface data:
 
 \[
-type(k)\in\{gfl,gfm\}.
+grid\_control\_mode(k)\in\{gfl,gfm\}.
 \]
 
-The device type is not inferred from the bus.
+The grid-control mode is not inferred from the bus, and it is not a
+formulation type.
 
 All buses may have both GFL and GFM devices.
 
@@ -43,8 +44,8 @@ All buses may have both GFL and GFM devices.
 \[
 P_{n,t}^{fl,on}
 =
-\sum_{i:\phi(i)=n,\;type(i)=gfl}
-P_i^{block}n_{a,i,t}.
+\sum_{i:\phi(i)=n,\;grid\_control\_mode(i)=gfl}
+P_i^{block,max}n_{a,i,t}.
 \]
 
 ## 4. Online GFM strengthening contribution
@@ -52,7 +53,7 @@ P_i^{block}n_{a,i,t}.
 \[
 B_{n,t}^{fm}
 =
-\sum_{k:\phi(k)=n,\;type(k)=gfm}
+\sum_{k:\phi(k)=n,\;grid\_control\_mode(k)=gfm}
 b_k^{block}n_{a,k,t}.
 \]
 
@@ -128,12 +129,12 @@ Expanded:
 \[
 \sigma_n^{0,G}
 +
-\sum_{k:\phi(k)=n,\;type(k)=gfm}
+\sum_{k:\phi(k)=n,\;grid\_control\_mode(k)=gfm}
 b_k^{block}n_{a,k,t}
 \ge
 \underline g
-\sum_{i:\phi(i)=n,\;type(i)=gfl}
-P_i^{block}n_{a,i,t}.
+\sum_{i:\phi(i)=n,\;grid\_control\_mode(i)=gfl}
+P_i^{block,max}n_{a,i,t}.
 \]
 
 Recommended code name:

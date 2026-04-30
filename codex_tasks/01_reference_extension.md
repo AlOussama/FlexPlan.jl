@@ -20,14 +20,18 @@ docs/tests/test_specification.md
 ## Implement
 
 1. Parse/read fields:
-   - `type`
+   - `carrier`
+   - `grid_control_mode`
    - `n0`
    - `nmax`
-   - `p_block_min`
+   - `na0`
+   - `p_min_pu`
+   - `p_max_pu`
    - `p_block_max`
    - `q_block_min`
    - `q_block_max`
    - `b_block`
+   - `cost_inv_per_mw`
    - optional `H`, `s_block`, `e_block`.
 
 2. Build reference maps:
@@ -43,7 +47,7 @@ docs/tests/test_specification.md
    - `gscr_sigma0_raw_rowsum`.
 
 5. Add tests:
-   - type classification;
+   - grid-control classification;
    - bus mapping;
    - row metric computation;
    - missing-field validation.

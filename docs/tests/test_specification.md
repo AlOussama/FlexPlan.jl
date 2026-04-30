@@ -2,13 +2,13 @@
 
 ## Test group A — data/reference tests
 
-### A1: device type classification
+### A1: grid-control classification
 
 Input devices with:
 
 ```julia
-type = "gfl"
-type = "gfm"
+grid_control_mode = "gfl"
+grid_control_mode = "gfm"
 ```
 
 Expected:
@@ -64,7 +64,7 @@ With `relax=false`, `n` and `na` are integer.
 For fixed \(n_a=2\):
 
 \[
-2p^{block,min}\le p\le 2p^{block,max}.
+2p^{min,pu}p^{block,max}\le p\le 2p^{max,pu}p^{block,max}.
 \]
 
 ### C2: reactive-power bounds

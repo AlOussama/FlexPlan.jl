@@ -17,8 +17,9 @@ reviewed and merged.
 - Validate physical/interface fields for block-enabled `gen`, `storage`, and
   `ne_storage`.
 - Replace old `type` usage with `grid_control_mode`.
-- Reject ambiguous old fields: `type`, `startup_block_cost`,
-  `shutdown_block_cost`, and other policy-like data fields.
+- Reject ambiguous old fields: `type`, `cost_inv_block`,
+  `startup_block_cost`, `shutdown_block_cost`, and other policy-like data
+  fields.
 - Validate snapshot/network fields `time_elapsed`, `operation_weight`, and
   conditionally `g_min`.
 - Document that template and network-physics choices are model-build inputs,
@@ -35,7 +36,7 @@ reviewed and merged.
 
 - Schema test accepts a minimal valid schema-v2 case.
 - Schema test rejects missing or wrong `block_model_schema`.
-- Schema test rejects `type`, `startup_block_cost`, and
+- Schema test rejects `type`, `cost_inv_block`, `startup_block_cost`, and
   `shutdown_block_cost`.
 - Schema test rejects missing required block fields.
 - Schema test requires `g_min` only when the validation context or later

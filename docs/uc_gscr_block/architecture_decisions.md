@@ -54,6 +54,7 @@ block_model_schema.version = "2.0"
 Schema v2 rejects old ambiguous fields, including:
 
 - `type`;
+- `cost_inv_block`;
 - `startup_block_cost`;
 - `shutdown_block_cost`.
 

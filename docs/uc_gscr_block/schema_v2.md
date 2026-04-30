@@ -1,8 +1,10 @@
 # UC/gSCR Block Schema v2
 
-This document defines the target schema for UC/gSCR block model-ready data. It
-is documentation for upcoming implementation work and does not imply that all
-validation is already present.
+This document defines the target schema for UC/gSCR block model-ready physical
+and interface data. It is documentation for upcoming implementation work and
+does not imply that all validation is already present. Converter outputs must
+not encode optimization formulation policies; formulation choices are supplied
+later through a downstream model template.
 
 ## 1. Schema Declaration
 
@@ -70,8 +72,8 @@ Each block-enabled `gen`, `storage`, or `ne_storage` record requires:
 
 | Field | Meaning |
 |---|---|
-| `carrier` | Technology or fuel carrier used by template matching |
-| `grid_control_mode` | AC-grid interface mode, either `"gfl"` or `"gfm"` |
+| `carrier` | Physical/grouping label used by downstream template matching |
+| `grid_control_mode` | Physical AC-grid interface/control classification, either `"gfl"` or `"gfm"` |
 | `n0` | Initial installed blocks |
 | `nmax` | Maximum installed blocks |
 | `na0` | Initially active or participating blocks before the first snapshot |
@@ -93,7 +95,8 @@ gfm
 `carrier` is an interface field for template matching. It must not be used as a
 silent fallback formulation by itself. A `(table, carrier)` template entry is
 an explicit model-template assignment; the `carrier` data value alone is not a
-policy choice.
+policy choice. `grid_control_mode` describes the physical AC-grid interface and
+does not choose the mathematical formulation.
 
 ## 5. Storage-Specific Fields
 
@@ -149,6 +152,24 @@ Required only when the selected gSCR formulation needs it:
 `operation_weight` applies to dispatch and startup/shutdown costs, not to
 investment cost.
 
+For the two-week 336-hour paper study, if the selected two weeks are
+annualized by repetition, `operation_weight` should be `26` for every hourly
+snapshot unless another explicit weighting is used.
+
+When mapping PyPSA snapshot weights directly:
+
+```text
+PyPSA snapshot_weightings.objective[t] -> operation_weight[t]
+```
+
+When using a custom annualization policy:
+
+```text
+operation_weight[t] = representative_repetition_factor[t] * time_elapsed[t]
+```
+
+`time_elapsed` remains the snapshot duration used by storage dynamics.
+
 ## 8. Bounds and Units
 
 Block-scaled bounds are the authoritative bounds for block-enabled devices.
@@ -201,10 +222,20 @@ startup\_cost\_per\_mw \cdot p\_block\_max \cdot su\_block,
 shutdown\_cost\_per\_mw \cdot p\_block\_max \cdot sd\_block.
 \]
 
+If source data provides startup/shutdown costs per MW, pass them through after
+unit conversion. If source data provides startup/shutdown costs per block or
+per unit, convert explicitly to per MW using the block rating, or reject the
+input as ambiguous. MATPOWER-style startup/shutdown cost fields must not be
+silently reinterpreted.
+
 All power, energy, susceptance, and cost fields must use the same internal base
 conventions as the corresponding PowerModels/FlexPlan quantities in the active
 model. Validation should report missing or inconsistent required fields rather
 than guessing fallback values.
+
+For wind and PV, `p_max_pu[t] = 0.3` means each participating block has `0.3`
+pu available output. It does not change the rated GFL exposure of a
+participating block; participation is represented downstream by `na_block`.
 
 ## 9. Template Compatibility Checks
 
@@ -248,6 +279,12 @@ g\_min
 
 `g_min` is required for this formulation. It is not required for `NoGSCR`.
 
+The converter is responsible for `grid_control_mode`, `b_block`, and
+`p_block_max`, and for case-level `g_min` only when it owns export of a case
+that will be solved with gSCR constraints. The converter does not choose
+`NoGSCR`, `GershgorinGSCR`, or `OnlineNameplateExposure`; those are downstream
+template choices.
+
 ## 11. Interface Boundary
 
 The repository consumes model-ready data. It does not implement a PyPSA
@@ -257,3 +294,29 @@ repository validates it, builds the optimization model, and reports diagnostics.
 Model-build choices such as the formulation template and the selected
 PowerModels model type are outside the schema-v2 device records. Schema v2
 defines the physical/interface contract those choices consume.
+
+The converter should not serialize downstream formulation objects or policy
+fields, such as `BlockThermalCommitment`, `BlockRenewableParticipation`,
+`BlockFixedInstalled`, `NoGSCR`, `GershgorinGSCR`,
+`OnlineNameplateExposure`, `activation_policy`, `uc_policy`, or
+`gscr_exposure_policy`. Documentation may recommend human-readable default
+mappings, but those mappings are not exported as device fields.
+
+## 12. Converter-Side Validation Checklist
+
+Converter-side validation should check:
+
+- `block_model_schema` exists and is version `2.0` when block data is exported.
+- Every block-enabled device has `carrier` and `grid_control_mode`.
+- `grid_control_mode` is `gfl` or `gfm`.
+- No old fields are present: `type`, `cost_inv_block`, `startup_block_cost`, `shutdown_block_cost`.
+- No model-policy fields are present: `activation_policy`, `uc_policy`, `gscr_exposure_policy`.
+- `0 <= na0 <= n0 <= nmax`.
+- `p_block_max > 0` for expandable devices.
+- `q_block_min <= q_block_max`.
+- `cost_inv_per_mw >= 0`.
+- `startup_cost_per_mw` and `shutdown_cost_per_mw` are per MW if present.
+- `p_min_pu` and `p_max_pu` are scalar or time-series compatible with exported snapshots.
+- `operation_weight` exists for every snapshot.
+- `time_elapsed` exists for every snapshot.
+- `e_block` exists for block-enabled `storage` and `ne_storage`.

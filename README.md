@@ -8,7 +8,7 @@ This package prepares a clean, reviewed implementation of block-based generator/
 2. CbaOPF is used only as a conceptual reference for inertia conventions, not as the implementation base.
 3. The full original network is used. No Kron-reduced network is introduced.
 4. The operational commitment variable is \(n_{a,k,t}\), the number of active/online blocks of device \(k\) at time/network \(t\).
-5. Device type is data: `type = "gfl"` or `type = "gfm"`.
+5. Grid control mode is physical interface data: `grid_control_mode = "gfl"` or `grid_control_mode = "gfm"`.
 6. First implementation uses `relax = true`, so \(n\) and \(n_a\) are continuous.
 7. Integer block commitment is a follow-up through `relax = false`.
 8. Two gSCR variants are documented:

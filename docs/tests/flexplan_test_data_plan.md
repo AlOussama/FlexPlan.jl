@@ -1,6 +1,6 @@
 # FlexPlan Test-Data Plan
 
-This document defines which existing FlexPlan test datasets should be used, in which order, and how to extend them with `gfl/gfm` and block data.
+This document defines which existing FlexPlan test datasets should be used, in which order, and how to extend them with `grid_control_mode` and block data.
 
 ## Principle
 
@@ -33,7 +33,7 @@ Use this for:
 
 - sign convention checks;
 - row-margin checks;
-- type classification;
+- grid-control classification;
 - block variable bounds;
 - simple gSCR feasibility/infeasibility tests.
 
@@ -88,23 +88,28 @@ Use for:
 
 ```julia
 function add_uc_gscr_block_fields!(data)
+    data["block_model_schema"] = Dict("name" => "uc_gscr_block", "version" => "2.0")
+
     for (id, gen) in data["gen"]
         is_gfm = id == "1"
 
-        gen["type"] = is_gfm ? "gfm" : "gfl"
+        gen["carrier"] = is_gfm ? "test_gfm" : "test_gfl"
+        gen["grid_control_mode"] = is_gfm ? "gfm" : "gfl"
         gen["n0"] = 1
         gen["nmax"] = 3
+        gen["na0"] = 1
 
         pblk = max(abs(gen["pmax"]), 1e-3)
 
-        gen["p_block_min"] = 0.0
+        gen["p_min_pu"] = 0.0
+        gen["p_max_pu"] = 1.0
         gen["p_block_max"] = pblk
 
         gen["q_block_min"] = get(gen, "qmin", -pblk)
         gen["q_block_max"] = get(gen, "qmax",  pblk)
 
         gen["b_block"] = is_gfm ? 0.2 : 0.0
-        gen["cost_inv_block"] = 1.0
+        gen["cost_inv_per_mw"] = 1.0
         gen["H"] = is_gfm ? 5.0 : 0.0
         gen["s_block"] = pblk
 
@@ -118,6 +123,8 @@ function add_uc_gscr_block_fields!(data)
     end
 
     data["g_min"] = 2.0
+    data["time_elapsed"] = 1.0
+    data["operation_weight"] = 1.0
 end
 ```
 

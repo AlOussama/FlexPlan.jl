@@ -9,12 +9,12 @@ Implement the LP/MILP-compatible gSCR sufficient condition.
 \[
 \sigma_n^{0,G}
 +
-\sum_{k:\phi(k)=n,type(k)=gfm}
+\sum_{k:\phi(k)=n,grid\_control\_mode(k)=gfm}
 b_k^{block}n_{a,k,t}
 \ge
 \underline g
-\sum_{i:\phi(i)=n,type(i)=gfl}
-P_i^{block}n_{a,i,t}.
+\sum_{i:\phi(i)=n,grid\_control\_mode(i)=gfl}
+P_i^{block,max}n_{a,i,t}.
 \]
 
 ## Requirements

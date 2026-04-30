@@ -103,7 +103,7 @@ Prefer small deterministic tests before integration tests.
 
 Do not silently guess:
 
-- `type`;
+- `grid_control_mode`;
 - `b_block`;
 - `g_min`;
 - `n0`;
@@ -112,7 +112,6 @@ Do not silently guess:
 Fallbacks are allowed only for documented convenience fields such as:
 
 ```text
-p_block = p_block_max
 s_block = p_block_max
 e_block = energy_to_power * p_block_max
 ```
