@@ -7,27 +7,25 @@ This helper is test-only and mutates `device` in place. Optional `e_block`
 is added for storage-capable devices.
 """
 function _uc_gscr_integration_add_block_fields!(device, type; n0, nmax, na0, p_block_min, p_block_max, q_block_min, q_block_max, b_block, cost_inv_block, startup_block_cost, shutdown_block_cost, e_block=nothing)
-    device["carrier"] = get(device, "carrier", "test-carrier")
-    device["grid_control_mode"] = type
-    device["n0"] = n0
-    device["nmax"] = nmax
-    device["na0"] = na0
-    device["p_block_min"] = p_block_min
-    device["p_block_max"] = p_block_max
-    device["q_block_min"] = q_block_min
-    device["q_block_max"] = q_block_max
-    device["b_block"] = b_block
-    device["startup_cost_per_mw"] = startup_block_cost
-    device["shutdown_cost_per_mw"] = shutdown_block_cost
-    device["H"] = 3.0
-    device["s_block"] = max(abs(p_block_max), 1.0)
-    device["cost_inv_per_mw"] = cost_inv_block
-    device["p_min_pu"] = 0.0
-    device["p_max_pu"] = 1.0
-    if !isnothing(e_block)
-        device["e_block"] = e_block
-    end
-    return device
+    return _uc_gscr_add_block_fields!(
+        device,
+        type;
+        carrier=get(device, "carrier", "test-carrier"),
+        n0,
+        nmax,
+        na0,
+        p_block_min,
+        p_block_max,
+        q_block_min,
+        q_block_max,
+        b_block,
+        cost_inv_per_mw=cost_inv_block,
+        startup_cost_per_mw=startup_block_cost,
+        shutdown_cost_per_mw=shutdown_block_cost,
+        e_block,
+        h=3.0,
+        s_block=max(abs(p_block_max), 1.0),
+    )
 end
 
 """
@@ -41,7 +39,7 @@ This helper is test-only and mutates only local fixture data.
 """
 function _uc_gscr_synthetic_integration_data(; g_min)
     data = _FP.parse_file(normpath(@__DIR__, "data", "case2", "case2_d_strg.m"))
-    data["block_model_schema"] = Dict{String,Any}("name" => "uc_gscr_block", "version" => "2.0")
+    data["block_model_schema"] = _uc_gscr_block_schema_v2()
     data["operation_weight"] = 1.0
 
     data["ne_storage"] = Dict{String,Any}()
@@ -135,19 +133,11 @@ function _uc_gscr_solve_integration_pm(data)
 end
 
 function _uc_gscr_integration_test_template()
-    return _FP.UCGSCRBlockTemplate(Dict(
-        (:gen, "test-carrier") => _FP.BlockThermalCommitment(),
-        (:storage, "test-carrier") => _FP.BlockThermalCommitment(),
-        (:ne_storage, "test-carrier") => _FP.BlockThermalCommitment(),
-    ), _FP.GershgorinGSCR(_FP.OnlineNameplateExposure()))
+    return _uc_gscr_common_test_template(gscr=_FP.GershgorinGSCR(_FP.OnlineNameplateExposure()))
 end
 
 function _uc_gscr_integration_no_gscr_template()
-    return _FP.UCGSCRBlockTemplate(Dict(
-        (:gen, "test-carrier") => _FP.BlockThermalCommitment(),
-        (:storage, "test-carrier") => _FP.BlockThermalCommitment(),
-        (:ne_storage, "test-carrier") => _FP.BlockThermalCommitment(),
-    ), _FP.NoGSCR())
+    return _uc_gscr_common_test_template()
 end
 
 """
@@ -184,7 +174,7 @@ This helper is test-only and mutates one single-network input dictionary.
 """
 function _uc_gscr_case6_extension(g_min)
     return function (sn_data)
-        sn_data["block_model_schema"] = Dict{String,Any}("name" => "uc_gscr_block", "version" => "2.0")
+        sn_data["block_model_schema"] = _uc_gscr_block_schema_v2()
         sn_data["operation_weight"] = 1.0
         sn_data["g_min"] = g_min
 
@@ -282,7 +272,7 @@ end
 
 function _uc_gscr_block_only_ne_storage_fixture()
     data = _FP.parse_file(normpath(@__DIR__, "data", "case2", "case2_d_strg.m"))
-    data["block_model_schema"] = Dict{String,Any}("name" => "uc_gscr_block", "version" => "2.0")
+    data["block_model_schema"] = _uc_gscr_block_schema_v2()
     data["operation_weight"] = 1.0
     data["g_min"] = 0.0
     data["gen"] = Dict{String,Any}()
@@ -332,7 +322,7 @@ keys. The helper is test-only and mutates only local fixture data.
 """
 function _uc_gscr_transition_fixture(; na0::Float64=1.0, n0::Float64=1.0, nmax::Float64=8.0, startup_cost::Float64=1.0, shutdown_cost::Float64=1.0, include_storage::Bool=false, hours::Int=2, p_block_max::Float64=20.0, operation_weight::Float64=1.0)
     data = _FP.parse_file(normpath(@__DIR__, "data", "case2", "case2_d_strg.m"))
-    data["block_model_schema"] = Dict{String,Any}("name" => "uc_gscr_block", "version" => "2.0")
+    data["block_model_schema"] = _uc_gscr_block_schema_v2()
     data["operation_weight"] = operation_weight
     data["g_min"] = 0.0
 
@@ -558,7 +548,7 @@ function _uc_gscr_two_island_dcline_data(; load_bus2::Float64=80.0, dcline_pmax:
         "baseMVA" => 1.0,
         "per_unit" => false,
         "source_type" => "synthetic",
-        "block_model_schema" => Dict{String,Any}("name" => "uc_gscr_block", "version" => "2.0"),
+        "block_model_schema" => _uc_gscr_block_schema_v2(),
         "operation_weight" => 1.0,
         "bus" => nw["bus"],
         "branch" => nw["branch"],
@@ -830,7 +820,7 @@ end
             number_of_scenarios=1,
             number_of_years=1,
             share_data=false,
-            init_data_extensions=[data -> data["block_model_schema"] = Dict{String,Any}("name" => "uc_gscr_block", "version" => "2.0")],
+            init_data_extensions=[data -> data["block_model_schema"] = _uc_gscr_block_schema_v2()],
             sn_data_extensions=[_uc_gscr_case6_extension(0.0)],
         )
         for (_, nw_data) in loose_data["nw"]
@@ -844,7 +834,7 @@ end
             number_of_scenarios=1,
             number_of_years=1,
             share_data=false,
-            init_data_extensions=[data -> data["block_model_schema"] = Dict{String,Any}("name" => "uc_gscr_block", "version" => "2.0")],
+            init_data_extensions=[data -> data["block_model_schema"] = _uc_gscr_block_schema_v2()],
             sn_data_extensions=[_uc_gscr_case6_extension(100.0)],
         )
         for (_, nw_data) in tight_data["nw"]
@@ -983,7 +973,7 @@ end
             :bus => Dict{Int,Any}(1 => Dict{String,Any}("index" => 1)),
             :gen => Dict{Int,Any}(1 => bad_device),
             :branch => Dict{Int,Any}(),
-            :block_model_schema => Dict{String,Any}("name" => "uc_gscr_block", "version" => "2.0"),
+            :block_model_schema => _uc_gscr_block_schema_v2(),
             :operation_weight => 1.0,
             :time_elapsed => 1.0,
         )

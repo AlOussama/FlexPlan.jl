@@ -8,7 +8,7 @@ values exercise the linear sufficient condition. It is formulation-independent
 and mutates no external state.
 """
 function _uc_gscr_gershgorin_device(type, bus; id=1, n0=0, nmax=1, pmax=1.0, bblock=0.0)
-    return Dict{String,Any}(
+    gen = Dict{String,Any}(
         "index" => id,
         "gen_bus" => bus,
         "gen_status" => 1,
@@ -23,21 +23,17 @@ function _uc_gscr_gershgorin_device(type, bus; id=1, n0=0, nmax=1, pmax=1.0, bbl
         "shutdown" => 0.0,
         "ncost" => 2,
         "cost" => [0.0, 0.0],
-        "carrier" => "test-carrier",
-        "grid_control_mode" => type,
-        "n0" => n0,
-        "nmax" => nmax,
-        "na0" => n0,
-        "p_block_min" => 0.0,
-        "p_block_max" => pmax,
-        "q_block_min" => -1.0,
-        "q_block_max" => 1.0,
-        "b_block" => bblock,
-        "cost_inv_per_mw" => 1.0,
-        "p_min_pu" => 0.0,
-        "p_max_pu" => 1.0,
-        "startup_cost_per_mw" => 1.0,
-        "shutdown_cost_per_mw" => 1.0,
+    )
+    return _uc_gscr_add_block_fields!(
+        gen,
+        type;
+        n0,
+        nmax,
+        na0=n0,
+        p_block_max=pmax,
+        q_block_min=-1.0,
+        q_block_max=1.0,
+        b_block=bblock,
     )
 end
 
@@ -78,7 +74,7 @@ function _uc_gscr_gershgorin_data(; g_min=2.0, include_g_min::Bool=true, gfm_b=3
         "switch" => Dict{String,Any}(),
         "dcline" => Dict{String,Any}(),
         "per_unit" => true,
-        "block_model_schema" => Dict{String,Any}("name" => "uc_gscr_block", "version" => "2.0"),
+        "block_model_schema" => _uc_gscr_block_schema_v2(),
         "operation_weight" => 1.0,
     )
 
@@ -91,7 +87,7 @@ function _uc_gscr_gershgorin_data(; g_min=2.0, include_g_min::Bool=true, gfm_b=3
 end
 
 function _uc_gscr_gershgorin_test_template()
-    return _FP.UCGSCRBlockTemplate(Dict((:gen, "test-carrier") => _FP.BlockThermalCommitment()), _FP.NoGSCR())
+    return _uc_gscr_common_test_template(tables=(:gen,))
 end
 
 """
