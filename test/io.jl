@@ -195,6 +195,9 @@
                 "H" => [4.5],
                 "s_block" => [60.0],
                 "cost_inv_per_mw" => [900.0],
+                "lifetime" => 20.0,
+                "discount_rate" => [0.05],
+                "fixed_om_percent" => [2.0],
                 "p_min_pu" => 0.0,
                 "p_max_pu" => 1.0,
                 "startup_cost_per_mw" => [11.0],
@@ -208,6 +211,9 @@
             @test gen_target["q_block_max"] == 20.0
             @test gen_target["H"] == 4.5
             @test gen_target["cost_inv_per_mw"] == 900.0
+            @test gen_target["lifetime"] == 20.0
+            @test gen_target["discount_rate"] == 0.05
+            @test gen_target["fixed_om_percent"] == 2.0
             @test gen_target["startup_cost_per_mw"] == 11.0
             @test gen_target["shutdown_cost_per_mw"] == 7.0
             @test !haskey(gen_target, "type")
@@ -237,6 +243,9 @@
                 "H" => [3.0],
                 "s_block" => [20.0],
                 "cost_inv_per_mw" => [1500.0],
+                "lifetime" => 15.0,
+                "discount_rate" => [0.0],
+                "fixed_om_percent" => [0.0],
                 "p_min_pu" => 0.0,
                 "p_max_pu" => 1.0,
             )
@@ -267,7 +276,143 @@
             end
         end
 
-        @testset "cost_inv_per_mw remains objective-only and is not scaled by scale_data!" begin
+        @testset "UC/gSCR block OPEX is annualized by scale_data!" begin
+            scale_data = Dict{String,Any}(
+                "gen" => Dict{String,Any}(
+                    "1" => Dict{String,Any}(
+                        "grid_control_mode" => "gfl",
+                        "n0" => 1.0,
+                        "nmax" => 2.0,
+                        "p_block_max" => 1.0,
+                        "startup_cost_per_mw" => 10.0,
+                        "shutdown_cost_per_mw" => 5.0,
+                        "cost_inv_per_mw" => 0.0,
+                        "lifetime" => 20.0,
+                        "discount_rate" => 0.0,
+                        "fixed_om_percent" => 0.0,
+                    ),
+                ),
+                "storage" => Dict{String,Any}(),
+                "ne_storage" => Dict{String,Any}(),
+                "load" => Dict{String,Any}(),
+            )
+            _FP.scale_data!(scale_data; number_of_hours=24, year_scale_factor=1, number_of_years=1, year_idx=1)
+            @test scale_data["gen"]["1"]["startup_cost_per_mw"] ≈ 10.0 * 365
+            @test scale_data["gen"]["1"]["shutdown_cost_per_mw"] ≈ 5.0 * 365
+        end
+
+        @testset "UC/gSCR block CAPEX is annualized by scale_data!" begin
+            scale_data = Dict{String,Any}(
+                "gen" => Dict{String,Any}(
+                    "1" => Dict{String,Any}(
+                        "grid_control_mode" => "gfl",
+                        "n0" => 0.0,
+                        "nmax" => 2.0,
+                        "p_block_max" => 1.0,
+                        "cost_inv_per_mw" => 1000.0,
+                        "lifetime" => 20.0,
+                        "discount_rate" => 0.0,
+                        "fixed_om_percent" => 0.0,
+                    ),
+                ),
+                "storage" => Dict{String,Any}(),
+                "ne_storage" => Dict{String,Any}(),
+                "load" => Dict{String,Any}(),
+            )
+            _FP.scale_data!(scale_data; number_of_hours=24, year_scale_factor=1, number_of_years=1, year_idx=1)
+            @test scale_data["gen"]["1"]["cost_inv_per_mw"] ≈ 50.0
+        end
+
+        @testset "UC/gSCR block CAPEX annuity uses discount rate" begin
+            scale_data = Dict{String,Any}(
+                "gen" => Dict{String,Any}(
+                    "1" => Dict{String,Any}(
+                        "grid_control_mode" => "gfl",
+                        "n0" => 0.0,
+                        "nmax" => 2.0,
+                        "p_block_max" => 1.0,
+                        "cost_inv_per_mw" => 1000.0,
+                        "lifetime" => 20.0,
+                        "discount_rate" => 0.05,
+                        "fixed_om_percent" => 0.0,
+                    ),
+                ),
+                "storage" => Dict{String,Any}(),
+                "ne_storage" => Dict{String,Any}(),
+                "load" => Dict{String,Any}(),
+            )
+            _FP.scale_data!(scale_data; number_of_hours=24, year_scale_factor=1, number_of_years=1, year_idx=1)
+            annuity = 0.05 / (1 - (1 + 0.05)^(-20))
+            @test scale_data["gen"]["1"]["cost_inv_per_mw"] ≈ 1000.0 * annuity
+        end
+
+        @testset "UC/gSCR block CAPEX includes fixed O&M percent" begin
+            scale_data = Dict{String,Any}(
+                "gen" => Dict{String,Any}(
+                    "1" => Dict{String,Any}(
+                        "grid_control_mode" => "gfl",
+                        "n0" => 0.0,
+                        "nmax" => 2.0,
+                        "p_block_max" => 1.0,
+                        "cost_inv_per_mw" => 1000.0,
+                        "lifetime" => 20.0,
+                        "discount_rate" => 0.0,
+                        "fixed_om_percent" => 2.0,
+                    ),
+                ),
+                "storage" => Dict{String,Any}(),
+                "ne_storage" => Dict{String,Any}(),
+                "load" => Dict{String,Any}(),
+            )
+            _FP.scale_data!(scale_data; number_of_hours=24, year_scale_factor=1, number_of_years=1, year_idx=1)
+            @test scale_data["gen"]["1"]["cost_inv_per_mw"] ≈ 1000.0 * (1 / 20 + 0.02)
+        end
+
+        @testset "UC/gSCR block CAPEX uses explicit case-level assumptions" begin
+            scale_data = Dict{String,Any}(
+                "uc_gscr_block_cost_assumptions" => Dict{String,Any}(
+                    "discount_rate" => 0.0,
+                    "fixed_om_percent" => 0.0,
+                ),
+                "gen" => Dict{String,Any}(
+                    "1" => Dict{String,Any}(
+                        "grid_control_mode" => "gfl",
+                        "n0" => 0.0,
+                        "nmax" => 2.0,
+                        "p_block_max" => 1.0,
+                        "cost_inv_per_mw" => 1000.0,
+                        "lifetime" => 10.0,
+                    ),
+                ),
+                "storage" => Dict{String,Any}(),
+                "ne_storage" => Dict{String,Any}(),
+                "load" => Dict{String,Any}(),
+            )
+            _FP.scale_data!(scale_data; number_of_hours=24, year_scale_factor=1, number_of_years=1, year_idx=1)
+            @test scale_data["gen"]["1"]["cost_inv_per_mw"] ≈ 100.0
+        end
+
+        @testset "UC/gSCR block CAPEX annualization requires lifetime" begin
+            scale_data = Dict{String,Any}(
+                "gen" => Dict{String,Any}(
+                    "1" => Dict{String,Any}(
+                        "grid_control_mode" => "gfl",
+                        "n0" => 0.0,
+                        "nmax" => 2.0,
+                        "p_block_max" => 1.0,
+                        "cost_inv_per_mw" => 1000.0,
+                        "discount_rate" => 0.0,
+                        "fixed_om_percent" => 0.0,
+                    ),
+                ),
+                "storage" => Dict{String,Any}(),
+                "ne_storage" => Dict{String,Any}(),
+                "load" => Dict{String,Any}(),
+            )
+            @test_throws ErrorException _FP.scale_data!(scale_data; number_of_hours=24, year_scale_factor=1, number_of_years=1, year_idx=1)
+        end
+
+        @testset "non-block cost_inv_per_mw remains untouched by scale_data!" begin
             scale_data = Dict{String,Any}(
                 "gen" => Dict{String,Any}(),
                 "load" => Dict{String,Any}(),

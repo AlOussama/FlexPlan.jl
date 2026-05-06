@@ -81,7 +81,7 @@ Each block-enabled `gen`, `storage`, or `ne_storage` record requires:
 | `q_block_min` | Reactive lower bound per active block |
 | `q_block_max` | Reactive upper bound per active block |
 | `b_block` | Per-block GFM strengthening contribution |
-| `cost_inv_per_mw` | Investment cost per MW of added block capacity |
+| `cost_inv_per_mw` | Raw overnight investment cost per MW of added block capacity before `scale_data!` annualization |
 | `p_min_pu` | Minimum active dispatch as per-unit of `p_block_max` per active block |
 | `p_max_pu` | Maximum active dispatch as per-unit of `p_block_max` per active block |
 
@@ -134,6 +134,24 @@ are required only for formulation templates that enable those constraints.
 For `BlockRenewableParticipation` and `BlockFixedInstalled`, startup/shutdown
 fields are not required and must not trigger startup/shutdown variables.
 
+For expandable block devices (`nmax > n0`), CAPEX annualization requires:
+
+| Field | Meaning |
+|---|---|
+| `lifetime` | Technical/economic lifetime in years used in the annuity calculation |
+| `discount_rate` | Nonnegative discount rate used in the annuity calculation |
+| `fixed_om_percent` | Nonnegative fixed O&M percentage added to the annuity |
+
+`discount_rate` and `fixed_om_percent` may be supplied as device fields or as
+case-level `uc_gscr_block_cost_assumptions` values. Precedence is:
+
+```text
+device value > case-level cost assumption > error
+```
+
+There are no hidden defaults. Explicit zeros are valid only when supplied by
+the device or by `uc_gscr_block_cost_assumptions`.
+
 ## 7. Snapshot and Network-Level Fields
 
 Required for time-series operation:
@@ -141,7 +159,7 @@ Required for time-series operation:
 | Field | Meaning |
 |---|---|
 | `time_elapsed` | Snapshot duration \(\Delta t\) used by storage dynamics |
-| `operation_weight` | Snapshot/scenario objective weight for operation costs |
+| `operation_weight` | Compatibility/diagnostic field; not the primary annualization mechanism |
 
 Required only when the selected gSCR formulation needs it:
 
@@ -149,28 +167,84 @@ Required only when the selected gSCR formulation needs it:
 |---|---|
 | `g_min` | Minimum gSCR/ESCR threshold |
 
-`operation_weight` applies to dispatch and startup/shutdown costs, not to
-investment cost.
+OPEX annualization is performed by `scale_data!`, using:
 
-For the two-week 336-hour paper study, if the selected two weeks are
-annualized by repetition, `operation_weight` should be `26` for every hourly
-snapshot unless another explicit weighting is used.
+\[
+8760 \cdot year\_scale\_factor / number\_of\_hours.
+\]
 
-When mapping PyPSA snapshot weights directly:
+For `year_scale_factor = 1`, this is \(8760 / number\_of\_hours\).
+`operation_weight` is not used as an additional annualization multiplier for
+dispatch, curtailment, load operation, startup, or shutdown costs. In the
+canonical UC/gSCR block workflow it should be `1.0` if retained in a case for
+compatibility. Values other than `1.0` are diagnostic only unless a future
+workflow explicitly disables `scale_data!` and documents a different policy.
 
-```text
-PyPSA snapshot_weightings.objective[t] -> operation_weight[t]
-```
-
-When using a custom annualization policy:
-
-```text
-operation_weight[t] = representative_repetition_factor[t] * time_elapsed[t]
-```
+Do not map PyPSA snapshot objective weights to `operation_weight` in a case
+that also uses `scale_data!` for annualization. PyPSA-style time weighting and
+FlexPlan `scale_data!` annualization are alternative mechanisms, not
+independent multipliers.
 
 `time_elapsed` remains the snapshot duration used by storage dynamics.
 
-## 8. Bounds and Units
+## 8. Cost Handling
+
+OPEX coefficients are scaled before model construction by
+[`src/io/scale.jl`](../../src/io/scale.jl). The objective in
+[`src/core/objective.jl`](../../src/core/objective.jl) assumes those
+coefficients are already annualized and does not multiply them by
+`operation_weight`.
+
+Startup/shutdown OPEX after `scale_data!`:
+
+\[
+startup\_cost\_per\_mw
+\leftarrow
+startup\_cost\_per\_mw \cdot
+8760 \cdot year\_scale\_factor / number\_of\_hours.
+\]
+
+\[
+shutdown\_cost\_per\_mw
+\leftarrow
+shutdown\_cost\_per\_mw \cdot
+8760 \cdot year\_scale\_factor / number\_of\_hours.
+\]
+
+CAPEX follows the PyPSA-Eur annualized-capex convention from
+[`scripts/process_cost_data.py`](https://github.com/PyPSA/pypsa-eur/blob/master/scripts/process_cost_data.py)
+and
+[`doc/costs.rst`](https://github.com/PyPSA/pypsa-eur/blob/master/doc/costs.rst):
+
+\[
+annualized\_cost\_inv\_per\_mw =
+cost\_inv\_per\_mw \cdot
+(annuity(lifetime, discount\_rate) + fixed\_om\_percent/100)
+\cdot year\_scale\_factor.
+\]
+
+\[
+annuity(n,r) =
+\begin{cases}
+r / (1 - (1+r)^{-n}) & r > 0,\\
+1/n & r = 0.
+\end{cases}
+\]
+
+For `discount_rate = 0`, `fixed_om_percent = 0`, and
+`year_scale_factor = 1`, annualized CAPEX is `cost_inv_per_mw / lifetime`.
+
+| Topic | Original FlexPlan | PyPSA-Eur | UC/gSCR block decision |
+|---|---|---|---|
+| OPEX time weighting | `scale_data!` scales hourly OPEX by \(8760 \cdot year\_scale\_factor / number\_of\_hours\) | Snapshot weights time-weight operation | Use FlexPlan `scale_data!`; `operation_weight` is compatibility-only |
+| CAPEX treatment | Candidate investments use lifetime/residual-value scaling | Annualized capital cost \((annuity + FOM/100) \cdot investment \cdot nyears\) | `cost_inv_per_mw` is raw overnight CAPEX and is annualized by `scale_data!` |
+| Lifetime use | Investment residual value | Annuity term | Required for expandable block devices |
+| Discount rate use | Not used in original residual-value rule | Annuity term | Device value, then case-level cost assumption, otherwise error |
+| FOM use | Not used in original residual-value rule | Added as `FOM/100` | Device value, then case-level cost assumption, otherwise error |
+| Scenario probability use | Applied separately in stochastic objectives | Separate from snapshot weights | Scenario probabilities remain only in stochastic objectives |
+| Multi-year handling | Year dimensions and residual value | `nyears` multiplier | `year_scale_factor` multiplier for block annualized CAPEX |
+
+## 9. Bounds and Units
 
 Block-scaled bounds are the authoritative bounds for block-enabled devices.
 
@@ -212,6 +286,9 @@ Investment cost:
 cost\_inv\_per\_mw \cdot p\_block\_max \cdot (n\_block - n0).
 \]
 
+At objective construction time, `cost_inv_per_mw` is the annualized coefficient
+after `scale_data!`.
+
 Startup/shutdown costs:
 
 \[
@@ -237,7 +314,7 @@ For wind and PV, `p_max_pu[t] = 0.3` means each participating block has `0.3`
 pu available output. It does not change the rated GFL exposure of a
 participating block; participation is represented downstream by `na_block`.
 
-## 9. Template Compatibility Checks
+## 10. Template Compatibility Checks
 
 Schema validation confirms the physical/interface data. Template compatibility
 checks confirm that the selected model template can formulate every
@@ -256,7 +333,7 @@ Compatibility requirements:
 - devices with missing required fields for the resolved formulation are rejected
   before optimization model construction proceeds.
 
-## 10. gSCR Data Use
+## 11. gSCR Data Use
 
 For `GershgorinGSCR(OnlineNameplateExposure)`, GFL exposure is:
 
@@ -285,7 +362,7 @@ that will be solved with gSCR constraints. The converter does not choose
 `NoGSCR`, `GershgorinGSCR`, or `OnlineNameplateExposure`; those are downstream
 template choices.
 
-## 11. Interface Boundary
+## 12. Interface Boundary
 
 The repository consumes model-ready data. It does not implement a PyPSA
 converter. External converter packages must write schema-v2-compliant data; the
@@ -302,7 +379,7 @@ fields, such as `BlockThermalCommitment`, `BlockRenewableParticipation`,
 `gscr_exposure_policy`. Documentation may recommend human-readable default
 mappings, but those mappings are not exported as device fields.
 
-## 12. Converter-Side Validation Checklist
+## 13. Converter-Side Validation Checklist
 
 Converter-side validation should check:
 
@@ -315,8 +392,9 @@ Converter-side validation should check:
 - `p_block_max > 0` for expandable devices.
 - `q_block_min <= q_block_max`.
 - `cost_inv_per_mw >= 0`.
+- Expandable block devices provide `lifetime`, `discount_rate`, and `fixed_om_percent` either on the device or through explicit case-level cost assumptions.
 - `startup_cost_per_mw` and `shutdown_cost_per_mw` are per MW if present.
 - `p_min_pu` and `p_max_pu` are scalar or time-series compatible with exported snapshots.
-- `operation_weight` exists for every snapshot.
+- `operation_weight`, if present, is `1.0` in the canonical `scale_data!` workflow.
 - `time_elapsed` exists for every snapshot.
 - `e_block` exists for block-enabled `storage` and `ne_storage`.

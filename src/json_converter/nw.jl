@@ -252,7 +252,8 @@ const _UC_GSCR_BLOCK_REQUIRED_FIELDS = (
     "p_min_pu",
     "p_max_pu",
 )
-const _UC_GSCR_BLOCK_OPTIONAL_FIELDS = ("p_block_min", "H", "s_block", "startup_cost_per_mw", "shutdown_cost_per_mw", "min_up_block_time", "min_down_block_time")
+const _UC_GSCR_BLOCK_OPTIONAL_FIELDS = ("p_block_min", "H", "s_block", "startup_cost_per_mw", "shutdown_cost_per_mw", "lifetime", "discount_rate", "fixed_om_percent", "min_up_block_time", "min_down_block_time")
+const _UC_GSCR_BLOCK_COST_ASSUMPTION_FIELDS = ("lifetime", "discount_rate", "fixed_om_percent")
 const _UC_GSCR_BLOCK_YEAR_FIELDS = (
     "p_block_min",
     "p_block_max",
@@ -264,6 +265,8 @@ const _UC_GSCR_BLOCK_YEAR_FIELDS = (
     "cost_inv_per_mw",
     "startup_cost_per_mw",
     "shutdown_cost_per_mw",
+    "discount_rate",
+    "fixed_om_percent",
     "e_block",
 )
 
@@ -273,7 +276,8 @@ function _uc_gscr_block_source_id(source::AbstractDict)
 end
 
 function _uc_gscr_has_any_block_source_field(source::AbstractDict)
-    for field in Iterators.flatten((_UC_GSCR_BLOCK_REQUIRED_FIELDS, _UC_GSCR_BLOCK_OPTIONAL_FIELDS, ("e_block",), _UC_GSCR_BLOCK_OLD_FIELDS))
+    detection_optional = setdiff(_UC_GSCR_BLOCK_OPTIONAL_FIELDS, _UC_GSCR_BLOCK_COST_ASSUMPTION_FIELDS)
+    for field in Iterators.flatten((_UC_GSCR_BLOCK_REQUIRED_FIELDS, detection_optional, ("e_block",), _UC_GSCR_BLOCK_OLD_FIELDS))
         if haskey(source, field)
             return true
         end
@@ -318,6 +322,9 @@ function _validate_uc_gscr_block_source!(source::AbstractDict; is_storage::Bool)
     end
     if is_storage && (!haskey(source, "e_block") || (source["e_block"] isa AbstractVector && isempty(source["e_block"])))
         push!(missing, "e_block")
+    end
+    if haskey(source, "n0") && haskey(source, "nmax") && source["nmax"] > source["n0"] && !haskey(source, "lifetime")
+        push!(missing, "lifetime")
     end
     if !isempty(missing)
         Memento.error(_LOGGER, "UC/gSCR block schema v2 source component $(_uc_gscr_block_source_id(source)) is missing required fields: $(join(missing, ", ")).")

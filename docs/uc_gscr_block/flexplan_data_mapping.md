@@ -216,28 +216,16 @@ Every converted snapshot/network must include:
 
 | Field | Meaning |
 |---|---|
-| `operation_weight` | Objective multiplier for operating costs |
+| `operation_weight` | Compatibility/diagnostic field; not the annualization mechanism when `scale_data!` is active |
 | `time_elapsed` | Snapshot duration used by storage dynamics |
 
-`operation_weight` applies downstream to dispatch and startup/shutdown costs.
-It does not apply to investment cost. `time_elapsed` remains the snapshot
-duration used by storage dynamics.
-
-For the two-week 336-hour paper study, if the selected two weeks are annualized
-by repetition, `operation_weight` should be `26` for every hourly snapshot
-unless another explicit weighting is used.
-
-If mapping PyPSA snapshot weights directly:
-
-```text
-PyPSA snapshot_weightings.objective[t] -> operation_weight[t]
-```
-
-If using a custom annualization policy:
-
-```text
-operation_weight[t] = representative_repetition_factor[t] * time_elapsed[t]
-```
+OPEX annualization is performed by FlexPlan `scale_data!` before
+`make_multinetwork`, using \(8760 \cdot year\_scale\_factor /
+number\_of\_hours\). `operation_weight` is not multiplied into dispatch or
+startup/shutdown costs in the canonical UC/gSCR block workflow and should be
+`1.0` if retained for compatibility. Do not map PyPSA snapshot weights into
+`operation_weight` when `scale_data!` is active. `time_elapsed` remains the
+snapshot duration used by storage dynamics.
 
 ## 8. Global Security Fields
 
@@ -361,7 +349,7 @@ Converter-side validation should check:
 - `cost_inv_per_mw >= 0`.
 - `startup_cost_per_mw` and `shutdown_cost_per_mw` are per MW if present.
 - `p_min_pu` and `p_max_pu` are scalar or time-series compatible with exported snapshots.
-- `operation_weight` exists for every snapshot.
+- `operation_weight`, if present, is `1.0` in the canonical `scale_data!` workflow.
 - `time_elapsed` exists for every snapshot.
 - `e_block` exists for block-enabled `storage` and `ne_storage`.
 

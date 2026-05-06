@@ -55,7 +55,8 @@ const _UC_GSCR_BLOCK_REQUIRED_FIELDS = [
 
 const _UC_GSCR_BLOCK_MIN_UP_DOWN_FIELDS = ["min_up_block_time", "min_down_block_time"]
 const _UC_GSCR_BLOCK_STORAGE_REQUIRED_FIELDS = ["e_block"]
-const _UC_GSCR_BLOCK_OPTIONAL_FIELDS = ["H", "s_block", "startup_cost_per_mw", "shutdown_cost_per_mw", "p_block_min", _UC_GSCR_BLOCK_MIN_UP_DOWN_FIELDS...]
+const _UC_GSCR_BLOCK_OPTIONAL_FIELDS = ["H", "s_block", "startup_cost_per_mw", "shutdown_cost_per_mw", "p_block_min", "lifetime", "discount_rate", "fixed_om_percent", _UC_GSCR_BLOCK_MIN_UP_DOWN_FIELDS...]
+const _UC_GSCR_BLOCK_COST_ASSUMPTION_FIELDS = ["lifetime", "discount_rate", "fixed_om_percent"]
 const _UC_GSCR_BLOCK_REJECTED_FIELDS = [
     "type",
     "startup_block_cost",
@@ -68,7 +69,7 @@ const _UC_GSCR_BLOCK_REJECTED_FIELDS = [
 const _UC_GSCR_BLOCK_DETECTION_FIELDS = unique([
     _UC_GSCR_BLOCK_REQUIRED_FIELDS;
     _UC_GSCR_BLOCK_STORAGE_REQUIRED_FIELDS;
-    _UC_GSCR_BLOCK_OPTIONAL_FIELDS;
+    setdiff(_UC_GSCR_BLOCK_OPTIONAL_FIELDS, _UC_GSCR_BLOCK_COST_ASSUMPTION_FIELDS);
     _UC_GSCR_BLOCK_REJECTED_FIELDS;
 ])
 
@@ -337,6 +338,21 @@ function _validate_uc_gscr_block_devices(nw_ref::Dict{Symbol,<:Any}; min_up_down
         end
         if !_uc_gscr_is_numeric(device["cost_inv_per_mw"]) || device["cost_inv_per_mw"] < 0
             Memento.error(_LOGGER, "$(uppercase(string(table_name))) device $(device_id) has invalid `cost_inv_per_mw=$(device["cost_inv_per_mw"])`. Expected a nonnegative numeric value.")
+        end
+        if nmax > n0
+            if !haskey(device, "lifetime")
+                Memento.error(_LOGGER, "$(uppercase(string(table_name))) device $(device_id) is expandable and missing `lifetime`; UC/gSCR block CAPEX annualization treats cost_inv_per_mw as raw overnight CAPEX and does not infer lifetime.")
+            end
+            if !_uc_gscr_is_numeric(device["lifetime"]) || device["lifetime"] <= 0
+                Memento.error(_LOGGER, "$(uppercase(string(table_name))) device $(device_id) has invalid `lifetime=$(device["lifetime"])`. Expected a positive numeric value for UC/gSCR block CAPEX annualization.")
+            end
+        elseif haskey(device, "lifetime") && (!_uc_gscr_is_numeric(device["lifetime"]) || device["lifetime"] <= 0)
+            Memento.error(_LOGGER, "$(uppercase(string(table_name))) device $(device_id) has invalid `lifetime=$(device["lifetime"])`. Expected a positive numeric value.")
+        end
+        for cost_field in ("discount_rate", "fixed_om_percent")
+            if haskey(device, cost_field) && (!_uc_gscr_is_numeric(device[cost_field]) || device[cost_field] < 0)
+                Memento.error(_LOGGER, "$(uppercase(string(table_name))) device $(device_id) has invalid `$(cost_field)=$(device[cost_field])`. Expected a nonnegative numeric value.")
+            end
         end
         _validate_uc_gscr_block_pu_bounds(table_name, device_id, device)
 

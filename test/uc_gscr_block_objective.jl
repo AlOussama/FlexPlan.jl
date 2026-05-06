@@ -102,6 +102,9 @@ function _stochastic_objective_weight_pm()
     gen["q_block_max"] = 1.0
     gen["b_block"] = 0.0
     gen["cost_inv_per_mw"] = 100.0
+    gen["lifetime"] = 20.0
+    gen["discount_rate"] = 0.0
+    gen["fixed_om_percent"] = 0.0
     gen["p_min_pu"] = 0.0
     gen["p_max_pu"] = 1.0
     gen["startup_cost_per_mw"] = 10.0
@@ -251,30 +254,30 @@ end
         @test coeff * 2 != 2.0 * 3.0 * 2 * 26.0
     end
 
-    @testset "Generator operation cost uses operation_weight" begin
+    @testset "Generator operation cost ignores operation_weight after scale_data!" begin
         pm = _gen_operation_cost_pm(; hours=1, operation_weights=[26.0])
         expr = _FP.calc_gen_cost(pm, 1)
 
-        @test JuMP.coefficient(expr, _PM.var(pm, 1, :pg, 1)) == 26.0 * 50.0
+        @test JuMP.coefficient(expr, _PM.var(pm, 1, :pg, 1)) == 50.0
     end
 
-    @testset "Generator operation cost uses per-snapshot operation_weight" begin
+    @testset "Generator operation cost does not apply per-snapshot operation_weight" begin
         pm = _gen_operation_cost_pm(; hours=2, operation_weights=[2.0, 3.0])
 
-        @test JuMP.coefficient(_FP.calc_gen_cost(pm, 1), _PM.var(pm, 1, :pg, 1)) == 2.0 * 50.0
-        @test JuMP.coefficient(_FP.calc_gen_cost(pm, 2), _PM.var(pm, 2, :pg, 1)) == 3.0 * 50.0
+        @test JuMP.coefficient(_FP.calc_gen_cost(pm, 1), _PM.var(pm, 1, :pg, 1)) == 50.0
+        @test JuMP.coefficient(_FP.calc_gen_cost(pm, 2), _PM.var(pm, 2, :pg, 1)) == 50.0
     end
 
-    @testset "Stochastic objective applies probability and operation_weight only to operation terms" begin
+    @testset "Stochastic objective applies probability but not operation_weight to operation terms" begin
         pm = _stochastic_objective_weight_pm()
         obj = JuMP.objective_function(pm.model)
         n_s1 = first(_FP.nw_ids(pm; scenario=1))
         n_s2 = first(_FP.nw_ids(pm; scenario=2))
 
-        @test JuMP.coefficient(obj, _PM.var(pm, n_s1, :pg, 1)) == 0.25 * 2.0 * 50.0
-        @test JuMP.coefficient(obj, _PM.var(pm, n_s2, :pg, 1)) == 0.75 * 3.0 * 50.0
-        @test JuMP.coefficient(obj, _PM.var(pm, n_s1, :su_block, (:gen, 1))) == 0.25 * 2.0 * 10.0 * 5.0
-        @test JuMP.coefficient(obj, _PM.var(pm, n_s2, :sd_block, (:gen, 1))) == 0.75 * 3.0 * 20.0 * 5.0
+        @test JuMP.coefficient(obj, _PM.var(pm, n_s1, :pg, 1)) == 0.25 * 50.0
+        @test JuMP.coefficient(obj, _PM.var(pm, n_s2, :pg, 1)) == 0.75 * 50.0
+        @test JuMP.coefficient(obj, _PM.var(pm, n_s1, :su_block, (:gen, 1))) == 0.25 * 10.0 * 5.0
+        @test JuMP.coefficient(obj, _PM.var(pm, n_s2, :sd_block, (:gen, 1))) == 0.75 * 20.0 * 5.0
         @test JuMP.coefficient(obj, _PM.var(pm, n_s1, :n_block, (:gen, 1))) == 100.0 * 5.0
     end
 end

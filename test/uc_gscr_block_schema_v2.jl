@@ -150,6 +150,12 @@ end
         @test_throws ErrorException _FP.ref_add_uc_gscr_block!(_schema_v2_ref(_schema_v2_nw_ref(; device=bad_expandable)), _schema_v2_data())
     end
 
+    @testset "expandable block device missing lifetime fails" begin
+        bad = _schema_v2_device()
+        delete!(bad, "lifetime")
+        @test_throws ErrorException _FP.ref_add_uc_gscr_block!(_schema_v2_ref(_schema_v2_nw_ref(; device=bad)), _schema_v2_data())
+    end
+
     @testset "active-power per-unit bounds validation" begin
         bad_scalar = _schema_v2_device()
         bad_scalar["p_min_pu"] = 0.7

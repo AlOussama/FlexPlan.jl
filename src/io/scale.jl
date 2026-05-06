@@ -24,6 +24,7 @@ function scale_data!(
     if _IM.ismultinetwork(data)
         Memento.error(_LOGGER, "`scale_data!` can only be applied to single-network data dictionaries.")
     end
+    _scale_uc_gscr_block_investment_cost_data!(data, year_scale_factor, cost_scale_factor)
     _scale_time_data!(data, year_scale_factor)
     _scale_operational_cost_data!(data, number_of_hours, year_scale_factor, cost_scale_factor)
     _scale_investment_cost_data!(data, number_of_years, year_idx, cost_scale_factor) # Must be called after `_scale_time_data!`
@@ -72,6 +73,13 @@ function _scale_operational_cost_data!(data, number_of_hours, year_scale_factor,
     for (g, gen) in data["gen"]
         _PM._apply_func!(gen, "cost", rescale)
         _PM._apply_func!(gen, "cost_curt", rescale)
+        _scale_uc_gscr_block_operational_cost_fields!(gen, rescale)
+    end
+    for strg in values(get(data, "storage", Dict{String,Any}()))
+        _scale_uc_gscr_block_operational_cost_fields!(strg, rescale)
+    end
+    for strg in values(get(data, "ne_storage", Dict{String,Any}()))
+        _scale_uc_gscr_block_operational_cost_fields!(strg, rescale)
     end
     for (l, load) in data["load"]
         _PM._apply_func!(load, "cost_shift", rescale) # Compensation for demand shifting
@@ -79,6 +87,98 @@ function _scale_operational_cost_data!(data, number_of_hours, year_scale_factor,
         _PM._apply_func!(load, "cost_red", rescale)   # Compensation for not consumed energy (i.e. voluntary demand reduction)
     end
     _PM._apply_func!(data, "co2_emission_cost", rescale)
+end
+
+function _scale_uc_gscr_block_operational_cost_fields!(device::Dict{String,<:Any}, rescale::Function)
+    if !_is_uc_gscr_block_device(device)
+        return device
+    end
+    _PM._apply_func!(device, "startup_cost_per_mw", rescale)
+    _PM._apply_func!(device, "shutdown_cost_per_mw", rescale)
+    return device
+end
+
+function _is_uc_gscr_block_device(device::Dict{String,<:Any})
+    return haskey(device, "grid_control_mode") ||
+           haskey(device, "n0") ||
+           haskey(device, "nmax") ||
+           haskey(device, "na0") ||
+           haskey(device, "p_block_max") ||
+           haskey(device, "startup_cost_per_mw") ||
+           haskey(device, "shutdown_cost_per_mw")
+end
+
+function _is_expandable_uc_gscr_block_device(device::Dict{String,<:Any})
+    if !_is_uc_gscr_block_device(device) || !haskey(device, "n0") || !haskey(device, "nmax")
+        return false
+    end
+    return device["nmax"] > device["n0"]
+end
+
+function _uc_gscr_block_cost_assumption(data::Dict{String,Any}, device::Dict{String,<:Any}, field::String, table_name::String, device_id)
+    if haskey(device, field)
+        return device[field]
+    end
+    assumptions = get(data, "uc_gscr_block_cost_assumptions", Dict{String,Any}())
+    if assumptions isa Dict && haskey(assumptions, field)
+        return assumptions[field]
+    end
+    Memento.error(
+        _LOGGER,
+        "Missing UC/gSCR block CAPEX annualization field `$(field)` for $(table_name) $(device_id). " *
+        "Set it on the device or in data[\"uc_gscr_block_cost_assumptions\"]; no hidden defaults are applied.",
+    )
+end
+
+function _validate_uc_gscr_block_annualization_inputs(table_name::String, device_id, cost_inv_per_mw, lifetime, discount_rate, fixed_om_percent)
+    if !(cost_inv_per_mw isa Real) || !isfinite(cost_inv_per_mw) || cost_inv_per_mw < 0
+        Memento.error(_LOGGER, "$(table_name) $(device_id) has invalid `cost_inv_per_mw=$(cost_inv_per_mw)`. Expected a nonnegative finite numeric value.")
+    end
+    if !(lifetime isa Real) || !isfinite(lifetime) || lifetime <= 0
+        Memento.error(_LOGGER, "$(table_name) $(device_id) has invalid UC/gSCR block CAPEX `lifetime=$(lifetime)`. Expected a positive finite numeric value.")
+    end
+    if !(discount_rate isa Real) || !isfinite(discount_rate) || discount_rate < 0
+        Memento.error(_LOGGER, "$(table_name) $(device_id) has invalid UC/gSCR block CAPEX `discount_rate=$(discount_rate)`. Expected a nonnegative finite numeric value.")
+    end
+    if !(fixed_om_percent isa Real) || !isfinite(fixed_om_percent) || fixed_om_percent < 0
+        Memento.error(_LOGGER, "$(table_name) $(device_id) has invalid UC/gSCR block CAPEX `fixed_om_percent=$(fixed_om_percent)`. Expected a nonnegative finite numeric value.")
+    end
+    return nothing
+end
+
+function _uc_gscr_block_annuity(lifetime::Real, discount_rate::Real)
+    if discount_rate == 0
+        return 1 / lifetime
+    end
+    return discount_rate / (1 - (1 + discount_rate)^(-lifetime))
+end
+
+"""
+    _scale_uc_gscr_block_investment_cost_data!(data, year_scale_factor, cost_scale_factor)
+
+Annualizes UC/gSCR block overnight investment costs before standard FlexPlan
+lifetime scaling mutates candidate lifetimes. Device-specific `lifetime`,
+`discount_rate`, and `fixed_om_percent` take precedence over
+`data["uc_gscr_block_cost_assumptions"]`. Missing values on expandable block
+devices are errors; no defaults are inferred.
+"""
+function _scale_uc_gscr_block_investment_cost_data!(data::Dict{String,Any}, year_scale_factor, cost_scale_factor)
+    for table_name in ("gen", "storage", "ne_storage")
+        for (device_id, device) in get(data, table_name, Dict{String,Any}())
+            if !_is_expandable_uc_gscr_block_device(device) || !haskey(device, "cost_inv_per_mw")
+                continue
+            end
+            cost_inv_per_mw = device["cost_inv_per_mw"]
+            lifetime = _uc_gscr_block_cost_assumption(data, device, "lifetime", table_name, device_id)
+            discount_rate = _uc_gscr_block_cost_assumption(data, device, "discount_rate", table_name, device_id)
+            fixed_om_percent = _uc_gscr_block_cost_assumption(data, device, "fixed_om_percent", table_name, device_id)
+            _validate_uc_gscr_block_annualization_inputs(table_name, device_id, cost_inv_per_mw, lifetime, discount_rate, fixed_om_percent)
+
+            annualization = _uc_gscr_block_annuity(lifetime, discount_rate) + fixed_om_percent / 100
+            device["cost_inv_per_mw"] = cost_inv_per_mw * annualization * year_scale_factor * cost_scale_factor
+        end
+    end
+    return data
 end
 
 """

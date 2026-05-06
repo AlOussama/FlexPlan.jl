@@ -892,8 +892,8 @@ end
         pm = _uc_gscr_transition_pm(data)
         expr = _FP.calc_uc_gscr_block_startup_shutdown_cost(pm)
 
-        @test JuMP.coefficient(expr, _PM.var(pm, 1, :su_block, (:gen, 1))) == 10.0 * 5.0 * 26.0
-        @test JuMP.coefficient(expr, _PM.var(pm, 2, :sd_block, (:gen, 1))) == 20.0 * 5.0 * 26.0
+        @test JuMP.coefficient(expr, _PM.var(pm, 1, :su_block, (:gen, 1))) == 10.0 * 5.0
+        @test JuMP.coefficient(expr, _PM.var(pm, 2, :sd_block, (:gen, 1))) == 20.0 * 5.0
         @test JuMP.coefficient(expr, _PM.var(pm, 1, :na_block, (:gen, 1))) == 0.0
 
         JuMP.fix(_PM.var(pm, 1, :na_block, (:gen, 1)), 4.0; force=true)
@@ -904,7 +904,7 @@ end
         JuMP.optimize!(pm.model)
 
         @test JuMP.termination_status(pm.model) == JuMP.MOI.OPTIMAL
-        @test JuMP.objective_value(pm.model) ≈ 10.0 * 5.0 * 26.0 * 3.0 + 20.0 * 5.0 * 26.0 * 2.0 atol=1e-6
+        @test JuMP.objective_value(pm.model) ≈ 10.0 * 5.0 * 3.0 + 20.0 * 5.0 * 2.0 atol=1e-6
     end
 
     @testset "Compound keys remain collision-free across gen/storage/ne_storage" begin
