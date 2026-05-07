@@ -134,7 +134,28 @@ are required only for formulation templates that enable those constraints.
 For `BlockRenewableParticipation` and `BlockFixedInstalled`, startup/shutdown
 fields are not required and must not trigger startup/shutdown variables.
 
-For expandable block devices (`nmax > n0`), CAPEX annualization requires:
+For expandable block devices (`nmax > n0`), `cost_inv_per_mw` has two valid
+meanings, and the meaning must be declared explicitly. Declare the basis with:
+
+```julia
+data["uc_gscr_block_cost_convention"] = Dict(
+    "capex_basis" => "overnight_per_mw",
+)
+```
+
+or by passing an explicit `scale_data!` keyword
+`uc_gscr_block_capex_basis`. Accepted values are:
+
+```text
+overnight_per_mw
+annualized_per_mw_year
+```
+
+No other values are supported, and the basis is never inferred from
+`lifetime`.
+
+For `capex_basis = "overnight_per_mw"`, `cost_inv_per_mw` is raw overnight
+investment cost per MW and annualization requires:
 
 | Field | Meaning |
 |---|---|
@@ -160,6 +181,12 @@ fixed_om_percent:
 There are no hidden defaults. Explicit zeros are valid only when supplied by
 the device or, for `discount_rate` and `fixed_om_percent`, by
 `uc_gscr_block_cost_assumptions`.
+
+For `capex_basis = "annualized_per_mw_year"`, `cost_inv_per_mw` is already
+annualized CAPEX per MW per year, such as PyPSA-Eur processed `capital_cost`.
+`scale_data!` does not apply annuity or FOM in this mode. `lifetime`,
+`discount_rate`, and `fixed_om_percent` may exist as provenance fields, but
+they are not required or used for scaling.
 
 ## 7. Snapshot and Network-Level Fields
 
@@ -210,17 +237,36 @@ Startup/shutdown OPEX after `scale_data!`:
 startup\_cost\_per\_mw
 \leftarrow
 startup\_cost\_per\_mw \cdot
-8760 \cdot year\_scale\_factor / number\_of\_hours.
+8760 \cdot year\_scale\_factor / number\_of\_hours \cdot
+cost\_scale\_factor.
 \]
 
 \[
 shutdown\_cost\_per\_mw
 \leftarrow
 shutdown\_cost\_per\_mw \cdot
-8760 \cdot year\_scale\_factor / number\_of\_hours.
+8760 \cdot year\_scale\_factor / number\_of\_hours \cdot
+cost\_scale\_factor.
 \]
 
-CAPEX follows the PyPSA-Eur annualized-capex convention from
+CAPEX basis is explicit. Raw technology-data investment cost should use:
+
+```julia
+"uc_gscr_block_cost_convention" => Dict(
+    "capex_basis" => "overnight_per_mw",
+)
+```
+
+PyPSA-Eur processed `capital_cost` should use:
+
+```julia
+"uc_gscr_block_cost_convention" => Dict(
+    "capex_basis" => "annualized_per_mw_year",
+)
+```
+
+For `overnight_per_mw`, CAPEX follows the PyPSA-Eur annualized-capex
+convention from
 [`scripts/process_cost_data.py`](https://github.com/PyPSA/pypsa-eur/blob/master/scripts/process_cost_data.py)
 and
 [`doc/costs.rst`](https://github.com/PyPSA/pypsa-eur/blob/master/doc/costs.rst):
@@ -244,13 +290,26 @@ r / (1 - (1+r)^{-n}) & r > 0,\\
 For `discount_rate = 0`, `fixed_om_percent = 0`, and
 `year_scale_factor = 1`, annualized CAPEX is `cost_inv_per_mw / lifetime`.
 
+For `annualized_per_mw_year`, `cost_inv_per_mw` is already annualized and
+`scale_data!` applies only:
+
+\[
+scaled\_cost\_inv\_per\_mw =
+cost\_inv\_per\_mw \cdot year\_scale\_factor \cdot cost\_scale\_factor.
+\]
+
+| `capex_basis` | Meaning of `cost_inv_per_mw` | Uses lifetime? | Uses discount/FOM? | Scaling in `scale_data!` |
+|---|---|---:|---:|---|
+| `overnight_per_mw` | raw overnight CAPEX €/MW | yes | yes | annuity + FOM, then `year_scale_factor` |
+| `annualized_per_mw_year` | annualized CAPEX €/MW/year | no | no | multiply by `year_scale_factor` only |
+
 | Topic | Original FlexPlan | PyPSA-Eur | UC/gSCR block decision |
 |---|---|---|---|
 | OPEX time weighting | `scale_data!` scales hourly OPEX by \(8760 \cdot year\_scale\_factor / number\_of\_hours\) | Snapshot weights time-weight operation | Use FlexPlan `scale_data!`; `operation_weight` is compatibility-only |
-| CAPEX treatment | Candidate investments use lifetime/residual-value scaling | Annualized capital cost \((annuity + FOM/100) \cdot investment \cdot nyears\) | `cost_inv_per_mw` is raw overnight CAPEX and is annualized by `scale_data!` |
-| Lifetime use | Investment residual value | Annuity term | Device field required for expandable block devices; no case-level lifetime |
-| Discount rate use | Not used in original residual-value rule | Annuity term | Device value, then case-level cost assumption, otherwise error |
-| FOM use | Not used in original residual-value rule | Added as `FOM/100` | Device value, then case-level cost assumption, otherwise error |
+| CAPEX treatment | Candidate investments use lifetime/residual-value scaling | Annualized capital cost \((annuity + FOM/100) \cdot investment \cdot nyears\) | Explicit `overnight_per_mw` or `annualized_per_mw_year` basis |
+| Lifetime use | Investment residual value | Annuity term | Required only for `overnight_per_mw`; provenance-only for `annualized_per_mw_year` |
+| Discount rate use | Not used in original residual-value rule | Annuity term | Used only for `overnight_per_mw`: device value, then case-level cost assumption, otherwise error |
+| FOM use | Not used in original residual-value rule | Added as `FOM/100` | Used only for `overnight_per_mw`: device value, then case-level cost assumption, otherwise error |
 | Scenario probability use | Applied separately in stochastic objectives | Separate from snapshot weights | Scenario probabilities remain only in stochastic objectives |
 | Multi-year handling | Year dimensions and residual value | `nyears` multiplier | `year_scale_factor` multiplier for block annualized CAPEX |
 
@@ -402,8 +461,13 @@ Converter-side validation should check:
 - `p_block_max > 0` for expandable devices.
 - `q_block_min <= q_block_max`.
 - `cost_inv_per_mw >= 0`.
-- Expandable block devices provide device-level `lifetime`.
-- `discount_rate` and `fixed_om_percent` are present either on the device or through explicit case-level cost assumptions.
+- The case declares `uc_gscr_block_cost_convention["capex_basis"]`, or the
+  caller passes an explicit `scale_data!` CAPEX-basis keyword.
+- If `capex_basis = "overnight_per_mw"`, expandable block devices provide
+  device-level `lifetime`, and `discount_rate` plus `fixed_om_percent` are
+  present either on the device or through explicit case-level cost assumptions.
+- If `capex_basis = "annualized_per_mw_year"`, `lifetime`, `discount_rate`,
+  and `fixed_om_percent` are optional provenance fields only.
 - `startup_cost_per_mw` and `shutdown_cost_per_mw` are per MW if present.
 - `p_min_pu` and `p_max_pu` are scalar or time-series compatible with exported snapshots.
 - `operation_weight`, if present, is `1.0` in the canonical `scale_data!` workflow.

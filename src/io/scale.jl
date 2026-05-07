@@ -12,6 +12,8 @@ See `_scale_time_data!`, `_scale_operational_cost_data!` and `_scale_investment_
 - `number_of_years`: number of representative years (default: `dim_length(data, :year)`).
 - `year_idx`: id of the representative year (default: `1`).
 - `cost_scale_factor`: scale factor for all costs (default: `1.0`).
+- `uc_gscr_block_capex_basis`: UC/gSCR block CAPEX basis override. Use
+  `:from_data`, `:overnight_per_mw`, or `:annualized_per_mw_year`.
 """
 function scale_data!(
         data::Dict{String,Any};
@@ -19,12 +21,13 @@ function scale_data!(
         year_scale_factor::Int = haskey(data, "dim") ? dim_meta(data, :year, "scale_factor") : 1,
         number_of_years::Int = haskey(data, "dim") ? dim_length(data, :year) : 1,
         year_idx::Int = 1,
-        cost_scale_factor::Real = 1.0
+        cost_scale_factor::Real = 1.0,
+        uc_gscr_block_capex_basis::Symbol = :from_data,
     )
     if _IM.ismultinetwork(data)
         Memento.error(_LOGGER, "`scale_data!` can only be applied to single-network data dictionaries.")
     end
-    _scale_uc_gscr_block_investment_cost_data!(data, year_scale_factor, cost_scale_factor)
+    _scale_uc_gscr_block_investment_cost_data!(data, year_scale_factor, cost_scale_factor, uc_gscr_block_capex_basis)
     _scale_time_data!(data, year_scale_factor)
     _scale_operational_cost_data!(data, number_of_hours, year_scale_factor, cost_scale_factor)
     _scale_investment_cost_data!(data, number_of_years, year_idx, cost_scale_factor) # Must be called after `_scale_time_data!`
@@ -115,6 +118,55 @@ function _is_expandable_uc_gscr_block_device(device::Dict{String,<:Any})
     return device["nmax"] > device["n0"]
 end
 
+function _has_expandable_uc_gscr_block_investment(data::Dict{String,Any})
+    for table_name in ("gen", "storage", "ne_storage")
+        for device in values(get(data, table_name, Dict{String,Any}()))
+            if _is_expandable_uc_gscr_block_device(device) && haskey(device, "cost_inv_per_mw")
+                return true
+            end
+        end
+    end
+    return false
+end
+
+const _UC_GSCR_BLOCK_CAPEX_BASES = (:overnight_per_mw, :annualized_per_mw_year)
+
+function _uc_gscr_block_capex_basis(data::Dict{String,Any}, keyword_basis::Symbol)
+    if !(keyword_basis in (:from_data, _UC_GSCR_BLOCK_CAPEX_BASES...))
+        Memento.error(_LOGGER, "Unsupported UC/gSCR block CAPEX basis keyword `$(keyword_basis)`. Expected :from_data, :overnight_per_mw, or :annualized_per_mw_year.")
+    end
+    if !_has_expandable_uc_gscr_block_investment(data)
+        return nothing
+    end
+
+    metadata_basis = nothing
+    if haskey(data, "uc_gscr_block_cost_convention")
+        convention = data["uc_gscr_block_cost_convention"]
+        if !(convention isa Dict)
+            Memento.error(_LOGGER, "UC/gSCR block cost convention must be a Dict with key `capex_basis`.")
+        end
+        if !haskey(convention, "capex_basis")
+            Memento.error(_LOGGER, "UC/gSCR block cost convention is missing `capex_basis`.")
+        end
+        metadata_basis = Symbol(convention["capex_basis"])
+        if !(metadata_basis in _UC_GSCR_BLOCK_CAPEX_BASES)
+            Memento.error(_LOGGER, "Unsupported UC/gSCR block CAPEX basis `$(convention["capex_basis"])`. Expected \"overnight_per_mw\" or \"annualized_per_mw_year\".")
+        end
+    end
+
+    if keyword_basis == :from_data
+        if isnothing(metadata_basis)
+            Memento.error(_LOGGER, "Missing UC/gSCR block CAPEX basis. Set data[\"uc_gscr_block_cost_convention\"][\"capex_basis\"] to \"overnight_per_mw\" or \"annualized_per_mw_year\", or pass uc_gscr_block_capex_basis explicitly to scale_data!.")
+        end
+        return metadata_basis
+    end
+
+    if !isnothing(metadata_basis) && keyword_basis != metadata_basis
+        Memento.error(_LOGGER, "UC/gSCR block CAPEX basis conflict: metadata declares `$(metadata_basis)` but scale_data! was called with `$(keyword_basis)`. Do not silently override cost convention metadata.")
+    end
+    return keyword_basis
+end
+
 function _uc_gscr_block_device_lifetime(device::Dict{String,<:Any}, table_name::String, device_id)
     if haskey(device, "lifetime")
         return device["lifetime"]
@@ -146,10 +198,15 @@ function _uc_gscr_block_discount_or_fom_assumption(data::Dict{String,Any}, devic
     )
 end
 
-function _validate_uc_gscr_block_annualization_inputs(table_name::String, device_id, cost_inv_per_mw, lifetime, discount_rate, fixed_om_percent)
+function _validate_uc_gscr_block_investment_cost(table_name::String, device_id, cost_inv_per_mw)
     if !(cost_inv_per_mw isa Real) || !isfinite(cost_inv_per_mw) || cost_inv_per_mw < 0
         Memento.error(_LOGGER, "$(table_name) $(device_id) has invalid `cost_inv_per_mw=$(cost_inv_per_mw)`. Expected a nonnegative finite numeric value.")
     end
+    return nothing
+end
+
+function _validate_uc_gscr_block_annualization_inputs(table_name::String, device_id, cost_inv_per_mw, lifetime, discount_rate, fixed_om_percent)
+    _validate_uc_gscr_block_investment_cost(table_name, device_id, cost_inv_per_mw)
     if !(lifetime isa Real) || !isfinite(lifetime) || lifetime <= 0
         Memento.error(_LOGGER, "$(table_name) $(device_id) has invalid UC/gSCR block CAPEX `lifetime=$(lifetime)`. Expected a positive finite numeric value.")
     end
@@ -170,28 +227,39 @@ function _uc_gscr_block_annuity(lifetime::Real, discount_rate::Real)
 end
 
 """
-    _scale_uc_gscr_block_investment_cost_data!(data, year_scale_factor, cost_scale_factor)
+    _scale_uc_gscr_block_investment_cost_data!(data, year_scale_factor, cost_scale_factor, uc_gscr_block_capex_basis)
 
-Annualizes UC/gSCR block overnight investment costs before standard FlexPlan
-lifetime scaling mutates candidate lifetimes. `lifetime` is required directly
-on each expandable block device. Device-specific `discount_rate` and
-`fixed_om_percent` take precedence over `data["uc_gscr_block_cost_assumptions"]`.
-Missing values on expandable block devices are errors; no defaults are inferred.
+Scales UC/gSCR block investment costs before standard FlexPlan lifetime scaling
+mutates candidate lifetimes. The CAPEX basis must be explicit. In
+`overnight_per_mw` mode, `cost_inv_per_mw` is annualized with device-level
+`lifetime` and explicit discount/FOM values. In `annualized_per_mw_year` mode,
+`cost_inv_per_mw` is already annualized per MW per year and is multiplied only
+by `year_scale_factor` and `cost_scale_factor`.
 """
-function _scale_uc_gscr_block_investment_cost_data!(data::Dict{String,Any}, year_scale_factor, cost_scale_factor)
+function _scale_uc_gscr_block_investment_cost_data!(data::Dict{String,Any}, year_scale_factor, cost_scale_factor, uc_gscr_block_capex_basis::Symbol)
+    capex_basis = _uc_gscr_block_capex_basis(data, uc_gscr_block_capex_basis)
+    if isnothing(capex_basis)
+        return data
+    end
+
     for table_name in ("gen", "storage", "ne_storage")
         for (device_id, device) in get(data, table_name, Dict{String,Any}())
             if !_is_expandable_uc_gscr_block_device(device) || !haskey(device, "cost_inv_per_mw")
                 continue
             end
             cost_inv_per_mw = device["cost_inv_per_mw"]
-            lifetime = _uc_gscr_block_device_lifetime(device, table_name, device_id)
-            discount_rate = _uc_gscr_block_discount_or_fom_assumption(data, device, "discount_rate", table_name, device_id)
-            fixed_om_percent = _uc_gscr_block_discount_or_fom_assumption(data, device, "fixed_om_percent", table_name, device_id)
-            _validate_uc_gscr_block_annualization_inputs(table_name, device_id, cost_inv_per_mw, lifetime, discount_rate, fixed_om_percent)
+            if capex_basis == :overnight_per_mw
+                lifetime = _uc_gscr_block_device_lifetime(device, table_name, device_id)
+                discount_rate = _uc_gscr_block_discount_or_fom_assumption(data, device, "discount_rate", table_name, device_id)
+                fixed_om_percent = _uc_gscr_block_discount_or_fom_assumption(data, device, "fixed_om_percent", table_name, device_id)
+                _validate_uc_gscr_block_annualization_inputs(table_name, device_id, cost_inv_per_mw, lifetime, discount_rate, fixed_om_percent)
 
-            annualization = _uc_gscr_block_annuity(lifetime, discount_rate) + fixed_om_percent / 100
-            device["cost_inv_per_mw"] = cost_inv_per_mw * annualization * year_scale_factor * cost_scale_factor
+                annualization = _uc_gscr_block_annuity(lifetime, discount_rate) + fixed_om_percent / 100
+                device["cost_inv_per_mw"] = cost_inv_per_mw * annualization * year_scale_factor * cost_scale_factor
+            else
+                _validate_uc_gscr_block_investment_cost(table_name, device_id, cost_inv_per_mw)
+                device["cost_inv_per_mw"] = cost_inv_per_mw * year_scale_factor * cost_scale_factor
+            end
         end
     end
     return data

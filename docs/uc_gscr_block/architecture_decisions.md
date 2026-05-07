@@ -281,17 +281,38 @@ If the field remains present for compatibility, it is ignored for cost
 annualization when `scale_data!` is active and must be `1.0` in canonical
 cases that use `scale_data!`.
 
-UC/gSCR block CAPEX follows the PyPSA-Eur annualized-capex convention used by
+UC/gSCR block CAPEX accepts two declared bases for `cost_inv_per_mw`. The basis
+must be explicit through:
+
+```julia
+data["uc_gscr_block_cost_convention"] = Dict(
+    "capex_basis" => "overnight_per_mw",
+)
+```
+
+or through the explicit `scale_data!` keyword
+`uc_gscr_block_capex_basis`. No basis is inferred from the presence or absence
+of `lifetime`.
+
+PyPSA-Eur computes annualized capital cost in
 [`scripts/process_cost_data.py`](https://github.com/PyPSA/pypsa-eur/blob/master/scripts/process_cost_data.py)
-and documented in
+and documents the convention in
 [`doc/costs.rst`](https://github.com/PyPSA/pypsa-eur/blob/master/doc/costs.rst):
 
 \[
 (annuity(lifetime, discount\_rate) + FOM/100) \cdot investment \cdot nyears.
 \]
 
-For UC/gSCR block devices, `cost_inv_per_mw` is raw overnight investment cost
-per MW before `scale_data!`. The repository annualizes it as:
+Raw technology-data investment cost should use:
+
+```julia
+"uc_gscr_block_cost_convention" => Dict(
+    "capex_basis" => "overnight_per_mw",
+)
+```
+
+In this mode, `cost_inv_per_mw` is raw overnight investment cost per MW before
+`scale_data!`, and the repository annualizes it as:
 
 \[
 cost\_inv\_per\_mw \cdot
@@ -317,13 +338,36 @@ overnight\ CAPEX / lifetime.
 For the one-year zero-discount, zero-FOM case, this is consistent with
 FlexPlan's residual-value treatment of investments.
 
+PyPSA-Eur processed `capital_cost` should use:
+
+```julia
+"uc_gscr_block_cost_convention" => Dict(
+    "capex_basis" => "annualized_per_mw_year",
+)
+```
+
+In this mode, `cost_inv_per_mw` is already annualized CAPEX per MW per year.
+`scale_data!` must not apply annuity or FOM again:
+
+\[
+cost\_inv\_per\_mw \cdot year\_scale\_factor \cdot cost\_scale\_factor.
+\]
+
+`lifetime`, `discount_rate`, and `fixed_om_percent` may exist as provenance
+fields in this mode, but are not used for cost scaling.
+
+| `capex_basis` | Meaning of `cost_inv_per_mw` | Uses lifetime? | Uses discount/FOM? | Scaling in `scale_data!` |
+|---|---|---:|---:|---|
+| `overnight_per_mw` | raw overnight CAPEX €/MW | yes | yes | annuity + FOM, then `year_scale_factor` |
+| `annualized_per_mw_year` | annualized CAPEX €/MW/year | no | no | multiply by `year_scale_factor` only |
+
 | Topic | Original FlexPlan | PyPSA-Eur | UC/gSCR block decision |
 |---|---|---|---|
 | OPEX time weighting | `scale_data!` scales hourly OPEX by \(8760 \cdot year\_scale\_factor / number\_of\_hours\) | Snapshot weights time-weight operation | Use FlexPlan `scale_data!`; no extra `operation_weight` multiplier |
-| CAPEX treatment | Candidate investments use lifetime/residual-value scaling | Annualized capital cost \((annuity + FOM/100) \cdot investment \cdot nyears\) | Annualize raw `cost_inv_per_mw` before objective |
-| Lifetime use | Investment residual value | Annuity term | Device field required for expandable block devices; no case-level lifetime |
-| Discount rate use | Not in the original residual-value rule | Annuity term | Device value, then explicit case assumption, otherwise error |
-| FOM use | Not in the original residual-value rule | Added as `FOM/100` | Device value, then explicit case assumption, otherwise error |
+| CAPEX treatment | Candidate investments use lifetime/residual-value scaling | Annualized capital cost \((annuity + FOM/100) \cdot investment \cdot nyears\) | Declared `overnight_per_mw` or `annualized_per_mw_year` basis |
+| Lifetime use | Investment residual value | Annuity term | Required only for `overnight_per_mw`; provenance-only for `annualized_per_mw_year` |
+| Discount rate use | Not in the original residual-value rule | Annuity term | Used only for `overnight_per_mw`: device value, then explicit case assumption, otherwise error |
+| FOM use | Not in the original residual-value rule | Added as `FOM/100` | Used only for `overnight_per_mw`: device value, then explicit case assumption, otherwise error |
 | Scenario probability use | Applied separately in stochastic objectives | Separate from snapshot weights | Scenario probabilities stay in stochastic objectives |
 | Multi-year handling | Year dimensions and residual value | `nyears` multiplier | `year_scale_factor` multiplier for annualized block CAPEX |
 

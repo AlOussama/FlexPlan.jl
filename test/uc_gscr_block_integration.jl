@@ -911,6 +911,7 @@ end
         sn_data = _FP.parse_file(normpath(@__DIR__, "data", "case2", "case2_d_strg.m"))
         sn_data["block_model_schema"] = _uc_gscr_block_schema_v2()
         sn_data["operation_weight"] = 26.0
+        sn_data["uc_gscr_block_cost_convention"] = Dict{String,Any}("capex_basis" => "annualized_per_mw_year")
         sn_data["g_min"] = 0.0
         _uc_gscr_integration_add_block_fields!(
             sn_data["gen"]["1"],

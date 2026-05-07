@@ -323,9 +323,6 @@ function _validate_uc_gscr_block_source!(source::AbstractDict; is_storage::Bool)
     if is_storage && (!haskey(source, "e_block") || (source["e_block"] isa AbstractVector && isempty(source["e_block"])))
         push!(missing, "e_block")
     end
-    if haskey(source, "n0") && haskey(source, "nmax") && source["nmax"] > source["n0"] && !haskey(source, "lifetime")
-        push!(missing, "lifetime")
-    end
     if !isempty(missing)
         Memento.error(_LOGGER, "UC/gSCR block schema v2 source component $(_uc_gscr_block_source_id(source)) is missing required fields: $(join(missing, ", ")).")
     end
@@ -359,10 +356,29 @@ function _operation_weight(source::AbstractDict, y::Int)
     end
 end
 
+function _uc_gscr_block_cost_convention(source::AbstractDict)
+    gp = get(source, "genericParameters", Dict{String,Any}())
+    if haskey(gp, "uc_gscr_block_cost_convention")
+        convention = gp["uc_gscr_block_cost_convention"]
+    elseif haskey(gp, "ucGscrBlockCostConvention")
+        convention = gp["ucGscrBlockCostConvention"]
+    else
+        return nothing
+    end
+    if !(convention isa AbstractDict)
+        Memento.error(_LOGGER, "UC/gSCR block cost convention metadata must be a dictionary.")
+    end
+    return Dict{String,Any}(string(k) => v for (k, v) in convention)
+end
+
 function add_uc_gscr_block_schema_fields!(target::AbstractDict, source::AbstractDict, y::Int)
     if _has_uc_gscr_block_output(target)
         target["block_model_schema"] = Dict{String,Any}("name" => "uc_gscr_block", "version" => "2.0")
         target["operation_weight"] = _operation_weight(source, y)
+        convention = _uc_gscr_block_cost_convention(source)
+        if !isnothing(convention)
+            target["uc_gscr_block_cost_convention"] = convention
+        end
     end
     return target
 end

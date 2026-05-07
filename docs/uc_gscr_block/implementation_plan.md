@@ -135,12 +135,17 @@ reviewed and merged.
 - Use `scale_data!` to annualize dispatch, curtailment, load operation, and
   startup/shutdown OPEX coefficients.
 - Do not apply `operation_weight` as an additional objective multiplier.
-- Annualize raw block `cost_inv_per_mw` using
+- Require an explicit UC/gSCR block CAPEX basis through
+  `uc_gscr_block_cost_convention["capex_basis"]` or the `scale_data!`
+  keyword. Accepted bases are `overnight_per_mw` and
+  `annualized_per_mw_year`.
+- For `overnight_per_mw`, annualize raw block `cost_inv_per_mw` using
   `(annuity(lifetime, discount_rate) + fixed_om_percent/100) *
-  year_scale_factor * cost_scale_factor`.
-- Require device-level lifetime for expandable block devices. Require explicit
-  nonnegative discount/FOM inputs on the device or in case-level cost
-  assumptions.
+  year_scale_factor * cost_scale_factor`. Require device-level lifetime for
+  expandable block devices and explicit nonnegative discount/FOM inputs on the
+  device or in case-level cost assumptions.
+- For `annualized_per_mw_year`, treat `cost_inv_per_mw` as already annualized
+  per MW per year and scale only by `year_scale_factor * cost_scale_factor`.
 - Keep marginal dispatch cost on existing standard dispatch cost fields.
 
 ### Non-Goals

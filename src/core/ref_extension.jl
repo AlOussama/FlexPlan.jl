@@ -339,14 +339,7 @@ function _validate_uc_gscr_block_devices(nw_ref::Dict{Symbol,<:Any}; min_up_down
         if !_uc_gscr_is_numeric(device["cost_inv_per_mw"]) || device["cost_inv_per_mw"] < 0
             Memento.error(_LOGGER, "$(uppercase(string(table_name))) device $(device_id) has invalid `cost_inv_per_mw=$(device["cost_inv_per_mw"])`. Expected a nonnegative numeric value.")
         end
-        if nmax > n0
-            if !haskey(device, "lifetime")
-                Memento.error(_LOGGER, "$(uppercase(string(table_name))) device $(device_id) is expandable and missing `lifetime`; UC/gSCR block CAPEX annualization treats cost_inv_per_mw as raw overnight CAPEX and does not infer lifetime.")
-            end
-            if !_uc_gscr_is_numeric(device["lifetime"]) || device["lifetime"] <= 0
-                Memento.error(_LOGGER, "$(uppercase(string(table_name))) device $(device_id) has invalid `lifetime=$(device["lifetime"])`. Expected a positive numeric value for UC/gSCR block CAPEX annualization.")
-            end
-        elseif haskey(device, "lifetime") && (!_uc_gscr_is_numeric(device["lifetime"]) || device["lifetime"] <= 0)
+        if haskey(device, "lifetime") && (!_uc_gscr_is_numeric(device["lifetime"]) || device["lifetime"] <= 0)
             Memento.error(_LOGGER, "$(uppercase(string(table_name))) device $(device_id) has invalid `lifetime=$(device["lifetime"])`. Expected a positive numeric value.")
         end
         for cost_field in ("discount_rate", "fixed_om_percent")

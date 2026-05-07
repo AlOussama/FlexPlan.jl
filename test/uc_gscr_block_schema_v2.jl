@@ -150,10 +150,12 @@ end
         @test_throws ErrorException _FP.ref_add_uc_gscr_block!(_schema_v2_ref(_schema_v2_nw_ref(; device=bad_expandable)), _schema_v2_data())
     end
 
-    @testset "expandable block device missing lifetime fails" begin
-        bad = _schema_v2_device()
-        delete!(bad, "lifetime")
-        @test_throws ErrorException _FP.ref_add_uc_gscr_block!(_schema_v2_ref(_schema_v2_nw_ref(; device=bad)), _schema_v2_data())
+    @testset "expandable block device may omit lifetime before cost-basis scaling" begin
+        device = _schema_v2_device()
+        delete!(device, "lifetime")
+        ref = _schema_v2_ref(_schema_v2_nw_ref(; device=device))
+        _FP.ref_add_uc_gscr_block!(ref, _schema_v2_data())
+        @test haskey(ref[:it][_PM.pm_it_sym][:nw][1], :gfl_devices)
     end
 
     @testset "active-power per-unit bounds validation" begin
