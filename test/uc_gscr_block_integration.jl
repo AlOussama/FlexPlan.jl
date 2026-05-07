@@ -892,8 +892,8 @@ end
         pm = _uc_gscr_transition_pm(data)
         expr = _FP.calc_uc_gscr_block_startup_shutdown_cost(pm)
 
-        @test JuMP.coefficient(expr, _PM.var(pm, 1, :su_block, (:gen, 1))) == 10.0 * 5.0 * 26.0
-        @test JuMP.coefficient(expr, _PM.var(pm, 2, :sd_block, (:gen, 1))) == 20.0 * 5.0 * 26.0
+        @test JuMP.coefficient(expr, _PM.var(pm, 1, :su_block, (:gen, 1))) == 10.0 * 5.0
+        @test JuMP.coefficient(expr, _PM.var(pm, 2, :sd_block, (:gen, 1))) == 20.0 * 5.0
         @test JuMP.coefficient(expr, _PM.var(pm, 1, :na_block, (:gen, 1))) == 0.0
 
         JuMP.fix(_PM.var(pm, 1, :na_block, (:gen, 1)), 4.0; force=true)
@@ -904,7 +904,57 @@ end
         JuMP.optimize!(pm.model)
 
         @test JuMP.termination_status(pm.model) == JuMP.MOI.OPTIMAL
-        @test JuMP.objective_value(pm.model) ≈ 10.0 * 5.0 * 26.0 * 3.0 + 20.0 * 5.0 * 26.0 * 2.0 atol=1e-6
+        @test JuMP.objective_value(pm.model) ≈ 10.0 * 5.0 * 3.0 + 20.0 * 5.0 * 2.0 atol=1e-6
+    end
+
+    @testset "Startup/shutdown OPEX is scaled once before objective" begin
+        sn_data = _FP.parse_file(normpath(@__DIR__, "data", "case2", "case2_d_strg.m"))
+        sn_data["block_model_schema"] = _uc_gscr_block_schema_v2()
+        sn_data["operation_weight"] = 26.0
+        sn_data["uc_gscr_block_cost_convention"] = Dict{String,Any}("capex_basis" => "annualized_per_mw_year")
+        sn_data["g_min"] = 0.0
+        _uc_gscr_integration_add_block_fields!(
+            sn_data["gen"]["1"],
+            "gfl";
+            n0=1.0,
+            nmax=8.0,
+            na0=1.0,
+            p_block_min=0.0,
+            p_block_max=2.0,
+            q_block_min=-10.0,
+            q_block_max=10.0,
+            b_block=0.0,
+            cost_inv_block=0.0,
+            startup_block_cost=10.0,
+            shutdown_block_cost=5.0,
+        )
+        sn_data["storage"] = Dict{String,Any}()
+        sn_data["ne_storage"] = Dict{String,Any}()
+        _FP.scale_data!(sn_data; number_of_hours=24, year_scale_factor=1, number_of_years=1, year_idx=1)
+        @test sn_data["gen"]["1"]["startup_cost_per_mw"] ≈ 3650.0
+        @test sn_data["gen"]["1"]["shutdown_cost_per_mw"] ≈ 1825.0
+        @test sn_data["operation_weight"] == 26.0
+
+        _FP.add_dimension!(sn_data, :hour, 2)
+        _FP.add_dimension!(sn_data, :scenario, Dict(1 => Dict{String,Any}("probability" => 1.0)))
+        _FP.add_dimension!(sn_data, :year, 1; metadata=Dict{String,Any}("scale_factor" => 1))
+        data = _FP.make_multinetwork(sn_data, Dict{String,Any}(); share_data=false)
+        pm = _uc_gscr_transition_pm(data)
+        expr = _FP.calc_uc_gscr_block_startup_shutdown_cost(pm)
+
+        @test JuMP.coefficient(expr, _PM.var(pm, 1, :su_block, (:gen, 1))) == 2.0 * 3650.0
+        @test JuMP.coefficient(expr, _PM.var(pm, 1, :sd_block, (:gen, 1))) == 2.0 * 1825.0
+
+        JuMP.fix(_PM.var(pm, 1, :na_block, (:gen, 1)), 4.0; force=true)
+        JuMP.fix(_PM.var(pm, 2, :na_block, (:gen, 1)), 4.0; force=true)
+        JuMP.@objective(pm.model, Min, expr)
+        JuMP.set_optimizer(pm.model, HiGHS.Optimizer)
+        JuMP.set_silent(pm.model)
+        JuMP.optimize!(pm.model)
+
+        @test JuMP.termination_status(pm.model) == JuMP.MOI.OPTIMAL
+        @test JuMP.value(_PM.var(pm, 1, :su_block, (:gen, 1))) ≈ 3.0 atol=1e-6
+        @test JuMP.objective_value(pm.model) ≈ 3.0 * 2.0 * 3650.0 atol=1e-6
     end
 
     @testset "Compound keys remain collision-free across gen/storage/ne_storage" begin

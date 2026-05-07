@@ -252,7 +252,8 @@ const _UC_GSCR_BLOCK_REQUIRED_FIELDS = (
     "p_min_pu",
     "p_max_pu",
 )
-const _UC_GSCR_BLOCK_OPTIONAL_FIELDS = ("p_block_min", "H", "s_block", "startup_cost_per_mw", "shutdown_cost_per_mw", "min_up_block_time", "min_down_block_time")
+const _UC_GSCR_BLOCK_OPTIONAL_FIELDS = ("p_block_min", "H", "s_block", "startup_cost_per_mw", "shutdown_cost_per_mw", "lifetime", "discount_rate", "fixed_om_percent", "min_up_block_time", "min_down_block_time")
+const _UC_GSCR_BLOCK_COST_ASSUMPTION_FIELDS = ("lifetime", "discount_rate", "fixed_om_percent")
 const _UC_GSCR_BLOCK_YEAR_FIELDS = (
     "p_block_min",
     "p_block_max",
@@ -264,6 +265,8 @@ const _UC_GSCR_BLOCK_YEAR_FIELDS = (
     "cost_inv_per_mw",
     "startup_cost_per_mw",
     "shutdown_cost_per_mw",
+    "discount_rate",
+    "fixed_om_percent",
     "e_block",
 )
 
@@ -273,7 +276,8 @@ function _uc_gscr_block_source_id(source::AbstractDict)
 end
 
 function _uc_gscr_has_any_block_source_field(source::AbstractDict)
-    for field in Iterators.flatten((_UC_GSCR_BLOCK_REQUIRED_FIELDS, _UC_GSCR_BLOCK_OPTIONAL_FIELDS, ("e_block",), _UC_GSCR_BLOCK_OLD_FIELDS))
+    detection_optional = setdiff(_UC_GSCR_BLOCK_OPTIONAL_FIELDS, _UC_GSCR_BLOCK_COST_ASSUMPTION_FIELDS)
+    for field in Iterators.flatten((_UC_GSCR_BLOCK_REQUIRED_FIELDS, detection_optional, ("e_block",), _UC_GSCR_BLOCK_OLD_FIELDS))
         if haskey(source, field)
             return true
         end
@@ -352,10 +356,29 @@ function _operation_weight(source::AbstractDict, y::Int)
     end
 end
 
+function _uc_gscr_block_cost_convention(source::AbstractDict)
+    gp = get(source, "genericParameters", Dict{String,Any}())
+    if haskey(gp, "uc_gscr_block_cost_convention")
+        convention = gp["uc_gscr_block_cost_convention"]
+    elseif haskey(gp, "ucGscrBlockCostConvention")
+        convention = gp["ucGscrBlockCostConvention"]
+    else
+        return nothing
+    end
+    if !(convention isa AbstractDict)
+        Memento.error(_LOGGER, "UC/gSCR block cost convention metadata must be a dictionary.")
+    end
+    return Dict{String,Any}(string(k) => v for (k, v) in convention)
+end
+
 function add_uc_gscr_block_schema_fields!(target::AbstractDict, source::AbstractDict, y::Int)
     if _has_uc_gscr_block_output(target)
         target["block_model_schema"] = Dict{String,Any}("name" => "uc_gscr_block", "version" => "2.0")
         target["operation_weight"] = _operation_weight(source, y)
+        convention = _uc_gscr_block_cost_convention(source)
+        if !isnothing(convention)
+            target["uc_gscr_block_cost_convention"] = convention
+        end
     end
     return target
 end

@@ -29,6 +29,9 @@ function _uc_gscr_add_block_fields!(
     q_block_max=2.0,
     b_block=nothing,
     cost_inv_per_mw=1.0,
+    lifetime=20.0,
+    discount_rate=0.0,
+    fixed_om_percent=0.0,
     p_min_pu=0.0,
     p_max_pu=1.0,
     startup_cost_per_mw=1.0,
@@ -51,6 +54,9 @@ function _uc_gscr_add_block_fields!(
     device["q_block_max"] = q_block_max
     device["b_block"] = isnothing(b_block) ? (mode == "gfm" ? 1.0 : 0.0) : b_block
     device["cost_inv_per_mw"] = cost_inv_per_mw
+    device["lifetime"] = lifetime
+    device["discount_rate"] = discount_rate
+    device["fixed_om_percent"] = fixed_om_percent
     device["p_min_pu"] = p_min_pu
     device["p_max_pu"] = p_max_pu
     if include_startup_shutdown

@@ -150,6 +150,14 @@ end
         @test_throws ErrorException _FP.ref_add_uc_gscr_block!(_schema_v2_ref(_schema_v2_nw_ref(; device=bad_expandable)), _schema_v2_data())
     end
 
+    @testset "expandable block device may omit lifetime before cost-basis scaling" begin
+        device = _schema_v2_device()
+        delete!(device, "lifetime")
+        ref = _schema_v2_ref(_schema_v2_nw_ref(; device=device))
+        _FP.ref_add_uc_gscr_block!(ref, _schema_v2_data())
+        @test haskey(ref[:it][_PM.pm_it_sym][:nw][1], :gfl_devices)
+    end
+
     @testset "active-power per-unit bounds validation" begin
         bad_scalar = _schema_v2_device()
         bad_scalar["p_min_pu"] = 0.7
@@ -202,6 +210,22 @@ end
             :bus => Dict{Int,Any}(1 => Dict{String,Any}("index" => 1)),
             :branch => Dict{Int,Any}(),
             :gen => Dict{Int,Any}(1 => Dict{String,Any}("gen_bus" => 1)),
+        )
+        ref = _schema_v2_ref(nw_ref)
+        _FP.ref_add_uc_gscr_block!(ref, Dict{String,Any}())
+        @test !haskey(ref[:it][_PM.pm_it_sym][:nw][1], :gfl_devices)
+    end
+
+    @testset "cost assumption fields alone do not activate block schema" begin
+        nw_ref = Dict{Symbol,Any}(
+            :bus => Dict{Int,Any}(1 => Dict{String,Any}("index" => 1)),
+            :branch => Dict{Int,Any}(),
+            :gen => Dict{Int,Any}(1 => Dict{String,Any}(
+                "gen_bus" => 1,
+                "lifetime" => 20.0,
+                "discount_rate" => 0.05,
+                "fixed_om_percent" => 2.0,
+            )),
         )
         ref = _schema_v2_ref(nw_ref)
         _FP.ref_add_uc_gscr_block!(ref, Dict{String,Any}())

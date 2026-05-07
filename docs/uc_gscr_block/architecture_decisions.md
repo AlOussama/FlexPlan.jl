@@ -254,6 +254,123 @@ verification should later compute eigenvalue and gSCR margins as diagnostics.
 
 ## 11. Objective and Costs
 
+### Cost Handling: FlexPlan OPEX Scaling and PyPSA-Eur-Style Annualized CAPEX
+
+Original FlexPlan annualizes OPEX-like coefficients in
+[`src/io/scale.jl`](../../src/io/scale.jl) before `make_multinetwork`. The
+operational scaling factor is:
+
+\[
+8760 \cdot year\_scale\_factor / number\_of\_hours.
+\]
+
+This project uses the same approach for UC/gSCR block OPEX. For the common
+study setup of one scenario with probability 1.0, one model year,
+`year_scale_factor = 1`, and a representative horizon of `number_of_hours =
+N_h`, the OPEX factor is:
+
+\[
+8760 / N_h.
+\]
+
+The factor applies to standard generator dispatch costs, non-dispatchable
+curtailment costs, load operation costs where applicable, and UC/gSCR block
+startup/shutdown costs. `operation_weight` must not be used as an additional
+annualization multiplier in [`src/core/objective.jl`](../../src/core/objective.jl).
+If the field remains present for compatibility, it is ignored for cost
+annualization when `scale_data!` is active and must be `1.0` in canonical
+cases that use `scale_data!`.
+
+UC/gSCR block CAPEX accepts two declared bases for `cost_inv_per_mw`. The basis
+must be explicit through:
+
+```julia
+data["uc_gscr_block_cost_convention"] = Dict(
+    "capex_basis" => "overnight_per_mw",
+)
+```
+
+or through the explicit `scale_data!` keyword
+`uc_gscr_block_capex_basis`. No basis is inferred from the presence or absence
+of `lifetime`.
+
+PyPSA-Eur computes annualized capital cost in
+[`scripts/process_cost_data.py`](https://github.com/PyPSA/pypsa-eur/blob/master/scripts/process_cost_data.py)
+and documents the convention in
+[`doc/costs.rst`](https://github.com/PyPSA/pypsa-eur/blob/master/doc/costs.rst):
+
+\[
+(annuity(lifetime, discount\_rate) + FOM/100) \cdot investment \cdot nyears.
+\]
+
+Raw technology-data investment cost should use:
+
+```julia
+"uc_gscr_block_cost_convention" => Dict(
+    "capex_basis" => "overnight_per_mw",
+)
+```
+
+In this mode, `cost_inv_per_mw` is raw overnight investment cost per MW before
+`scale_data!`, and the repository annualizes it as:
+
+\[
+cost\_inv\_per\_mw \cdot
+(annuity(lifetime, discount\_rate) + fixed\_om\_percent/100) \cdot
+year\_scale\_factor \cdot cost\_scale\_factor.
+\]
+
+`lifetime` is required directly on every expandable block device (`nmax >
+n0`). Case-level `lifetime` is not supported. `discount_rate` and
+`fixed_om_percent` may be specified either on the device or in
+`uc_gscr_block_cost_assumptions`, with precedence:
+
+```text
+device value > uc_gscr_block_cost_assumptions > error
+```
+
+When `discount_rate = 0` and `fixed_om_percent = 0`, this reduces to:
+
+\[
+overnight\ CAPEX / lifetime.
+\]
+
+For the one-year zero-discount, zero-FOM case, this is consistent with
+FlexPlan's residual-value treatment of investments.
+
+PyPSA-Eur processed `capital_cost` should use:
+
+```julia
+"uc_gscr_block_cost_convention" => Dict(
+    "capex_basis" => "annualized_per_mw_year",
+)
+```
+
+In this mode, `cost_inv_per_mw` is already annualized CAPEX per MW per year.
+`scale_data!` must not apply annuity or FOM again:
+
+\[
+cost\_inv\_per\_mw \cdot year\_scale\_factor \cdot cost\_scale\_factor.
+\]
+
+`lifetime`, `discount_rate`, and `fixed_om_percent` may exist as provenance
+fields in this mode, but are not used for cost scaling.
+
+| `capex_basis` | Meaning of `cost_inv_per_mw` | Uses lifetime? | Uses discount/FOM? | Scaling in `scale_data!` |
+|---|---|---:|---:|---|
+| `overnight_per_mw` | raw overnight CAPEX €/MW | yes | yes | annuity + FOM, then `year_scale_factor` |
+| `annualized_per_mw_year` | annualized CAPEX €/MW/year | no | no | multiply by `year_scale_factor` only |
+
+| Topic | Original FlexPlan | PyPSA-Eur | UC/gSCR block decision |
+|---|---|---|---|
+| OPEX time weighting | `scale_data!` scales hourly OPEX by \(8760 \cdot year\_scale\_factor / number\_of\_hours\) | Snapshot weights time-weight operation | Use FlexPlan `scale_data!`; no extra `operation_weight` multiplier |
+| CAPEX treatment | Candidate investments use lifetime/residual-value scaling | Annualized capital cost \((annuity + FOM/100) \cdot investment \cdot nyears\) | Declared `overnight_per_mw` or `annualized_per_mw_year` basis |
+| Lifetime use | Investment residual value | Annuity term | Required only for `overnight_per_mw`; provenance-only for `annualized_per_mw_year` |
+| Discount rate use | Not in the original residual-value rule | Annuity term | Used only for `overnight_per_mw`: device value, then explicit case assumption, otherwise error |
+| FOM use | Not in the original residual-value rule | Added as `FOM/100` | Used only for `overnight_per_mw`: device value, then explicit case assumption, otherwise error |
+| Scenario probability use | Applied separately in stochastic objectives | Separate from snapshot weights | Scenario probabilities stay in stochastic objectives |
+| Multi-year handling | Year dimensions and residual value | `nyears` multiplier | `year_scale_factor` multiplier for annualized block CAPEX |
+
 Investment cost:
 
 \[
@@ -276,8 +393,9 @@ C_{k,t}^{sd}
 c_k^{sd/MW} P_k^{block,max} sd_{k,t}^{block}.
 \]
 
-Operation weights apply to dispatch and startup/shutdown costs. Operation
-weights do not apply to investment cost.
+Operation costs use coefficients already scaled by `scale_data!`. Operation
+weights do not apply to dispatch, startup/shutdown, or investment cost in the
+canonical UC/gSCR block workflow.
 
 Marginal dispatch cost should keep using standard dispatch cost fields unless
 that objective layer is explicitly refactored later.

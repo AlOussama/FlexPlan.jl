@@ -93,7 +93,7 @@ Every block-enabled `gen`, `storage`, and `ne_storage` record requires:
 | `q_block_min` | Reactive lower bound per participating block |
 | `q_block_max` | Reactive upper bound per participating block |
 | `b_block` | Per-block GFM strength contribution |
-| `cost_inv_per_mw` | Investment cost per MW of added block capacity |
+| `cost_inv_per_mw` | Investment cost per MW of added block capacity; exact basis is declared by `uc_gscr_block_cost_convention["capex_basis"]` |
 | `p_min_pu` | Minimum meaningful active dispatch per participating block, if applicable |
 | `p_max_pu` | Per-unit availability/capability per participating block |
 
@@ -116,6 +116,34 @@ physical AC-grid interface/control classification, not a formulation type.
 
 Optional physical/interface fields such as `H` and `s_block` may be exported if
 the downstream model uses them, but they do not select formulation behavior.
+
+Every case with expandable block CAPEX must declare the basis of
+`cost_inv_per_mw`:
+
+```julia
+"uc_gscr_block_cost_convention" => Dict(
+    "capex_basis" => "overnight_per_mw",
+)
+```
+
+or:
+
+```julia
+"uc_gscr_block_cost_convention" => Dict(
+    "capex_basis" => "annualized_per_mw_year",
+)
+```
+
+Use `overnight_per_mw` when exporting raw technology-data investment cost.
+Use `annualized_per_mw_year` when exporting already annualized costs such as
+PyPSA-Eur processed `capital_cost`. In `overnight_per_mw` mode, expandable
+block-enabled devices (`nmax > n0`) must also provide device-level `lifetime`.
+Case-level `lifetime` is not supported. The CAPEX annualization fields
+`discount_rate` and `fixed_om_percent` may be exported on the device; if
+omitted, downstream `scale_data!` may use explicit case-level
+`uc_gscr_block_cost_assumptions` values. In `annualized_per_mw_year` mode,
+`lifetime`, `discount_rate`, and `fixed_om_percent` may be exported as
+provenance fields, but they are not used for scaling.
 
 ## 4. Block Count Semantics
 
@@ -187,6 +215,34 @@ The downstream objective convention is:
 cost\_inv\_per\_mw \cdot p\_block\_max \cdot (n\_block - n0).
 \]
 
+Before model construction, `scale_data!` reads the declared CAPEX basis. For
+`overnight_per_mw`, it annualizes raw `cost_inv_per_mw` as:
+
+\[
+cost\_inv\_per\_mw \cdot
+(annuity(lifetime, discount\_rate) + fixed\_om\_percent/100)
+\cdot year\_scale\_factor
+\cdot cost\_scale\_factor.
+\]
+
+`lifetime` is always read from the device. `discount_rate` and
+`fixed_om_percent` use device values first, then
+`uc_gscr_block_cost_assumptions`, otherwise an explicit error.
+
+For `annualized_per_mw_year`, `cost_inv_per_mw` is already annualized per MW
+per year and is scaled only by:
+
+\[
+cost\_inv\_per\_mw \cdot year\_scale\_factor \cdot cost\_scale\_factor.
+\]
+
+No annuity or FOM is applied in this mode.
+
+| `capex_basis` | Meaning of `cost_inv_per_mw` | Uses lifetime? | Uses discount/FOM? | Scaling in `scale_data!` |
+|---|---|---:|---:|---|
+| `overnight_per_mw` | raw overnight CAPEX €/MW | yes | yes | annuity + FOM, then `year_scale_factor` |
+| `annualized_per_mw_year` | annualized CAPEX €/MW/year | no | no | multiply by `year_scale_factor` only |
+
 Startup and shutdown costs are per MW of started or shut-down block capacity:
 
 ```text
@@ -216,28 +272,16 @@ Every converted snapshot/network must include:
 
 | Field | Meaning |
 |---|---|
-| `operation_weight` | Objective multiplier for operating costs |
+| `operation_weight` | Compatibility/diagnostic field; not the annualization mechanism when `scale_data!` is active |
 | `time_elapsed` | Snapshot duration used by storage dynamics |
 
-`operation_weight` applies downstream to dispatch and startup/shutdown costs.
-It does not apply to investment cost. `time_elapsed` remains the snapshot
-duration used by storage dynamics.
-
-For the two-week 336-hour paper study, if the selected two weeks are annualized
-by repetition, `operation_weight` should be `26` for every hourly snapshot
-unless another explicit weighting is used.
-
-If mapping PyPSA snapshot weights directly:
-
-```text
-PyPSA snapshot_weightings.objective[t] -> operation_weight[t]
-```
-
-If using a custom annualization policy:
-
-```text
-operation_weight[t] = representative_repetition_factor[t] * time_elapsed[t]
-```
+OPEX annualization is performed by FlexPlan `scale_data!` before
+`make_multinetwork`, using \(8760 \cdot year\_scale\_factor /
+number\_of\_hours\). `operation_weight` is not multiplied into dispatch or
+startup/shutdown costs in the canonical UC/gSCR block workflow and should be
+`1.0` if retained for compatibility. Do not map PyPSA snapshot weights into
+`operation_weight` when `scale_data!` is active. `time_elapsed` remains the
+snapshot duration used by storage dynamics.
 
 ## 8. Global Security Fields
 
@@ -359,9 +403,13 @@ Converter-side validation should check:
 - `p_block_max > 0` for expandable devices.
 - `q_block_min <= q_block_max`.
 - `cost_inv_per_mw >= 0`.
+- Cases with block CAPEX declare `uc_gscr_block_cost_convention["capex_basis"]`
+  as `overnight_per_mw` or `annualized_per_mw_year`.
+- If `capex_basis = "overnight_per_mw"`, expandable block devices provide
+  device-level `lifetime`.
 - `startup_cost_per_mw` and `shutdown_cost_per_mw` are per MW if present.
 - `p_min_pu` and `p_max_pu` are scalar or time-series compatible with exported snapshots.
-- `operation_weight` exists for every snapshot.
+- `operation_weight`, if present, is `1.0` in the canonical `scale_data!` workflow.
 - `time_elapsed` exists for every snapshot.
 - `e_block` exists for block-enabled `storage` and `ne_storage`.
 
