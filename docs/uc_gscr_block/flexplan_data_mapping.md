@@ -93,7 +93,7 @@ Every block-enabled `gen`, `storage`, and `ne_storage` record requires:
 | `q_block_min` | Reactive lower bound per participating block |
 | `q_block_max` | Reactive upper bound per participating block |
 | `b_block` | Per-block GFM strength contribution |
-| `cost_inv_per_mw` | Investment cost per MW of added block capacity |
+| `cost_inv_per_mw` | Raw overnight investment cost per MW of added block capacity before `scale_data!` |
 | `p_min_pu` | Minimum meaningful active dispatch per participating block, if applicable |
 | `p_max_pu` | Per-unit availability/capability per participating block |
 
@@ -116,6 +116,12 @@ physical AC-grid interface/control classification, not a formulation type.
 
 Optional physical/interface fields such as `H` and `s_block` may be exported if
 the downstream model uses them, but they do not select formulation behavior.
+
+Every expandable block-enabled device (`nmax > n0`) must also provide
+device-level `lifetime`. Case-level `lifetime` is not supported. The optional
+CAPEX annualization fields `discount_rate` and `fixed_om_percent` may be
+exported on the device; if omitted, downstream `scale_data!` may use explicit
+case-level `uc_gscr_block_cost_assumptions` values.
 
 ## 4. Block Count Semantics
 
@@ -186,6 +192,19 @@ The downstream objective convention is:
 \[
 cost\_inv\_per\_mw \cdot p\_block\_max \cdot (n\_block - n0).
 \]
+
+Before model construction, `scale_data!` annualizes raw `cost_inv_per_mw` as:
+
+\[
+cost\_inv\_per\_mw \cdot
+(annuity(lifetime, discount\_rate) + fixed\_om\_percent/100)
+\cdot year\_scale\_factor
+\cdot cost\_scale\_factor.
+\]
+
+`lifetime` is always read from the device. `discount_rate` and
+`fixed_om_percent` use device values first, then
+`uc_gscr_block_cost_assumptions`, otherwise an explicit error.
 
 Startup and shutdown costs are per MW of started or shut-down block capacity:
 
@@ -347,6 +366,7 @@ Converter-side validation should check:
 - `p_block_max > 0` for expandable devices.
 - `q_block_min <= q_block_max`.
 - `cost_inv_per_mw >= 0`.
+- Expandable block devices provide device-level `lifetime`.
 - `startup_cost_per_mw` and `shutdown_cost_per_mw` are per MW if present.
 - `p_min_pu` and `p_max_pu` are scalar or time-series compatible with exported snapshots.
 - `operation_weight`, if present, is `1.0` in the canonical `scale_data!` workflow.

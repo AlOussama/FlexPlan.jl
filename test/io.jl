@@ -263,6 +263,7 @@
 
             target = Dict{String,Any}("gen" => Dict{String,Any}("1" => gen_target), "storage" => Dict{String,Any}(), "ne_storage" => Dict{String,Any}())
             source = Dict{String,Any}("genericParameters" => Dict{String,Any}("operation_weight" => [2.5]))
+            # Converter copy-through only. This is not a canonical scale_data! optimization fixture.
             _FP.JSONConverter.add_uc_gscr_block_schema_fields!(target, source, 1)
             @test target["block_model_schema"] == Dict{String,Any}("name" => "uc_gscr_block", "version" => "2.0")
             @test target["operation_weight"] == 2.5
@@ -278,6 +279,7 @@
 
         @testset "UC/gSCR block OPEX is annualized by scale_data!" begin
             scale_data = Dict{String,Any}(
+                "operation_weight" => 1.0,
                 "gen" => Dict{String,Any}(
                     "1" => Dict{String,Any}(
                         "grid_control_mode" => "gfl",
@@ -299,6 +301,7 @@
             _FP.scale_data!(scale_data; number_of_hours=24, year_scale_factor=1, number_of_years=1, year_idx=1)
             @test scale_data["gen"]["1"]["startup_cost_per_mw"] ≈ 10.0 * 365
             @test scale_data["gen"]["1"]["shutdown_cost_per_mw"] ≈ 5.0 * 365
+            @test scale_data["operation_weight"] == 1.0
         end
 
         @testset "UC/gSCR block CAPEX is annualized by scale_data!" begin
@@ -390,6 +393,93 @@
             )
             _FP.scale_data!(scale_data; number_of_hours=24, year_scale_factor=1, number_of_years=1, year_idx=1)
             @test scale_data["gen"]["1"]["cost_inv_per_mw"] ≈ 100.0
+        end
+
+        @testset "UC/gSCR block CAPEX rejects case-level lifetime" begin
+            scale_data = Dict{String,Any}(
+                "uc_gscr_block_cost_assumptions" => Dict{String,Any}(
+                    "lifetime" => 20.0,
+                    "discount_rate" => 0.0,
+                    "fixed_om_percent" => 0.0,
+                ),
+                "gen" => Dict{String,Any}(
+                    "1" => Dict{String,Any}(
+                        "grid_control_mode" => "gfl",
+                        "n0" => 0.0,
+                        "nmax" => 2.0,
+                        "p_block_max" => 1.0,
+                        "cost_inv_per_mw" => 1000.0,
+                    ),
+                ),
+                "storage" => Dict{String,Any}(),
+                "ne_storage" => Dict{String,Any}(),
+                "load" => Dict{String,Any}(),
+            )
+            err = try
+                _FP.scale_data!(scale_data; number_of_hours=24, year_scale_factor=1, number_of_years=1, year_idx=1)
+                nothing
+            catch e
+                e
+            end
+            @test err isa ErrorException
+            @test occursin("device-level lifetime", sprint(showerror, err))
+        end
+
+        @testset "UC/gSCR block CAPEX device discount/FOM override case assumptions" begin
+            scale_data = Dict{String,Any}(
+                "uc_gscr_block_cost_assumptions" => Dict{String,Any}(
+                    "discount_rate" => 0.0,
+                    "fixed_om_percent" => 0.0,
+                ),
+                "gen" => Dict{String,Any}(
+                    "1" => Dict{String,Any}(
+                        "grid_control_mode" => "gfl",
+                        "n0" => 0.0,
+                        "nmax" => 2.0,
+                        "p_block_max" => 1.0,
+                        "cost_inv_per_mw" => 1000.0,
+                        "lifetime" => 20.0,
+                        "discount_rate" => 0.05,
+                        "fixed_om_percent" => 2.0,
+                    ),
+                ),
+                "storage" => Dict{String,Any}(),
+                "ne_storage" => Dict{String,Any}(),
+                "load" => Dict{String,Any}(),
+            )
+            _FP.scale_data!(scale_data; number_of_hours=24, year_scale_factor=1, number_of_years=1, year_idx=1)
+            annuity = 0.05 / (1 - (1 + 0.05)^(-20))
+            @test scale_data["gen"]["1"]["cost_inv_per_mw"] ≈ 1000.0 * (annuity + 0.02)
+        end
+
+        @testset "UC/gSCR block CAPEX requires explicit discount and FOM" begin
+            for missing_field in ("discount_rate", "fixed_om_percent")
+                device = Dict{String,Any}(
+                    "grid_control_mode" => "gfl",
+                    "n0" => 0.0,
+                    "nmax" => 2.0,
+                    "p_block_max" => 1.0,
+                    "cost_inv_per_mw" => 1000.0,
+                    "lifetime" => 20.0,
+                )
+                device[missing_field == "discount_rate" ? "fixed_om_percent" : "discount_rate"] = 0.0
+                scale_data = Dict{String,Any}(
+                    "gen" => Dict{String,Any}(
+                        "1" => device,
+                    ),
+                    "storage" => Dict{String,Any}(),
+                    "ne_storage" => Dict{String,Any}(),
+                    "load" => Dict{String,Any}(),
+                )
+                err = try
+                    _FP.scale_data!(scale_data; number_of_hours=24, year_scale_factor=1, number_of_years=1, year_idx=1)
+                    nothing
+                catch e
+                    e
+                end
+                @test err isa ErrorException
+                @test occursin("$(missing_field) must be set", sprint(showerror, err))
+            end
         end
 
         @testset "UC/gSCR block CAPEX annualization requires lifetime" begin

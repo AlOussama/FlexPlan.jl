@@ -115,13 +115,29 @@ function _is_expandable_uc_gscr_block_device(device::Dict{String,<:Any})
     return device["nmax"] > device["n0"]
 end
 
-function _uc_gscr_block_cost_assumption(data::Dict{String,Any}, device::Dict{String,<:Any}, field::String, table_name::String, device_id)
+function _uc_gscr_block_device_lifetime(device::Dict{String,<:Any}, table_name::String, device_id)
+    if haskey(device, "lifetime")
+        return device["lifetime"]
+    end
+    Memento.error(
+        _LOGGER,
+        "Expandable UC/gSCR block device requires device-level lifetime. " *
+        "$(table_name) $(device_id) is expandable and no case-level lifetime fallback is supported.",
+    )
+end
+
+function _uc_gscr_block_discount_or_fom_assumption(data::Dict{String,Any}, device::Dict{String,<:Any}, field::String, table_name::String, device_id)
     if haskey(device, field)
         return device[field]
     end
     assumptions = get(data, "uc_gscr_block_cost_assumptions", Dict{String,Any}())
     if assumptions isa Dict && haskey(assumptions, field)
         return assumptions[field]
+    end
+    if field == "discount_rate"
+        Memento.error(_LOGGER, "UC/gSCR block CAPEX annualization requires `discount_rate` for $(table_name) $(device_id); discount_rate must be set on the device or in uc_gscr_block_cost_assumptions.")
+    elseif field == "fixed_om_percent"
+        Memento.error(_LOGGER, "UC/gSCR block CAPEX annualization requires `fixed_om_percent` for $(table_name) $(device_id); fixed_om_percent must be set on the device or in uc_gscr_block_cost_assumptions.")
     end
     Memento.error(
         _LOGGER,
@@ -157,10 +173,10 @@ end
     _scale_uc_gscr_block_investment_cost_data!(data, year_scale_factor, cost_scale_factor)
 
 Annualizes UC/gSCR block overnight investment costs before standard FlexPlan
-lifetime scaling mutates candidate lifetimes. Device-specific `lifetime`,
-`discount_rate`, and `fixed_om_percent` take precedence over
-`data["uc_gscr_block_cost_assumptions"]`. Missing values on expandable block
-devices are errors; no defaults are inferred.
+lifetime scaling mutates candidate lifetimes. `lifetime` is required directly
+on each expandable block device. Device-specific `discount_rate` and
+`fixed_om_percent` take precedence over `data["uc_gscr_block_cost_assumptions"]`.
+Missing values on expandable block devices are errors; no defaults are inferred.
 """
 function _scale_uc_gscr_block_investment_cost_data!(data::Dict{String,Any}, year_scale_factor, cost_scale_factor)
     for table_name in ("gen", "storage", "ne_storage")
@@ -169,9 +185,9 @@ function _scale_uc_gscr_block_investment_cost_data!(data::Dict{String,Any}, year
                 continue
             end
             cost_inv_per_mw = device["cost_inv_per_mw"]
-            lifetime = _uc_gscr_block_cost_assumption(data, device, "lifetime", table_name, device_id)
-            discount_rate = _uc_gscr_block_cost_assumption(data, device, "discount_rate", table_name, device_id)
-            fixed_om_percent = _uc_gscr_block_cost_assumption(data, device, "fixed_om_percent", table_name, device_id)
+            lifetime = _uc_gscr_block_device_lifetime(device, table_name, device_id)
+            discount_rate = _uc_gscr_block_discount_or_fom_assumption(data, device, "discount_rate", table_name, device_id)
+            fixed_om_percent = _uc_gscr_block_discount_or_fom_assumption(data, device, "fixed_om_percent", table_name, device_id)
             _validate_uc_gscr_block_annualization_inputs(table_name, device_id, cost_inv_per_mw, lifetime, discount_rate, fixed_om_percent)
 
             annualization = _uc_gscr_block_annuity(lifetime, discount_rate) + fixed_om_percent / 100

@@ -137,8 +137,8 @@ reviewed and merged.
 - Do not apply `operation_weight` as an additional objective multiplier.
 - Annualize raw block `cost_inv_per_mw` using
   `(annuity(lifetime, discount_rate) + fixed_om_percent/100) *
-  year_scale_factor`.
-- Require explicit lifetime for expandable block devices and explicit
+  year_scale_factor * cost_scale_factor`.
+- Require device-level lifetime for expandable block devices. Require explicit
   nonnegative discount/FOM inputs on the device or in case-level cost
   assumptions.
 - Keep marginal dispatch cost on existing standard dispatch cost fields.

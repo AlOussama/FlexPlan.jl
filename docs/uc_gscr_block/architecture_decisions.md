@@ -278,7 +278,8 @@ curtailment costs, load operation costs where applicable, and UC/gSCR block
 startup/shutdown costs. `operation_weight` must not be used as an additional
 annualization multiplier in [`src/core/objective.jl`](../../src/core/objective.jl).
 If the field remains present for compatibility, it is ignored for cost
-annualization when `scale_data!` is active.
+annualization when `scale_data!` is active and must be `1.0` in canonical
+cases that use `scale_data!`.
 
 UC/gSCR block CAPEX follows the PyPSA-Eur annualized-capex convention used by
 [`scripts/process_cost_data.py`](https://github.com/PyPSA/pypsa-eur/blob/master/scripts/process_cost_data.py)
@@ -295,8 +296,17 @@ per MW before `scale_data!`. The repository annualizes it as:
 \[
 cost\_inv\_per\_mw \cdot
 (annuity(lifetime, discount\_rate) + fixed\_om\_percent/100) \cdot
-year\_scale\_factor.
+year\_scale\_factor \cdot cost\_scale\_factor.
 \]
+
+`lifetime` is required directly on every expandable block device (`nmax >
+n0`). Case-level `lifetime` is not supported. `discount_rate` and
+`fixed_om_percent` may be specified either on the device or in
+`uc_gscr_block_cost_assumptions`, with precedence:
+
+```text
+device value > uc_gscr_block_cost_assumptions > error
+```
 
 When `discount_rate = 0` and `fixed_om_percent = 0`, this reduces to:
 
@@ -311,9 +321,9 @@ FlexPlan's residual-value treatment of investments.
 |---|---|---|---|
 | OPEX time weighting | `scale_data!` scales hourly OPEX by \(8760 \cdot year\_scale\_factor / number\_of\_hours\) | Snapshot weights time-weight operation | Use FlexPlan `scale_data!`; no extra `operation_weight` multiplier |
 | CAPEX treatment | Candidate investments use lifetime/residual-value scaling | Annualized capital cost \((annuity + FOM/100) \cdot investment \cdot nyears\) | Annualize raw `cost_inv_per_mw` before objective |
-| Lifetime use | Investment residual value | Annuity term | Required for expandable block devices |
-| Discount rate use | Not in the original residual-value rule | Annuity term | Device value, then explicit case assumption |
-| FOM use | Not in the original residual-value rule | Added as `FOM/100` | Device value, then explicit case assumption |
+| Lifetime use | Investment residual value | Annuity term | Device field required for expandable block devices; no case-level lifetime |
+| Discount rate use | Not in the original residual-value rule | Annuity term | Device value, then explicit case assumption, otherwise error |
+| FOM use | Not in the original residual-value rule | Added as `FOM/100` | Device value, then explicit case assumption, otherwise error |
 | Scenario probability use | Applied separately in stochastic objectives | Separate from snapshot weights | Scenario probabilities stay in stochastic objectives |
 | Multi-year handling | Year dimensions and residual value | `nyears` multiplier | `year_scale_factor` multiplier for annualized block CAPEX |
 

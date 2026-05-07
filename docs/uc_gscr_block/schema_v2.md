@@ -142,15 +142,24 @@ For expandable block devices (`nmax > n0`), CAPEX annualization requires:
 | `discount_rate` | Nonnegative discount rate used in the annuity calculation |
 | `fixed_om_percent` | Nonnegative fixed O&M percentage added to the annuity |
 
-`discount_rate` and `fixed_om_percent` may be supplied as device fields or as
-case-level `uc_gscr_block_cost_assumptions` values. Precedence is:
+`lifetime` must be supplied on the device. Case-level `lifetime` is not
+supported. `discount_rate` and `fixed_om_percent` may be supplied as device
+fields or as case-level `uc_gscr_block_cost_assumptions` values. Precedence is:
 
 ```text
-device value > case-level cost assumption > error
+lifetime:
+    device field required
+
+discount_rate:
+    device value > uc_gscr_block_cost_assumptions > error
+
+fixed_om_percent:
+    device value > uc_gscr_block_cost_assumptions > error
 ```
 
 There are no hidden defaults. Explicit zeros are valid only when supplied by
-the device or by `uc_gscr_block_cost_assumptions`.
+the device or, for `discount_rate` and `fixed_om_percent`, by
+`uc_gscr_block_cost_assumptions`.
 
 ## 7. Snapshot and Network-Level Fields
 
@@ -220,7 +229,8 @@ and
 annualized\_cost\_inv\_per\_mw =
 cost\_inv\_per\_mw \cdot
 (annuity(lifetime, discount\_rate) + fixed\_om\_percent/100)
-\cdot year\_scale\_factor.
+\cdot year\_scale\_factor
+\cdot cost\_scale\_factor.
 \]
 
 \[
@@ -238,7 +248,7 @@ For `discount_rate = 0`, `fixed_om_percent = 0`, and
 |---|---|---|---|
 | OPEX time weighting | `scale_data!` scales hourly OPEX by \(8760 \cdot year\_scale\_factor / number\_of\_hours\) | Snapshot weights time-weight operation | Use FlexPlan `scale_data!`; `operation_weight` is compatibility-only |
 | CAPEX treatment | Candidate investments use lifetime/residual-value scaling | Annualized capital cost \((annuity + FOM/100) \cdot investment \cdot nyears\) | `cost_inv_per_mw` is raw overnight CAPEX and is annualized by `scale_data!` |
-| Lifetime use | Investment residual value | Annuity term | Required for expandable block devices |
+| Lifetime use | Investment residual value | Annuity term | Device field required for expandable block devices; no case-level lifetime |
 | Discount rate use | Not used in original residual-value rule | Annuity term | Device value, then case-level cost assumption, otherwise error |
 | FOM use | Not used in original residual-value rule | Added as `FOM/100` | Device value, then case-level cost assumption, otherwise error |
 | Scenario probability use | Applied separately in stochastic objectives | Separate from snapshot weights | Scenario probabilities remain only in stochastic objectives |
@@ -392,7 +402,8 @@ Converter-side validation should check:
 - `p_block_max > 0` for expandable devices.
 - `q_block_min <= q_block_max`.
 - `cost_inv_per_mw >= 0`.
-- Expandable block devices provide `lifetime`, `discount_rate`, and `fixed_om_percent` either on the device or through explicit case-level cost assumptions.
+- Expandable block devices provide device-level `lifetime`.
+- `discount_rate` and `fixed_om_percent` are present either on the device or through explicit case-level cost assumptions.
 - `startup_cost_per_mw` and `shutdown_cost_per_mw` are per MW if present.
 - `p_min_pu` and `p_max_pu` are scalar or time-series compatible with exported snapshots.
 - `operation_weight`, if present, is `1.0` in the canonical `scale_data!` workflow.

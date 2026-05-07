@@ -213,4 +213,20 @@ end
         _FP.ref_add_uc_gscr_block!(ref, Dict{String,Any}())
         @test !haskey(ref[:it][_PM.pm_it_sym][:nw][1], :gfl_devices)
     end
+
+    @testset "cost assumption fields alone do not activate block schema" begin
+        nw_ref = Dict{Symbol,Any}(
+            :bus => Dict{Int,Any}(1 => Dict{String,Any}("index" => 1)),
+            :branch => Dict{Int,Any}(),
+            :gen => Dict{Int,Any}(1 => Dict{String,Any}(
+                "gen_bus" => 1,
+                "lifetime" => 20.0,
+                "discount_rate" => 0.05,
+                "fixed_om_percent" => 2.0,
+            )),
+        )
+        ref = _schema_v2_ref(nw_ref)
+        _FP.ref_add_uc_gscr_block!(ref, Dict{String,Any}())
+        @test !haskey(ref[:it][_PM.pm_it_sym][:nw][1], :gfl_devices)
+    end
 end
