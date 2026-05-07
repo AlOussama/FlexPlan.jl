@@ -1,11 +1,29 @@
+using Test
 import JSON
 import Printf: @sprintf
+import FlexPlan as _FP
+import PowerModels as _PM
+import PowerModelsACDC as _PMACDC
+import InfrastructureModels as _IM
+using JuMP
+using Memento
+import HiGHS
+
+if !@isdefined(milp_optimizer)
+    milp_optimizer = _FP.optimizer_with_attributes(HiGHS.Optimizer, "output_flag" => false)
+end
+
+const _PYPSA_ACCEPTANCE_DIRECT_RUN = abspath(PROGRAM_FILE) == abspath(@__FILE__)
 
 const _PYPSA_ACCEPTANCE_ROOT = get(
     ENV,
     "PYPSA_FLEXPLAN_BLOCK_GSCR_ROOT",
     raw"D:\Projekte\Code\pypsatomatpowerx\data\flexplan_block_gscr",
 )
+
+if _PYPSA_ACCEPTANCE_DIRECT_RUN
+    @info "Running PyPSA dataset optimizer acceptance directly" root=_PYPSA_ACCEPTANCE_ROOT
+end
 
 const _PYPSA_ACCEPTANCE_DATASETS = [
     ("base_s_5_3snap", 3),
@@ -24,14 +42,19 @@ const _PYPSA_BLOCK_FIELDS = [
     "q_block_max",
     "b_block",
     "cost_inv_per_mw",
-    "lifetime",
-    "discount_rate",
-    "fixed_om_percent",
     "p_min_pu",
     "p_max_pu",
     "startup_cost_per_mw",
     "shutdown_cost_per_mw",
 ]
+
+const _PYPSA_COST_PROVENANCE_FIELDS = [
+    "lifetime",
+    "discount_rate",
+    "fixed_om_percent",
+]
+
+const _PYPSA_ALLOWED_CAPEX_BASES = Set(["overnight_per_mw", "annualized_per_mw_year"])
 
 # PyPSA acceptance consumes schema-v2 converted data directly. These v1 and
 # policy fields are rejected; no silent test adapter translates them.
@@ -72,6 +95,97 @@ function _pypsa_block_devices(nw::Dict{String,Any})
         end
     end
     return devices
+end
+
+function _pypsa_convention_capex_basis(convention)
+    if !(convention isa Dict) || !haskey(convention, "capex_basis")
+        return nothing
+    end
+    basis = string(convention["capex_basis"])
+    return basis in _PYPSA_ALLOWED_CAPEX_BASES ? basis : "__invalid__:$(basis)"
+end
+
+function _pypsa_capex_basis(data::Dict{String,Any}, nw::Dict{String,Any})
+    top_basis = _pypsa_convention_capex_basis(get(data, "uc_gscr_block_cost_convention", nothing))
+    nw_basis = _pypsa_convention_capex_basis(get(nw, "uc_gscr_block_cost_convention", nothing))
+    if !isnothing(top_basis) && !isnothing(nw_basis) && top_basis != nw_basis
+        return "__conflict__:top=$(top_basis),nw=$(nw_basis)"
+    end
+    return isnothing(nw_basis) ? top_basis : nw_basis
+end
+
+function _pypsa_assert_cost_convention(data::Dict{String,Any}, dataset_name::String)
+    basis_by_nw = Dict{String,String}()
+    for (nw_id, nw) in sort(collect(data["nw"]); by=x -> parse(Int, x.first))
+        basis = _pypsa_capex_basis(data, nw)
+        @test !isnothing(basis)
+        @test basis in _PYPSA_ALLOWED_CAPEX_BASES
+        basis_by_nw[nw_id] = isnothing(basis) ? "" : basis
+    end
+    unique_basis = unique(values(basis_by_nw))
+    @test length(unique_basis) == 1
+    if any(!(basis in _PYPSA_ALLOWED_CAPEX_BASES) for basis in unique_basis) || length(unique_basis) != 1
+        error("Invalid UC/gSCR block CAPEX basis in dataset $(dataset_name): $(basis_by_nw)")
+    end
+    return first(unique_basis)
+end
+
+function _pypsa_explicit_assumption(data::Dict{String,Any}, field::String)
+    assumptions = get(data, "uc_gscr_block_cost_assumptions", Dict{String,Any}())
+    return assumptions isa Dict && haskey(assumptions, field)
+end
+
+function _pypsa_is_nonnegative_number(value)
+    return value isa Real && isfinite(value) && value >= 0
+end
+
+function _pypsa_is_positive_number(value)
+    return value isa Real && isfinite(value) && value > 0
+end
+
+function _pypsa_assert_block_cost_fields(data::Dict{String,Any}, dataset_name::String, capex_basis::String)
+    for (nw_id, nw) in sort(collect(data["nw"]); by=x -> parse(Int, x.first))
+        for (table, component_id, device) in _pypsa_block_devices(nw)
+            @test _pypsa_is_nonnegative_number(device["cost_inv_per_mw"])
+            @test _pypsa_is_nonnegative_number(device["startup_cost_per_mw"])
+            @test _pypsa_is_nonnegative_number(device["shutdown_cost_per_mw"])
+
+            if device["nmax"] > device["n0"]
+                @test device["p_block_max"] > 0
+            end
+
+            for field in _PYPSA_COST_PROVENANCE_FIELDS
+                if haskey(device, field)
+                    if field == "lifetime"
+                        @test _pypsa_is_positive_number(device[field])
+                    else
+                        @test _pypsa_is_nonnegative_number(device[field])
+                    end
+                end
+            end
+
+            if capex_basis == "overnight_per_mw" && device["nmax"] > device["n0"]
+                @test haskey(device, "lifetime")
+                @test haskey(device, "discount_rate") || _pypsa_explicit_assumption(data, "discount_rate")
+                @test haskey(device, "fixed_om_percent") || _pypsa_explicit_assumption(data, "fixed_om_percent")
+            elseif capex_basis == "annualized_per_mw_year"
+                # cost_inv_per_mw is interpreted as already annualized PyPSA/PyPSA-Eur capital_cost.
+                @test true
+            else
+                error("Unsupported CAPEX basis $(capex_basis) in dataset $(dataset_name), snapshot $(nw_id), $(table) $(component_id).")
+            end
+        end
+    end
+    return nothing
+end
+
+function _pypsa_assert_operation_time_fields(data::Dict{String,Any})
+    for (_, nw) in sort(collect(data["nw"]); by=x -> parse(Int, x.first))
+        @test get(nw, "operation_weight", nothing) == 1.0
+        @test haskey(nw, "pypsa_snapshot_weight_objective")
+        @test get(nw, "time_elapsed", 0.0) > 0
+    end
+    return nothing
 end
 
 function _pypsa_assert_no_rejected_block_fields(data::Dict{String,Any}, dataset_name::String)
@@ -185,7 +299,8 @@ function _pypsa_assert_schema(data::Dict{String,Any}, expected_snapshots::Int)
     @test data["multinetwork"] == true
     @test length(data["nw"]) == expected_snapshots
     @test _pypsa_has_schema_v2(data)
-    @test all(get(nw, "operation_weight", nothing) !== nothing for nw in values(data["nw"]))
+    _pypsa_assert_operation_time_fields(data)
+    capex_basis = _pypsa_assert_cost_convention(data, get(data, "name", "pypsa-flexplan-block-gscr"))
 
     nw1 = data["nw"]["1"]
     @test length(nw1["bus"]) == 5
@@ -200,10 +315,11 @@ function _pypsa_assert_schema(data::Dict{String,Any}, expected_snapshots::Int)
     @test all(all(haskey(device, field) for field in _PYPSA_BLOCK_FIELDS) for (_, _, device) in devices)
     @test all(all(!haskey(device, field) for field in _PYPSA_REJECTED_BLOCK_FIELDS) for (_, _, device) in devices)
     @test all(haskey(device, "e_block") for (table, _, device) in devices if table in ("storage", "ne_storage"))
+    _pypsa_assert_block_cost_fields(data, get(data, "name", "pypsa-flexplan-block-gscr"), capex_basis)
 end
 
 function _pypsa_strip_block_fields!(data::Dict{String,Any})
-    fields = Set([_PYPSA_BLOCK_FIELDS; _PYPSA_REJECTED_BLOCK_FIELDS; ["p_block_min", "H", "s_block", "gscr_rhs_uses_nameplate", "e_block"]])
+    fields = Set([_PYPSA_BLOCK_FIELDS; _PYPSA_COST_PROVENANCE_FIELDS; _PYPSA_REJECTED_BLOCK_FIELDS; ["p_block_min", "H", "s_block", "gscr_rhs_uses_nameplate", "e_block"]])
     for nw in values(data["nw"])
         for table in ("gen", "storage", "ne_storage")
             for device in values(get(nw, table, Dict{String,Any}()))
@@ -406,11 +522,28 @@ function _pypsa_solve_standard_opf(data::Dict{String,Any})
     return _PM.solve_mn_opf_strg(data, _PM.DCPPowerModel, milp_optimizer)
 end
 
+function _pypsa_uc_gscr_template()
+    return _FP.UCGSCRBlockTemplate(
+        Dict(
+            (:gen, "CCGT") => _FP.BlockThermalCommitment(),
+            (:gen, "biomass") => _FP.BlockThermalCommitment(),
+            (:gen, "nuclear") => _FP.BlockThermalCommitment(),
+            (:gen, "oil") => _FP.BlockThermalCommitment(),
+            (:gen, "onwind") => _FP.BlockRenewableParticipation(),
+            (:gen, "offwind-ac") => _FP.BlockRenewableParticipation(),
+            (:gen, "offwind-dc") => _FP.BlockRenewableParticipation(),
+            (:gen, "solar") => _FP.BlockRenewableParticipation(),
+            (:storage, "battery") => _FP.BlockFixedInstalled(),
+        ),
+        _FP.GershgorinGSCR(_FP.OnlineNameplateExposure()),
+    )
+end
+
 function _pypsa_build_active_pm(data::Dict{String,Any})
     return _PM.instantiate_model(
         data,
         _PM.DCPPowerModel,
-        _FP.build_uc_gscr_block_integration;
+        pm -> _FP.build_uc_gscr_block_integration(pm; template=_pypsa_uc_gscr_template());
         ref_extensions=[_FP.ref_add_gen!, _FP.ref_add_storage!, _FP.ref_add_ne_storage!, _FP.ref_add_uc_gscr_block!],
     )
 end
@@ -463,16 +596,19 @@ function _pypsa_active_metrics(pm)
     end
 
     for nw in nws
+        startup_shutdown_keys = Set(_FP._uc_gscr_block_startup_shutdown_device_keys(pm, nw))
         for key in keys
             device = _PM.ref(pm, nw, key[1], key[2])
             n_val = JuMP.value(_PM.var(pm, nw, :n_block, key))
             na_val = JuMP.value(_PM.var(pm, nw, :na_block, key))
-            su_val = JuMP.value(_PM.var(pm, nw, :su_block, key))
-            sd_val = JuMP.value(_PM.var(pm, nw, :sd_block, key))
             prev_na = _FP.is_first_id(pm, nw, :hour) ? device["na0"] : JuMP.value(_PM.var(pm, _FP.prev_id(pm, nw, :hour), :na_block, key))
 
-            metrics["startup_shutdown_cost"] += device["startup_cost_per_mw"] * su_val + device["shutdown_cost_per_mw"] * sd_val
-            metrics["max_transition_residual"] = max(metrics["max_transition_residual"], abs((na_val - prev_na) - (su_val - sd_val)))
+            if key in startup_shutdown_keys
+                su_val = JuMP.value(_PM.var(pm, nw, :su_block, key))
+                sd_val = JuMP.value(_PM.var(pm, nw, :sd_block, key))
+                metrics["startup_shutdown_cost"] += device["p_block_max"] * (device["startup_cost_per_mw"] * su_val + device["shutdown_cost_per_mw"] * sd_val)
+                metrics["max_transition_residual"] = max(metrics["max_transition_residual"], abs((na_val - prev_na) - (su_val - sd_val)))
+            end
             metrics["max_active_bound_violation"] = max(metrics["max_active_bound_violation"], max(0.0, -na_val, na_val - n_val))
             if device["grid_control_mode"] == "gfm"
                 metrics["gfm_online"] += na_val
@@ -520,20 +656,23 @@ function _pypsa_write_report(records::Vector{Dict{String,Any}}, context::Vector{
         println(io)
         println(io, "## Results")
         println(io)
-        println(io, "| dataset | test | snapshots | status | objective | min gSCR margin | near-binding | startup/shutdown | investment | warnings |")
-        println(io, "|---|---|---:|---|---:|---:|---:|---:|---:|---|")
+        println(io, "| dataset | test | snapshots | capex_basis | status | objective | min gSCR margin | near-binding | startup/shutdown | investment | warnings |")
+        println(io, "|---|---|---:|---|---|---:|---:|---:|---:|---:|---|")
         for rec in records
             objective = isnothing(rec["objective"]) ? "NaN" : @sprintf("%.6f", rec["objective"])
             margin = !haskey(rec, "min_gscr_margin") || !isfinite(rec["min_gscr_margin"]) ? "NaN" : @sprintf("%.6f", rec["min_gscr_margin"])
             near = string(get(rec, "near_binding_count", 0))
             su_sd = isnothing(get(rec, "startup_shutdown_cost", nothing)) ? "NaN" : @sprintf("%.6f", rec["startup_shutdown_cost"])
             inv = isnothing(get(rec, "investment_cost", nothing)) ? "NaN" : @sprintf("%.6f", rec["investment_cost"])
-            println(io, "| ", rec["dataset"], " | ", rec["test"], " | ", rec["snapshots"], " | ", rec["status"], " | ", objective, " | ", margin, " | ", near, " | ", su_sd, " | ", inv, " | ", get(rec, "warnings", ""), " |")
+            println(io, "| ", rec["dataset"], " | ", rec["test"], " | ", rec["snapshots"], " | ", get(rec, "capex_basis", ""), " | ", rec["status"], " | ", objective, " | ", margin, " | ", near, " | ", su_sd, " | ", inv, " | ", get(rec, "warnings", ""), " |")
         end
         println(io)
         println(io, "## Warnings and Unresolved Issues")
         println(io)
         println(io, "- PyPSA JSON is required to be UC/gSCR block schema v2; v1 block fields are rejected and no v1 solver-copy adapter is applied.")
+        println(io, "- `uc_gscr_block_cost_convention.capex_basis` is required and must be either `annualized_per_mw_year` or `overnight_per_mw`; regenerated PyPSA-Eur `capital_cost` datasets use `annualized_per_mw_year`.")
+        println(io, "- `operation_weight` is compatibility/diagnostic only and is required to be `1.0`; PyPSA objective snapshot weights are kept in `pypsa_snapshot_weight_objective` for diagnostics.")
+        println(io, "- `time_elapsed` must be positive and may reflect multi-hour snapshot spacing, for example 3-hour `base_s_5` fixtures.")
         println(io, "- `na0` invariants are validated on raw data for every block-enabled component and snapshot: `0 <= na0 <= n0 <= nmax`.")
         println(io, "- PyPSA `link` entries with `carrier == \"DC\"` are mapped to PowerModels `dcline`; all other link carriers are ignored in solver copies.")
         println(io, "- Standard OPF is run through `solve_mn_opf_strg` because the datasets include storage.")
@@ -549,8 +688,11 @@ end
         records = Dict{String,Any}[]
         context = [
             "JSON datasets are loaded with JSON.parsefile as PowerModels-style dictionaries.",
+            "Dataset root: `$(_PYPSA_ACCEPTANCE_ROOT)`.",
             "Multinetwork cases are identified by `multinetwork=true` and processed through `data[\"nw\"]`; the active path receives explicit `:hour`, `:scenario`, and `:year` dimensions.",
             "Raw block fields are schema-checked with v2 names (`grid_control_mode`, `n0`, `nmax`, `cost_inv_per_mw`, `startup_cost_per_mw`, `shutdown_cost_per_mw`); v1 converted data is no longer accepted.",
+            "`uc_gscr_block_cost_convention.capex_basis` is hard-validated. `annualized_per_mw_year` interprets `cost_inv_per_mw` as annualized PyPSA/PyPSA-Eur `capital_cost`; `overnight_per_mw` interprets it as raw overnight CAPEX.",
+            "`operation_weight` must be `1.0`; `pypsa_snapshot_weight_objective` is required as a diagnostic field; `time_elapsed` must be positive and is not assumed to be `1.0`.",
             "Raw block-count invariants are hard-validated before solver execution: `0 <= na0 <= n0 <= nmax`.",
             "PyPSA `link` records are mapped to PowerModels `dcline` only when `carrier == \"DC\"`; non-DC link carriers are ignored.",
             "gSCR constraints are activated only through `ref_add_uc_gscr_block!` and `constraint_gscr_gershgorin_sufficient` in `build_uc_gscr_block_integration`.",
@@ -562,6 +704,7 @@ end
             for (name, snapshots) in _PYPSA_ACCEPTANCE_DATASETS
                 data = _pypsa_load_case(name)
                 _pypsa_assert_no_rejected_block_fields(data, name)
+                capex_basis = _pypsa_assert_cost_convention(data, name)
                 _pypsa_assert_schema(data, snapshots)
                 _pypsa_assert_no_na0_invariant_violations(data, name)
                 summary = _pypsa_schema_summary(data, snapshots)
@@ -569,6 +712,7 @@ end
                     "dataset" => name,
                     "test" => "load/schema",
                     "snapshots" => summary["snapshots"],
+                    "capex_basis" => capex_basis,
                     "status" => "PASS",
                     "objective" => nothing,
                     "warnings" => "",
@@ -577,6 +721,7 @@ end
         end
 
         raw_3 = _pypsa_load_case("base_s_5_3snap")
+        raw_3_capex_basis = _pypsa_assert_cost_convention(raw_3, "base_s_5_3snap")
 
         @testset "3-snapshot standard OPF and passive metadata" begin
             opf_data = _pypsa_prepare_solver_data(raw_3; mode=:opf)
@@ -591,6 +736,7 @@ end
                 "dataset" => "base_s_5_3snap",
                 "test" => "standard OPF",
                 "snapshots" => 3,
+                "capex_basis" => raw_3_capex_basis,
                 "status" => opf_status,
                 "objective" => get(opf_result, "objective", nothing),
                 "warnings" => opf_status == "INFEASIBLE" ? "documented infeasible standard OPF status" : "",
@@ -604,6 +750,7 @@ end
                 "dataset" => "base_s_5_3snap",
                 "test" => "passive metadata",
                 "snapshots" => 3,
+                "capex_basis" => raw_3_capex_basis,
                 "status" => stripped_status,
                 "objective" => get(stripped_result, "objective", nothing),
                 "warnings" => "block metadata ignored by standard OPF",
@@ -612,6 +759,7 @@ end
 
         for (name, snapshots) in _PYPSA_ACCEPTANCE_DATASETS[1:2]
             raw = _pypsa_load_case(name)
+            capex_basis = _pypsa_assert_cost_convention(raw, name)
             @testset "$(snapshots)-snapshot active UC/CAPEXP" begin
                 uc_pm = _pypsa_solve_active_pm(_pypsa_prepare_solver_data(raw; mode=:uc))
                 uc_metrics = _pypsa_active_metrics(uc_pm)
@@ -624,6 +772,7 @@ end
                     "dataset" => name,
                     "test" => "active UC/gSCR",
                     "snapshots" => snapshots,
+                    "capex_basis" => capex_basis,
                     "warnings" => uc_metrics["status"] == "INFEASIBLE" ? "active UC/gSCR infeasible; reconstruction unavailable" : "",
                 )))
 
@@ -638,6 +787,7 @@ end
                     "dataset" => name,
                     "test" => "active CAPEXP/gSCR",
                     "snapshots" => snapshots,
+                    "capex_basis" => capex_basis,
                     "warnings" => cap_metrics["status"] == "INFEASIBLE" ? "active CAPEXP/gSCR infeasible; reconstruction unavailable" : "",
                 )))
 
@@ -655,6 +805,7 @@ end
                     "dataset" => name,
                     "test" => "CAPEXP g_min sweep",
                     "snapshots" => snapshots,
+                    "capex_basis" => capex_basis,
                     "status" => join([item["label"] * "=" * item["status"] for item in sweep], ", "),
                     "objective" => nothing,
                     "warnings" => "monotone feasibility checked over low/medium/high g_min",
