@@ -300,6 +300,9 @@ function calc_uc_gscr_block_investment_cost(pm::_PM.AbstractPowerModel)
     for device_key in device_keys
         device = _PM.ref(pm, first_nw, device_key[1], device_key[2])
         coeff = device["cost_inv_per_mw"] * device["p_block_max"]
+        if haskey(_PM.ref(pm,first_nw),:paper_a_regional)
+            coeff = device["cost_inv_per_mw"] * device["p_block_max_MW"]
+        end
         JuMP.add_to_expression!(cost, coeff, n_block[device_key])
         JuMP.add_to_expression!(cost, -coeff * device["n0"])
     end
@@ -347,6 +350,14 @@ function calc_uc_gscr_block_startup_shutdown_cost(pm::_PM.AbstractPowerModel, nw
         p_block_max = _PM.ref(pm, nw, device_key[1], device_key[2], "p_block_max")
         startup_coeff = p_block_max * _PM.ref(pm, nw, device_key[1], device_key[2], "startup_cost_per_mw")
         shutdown_coeff = p_block_max * _PM.ref(pm, nw, device_key[1], device_key[2], "shutdown_cost_per_mw")
+        if haskey(_PM.ref(pm,nw),:paper_a_regional)
+            factor = _PM.ref(pm,nw,device_key[1],device_key[2],"S_base_MVA")
+            if _PM.ref(pm,nw,:paper_a_cost_state)=="raw_hourly"
+                factor *= _PM.ref(pm,nw,:paper_a_temporal).event
+            end
+            startup_coeff *= factor
+            shutdown_coeff *= factor
+        end
         JuMP.add_to_expression!(cost, startup_coeff, su_block[device_key])
         JuMP.add_to_expression!(cost, shutdown_coeff, sd_block[device_key])
     end

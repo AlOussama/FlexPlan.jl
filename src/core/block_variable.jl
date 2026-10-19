@@ -234,7 +234,8 @@ function constraint_active_blocks_le_installed(pm::_PM.AbstractPowerModel; nw::I
     constraints = _PM.con(pm, nw)[:active_blocks_le_installed] = Dict{Tuple{Symbol,Any},JuMP.ConstraintRef}()
 
     for device_key in _uc_gscr_block_all_device_keys(pm, nw)
-        constraints[device_key] = JuMP.@constraint(pm.model, na_block[device_key] <= n_block[device_key])
+        factor = haskey(_PM.ref(pm,nw),:paper_a_regional) ? _PM.ref(pm,nw,device_key[1],device_key[2],"a_conn") : 1.0
+        constraints[device_key] = JuMP.@constraint(pm.model, na_block[device_key] <= factor*n_block[device_key])
     end
 
     return constraints
@@ -266,7 +267,8 @@ function constraint_fixed_installed_active_equals_installed(pm::_PM.AbstractPowe
     constraints = _PM.con(pm, nw)[:fixed_installed_active_equals_installed] = Dict{Tuple{Symbol,Any},JuMP.ConstraintRef}()
 
     for device_key in _uc_gscr_block_fixed_installed_device_keys(pm, nw)
-        constraints[device_key] = JuMP.@constraint(pm.model, na_block[device_key] == n_block[device_key])
+        factor = haskey(_PM.ref(pm,nw),:paper_a_regional) ? _PM.ref(pm,nw,device_key[1],device_key[2],"a_conn") : 1.0
+        constraints[device_key] = JuMP.@constraint(pm.model, na_block[device_key] == factor*n_block[device_key])
     end
 
     return constraints
@@ -565,7 +567,7 @@ function _uc_gscr_block_device_keys(pm::_PM.AbstractPowerModel, nw::Int)
         return Tuple{Symbol,Any}[]
     end
 
-    device_keys = collect(union(keys(_PM.ref(pm, nw, :gfl_devices)), keys(_PM.ref(pm, nw, :gfm_devices))))
+    device_keys = haskey(_PM.ref(pm,nw),:paper_a_coefficients) ? collect(keys(_PM.ref(pm,nw,:paper_a_coefficients))) : collect(union(keys(_PM.ref(pm, nw, :gfl_devices)), keys(_PM.ref(pm, nw, :gfm_devices))))
     sort!(device_keys; by=device_key -> (string(device_key[1]), string(device_key[2])))
     return device_keys
 end

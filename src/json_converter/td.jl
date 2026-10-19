@@ -14,7 +14,7 @@ Refer to `convert_JSON` documentation.
 function convert_JSON_td end
 
 function convert_JSON_td(file::String; kwargs...)
-    source_dict = JSON.parsefile(file)
+    source_dict = JSON.parsefile(file;dicttype=Dict{String,Any})
     convert_JSON_td(source_dict; kwargs...)
 end
 

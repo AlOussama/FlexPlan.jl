@@ -171,6 +171,9 @@ function constraint_uc_gscr_block_active_dispatch_bounds(pm::_PM.AbstractPowerMo
         device = _PM.ref(pm, nw, device_key[1], device_key[2])
         p_min_pu = _uc_gscr_block_pu_value(device, "p_min_pu", nw; default=0.0)
         p_max_pu = _uc_gscr_block_pu_value(device, "p_max_pu", nw; default=1.0)
+        if haskey(_PM.ref(pm,nw),:paper_a_regional) && (device["source_class"]=="GFL" || pm.ext[:uc_gscr_block_formulations][nw][device_key] isa BlockRenewableParticipation)
+            p_max_pu = device["a_res"]
+        end
         constraints[device_key] = constraint_uc_gscr_block_active_dispatch_bounds(
             pm, nw, device_key, p_min_pu, p_max_pu, device["p_block_max"]
         )
@@ -430,6 +433,9 @@ function is formulation-independent, is a no-op when UC/gSCR block references
 are absent, and mutates only the model constraint dictionary.
 """
 function constraint_gscr_gershgorin_sufficient(pm::_PM.AbstractPowerModel; nw::Int=_PM.nw_id_default)
+    if haskey(_PM.ref(pm,nw),:paper_a_regional)
+        return _paper_a_g1!(pm,nw)
+    end
     if !_has_uc_gscr_block_ref(pm, nw)
         return
     end

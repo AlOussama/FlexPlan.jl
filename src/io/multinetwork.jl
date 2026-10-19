@@ -37,6 +37,14 @@ function make_multinetwork(
     mn_data = Dict{String,Any}("nw"=>Dict{String,Any}())
     _add_mn_global_values!(mn_data, sn_data, global_keys)
     _add_time_series!(mn_data, sn_data, global_keys, time_series, number_of_nws, nw_id_offset; share_data)
+    if _paper_a_enabled(sn_data)
+        for key in ("baseMVA","paper_a_extension","paper_a_network","paper_a_temporal")
+            haskey(sn_data,key) && (mn_data[key]=deepcopy(sn_data[key]))
+        end
+        for sn in values(mn_data["nw"]), key in ("block_model_schema","uc_gscr_block_cost_convention","uc_gscr_block_cost_assumptions")
+            haskey(sn_data,key) && (sn[key]=deepcopy(sn_data[key]))
+        end
+    end
 
     return mn_data
 end
@@ -69,6 +77,14 @@ function make_multinetwork(
     _add_mn_global_values!(mn_data, sn_data, global_keys)
     template_nw = _make_template_nw(sn_data, global_keys)
     mn_data["nw"]["1"] = copy(template_nw)
+    if _paper_a_enabled(sn_data)
+        for key in ("baseMVA","paper_a_extension","paper_a_network","paper_a_temporal")
+            haskey(sn_data,key) && (mn_data[key]=deepcopy(sn_data[key]))
+        end
+        for sn in values(mn_data["nw"]), key in ("block_model_schema","uc_gscr_block_cost_convention","uc_gscr_block_cost_assumptions")
+            haskey(sn_data,key) && (sn[key]=deepcopy(sn_data[key]))
+        end
+    end
 
     return mn_data
 end

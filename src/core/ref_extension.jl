@@ -93,13 +93,14 @@ Block strengths are assumed to be in a per-unit base consistent with device
 power fields. This function is formulation-independent and mutates only `ref`.
 """
 function ref_add_uc_gscr_block!(ref::Dict{Symbol,<:Any}, data::Dict{String,<:Any})
+    paper_a = _paper_a_validate_markers(data)
     any_block_data = any(_has_uc_gscr_block_data(nw_ref) for (_, nw_ref) in ref[:it][_PM.pm_it_sym][:nw])
     if any_block_data
         _validate_uc_gscr_block_schema_declaration(ref, data)
     end
 
     for (nw, nw_ref) in ref[:it][_PM.pm_it_sym][:nw]
-        if !_has_uc_gscr_block_data(nw_ref)
+        if !_has_uc_gscr_block_data(nw_ref) && !paper_a
             continue
         end
 
@@ -108,12 +109,17 @@ function ref_add_uc_gscr_block!(ref::Dict{Symbol,<:Any}, data::Dict{String,<:Any
         missing_report = _uc_gscr_missing_required_fields_report(nw_ref; min_up_down_enabled)
         _warn_uc_gscr_missing_required_fields(missing_report)
         _validate_uc_gscr_rejected_block_fields(nw_ref)
-        _validate_uc_gscr_block_devices(nw_ref; min_up_down_enabled)
+        _validate_uc_gscr_block_devices(nw_ref; min_up_down_enabled, paper_a)
         _warn_uc_gscr_deprecated_block_fields(nw_ref)
         _add_uc_gscr_device_maps!(nw_ref)
-        _add_uc_gscr_row_metrics!(nw_ref)
+        if paper_a
+            _paper_a_add_reference!(nw_ref,data,nw)
+        else
+            _add_uc_gscr_row_metrics!(nw_ref)
+        end
         nw_ref[:uc_gscr_block_min_up_down_enabled] = min_up_down_enabled
     end
+    paper_a && _paper_a_validate_shared_assets(ref)
 end
 
 function _validate_uc_gscr_block_schema_declaration(ref::Dict{Symbol,<:Any}, data::Dict{String,<:Any})
@@ -287,7 +293,7 @@ block-scaled constraint. This function is formulation-independent and mutates no
 Missing required fields are reported explicitly and then raise a hard
 validation error.
 """
-function _validate_uc_gscr_block_devices(nw_ref::Dict{Symbol,<:Any}; min_up_down_enabled::Bool=false)
+function _validate_uc_gscr_block_devices(nw_ref::Dict{Symbol,<:Any}; min_up_down_enabled::Bool=false, paper_a::Bool=false)
     missing_report = _uc_gscr_missing_required_fields_report(nw_ref; min_up_down_enabled)
     if !isempty(missing_report)
         device_summaries = String[
@@ -304,7 +310,7 @@ function _validate_uc_gscr_block_devices(nw_ref::Dict{Symbol,<:Any}; min_up_down
 
     for (table_name, device_id, device) in _uc_gscr_block_devices(nw_ref)
         grid_control_mode = device["grid_control_mode"]
-        if !(grid_control_mode in ("gfl", "gfm"))
+        if !(grid_control_mode in ("gfl", "gfm")) && !(paper_a && grid_control_mode=="not_applicable" && get(device,"source_class",nothing) in ("SYN","SC"))
             Memento.error(_LOGGER, "$(uppercase(string(table_name))) device $(device_id) has invalid UC/gSCR block field `grid_control_mode=$(grid_control_mode)`. Expected `gfl` or `gfm`.")
         end
 
@@ -554,6 +560,7 @@ devices. The function is formulation-independent and mutates `nw_ref`.
 function _add_uc_gscr_device_maps!(nw_ref::Dict{Symbol,<:Any})
     gfl_devices = Dict{Tuple{Symbol,Any},Any}()
     gfm_devices = Dict{Tuple{Symbol,Any},Any}()
+    syn_devices = Dict{Tuple{Symbol,Any},Any}()
     bus_gfl_devices = Dict((bus_id, Tuple{Symbol,Any}[]) for (bus_id, bus) in nw_ref[:bus])
     bus_gfm_devices = Dict((bus_id, Tuple{Symbol,Any}[]) for (bus_id, bus) in nw_ref[:bus])
 
@@ -567,6 +574,8 @@ function _add_uc_gscr_device_maps!(nw_ref::Dict{Symbol,<:Any})
         if device["grid_control_mode"] == "gfl"
             gfl_devices[device_key] = device
             push!(bus_gfl_devices[bus_id], device_key)
+        elseif get(device,"source_class",nothing)=="SYN"
+            syn_devices[device_key]=device
         else
             gfm_devices[device_key] = device
             push!(bus_gfm_devices[bus_id], device_key)
@@ -577,6 +586,9 @@ function _add_uc_gscr_device_maps!(nw_ref::Dict{Symbol,<:Any})
     nw_ref[:gfm_devices] = gfm_devices
     nw_ref[:bus_gfl_devices] = bus_gfl_devices
     nw_ref[:bus_gfm_devices] = bus_gfm_devices
+    if !isempty(syn_devices)
+        nw_ref[:syn_devices]=syn_devices
+    end
 end
 
 """

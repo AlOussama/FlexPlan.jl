@@ -78,7 +78,7 @@ function _pypsa_dataset_path(name::String)
 end
 
 function _pypsa_load_case(name::String)
-    return JSON.parsefile(_pypsa_dataset_path(name))
+    return JSON.parsefile(_pypsa_dataset_path(name);dicttype=Dict{String,Any})
 end
 
 function _pypsa_status_string(status)

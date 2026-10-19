@@ -27,6 +27,11 @@ function scale_data!(
     if _IM.ismultinetwork(data)
         Memento.error(_LOGGER, "`scale_data!` can only be applied to single-network data dictionaries.")
     end
+    if _paper_a_enabled(data)
+        year_scale_factor==1 && number_of_years==1 && year_idx==1 && uc_gscr_block_capex_basis==:from_data ||
+            throw(ArgumentError("Paper-A bounded cost path uses one represented year and explicit CAPEX metadata"))
+        return scale_paper_a_costs!(data;cost_scale_factor)
+    end
     _scale_uc_gscr_block_investment_cost_data!(data, year_scale_factor, cost_scale_factor, uc_gscr_block_capex_basis)
     _scale_time_data!(data, year_scale_factor)
     _scale_operational_cost_data!(data, number_of_hours, year_scale_factor, cost_scale_factor)

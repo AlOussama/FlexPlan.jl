@@ -68,19 +68,31 @@ function build_uc_gscr_block_integration(
     storage_terminal_policy::Symbol=:relaxed_cyclic,
     storage_terminal_fraction::Float64=1.0,
     final_storage_policy::Union{Nothing,Symbol}=nothing,
-    relax_block_variables::Bool=true,
+    relax_block_variables::Union{Nothing,Bool}=nothing,
     template=nothing,
 )
     if !isnothing(final_storage_policy)
         storage_terminal_policy = _uc_gscr_storage_terminal_policy_from_deprecated(final_storage_policy)
     end
     _validate_uc_gscr_storage_terminal_policy(storage_terminal_policy, storage_terminal_fraction)
+    paper_a=any(haskey(_PM.ref(pm,n),:paper_a_regional) for n in nw_ids(pm))
+    if paper_a
+        pm isa _PM.AbstractDCPModel || throw(ArgumentError("Paper-A operational integration requires a PowerModels DCP model"))
+        for n in nw_ids(pm)
+            isempty(get(_PM.ref(pm,n),:switch,Dict())) || throw(ArgumentError("Paper-A fixed-topology DCP builder does not support switches"))
+            isempty(get(_PM.ref(pm,n),:link,Dict())) || throw(ArgumentError("AP1 raw links require an explicit operational dcline conversion before model build"))
+        end
+    end
+    relax_blocks=isnothing(relax_block_variables) ? !paper_a : relax_block_variables
 
     if !isnothing(template)
         resolve_uc_gscr_block_template!(pm, template)
     end
 
     for n in nw_ids(pm)
+        if paper_a
+            _PM.variable_bus_voltage(pm; nw=n)
+        end
         _PM.variable_branch_power(pm; nw=n)
         _PM.variable_gen_power(pm; nw=n)
         expression_gen_curtailment(pm; nw=n)
@@ -93,7 +105,8 @@ function build_uc_gscr_block_integration(
             variable_absorbed_energy_ne(pm; nw=n)
         end
 
-        variable_uc_gscr_block(pm; nw=n, relax=relax_block_variables)
+        variable_uc_gscr_block(pm; nw=n, relax=relax_blocks)
+        _paper_a_online_expressions!(pm,n)
         _relax_standard_bounds_for_block_enabled_devices!(pm, n)
     end
 
@@ -102,6 +115,17 @@ function build_uc_gscr_block_integration(
     end
 
     for n in nw_ids(pm)
+        if paper_a
+            _PM.constraint_model_voltage(pm;nw=n)
+            for i in _PM.ids(pm,n,:ref_buses); _PM.constraint_theta_ref(pm,i;nw=n); end
+            for i in _PM.ids(pm,n,:branch)
+                _PM.constraint_ohms_yt_from(pm,i;nw=n)
+                _PM.constraint_ohms_yt_to(pm,i;nw=n)
+                _PM.constraint_voltage_angle_difference(pm,i;nw=n)
+                _PM.constraint_thermal_limit_from(pm,i;nw=n)
+                _PM.constraint_thermal_limit_to(pm,i;nw=n)
+            end
+        end
         for i in _PM.ids(pm, n, :dcline)
             _PM.constraint_dcline_power_losses(pm, i; nw=n)
         end
@@ -190,7 +214,8 @@ function objective_min_cost_uc_gscr_block_integration(pm::_PM.AbstractPowerModel
     JuMP.add_to_expression!(cost, calc_uc_gscr_block_startup_shutdown_cost(pm))
 
     for n in nw_ids(pm)
-        JuMP.add_to_expression!(cost, calc_gen_cost(pm, n))
+        factor=haskey(_PM.ref(pm,n),:paper_a_regional) && _PM.ref(pm,n,:paper_a_cost_state)=="raw_hourly" ? _PM.ref(pm,n,:paper_a_temporal).dispatch : 1.0
+        JuMP.add_to_expression!(cost, factor, calc_gen_cost(pm, n))
     end
 
     JuMP.@objective(pm.model, Min, cost)
@@ -218,8 +243,12 @@ function constraint_uc_gscr_block_bus_active_balance(pm::_PM.AbstractActivePower
 
     constraints = _PM.con(pm, nw)[:uc_gscr_block_bus_active_balance] = Dict{Int,Any}()
     for i in _PM.ids(pm, nw, :bus)
-        _PM.constraint_power_balance(pm, i; nw=nw)
-        constraints[i] = nothing
+        if haskey(_PM.ref(pm,nw),:paper_a_regional) && !isempty(get(_PM.ref(pm,nw),:ne_storage,Dict()))
+            constraints[i]=_paper_a_candidate_storage_balance(pm,nw,i)
+        else
+            _PM.constraint_power_balance(pm, i; nw=nw)
+            constraints[i] = nothing
+        end
     end
     return constraints
 end
@@ -263,6 +292,9 @@ function _is_uc_gscr_block_enabled_device(pm::_PM.AbstractPowerModel, nw::Int, t
         return false
     end
     device_key = (table, id)
+    if haskey(_PM.ref(pm,nw),:paper_a_coefficients)
+        return haskey(_PM.ref(pm,nw,:paper_a_coefficients),device_key)
+    end
     return haskey(_PM.ref(pm, nw, :gfl_devices), device_key) || haskey(_PM.ref(pm, nw, :gfm_devices), device_key)
 end
 
@@ -534,6 +566,14 @@ function _relax_standard_bounds_for_block_enabled_devices!(pm::_PM.AbstractActiv
             JuMP.has_upper_bound(se) && JuMP.delete_upper_bound(se)
             JuMP.has_upper_bound(sc) && JuMP.delete_upper_bound(sc)
             JuMP.has_upper_bound(sd) && JuMP.delete_upper_bound(sd)
+            if haskey(_PM.ref(pm,nw),:paper_a_regional)
+                # Block-scaled charge/discharge plus physical loss equations
+                # bound net injection; the original one-unit envelope must not
+                # cap an expandable AP1 storage portfolio.
+                ps=_PM.var(pm,nw,:ps,i)
+                JuMP.has_lower_bound(ps) && JuMP.delete_lower_bound(ps)
+                JuMP.has_upper_bound(ps) && JuMP.delete_upper_bound(ps)
+            end
         end
     end
 end

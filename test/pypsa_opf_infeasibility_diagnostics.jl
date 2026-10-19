@@ -15,7 +15,7 @@ function _pypsa_diag_status(result_or_error)
 end
 
 function _pypsa_diag_load_case()
-    return JSON.parsefile(_PYPSA_OPF_DIAG_CASE)
+    return JSON.parsefile(_PYPSA_OPF_DIAG_CASE;dicttype=Dict{String,Any})
 end
 
 function _pypsa_diag_add_dimensions!(data::Dict{String,Any})

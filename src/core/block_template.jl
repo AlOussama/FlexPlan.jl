@@ -166,10 +166,25 @@ function _uc_gscr_block_template_formulation(pm::_PM.AbstractPowerModel, nw::Int
 end
 
 function _validate_uc_gscr_block_template_device(pm::_PM.AbstractPowerModel, nw::Int, device_key::Tuple{Symbol,Any}, formulation::AbstractBlockDeviceFormulation)
+    if haskey(_PM.ref(pm,nw),:paper_a_regional)
+        dev=_PM.ref(pm,nw,device_key[1],device_key[2])
+        if formulation isa BlockFixedInstalled && !(dev["a_conn"] in (0,1))
+            throw(ArgumentError("BlockFixedInstalled requires binary AP1 connection availability; use a participation template for fractional a_conn"))
+        end
+        if get(dev,"fixed_strength_already_in_network",false) && !(formulation isa BlockFixedInstalled)
+            throw(ArgumentError("fixed-in-Y source requires permanently online BlockFixedInstalled template"))
+        end
+    end
     if formulation isa BlockThermalCommitment
         for field in ("startup_cost_per_mw", "shutdown_cost_per_mw")
             if !haskey(_PM.ref(pm, nw, device_key[1], device_key[2]), field)
                 Memento.error(_LOGGER, "UC/gSCR block template validation failed: $(uppercase(string(device_key[1]))) device $(device_key[2]) uses BlockThermalCommitment and is missing required field `$(field)`.")
+            end
+        end
+        if haskey(_PM.ref(pm,nw),:paper_a_regional)
+            dev=_PM.ref(pm,nw,device_key[1],device_key[2])
+            for field in ("startup_cost_per_mw","shutdown_cost_per_mw")
+                PaperARegional.number(dev,field;nonnegative=true)
             end
         end
     end
@@ -206,6 +221,10 @@ function _validate_uc_gscr_block_template_gershgorin(pm::_PM.AbstractPowerModel,
         end
         if !haskey(_PM.ref(pm, nw), :g_min)
             Memento.error(_LOGGER, "UC/gSCR block template validation failed: GershgorinGSCR requires network $(nw) field `g_min`.")
+        end
+        if haskey(_PM.ref(pm,nw),:paper_a_regional)
+            PaperARegional.symmetric_z(_PM.ref(pm,nw,:paper_a_regional).B0)
+            continue
         end
         for key in (:gfl_devices, :gfm_devices, :bus_gfl_devices, :bus_gfm_devices, :gscr_sigma0_gershgorin_margin)
             if !haskey(_PM.ref(pm, nw), key)

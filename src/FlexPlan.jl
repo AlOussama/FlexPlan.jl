@@ -5,6 +5,7 @@ module FlexPlan
 
 import Memento
 import JuMP
+import JSON
 import InfrastructureModels as _IM
 import PowerModels as _PM
 import PowerModelsACDC as _PMACDC
@@ -22,6 +23,8 @@ __init__() = Memento.register(_LOGGER)
 
 ## Includes
 
+include("core/paper_a_regional.jl")
+include("core/paper_a_integration.jl")
 include("prob/storage_tnep.jl")
 include("prob/flexible_tnep.jl")
 include("prob/stochastic_flexible_tnep.jl")

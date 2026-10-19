@@ -62,7 +62,7 @@ Features of FlexPlan WP3 API not supported in FlexPlan.jl:
 function convert_JSON end
 
 function convert_JSON(file::String; kwargs...)
-    source_dict = JSON.parsefile(file)
+    source_dict = JSON.parsefile(file;dicttype=Dict{String,Any})
     convert_JSON(source_dict; kwargs...)
 end
 

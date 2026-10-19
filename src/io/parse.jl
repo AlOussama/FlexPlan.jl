@@ -14,6 +14,12 @@ Optional tables: `gencost`, `ndgen`, `branch_oltc`, `storage`, `storage_extra`,
 Other tables can be added as well: they will be made available in the returned object.
 """
 function parse_file(file::String; flex_load=true, kwargs...)
+    if lowercase(splitext(file)[2])==".json"
+        raw=JSON.parsefile(file;dicttype=Dict{String,Any})
+        if _paper_a_validate_markers(raw)
+            return prepare_paper_a_data!(raw)
+        end
+    end
     data = _PM.parse_file(file; kwargs...)
     _add_gen_data!(data)
     if !haskey(data, "ne_branch")
