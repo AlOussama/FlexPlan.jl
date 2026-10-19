@@ -21,6 +21,15 @@ for repeat in repeats
     runs[only(index)]=repeat
     cp(joinpath(new,repeat["solution_file"]),joinpath(out,repeat["solution_file"]);force=true)
 end
+recheck=joinpath(root,"integer_rechecks")
+if isdir(recheck)
+    for row in readj(joinpath(recheck,"runs.json"))["runs"]
+        index=only(findall(r->r["case_id"]==row["case_id"]&&r["formulation"]==row["formulation"]&&!r["relaxed"],runs))
+        row["case_sha256"]==runs[index]["case_sha256"] && row["parameters"]==runs[index]["parameters"] || error("integer recheck scope mismatch")
+        row["source_run_directory"]="integer_rechecks";runs[index]=row
+        cp(joinpath(recheck,row["solution_file"]),joinpath(out,row["solution_file"]);force=true)
+    end
+end
 open(joinpath(out,"runs.json"),"w") do io;JSON.print(io,Dict("schema"=>"paper_a_ap3/1.0","runs"=>runs),2);end
 open(joinpath(out,"consolidation.json"),"w") do io
     JSON.print(io,Dict("scope"=>"evidence_only_no_new_solve","original_suite"=>"suite_final","dual_repetition"=>"dual_audit_suite","policy"=>"complete continuous G0/G3 record and solution replacement after identical case/parameter/exposure/hash checks","source_provenance"=>[readj(joinpath(p,"provenance.json")) for p in (old,new)]),2)
