@@ -292,10 +292,16 @@ function metric_rows(records)
 end
 function write_metrics(input,out)
     newoutput(out);records=readjson(joinpath(input,"matrices.json"))["records"];m=metric_rows(records)
-    writejson(joinpath(out,"metrics.json"),Dict("schema"=>SCHEMA,"metrics"=>m))
+    open(joinpath(out,"metrics.json"),"w") do io
+        JSON.print(io,Dict("schema"=>SCHEMA,"metrics"=>m))
+    end
     flat=[(run_id=x["run_id"],case_id=x["case_id"],formulation=x["formulation_id"],snapshot_id=x["snapshot_id"],metric_id=x["metric_id"],value_json=JSON.json(x["value"]),unit=x["unit"],status=x["status"],base=x["base"],tolerance=x["tolerance"]) for x in m]
     CSV.write(joinpath(out,"metrics.csv"),flat)
-    registry=Dict(x["metric_id"]=>merge(Dict(k=>x[k] for k in ("unit","method","theorem","tolerance")),Dict("shape"=>x["value"] isa Vector ? "vector_or_matrix_or_ledger" : "scalar_or_status","scope"=>"snapshot_region_order_in_record","formula"=>metric_formula(x["metric_id"]),"domain"=>"per_record_status_and_frozen_theorem_assumptions")) for x in m)
+    registry=Dict{String,Any}()
+    for x in m
+        haskey(registry,x["metric_id"]) && x["value"]===nothing && continue
+        registry[x["metric_id"]]=merge(Dict(k=>x[k] for k in ("unit","method","theorem","tolerance")),Dict("shape"=>x["value"] isa Vector ? "vector_or_matrix_or_ledger" : "scalar_or_status","scope"=>"snapshot_region_order_in_record","formula"=>metric_formula(x["metric_id"]),"domain"=>"per_record_status_and_frozen_theorem_assumptions"))
+    end
     writejson(joinpath(out,"metric_registry.json"),registry);return m
 end
 function metric_formula(id)
