@@ -1,0 +1,85 @@
+# AP3-A0 documentation-only freeze. This file does not report an AP3 solver execution.
+date: "2026-10-20"
+schema: paper_a_ap3_a0_documentation_status_v1
+verdict: AP3_A0_documentation_prepared
+implementation_status: not_started
+documentation_only: true
+mathematical_freeze_modified: false
+AP3_math_ready: false
+A3_closed: false
+AP4_ready: false
+
+pinned_code_and_science:
+  producer_final_sha: b9e4efec8c2939bff1a65ae4ccb66cfbcf9cb62c
+  producer_numeric_anchor_sha: 3b8fdb01d931225edc5f8fe1e2c200d0da288a09
+  consumer_with_parameter_qualification_sha: e992edc88d39fa0eb2d72e2490e157441223f568
+  original_ap3_math_docs_sha: 8180afb3ea482e66a8c114db9b7fb4a90b1d3325
+  scientific_paper_freeze_sha: 672a61c95525bf1d7a03cf745a754a15a23ce78b
+  full_mathematics_freeze_sha: 2c2fce769b2ed6ffd4f1ced60c0798776acccc93
+  science_strang_b_record_sha: a6c19790bb009b5956475a6368a23e339a82dab7
+
+canonical_parameter_contract:
+  registry_id: paper_a_strang_b_v1
+  annex_version: paper_a_parameter_qualification/1.0
+  registry_sha256: a249f7a96d202798c6ff5778c1fa1571eba59a3717bac5d25b150d2a6c41bce9
+  scenario_sha256: be9d9d9aa90e9790fc7c3554bc1107777a5ba743f4f95d8f675acd9bfeb1e75a
+  registry_rows: 8739
+  scenarios: 9
+  scope: registered_parametric_only
+
+existing_evidence:
+  ap1_producer_tests: "4162/4162"
+  consumer_full_regression: "5987/5987"
+  ap2_targeted_tests: "153/153"
+  historical_producer_solver: "51/51"
+  strang_b_parameter_solver_acceptance: "291/291"
+  strang_b_network_audit: "54/54"
+  strang_b_milp_optimal: 9
+  strang_b_lp_optimal: 9
+  original_integer_infeasible_negative_tests: 3
+  tests_newly_executed_by_documentation: 0
+  conic_solvers_newly_executed_by_documentation: 0
+
+input_gates:
+  ap1_ap2_interface: pass
+  parametric_case_ready: true
+  ap3_input_contract_ready: true
+  empirical_study_ready: false
+  empirical_economic_data_valid: false
+  theorem_domain_valid_real: false
+  owner_parametric_study_design_approved: false
+
+ap3_gates:
+  G0_PSD_optimization: not_implemented
+  G1_baseline: AP2_existing
+  G2_fixed_scaled: not_implemented
+  G3_exact_edge_SOC: not_implemented
+  M0_exact_inverse_burden_postsolve: not_implemented
+  M1_fixed_Z_bound: not_implemented
+  M2_MIIF_weighted_gscr: not_implemented
+  E2_Woodbury_Neumann: not_implemented
+  LOCAL_metrics: not_implemented
+  full_metric_registry: specified_not_implemented
+  executable_postprocessing_cli: not_implemented
+  generalized_singular_exposure: not_implemented
+  G0_G3_numeric_equivalence: not_evaluated
+  solver_SDP_capability: not_evaluated
+  solver_SOCP_capability: not_evaluated
+  solver_MISOCP_capability: not_evaluated
+  project_predicates_P001_to_P010_all_states: not_evaluated
+  independent_A3_5_closure: false
+
+documents:
+  retained_originals_byte_identical:
+    - docs/paper_a/ap3_a0_full_mathematics_gap_analysis.md
+    - docs/paper_a/ap3_a0_comprehensive_formulations_metrics_postprocessing_scope.md
+  new_technical_contract: docs/paper_a/ap3_implementation_and_acceptance_contract.md
+  scientific_consolidated_gap: docs/reports/C2_constraints/C2A_voltage_stability/paper_a/implementation_audit/2026-10-20__paper-a-ap3-a0-consolidated-freeze-and-equation-to-code-gap.md
+  scientific_owner_decisions: docs/reports/C2_constraints/C2A_voltage_stability/paper_a/traceability/2026-10-20__paper-a-ap3-a0-owner-decision-and-gate-ledger.md
+
+next_action: autonomous_AP3_implementation_on_separate_code_branch
+separation:
+  no_ap1_ap2_code_modified_in_documentation_branches: true
+  no_scientific_formulation_modified: true
+  no_empirical_approval_inferred: true
+  no_automatic_merge_or_pr: true
