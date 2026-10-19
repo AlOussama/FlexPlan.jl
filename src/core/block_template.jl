@@ -131,7 +131,7 @@ function _uc_gscr_block_requires_gscr_constraints(pm::_PM.AbstractPowerModel, nw
     gscr = _uc_gscr_block_gscr_formulation(pm, nw)
     if gscr isa NoGSCR
         return false
-    elseif gscr isa GershgorinGSCR
+    elseif gscr isa GershgorinGSCR || gscr isa AbstractPaperAFormulation
         return true
     else
         Memento.error(_LOGGER, "Unsupported UC/gSCR block template gSCR formulation `$(typeof(gscr))`.")
@@ -201,6 +201,9 @@ function _validate_uc_gscr_block_template_gscr(pm::_PM.AbstractPowerModel, gscr:
     _validate_uc_gscr_block_gscr_formulation_supported(gscr)
     if gscr isa NoGSCR
         return nothing
+    elseif gscr isa AbstractPaperAFormulation
+        _validate_paper_a_formulation(pm,gscr)
+        return nothing
     elseif gscr isa GershgorinGSCR
         _validate_uc_gscr_block_template_gershgorin(pm, gscr)
         return nothing
@@ -208,7 +211,7 @@ function _validate_uc_gscr_block_template_gscr(pm::_PM.AbstractPowerModel, gscr:
 end
 
 function _validate_uc_gscr_block_gscr_formulation_supported(gscr::AbstractGSCRFormulation)
-    if gscr isa NoGSCR
+    if gscr isa NoGSCR || gscr isa AbstractPaperAFormulation
         return nothing
     elseif gscr isa GershgorinGSCR
         if !(gscr.exposure isa OnlineNameplateExposure)

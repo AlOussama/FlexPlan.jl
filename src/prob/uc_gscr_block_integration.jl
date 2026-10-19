@@ -135,7 +135,7 @@ function build_uc_gscr_block_integration(
         constraint_uc_gscr_block_dispatch(pm; nw=n)
         constraint_uc_gscr_block_storage_bounds(pm; nw=n)
         if _uc_gscr_block_requires_gscr_constraints(pm, n)
-            constraint_gscr_gershgorin_sufficient(pm; nw=n)
+            _paper_a_formulation!(pm,n,_uc_gscr_block_gscr_formulation(pm,n))
         end
 
         for i in _PM.ids(pm, :storage, nw=n)

@@ -9,6 +9,7 @@ import JSON
 import CSV
 import SHA
 import TOML
+using LinearAlgebra
 import InfrastructureModels as _IM
 import PowerModels as _PM
 import PowerModelsACDC as _PMACDC
@@ -43,6 +44,8 @@ include("io/plot_geo_data.jl")
 
 include("core/types.jl")
 include("core/block_template.jl")
+include("core/paper_a_formulations.jl")
+include("core/paper_a_diagnostics.jl")
 include("core/dimensions.jl")
 include("core/variable.jl")
 include("core/block_variable.jl")

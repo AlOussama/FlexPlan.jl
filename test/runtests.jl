@@ -35,6 +35,7 @@ milp_optimizer = _FP.optimizer_with_attributes(HiGHS.Optimizer, "output_flag"=>f
     include("paper_a_fixtures.jl")
     include("paper_a_regional.jl")
     include("paper_a_integration.jl")
+    include("paper_a_ap3.jl")
     include("uc_gscr_block_schema_v2.jl")
     include("uc_gscr_block_template.jl")
     include("uc_gscr_block_formulation_constraints.jl")
