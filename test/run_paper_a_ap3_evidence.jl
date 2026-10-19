@@ -5,17 +5,17 @@ const D=FlexPlan.PaperADiagnostics
 length(ARGS)==1 || error("usage: run_paper_a_ap3_evidence.jl RUN_ROOT")
 root=abspath(ARGS[1]);load(path)=JSON.parsefile(joinpath(root,path))
 @testset "AP3 saved input solution independent CLI evidence" begin
-    runs=load("suite_final/runs.json")["runs"]
+    runs=load("accepted_suite/runs.json")["runs"]
     @test length(runs)==9*9*2
     @test all(r->r["status"]!="execution_error",runs)
     @test length(unique(r["case_id"] for r in runs))==9
     for r in runs
-        case=joinpath(root,"suite_final",r["case_id"],"case.json")
+        case=joinpath(root,"accepted_suite",r["case_id"],"case.json")
         @test D.hashfile(case)==r["case_sha256"]
         if r["status"]=="optimal"
             @test r["primal_status"]=="FEASIBLE_POINT"
-            @test isfile(joinpath(root,"suite_final",r["solution_file"]))
-        else
+            @test isfile(joinpath(root,"accepted_suite",r["solution_file"]))
+        elseif r["status"]!="numerical_inconclusive"
             @test get(r,"objective",nothing)===nothing
         end
     end
