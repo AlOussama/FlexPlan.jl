@@ -20,7 +20,7 @@ function reduced_strength(L::AbstractMatrix{<:Real}, retained::AbstractVector{<:
     isempty(eliminated) && return R
     E = Matrix{Float64}(L[eliminated,eliminated])
     minimum(svdvals(E)) > tol || throw(ArgumentError("singular passive eliminated-node block"))
-    return R - L[retained,eliminated] * (E \\ Matrix(L[eliminated,retained]))
+    return R - L[retained,eliminated] * (E \ Matrix(L[eliminated,retained]))
 end
 
 """Compute a voltage-source-behind-reactance contribution on the system base.
