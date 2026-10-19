@@ -143,6 +143,21 @@ function extract(pm)
         if cert!==nothing && cert.kind=="G3"
             sn["witness"]=Dict("edges"=>[[i,j] for (i,j) in cert.edges],"q"=>[[JuMP.value(cert.q[k,1]),JuMP.value(cert.q[k,2])] for k in eachindex(cert.edges)])
         end
+        dual=Dict{String,Any}("status"=>"not_available_integer_or_no_dual_solution","dual_cone_violation"=>nothing,"complementarity_residual"=>nothing)
+        if cert!==nothing && JuMP.has_duals(pm.model) && cert.kind in ("G0","G3")
+            if cert.kind=="G0"
+                Z=JuMP.dual(cert.psd);MM=JuMP.value.(x.M)
+                dual=Dict("status"=>"valid","dual_cone_violation"=>max(0.,-eigmin(Symmetric(Z))),"complementarity_residual"=>abs(sum(MM.*Z)))
+            else
+                violation=0.;complement=0.
+                for (k,(i,j)) in enumerate(cert.edges)
+                    z=JuMP.dual(cert.cones[k]);v=[JuMP.value(cert.q[k,1]),JuMP.value(cert.q[k,2]),sqrt(2.)*JuMP.value(x.M[i,j])]
+                    violation=max(violation,-z[1],-z[2],z[3]^2-2z[1]*z[2]);complement=max(complement,abs(dot(v,z)))
+                end
+                dual=Dict("status"=>"valid","dual_cone_violation"=>violation,"complementarity_residual"=>complement)
+            end
+        end
+        sn["conic_dual"]=dual
         snaps[string(t)]=sn
     end
     return Dict("snapshots"=>snaps)
@@ -164,6 +179,8 @@ function capability_probe()
                 row["termination"]=string(JuMP.termination_status(m));row["objective"]=JuMP.has_values(m) ? JuMP.objective_value(m) : nothing
                 row["status"]=JuMP.termination_status(m)==JuMP.MOI.OPTIMAL ? "supported_runtime_verified" : "numerical_inconclusive"
                 row["backend"]=string(typeof(JuMP.backend(m)));row["bridge_policy"]="JuMP_default_bridges"
+                row["MOI_affine_PSD_support"]=safe(()->JuMP.MOI.supports_constraint(JuMP.backend(m),JuMP.MOI.VectorAffineFunction{Float64},JuMP.MOI.PositiveSemidefiniteConeTriangle))
+                row["MOI_affine_RSOC_support"]=safe(()->JuMP.MOI.supports_constraint(JuMP.backend(m),JuMP.MOI.VectorAffineFunction{Float64},JuMP.MOI.RotatedSecondOrderCone))
             catch e
                 row["status"]="solver_unsupported";row["error"]=sprint(showerror,e)
             end
@@ -241,6 +258,7 @@ function reconstruct_runs(input,out)
             rec=D.reconstruct(raw,s,parse(Int,t));rec["run"]=run;rec["snapshot_id"]=t
             rec["witness"]=get(s["snapshots"][t],"witness",nothing)
             rec["planning"]=planning(raw,s,run)
+            rec["conic_dual"]=get(s["snapshots"][t],"conic_dual",Dict("status"=>"not_recorded_in_earlier_attempt","dual_cone_violation"=>nothing,"complementarity_residual"=>nothing))
             rec["network_domain"]=Dict(k=>raw["paper_a_network"][k] for k in ("network_islands","reference_buses","retained_physical_buses","eliminated_physical_buses","fixed_shunts","fixed_sources_in_network"))
             push!(records,rec)
         end
@@ -257,6 +275,10 @@ function evaluate_record(rec)
     end
     m["E.S_I_v1"]=D.undefined("blocked_missing_current_capability_voltage_convention")
     m["A.network_domain"]=D.entry(rec["network_domain"];method="raw_island_reference_inventory")
+    for k in ("dual_cone_violation","complementarity_residual")
+        dual=get(rec,"conic_dual",Dict("status"=>"not_recorded","dual_cone_violation"=>nothing,"complementarity_residual"=>nothing))
+        m["F.$k"]=D.entry(dual[k];status=dual["status"],method="solver_dual_cone_eigen_or_RSOC_product_and_primal_dual_inner_product")
+    end
     for (k,v) in rec["planning"]
         k in ("schema","case_id","formulation","relaxed","unit") && continue
         m["E.$k"]=D.entry(v;unit=occursin("MWh",k) ? "MWh" : occursin("MW",k) ? "MW" : "declared_currency_or_explicit_ledger",method="independent_raw_prices_durations_and_solved_quantities")
