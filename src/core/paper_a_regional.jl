@@ -33,7 +33,7 @@ end
 
 """Validate the AP1 physical class, converter control mode and provenance.
 SC is purposefully rejected as an unpriced active-power planning option here."""
-function validate_source(d::AbstractDict)
+function validate_source(d::AbstractDict;synthetic_regression=false)
     cls = get(d,"source_class",nothing)
     cls in ("GFL","GFM","SYN","SC") || throw(ArgumentError("unknown physical source_class"))
     mode = get(d,"grid_control_mode",nothing)
@@ -41,6 +41,9 @@ function validate_source(d::AbstractDict)
     mode == expected || throw(ArgumentError("source_class/control_mode mismatch"))
     cls == "SC" && throw(ArgumentError("unsupported source case SC: dedicated MVA/Mvar and cost treatment required"))
     for f in ("source_class_evidence", "electrical_interface_evidence", "a_conn_provenance")
+        # In an explicitly selected synthetic mathematical model, source class
+        # is a declared fixture definition, not real electrical-interface proof.
+        synthetic_regression && f=="electrical_interface_evidence" && continue
         evidence(get(d,f,nothing)) || throw(ArgumentError("missing/unverified "*f))
     end
     for f in ("S_base_MVA", "p_block_max_MW")
@@ -188,8 +191,10 @@ function network_reference(net::AbstractDict, buses::AbstractDict, base::Real;to
         norm(B0-B,Inf)
     end
     return (ac_order=names,retained=r,eliminated=e,regions=regions,bus_to_region=mapping,
+            S_base_MVA=Float64(base),
             Y=Y,L=L,B0=B0,b_fix=bfix,islands=islands,schur_residual=schur_residual,
-            B0_reference_residual=difference,theorem_domain_valid=isempty(issues))
+            B0_reference_residual=difference,symmetric_z_valid=true,
+            passive_domain_issues=copy(issues),theorem_domain_valid=isempty(issues))
 end
 
 """Check physical technical connection separately from renewable availability."""

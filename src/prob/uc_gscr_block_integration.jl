@@ -28,7 +28,8 @@ function uc_gscr_block_integration(data::Dict{String,Any}, model_type::Type, opt
         model_type,
         optimizer,
         build_method;
-        ref_extensions=[ref_add_gen!, ref_add_storage!, ref_add_ne_storage!, ref_add_uc_gscr_block!],
+        ref_extensions=[ref_add_gen!, ref_add_storage!, ref_add_ne_storage!,
+            (ref,data)->ref_add_uc_gscr_block!(ref,data;paper_a_validation_scope=isnothing(template) ? :strict : template.paper_a_validation_scope)],
         solution_processors=[_PM.sol_data_model!],
         multinetwork=true,
         kwargs...
@@ -216,6 +217,7 @@ function objective_min_cost_uc_gscr_block_integration(pm::_PM.AbstractPowerModel
     for n in nw_ids(pm)
         factor=haskey(_PM.ref(pm,n),:paper_a_regional) && _PM.ref(pm,n,:paper_a_cost_state)=="raw_hourly" ? _PM.ref(pm,n,:paper_a_temporal).dispatch : 1.0
         JuMP.add_to_expression!(cost, factor, calc_gen_cost(pm, n))
+        JuMP.add_to_expression!(cost,_paper_a_storage_operation_cost(pm,n))
     end
 
     JuMP.@objective(pm.model, Min, cost)

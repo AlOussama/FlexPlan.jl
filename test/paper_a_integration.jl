@@ -96,6 +96,7 @@ end
     relaxed=_ap2_model(data;relax_block_variables=true)
     _ap2_solve!(relaxed)
     @test JuMP.value(_PM.var(relaxed,1,:na_block,(:gen,1)))<=0.5+1e-8
+    @test JuMP.objective_value(relaxed.model)<JuMP.objective_value(model.model)
     bad=_ap2_fixture();s=bad["nw"]["1"]["gen"]["2"]
     s["fixed_strength_already_in_network"]=true;s["b_block"]=0.5
     _FP.scale_paper_a_costs!(bad)
@@ -268,6 +269,27 @@ end
     JuMP.fix(_PM.var(model,1,:sd_ne,1),0.0;force=true)
     _ap2_solve!(model)
     @test sum(JuMP.value(_PM.var(model,1,:pg,g)) for g in (1,2))≈.42
+    priced=_ap2_fixture()
+    for sn in values(priced["nw"]);sn["storage"]["1"]["marginal_cost"]=2.0;end
+    _FP.scale_paper_a_costs!(priced)
+    @test_throws ArgumentError _ap2_model(priced)
+    model=_ap2_model(priced;template=_ap2_template(gscr=_FP.NoGSCR(),storage_cost_policy=:discharge),storage_terminal_policy=:none)
+    JuMP.fix(_PM.var(model,1,:sc,1),.02;force=true)
+    JuMP.fix(_PM.var(model,1,:sd,1),0.0;force=true)
+    JuMP.fix(_PM.var(model,2,:sc,1),0.0;force=true)
+    JuMP.fix(_PM.var(model,2,:sd,1),.018;force=true)
+    _ap2_solve!(model)
+    @test JuMP.coefficient(JuMP.objective_function(model.model),_PM.var(model,2,:sd,1))≈2*250*3
+    @test JuMP.value(_FP._paper_a_storage_operation_cost(model,2))≈27.0
+    _AP2_EVIDENCE["nonzero_storage_variable_cost"]=27.0
+    _AP2_EVIDENCE["storage_cost_rule"]="AC_side_discharge_MWh_only_charge_not_billed"
+    unpriced=_ap2_fixture()
+    for sn in values(unpriced["nw"]);sn["gen"]["2"]["cost_inv_per_mw"]=0.0;end
+    _FP.scale_paper_a_costs!(unpriced)
+    @test_throws ArgumentError _ap2_model(unpriced)
+    # A synthetic test scope cannot be applied to a real/unclassified dataset.
+    template=_ap2_template();scoped=_FP.UCGSCRBlockTemplate(template.carrier_formulations,template.gscr_formulation;paper_a_validation_scope=:synthetic_regression)
+    @test_throws ArgumentError _ap2_model(priced;template=scoped)
 end
 
 if haskey(ENV,"PAPER_A_AP2_EVIDENCE")

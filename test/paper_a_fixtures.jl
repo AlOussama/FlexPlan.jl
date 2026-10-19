@@ -68,17 +68,18 @@ function _ap2_fixture(;hours=2,alpha=4.0,conn=1.0,res=1.0)
     return mn
 end
 
-function _ap2_template(;gscr=_FP.GershgorinGSCR(),fixed_gfl=false)
+function _ap2_template(;gscr=_FP.GershgorinGSCR(),fixed_gfl=false,storage_cost_policy=:reject)
     _FP.UCGSCRBlockTemplate(Dict(
         (:gen,"GFL")=>(fixed_gfl ? _FP.BlockFixedInstalled() : _FP.BlockRenewableParticipation()),
         (:gen,"SYN")=>_FP.BlockThermalCommitment(),
-        (:storage,"GFM")=>_FP.BlockStorageParticipation()),gscr)
+        (:storage,"GFM")=>_FP.BlockStorageParticipation()),gscr;storage_cost_policy)
 end
 
 function _ap2_model(data;template=_ap2_template(),kwargs...)
     _PM.instantiate_model(data,_PM.DCPPowerModel,
         pm->_FP.build_uc_gscr_block_integration(pm;template,kwargs...);
-        ref_extensions=[_FP.ref_add_gen!,_FP.ref_add_storage!,_FP.ref_add_ne_storage!,_FP.ref_add_uc_gscr_block!])
+        ref_extensions=[_FP.ref_add_gen!,_FP.ref_add_storage!,_FP.ref_add_ne_storage!,
+            (ref,data)->_FP.ref_add_uc_gscr_block!(ref,data;paper_a_validation_scope=template.paper_a_validation_scope)])
 end
 
 function _ap2_solve!(pm)

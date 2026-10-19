@@ -24,13 +24,19 @@ struct UCGSCRBlockTemplate
     carrier_formulations::Dict{Tuple{Symbol,Any},AbstractBlockDeviceFormulation}
     device_formulations::Dict{Tuple{Symbol,Any},AbstractBlockDeviceFormulation}
     gscr_formulation::AbstractGSCRFormulation
+    paper_a_validation_scope::Symbol
+    storage_cost_policy::Symbol
 end
 
 function UCGSCRBlockTemplate(
     carrier_formulations::AbstractDict,
     gscr_formulation::AbstractGSCRFormulation=NoGSCR();
     device_formulations::AbstractDict=Dict{Tuple{Symbol,Any},AbstractBlockDeviceFormulation}(),
+    paper_a_validation_scope::Symbol=:strict,
+    storage_cost_policy::Symbol=:reject,
 )
+    paper_a_validation_scope in (:strict,:synthetic_regression) || throw(ArgumentError("unsupported Paper-A validation scope"))
+    storage_cost_policy in (:reject,:discharge) || throw(ArgumentError("unsupported storage variable-cost policy"))
     carrier_map = Dict{Tuple{Symbol,Any},AbstractBlockDeviceFormulation}()
     for (key, formulation) in carrier_formulations
         table, carrier = _uc_gscr_block_template_key(key, "carrier assignment")
@@ -55,7 +61,7 @@ function UCGSCRBlockTemplate(
         device_map[(table, device_id)] = formulation
     end
 
-    return UCGSCRBlockTemplate(carrier_map, device_map, gscr_formulation)
+    return UCGSCRBlockTemplate(carrier_map, device_map, gscr_formulation,paper_a_validation_scope,storage_cost_policy)
 end
 
 function _uc_gscr_block_template_key(key, context::String)

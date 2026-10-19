@@ -61,6 +61,30 @@ function prepare_paper_a_data!(data::Dict{String,Any})
     for sn in values(snapshots)
         get(sn,"baseMVA",base)==base || throw(ArgumentError("snapshot baseMVA mismatch"))
         sn["baseMVA"]=base
+        for table in ("gen","bus","branch","load","storage","ne_storage","shunt","switch","dcline")
+            get!(sn,table,Dict{String,Any}())
+            for (id,component) in sn[table]
+                get!(component,"index",parse(Int,id))
+            end
+        end
+        for load in values(sn["load"]);get!(load,"status",1);end
+        for br in values(sn["branch"])
+            # AP1 only supports unit-tap line primitives; physical consistency
+            # and unsupported models are checked again by the Y builder.
+            for (field,value) in (("tap",1.0),("shift",0.0),("g_fr",0.0),("g_to",0.0),("transformer",false))
+                get!(br,field,value)
+            end
+        end
+        for table in ("storage","ne_storage"),dev in values(sn[table])
+            # The AP2 storage abstraction uses exported efficiencies and SOC;
+            # extra stationary/electrical loss models are opt-in explicit data.
+            for field in ("r","x","p_loss","q_loss","stationary_energy_inflow","stationary_energy_outflow","self_discharge_rate")
+                get!(dev,field,0.0)
+            end
+            get!(dev,"thermal_rating",dev["charge_rating"]+dev["discharge_rating"])
+            get!(dev,"qmin",dev["q_block_min"]*dev["nmax"])
+            get!(dev,"qmax",dev["q_block_max"]*dev["nmax"])
+        end
         get(sn,"per_unit",false)===false || throw(ArgumentError("mixed raw/pu snapshots"))
         _PM.make_per_unit!(sn)
         _add_gen_data!(sn)
@@ -87,14 +111,20 @@ function _paper_a_temporal(data,nw)
     return (delta_t_h=dt,dispatch=w.dispatch,event=w.event,probability=prob)
 end
 
-function _paper_a_add_reference!(nw_ref,data,nw)
+function _paper_a_add_reference!(nw_ref,data,nw;validation_scope=:strict)
     sn=get(data,"multinetwork",false) ? data["nw"][string(nw)] : data
     base=PaperARegional.number(data,"baseMVA";positive=true)
     get(sn,"baseMVA",base)==base || throw(ArgumentError("AP1 snapshot base mismatch"))
     get(data,"per_unit",false) && get(sn,"paper_a_block_units",nothing)=="pu_system" || throw(ArgumentError("call prepare_paper_a_data! before model construction"))
     net=get(data,"paper_a_network",get(sn,"paper_a_network",nothing))
     net isa AbstractDict || throw(ArgumentError("missing physical paper_a_network"))
-    regional=PaperARegional.network_reference(net,nw_ref[:bus],base)
+    synthetic=validation_scope==:synthetic_regression
+    validation_scope in (:strict,:synthetic_regression) || throw(ArgumentError("unsupported validation scope"))
+    if synthetic
+        get(data["paper_a_extension"],"dataset_kind",nothing)=="synthetic_regression_only" || throw(ArgumentError("synthetic regression scope cannot be used on real/unclassified input"))
+        all(i=="grounding_reference_unverified" for i in net["passive_domain_issues"]) || throw(ArgumentError("synthetic regression still requires verified shunt/source inventories"))
+    end
+    regional=PaperARegional.network_reference(net,nw_ref[:bus],base;diagnostic_only=synthetic)
     temporal=_paper_a_temporal(data,nw)
     if haskey(data,"dim")
         isapprox(dim_prop(data,nw,:scenario,"probability"),temporal.probability;atol=1e-9) || throw(ArgumentError("AP1 scenario dimension/temporal probability mismatch"))
@@ -111,7 +141,11 @@ function _paper_a_add_reference!(nw_ref,data,nw)
     coeff=Dict{Tuple{Symbol,Any},Any}()
     fixed_assets=String[]
     for (table,id,dev) in _uc_gscr_block_devices(nw_ref)
-        PaperARegional.validate_source(dev)
+        PaperARegional.validate_source(dev;synthetic_regression=synthetic)
+        if dev["nmax"]>dev["n0"]
+            PaperARegional.number(dev,"cost_inv_per_mw";positive=true)
+            get(dev,"investment_data_status",nothing)!="blocked_missing_cost" || throw(ArgumentError("blocked/unpriced AP1 asset cannot expand"))
+        end
         for f in ("n0","nmax","na0")
             x=PaperARegional.number(dev,f;nonnegative=true)
             isinteger(x) || throw(ArgumentError("physical AP1 $f must be an integer count even for LP relaxation"))
@@ -149,6 +183,7 @@ function _paper_a_add_reference!(nw_ref,data,nw)
     nw_ref[:paper_a_coefficients]=coeff
     nw_ref[:paper_a_temporal]=temporal
     nw_ref[:paper_a_cost_state]=state
+    nw_ref[:paper_a_validation_scope]=validation_scope
     return nothing
 end
 
@@ -174,8 +209,9 @@ function scale_paper_a_costs!(data::Dict{String,Any}; cost_scale_factor::Real=1.
         end
         for table in ("gen","storage","ne_storage"),dev in values(get(sn,table,Dict()))
             _scale_uc_gscr_block_operational_cost_fields!(dev,x->x*t.event*cost_scale_factor)
-            if table!="gen" && get(dev,"marginal_cost",0.0) != 0.0
-                throw(ArgumentError("nonzero bidirectional storage marginal cost needs an explicit physical cost rule"))
+            if table!="gen" && haskey(dev,"marginal_cost")
+                price=PaperARegional.number(dev,"marginal_cost";nonnegative=true)
+                dev["marginal_cost"]=price*t.dispatch*cost_scale_factor
             end
         end
         sn["paper_a_cost_state"]="weighted"
@@ -183,6 +219,23 @@ function scale_paper_a_costs!(data::Dict{String,Any}; cost_scale_factor::Real=1.
         sn["paper_a_capex_scaled"]=true
     end
     return data
+end
+
+function _paper_a_storage_operation_cost(pm,nw)
+    haskey(_PM.ref(pm,nw),:paper_a_regional) || return JuMP.AffExpr(0.0)
+    template=pm.ext[:uc_gscr_block_template]
+    cost=JuMP.AffExpr(0.0)
+    for table in (:storage,:ne_storage), (id,dev) in get(_PM.ref(pm,nw),table,Dict())
+        haskey(dev,"marginal_cost") || continue
+        price=PaperARegional.number(dev,"marginal_cost";nonnegative=true)
+        price==0 && continue
+        template.storage_cost_policy==:discharge || throw(ArgumentError("nonzero AP1 storage cost requires explicit storage_cost_policy=:discharge in UCGSCRBlockTemplate"))
+        weight=_PM.ref(pm,nw,:paper_a_cost_state)=="raw_hourly" ? _PM.ref(pm,nw,:paper_a_temporal).dispatch : 1.0
+        # sd is AC-side discharged MW on system pu base; charge is not billed.
+        sd=_PM.var(pm,nw,table==:storage ? :sd : :sd_ne,id)
+        JuMP.add_to_expression!(cost,price*dev["S_base_MVA"]*weight,sd)
+    end
+    return cost
 end
 
 function _paper_a_online_expressions!(pm,nw)

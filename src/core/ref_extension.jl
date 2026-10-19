@@ -92,7 +92,7 @@ Arguments are the PowerModels `ref` dictionary and original network `data`.
 Block strengths are assumed to be in a per-unit base consistent with device
 power fields. This function is formulation-independent and mutates only `ref`.
 """
-function ref_add_uc_gscr_block!(ref::Dict{Symbol,<:Any}, data::Dict{String,<:Any})
+function ref_add_uc_gscr_block!(ref::Dict{Symbol,<:Any}, data::Dict{String,<:Any};paper_a_validation_scope::Symbol=:strict)
     paper_a = _paper_a_validate_markers(data)
     any_block_data = any(_has_uc_gscr_block_data(nw_ref) for (_, nw_ref) in ref[:it][_PM.pm_it_sym][:nw])
     if any_block_data
@@ -113,7 +113,7 @@ function ref_add_uc_gscr_block!(ref::Dict{Symbol,<:Any}, data::Dict{String,<:Any
         _warn_uc_gscr_deprecated_block_fields(nw_ref)
         _add_uc_gscr_device_maps!(nw_ref)
         if paper_a
-            _paper_a_add_reference!(nw_ref,data,nw)
+            _paper_a_add_reference!(nw_ref,data,nw;validation_scope=paper_a_validation_scope)
         else
             _add_uc_gscr_row_metrics!(nw_ref)
         end
