@@ -299,3 +299,7 @@ An independent NumPy elementary check at preparation (NOT a Julia conic run) rep
 - Solver capability matrix: `https://jump.dev/JuMP.jl/stable/installation/`
 
 **Integrity note:** The source dissertation and historical project-predicate audit were never rewritten by this AP3-A0 analysis. Any later state promotion must be scoped to exact executable AP3 SHA/test cases and distinct empirical parameter approval.
+
+## AP3-A0 Scope Amendment — owner decision 2026-10-20
+
+**SUPERSEDING IMPLEMENTATION SCOPE:** The narrower execution wording in this historical A0 gap analysis (especially its previously optional G2, M1/M2 and bounded inverse-approximation sections) has been **superseded** by [Comprehensive AP3 formulation, evaluation metrics and executable post-processing scope](ap3_a0_comprehensive_formulations_metrics_postprocessing_scope.md). All mathematically and computationally meaningful candidates must be implemented with their distinct guarantee classes; **all evaluation metrics and executable independent post-processing scripts are mandatory**. The original mathematics, theorems, counterexamples, source/code gaps and status observations in this A0 report remain unchanged. No solver/test/AP3 result is claimed by this documentation amendment.
