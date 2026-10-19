@@ -253,11 +253,14 @@ function reconstruct_runs(input,out)
     newoutput(out);records=Any[]
     for run in readjson(joinpath(input,"runs.json"))["runs"]
         run["status"]=="optimal" || continue
-        raw=readjson(joinpath(input,run["case_id"],"case.json"));s=readjson(joinpath(input,run["solution_file"]))
+        casepath=joinpath(input,run["case_id"],"case.json")
+        D.hashfile(casepath)==run["case_sha256"] || throw(ArgumentError("saved raw case hash mismatch"))
+        raw=readjson(casepath);s=readjson(joinpath(input,run["solution_file"]))
         for t in sort(collect(keys(s["snapshots"]));by=x->parse(Int,x))
             rec=D.reconstruct(raw,s,parse(Int,t));rec["run"]=run;rec["snapshot_id"]=t
             rec["witness"]=get(s["snapshots"][t],"witness",nothing)
             rec["planning"]=planning(raw,s,run)
+            rec["input_solution_sha256"]=D.hashfile(joinpath(input,run["solution_file"]))
             rec["conic_dual"]=get(s["snapshots"][t],"conic_dual",Dict("status"=>"not_recorded_in_earlier_attempt","dual_cone_violation"=>nothing,"complementarity_residual"=>nothing))
             rec["network_domain"]=Dict(k=>raw["paper_a_network"][k] for k in ("network_islands","reference_buses","retained_physical_buses","eliminated_physical_buses","fixed_shunts","fixed_sources_in_network"))
             push!(records,rec)
