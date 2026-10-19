@@ -487,5 +487,6 @@ function main(args)
     haskey(actions,action) || throw(ArgumentError("unknown action $action"))
     ispath(input) || throw(ArgumentError("missing input $input"))
     actions[action](abspath(input),abspath(out))
+    isfile(joinpath(out,"provenance.json")) || writejson(joinpath(out,"provenance.json"),provenance())
 end
 end
