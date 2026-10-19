@@ -1,0 +1,46 @@
+{
+  "RecordedAtUTC": "2026-10-19T21:07:54.1109637Z",
+  "Branch": "implementation/paper-a-ap2-regional-optimization-v1",
+  "TestedCodeSHA": "5b24ef8ad33d812ce87008558913a6abf82e57f4",
+  "AP2InitialRemoteSHA": "a80c3514dd08b21caa0388918099d5771c42c426",
+  "AP2RemoteBeforePublication": "a80c3514dd08b21caa0388918099d5771c42c426",
+  "MasterSHA": "991d0e99627b9bd57b3df476c66141ae6bb5163d",
+  "AP1AssignmentSHA": "00b259da66f084e00d53c5dc1be4d23de145fdc1",
+  "AP1EntrySHA": "991c34445f602df14592fdd0f51b5e67d3ddd782",
+  "AP1FinalAuthoritySHA": "32ff4525dc576af52c16298cb35ebd98f02cf8b2",
+  "AP1FinalFetchedSHA": "32ff4525dc576af52c16298cb35ebd98f02cf8b2",
+  "ScienceSHA": "672a61c95525bf1d7a03cf745a754a15a23ce78b",
+  "IntegrationAuditSHA": "8b78fc2d0aa22012ce75b70c0cff08d7336ebe75",
+  "ProjectSHA256": "69648d9e63a0de3a07ebf0773c2b2546ce82dd90628b7f47bc115eca4b4851d9",
+  "ManifestSHA256": "369c84caf60c6b67046a3c512b9765281d1a722f2dac34312d002a3e85c5a8c7",
+  "AssignmentSHA256": "f428a700d88f8b48f99e80511b60e2a682480836d7b2f12b0f3edae63fe661d9",
+  "FinalAmendmentSHA256": "63e398782ed8cd19b9499728dfec524636a821f8084bf096facd83a837215537",
+  "FullSuite": {
+    "Errored": 0,
+    "ExitCode": 0,
+    "Failed": 0,
+    "Passed": 5987,
+    "Log": "full_suite_amended_final.log"
+  },
+  "TargetedAP2": {
+    "Passed": 153,
+    "ExitCode": 0
+  },
+  "PinnedProducerSolver": {
+    "LPOptimal": 3,
+    "ExitCode": 0,
+    "Passed": 51,
+    "IntegerInfeasible": 3
+  },
+  "CodeRepositoriesWritten": [
+    "FlexPlan.jl"
+  ],
+  "ForeignRepositoriesReadOnly": [
+    "PyPSA2MatpowerX",
+    "research-map"
+  ],
+  "PreexistingAuditPreserved": true,
+  "NoNewImplementationBranch": true,
+  "NoForcePush": true,
+  "FinalPublicationSHA": "exact remote HEAD is verified after evidence commit and recorded in chat; no self-referential commit hash"
+}

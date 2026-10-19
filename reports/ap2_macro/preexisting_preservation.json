@@ -1,0 +1,205 @@
+[
+  {
+    "Path": "Manifest-v1.10.toml",
+    "OriginalBackupSHA256": "2d018b6d7c8f8f02a00d2f37965bf53423f55c5311f8a89b9878b42a72c9c9b5",
+    "CurrentSHA256": "369c84caf60c6b67046a3c512b9765281d1a722f2dac34312d002a3e85c5a8c7",
+    "Unchanged": false,
+    "ExpectedAuthorizedLockUpdate": true
+  },
+  {
+    "Path": "audit/c2a_reproducible_environment/clean-depot-reproduction.json",
+    "OriginalBackupSHA256": "d3ab366ff56049e2f1a9d3a3d0c31eb5a66ed710b557433e55d24bccc5e5f338",
+    "CurrentSHA256": "d3ab366ff56049e2f1a9d3a3d0c31eb5a66ed710b557433e55d24bccc5e5f338",
+    "Unchanged": true,
+    "ExpectedAuthorizedLockUpdate": false
+  },
+  {
+    "Path": "audit/c2a_reproducible_environment/commands.jsonl",
+    "OriginalBackupSHA256": "c70315e9fbddc7abd372a845087bdb44b4b10e67af6e73c93f321b726b5bdd06",
+    "CurrentSHA256": "c70315e9fbddc7abd372a845087bdb44b4b10e67af6e73c93f321b726b5bdd06",
+    "Unchanged": true,
+    "ExpectedAuthorizedLockUpdate": false
+  },
+  {
+    "Path": "audit/c2a_reproducible_environment/environment-lock-report.md",
+    "OriginalBackupSHA256": "9dae37d35c1e3afb9814d0daddec9097167bd4e1f69ad11041c9142814b9e7f6",
+    "CurrentSHA256": "9dae37d35c1e3afb9814d0daddec9097167bd4e1f69ad11041c9142814b9e7f6",
+    "Unchanged": true,
+    "ExpectedAuthorizedLockUpdate": false
+  },
+  {
+    "Path": "audit/c2a_reproducible_environment/environment-resolution.json",
+    "OriginalBackupSHA256": "50e797adf4672477e183917088683f0671b60f1c1ab7c8d0d83d481a9859af40",
+    "CurrentSHA256": "50e797adf4672477e183917088683f0671b60f1c1ab7c8d0d83d481a9859af40",
+    "Unchanged": true,
+    "ExpectedAuthorizedLockUpdate": false
+  },
+  {
+    "Path": "audit/c2a_reproducible_environment/evidence-sha256.csv",
+    "OriginalBackupSHA256": "bd82b309910205a90fde7c612ce2a778ff11a1ab3baffb73dc92b71972c8d49f",
+    "CurrentSHA256": "bd82b309910205a90fde7c612ce2a778ff11a1ab3baffb73dc92b71972c8d49f",
+    "Unchanged": true,
+    "ExpectedAuthorizedLockUpdate": false
+  },
+  {
+    "Path": "audit/c2a_reproducible_environment/final-hashes.json",
+    "OriginalBackupSHA256": "ca92d62d5ade92807a69c7aec19a01b5994a87c6eec23ff728fce52cf50b5740",
+    "CurrentSHA256": "ca92d62d5ade92807a69c7aec19a01b5994a87c6eec23ff728fce52cf50b5740",
+    "Unchanged": true,
+    "ExpectedAuthorizedLockUpdate": false
+  },
+  {
+    "Path": "audit/c2a_reproducible_environment/fixture-comparison.csv",
+    "OriginalBackupSHA256": "d8b784fee45c23526bd7e4d9a4d46260f769fe8f01a736748283b2d1fb6f78aa",
+    "CurrentSHA256": "d8b784fee45c23526bd7e4d9a4d46260f769fe8f01a736748283b2d1fb6f78aa",
+    "Unchanged": true,
+    "ExpectedAuthorizedLockUpdate": false
+  },
+  {
+    "Path": "audit/c2a_reproducible_environment/general-registry.json",
+    "OriginalBackupSHA256": "92e34e97ce4fd3af8b5b8e1c514564511d4568e507c20d371aee6fb2f6dd3eeb",
+    "CurrentSHA256": "92e34e97ce4fd3af8b5b8e1c514564511d4568e507c20d371aee6fb2f6dd3eeb",
+    "Unchanged": true,
+    "ExpectedAuthorizedLockUpdate": false
+  },
+  {
+    "Path": "audit/c2a_reproducible_environment/julia-command.json",
+    "OriginalBackupSHA256": "e38ac94722fe326e11fe75366d3bbb37f5ef8b64130efe0305728ab2ff9f347a",
+    "CurrentSHA256": "e38ac94722fe326e11fe75366d3bbb37f5ef8b64130efe0305728ab2ff9f347a",
+    "Unchanged": true,
+    "ExpectedAuthorizedLockUpdate": false
+  },
+  {
+    "Path": "audit/c2a_reproducible_environment/julia-version.txt",
+    "OriginalBackupSHA256": "81e36a720b852fbfd5c7ad0704a73a73abd670d1b216b8bdb8e3cd764510fe37",
+    "CurrentSHA256": "81e36a720b852fbfd5c7ad0704a73a73abd670d1b216b8bdb8e3cd764510fe37",
+    "Unchanged": true,
+    "ExpectedAuthorizedLockUpdate": false
+  },
+  {
+    "Path": "audit/c2a_reproducible_environment/julia-versioninfo.txt",
+    "OriginalBackupSHA256": "2365d330391facaefbd32f078084e6fc67aea9443f3d5196be4723cf27634dcd",
+    "CurrentSHA256": "2365d330391facaefbd32f078084e6fc67aea9443f3d5196be4723cf27634dcd",
+    "Unchanged": true,
+    "ExpectedAuthorizedLockUpdate": false
+  },
+  {
+    "Path": "audit/c2a_reproducible_environment/logs/clean-reproduction.stderr.log",
+    "OriginalBackupSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "CurrentSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "Unchanged": true,
+    "ExpectedAuthorizedLockUpdate": false
+  },
+  {
+    "Path": "audit/c2a_reproducible_environment/logs/clean-reproduction.stdout.log",
+    "OriginalBackupSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "CurrentSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "Unchanged": true,
+    "ExpectedAuthorizedLockUpdate": false
+  },
+  {
+    "Path": "audit/c2a_reproducible_environment/logs/continuation-instantiate-03.stderr.log",
+    "OriginalBackupSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "CurrentSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "Unchanged": true,
+    "ExpectedAuthorizedLockUpdate": false
+  },
+  {
+    "Path": "audit/c2a_reproducible_environment/logs/continuation-instantiate-03.stdout.log",
+    "OriginalBackupSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "CurrentSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "Unchanged": true,
+    "ExpectedAuthorizedLockUpdate": false
+  },
+  {
+    "Path": "audit/c2a_reproducible_environment/logs/continuation-instantiate.stderr.log",
+    "OriginalBackupSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "CurrentSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "Unchanged": true,
+    "ExpectedAuthorizedLockUpdate": false
+  },
+  {
+    "Path": "audit/c2a_reproducible_environment/logs/continuation-instantiate.stdout.log",
+    "OriginalBackupSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "CurrentSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "Unchanged": true,
+    "ExpectedAuthorizedLockUpdate": false
+  },
+  {
+    "Path": "audit/c2a_reproducible_environment/logs/precompile-retry.stderr.log",
+    "OriginalBackupSHA256": "122b3e70c79576db27e953e6d4da1443c9f134baf5228b0b329b6e147b7c51e7",
+    "CurrentSHA256": "122b3e70c79576db27e953e6d4da1443c9f134baf5228b0b329b6e147b7c51e7",
+    "Unchanged": true,
+    "ExpectedAuthorizedLockUpdate": false
+  },
+  {
+    "Path": "audit/c2a_reproducible_environment/logs/precompile-retry.stdout.log",
+    "OriginalBackupSHA256": "1d31abb00fc7ab340769ccd2f3e67d919df43451385567bc9d42fbc5f7aa4d09",
+    "CurrentSHA256": "1d31abb00fc7ab340769ccd2f3e67d919df43451385567bc9d42fbc5f7aa4d09",
+    "Unchanged": true,
+    "ExpectedAuthorizedLockUpdate": false
+  },
+  {
+    "Path": "audit/c2a_reproducible_environment/logs/resolution.stderr.log",
+    "OriginalBackupSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "CurrentSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "Unchanged": true,
+    "ExpectedAuthorizedLockUpdate": false
+  },
+  {
+    "Path": "audit/c2a_reproducible_environment/logs/resolution.stdout.log",
+    "OriginalBackupSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "CurrentSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "Unchanged": true,
+    "ExpectedAuthorizedLockUpdate": false
+  },
+  {
+    "Path": "audit/c2a_reproducible_environment/material-packages.toml",
+    "OriginalBackupSHA256": "e38ac94722fe326e11fe75366d3bbb37f5ef8b64130efe0305728ab2ff9f347a",
+    "CurrentSHA256": "e38ac94722fe326e11fe75366d3bbb37f5ef8b64130efe0305728ab2ff9f347a",
+    "Unchanged": true,
+    "ExpectedAuthorizedLockUpdate": false
+  },
+  {
+    "Path": "audit/c2a_reproducible_environment/operating-system.json",
+    "OriginalBackupSHA256": "4658b65b3a75ab29effff9cb6f8daf46b5965da240bca25467efdcdeba384240",
+    "CurrentSHA256": "4658b65b3a75ab29effff9cb6f8daf46b5965da240bca25467efdcdeba384240",
+    "Unchanged": true,
+    "ExpectedAuthorizedLockUpdate": false
+  },
+  {
+    "Path": "audit/c2a_reproducible_environment/powershell-version.json",
+    "OriginalBackupSHA256": "30e9ee500ce9de9a84c884eedb7b272e65884b4cea15eab8443a27fd081134cf",
+    "CurrentSHA256": "30e9ee500ce9de9a84c884eedb7b272e65884b4cea15eab8443a27fd081134cf",
+    "Unchanged": true,
+    "ExpectedAuthorizedLockUpdate": false
+  },
+  {
+    "Path": "audit/c2a_reproducible_environment/processor.json",
+    "OriginalBackupSHA256": "46fc875e8ba6a2a3ab84680b5190bf19b1142fcc2d3162fca17b1b75dd2ccc41",
+    "CurrentSHA256": "46fc875e8ba6a2a3ab84680b5190bf19b1142fcc2d3162fca17b1b75dd2ccc41",
+    "Unchanged": true,
+    "ExpectedAuthorizedLockUpdate": false
+  },
+  {
+    "Path": "audit/c2a_reproducible_environment/solver-smoke-result.toml",
+    "OriginalBackupSHA256": "e38ac94722fe326e11fe75366d3bbb37f5ef8b64130efe0305728ab2ff9f347a",
+    "CurrentSHA256": "e38ac94722fe326e11fe75366d3bbb37f5ef8b64130efe0305728ab2ff9f347a",
+    "Unchanged": true,
+    "ExpectedAuthorizedLockUpdate": false
+  },
+  {
+    "Path": "audit/c2a_reproducible_environment/source-state-before.json",
+    "OriginalBackupSHA256": "c44ec30f470d2f9379a6b4282d3031bf3a2cf2531d9ea0228c2aaa9906f9073a",
+    "CurrentSHA256": "c44ec30f470d2f9379a6b4282d3031bf3a2cf2531d9ea0228c2aaa9906f9073a",
+    "Unchanged": true,
+    "ExpectedAuthorizedLockUpdate": false
+  },
+  {
+    "Path": "audit/c2a_reproducible_environment/validation-summary.yaml",
+    "OriginalBackupSHA256": "18b9cce670a7a543b41b0f49d0c35eb8fee40337810fbcebee5c2f6bc1a72c1d",
+    "CurrentSHA256": "18b9cce670a7a543b41b0f49d0c35eb8fee40337810fbcebee5c2f6bc1a72c1d",
+    "Unchanged": true,
+    "ExpectedAuthorizedLockUpdate": false
+  }
+]

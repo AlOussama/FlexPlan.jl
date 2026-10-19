@@ -1,0 +1,43 @@
+    Updating registry at `C:\Users\User\.julia\registries\General.toml`
+   Resolving package versions...
+ERROR: Unsatisfiable requirements detected for package JSON [682c06a0]:
+ JSON [682c06a0] log:
+ ├─possible versions are: 0.18.0-1.11.0 or uninstalled
+ ├─restricted to versions [0.21, 1] by FlexPlan [4dc3fedf], leaving only versions: 0.21.0-1.11.0
+ │ └─FlexPlan [4dc3fedf] log:
+ │   ├─possible versions are: 0.4.1 or uninstalled
+ │   └─FlexPlan [4dc3fedf] is fixed to version 0.4.1
+ ├─restricted to versions 1.6.1 by an explicit requirement, leaving only versions: 1.6.1
+ └─restricted by compatibility requirements with PowerModels [c36e90e8] to versions: 0.21.0-0.21.4 — no versions left
+   └─PowerModels [c36e90e8] log:
+     ├─possible versions are: 0.8.0-0.21.7 or uninstalled
+     ├─restricted to versions 0.21 by FlexPlan [4dc3fedf], leaving only versions: 0.21.0-0.21.7
+     │ └─FlexPlan [4dc3fedf] log: see above
+     └─restricted to versions 0.21.4 by an explicit requirement, leaving only versions: 0.21.4
+Stacktrace:
+  [1] propagate_constraints!(graph::Pkg.Resolve.Graph, sources::Set{Int64}; log_events::Bool)
+    @ Pkg.Resolve C:\Users\User\.julia\juliaup\julia-1.10.11+0.x64.w64.mingw32\share\julia\stdlib\v1.10\Pkg\src\Resolve\graphtype.jl:1072
+  [2] propagate_constraints! (repeats 2 times)
+    @ C:\Users\User\.julia\juliaup\julia-1.10.11+0.x64.w64.mingw32\share\julia\stdlib\v1.10\Pkg\src\Resolve\graphtype.jl:1008 [inlined]
+  [3] simplify_graph!(graph::Pkg.Resolve.Graph, sources::Set{Int64}; clean_graph::Bool)
+    @ Pkg.Resolve C:\Users\User\.julia\juliaup\julia-1.10.11+0.x64.w64.mingw32\share\julia\stdlib\v1.10\Pkg\src\Resolve\graphtype.jl:1533
+  [4] simplify_graph! (repeats 2 times)
+    @ C:\Users\User\.julia\juliaup\julia-1.10.11+0.x64.w64.mingw32\share\julia\stdlib\v1.10\Pkg\src\Resolve\graphtype.jl:1532 [inlined]
+  [5] resolve_versions!(env::Pkg.Types.EnvCache, registries::Vector{Pkg.Registry.RegistryInstance}, pkgs::Vector{Pkg.Types.PackageSpec}, julia_version::VersionNumber, installed_only::Bool)
+    @ Pkg.Operations C:\Users\User\.julia\juliaup\julia-1.10.11+0.x64.w64.mingw32\share\julia\stdlib\v1.10\Pkg\src\Operations.jl:414
+  [6] targeted_resolve(env::Pkg.Types.EnvCache, registries::Vector{Pkg.Registry.RegistryInstance}, pkgs::Vector{Pkg.Types.PackageSpec}, preserve::Pkg.Types.PreserveLevel, julia_version::VersionNumber)
+    @ Pkg.Operations C:\Users\User\.julia\juliaup\julia-1.10.11+0.x64.w64.mingw32\share\julia\stdlib\v1.10\Pkg\src\Operations.jl:1391
+  [7] _resolve(io::Base.PipeEndpoint, env::Pkg.Types.EnvCache, registries::Vector{Pkg.Registry.RegistryInstance}, pkgs::Vector{Pkg.Types.PackageSpec}, preserve::Pkg.Types.PreserveLevel, julia_version::VersionNumber)
+    @ Pkg.Operations C:\Users\User\.julia\juliaup\julia-1.10.11+0.x64.w64.mingw32\share\julia\stdlib\v1.10\Pkg\src\Operations.jl:1403
+  [8] add(ctx::Pkg.Types.Context, pkgs::Vector{Pkg.Types.PackageSpec}, new_git::Set{Base.UUID}; preserve::Pkg.Types.PreserveLevel, platform::Base.BinaryPlatforms.Platform)
+    @ Pkg.Operations C:\Users\User\.julia\juliaup\julia-1.10.11+0.x64.w64.mingw32\share\julia\stdlib\v1.10\Pkg\src\Operations.jl:1419
+  [9] add
+    @ C:\Users\User\.julia\juliaup\julia-1.10.11+0.x64.w64.mingw32\share\julia\stdlib\v1.10\Pkg\src\Operations.jl:1407 [inlined]
+ [10] add(ctx::Pkg.Types.Context, pkgs::Vector{Pkg.Types.PackageSpec}; preserve::Pkg.Types.PreserveLevel, platform::Base.BinaryPlatforms.Platform, kwargs::@Kwargs{io::Base.PipeEndpoint})
+    @ Pkg.API C:\Users\User\.julia\juliaup\julia-1.10.11+0.x64.w64.mingw32\share\julia\stdlib\v1.10\Pkg\src\API.jl:278
+ [11] add(pkgs::Vector{Pkg.Types.PackageSpec}; io::Base.PipeEndpoint, kwargs::@Kwargs{preserve::Pkg.Types.PreserveLevel})
+    @ Pkg.API C:\Users\User\.julia\juliaup\julia-1.10.11+0.x64.w64.mingw32\share\julia\stdlib\v1.10\Pkg\src\API.jl:159
+ [12] #add#24
+    @ C:\Users\User\.julia\juliaup\julia-1.10.11+0.x64.w64.mingw32\share\julia\stdlib\v1.10\Pkg\src\API.jl:146 [inlined]
+ [13] top-level scope
+    @ none:1

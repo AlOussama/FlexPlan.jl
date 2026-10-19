@@ -1,24 +1,85 @@
-schema_version: paper_a_ap2_status_1.0
-work_package: AP2
-verdict: AP2_partial
-baseline_flexplan_master: 991d0e99627b9bd57b3df476c66141ae6bb5163d
-ap1_producer_head_read: 00b259da66f084e00d53c5dc1be4d23de145fdc1
-science_freeze: 672a61c95525bf1d7a03cf745a754a15a23ce78b
-schema_valid: unverified
-economic_data_valid: unverified
-theorem_domain_valid: unverified
-ap2_model_ready: false
-ap3_interface_ready: false
-ap4_ready: false
-standalone_regional_helpers_added: true
-integrated_into_optimizer: false
-julia_tests_executed: false
-solver_tests_executed: false
+schema_version: "paper_a_ap2_status_1.0"
+date: "2026-10-19"
+work_package: "AP2"
+verdict: "AP2_partial"
+specification_status: "SPECIFICATION_READY"
+code_commit: "5b24ef8ad33d812ce87008558913a6abf82e57f4"
+branch: "implementation/paper-a-ap2-regional-optimization-v1"
+ap1_producer_contract_loaded: true
+ap2_parser_compatible: true
+ap2_physical_model_validated: true
+ap2_physical_model_validated_scope: "qualified_synthetic_math_and_all_six_passive_matrix_comparisons; not_real_study_approval"
+ap2_optimization_integrated: true
+ap2_synthetic_tests_passed: true
+ap2_real_fixture_interface_tested: true
+ap2_real_fixture_interface_scope: "three_pinned_real_imports_and_controlled_strict_refusal"
+schema_valid: true
+schema_valid_scope: "AP2_parser_and_qualified_synthetic_consumer_inputs; real_source_completeness_unverified"
+economic_data_valid: "unverified"
+theorem_domain_valid: "unverified"
+synthetic_symmetric_z_math_validated: true
+ap2_model_ready: true
+ap2_model_ready_scope: "supported_verified_inputs_or_explicit_synthetic_regression_template"
+ap3_interface_ready: true
+ap3_interface_ready_scope: "affine_B_S_M_common_base_and_mappings_validated_on_real_builder_and_pinned_synthetic_LP_solutions"
+ap1_strict_physical_contract_ready: false
+actual_study_ready: false
+A3_closed: false
+AP4_ready: false
+a4_ready: false
+producer_synthetic_solver_gate: "PASSED"
+producer_real_strength_study_gate: "BLOCKED"
+producer_real_strength_study_execution: "NOT_EXECUTED"
+repositories:
+  master_sha: "991d0e99627b9bd57b3df476c66141ae6bb5163d"
+  ap2_entry_sha: "a80c3514dd08b21caa0388918099d5771c42c426"
+  ap1_assignment_sha: "00b259da66f084e00d53c5dc1be4d23de145fdc1"
+  ap1_entry_sha: "991c34445f602df14592fdd0f51b5e67d3ddd782"
+  ap1_final_integration_sha: "32ff4525dc576af52c16298cb35ebd98f02cf8b2"
+  science_sha: "672a61c95525bf1d7a03cf745a754a15a23ce78b"
+  audit_sha: "8b78fc2d0aa22012ce75b70c0cff08d7336ebe75"
+runtime:
+  julia: "1.10.11"
+  FlexPlan: "0.4.1"
+  JuMP: "1.31.1"
+  PowerModels: "0.21.4"
+  PowerModelsACDC: "0.9.4"
+  HiGHS_julia: "1.24.1"
+  HiGHS_backend: "1.15.1"
+  JSON: "0.21.4"
+  lock: "Manifest-v1.10.toml"
+tests:
+  synthetic_ap2: {status: "PASSED", passed: 153, failed: 0, errored: 0}
+  pinned_producer_optimization: {status: "PASSED", passed: 51, failed: 0, errored: 0}
+  full_repository: {status: "PASSED", passed: 5987, failed: 0, errored: 0, exit_code: 0}
+  before_final_amendment_full_repository: {status: "PASSED", passed: 5979, failed: 0, errored: 0}
+  historical_acceptance: {status: "PASSED", passed: 4378}
+  six_pinned_producer_cases: {read: 6, case_manifest_hash_valid: 6, parser_passed: 6, matrix_comparison_zero: 6}
+  producer_synthetic_integer: {executed: 3, termination: "INFEASIBLE", explanation: "G1_forces_region_C_GFL_offline_and_SYN_minimum_128.25_MW_exceeds_10_MW_load"}
+  producer_synthetic_explicit_LP: {executed: 3, termination: "OPTIMAL", primal: "FEASIBLE_POINT", dual: "FEASIBLE_POINT"}
+  producer_LP_objectives: [262161.25, 481161.25, 1795161.2500000016]
+  producer_LP_max_cost_residual: 2.9103830456733704e-11
+  producer_LP_max_power_balance_residual: 3.469446951953614e-16
+  producer_LP_max_soc_residual: 1.0685896612017132e-15
+  producer_LP_source_expression_residual: 0.0
+  producer_LP_exposure_expression_residual: 0.0
+  nonzero_storage_cost: 27.0
+  storage_cost_rule: "explicit_template_discharge_only_AC_MWh"
+  independent_own_fixture_max_cost_residual: 2.2737367544323206e-13
+  positive_thresholds: [0.1, 4.0]
+  own_integer_objectives: [600.0, 1870.0000000000005]
+  own_new_SYN_blocks: [0, 2]
 blockers:
-  - physical_positive_sequence_primitive_y_builder_missing
-  - ap1_versioned_parser_migration_missing
-  - flexplan_template_and_optimization_integration_missing
-  - dispatch_and_event_economic_weights_missing
-  - ap1_real_economic_source_evidence_missing
-  - no_julia_runtime_for_testing
-  - sc_mva_mvar_and_cost_support_missing
+  - "Strict real-study input contract remains unapproved: grounding, electrical interfaces, mu, native source parameters, fixed shunt/source inventories and representative/event factors."
+  - "Producer synthetic runs require explicit mathematical regression scope; original unverified study evidence stays unchanged."
+  - "Real economic approval, genuine BESS P+E prices/year/currency and dedicated SC treatment remain unsupported."
+  - "Producer execution manifests record dirty execution; pypsa_import.jl has one LF/CRLF byte difference with normalized text identity."
+artifacts:
+  validation: "reports/paper_a_ap2_validation.md"
+  compatibility: "docs/paper_a/ap1_ap2_compatibility_matrix.md"
+  implementation: "docs/paper_a/ap2_regional_optimization_implementation.md"
+  ap3_handoff: "docs/paper_a/ap2_to_ap3_handoff.md"
+  provenance: "reports/ap2_macro/provenance.json"
+  producer_manifests: "reports/ap2_macro/producer_gate_pinned.json"
+  producer_solver: "reports/ap2_macro/producer_solver_results_final.json"
+  evidence: "reports/ap2_macro/"

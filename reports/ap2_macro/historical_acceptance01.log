@@ -1,0 +1,41 @@
+┌ Info: Running PyPSA dataset optimizer acceptance directly
+└   root = "D:\\Projekte\\Code\\pypsatomatpowerx\\data\\flexplan_block_gscr"
+Load-only schema: Error During Test at D:\Projekte\Code\FlexPlan_UC_GSCR\test\pypsa_dataset_optimizer_acceptance.jl:703
+  Got exception outside of a @test
+  MethodError: no method matching _pypsa_assert_no_rejected_block_fields(::JSON.Object{String, Any}, ::String)
+  
+  Closest candidates are:
+    _pypsa_assert_no_rejected_block_fields(!Matched::Dict{String, Any}, ::String)
+     @ Main D:\Projekte\Code\FlexPlan_UC_GSCR\test\pypsa_dataset_optimizer_acceptance.jl:191
+  
+  Stacktrace:
+   [1] macro expansion
+     @ D:\Projekte\Code\FlexPlan_UC_GSCR\test\pypsa_dataset_optimizer_acceptance.jl:706 [inlined]
+   [2] macro expansion
+     @ C:\Users\User\.julia\juliaup\julia-1.10.11+0.x64.w64.mingw32\share\julia\stdlib\v1.10\Test\src\Test.jl:1582 [inlined]
+   [3] macro expansion
+     @ D:\Projekte\Code\FlexPlan_UC_GSCR\test\pypsa_dataset_optimizer_acceptance.jl:704 [inlined]
+   [4] macro expansion
+     @ C:\Users\User\.julia\juliaup\julia-1.10.11+0.x64.w64.mingw32\share\julia\stdlib\v1.10\Test\src\Test.jl:1582 [inlined]
+   [5] top-level scope
+     @ D:\Projekte\Code\FlexPlan_UC_GSCR\test\pypsa_dataset_optimizer_acceptance.jl:685
+PyPSA-derived FlexPlan dataset optimizer acceptance: Error During Test at D:\Projekte\Code\FlexPlan_UC_GSCR\test\pypsa_dataset_optimizer_acceptance.jl:684
+  Got exception outside of a @test
+  MethodError: no method matching _pypsa_assert_cost_convention(::JSON.Object{String, Any}, ::String)
+  
+  Closest candidates are:
+    _pypsa_assert_cost_convention(!Matched::Dict{String, Any}, ::String)
+     @ Main D:\Projekte\Code\FlexPlan_UC_GSCR\test\pypsa_dataset_optimizer_acceptance.jl:117
+  
+  Stacktrace:
+   [1] macro expansion
+     @ D:\Projekte\Code\FlexPlan_UC_GSCR\test\pypsa_dataset_optimizer_acceptance.jl:724 [inlined]
+   [2] macro expansion
+     @ C:\Users\User\.julia\juliaup\julia-1.10.11+0.x64.w64.mingw32\share\julia\stdlib\v1.10\Test\src\Test.jl:1582 [inlined]
+   [3] top-level scope
+     @ D:\Projekte\Code\FlexPlan_UC_GSCR\test\pypsa_dataset_optimizer_acceptance.jl:685
+Test Summary:                                       | Error  Total  Time
+PyPSA-derived FlexPlan dataset optimizer acceptance |     2      2  3.9s
+  Load-only schema                                  |     1      1  3.8s
+ERROR: LoadError: Some tests did not pass: 0 passed, 0 failed, 2 errored, 0 broken.
+in expression starting at D:\Projekte\Code\FlexPlan_UC_GSCR\test\pypsa_dataset_optimizer_acceptance.jl:684

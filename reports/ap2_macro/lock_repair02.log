@@ -1,0 +1,26 @@
+   Resolving package versions...
+    Updating `D:\Projekte\Code\FlexPlan_UC_GSCR\Project.toml`
+⌅ [682c06a0] ↓ JSON v1.6.1 ⇒ v0.21.4
+⌃ [c36e90e8] ↓ PowerModels v0.21.6 ⇒ v0.21.4
+    Updating `D:\Projekte\Code\FlexPlan_UC_GSCR\Manifest-v1.10.toml`
+⌅ [682c06a0] ↓ JSON v1.6.1 ⇒ v0.21.4
+⌃ [c36e90e8] ↓ PowerModels v0.21.6 ⇒ v0.21.4
+  [ec057cc2] - StructUtils v2.8.2
+        Info Packages marked with ⌃ and ⌅ have new versions available. Those with ⌃ may be upgradable, but those with ⌅ are restricted by compatibility constraints from upgrading. To see why use `status --outdated -m`
+Project FlexPlan v0.4.1
+Status `D:\Projekte\Code\FlexPlan_UC_GSCR\Project.toml`
+⌃ [336ed68f] CSV v0.10.16
+  [a93c6f00] DataFrames v1.8.2
+⌃ [2e9cd046] Gurobi v1.9.2
+⌃ [87dc4568] HiGHS v1.24.1
+  [2030c09a] InfrastructureModels v0.7.9
+⌃ [b6b21f68] Ipopt v1.15.0
+⌅ [682c06a0] JSON v0.21.4
+⌃ [4076af6c] JuMP v1.31.1
+⌅ [f28f55f0] Memento v1.4.1
+⌃ [91a5bcdd] Plots v1.41.6
+⌃ [c36e90e8] PowerModels v0.21.4
+⌅ [ff45984e] PowerModelsACDC v0.9.4
+  [37e2e46d] LinearAlgebra
+  [de0858da] Printf
+Info Packages marked with ⌃ and ⌅ have new versions available. Those with ⌃ may be upgradable, but those with ⌅ are restricted by compatibility constraints from upgrading. To see why use `status --outdated`

@@ -1,0 +1,111 @@
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+AP2 parser network and matrix: Test Failed at D:\Projekte\Code\FlexPlan_UC_GSCR\test\paper_a_integration.jl:10
+  Expression: nr.B0_reference_residual == 0
+   Evaluated: 1.7763568394002505e-15 == 0
+
+Stacktrace:
+ [1] macro expansion
+   @ C:\Users\User\.julia\juliaup\julia-1.10.11+0.x64.w64.mingw32\share\julia\stdlib\v1.10\Test\src\Test.jl:673 [inlined]
+ [2] macro expansion
+   @ D:\Projekte\Code\FlexPlan_UC_GSCR\test\paper_a_integration.jl:10 [inlined]
+ [3] macro expansion
+   @ C:\Users\User\.julia\juliaup\julia-1.10.11+0.x64.w64.mingw32\share\julia\stdlib\v1.10\Test\src\Test.jl:1582 [inlined]
+ [4] top-level scope
+   @ D:\Projekte\Code\FlexPlan_UC_GSCR\test\paper_a_integration.jl:6
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[error | FlexPlan]: UC/gSCR block template has no formulation assignment for block-enabled GEN device 1 with carrier `GFL` in network 1.
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+AP2 physical sources and planning: Test Failed at D:\Projekte\Code\FlexPlan_UC_GSCR\test\paper_a_integration.jl:85
+  Expression: ≈(JuMP.value(_PM.var(model, 1, :pg, 1)), 0.0, atol = 1.0e-8)
+   Evaluated: 0.29000000000000004 ≈ 0.0 (atol=1.0e-8)
+
+Stacktrace:
+ [1] macro expansion
+   @ C:\Users\User\.julia\juliaup\julia-1.10.11+0.x64.w64.mingw32\share\julia\stdlib\v1.10\Test\src\Test.jl:673 [inlined]
+ [2] macro expansion
+   @ D:\Projekte\Code\FlexPlan_UC_GSCR\test\paper_a_integration.jl:85 [inlined]
+ [3] macro expansion
+   @ C:\Users\User\.julia\juliaup\julia-1.10.11+0.x64.w64.mingw32\share\julia\stdlib\v1.10\Test\src\Test.jl:1582 [inlined]
+ [4] top-level scope
+   @ D:\Projekte\Code\FlexPlan_UC_GSCR\test\paper_a_integration.jl:59
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+Test Summary:                                        | Pass  Fail  Total   Time
+Paper A AP2                                          |  121     2    123  39.8s
+  AP2 regional scientific primitives                 |   18           18   2.8s
+  AP2 parser network and matrix                      |   25     1     26  13.2s
+  AP2 physical sources and planning                  |   35     1     36  13.9s
+  AP2 real G1 optimization and independent residuals |   27           27   2.5s
+  AP2 economic coefficients time and block events    |   16           16   0.4s
+ERROR: LoadError: Some tests did not pass: 121 passed, 2 failed, 0 errored, 0 broken.
+in expression starting at D:\Projekte\Code\FlexPlan_UC_GSCR\test\run_paper_a_ap2.jl:10

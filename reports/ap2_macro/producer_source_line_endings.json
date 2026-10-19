@@ -1,0 +1,6 @@
+{
+  "PublishedSHA256": "a40c138868cd168edb70e5df4d7ad1da125efc97220902d3cf82599b8d4fdbc8",
+  "ManifestAndWorkingSHA256": "56e4899a5683955b8c47cc43b3be1111c6f7689875f1145c317d5f0ad2e5ee6f",
+  "NormalizedTextEqual": true,
+  "Reason": "One mixed LF versus CRLF newline; byte identity is false, normalized text identity is true"
+}

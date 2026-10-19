@@ -1,0 +1,78 @@
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[error | FlexPlan]: UC/gSCR block template has no formulation assignment for block-enabled GEN device 1 with carrier `GFL` in network 1.
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+Test Summary: | Pass  Total   Time
+Paper A AP2   |  123    123  36.6s

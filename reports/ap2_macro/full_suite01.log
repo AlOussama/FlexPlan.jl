@@ -1,0 +1,1527 @@
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x4
+[ PowerModels | Info]: extending matpower format with data: gen_extra 3x2
+[ PowerModels | Info]: extending matpower format with data: busdc 4x9
+[ PowerModels | Info]: extending matpower format with data: convdc 4x35
+[ PowerModels | Info]: extending matpower format with data: convdc_ne 6x38
+[ PowerModels | Info]: extending matpower format with data: ne_storage 2x25
+[ PowerModels | Info]: extending matpower format with data: ndgen 3x8
+[ PowerModels | Info]: extending matpower format with data: busdc_ne 4x9
+[ PowerModels | Info]: extending matpower format with data: load_extra 5x16
+[ PowerModels | Info]: extending matpower format with data: branchdc_ne 3x13
+[ PowerModels | Info]: extending matpower format with data: ne_branch 4x18
+[ PowerModels | Info]: extending matpower format with data: branchdc 2x10
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[ PowerModels | Info]: extending matpower format by appending matrix "gen_extra" in to "gen"
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x4
+[ PowerModels | Info]: extending matpower format with data: gen_extra 3x2
+[ PowerModels | Info]: extending matpower format with data: busdc 4x9
+[ PowerModels | Info]: extending matpower format with data: convdc 4x35
+[ PowerModels | Info]: extending matpower format with data: convdc_ne 6x38
+[ PowerModels | Info]: extending matpower format with data: ne_storage 2x25
+[ PowerModels | Info]: extending matpower format with data: ndgen 3x8
+[ PowerModels | Info]: extending matpower format with data: busdc_ne 4x9
+[ PowerModels | Info]: extending matpower format with data: load_extra 5x16
+[ PowerModels | Info]: extending matpower format with data: branchdc_ne 3x13
+[ PowerModels | Info]: extending matpower format with data: ne_branch 4x18
+[ PowerModels | Info]: extending matpower format with data: branchdc 2x10
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[ PowerModels | Info]: extending matpower format by appending matrix "gen_extra" in to "gen"
+[error | FlexPlan]: UC/gSCR block schema v2 converter output requires `operation_weight`; provide `genericParameters.operation_weight` or `genericParameters.operationWeight` in the source data.
+[error | FlexPlan]: UC/gSCR block schema v2 rejects source field `type` on component <unknown>. Use schema-v2 names only.
+[error | FlexPlan]: UC/gSCR block schema v2 rejects source field `cost_inv_block` on component <unknown>. Use schema-v2 names only.
+[error | FlexPlan]: UC/gSCR block schema v2 rejects source field `startup_block_cost` on component <unknown>. Use schema-v2 names only.
+[error | FlexPlan]: UC/gSCR block schema v2 rejects source field `shutdown_block_cost` on component <unknown>. Use schema-v2 names only.
+[error | FlexPlan]: UC/gSCR block schema v2 rejects source field `activation_policy` on component <unknown>. Use schema-v2 names only.
+[error | FlexPlan]: UC/gSCR block schema v2 rejects source field `uc_policy` on component <unknown>. Use schema-v2 names only.
+[error | FlexPlan]: UC/gSCR block schema v2 rejects source field `gscr_exposure_policy` on component <unknown>. Use schema-v2 names only.
+[error | FlexPlan]: Missing UC/gSCR block CAPEX basis. Set data["uc_gscr_block_cost_convention"]["capex_basis"] to "overnight_per_mw" or "annualized_per_mw_year", or pass uc_gscr_block_capex_basis explicitly to scale_data!.
+[error | FlexPlan]: Expandable UC/gSCR block device requires device-level lifetime. gen 1 is expandable and no case-level lifetime fallback is supported.
+[error | FlexPlan]: UC/gSCR block CAPEX annualization requires `discount_rate` for gen 1; discount_rate must be set on the device or in uc_gscr_block_cost_assumptions.
+[error | FlexPlan]: UC/gSCR block CAPEX annualization requires `fixed_om_percent` for gen 1; fixed_om_percent must be set on the device or in uc_gscr_block_cost_assumptions.
+[error | FlexPlan]: Expandable UC/gSCR block device requires device-level lifetime. gen 1 is expandable and no case-level lifetime fallback is supported.
+[error | FlexPlan]: UC/gSCR block CAPEX basis conflict: metadata declares `overnight_per_mw` but scale_data! was called with `annualized_per_mw_year`. Do not silently override cost convention metadata.
+[ PowerModels | Info]: extending matpower format with data: branch_oltc 17x3
+[ PowerModels | Info]: extending matpower format with data: ne_branch 5x19
+[ PowerModels | Info]: extending matpower format with data: load_extra 13x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "branch_oltc" in to "branch"
+[ PowerModels | Warn]: active generators found at bus 4, updating to bus type from 1 to 2
+[ PowerModels | Warn]: active generators found at bus 6, updating to bus type from 1 to 2
+[ PowerModels | Warn]: active generators found at bus 11, updating to bus type from 1 to 2
+[ PowerModels | Warn]: active generators found at bus 5, updating to bus type from 1 to 2
+[ PowerModels | Warn]: active generators found at bus 7, updating to bus type from 1 to 2
+[ PowerModels | Warn]: active generators found at bus 8, updating to bus type from 1 to 2
+[ PowerModels | Warn]: active generators found at bus 10, updating to bus type from 1 to 2
+[ PowerModels | Warn]: active generators found at bus 9, updating to bus type from 1 to 2
+[ PowerModels | Warn]: active generators found at bus 3, updating to bus type from 1 to 2
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with data: ndgen 1x8
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[error | FlexPlan]: UC/gSCR block template has no formulation assignment for block-enabled GEN device 1 with carrier `GFL` in network 1.
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+AP2 economic coefficients time and block events: Test Failed at D:\Projekte\Code\FlexPlan_UC_GSCR\test\paper_a_integration.jl:270
+  Expression: sum((JuMP.value(_PM.var(model, 1, :pg, g)) for g = (1, 2))) ≈ 0.42
+   Evaluated: 0.4 ≈ 0.42
+
+Stacktrace:
+ [1] macro expansion
+   @ C:\Users\User\.julia\juliaup\julia-1.10.11+0.x64.w64.mingw32\share\julia\stdlib\v1.10\Test\src\Test.jl:673 [inlined]
+ [2] macro expansion
+   @ D:\Projekte\Code\FlexPlan_UC_GSCR\test\paper_a_integration.jl:270 [inlined]
+ [3] macro expansion
+   @ C:\Users\User\.julia\juliaup\julia-1.10.11+0.x64.w64.mingw32\share\julia\stdlib\v1.10\Test\src\Test.jl:1582 [inlined]
+ [4] top-level scope
+   @ D:\Projekte\Code\FlexPlan_UC_GSCR\test\paper_a_integration.jl:199
+[error | FlexPlan]: UC/gSCR block schema v2 validation failed: block data requires block_model_schema.name="uc_gscr_block" and version="2.0".
+[error | FlexPlan]: UC/gSCR block schema v2 validation failed: block_model_schema.name must be "uc_gscr_block".
+[error | FlexPlan]: UC/gSCR block schema v2 validation failed: block_model_schema.version must be "2.0".
+[error | FlexPlan]: UC/gSCR block schema v2 validation failed due to rejected old or policy fields. Rejected-field report: GEN 1: type. Use grid_control_mode and cost_inv_per_mw, and provide formulation policy through a model template.
+[warn | FlexPlan]: GEN device 1 is missing required UC/gSCR block fields: grid_control_mode.
+[error | FlexPlan]: UC/gSCR block schema validation failed due to missing required fields. Missing-field report: GEN 1: grid_control_mode. No silent defaults are applied.
+[error | FlexPlan]: GEN device 1 has invalid UC/gSCR block field `grid_control_mode=grid-forming`. Expected `gfl` or `gfm`.
+[warn | FlexPlan]: GEN device 1 is missing required UC/gSCR block fields: carrier.
+[error | FlexPlan]: UC/gSCR block schema validation failed due to missing required fields. Missing-field report: GEN 1: carrier. No silent defaults are applied.
+[error | FlexPlan]: UC/gSCR block schema v2 validation failed due to rejected old or policy fields. Rejected-field report: GEN 1: startup_block_cost. Use grid_control_mode and cost_inv_per_mw, and provide formulation policy through a model template.
+[error | FlexPlan]: UC/gSCR block schema v2 validation failed due to rejected old or policy fields. Rejected-field report: GEN 1: shutdown_block_cost. Use grid_control_mode and cost_inv_per_mw, and provide formulation policy through a model template.
+[error | FlexPlan]: UC/gSCR block schema v2 validation failed due to rejected old or policy fields. Rejected-field report: GEN 1: cost_inv_block. Use grid_control_mode and cost_inv_per_mw, and provide formulation policy through a model template.
+[error | FlexPlan]: UC/gSCR block schema v2 validation failed due to rejected old or policy fields. Rejected-field report: GEN 1: activation_policy. Use grid_control_mode and cost_inv_per_mw, and provide formulation policy through a model template.
+[error | FlexPlan]: UC/gSCR block schema v2 validation failed due to rejected old or policy fields. Rejected-field report: GEN 1: uc_policy. Use grid_control_mode and cost_inv_per_mw, and provide formulation policy through a model template.
+[error | FlexPlan]: UC/gSCR block schema v2 validation failed due to rejected old or policy fields. Rejected-field report: GEN 1: gscr_exposure_policy. Use grid_control_mode and cost_inv_per_mw, and provide formulation policy through a model template.
+[error | FlexPlan]: GEN device 1 has invalid UC/gSCR active-block initial state: require numeric 0 <= na0 <= n0 <= nmax.
+[error | FlexPlan]: GEN device 1 has invalid UC/gSCR block bounds: require numeric 0 <= n0 <= nmax.
+[error | FlexPlan]: GEN device 1 has invalid UC/gSCR block bounds: require numeric 0 <= n0 <= nmax.
+[error | FlexPlan]: GEN device 1 has invalid `p_block_max=10`. Expected a numeric value.
+[error | FlexPlan]: GEN device 1 has invalid reactive block bounds: q_block_min and q_block_max must be numeric.
+[error | FlexPlan]: GEN device 1 has invalid reactive block bounds: q_block_min and q_block_max must be numeric.
+[error | FlexPlan]: GEN device 1 has invalid `b_block=bad`. Expected a numeric value.
+[error | FlexPlan]: GEN device 1 has invalid `cost_inv_per_mw=bad`. Expected a nonnegative numeric value.
+[error | FlexPlan]: GEN device 1 has invalid `cost_inv_per_mw=-1.0`. Expected a nonnegative numeric value.
+[error | FlexPlan]: GEN device 1 has invalid reactive block bounds: require q_block_min <= q_block_max.
+[error | FlexPlan]: GEN device 1 has invalid expandable UC/gSCR block capacity: require p_block_max > 0 when nmax > n0.
+[error | FlexPlan]: GEN device 1 has invalid scalar active-power per-unit bounds: require 0 <= p_min_pu <= p_max_pu.
+[error | FlexPlan]: GEN device 1 has invalid `p_min_pu`: numeric values must be nonnegative.
+[error | FlexPlan]: GEN device 1 has invalid vector active-power per-unit bounds: require p_min_pu <= p_max_pu at each comparable snapshot.
+[error | FlexPlan]: GEN device 1 has invalid snapshot-keyed active-power per-unit bounds at 2: require p_min_pu <= p_max_pu.
+[error | FlexPlan]: UC/gSCR block schema v2 validation failed: p_max_pu time-series values must be finite numeric values.
+[error | FlexPlan]: UC/gSCR block schema v2 validation failed: network snapshot 1 is missing required field `operation_weight`.
+[warn | FlexPlan]: STORAGE device 1 is missing required UC/gSCR block fields: e_block.
+[error | FlexPlan]: UC/gSCR block schema validation failed due to missing required fields. Missing-field report: STORAGE 1: e_block. No silent defaults are applied.
+[warn | FlexPlan]: NE_STORAGE device 1 is missing required UC/gSCR block fields: e_block.
+[error | FlexPlan]: UC/gSCR block schema validation failed due to missing required fields. Missing-field report: NE_STORAGE 1: e_block. No silent defaults are applied.
+[error | FlexPlan]: UC/gSCR block template has no formulation assignment for block-enabled GEN device 1 with carrier `biomass` in network 1.
+[error | FlexPlan]: UC/gSCR block template has no formulation assignment for block-enabled GEN device 1 with carrier `CCGT` in network 1.
+[error | FlexPlan]: UC/gSCR block template override (:gen, 99) does not reference a block-enabled device in network 1.
+[error | FlexPlan]: UC/gSCR block template carrier assignment uses unsupported table `load`. Supported tables are gen, storage, and ne_storage.
+[error | FlexPlan]: UC/gSCR block template device override uses unsupported table `load`. Supported tables are gen, storage, and ne_storage.
+[error | FlexPlan]: UC/gSCR block template validation failed: GEN device 1 uses BlockThermalCommitment and is missing required field `startup_cost_per_mw`.
+[error | FlexPlan]: UC/gSCR block template validation failed: GershgorinGSCR requires network 1 field `g_min`.
+[error | FlexPlan]: Unsupported UC/gSCR block template gSCR formulation `_UnsupportedTemplateGSCR`.
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[error | FlexPlan]: UC/gSCR block formulation-specific model construction requires a resolved UCGSCRBlockTemplate for network 1. Pass `template=...` to `uc_gscr_block_integration` or call `resolve_uc_gscr_block_template!` before creating block variables or constraints.
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: STORAGE device 3 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: NE_STORAGE device 4 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[error | FlexPlan]: UC/gSCR AC-side extraction is ambiguous: branch 1 endpoint(s) (1, 99) are not present in AC `:bus`.
+[warn | FlexPlan]: GEN device 1 is missing required UC/gSCR block fields: b_block.
+[error | FlexPlan]: UC/gSCR block schema validation failed due to missing required fields. Missing-field report: GEN 1: b_block. No silent defaults are applied.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=0.5 < p_block_max=10.0. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=3) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=0.5 < p_block_max=10.0. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=3) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: UC/gSCR block schema v2 prefers explicit `time_elapsed`; continuing with existing storage default behavior for snapshot 2.
+[warn | FlexPlan]: UC/gSCR block schema v2 prefers explicit `time_elapsed`; continuing with existing storage default behavior for snapshot 1.
+[warn | FlexPlan]: UC/gSCR block schema v2 prefers explicit `time_elapsed`; continuing with existing storage default behavior for snapshot 2.
+[warn | FlexPlan]: UC/gSCR block schema v2 prefers explicit `time_elapsed`; continuing with existing storage default behavior for snapshot 1.
+[warn | FlexPlan]: UC/gSCR block schema v2 prefers explicit `time_elapsed`; continuing with existing storage default behavior for snapshot 2.
+[warn | FlexPlan]: UC/gSCR block schema v2 prefers explicit `time_elapsed`; continuing with existing storage default behavior for snapshot 1.
+[warn | FlexPlan]: UC/gSCR block schema v2 prefers explicit `time_elapsed`; continuing with existing storage default behavior for snapshot 2.
+[warn | FlexPlan]: UC/gSCR block schema v2 prefers explicit `time_elapsed`; continuing with existing storage default behavior for snapshot 1.
+[warn | FlexPlan]: UC/gSCR block schema v2 prefers explicit `time_elapsed`; continuing with existing storage default behavior for snapshot 2.
+[warn | FlexPlan]: UC/gSCR block schema v2 prefers explicit `time_elapsed`; continuing with existing storage default behavior for snapshot 1.
+[warn | FlexPlan]: UC/gSCR block schema v2 prefers explicit `time_elapsed`; continuing with existing storage default behavior for snapshot 2.
+[warn | FlexPlan]: UC/gSCR block schema v2 prefers explicit `time_elapsed`; continuing with existing storage default behavior for snapshot 1.
+[warn | FlexPlan]: UC/gSCR block schema v2 prefers explicit `time_elapsed`; continuing with existing storage default behavior for snapshot 2.
+[warn | FlexPlan]: UC/gSCR block schema v2 prefers explicit `time_elapsed`; continuing with existing storage default behavior for snapshot 1.
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=1.0 < p_block_max=10.0. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=4) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=1.0 < p_block_max=10.0. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=4) to avoid this conflict.
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=1.0 < p_block_max=10.0. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=4) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=1.0 < p_block_max=10.0. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=4) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=1.0 < p_block_max=10.0. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=4) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=1.0 < p_block_max=10.0. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=4) to avoid this conflict.
+[warn | FlexPlan]: UC/gSCR block schema v2 prefers explicit `time_elapsed`; continuing with existing storage default behavior for snapshot 2.
+[warn | FlexPlan]: UC/gSCR block schema v2 prefers explicit `time_elapsed`; continuing with existing storage default behavior for snapshot 1.
+[warn | FlexPlan]: UC/gSCR block schema v2 prefers explicit `time_elapsed`; continuing with existing storage default behavior for snapshot 2.
+[warn | FlexPlan]: UC/gSCR block schema v2 prefers explicit `time_elapsed`; continuing with existing storage default behavior for snapshot 1.
+[warn | FlexPlan]: UC/gSCR block schema v2 prefers explicit `time_elapsed`; continuing with existing storage default behavior for snapshot 2.
+[warn | FlexPlan]: UC/gSCR block schema v2 prefers explicit `time_elapsed`; continuing with existing storage default behavior for snapshot 1.
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=1.0 < p_block_max=2.5. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=4) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=1.0 < p_block_max=2.5. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=4) to avoid this conflict.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: NE_STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=1.0 < p_block_max=2.5. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=4) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=1.0 < p_block_max=2.5. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=4) to avoid this conflict.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: NE_STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=1.0 < p_block_max=2.5. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=4) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=1.0 < p_block_max=2.5. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=4) to avoid this conflict.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: NE_STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=1.0 < p_block_max=2.5. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=4) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=1.0 < p_block_max=2.5. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=4) to avoid this conflict.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: NE_STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=1.0 < p_block_max=2.5. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=4) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=1.0 < p_block_max=2.5. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=4) to avoid this conflict.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: NE_STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: UC/gSCR block field `p_max_pu` is a time series of length 2 but snapshot index nw=5 is out of range or non-numeric. Using default 1.0. Check that the time-series length matches the horizon.
+[warn | FlexPlan]: UC/gSCR block field `p_min_pu` is a time series of length 1 but snapshot index nw=3 is out of range or non-numeric. Using default 0.0. Check that the time-series length matches the horizon.
+[warn | FlexPlan]: UC/gSCR block field `p_max_pu` is a Dict but snapshot key nw=5 (or "5") is missing or non-numeric. Using default 1.0. Check that all snapshot keys are present in the time-series Dict.
+[warn | FlexPlan]: UC/gSCR block field `p_max_pu` has unsupported type String. Expected Number, Vector, Tuple, or Dict. Using default 1.0.
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=1.0 < p_block_max=2.5. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=4) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=1.0 < p_block_max=2.5. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=4) to avoid this conflict.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: NE_STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=1.0 < p_block_max=2.5. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=4) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=1.0 < p_block_max=2.5. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=4) to avoid this conflict.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: NE_STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=1.0 < p_block_max=2.5. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=4) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=1.0 < p_block_max=2.5. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=4) to avoid this conflict.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: NE_STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=1.0 < p_block_max=2.5. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=4) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=1.0 < p_block_max=2.5. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=4) to avoid this conflict.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: NE_STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=1.0 < p_block_max=2.5. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=4) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=1.0 < p_block_max=2.5. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=4) to avoid this conflict.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: NE_STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=1.0 < p_block_max=2.5. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=4) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=1.0 < p_block_max=2.5. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=4) to avoid this conflict.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: NE_STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=1.0 < p_block_max=2.5. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=4) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=1.0 < p_block_max=2.5. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=4) to avoid this conflict.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: NE_STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=1.0 < p_block_max=1.5. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=3) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=1.0 < p_block_max=1.5. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=3) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=1.0 < p_block_max=1.5. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=3) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=1.0 < p_block_max=1.5. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=3) to avoid this conflict.
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=1.0 < p_block_max=1.5. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=3) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=1.0 < p_block_max=1.5. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=3) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=1.0 < p_block_max=1.5. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=3) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=1.0 < p_block_max=1.5. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=3) to avoid this conflict.
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=1.0 < p_block_max=1.5. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=3) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=1.0 < p_block_max=1.5. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=3) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=1.0 < p_block_max=1.5. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=3) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=1.0 < p_block_max=1.5. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=3) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=1.0 < p_block_max=1.5. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=3) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=1.0 < p_block_max=1.5. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=3) to avoid this conflict.
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=1.0 < p_block_max=1.5. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=3) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=1.0 < p_block_max=1.5. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=3) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=1.0 < p_block_max=1.5. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=3) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=1.0 < p_block_max=1.5. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=3) to avoid this conflict.
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[warn | FlexPlan]: STORAGE device 1 is missing required UC/gSCR block fields: cost_inv_per_mw.
+[error | FlexPlan]: UC/gSCR block schema validation failed due to missing required fields. Missing-field report: STORAGE 1: cost_inv_per_mw. No silent defaults are applied.
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[warn | FlexPlan]: GEN device 1 is missing required UC/gSCR block fields: p_block_max.
+[error | FlexPlan]: UC/gSCR block schema validation failed due to missing required fields. Missing-field report: GEN 1: p_block_max. No silent defaults are applied.
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=1.0 < p_block_max=1.5. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=3) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=1.0 < p_block_max=1.5. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=3) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=1.0 < p_block_max=1.5. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=3) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=1.0 < p_block_max=1.5. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=3) to avoid this conflict.
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=1.0 < p_block_max=1.5. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=3) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=1.0 < p_block_max=1.5. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=3) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=1.0 < p_block_max=1.5. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=3) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=1.0 < p_block_max=1.5. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=3) to avoid this conflict.
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with data: ndgen 1x8
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with data: ndgen 1x8
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: UC/gSCR block schema v2 prefers explicit `time_elapsed`; continuing with existing storage default behavior for snapshot 1.
+[warn | FlexPlan]: UC/gSCR block schema v2 prefers explicit `time_elapsed`; continuing with existing storage default behavior for snapshot 1.
+[warn | FlexPlan]: UC/gSCR block schema v2 prefers explicit `time_elapsed`; continuing with existing storage default behavior for snapshot 1.
+[warn | FlexPlan]: UC/gSCR block schema v2 prefers explicit `time_elapsed`; continuing with existing storage default behavior for snapshot 1.
+[error | FlexPlan]: Network 1 is missing required global field `g_min`. The gSCR Gershgorin constraint uses g_min as the minimum strength threshold; no silent default is applied.
+[warn | FlexPlan]: UC/gSCR block schema v2 prefers explicit `time_elapsed`; continuing with existing storage default behavior for snapshot 1.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[error | FlexPlan]: UC/gSCR block formulation-specific model construction requires a resolved UCGSCRBlockTemplate for network 1. Pass `template=...` to `uc_gscr_block_integration` or call `resolve_uc_gscr_block_template!` before creating block variables or constraints.
+[warn | FlexPlan]: UC/gSCR block schema v2 prefers explicit `time_elapsed`; continuing with existing storage default behavior for snapshot 1.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[error | FlexPlan]: UC/gSCR block formulation-specific model construction requires a resolved UCGSCRBlockTemplate for network 1. Pass `template=...` to `uc_gscr_block_integration` or call `resolve_uc_gscr_block_template!` before creating block variables or constraints.
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=1.0 < p_block_max=5.0. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=8.0) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=1.0 < p_block_max=5.0. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=8.0) to avoid this conflict.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: NE_STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=1.0 < p_block_max=5.0. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=8.0) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=1.0 < p_block_max=5.0. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=8.0) to avoid this conflict.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: NE_STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=1.0 < p_block_max=5.0. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=8.0) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=1.0 < p_block_max=5.0. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=8.0) to avoid this conflict.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: NE_STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=1.0 < p_block_max=5.0. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=8.0) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=1.0 < p_block_max=5.0. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=8.0) to avoid this conflict.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: NE_STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=1.0 < p_block_max=5.0. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=8.0) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=1.0 < p_block_max=5.0. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=8.0) to avoid this conflict.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: NE_STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=1.0 < p_block_max=5.0. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=8.0) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=1.0 < p_block_max=5.0. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=8.0) to avoid this conflict.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: NE_STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=1.0 < p_block_max=5.0. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=8.0) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=1.0 < p_block_max=5.0. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=8.0) to avoid this conflict.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: NE_STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=1.0 < p_block_max=5.0. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=8.0) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=1.0 < p_block_max=5.0. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=8.0) to avoid this conflict.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: NE_STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=1.0 < p_block_max=5.0. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=8.0) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=1.0 < p_block_max=5.0. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=8.0) to avoid this conflict.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: NE_STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=1.0 < p_block_max=5.0. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=8.0) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=1.0 < p_block_max=5.0. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=8.0) to avoid this conflict.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: NE_STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[error | FlexPlan]: Unsupported storage_terminal_policy=`bad_policy` in build_uc_gscr_block_integration.
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=1.0 < p_block_max=5.0. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=8.0) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=1.0 < p_block_max=5.0. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=8.0) to avoid this conflict.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: NE_STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=1.0 < p_block_max=5.0. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=8.0) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=1.0 < p_block_max=5.0. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=8.0) to avoid this conflict.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: NE_STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[error | FlexPlan]: Invalid storage_terminal_fraction=-0.1 in build_uc_gscr_block_integration; expected a finite value in [0, 1].
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=1.0 < p_block_max=5.0. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=8.0) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=1.0 < p_block_max=5.0. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=8.0) to avoid this conflict.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: NE_STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=1.0 < p_block_max=5.0. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=8.0) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=1.0 < p_block_max=5.0. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=8.0) to avoid this conflict.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: NE_STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[error | FlexPlan]: Invalid storage_terminal_fraction=1.1 in build_uc_gscr_block_integration; expected a finite value in [0, 1].
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=1.0 < p_block_max=5.0. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=8.0) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=1.0 < p_block_max=5.0. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=8.0) to avoid this conflict.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: NE_STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=1.0 < p_block_max=5.0. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=8.0) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=1.0 < p_block_max=5.0. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=8.0) to avoid this conflict.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: NE_STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: `final_storage_policy` is deprecated in build_uc_gscr_block_integration; use `storage_terminal_policy` instead.
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[error | FlexPlan]: UC/gSCR block template validation failed: GershgorinGSCR requires network 1 field `g_min`.
+[warn | FlexPlan]: UC/gSCR block schema v2 prefers explicit `time_elapsed`; continuing with existing storage default behavior for snapshot 1.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: UC/gSCR block schema v2 prefers explicit `time_elapsed`; continuing with existing storage default behavior for snapshot 1.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: UC/gSCR block schema v2 prefers explicit `time_elapsed`; continuing with existing storage default behavior for snapshot 1.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x4
+[ PowerModels | Info]: extending matpower format with data: gen_extra 3x2
+[ PowerModels | Info]: extending matpower format with data: busdc 4x9
+[ PowerModels | Info]: extending matpower format with data: convdc 4x35
+[ PowerModels | Info]: extending matpower format with data: convdc_ne 6x38
+[ PowerModels | Info]: extending matpower format with data: ne_storage 2x25
+[ PowerModels | Info]: extending matpower format with data: ndgen 3x8
+[ PowerModels | Info]: extending matpower format with data: busdc_ne 4x9
+[ PowerModels | Info]: extending matpower format with data: load_extra 5x16
+[ PowerModels | Info]: extending matpower format with data: branchdc_ne 3x13
+[ PowerModels | Info]: extending matpower format with data: ne_branch 4x18
+[ PowerModels | Info]: extending matpower format with data: branchdc 2x10
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[ PowerModels | Info]: extending matpower format by appending matrix "gen_extra" in to "gen"
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x4
+[ PowerModels | Info]: extending matpower format with data: gen_extra 3x2
+[ PowerModels | Info]: extending matpower format with data: busdc 4x9
+[ PowerModels | Info]: extending matpower format with data: convdc 4x35
+[ PowerModels | Info]: extending matpower format with data: convdc_ne 6x38
+[ PowerModels | Info]: extending matpower format with data: ne_storage 2x25
+[ PowerModels | Info]: extending matpower format with data: ndgen 3x8
+[ PowerModels | Info]: extending matpower format with data: busdc_ne 4x9
+[ PowerModels | Info]: extending matpower format with data: load_extra 5x16
+[ PowerModels | Info]: extending matpower format with data: branchdc_ne 3x13
+[ PowerModels | Info]: extending matpower format with data: ne_branch 4x18
+[ PowerModels | Info]: extending matpower format with data: branchdc 2x10
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[ PowerModels | Info]: extending matpower format by appending matrix "gen_extra" in to "gen"
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=1.0 < p_block_max=5.0. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=8.0) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=1.0 < p_block_max=5.0. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=8.0) to avoid this conflict.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: NE_STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 is missing required UC/gSCR block fields: na0.
+[error | FlexPlan]: UC/gSCR block schema validation failed due to missing required fields. Missing-field report: GEN 1: na0. No silent defaults are applied.
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=0.0 < p_block_max=5.0. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=3) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=0.0 < p_block_max=5.0. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=3) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=0.0 < p_block_max=5.0. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=3) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=0.0 < p_block_max=5.0. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=3) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=0.0 < p_block_max=5.0. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=3) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=0.0 < p_block_max=5.0. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=3) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=0.0 < p_block_max=5.0. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=3) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=0.0 < p_block_max=5.0. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=3) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[error | FlexPlan]: UC/gSCR block storage architecture guard failed. Block-enabled candidate storage must use block variables and block-scaled constraints only; standard FlexPlan candidate-storage binary investment/activation logic is forbidden. table=ne_storage device=1 nw=1 offending variable family=z_strg_ne
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=0.0 < p_block_max=5.0. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=3) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=0.0 < p_block_max=5.0. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=3) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=0.0 < p_block_max=5.0. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=3) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=0.0 < p_block_max=5.0. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=3) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[error | FlexPlan]: UC/gSCR block storage architecture guard failed. Block-enabled candidate storage must use block variables and block-scaled constraints only; standard FlexPlan candidate-storage binary investment/activation logic is forbidden. table=ne_storage device=1 nw=1 offending variable family=z_strg_ne_investment
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=0.0 < p_block_max=5.0. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=3) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=0.0 < p_block_max=5.0. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=3) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=0.0 < p_block_max=5.0. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=3) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=0.0 < p_block_max=5.0. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=3) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[error | FlexPlan]: UC/gSCR block storage architecture guard failed. Block-enabled candidate storage must use block variables and block-scaled constraints only; standard FlexPlan candidate-storage binary investment/activation logic is forbidden. table=ne_storage device=1 nw=1 offending constraint family=ne_storage_activation
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=0.0 < p_block_max=5.0. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=3) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=0.0 < p_block_max=5.0. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=3) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=0.0 < p_block_max=5.0. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=3) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=0.0 < p_block_max=5.0. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=3) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[error | FlexPlan]: UC/gSCR block storage architecture guard failed. Block-enabled candidate storage must use block variables and block-scaled constraints only; standard FlexPlan candidate-storage binary investment/activation logic is forbidden. table=ne_storage device=1 nw=1 offending constraint family=storage_bounds_ne
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with data: ndgen 1x8
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with data: ndgen 1x8
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=1.0 < p_block_max=5.0. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=8) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=1.0 < p_block_max=5.0. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=8) to avoid this conflict.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: NE_STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=1.0 < p_block_max=5.0. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=8) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=1.0 < p_block_max=5.0. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=8) to avoid this conflict.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: NE_STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=1.0 < p_block_max=5.0. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=8) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=1.0 < p_block_max=5.0. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=8) to avoid this conflict.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: NE_STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x4
+[ PowerModels | Info]: extending matpower format with data: gen_extra 3x2
+[ PowerModels | Info]: extending matpower format with data: busdc 4x9
+[ PowerModels | Info]: extending matpower format with data: convdc 4x35
+[ PowerModels | Info]: extending matpower format with data: convdc_ne 6x38
+[ PowerModels | Info]: extending matpower format with data: ne_storage 2x25
+[ PowerModels | Info]: extending matpower format with data: ndgen 3x8
+[ PowerModels | Info]: extending matpower format with data: busdc_ne 4x9
+[ PowerModels | Info]: extending matpower format with data: load_extra 5x16
+[ PowerModels | Info]: extending matpower format with data: branchdc_ne 3x13
+[ PowerModels | Info]: extending matpower format with data: ne_branch 4x18
+[ PowerModels | Info]: extending matpower format with data: branchdc 2x10
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[ PowerModels | Info]: extending matpower format by appending matrix "gen_extra" in to "gen"
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x4
+[ PowerModels | Info]: extending matpower format with data: gen_extra 3x2
+[ PowerModels | Info]: extending matpower format with data: busdc 4x9
+[ PowerModels | Info]: extending matpower format with data: convdc 4x35
+[ PowerModels | Info]: extending matpower format with data: convdc_ne 6x38
+[ PowerModels | Info]: extending matpower format with data: ne_storage 2x25
+[ PowerModels | Info]: extending matpower format with data: ndgen 3x8
+[ PowerModels | Info]: extending matpower format with data: busdc_ne 4x9
+[ PowerModels | Info]: extending matpower format with data: load_extra 5x16
+[ PowerModels | Info]: extending matpower format with data: branchdc_ne 3x13
+[ PowerModels | Info]: extending matpower format with data: ne_branch 4x18
+[ PowerModels | Info]: extending matpower format with data: branchdc 2x10
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[ PowerModels | Info]: extending matpower format by appending matrix "gen_extra" in to "gen"
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x4
+[ PowerModels | Info]: extending matpower format with data: gen_extra 3x2
+[ PowerModels | Info]: extending matpower format with data: busdc 4x9
+[ PowerModels | Info]: extending matpower format with data: convdc 4x35
+[ PowerModels | Info]: extending matpower format with data: convdc_ne 6x38
+[ PowerModels | Info]: extending matpower format with data: ne_storage 2x25
+[ PowerModels | Info]: extending matpower format with data: ndgen 3x8
+[ PowerModels | Info]: extending matpower format with data: busdc_ne 4x9
+[ PowerModels | Info]: extending matpower format with data: load_extra 5x16
+[ PowerModels | Info]: extending matpower format with data: branchdc_ne 3x13
+[ PowerModels | Info]: extending matpower format with data: ne_branch 4x18
+[ PowerModels | Info]: extending matpower format with data: branchdc 2x10
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[ PowerModels | Info]: extending matpower format by appending matrix "gen_extra" in to "gen"
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x4
+[ PowerModels | Info]: extending matpower format with data: gen_extra 3x2
+[ PowerModels | Info]: extending matpower format with data: busdc 4x9
+[ PowerModels | Info]: extending matpower format with data: convdc 4x35
+[ PowerModels | Info]: extending matpower format with data: convdc_ne 6x38
+[ PowerModels | Info]: extending matpower format with data: ne_storage 2x25
+[ PowerModels | Info]: extending matpower format with data: ndgen 3x8
+[ PowerModels | Info]: extending matpower format with data: busdc_ne 4x9
+[ PowerModels | Info]: extending matpower format with data: load_extra 5x16
+[ PowerModels | Info]: extending matpower format with data: branchdc_ne 3x13
+[ PowerModels | Info]: extending matpower format with data: ne_branch 4x18
+[ PowerModels | Info]: extending matpower format with data: branchdc 2x10
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[ PowerModels | Info]: extending matpower format by appending matrix "gen_extra" in to "gen"
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x4
+[ PowerModels | Info]: extending matpower format with data: gen_extra 3x2
+[ PowerModels | Info]: extending matpower format with data: busdc 4x9
+[ PowerModels | Info]: extending matpower format with data: convdc 4x35
+[ PowerModels | Info]: extending matpower format with data: convdc_ne 6x38
+[ PowerModels | Info]: extending matpower format with data: ne_storage 2x25
+[ PowerModels | Info]: extending matpower format with data: ndgen 3x8
+[ PowerModels | Info]: extending matpower format with data: busdc_ne 4x9
+[ PowerModels | Info]: extending matpower format with data: load_extra 5x16
+[ PowerModels | Info]: extending matpower format with data: branchdc_ne 3x13
+[ PowerModels | Info]: extending matpower format with data: ne_branch 4x18
+[ PowerModels | Info]: extending matpower format with data: branchdc 2x10
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[ PowerModels | Info]: extending matpower format by appending matrix "gen_extra" in to "gen"
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x4
+[ PowerModels | Info]: extending matpower format with data: gen_extra 3x2
+[ PowerModels | Info]: extending matpower format with data: busdc 4x9
+[ PowerModels | Info]: extending matpower format with data: convdc 4x35
+[ PowerModels | Info]: extending matpower format with data: convdc_ne 6x38
+[ PowerModels | Info]: extending matpower format with data: ne_storage 2x25
+[ PowerModels | Info]: extending matpower format with data: ndgen 3x8
+[ PowerModels | Info]: extending matpower format with data: busdc_ne 4x9
+[ PowerModels | Info]: extending matpower format with data: load_extra 5x16
+[ PowerModels | Info]: extending matpower format with data: branchdc_ne 3x13
+[ PowerModels | Info]: extending matpower format with data: ne_branch 4x18
+[ PowerModels | Info]: extending matpower format with data: branchdc 2x10
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[ PowerModels | Info]: extending matpower format by appending matrix "gen_extra" in to "gen"
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x4
+[ PowerModels | Info]: extending matpower format with data: convdc 2x35
+[ PowerModels | Info]: extending matpower format with data: busdc 2x9
+[ PowerModels | Info]: extending matpower format with data: convdc_ne 7x38
+[ PowerModels | Info]: extending matpower format with data: ne_storage 5x25
+[ PowerModels | Info]: extending matpower format with data: areas 1x3
+[ PowerModels | Info]: extending matpower format with data: busdc_ne 7x9
+[ PowerModels | Info]: extending matpower format with data: load_extra 37x16
+[ PowerModels | Info]: extending matpower format with data: branchdc_ne 9x13
+[ PowerModels | Info]: extending matpower format with constant data: dcpol
+[ PowerModels | Info]: extending matpower format with data: branchdc 1x10
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[ PowerModels | Warn]: the voltage setpoint on generator 4 does not match the value at bus 5
+[ PowerModels | Warn]: the voltage setpoint on generator 1 does not match the value at bus 1
+[ PowerModels | Warn]: the voltage setpoint on generator 12 does not match the value at bus 41
+[ PowerModels | Warn]: the voltage setpoint on generator 20 does not match the value at bus 67
+[ PowerModels | Warn]: the voltage setpoint on generator 2 does not match the value at bus 2
+[ PowerModels | Warn]: the voltage setpoint on generator 6 does not match the value at bus 13
+[ PowerModels | Warn]: the voltage setpoint on generator 11 does not match the value at bus 36
+[ PowerModels | Warn]: the voltage setpoint on generator 13 does not match the value at bus 43
+[ PowerModels | Warn]: the voltage setpoint on generator 5 does not match the value at bus 10
+[ PowerModels | Warn]: the voltage setpoint on generator 15 does not match the value at bus 56
+[ PowerModels | Warn]: the voltage setpoint on generator 16 does not match the value at bus 59
+[ PowerModels | Warn]: the voltage setpoint on generator 14 does not match the value at bus 50
+[ PowerModels | Warn]: the voltage setpoint on generator 7 does not match the value at bus 18
+[ PowerModels | Warn]: the voltage setpoint on generator 8 does not match the value at bus 25
+[ PowerModels | Warn]: the voltage setpoint on generator 17 does not match the value at bus 63
+[ PowerModels | Warn]: the voltage setpoint on generator 10 does not match the value at bus 33
+[ PowerModels | Warn]: the voltage setpoint on generator 19 does not match the value at bus 66
+[ PowerModels | Warn]: the voltage setpoint on generator 9 does not match the value at bus 29
+[ PowerModels | Warn]: the voltage setpoint on generator 18 does not match the value at bus 64
+[ PowerModels | Warn]: the voltage setpoint on generator 3 does not match the value at bus 4
+C/D. Capacity-expansion checks and multi-system benchmark report: Error During Test at D:\Projekte\Code\FlexPlan_UC_GSCR\test\uc_gscr_block_benchmarks.jl:616
+  Got exception outside of a @test
+  MethodError: no method matching warn(::Base.RefValue{Logging.ConsoleLogger}, ::String)
+  
+  Closest candidates are:
+    warn(!Matched::Logger, ::AbstractString, !Matched::Exception)
+     @ Memento C:\Users\User\.julia\packages\Memento\xnHxE\src\loggers.jl:540
+    warn(!Matched::Logger, ::AbstractString)
+     @ Memento C:\Users\User\.julia\packages\Memento\xnHxE\src\loggers.jl:430
+  
+  Stacktrace:
+    [1] check_conv_parameters(conv::Dict{String, Any})
+      @ PowerModelsACDC C:\Users\User\.julia\packages\PowerModelsACDC\czJD3\src\core\data.jl:681
+    [2] fix_data_single_network!(data::Dict{String, Any}; tnep::Bool)
+      @ PowerModelsACDC C:\Users\User\.julia\packages\PowerModelsACDC\czJD3\src\core\data.jl:533
+    [3] fix_data_single_network!
+      @ C:\Users\User\.julia\packages\PowerModelsACDC\czJD3\src\core\data.jl:528 [inlined]
+    [4] #fix_data!#111
+      @ C:\Users\User\.julia\packages\PowerModelsACDC\czJD3\src\core\data.jl:522 [inlined]
+    [5] fix_data!
+      @ C:\Users\User\.julia\packages\PowerModelsACDC\czJD3\src\core\data.jl:519 [inlined]
+    [6] process_additional_data!(data::Dict{String, Any}; tnep::Bool)
+      @ PowerModelsACDC C:\Users\User\.julia\packages\PowerModelsACDC\czJD3\src\core\data.jl:41
+    [7] process_additional_data!
+      @ C:\Users\User\.julia\packages\PowerModelsACDC\czJD3\src\core\data.jl:27 [inlined]
+    [8] parse_file(file::String; flex_load::Bool, kwargs::@Kwargs{})
+      @ FlexPlan D:\Projekte\Code\FlexPlan_UC_GSCR\src\io\parse.jl:29
+    [9] parse_file
+      @ D:\Projekte\Code\FlexPlan_UC_GSCR\src\io\parse.jl:16 [inlined]
+   [10] create_multi_year_network_data(case::String, number_of_hours::Int64, number_of_scenarios::Int64, number_of_years::Int64; year_scale_factor::Int64, cost_scale_factor::Float64, init_data_extensions::Vector{var"#247#249"}, sn_data_extensions::Vector{var"#248#250"{Symbol, Symbol, Float64}}, share_data::Bool, kwargs::@Kwargs{})
+      @ Main D:\Projekte\Code\FlexPlan_UC_GSCR\test\io\multiple_years.jl:80
+   [11] create_multi_year_network_data
+      @ D:\Projekte\Code\FlexPlan_UC_GSCR\test\io\multiple_years.jl:30 [inlined]
+   [12] #load_case67#31
+      @ D:\Projekte\Code\FlexPlan_UC_GSCR\test\io\load_case.jl:130 [inlined]
+   [13] load_case67
+      @ D:\Projekte\Code\FlexPlan_UC_GSCR\test\io\load_case.jl:101 [inlined]
+   [14] #_bench_case67_data#246
+      @ D:\Projekte\Code\FlexPlan_UC_GSCR\test\uc_gscr_block_benchmarks.jl:203 [inlined]
+   [15] _bench_case67_data
+      @ D:\Projekte\Code\FlexPlan_UC_GSCR\test\uc_gscr_block_benchmarks.jl:202 [inlined]
+   [16] (::var"#274#282")(mode::String, g::Float64)
+      @ Main D:\Projekte\Code\FlexPlan_UC_GSCR\test\uc_gscr_block_benchmarks.jl:658
+   [17] macro expansion
+      @ D:\Projekte\Code\FlexPlan_UC_GSCR\test\uc_gscr_block_benchmarks.jl:667 [inlined]
+   [18] macro expansion
+      @ C:\Users\User\.julia\juliaup\julia-1.10.11+0.x64.w64.mingw32\share\julia\stdlib\v1.10\Test\src\Test.jl:1582 [inlined]
+   [19] macro expansion
+      @ D:\Projekte\Code\FlexPlan_UC_GSCR\test\uc_gscr_block_benchmarks.jl:617 [inlined]
+   [20] macro expansion
+      @ C:\Users\User\.julia\juliaup\julia-1.10.11+0.x64.w64.mingw32\share\julia\stdlib\v1.10\Test\src\Test.jl:1582 [inlined]
+   [21] top-level scope
+      @ D:\Projekte\Code\FlexPlan_UC_GSCR\test\uc_gscr_block_benchmarks.jl:510
+   [22] include(fname::String)
+      @ Base.MainInclude .\client.jl:487
+   [23] macro expansion
+      @ D:\Projekte\Code\FlexPlan_UC_GSCR\test\runtests.jl:47 [inlined]
+   [24] macro expansion
+      @ C:\Users\User\.julia\juliaup\julia-1.10.11+0.x64.w64.mingw32\share\julia\stdlib\v1.10\Test\src\Test.jl:1582 [inlined]
+   [25] top-level scope
+      @ D:\Projekte\Code\FlexPlan_UC_GSCR\test\runtests.jl:24
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x4
+[ PowerModels | Info]: extending matpower format with data: gen_extra 3x2
+[ PowerModels | Info]: extending matpower format with data: busdc 4x9
+[ PowerModels | Info]: extending matpower format with data: convdc 4x35
+[ PowerModels | Info]: extending matpower format with data: convdc_ne 6x38
+[ PowerModels | Info]: extending matpower format with data: ne_storage 2x25
+[ PowerModels | Info]: extending matpower format with data: ndgen 3x8
+[ PowerModels | Info]: extending matpower format with data: busdc_ne 4x9
+[ PowerModels | Info]: extending matpower format with data: load_extra 5x16
+[ PowerModels | Info]: extending matpower format with data: branchdc_ne 3x13
+[ PowerModels | Info]: extending matpower format with data: ne_branch 4x18
+[ PowerModels | Info]: extending matpower format with data: branchdc 2x10
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[ PowerModels | Info]: extending matpower format by appending matrix "gen_extra" in to "gen"
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x4
+[ PowerModels | Info]: extending matpower format with data: gen_extra 3x2
+[ PowerModels | Info]: extending matpower format with data: busdc 4x9
+[ PowerModels | Info]: extending matpower format with data: convdc 4x35
+[ PowerModels | Info]: extending matpower format with data: convdc_ne 6x38
+[ PowerModels | Info]: extending matpower format with data: ne_storage 3x25
+[ PowerModels | Info]: extending matpower format with data: ndgen 3x8
+[ PowerModels | Info]: extending matpower format with data: busdc_ne 4x9
+[ PowerModels | Info]: extending matpower format with data: load_extra 5x16
+[ PowerModels | Info]: extending matpower format with data: branchdc_ne 3x13
+[ PowerModels | Info]: extending matpower format with data: ne_branch 4x18
+[ PowerModels | Info]: extending matpower format with data: branchdc 2x10
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[ PowerModels | Info]: extending matpower format by appending matrix "gen_extra" in to "gen"
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x4
+[ PowerModels | Info]: extending matpower format with data: gen_extra 3x2
+[ PowerModels | Info]: extending matpower format with data: busdc 4x9
+[ PowerModels | Info]: extending matpower format with data: convdc 4x35
+[ PowerModels | Info]: extending matpower format with data: convdc_ne 7x38
+[ PowerModels | Info]: extending matpower format with data: ne_storage 3x25
+[ PowerModels | Info]: extending matpower format with data: ndgen 3x8
+[ PowerModels | Info]: extending matpower format with data: busdc_ne 5x9
+[ PowerModels | Info]: extending matpower format with data: load_extra 5x16
+[ PowerModels | Info]: extending matpower format with data: branchdc_ne 4x13
+[ PowerModels | Info]: extending matpower format with data: ne_branch 4x18
+[ PowerModels | Info]: extending matpower format with data: branchdc 2x10
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[ PowerModels | Info]: extending matpower format by appending matrix "gen_extra" in to "gen"
+[ PowerModels | Info]: extending matpower format with data: storage_extra 3x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 3x26
+[ PowerModels | Info]: extending matpower format with data: ndgen 13x8
+[ PowerModels | Info]: extending matpower format with data: branch_oltc 17x3
+[ PowerModels | Info]: extending matpower format with data: load_extra 13x17
+[ PowerModels | Info]: extending matpower format with data: ne_branch 17x19
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[ PowerModels | Info]: extending matpower format by appending matrix "branch_oltc" in to "branch"
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x4
+[ PowerModels | Info]: extending matpower format with data: gen_extra 3x2
+[ PowerModels | Info]: extending matpower format with data: busdc 4x9
+[ PowerModels | Info]: extending matpower format with data: convdc 4x35
+[ PowerModels | Info]: extending matpower format with data: convdc_ne 6x38
+[ PowerModels | Info]: extending matpower format with data: ne_storage 2x25
+[ PowerModels | Info]: extending matpower format with data: ndgen 3x8
+[ PowerModels | Info]: extending matpower format with data: busdc_ne 4x9
+[ PowerModels | Info]: extending matpower format with data: load_extra 5x16
+[ PowerModels | Info]: extending matpower format with data: branchdc_ne 3x13
+[ PowerModels | Info]: extending matpower format with data: ne_branch 4x18
+[ PowerModels | Info]: extending matpower format with data: branchdc 2x10
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[ PowerModels | Info]: extending matpower format by appending matrix "gen_extra" in to "gen"
+[ PowerModels | Info]: extending matpower format with data: storage_extra 3x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 3x26
+[ PowerModels | Info]: extending matpower format with data: ndgen 13x8
+[ PowerModels | Info]: extending matpower format with data: branch_oltc 17x3
+[ PowerModels | Info]: extending matpower format with data: load_extra 13x17
+[ PowerModels | Info]: extending matpower format with data: ne_branch 17x19
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[ PowerModels | Info]: extending matpower format by appending matrix "branch_oltc" in to "branch"
+Test Summary:                                                        | Pass  Fail  Error  Total     Time
+FlexPlan                                                             | 5968     1      1   5970  3m41.2s
+  Multinetwork dimensions                                            |  173                 173    10.6s
+  Input-ouput                                                        |   90                  90  1m12.5s
+  BFARadPowerModel                                                   |   39                  39     2.8s
+  Generator model                                                    |   20                  20     1.1s
+  Load model                                                         |  397                 397     0.6s
+  Storage model                                                      |   64                  64     0.3s
+  AP2 regional scientific primitives                                 |   18                  18     2.1s
+  AP2 parser network and matrix                                      |   26                  26     5.1s
+  AP2 physical sources and planning                                  |   46                  46    10.6s
+  AP2 real G1 optimization and independent residuals                 |   31                  31     0.5s
+  AP2 economic coefficients time and block events                    |   22     1            23     2.3s
+  UC/gSCR block schema v2 validation                                 |   37                  37     0.8s
+  UC/gSCR block model template                                       |   50                  50     0.3s
+  UC/gSCR block formulation-specific constraints                     |   33                  33     0.6s
+  UC/gSCR block reference extension                                  |   47                  47     0.6s
+  UC/gSCR block variables                                            |   80                  80     0.9s
+  UC/gSCR dispatch bounds constraints                                |   60                  60     2.7s
+  UC/gSCR block objective term                                       |   37                  37     0.1s
+  UC/gSCR Gershgorin sufficient constraint                           |   12                  12     0.8s
+  UC/gSCR integrated solve path                                      |  181                 181     3.3s
+  UC/gSCR block benchmark suite                                      |   61            1     62     4.5s
+    A. OPF compatibility and active-path guardrails                  |   18                  18     0.9s
+    B. UC scheduling focused checks                                  |   26                  26     0.3s
+    C/D. Capacity-expansion checks and multi-system benchmark report |   17            1     18     3.2s
+  PyPSA-derived FlexPlan dataset optimizer acceptance                | 4378                4378     4.7s
+  PyPSA standard OPF infeasibility diagnostics                       |    1                   1     6.1s
+  Problem                                                            |   16                  16    48.8s
+  T&D decoupling                                                     |   46                  46    13.9s
+  Export                                                             |    3                   3     0.0s
+ERROR: LoadError: Some tests did not pass: 5968 passed, 1 failed, 1 errored, 0 broken.
+in expression starting at D:\Projekte\Code\FlexPlan_UC_GSCR\test\runtests.jl:18

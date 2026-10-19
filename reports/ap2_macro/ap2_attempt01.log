@@ -1,0 +1,139 @@
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+AP2 parser network and matrix: Error During Test at D:\Projekte\Code\FlexPlan_UC_GSCR\test\paper_a_integration.jl:5
+  Got exception outside of a @test
+  ArgumentError: missing/nonfinite physical field baseMVA
+  Stacktrace:
+    [1] number(d::Dict{String, Any}, f::String; positive::Bool, nonnegative::Bool)
+      @ FlexPlan.PaperARegional D:\Projekte\Code\FlexPlan_UC_GSCR\src\core\paper_a_regional.jl:90
+    [2] number
+      @ D:\Projekte\Code\FlexPlan_UC_GSCR\src\core\paper_a_regional.jl:88 [inlined]
+    [3] prepare_paper_a_data!(data::Dict{String, Any})
+      @ FlexPlan D:\Projekte\Code\FlexPlan_UC_GSCR\src\core\paper_a_integration.jl:55
+    [4] _ap2_fixture(; hours::Int64, alpha::Float64, conn::Float64, res::Float64)
+      @ Main D:\Projekte\Code\FlexPlan_UC_GSCR\test\paper_a_fixtures.jl:66
+    [5] _ap2_fixture()
+      @ Main D:\Projekte\Code\FlexPlan_UC_GSCR\test\paper_a_fixtures.jl:29
+    [6] macro expansion
+      @ D:\Projekte\Code\FlexPlan_UC_GSCR\test\paper_a_integration.jl:6 [inlined]
+    [7] macro expansion
+      @ C:\Users\User\.julia\juliaup\julia-1.10.11+0.x64.w64.mingw32\share\julia\stdlib\v1.10\Test\src\Test.jl:1582 [inlined]
+    [8] top-level scope
+      @ D:\Projekte\Code\FlexPlan_UC_GSCR\test\paper_a_integration.jl:6
+    [9] include(fname::String)
+      @ Base.MainInclude .\client.jl:487
+   [10] macro expansion
+      @ D:\Projekte\Code\FlexPlan_UC_GSCR\test\run_paper_a_ap2.jl:12 [inlined]
+   [11] macro expansion
+      @ C:\Users\User\.julia\juliaup\julia-1.10.11+0.x64.w64.mingw32\share\julia\stdlib\v1.10\Test\src\Test.jl:1582 [inlined]
+   [12] top-level scope
+      @ D:\Projekte\Code\FlexPlan_UC_GSCR\test\run_paper_a_ap2.jl:11
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+AP2 physical sources and planning: Error During Test at D:\Projekte\Code\FlexPlan_UC_GSCR\test\paper_a_integration.jl:58
+  Got exception outside of a @test
+  ArgumentError: missing/nonfinite physical field baseMVA
+  Stacktrace:
+    [1] number(d::Dict{String, Any}, f::String; positive::Bool, nonnegative::Bool)
+      @ FlexPlan.PaperARegional D:\Projekte\Code\FlexPlan_UC_GSCR\src\core\paper_a_regional.jl:90
+    [2] number
+      @ D:\Projekte\Code\FlexPlan_UC_GSCR\src\core\paper_a_regional.jl:88 [inlined]
+    [3] prepare_paper_a_data!(data::Dict{String, Any})
+      @ FlexPlan D:\Projekte\Code\FlexPlan_UC_GSCR\src\core\paper_a_integration.jl:55
+    [4] _ap2_fixture(; hours::Int64, alpha::Float64, conn::Float64, res::Float64)
+      @ Main D:\Projekte\Code\FlexPlan_UC_GSCR\test\paper_a_fixtures.jl:66
+    [5] _ap2_fixture
+      @ D:\Projekte\Code\FlexPlan_UC_GSCR\test\paper_a_fixtures.jl:29 [inlined]
+    [6] macro expansion
+      @ D:\Projekte\Code\FlexPlan_UC_GSCR\test\paper_a_integration.jl:70 [inlined]
+    [7] macro expansion
+      @ C:\Users\User\.julia\juliaup\julia-1.10.11+0.x64.w64.mingw32\share\julia\stdlib\v1.10\Test\src\Test.jl:1582 [inlined]
+    [8] top-level scope
+      @ D:\Projekte\Code\FlexPlan_UC_GSCR\test\paper_a_integration.jl:59
+    [9] include(fname::String)
+      @ Base.MainInclude .\client.jl:487
+   [10] macro expansion
+      @ D:\Projekte\Code\FlexPlan_UC_GSCR\test\run_paper_a_ap2.jl:12 [inlined]
+   [11] macro expansion
+      @ C:\Users\User\.julia\juliaup\julia-1.10.11+0.x64.w64.mingw32\share\julia\stdlib\v1.10\Test\src\Test.jl:1582 [inlined]
+   [12] top-level scope
+      @ D:\Projekte\Code\FlexPlan_UC_GSCR\test\run_paper_a_ap2.jl:11
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+AP2 real G1 optimization and independent residuals: Error During Test at D:\Projekte\Code\FlexPlan_UC_GSCR\test\paper_a_integration.jl:111
+  Got exception outside of a @test
+  ArgumentError: missing/nonfinite physical field baseMVA
+  Stacktrace:
+    [1] number(d::Dict{String, Any}, f::String; positive::Bool, nonnegative::Bool)
+      @ FlexPlan.PaperARegional D:\Projekte\Code\FlexPlan_UC_GSCR\src\core\paper_a_regional.jl:90
+    [2] number
+      @ D:\Projekte\Code\FlexPlan_UC_GSCR\src\core\paper_a_regional.jl:88 [inlined]
+    [3] prepare_paper_a_data!(data::Dict{String, Any})
+      @ FlexPlan D:\Projekte\Code\FlexPlan_UC_GSCR\src\core\paper_a_integration.jl:55
+    [4] _ap2_fixture(; hours::Int64, alpha::Float64, conn::Float64, res::Float64)
+      @ Main D:\Projekte\Code\FlexPlan_UC_GSCR\test\paper_a_fixtures.jl:66
+    [5] macro expansion
+      @ D:\Projekte\Code\FlexPlan_UC_GSCR\test\paper_a_integration.jl:114 [inlined]
+    [6] macro expansion
+      @ C:\Users\User\.julia\juliaup\julia-1.10.11+0.x64.w64.mingw32\share\julia\stdlib\v1.10\Test\src\Test.jl:1582 [inlined]
+    [7] top-level scope
+      @ D:\Projekte\Code\FlexPlan_UC_GSCR\test\paper_a_integration.jl:112
+    [8] include(fname::String)
+      @ Base.MainInclude .\client.jl:487
+    [9] macro expansion
+      @ D:\Projekte\Code\FlexPlan_UC_GSCR\test\run_paper_a_ap2.jl:12 [inlined]
+   [10] macro expansion
+      @ C:\Users\User\.julia\juliaup\julia-1.10.11+0.x64.w64.mingw32\share\julia\stdlib\v1.10\Test\src\Test.jl:1582 [inlined]
+   [11] top-level scope
+      @ D:\Projekte\Code\FlexPlan_UC_GSCR\test\run_paper_a_ap2.jl:11
+[ PowerModels | Info]: extending matpower format with data: storage_extra 1x5
+[ PowerModels | Info]: extending matpower format with data: ne_storage 1x26
+[ PowerModels | Info]: extending matpower format with data: load_extra 1x17
+[ PowerModels | Info]: extending matpower format with constant data: time_elapsed
+[ PowerModels | Info]: extending matpower format by appending matrix "storage_extra" in to "storage"
+AP2 economic coefficients time and block events: Error During Test at D:\Projekte\Code\FlexPlan_UC_GSCR\test\paper_a_integration.jl:158
+  Got exception outside of a @test
+  ArgumentError: missing/nonfinite physical field baseMVA
+  Stacktrace:
+    [1] number(d::Dict{String, Any}, f::String; positive::Bool, nonnegative::Bool)
+      @ FlexPlan.PaperARegional D:\Projekte\Code\FlexPlan_UC_GSCR\src\core\paper_a_regional.jl:90
+    [2] number
+      @ D:\Projekte\Code\FlexPlan_UC_GSCR\src\core\paper_a_regional.jl:88 [inlined]
+    [3] prepare_paper_a_data!(data::Dict{String, Any})
+      @ FlexPlan D:\Projekte\Code\FlexPlan_UC_GSCR\src\core\paper_a_integration.jl:55
+    [4] _ap2_fixture(; hours::Int64, alpha::Float64, conn::Float64, res::Float64)
+      @ Main D:\Projekte\Code\FlexPlan_UC_GSCR\test\paper_a_fixtures.jl:66
+    [5] _ap2_fixture
+      @ D:\Projekte\Code\FlexPlan_UC_GSCR\test\paper_a_fixtures.jl:29 [inlined]
+    [6] macro expansion
+      @ D:\Projekte\Code\FlexPlan_UC_GSCR\test\paper_a_integration.jl:159 [inlined]
+    [7] macro expansion
+      @ C:\Users\User\.julia\juliaup\julia-1.10.11+0.x64.w64.mingw32\share\julia\stdlib\v1.10\Test\src\Test.jl:1582 [inlined]
+    [8] top-level scope
+      @ D:\Projekte\Code\FlexPlan_UC_GSCR\test\paper_a_integration.jl:159
+    [9] include(fname::String)
+      @ Base.MainInclude .\client.jl:487
+   [10] macro expansion
+      @ D:\Projekte\Code\FlexPlan_UC_GSCR\test\run_paper_a_ap2.jl:12 [inlined]
+   [11] macro expansion
+      @ C:\Users\User\.julia\juliaup\julia-1.10.11+0.x64.w64.mingw32\share\julia\stdlib\v1.10\Test\src\Test.jl:1582 [inlined]
+   [12] top-level scope
+      @ D:\Projekte\Code\FlexPlan_UC_GSCR\test\run_paper_a_ap2.jl:11
+Test Summary:                                        | Pass  Error  Total   Time
+Paper A AP2                                          |   27      4     31  18.9s
+  AP2 regional scientific primitives                 |   18            18   2.8s
+  AP2 parser network and matrix                      |           1      1   9.8s
+  AP2 physical sources and planning                  |    9      1     10   0.1s
+  AP2 real G1 optimization and independent residuals |           1      1   0.1s
+  AP2 economic coefficients time and block events    |           1      1   0.1s
+ERROR: LoadError: Some tests did not pass: 27 passed, 0 failed, 4 errored, 0 broken.
+in expression starting at D:\Projekte\Code\FlexPlan_UC_GSCR\test\run_paper_a_ap2.jl:10

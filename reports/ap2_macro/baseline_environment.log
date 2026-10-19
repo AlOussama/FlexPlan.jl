@@ -1,0 +1,100 @@
+1.10.11
+  Installing known registries into `D:\Projekte\Code\C2A_Execution_Lock\depot-resolution-20260730`
+       Added `General` registry to D:\Projekte\Code\C2A_Execution_Lock\depot-resolution-20260730\registries
+Project FlexPlan v0.4.1
+Status `D:\Projekte\Code\FlexPlan_UC_GSCR\Project.toml`
+→⌃ [336ed68f] CSV v0.10.16
+→  [a93c6f00] DataFrames v1.8.2
+→⌃ [2e9cd046] Gurobi v1.9.2
+→⌃ [87dc4568] HiGHS v1.24.1
+→  [2030c09a] InfrastructureModels v0.7.9
+→⌃ [b6b21f68] Ipopt v1.15.0
+→⌃ [682c06a0] JSON v1.6.1
+→⌃ [4076af6c] JuMP v1.31.1
+→⌅ [f28f55f0] Memento v1.4.1
+→⌃ [91a5bcdd] Plots v1.41.6
+→⌃ [c36e90e8] PowerModels v0.21.6
+→⌅ [ff45984e] PowerModelsACDC v0.9.4
+   [de0858da] Printf
+Info Packages marked with → are not downloaded, use `instantiate` to download
+Info Packages marked with ⌃ and ⌅ have new versions available. Those with ⌃ may be upgradable, but those with ⌅ are restricted by compatibility constraints from upgrading. To see why use `status --outdated`
+ERROR: LoadError: ArgumentError: Package Memento [f28f55f0-a522-5efc-85c2-fe41dfb9b2d9] is required but does not seem to be installed:
+ - Run `Pkg.instantiate()` to install all recorded dependencies.
+
+Stacktrace:
+  [1] _require(pkg::Base.PkgId, env::String)
+    @ Base .\loading.jl:2000
+  [2] __require_prelocked(uuidkey::Base.PkgId, env::String)
+    @ Base .\loading.jl:1886
+  [3] #invoke_in_world#3
+    @ .\essentials.jl:926 [inlined]
+  [4] invoke_in_world
+    @ .\essentials.jl:923 [inlined]
+  [5] _require_prelocked(uuidkey::Base.PkgId, env::String)
+    @ Base .\loading.jl:1877
+  [6] macro expansion
+    @ .\loading.jl:1864 [inlined]
+  [7] macro expansion
+    @ .\lock.jl:270 [inlined]
+  [8] __require(into::Module, mod::Symbol)
+    @ Base .\loading.jl:1827
+  [9] #invoke_in_world#3
+    @ .\essentials.jl:926 [inlined]
+ [10] invoke_in_world
+    @ .\essentials.jl:923 [inlined]
+ [11] require(into::Module, mod::Symbol)
+    @ Base .\loading.jl:1820
+ [12] include
+    @ .\Base.jl:495 [inlined]
+ [13] include_package_for_output(pkg::Base.PkgId, input::String, depot_path::Vector{String}, dl_load_path::Vector{String}, load_path::Vector{String}, concrete_deps::Vector{Pair{Base.PkgId, UInt128}}, source::Nothing)
+    @ Base .\loading.jl:2306
+ [14] top-level scope
+    @ stdin:5
+in expression starting at D:\Projekte\Code\FlexPlan_UC_GSCR\src\FlexPlan.jl:1
+in expression starting at stdin:5
+ERROR: Failed to precompile FlexPlan [4dc3fedf-fcb4-4327-bce2-523fd266e8c9] to "D:\\Projekte\\Code\\C2A_Execution_Lock\\depot-resolution-20260730\\compiled\\v1.10\\FlexPlan\\jl_2C9E.tmp".
+Stacktrace:
+  [1] error(s::String)
+    @ Base .\error.jl:35
+  [2] compilecache(pkg::Base.PkgId, path::String, internal_stderr::IO, internal_stdout::IO, keep_loaded_modules::Bool; loadable_exts::Nothing)
+    @ Base .\loading.jl:2547
+  [3] compilecache
+    @ .\loading.jl:2414 [inlined]
+  [4] (::Base.var"#973#974"{Base.PkgId})()
+    @ Base .\loading.jl:2058
+  [5] mkpidlock(f::Base.var"#973#974"{Base.PkgId}, at::String, pid::Int32; kwopts::@Kwargs{stale_age::Int64, wait::Bool})
+    @ FileWatching.Pidfile C:\Users\User\.julia\juliaup\julia-1.10.11+0.x64.w64.mingw32\share\julia\stdlib\v1.10\FileWatching\src\pidfile.jl:93
+  [6] #mkpidlock#6
+    @ C:\Users\User\.julia\juliaup\julia-1.10.11+0.x64.w64.mingw32\share\julia\stdlib\v1.10\FileWatching\src\pidfile.jl:88 [inlined]
+  [7] trymkpidlock(::Function, ::Vararg{Any}; kwargs::@Kwargs{stale_age::Int64})
+    @ FileWatching.Pidfile C:\Users\User\.julia\juliaup\julia-1.10.11+0.x64.w64.mingw32\share\julia\stdlib\v1.10\FileWatching\src\pidfile.jl:111
+  [8] #invokelatest#2
+    @ .\essentials.jl:894 [inlined]
+  [9] invokelatest
+    @ .\essentials.jl:889 [inlined]
+ [10] maybe_cachefile_lock(f::Base.var"#973#974"{Base.PkgId}, pkg::Base.PkgId, srcpath::String; stale_age::Int64)
+    @ Base .\loading.jl:3062
+ [11] maybe_cachefile_lock
+    @ .\loading.jl:3059 [inlined]
+ [12] _require(pkg::Base.PkgId, env::String)
+    @ Base .\loading.jl:2044
+ [13] __require_prelocked(uuidkey::Base.PkgId, env::String)
+    @ Base .\loading.jl:1886
+ [14] #invoke_in_world#3
+    @ .\essentials.jl:926 [inlined]
+ [15] invoke_in_world
+    @ .\essentials.jl:923 [inlined]
+ [16] _require_prelocked(uuidkey::Base.PkgId, env::String)
+    @ Base .\loading.jl:1877
+ [17] macro expansion
+    @ .\loading.jl:1864 [inlined]
+ [18] macro expansion
+    @ .\lock.jl:270 [inlined]
+ [19] __require(into::Module, mod::Symbol)
+    @ Base .\loading.jl:1827
+ [20] #invoke_in_world#3
+    @ .\essentials.jl:926 [inlined]
+ [21] invoke_in_world
+    @ .\essentials.jl:923 [inlined]
+ [22] require(into::Module, mod::Symbol)
+    @ Base .\loading.jl:1820

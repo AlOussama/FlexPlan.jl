@@ -1,0 +1,24 @@
+schema_version: paper_a_ap2_status_1.0
+work_package: AP2
+verdict: AP2_partial
+baseline_flexplan_master: 991d0e99627b9bd57b3df476c66141ae6bb5163d
+ap1_producer_head_read: 00b259da66f084e00d53c5dc1be4d23de145fdc1
+science_freeze: 672a61c95525bf1d7a03cf745a754a15a23ce78b
+schema_valid: unverified
+economic_data_valid: unverified
+theorem_domain_valid: unverified
+ap2_model_ready: false
+ap3_interface_ready: false
+ap4_ready: false
+standalone_regional_helpers_added: true
+integrated_into_optimizer: false
+julia_tests_executed: false
+solver_tests_executed: false
+blockers:
+  - physical_positive_sequence_primitive_y_builder_missing
+  - ap1_versioned_parser_migration_missing
+  - flexplan_template_and_optimization_integration_missing
+  - dispatch_and_event_economic_weights_missing
+  - ap1_real_economic_source_evidence_missing
+  - no_julia_runtime_for_testing
+  - sc_mva_mvar_and_cost_support_missing

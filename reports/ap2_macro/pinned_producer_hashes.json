@@ -1,0 +1,188 @@
+[
+  {
+    "Family": "paper_a_ap1",
+    "Case": "base_s_5_ap1_24snap",
+    "SHA256": "eedfead1535146b920b529545e9282e6a21fd9b912d8ad764f629705f50cd1ce",
+    "ManifestCaseHashValid": true,
+    "ExecutionSHA": "991c34445f602df14592fdd0f51b5e67d3ddd782",
+    "DirtyExecution": true,
+    "PublicationSHA": "32ff4525dc576af52c16298cb35ebd98f02cf8b2",
+    "SourceChecks": [
+      {
+        "Source": "paper_a_ap1.jl",
+        "Matches": true
+      },
+      {
+        "Source": "pypsa_import.jl",
+        "Matches": false
+      },
+      {
+        "Source": "generate_flexplan_datasets.jl",
+        "Matches": true
+      },
+      {
+        "Source": "PyPSA2Matpower.jl",
+        "Matches": true
+      },
+      {
+        "Source": "block_gscr_converter.jl",
+        "Matches": true
+      }
+    ]
+  },
+  {
+    "Family": "paper_a_ap1",
+    "Case": "base_s_5_ap1_3snap",
+    "SHA256": "0b4bdcabdf4ee96817fbf4268d6061d9b690d1f2e93672fabe13a8812cc4d0a4",
+    "ManifestCaseHashValid": true,
+    "ExecutionSHA": "991c34445f602df14592fdd0f51b5e67d3ddd782",
+    "DirtyExecution": true,
+    "PublicationSHA": "32ff4525dc576af52c16298cb35ebd98f02cf8b2",
+    "SourceChecks": [
+      {
+        "Source": "paper_a_ap1.jl",
+        "Matches": true
+      },
+      {
+        "Source": "pypsa_import.jl",
+        "Matches": false
+      },
+      {
+        "Source": "generate_flexplan_datasets.jl",
+        "Matches": true
+      },
+      {
+        "Source": "PyPSA2Matpower.jl",
+        "Matches": true
+      },
+      {
+        "Source": "block_gscr_converter.jl",
+        "Matches": true
+      }
+    ]
+  },
+  {
+    "Family": "paper_a_ap1",
+    "Case": "base_s_5_ap1_6snap",
+    "SHA256": "cd591744bec8f1cafade10ead00bc6495c6330b7be0d37b44fb723c26a86286a",
+    "ManifestCaseHashValid": true,
+    "ExecutionSHA": "991c34445f602df14592fdd0f51b5e67d3ddd782",
+    "DirtyExecution": true,
+    "PublicationSHA": "32ff4525dc576af52c16298cb35ebd98f02cf8b2",
+    "SourceChecks": [
+      {
+        "Source": "paper_a_ap1.jl",
+        "Matches": true
+      },
+      {
+        "Source": "pypsa_import.jl",
+        "Matches": false
+      },
+      {
+        "Source": "generate_flexplan_datasets.jl",
+        "Matches": true
+      },
+      {
+        "Source": "PyPSA2Matpower.jl",
+        "Matches": true
+      },
+      {
+        "Source": "block_gscr_converter.jl",
+        "Matches": true
+      }
+    ]
+  },
+  {
+    "Family": "paper_a_ap1_synthetic",
+    "Case": "synthetic_ap1_24snap",
+    "SHA256": "e1db71e670833cd1ca189e2618970c0dde56b7d1ca38e58651b0d12f54296fad",
+    "ManifestCaseHashValid": true,
+    "ExecutionSHA": "991c34445f602df14592fdd0f51b5e67d3ddd782",
+    "DirtyExecution": true,
+    "PublicationSHA": "32ff4525dc576af52c16298cb35ebd98f02cf8b2",
+    "SourceChecks": [
+      {
+        "Source": "paper_a_ap1.jl",
+        "Matches": true
+      },
+      {
+        "Source": "pypsa_import.jl",
+        "Matches": false
+      },
+      {
+        "Source": "generate_flexplan_datasets.jl",
+        "Matches": true
+      },
+      {
+        "Source": "PyPSA2Matpower.jl",
+        "Matches": true
+      },
+      {
+        "Source": "block_gscr_converter.jl",
+        "Matches": true
+      }
+    ]
+  },
+  {
+    "Family": "paper_a_ap1_synthetic",
+    "Case": "synthetic_ap1_3snap",
+    "SHA256": "dea805ed2af505e8d302f0316dd7d54dfb42e0d6bb861f611c1d5f4ae99c45a5",
+    "ManifestCaseHashValid": true,
+    "ExecutionSHA": "991c34445f602df14592fdd0f51b5e67d3ddd782",
+    "DirtyExecution": true,
+    "PublicationSHA": "32ff4525dc576af52c16298cb35ebd98f02cf8b2",
+    "SourceChecks": [
+      {
+        "Source": "paper_a_ap1.jl",
+        "Matches": true
+      },
+      {
+        "Source": "pypsa_import.jl",
+        "Matches": false
+      },
+      {
+        "Source": "generate_flexplan_datasets.jl",
+        "Matches": true
+      },
+      {
+        "Source": "PyPSA2Matpower.jl",
+        "Matches": true
+      },
+      {
+        "Source": "block_gscr_converter.jl",
+        "Matches": true
+      }
+    ]
+  },
+  {
+    "Family": "paper_a_ap1_synthetic",
+    "Case": "synthetic_ap1_6snap",
+    "SHA256": "1e6529f4dc22c9e9decd8153510f5b84703ab544715fd282f143f0e94396f0f6",
+    "ManifestCaseHashValid": true,
+    "ExecutionSHA": "991c34445f602df14592fdd0f51b5e67d3ddd782",
+    "DirtyExecution": true,
+    "PublicationSHA": "32ff4525dc576af52c16298cb35ebd98f02cf8b2",
+    "SourceChecks": [
+      {
+        "Source": "paper_a_ap1.jl",
+        "Matches": true
+      },
+      {
+        "Source": "pypsa_import.jl",
+        "Matches": false
+      },
+      {
+        "Source": "generate_flexplan_datasets.jl",
+        "Matches": true
+      },
+      {
+        "Source": "PyPSA2Matpower.jl",
+        "Matches": true
+      },
+      {
+        "Source": "block_gscr_converter.jl",
+        "Matches": true
+      }
+    ]
+  }
+]
