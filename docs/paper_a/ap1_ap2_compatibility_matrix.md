@@ -1,5 +1,20 @@
 # AP1 1.0 → AP2 producer/consumer compatibility matrix
 
+## Additive Strang B contract — 2026-10-20
+
+The [parameter qualification annex](parameter_qualification_annex.md) binds ID/version/hashes to the external canonical producer registry. Historical rows below retain their pinned-input semantics.
+
+| New contract field | Consumer obligation | Evidence |
+|---|---|---|
+| `paper_a_parameter_qualification.parameter_registry_id/version/parameter_registry_sha256` | Exact registered ID/version; actual-byte hash; complete qualified selected rows | `register_paper_a_parameters!`; hash/missing/mutation negatives |
+| `scenario_config_sha256`, `scenario_id`, `source_baseline_sha` | Verify scenario bytes, unique ID, baseline and snapshot count | Canonical scenario registration |
+| `qualification_scope/status/evidence_class` | Require explicit `:parametric_study`; reject strict/synthetic misuse | No global permission or empirical promotion |
+| Asset ratings/counts/minima/source/multipliers/connection/resource/price fields | Compare canonical raw fields and post-normalization/scaling values; recheck at model build | Full registered producer-to-solver acceptance |
+| `investment_period_fraction` | Reuse annual CAPEX scaler with declared fraction once; independent dispatch/event weights | Objective decomposition and repeated-scaling rejection |
+| `parametric_selectable` | Separate parametrically priced resource from empirical `selectable_priced` | Existing real economic flags remain unverified |
+| Non-DC `link` descriptions | Preserve as an ignored metadata list to avoid interpreting names as component IDs | Actual five-bus parse/build; no H2 physics introduced |
+| Named network assumptions | Permit only declared conditional inventory/reference issues; retain false theorem-domain flag | Hard-domain negative and B0/G1 residual checks |
+
 Producer authority: `32ff4525dc576af52c16298cb35ebd98f02cf8b2`. `case` means the multinetwork root; `sn` means `case.nw[t]`; `device` means sn.gen/storage/ne_storage[id]. Tests: P = `test/paper_a_integration.jl`; F = `test/run_paper_a_ap1_acceptance.jl`; R = `test/paper_a_producer_gate.jl`; L = retained legacy test suites. Outcomes are backed by the current validation report and raw logs; real-study approval is separate.
 
 | Producer field/location | Unit/base | Reader and model use | Validation | PA/X and test |

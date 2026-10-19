@@ -1,0 +1,24 @@
+Strang B registered AP1 to AP2 parametric acceptance: Error During Test at D:\Projekte\Code\FlexPlan_StrangB\test\run_paper_a_parameter_acceptance.jl:31
+  Got exception outside of a @test
+  MethodError: no method matching haskey(::JuMP.Containers.DenseAxisArray{VariableRef, 1, Tuple{Vector{Tuple{Symbol, Int64}}}, Tuple{JuMP.Containers._AxisLookup{Dict{Tuple{Symbol, Int64}, Int64}}}}, ::Tuple{Symbol, Int64})
+  
+  Closest candidates are:
+    haskey(!Matched::LibGit2.CachedCredentials, ::Any)
+     @ LibGit2 C:\Users\User\.julia\juliaup\julia-1.10.11+0.x64.w64.mingw32\share\julia\stdlib\v1.10\LibGit2\src\types.jl:1309
+    haskey(!Matched::Pkg.Types.Manifest, ::Any)
+     @ Pkg C:\Users\User\.julia\juliaup\julia-1.10.11+0.x64.w64.mingw32\share\julia\stdlib\v1.10\Pkg\src\Types.jl:322
+    haskey(!Matched::REPL.Terminals.TTYTerminal, ::Any)
+     @ REPL C:\Users\User\.julia\juliaup\julia-1.10.11+0.x64.w64.mingw32\share\julia\stdlib\v1.10\REPL\src\Terminals.jl:159
+    ...
+  
+  Stacktrace:
+   [1] macro expansion
+     @ D:\Projekte\Code\FlexPlan_StrangB\test\run_paper_a_parameter_acceptance.jl:109 [inlined]
+   [2] macro expansion
+     @ C:\Users\User\.julia\juliaup\julia-1.10.11+0.x64.w64.mingw32\share\julia\stdlib\v1.10\Test\src\Test.jl:1582 [inlined]
+   [3] top-level scope
+     @ D:\Projekte\Code\FlexPlan_StrangB\test\run_paper_a_parameter_acceptance.jl:32
+Test Summary:                                        | Pass  Error  Total   Time
+Strang B registered AP1 to AP2 parametric acceptance |   24      1     25  44.4s
+ERROR: LoadError: Some tests did not pass: 24 passed, 0 failed, 1 errored, 0 broken.
+in expression starting at D:\Projekte\Code\FlexPlan_StrangB\test\run_paper_a_parameter_acceptance.jl:31

@@ -1,0 +1,56 @@
+Strang B registered AP1 to AP2 parametric acceptance: Test Failed at D:\Projekte\Code\FlexPlan_StrangB\test\run_paper_a_parameter_acceptance.jl:47
+  Expression: FP._paper_a_validate_registered!(bad)
+    Expected: ArgumentError
+  No exception thrown
+
+Stacktrace:
+ [1] macro expansion
+   @ D:\Projekte\Code\FlexPlan_StrangB\test\run_paper_a_parameter_acceptance.jl:47 [inlined]
+ [2] macro expansion
+   @ C:\Users\User\.julia\juliaup\julia-1.10.11+0.x64.w64.mingw32\share\julia\stdlib\v1.10\Test\src\Test.jl:1582 [inlined]
+ [3] top-level scope
+   @ D:\Projekte\Code\FlexPlan_StrangB\test\run_paper_a_parameter_acceptance.jl:32
+Strang B registered AP1 to AP2 parametric acceptance: Error During Test at D:\Projekte\Code\FlexPlan_StrangB\test\run_paper_a_parameter_acceptance.jl:31
+  Got exception outside of a @test
+  ArgumentError: invalid base 10 digit 'B' in "BE0 1 H2 Fuel Cell"
+  Stacktrace:
+    [1] tryparse_internal(::Type{Int64}, s::String, startpos::Int64, endpos::Int64, base_::Int64, raise::Bool)
+      @ Base .\parse.jl:143
+    [2] parse(::Type{Int64}, s::String; base::Nothing)
+      @ Base .\parse.jl:254
+    [3] parse
+      @ .\parse.jl:253 [inlined]
+    [4] #5
+      @ .\none:0 [inlined]
+    [5] iterate
+      @ .\generator.jl:47 [inlined]
+    [6] collect(itr::Base.Generator{Dict{String, Any}, InfrastructureModels.var"#5#6"})
+      @ Base .\array.jl:834
+    [7] _populate_ref_it!(refs::Dict{Symbol, Any}, data_it::Dict{String, Any}, global_keys::Set{String}, it::String)
+      @ InfrastructureModels C:\Users\User\.julia\packages\InfrastructureModels\3h9nD\src\core\base.jl:213
+    [8] ref_initialize(data::Dict{String, Any}, it::String, global_keys::Set{String})
+      @ InfrastructureModels C:\Users\User\.julia\packages\InfrastructureModels\3h9nD\src\core\base.jl:148
+    [9] InitializeInfrastructureModel(InfrastructureModel::Type{PowerModels.DCPPowerModel}, data::Dict{String, Any}, global_keys::Set{String}, it::Symbol; ext::Dict{Symbol, Any}, setting::Dict{String, Any}, jump_model::Model)
+      @ InfrastructureModels C:\Users\User\.julia\packages\InfrastructureModels\3h9nD\src\core\base.jl:83
+   [10] InitializeInfrastructureModel(InfrastructureModel::Type, data::Dict{String, Any}, global_keys::Set{String}, it::Symbol)
+      @ InfrastructureModels C:\Users\User\.julia\packages\InfrastructureModels\3h9nD\src\core\base.jl:77
+   [11] instantiate_model(data::Dict{String, Any}, model_type::Type, build_method::var"#2#4"{Bool, FlexPlan.UCGSCRBlockTemplate}, ref_add_core!::typeof(PowerModels.ref_add_core!), global_keys::Set{String}, it::Symbol; ref_extensions::Vector{Function}, kwargs::@Kwargs{})
+      @ InfrastructureModels C:\Users\User\.julia\packages\InfrastructureModels\3h9nD\src\core\base.jl:356
+   [12] instantiate_model
+      @ C:\Users\User\.julia\packages\InfrastructureModels\3h9nD\src\core\base.jl:350 [inlined]
+   [13] #instantiate_model#292
+      @ C:\Users\User\.julia\packages\PowerModels\LnSmr\src\core\base.jl:48 [inlined]
+   [14] instantiate_model
+      @ C:\Users\User\.julia\packages\PowerModels\LnSmr\src\core\base.jl:47 [inlined]
+   [15] #build#1
+      @ D:\Projekte\Code\FlexPlan_StrangB\test\run_paper_a_parameter_acceptance.jl:21 [inlined]
+   [16] macro expansion
+      @ D:\Projekte\Code\FlexPlan_StrangB\test\run_paper_a_parameter_acceptance.jl:68 [inlined]
+   [17] macro expansion
+      @ C:\Users\User\.julia\juliaup\julia-1.10.11+0.x64.w64.mingw32\share\julia\stdlib\v1.10\Test\src\Test.jl:1582 [inlined]
+   [18] top-level scope
+      @ D:\Projekte\Code\FlexPlan_StrangB\test\run_paper_a_parameter_acceptance.jl:32
+Test Summary:                                        | Pass  Fail  Error  Total   Time
+Strang B registered AP1 to AP2 parametric acceptance |   20     1      1     22  17.1s
+ERROR: LoadError: Some tests did not pass: 20 passed, 1 failed, 1 errored, 0 broken.
+in expression starting at D:\Projekte\Code\FlexPlan_StrangB\test\run_paper_a_parameter_acceptance.jl:31

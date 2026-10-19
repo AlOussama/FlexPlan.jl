@@ -1,0 +1,19 @@
+{
+  "execution_input_head": "725de2e6c1cea21f63902474f72ec614b2358356",
+  "worktree_dirty_during_tests": true,
+  "julia": "1.10.11",
+  "source_hashes": {
+    "Project.toml": "22596ca52228698ffb5c3589d64353806e6cbc4e5453cce03bcbe2da64b523a8",
+    "Manifest-v1.10.toml": "c8e0a5faadf2415b681383f5f1529fdb6a50a7058e9f709c6315dbf77980481a",
+    "src/FlexPlan.jl": "b3d887f38092783354b747937312900a63a4dcc0a63ab0245a646a539d3faee0",
+    "src/core/paper_a_integration.jl": "8088203b5cdc06a6ad8f85caef2f18ee83a253247b2616bb45043f51f80a2d14",
+    "src/core/paper_a_qualification.jl": "4a8a18efe9c6245cfb7856404ec17e68b8a6539b6b1a7d3f5ebb072c3e6efb82",
+    "src/core/block_template.jl": "a5e0ce8f2cde43c68596176807e851387a730fea08d72bacaadf398ee155eedb",
+    "test/run_paper_a_parameter_acceptance.jl": "1e12f45a853ff0b7be541ebff319d58eb5892f0fe15a3b2305a8d5c5dc542213",
+    "test/run_paper_a_parameter_network_audit.jl": "cad63d8a7032a35c16f4389be4103cabc3757d9b94222f6939246a5330bb35d1"
+  },
+  "publication_anchor": "this commit; final cross-repository pins in producer handoff",
+  "producer_published_registry_anchor_sha": "3b8fdb01d931225edc5f8fe1e2c200d0da288a09",
+  "parameter_registry_id": "paper_a_strang_b_v1",
+  "annex_version": "paper_a_parameter_qualification/1.0"
+}

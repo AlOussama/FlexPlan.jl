@@ -1,0 +1,29 @@
+# Strang B consumer validation — 2026-10-20
+
+Outcome: **qualified_parametric**, scientific design conditional, empirical approval false. Exact numerical input authority is producer anchor **3b8fdb01d931225edc5f8fe1e2c200d0da288a09**, linked in the [binding annex](../../docs/paper_a/parameter_qualification_annex.md). Registry/scenario hashes are repeated as identities in `parametric_acceptance.json`, `acceptance_summary.json` and the annex; numerical inputs remain solely in the producer.
+
+Baseline: FlexPlan `725de2e6c1cea21f63902474f72ec614b2358356`; worktree `D:/Projekte/Code/FlexPlan_StrangB`, branch `integration/paper-a-parameter-qualification-v1`. Producer input baseline `b30faaa7fa1708028ff83e08e926476f47170b1e`. Canonical ID `paper_a_strang_b_v1`, version `paper_a_parameter_qualification/1.0`. Full publication pins and science-record SHA are in the final producer cross-repository handoff.
+
+Production changes reuse the existing parser normalization, CAPEX scaler, physical Y/Schur builder, source/exposure expressions, G1 and UC/storage solver path. The new external registration checks ID/version/hashes, required selected rows and actual parameters before scaling and at model construction. Explicit `:parametric_study` permission is local to the data object. Strict/synthetic misuse, missing content despite a changed hash, altered source/count/connection/prices, invalid scope/status and hard domain defects fail. Non-DC link descriptions are preserved as a metadata list, avoiding InfrastructureModels' numeric-component-key interpretation. No H2 physical model, new formulation or AP3 G0/G3/M0 is added.
+
+Actual Julia **1.10.11** environment: JuMP 1.31.1, HiGHS 1.24.1, HiGHS_jll 1.15.1+1, PowerModels 0.21.4, InfrastructureModels 0.7.9, CSV 0.10.16, JSON 0.21.4. `package_versions.log` records all resolved packages. SHA/TOML are made explicit stdlib dependencies; `Manifest-v1.10.toml` changes only its Project hash, with no package version changes.
+
+| Executed command (repository project) | Result / log |
+|---|---|
+| `test/runtests.jl` | 5987/5987; `full_regression_published_sources.log` is the final frozen-source run; prior successful runs retained |
+| `test/run_paper_a_ap2.jl` | 153/153; `ap2_targeted_final.log` |
+| `test/run_paper_a_ap1_acceptance.jl PRODUCER/data OUTPUT` | 51/51; `historical_producer_solver_final.log/json`; 3 historical integer INFEASIBLE and 3 LP OPTIMAL |
+| `test/run_paper_a_parameter_acceptance.jl PRODUCER OUTPUT` | 291/291; `parametric_acceptance_attempt03.log`, `parametric_acceptance.json`; 9 new MILP +9 LP OPTIMAL |
+| `test/run_paper_a_parameter_network_audit.jl PRODUCER OUTPUT` | 54/54; `network_audit.log/json`; physical real/imaginary Y, L, B0 and Schur |
+
+Commands use `--startup-file=no --project=.` and the pinned Julia installation. Full commands, including producer path, are in the annex. `consumer_source_hashes.json` identifies published source bytes. These are worker executions, not an invented independent review. Expected negative-test diagnostics in full regression logs do not indicate failed suites. Old generated benchmark/report outputs are preserved under `legacy_report_outputs/`; their original tracked versions are restored.
+
+Failed parametric attempts are preserved: attempt01 exposed an irrelevant SYN mu_fl mutation test and nonnumeric link-metadata keys; attempt02 reached an optimal integer solution but its residual reporter incorrectly called `haskey` on a JuMP DenseAxisArray. Both were fixed; attempt03 completed all 291 checks. No unqualified failed attempt is promoted to a successful result.
+
+Over all 18 new solves: maximum power residual `7.638334409421077e-12 MW`, SOC `2.012415134155567e-11 MWh`, terminal `0`, G1 violation `4.4164671919588727e-13`, source/exposure-expression residuals `0/0`, B0 comparison `0`, connection violation `3.860150651477082e-14`, integrality residual `4.618527782440651e-13`, block-bound violation `0`, objective decomposition residual `2.427026629447937e-6 EUR`. Y-real/Y-imag/L/Schur diagnostics are separately recorded; the new five-bus cases have identity aggregation and no eliminated buses. Nontrivial Schur regression remains in the retained AP2 tests.
+
+`test/summarize_paper_a_parameter_residuals.ps1 -ProducerRoot D:/Projekte/Code/pypsatomatpowerx` reproduces `normalized_residuals.json` from the solver outputs and verified case bytes. It states characteristic scales explicitly. Maximum normalized power/peak-demand residual is `6.487459148268936e-16`, SOC/largest-installed-storage residual `3.129058250683255e-15`, cost/objective residual `7.811943322063914e-13`, and G1/installed-source-scale residual `7.701782416662601e-16`. This is postprocessing of the same independent residuals, not another solver run or a new tolerance.
+
+Reference 3-snapshot MILP objective is `2535123.94949411`, LP `2534119.64773424`; MILP selects two priced BESS-GFM blocks at BE0 3 (200 MW). Longer horizons and independent source/multiplier/cost/threshold/connection/event-price stresses are separately recorded. The event-price sensitivity produces positive, independently reconciled event costs. These are short-horizon illustrative EUR cost allocations, not calibrated annual-planning results.
+
+Gate outcome: `ap1_ap2_interface=pass`, `parametric_case_ready=true`, `parametric_economic_data_valid=true`, `empirical_study_ready=false`, `economic_data_valid=false` for empirical data, `theorem_domain_valid=false`, `ap3_input_contract_ready=true` for explicitly registered parametric input only, `A3_closed=false`, `AP4_ready=false`. Conditional no-extra-shunt/no-embedded-source/floating-network assumptions do not prove empirical inventories or frozen theorem hypotheses. DCP optimality does not establish full AC feasibility or low-SOC GFM reserve adequacy. Historical AP1_partial/AP2_partial records remain unchanged.

@@ -1,5 +1,7 @@
 # Paper A AP2 to AP3 interface
 
+**Additive Strang B handoff, 2026-10-20:** The [parameter qualification annex](parameter_qualification_annex.md) now binds the canonical producer ID/version/registry/scenario hashes and explicit `:parametric_study` registration. AP3 may use these technically checked illustrative inputs only with the same scope and their conditional assumptions. See `reports/strang_b/validation.md` and `parametric_acceptance.json` for actual MILP/LP evidence and separate gates. Source/cost completeness for this scope does not approve empirical parameters, theorem domains, AP3 G0/G3/M0, A3 or AP4. Existing regional/G1 interfaces below are reused unchanged. Final scientific design approval remains with the owner.
+
 This is an interface handoff for qualified AP1 cases, not acceptance of AP3, G0/G3/M0, or a real study. Overall AP2 closure remains conditional on the external producer/data gates in the validation report.
 
 `ref_add_uc_gscr_block!` creates for every AP1 snapshot:

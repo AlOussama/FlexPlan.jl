@@ -35,7 +35,7 @@ function UCGSCRBlockTemplate(
     paper_a_validation_scope::Symbol=:strict,
     storage_cost_policy::Symbol=:reject,
 )
-    paper_a_validation_scope in (:strict,:synthetic_regression) || throw(ArgumentError("unsupported Paper-A validation scope"))
+    paper_a_validation_scope in (:strict,:synthetic_regression,:parametric_study) || throw(ArgumentError("unsupported Paper-A validation scope"))
     storage_cost_policy in (:reject,:discharge) || throw(ArgumentError("unsupported storage variable-cost policy"))
     carrier_map = Dict{Tuple{Symbol,Any},AbstractBlockDeviceFormulation}()
     for (key, formulation) in carrier_formulations

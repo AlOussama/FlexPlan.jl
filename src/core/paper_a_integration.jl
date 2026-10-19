@@ -61,6 +61,12 @@ function prepare_paper_a_data!(data::Dict{String,Any})
     for sn in values(snapshots)
         get(sn,"baseMVA",base)==base || throw(ArgumentError("snapshot baseMVA mismatch"))
         sn["baseMVA"]=base
+        if get(data["paper_a_extension"],"dataset_kind",nothing)=="parametric_study" && haskey(sn,"link")
+            # Producer non-DC links are explicitly ignored source metadata.
+            # IM treats dictionaries of dictionaries as numbered component
+            # tables; retain these descriptions as a list instead.
+            sn["paper_a_ignored_link_metadata"]=[Dict("source_name"=>name,"metadata"=>dev) for (name,dev) in pop!(sn,"link")]
+        end
         for table in ("gen","bus","branch","load","storage","ne_storage","shunt","switch","dcline")
             get!(sn,table,Dict{String,Any}())
             for (id,component) in sn[table]
@@ -119,12 +125,18 @@ function _paper_a_add_reference!(nw_ref,data,nw;validation_scope=:strict)
     net=get(data,"paper_a_network",get(sn,"paper_a_network",nothing))
     net isa AbstractDict || throw(ArgumentError("missing physical paper_a_network"))
     synthetic=validation_scope==:synthetic_regression
-    validation_scope in (:strict,:synthetic_regression) || throw(ArgumentError("unsupported validation scope"))
+    parametric=validation_scope==:parametric_study
+    validation_scope in (:strict,:synthetic_regression,:parametric_study) || throw(ArgumentError("unsupported validation scope"))
+    if parametric
+        _paper_a_validate_registered!(data)
+    elseif haskey(data,"paper_a_parameter_qualification") || get(data["paper_a_extension"],"dataset_kind",nothing)=="parametric_study"
+        throw(ArgumentError("parametric data requires explicit parametric_study scope"))
+    end
     if synthetic
         get(data["paper_a_extension"],"dataset_kind",nothing)=="synthetic_regression_only" || throw(ArgumentError("synthetic regression scope cannot be used on real/unclassified input"))
         all(i=="grounding_reference_unverified" for i in net["passive_domain_issues"]) || throw(ArgumentError("synthetic regression still requires verified shunt/source inventories"))
     end
-    regional=PaperARegional.network_reference(net,nw_ref[:bus],base;diagnostic_only=synthetic)
+    regional=PaperARegional.network_reference(net,nw_ref[:bus],base;diagnostic_only=synthetic || parametric)
     temporal=_paper_a_temporal(data,nw)
     if haskey(data,"dim")
         isapprox(dim_prop(data,nw,:scenario,"probability"),temporal.probability;atol=1e-9) || throw(ArgumentError("AP1 scenario dimension/temporal probability mismatch"))
@@ -202,7 +214,10 @@ function scale_paper_a_costs!(data::Dict{String,Any}; cost_scale_factor::Real=1.
         for key in ("uc_gscr_block_cost_convention","uc_gscr_block_cost_assumptions")
             if !haskey(sn,key) && haskey(data,key);sn[key]=deepcopy(data[key]);end
         end
-        _scale_uc_gscr_block_investment_cost_data!(sn,1,cost_scale_factor,:from_data)
+        parametric=get(data["paper_a_extension"],"dataset_kind",nothing)=="parametric_study"
+        parametric && _paper_a_validate_registered!(data)
+        fraction=parametric ? data["investment_period_fraction"] : 1.
+        _scale_uc_gscr_block_investment_cost_data!(sn,fraction,cost_scale_factor,:from_data)
         for gen in values(sn["gen"])
             get(gen,"model",nothing)==2 && length(gen["cost"])==2 && gen["cost"][end]==0 || throw(ArgumentError("AP1 supports linear hourly generation cost with zero constant only"))
             _PM._apply_func!(gen,"cost",x->x*t.dispatch*cost_scale_factor)
@@ -217,6 +232,8 @@ function scale_paper_a_costs!(data::Dict{String,Any}; cost_scale_factor::Real=1.
         sn["paper_a_cost_state"]="weighted"
         sn["paper_a_applied_weights"]=[t.dispatch,t.event]
         sn["paper_a_capex_scaled"]=true
+        sn["paper_a_investment_fraction_applied"]=fraction
+        sn["paper_a_currency_factor"]=cost_scale_factor
     end
     return data
 end

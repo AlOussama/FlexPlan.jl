@@ -1,0 +1,23 @@
+{
+  "case_count": 18,
+  "optimal_count": 18,
+  "milp_count": 9,
+  "lp_count": 9,
+  "registry_sha256": "a249f7a96d202798c6ff5778c1fa1571eba59a3717bac5d25b150d2a6c41bce9",
+  "scenario_config_sha256": "be9d9d9aa90e9790fc7c3554bc1107777a5ba743f4f95d8f675acd9bfeb1e75a",
+  "maxima": {
+    "power_balance_MW_residual": 7.638334409421077E-12,
+    "soc_MWh_residual": 2.012415134155567E-11,
+    "terminal_MWh_residual": 0.0,
+    "G1_violation": 4.4164671919588727E-13,
+    "source_expression_residual": 0.0,
+    "exposure_expression_residual": 0.0,
+    "B0_residual": 0.0,
+    "connection_violation": 3.860150651477082E-14,
+    "integrality_residual": 4.618527782440651E-13,
+    "block_bound_violation": 0.0,
+    "cost_residual": 2.427026629447937E-06
+  },
+  "empirical_approved": false,
+  "theorem_domain_valid": false
+}
