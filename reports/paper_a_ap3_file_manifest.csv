@@ -1066,7 +1066,7 @@
 "reports/paper_a_ap3_export.log","0","e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855","e69de29bb2d1d6434b8b29ae775ad8c2e48c5391","hashed_working_tree_bytes_and_index_blob"
 "reports/paper_a_ap3_file_manifest.csv","","","","self_hash_excluded_to_avoid_cycle"
 "reports/paper_a_ap3_index_verification.json","540","c7ec592ff3a38b023afc57d86f04466fcd488b58fbd4d90d4e7e5dfa5094de20","5d9f09b70089ea603320bfe3809a86e990dffc40","hashed_working_tree_bytes_and_index_blob"
-"reports/paper_a_ap3_publication.md","","","","publication_receipt_generated_after_remote_verification"
+"reports/paper_a_ap3_publication.md","4179","7c2baa57cfb975c45726903cd6930f9c419dec084582433f1ad48f7793c89cd1","7c9d389f449facfdbaab1a852a11498b751d3b21","hashed_working_tree_bytes_and_index_blob"
 "reports/paper_a_ap3_status.yaml","6179","281d0023fb234582eba81095594ccd0c6476612ca731a0bcebc0f982e2eff313","2eb1b9f7db0917ea30158817c0ee035c40b9e288","hashed_working_tree_bytes_and_index_blob"
 "reports/paper_a_ap3_validation.md","24553","b35467ee1f328f38d40e0759bcf376cd7329df5c5d60f67ce0a0328bef02f12d","f430e5c519ae0892e91cca0697ba0f00c7a64475","hashed_working_tree_bytes_and_index_blob"
 "scripts/paper_a/ap3.jl","49","c32dd84e9f572ddbad0cdc9a969799be4513a289dae73594e71e948dfb16e512","9c87618e06105a187f125a15cfdceda3637b30e4","hashed_working_tree_bytes_and_index_blob"
