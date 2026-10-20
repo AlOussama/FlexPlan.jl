@@ -104,10 +104,28 @@ function modelstats(m)
 end
 function solve!(pm,optimizer;objective_scale=nothing)
     m=pm.model;original=JuMP.objective_function(m)
+    solver_objective=original;rebased=0
+    if optimizer!==HiGHS.Optimizer && optimizer!==Clarabel.Optimizer && optimizer!==Gurobi.Optimizer
+        # Pajarito's relative gap excludes its affine objective offset. Express
+        # installed-minus-initial costs in nonnegative increment coordinates,
+        # retaining the exact frozen objective and every physical decision.
+        solver_objective=JuMP.AffExpr(original.constant)
+        for (c,v) in JuMP.linear_terms(original)
+            if c>0 && JuMP.has_lower_bound(v) && JuMP.lower_bound(v)>0
+                lower=JuMP.lower_bound(v)
+                increment=JuMP.@variable(m,lower_bound=0.,base_name="objective_increment")
+                JuMP.@constraint(m,increment==v-lower)
+                JuMP.add_to_expression!(solver_objective,c,increment)
+                JuMP.add_to_expression!(solver_objective,c*lower);rebased+=1
+            else
+                JuMP.add_to_expression!(solver_objective,c,v)
+            end
+        end
+    end
     scale=optimizer!==HiGHS.Optimizer && optimizer!==Gurobi.Optimizer ? max(1.,maximum((abs(c) for (c,v) in JuMP.linear_terms(original) if !JuMP.is_fixed(v));init=1.)) : 1.
     objective_scale===nothing || (scale=Float64(objective_scale))
     isfinite(scale) && scale>0 || throw(ArgumentError("positive objective conditioning factor required"))
-    JuMP.set_objective_function(m,original/scale)
+    JuMP.set_objective_function(m,solver_objective/scale)
     JuMP.set_optimizer(m,optimizer);JuMP.set_silent(m)
     if optimizer===HiGHS.Optimizer
         JuMP.set_optimizer_attribute(m,"threads",1)
@@ -119,6 +137,9 @@ function solve!(pm,optimizer;objective_scale=nothing)
     wall=@elapsed JuMP.optimize!(m)
     feasible=JuMP.primal_status(m)==JuMP.MOI.FEASIBLE_POINT
     obj=feasible ? JuMP.value(original) : nothing;bound=safe(()->JuMP.objective_bound(m)*scale)
+    if !(bound isa Real && isfinite(bound)) && JuMP.has_duals(m)
+        bound=safe(()->JuMP.dual_objective_value(m)*scale)
+    end
     gap=obj isa Real && bound isa Real && isfinite(bound) ? abs(obj-bound)/max(1.,abs(obj)) : nothing
     return Dict{String,Any}("termination"=>string(JuMP.termination_status(m)),"primal_status"=>string(JuMP.primal_status(m)),"dual_status"=>string(JuMP.dual_status(m)),"objective"=>obj,"objective_solver_scaling"=>scale,"bound"=>bound,"relative_gap"=>gap,"raw_solver_relative_gap"=>nonnegative(()->JuMP.relative_gap(m)),"solve_wall_s"=>wall,"solver_time_s"=>nonnegative(()->JuMP.solve_time(m)),"solver"=>JuMP.solver_name(m),"optimizer_configuration"=>optimizer===HiGHS.Optimizer ? "HiGHS: threads=1,seed=20261020,mip_rel_gap=1e-8,time_limit=120s" : optimizer===Clarabel.Optimizer ? "Clarabel: tol_gap_abs=tol_gap_rel=tol_feas=1e-10,max_iter=300,objective_scaled_by_recorded_positive_factor" : "Pajarito: iterative,HiGHS+Clarabel,tol_rel_gap=tol_feas=1e-7,tol_abs_gap=1e-8,time_limit=120s,iteration_limit=100","barrier_iterations"=>nonnegative(()->JuMP.barrier_iterations(m)),"simplex_iterations"=>nonnegative(()->JuMP.simplex_iterations(m)),"nodes"=>nonnegative(()->JuMP.node_count(m)),"model"=>modelstats(m))
 end
@@ -436,12 +457,20 @@ function assess(input,out)
 end
 function compare(input,out)
     newoutput(out);runs=readjson(joinpath(input,"runs.json"))["runs"];a=Any[]
-    gapok(r)=get(r,"objective",nothing) isa Real && get(r,"bound",nothing) isa Real && isfinite(r["bound"]) && abs(r["objective"]-r["bound"])/max(1.,abs(r["objective"]))<=1e-6
+    function effective_bound(r)
+        b=get(r,"bound",nothing);b isa Real && isfinite(b) && return b
+        base=filter(x->x["case_id"]==r["case_id"]&&x["relaxed"]==r["relaxed"]&&x["formulation"]=="BASE"&&x["status"]=="optimal",runs)
+        isempty(base) && return nothing
+        b=get(only(base),"bound",nothing);return b isa Real && isfinite(b) ? b : nothing
+    end
+    gapok(r)=get(r,"objective",nothing) isa Real && effective_bound(r)!==nothing && abs(r["objective"]-effective_bound(r))/max(1.,abs(r["objective"]))<=1e-6
     for run in runs
         reference=filter(x->x["case_id"]==run["case_id"]&&x["relaxed"]==run["relaxed"]&&x["formulation"]=="G0"&&x["status"]=="optimal"&&gapok(x),runs)
         ref=isempty(reference) ? nothing : only(reference)
         row=Dict{String,Any}("case_id"=>run["case_id"],"formulation"=>run["formulation"],"relaxed"=>run["relaxed"],"status"=>run["status"],"objective"=>get(run,"objective",nothing),"reference"=>"G0_same_case_and_relaxation","absolute_delta"=>ref!==nothing&&run["status"]=="optimal" ? run["objective"]-ref["objective"] : nothing,"relative_delta"=>ref!==nothing&&run["status"]=="optimal"&&ref["objective"]!=0 ? (run["objective"]-ref["objective"])/abs(ref["objective"]) : nothing,"denominator"=>"abs(G0_objective)","same_input_hash"=>ref===nothing ? nothing : ref["case_sha256"]==run["case_sha256"],"portfolio_identity_required"=>false)
         row["original_currency_bound_gap_pass"]=gapok(run)
+        row["effective_global_lower_bound"]=effective_bound(run)
+        row["bound_source"]=get(run,"bound",nothing) isa Real ? "native_solver" : "BASE_same_scope_relaxation"
         if run["status"]=="optimal" && !gapok(run)
             row["status"]="numerical_inconclusive";row["reason"]="original_currency_gap_not_certified";row["absolute_delta"]=nothing;row["relative_delta"]=nothing
         end
