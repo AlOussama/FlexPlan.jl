@@ -306,11 +306,11 @@ function evaluate_record(rec)
     return m
 end
 function metric_rows(records)
-    output=Any[]
+    output=Any[];ap3_sha=head()
     for rec in records
         run=rec["run"]
         for (id,v) in sort(collect(evaluate_record(rec));by=first)
-            push!(output,merge(Dict("schema"=>SCHEMA,"run_id"=>run["solution_file"],"case_id"=>run["case_id"],"dataset_kind"=>run["validation_scope"],"AP1_SHA"=>run["source_producer_sha"],"AP2_SHA"=>BASE,"AP3_SHA"=>head(),"science_SHA"=>SCIENCE,"parameter_registry_sha256"=>run["registry_sha256"],"scenario_id"=>run["case_id"],"snapshot_id"=>rec["snapshot_id"],"formulation_id"=>run["formulation"],"exposure_variant"=>run["exposure"],"region_or_edge"=>rec["regions"],"metric_id"=>id,"base"=>rec["base_MVA"],"tolerance"=>D.DEFAULT_TOL,"domain_predicates"=>Dict("empirical"=>false,"passive_issues"=>rec["passive_domain_issues"]),"solver_status"=>get(run,"termination",nothing)),v))
+            push!(output,merge(Dict("schema"=>SCHEMA,"run_id"=>run["solution_file"],"case_id"=>run["case_id"],"dataset_kind"=>run["validation_scope"],"AP1_SHA"=>run["source_producer_sha"],"AP2_SHA"=>BASE,"AP3_SHA"=>ap3_sha,"science_SHA"=>SCIENCE,"parameter_registry_sha256"=>run["registry_sha256"],"scenario_id"=>run["case_id"],"snapshot_id"=>rec["snapshot_id"],"formulation_id"=>run["formulation"],"exposure_variant"=>run["exposure"],"region_or_edge"=>rec["regions"],"metric_id"=>id,"base"=>rec["base_MVA"],"tolerance"=>D.DEFAULT_TOL,"domain_predicates"=>Dict("empirical"=>false,"passive_issues"=>rec["passive_domain_issues"]),"solver_status"=>get(run,"termination",nothing)),v))
         end
     end
     return output
