@@ -33,5 +33,6 @@ output/
 .vscode/
 *.code-workspace
 
-# Exact large metric JSON artifacts are published in adjacent ZIP archives.
+# Exact large metric JSON/CSV artifacts are published in adjacent ZIP archives.
 reports/ap3_runs/**/metrics.json
+reports/ap3_runs/**/metrics.csv

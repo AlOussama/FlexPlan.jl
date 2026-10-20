@@ -323,7 +323,8 @@ function evaluate_record(rec)
     end
     for (k,v) in rec["planning"]
         k in ("schema","case_id","formulation","relaxed","unit") && continue
-        m["E.$k"]=D.entry(v;unit=occursin("MWh",k) ? "MWh" : occursin("MW",k) ? "MW" : "declared_currency_or_explicit_ledger",method="independent_raw_prices_durations_and_solved_quantities")
+        status=v===nothing ? (k=="integrality_residual" && rec["run"]["relaxed"] ? "not_applicable_continuous_relaxation" : "not_available_from_saved_solution") : "valid"
+        m["E.$k"]=D.entry(v;status,unit=occursin("MWh",k) ? "MWh" : occursin("MW",k) ? "MW" : "declared_currency_or_explicit_ledger",method="independent_raw_prices_durations_and_solved_quantities")
     end
     for k in ("model","build_wall_s","solve_wall_s","solver_time_s","relative_gap","bound","barrier_iterations","simplex_iterations","nodes","primal_status","dual_status","termination","solver")
         v=get(rec["run"],k,nothing)
