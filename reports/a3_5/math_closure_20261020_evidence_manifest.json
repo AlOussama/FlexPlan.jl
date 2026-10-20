@@ -1,0 +1,58 @@
+{
+  "schema": "paper_a_a3_5_math_closure_evidence_manifest_v1",
+  "date": "2026-10-20",
+  "original_AP3_target": "485b637cc1998a327206c5929434bd26c6f0be16",
+  "science_authority": "e8118425adc335a99e85120d943763305f211315",
+  "science_freeze": "2c2fce769b2ed6ffd4f1ced60c0798776acccc93",
+  "review_entry_head": "0c58af3147881e951e34bcdb556cb47681b08e46",
+  "publication_parent_head": "67b08bdd007a84865e8dc64c4c34d737d33aa0af",
+  "review_branch": "review/paper-a-a3-5-independent-acceptance-v1",
+  "source_git_blobs": {
+    "chapter": "11ab4ba5a0005336756d252b4877967a3d90668b",
+    "scientific_freeze": "5ae4d319ac6e204368a7f4b9cbd00ff621138f06",
+    "adjudicated_proofs": "518e78a479b3336f55d0ecca253b256abfcf6225",
+    "predicate_audit": "4866f5f5dab7cd416c7fb203db0106d98c45897f",
+    "paper_plan": "c43ee68a7afc7c2c5f4110e304e90f189fe60a65",
+    "multirepo_freeze": "f9f64539e69bf46386d0d597e0a6a85cbfb88a37",
+    "AP2_regional": "64d29db802d3f35a0064fe55798fda48198d4caf",
+    "AP2_integration": "bf849b5578e12a9fb12cf542f483a0a56fc02bf2"
+  },
+  "oracle": {
+    "method": "separate Python fractions Gaussian elimination and all principal minors, independently crosschecked by SymPy exact eigenvalue computation",
+    "command": "python scripts/a3_5_independent_math_closure/oracles.py",
+    "environment": "Python 3.13, SymPy 1.14.0",
+    "passed": 30,
+    "total": 30,
+    "script_sha256": "2301c90617bf7d6e931af7b0da55be7ca20664d3c46003a3ed80064c6dc279ba",
+    "script_git_blob": "f65b60151bc9e64ab4d7d65473952a437f2495d7",
+    "full_results_uncompressed_sha256": "f26874523782347e8e4ee4a42282e10bcc081e9d6b7840d02a1b167c25a466bb",
+    "compressed_gzip_sha256": "a02a038a2c3cb0cd2fdd3c983ca2b25a9ed7db2b694eb5dabe970385ffc13c71",
+    "compressed_gzip_git_blob": "6f4a66b09d6e87311e100d73bb37f5a23d45e12d",
+    "full_results_gzip_path": "reports/a3_5/math_closure_20261020_oracle_results.json.gz",
+    "uncompress_command": "gzip -dc reports/a3_5/math_closure_20261020_oracle_results.json.gz > full_oracle_results.json"
+  },
+  "published_new_files": [
+    "reports/a3_5/math_closure_20261020_repository_independent_adjudication.md",
+    "reports/a3_5/math_closure_20261020_theorem_ledger.csv",
+    "reports/a3_5/math_closure_20261020_findings.yaml",
+    "reports/a3_5/math_closure_20261020_amendment_proposal.md",
+    "reports/a3_5/math_closure_20261020_source_boundary.md",
+    "reports/a3_5/math_closure_20261020_status.yaml",
+    "reports/a3_5/math_closure_20261020_oracle_results_summary.json",
+    "reports/a3_5/math_closure_20261020_oracle_results.json.gz",
+    "scripts/a3_5_independent_math_closure/oracles.py"
+  ],
+  "limits": [
+    "Theoretical independent oracle is not a Julia solver replay.",
+    "External mathematical fulltexts partly restricted; no fabricated theorem/equation locators.",
+    "Original AP3 sources, previous A3.5 reviews and research-map scientific freeze untouched.",
+    "Detailed expanded standalone local report is additionally delivered as an artifact outside GitHub."
+  ],
+  "gates": {
+    "science_amendment_approved": false,
+    "independent_A3_5_accepted": false,
+    "A3_closed": false,
+    "AP4_ready": false,
+    "empirical_study_ready": false
+  }
+}
