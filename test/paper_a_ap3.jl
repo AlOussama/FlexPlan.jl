@@ -121,6 +121,9 @@ end
     m,c=_ap3_conic(A,[.1,.1],1.,_FP.InverseBoundGSCR([.6 -.5;-.5 .6];provenance="offline_fixture");cost=[1.,3.])
     @test JuMP.termination_status(m)==JuMP.MOI.OPTIMAL
     @test isapprox(JuMP.objective_value(m),.4;atol=1e-6)
+    m,c=_ap3_conic(A,[.1,.1],1.,_FP.InverseBoundGSCR([.6 -.5000000000000001;-.5000000000000001 .6];provenance="independent_stamp_roundoff");cost=[1.,3.])
+    @test JuMP.termination_status(m)==JuMP.MOI.OPTIMAL
+    @test c.Bmin[1,2]==-.5 && c.passive_stamp_roundoff>0
     m,c=_ap3_conic(A,p,1.,_FP.InteractionGSCR(ones(2,2);provenance="offline_full");cost=[1.,3.])
     full=JuMP.objective_value(m)
     m,c=_ap3_conic(A,p,1.,_FP.InteractionGSCR(Matrix{Float64}(I,2,2);provenance="offline_sparse");cost=[1.,3.])

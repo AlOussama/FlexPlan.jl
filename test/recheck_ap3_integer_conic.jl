@@ -1,8 +1,8 @@
 include("../scripts/paper_a/AP3Pipeline.jl")
 using .AP3Pipeline,JuMP,LinearAlgebra
 import JSON
-length(ARGS)==1 || error("usage: recheck_ap3_integer_conic.jl RUN_ROOT")
-root=abspath(ARGS[1]);input=joinpath(root,"suite_final");out=joinpath(root,"integer_rechecks")
+length(ARGS) in (1,2) || error("usage: recheck_ap3_integer_conic.jl RUN_ROOT [NEW_OUTPUT_NAME]")
+root=abspath(ARGS[1]);input=joinpath(root,"suite_final");out=joinpath(root,length(ARGS)==2 ? ARGS[2] : "integer_rechecks")
 AP3Pipeline.newoutput(out)
 runs=AP3Pipeline.readjson(joinpath(input,"runs.json"))["runs"];length(runs)==162 || error("source suite incomplete")
 result=Any[]

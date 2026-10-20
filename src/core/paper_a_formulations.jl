@@ -88,10 +88,22 @@ function add_paper_a_constraints!(model,B,p,M,f::AbstractPaperAFormulation;alpha
     elseif f isa InverseBoundGSCR
         alpha>0 || throw(ArgumentError("M1 alpha"))
         size(f.Bmin)==(n,n) || throw(DimensionMismatch("Bmin"))
-        Zub=f.Bmin\Matrix{Float64}(I,n,n)
-        lower=[JuMP.@constraint(model,B[i,j]>=f.Bmin[i,j]) for i in 1:n,j in 1:n]
+        A=copy(f.Bmin)
+        for i in 1:n,j in 1:n
+            i==j && continue
+            a=B[i,j]
+            value=a isa Number ? a : (isempty(a.terms) ? a.constant : throw(ArgumentError("M1 requires fixed passive offdiagonals")))
+            isapprox(A[i,j],value;atol=1e-10,rtol=1e-12) || throw(ArgumentError("M1 passive offdiagonal mismatch"))
+            A[i,j]=value
+        end
+        # Independent physical stamps can differ by final-bit roundoff. Bind
+        # the minimum to the model's IDENTICAL passive entries, rather than
+        # introduce empty constant inequalities such as -1e-13 >= 0.
+        isposdef(Symmetric(A)) || throw(ArgumentError("canonical M1 minimum is not PD"))
+        Zub=A\Matrix{Float64}(I,n,n)
+        lower=[JuMP.@constraint(model,B[i,i]>=A[i,i]) for i in 1:n]
         rows=[JuMP.@constraint(model,sum(Zub[i,j]*p[j] for j in 1:n)<=1/alpha) for i in 1:n]
-        return (kind="M1",lower=lower,rows=rows)
+        return (kind="M1",lower=lower,rows=rows,Bmin=A,passive_stamp_roundoff=maximum(abs.(A-f.Bmin)))
     elseif f isa InteractionGSCR
         size(f.W)==(n,n) || throw(DimensionMismatch("W"))
         return (kind="M2",rows=[JuMP.@constraint(model,sum(B[i,j] for j in 1:n)>=alpha*sum(f.W[i,j]*p[j] for j in 1:n)) for i in 1:n])

@@ -104,7 +104,7 @@ function modelstats(m)
 end
 function solve!(pm,optimizer)
     m=pm.model;original=JuMP.objective_function(m)
-    scale=optimizer!==HiGHS.Optimizer && optimizer!==Gurobi.Optimizer ? max(1.,maximum(abs(c) for (c,v) in JuMP.linear_terms(original);init=1.)) : 1.
+    scale=optimizer!==HiGHS.Optimizer && optimizer!==Gurobi.Optimizer ? max(1.,maximum((abs(c) for (c,v) in JuMP.linear_terms(original) if !JuMP.is_fixed(v));init=1.)) : 1.
     JuMP.set_objective_function(m,original/scale)
     JuMP.set_optimizer(m,optimizer);JuMP.set_silent(m)
     if optimizer===HiGHS.Optimizer
