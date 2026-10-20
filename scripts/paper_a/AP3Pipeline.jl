@@ -102,9 +102,11 @@ function modelstats(m)
     counts=Dict(string(F)*" in "*string(S)=>JuMP.num_constraints(m,F,S) for (F,S) in JuMP.list_of_constraint_types(m))
     return Dict("variables"=>JuMP.num_variables(m),"integer"=>count(v->JuMP.is_integer(v)||JuMP.is_binary(v),JuMP.all_variables(m)),"constraints"=>counts)
 end
-function solve!(pm,optimizer)
+function solve!(pm,optimizer;objective_scale=nothing)
     m=pm.model;original=JuMP.objective_function(m)
     scale=optimizer!==HiGHS.Optimizer && optimizer!==Gurobi.Optimizer ? max(1.,maximum((abs(c) for (c,v) in JuMP.linear_terms(original) if !JuMP.is_fixed(v));init=1.)) : 1.
+    objective_scale===nothing || (scale=Float64(objective_scale))
+    isfinite(scale) && scale>0 || throw(ArgumentError("positive objective conditioning factor required"))
     JuMP.set_objective_function(m,original/scale)
     JuMP.set_optimizer(m,optimizer);JuMP.set_silent(m)
     if optimizer===HiGHS.Optimizer
@@ -116,7 +118,9 @@ function solve!(pm,optimizer)
     end
     wall=@elapsed JuMP.optimize!(m)
     feasible=JuMP.primal_status(m)==JuMP.MOI.FEASIBLE_POINT
-    return Dict{String,Any}("termination"=>string(JuMP.termination_status(m)),"primal_status"=>string(JuMP.primal_status(m)),"dual_status"=>string(JuMP.dual_status(m)),"objective"=>feasible ? JuMP.value(original) : nothing,"objective_solver_scaling"=>scale,"bound"=>safe(()->JuMP.objective_bound(m)*scale),"relative_gap"=>nonnegative(()->JuMP.relative_gap(m)),"solve_wall_s"=>wall,"solver_time_s"=>nonnegative(()->JuMP.solve_time(m)),"solver"=>JuMP.solver_name(m),"optimizer_configuration"=>optimizer===HiGHS.Optimizer ? "HiGHS: threads=1,seed=20261020,mip_rel_gap=1e-8,time_limit=120s" : optimizer===Clarabel.Optimizer ? "Clarabel: tol_gap_abs=tol_gap_rel=tol_feas=1e-10,max_iter=300,objective_scaled_by_recorded_positive_factor" : "Pajarito: iterative,HiGHS+Clarabel,tol_rel_gap=tol_feas=1e-7,tol_abs_gap=1e-8,time_limit=120s,iteration_limit=100","barrier_iterations"=>nonnegative(()->JuMP.barrier_iterations(m)),"simplex_iterations"=>nonnegative(()->JuMP.simplex_iterations(m)),"nodes"=>nonnegative(()->JuMP.node_count(m)),"model"=>modelstats(m))
+    obj=feasible ? JuMP.value(original) : nothing;bound=safe(()->JuMP.objective_bound(m)*scale)
+    gap=obj isa Real && bound isa Real && isfinite(bound) ? abs(obj-bound)/max(1.,abs(obj)) : nothing
+    return Dict{String,Any}("termination"=>string(JuMP.termination_status(m)),"primal_status"=>string(JuMP.primal_status(m)),"dual_status"=>string(JuMP.dual_status(m)),"objective"=>obj,"objective_solver_scaling"=>scale,"bound"=>bound,"relative_gap"=>gap,"raw_solver_relative_gap"=>nonnegative(()->JuMP.relative_gap(m)),"solve_wall_s"=>wall,"solver_time_s"=>nonnegative(()->JuMP.solve_time(m)),"solver"=>JuMP.solver_name(m),"optimizer_configuration"=>optimizer===HiGHS.Optimizer ? "HiGHS: threads=1,seed=20261020,mip_rel_gap=1e-8,time_limit=120s" : optimizer===Clarabel.Optimizer ? "Clarabel: tol_gap_abs=tol_gap_rel=tol_feas=1e-10,max_iter=300,objective_scaled_by_recorded_positive_factor" : "Pajarito: iterative,HiGHS+Clarabel,tol_rel_gap=tol_feas=1e-7,tol_abs_gap=1e-8,time_limit=120s,iteration_limit=100","barrier_iterations"=>nonnegative(()->JuMP.barrier_iterations(m)),"simplex_iterations"=>nonnegative(()->JuMP.simplex_iterations(m)),"nodes"=>nonnegative(()->JuMP.node_count(m)),"model"=>modelstats(m))
 end
 function extract(pm)
     snaps=Dict{String,Any}()
@@ -220,6 +224,13 @@ function run_suite(configpath,out)
         end
         raw,data,scope=prepare(item["case"];registry=get(item,"registry",nothing),scenarios=get(item,"scenarios",nothing))
         cp(item["case"],joinpath(casedir,"case.json"));p=parameters(raw);writejson(joinpath(casedir,"parameters.json"),p)
+        baseline_scale=nothing
+        if get(cfg,"condition_on_baseline_LP",false)
+            conditioning=solve!(build(data,FP.NoGSCR(),scope;relaxed=true),HiGHS.Optimizer)
+            conditioning["termination"]=="OPTIMAL" && conditioning["objective"]>0 || throw(ArgumentError("BASE LP conditioning unavailable"))
+            baseline_scale=conditioning["objective"]
+            writejson(joinpath(casedir,"objective_conditioning.json"),Dict("purpose"=>"positive numerical objective scaling only; same physical objective and feasible set","factor"=>baseline_scale,"BASE_LP"=>conditioning))
+        end
         for (key,filename) in (("registry","parameter_registry.csv"),("scenarios","study_scenarios.toml"));haskey(item,key) && cp(item[key],joinpath(casedir,filename));end
         isfile(joinpath(dirname(item["case"]),"case_manifest.json")) && cp(joinpath(dirname(item["case"]),"case_manifest.json"),joinpath(casedir,"case_manifest.json"))
         for relaxed in get(cfg,"relaxations",[true,false]),fid in get(cfg,"formulations",CANDIDATES)
@@ -233,9 +244,12 @@ function run_suite(configpath,out)
                 try
                     compile=@elapsed pm=build(data,formulation(fid,p),scope;relaxed)
                     opt=fid in ("G0","G3") ? (relaxed ? Clarabel.Optimizer : fid=="G3" && gurobi ? Gurobi.Optimizer : pajarito_optimizer()) : HiGHS.Optimizer
-                    result=solve!(pm,opt);merge!(row,result);row["build_wall_s"]=compile
+                    result=solve!(pm,opt;objective_scale=fid in ("G0","G3") ? baseline_scale : nothing);merge!(row,result);row["build_wall_s"]=compile
                     row["status"]=result["termination"]=="OPTIMAL" ? "optimal" : result["termination"]=="INFEASIBLE" ? "infeasible" : "numerical_inconclusive"
-                    if row["status"]=="optimal" && JuMP.primal_status(pm.model)==JuMP.MOI.FEASIBLE_POINT
+                    if row["status"]=="optimal" && row["relative_gap"] isa Real && row["relative_gap"]>1e-6
+                        row["status"]="numerical_inconclusive";row["reason"]="original_currency_primal_bound_gap_exceeds_1e-6"
+                    end
+                    if JuMP.primal_status(pm.model)==JuMP.MOI.FEASIBLE_POINT
                         solution=extract(pm);writejson(joinpath(casedir,name*".json"),solution)
                     end
                 catch e
