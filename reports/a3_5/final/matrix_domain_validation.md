@@ -1,0 +1,3 @@
+# Matrix domain audit — independent bounded pass
+Frozen code: 485b637cc1998a327206c5929434bd26c6f0be16.
+Source src/core/paper_a_regional.jl L9–25: reduced_strength checks E via minimum(svdvals(E))>tol; does not enforce E PD. This **does not prove a production defect**, because the allowed passive source domain may enforce PD indirectly. Independent rational checks: L=[[2,-1],[-1,-1]] gives E=-1 and Schur 3 despite L indefinite; L=[[1,1],[1,0]] fails pseudoinverse-Range condition. Symmetry/Z tests are visible in network_reference but network fixture coverage is not fully replayed. Verdict: P001/P002/P003/P004 NOT globally verified; no blind patch.
