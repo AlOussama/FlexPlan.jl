@@ -1,0 +1,46 @@
+schema: paper_a_a3_5_science_verdict_mirror_v1
+record_type: non_normative_cross_repository_science_mirror
+publication_date: "2026-10-20"
+source_of_authority: AlOussama/research-map
+canonical_science_commit: 5ceb19a6faf4e7c7e797a737ed5b449f9e2db609
+canonical_science_review_branch: review/paper-a-a3-5-science-release-v1
+canonical_science_report_path: docs/reports/C2_constraints/C2A_voltage_stability/paper_a/science_release/2026-10-20__a3-5-science-adjudication.md
+canonical_science_report_blob: f9dd0b8d2d295d7fdaa79572411635e1851e77d4
+proposed_amendment_blob: fba4802ecabade61a752833a71106a5bda4ce78f
+canonical_freeze_commit: 2c2fce769b2ed6ffd4f1ced60c0798776acccc93
+canonical_research_main: e8118425adc335a99e85120d943763305f211315
+paper_a_scope_commit: 672a61c95525bf1d7a03cf745a754a15a23ce78b
+original_ap3_review_target: 485b637cc1998a327206c5929434bd26c6f0be16
+math_review_before_mirror: 0574d491111677a7ac2cabff2877735171486c46
+source_of_scientific_normativity: research_map_only
+freeze_amendment_in_effect: false
+scientific_release_adjudication: approve_for_owner_ratification
+owner_ratification: pending
+science_amendment_approved: false
+independent_A3_5_accepted: false
+A3_closed: false
+AP4_ready: false
+empirical_study_ready: false
+decisions:
+  D1_M0_implies_G0: approve_with_precise_corrections
+  D2_singular_S_T006: approve_with_precise_corrections
+  D3_source_behind_reactance: approve_with_precise_corrections
+  D4_psd_schur_z_matrix_G3_planning: approve_with_precise_corrections
+findings:
+  A35-NEW-001: {classification: confirmed, severity: major, release: scoped_approve}
+  A35-MATH-002: {classification: confirmed, severity: major, release: scoped_approve, physical_applicability: pending}
+  A35-MATH-003: {classification: confirmed, severity: major, release: scoped_approve}
+  A35-MATH-004: {classification: confirmed, severity: minor, release: approve_boundary}
+  A35-MATH-005: {classification: unresolved, severity: informational, release: deferred_nonblocking_historical}
+  A35-MATH-006: {classification: conditional, severity: major, release: scoped_approve, production_code_defect_confirmed: false}
+  A35-MATH-007: {classification: conditional, severity: major, release: theorem_only, P008: unverified}
+  A35-MATH-008: {classification: confirmed, severity: major, release: approve_nonimplication}
+  A35-MATH-009: {classification: unresolved, severity: major, release: physical_source_qualification_pending}
+remaining_verification:
+  - independent_P_C2A_001_to_010
+  - independent_G3_edge_and_RSOC_reconstruction
+  - native_G3_MISOCP_B1_and_integer_globality
+  - "124_metrics_and_8_CLI_actions"
+  - actual_source_base_fault_current_limit_validation
+  - producer_costs_parameters_and_representativeness
+evidence_disclaimer: "This is a mirror of a research-map scientific verdict, not a FlexPlan model, test, numerical, parameter, solver or owner-approval PASS."
