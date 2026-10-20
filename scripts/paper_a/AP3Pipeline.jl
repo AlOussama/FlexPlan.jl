@@ -432,10 +432,15 @@ function assess(input,out)
 end
 function compare(input,out)
     newoutput(out);runs=readjson(joinpath(input,"runs.json"))["runs"];a=Any[]
+    gapok(r)=get(r,"objective",nothing) isa Real && get(r,"bound",nothing) isa Real && isfinite(r["bound"]) && abs(r["objective"]-r["bound"])/max(1.,abs(r["objective"]))<=1e-6
     for run in runs
-        reference=filter(x->x["case_id"]==run["case_id"]&&x["relaxed"]==run["relaxed"]&&x["formulation"]=="G0"&&x["status"]=="optimal",runs)
+        reference=filter(x->x["case_id"]==run["case_id"]&&x["relaxed"]==run["relaxed"]&&x["formulation"]=="G0"&&x["status"]=="optimal"&&gapok(x),runs)
         ref=isempty(reference) ? nothing : only(reference)
         row=Dict{String,Any}("case_id"=>run["case_id"],"formulation"=>run["formulation"],"relaxed"=>run["relaxed"],"status"=>run["status"],"objective"=>get(run,"objective",nothing),"reference"=>"G0_same_case_and_relaxation","absolute_delta"=>ref!==nothing&&run["status"]=="optimal" ? run["objective"]-ref["objective"] : nothing,"relative_delta"=>ref!==nothing&&run["status"]=="optimal"&&ref["objective"]!=0 ? (run["objective"]-ref["objective"])/abs(ref["objective"]) : nothing,"denominator"=>"abs(G0_objective)","same_input_hash"=>ref===nothing ? nothing : ref["case_sha256"]==run["case_sha256"],"portfolio_identity_required"=>false)
+        row["original_currency_bound_gap_pass"]=gapok(run)
+        if run["status"]=="optimal" && !gapok(run)
+            row["status"]="numerical_inconclusive";row["reason"]="original_currency_gap_not_certified";row["absolute_delta"]=nothing;row["relative_delta"]=nothing
+        end
         if run["status"]=="optimal"
             raw=readjson(joinpath(input,run["case_id"],"case.json"));s=readjson(joinpath(input,run["solution_file"]))
             mets=[evaluate_record(merge(D.reconstruct(raw,s,parse(Int,t)),Dict("run"=>run,"snapshot_id"=>t,"witness"=>get(s["snapshots"][t],"witness",nothing),"planning"=>planning(raw,s,run),"network_domain"=>Dict()))) for t in keys(s["snapshots"])]
