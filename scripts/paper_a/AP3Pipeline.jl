@@ -360,15 +360,20 @@ function metric_unit(id,default)
     return default
 end
 function metric_rows(records)
-    output=Any[];ap3_sha=head()
+    output=Any[];ap3_sha=head();seen_runs=Set{String}()
     for rec in records
         run=rec["run"]
-        for (id,v) in sort(collect(evaluate_record(rec));by=first)
-            push!(output,merge(Dict("schema"=>SCHEMA,"run_id"=>run["solution_file"],"case_id"=>run["case_id"],"dataset_kind"=>run["validation_scope"],"AP1_SHA"=>run["source_producer_sha"],"AP2_SHA"=>BASE,"AP3_SHA"=>ap3_sha,"science_SHA"=>SCIENCE,"parameter_registry_sha256"=>run["registry_sha256"],"scenario_id"=>run["case_id"],"snapshot_id"=>rec["snapshot_id"],"formulation_id"=>run["formulation"],"exposure_variant"=>run["exposure"],"region_or_edge"=>rec["regions"],"metric_id"=>id,"base"=>rec["base_MVA"],"tolerance"=>D.DEFAULT_TOL,"domain_predicates"=>Dict("empirical"=>false,"passive_issues"=>rec["passive_domain_issues"]),"solver_status"=>get(run,"termination",nothing)),v))
+        first_of_run=!(run["solution_file"] in seen_runs);push!(seen_runs,run["solution_file"])
+        measured=evaluate_record(rec)
+        domain=Dict("empirical"=>false,"passive_issues"=>rec["passive_domain_issues"],"symmetry_residual"=>measured["A.symmetry"]["value"],"positive_offdiagonal"=>measured["A.positive_offdiagonal"]["value"],"B_minimum_eigenvalue"=>minimum(measured["A.B_eigenvalues"]["value"]),"minimum_inverse_entry"=>measured["C.inverse_min"]["value"],"G3_witness_valid"=>measured["B.G3"]["value"],"range_residual"=>measured["B.range_residual"]["value"],"affine_reconstruction_residual"=>rec["affine_reconstruction_residual"])
+        for (id,v) in sort(collect(measured);by=first)
+            scope=metric_scope(id);scope=="case_or_horizon" && !first_of_run && continue
+            push!(output,merge(Dict("schema"=>SCHEMA,"run_id"=>run["solution_file"],"case_id"=>run["case_id"],"dataset_kind"=>run["validation_scope"],"AP1_SHA"=>run["source_producer_sha"],"AP2_SHA"=>BASE,"AP3_SHA"=>ap3_sha,"science_SHA"=>SCIENCE,"parameter_registry_sha256"=>run["registry_sha256"],"scenario_id"=>run["case_id"],"snapshot_id"=>scope=="case_or_horizon" ? "all" : rec["snapshot_id"],"scope"=>scope,"formulation_id"=>run["formulation"],"exposure_variant"=>run["exposure"],"region_or_edge"=>rec["regions"],"metric_id"=>id,"base"=>rec["base_MVA"],"tolerance"=>D.DEFAULT_TOL,"domain_predicates"=>domain,"solver_status"=>get(run,"termination",nothing)),v))
         end
     end
     return output
 end
+metric_scope(id)=startswith(id,"E.") && !(id in ("E.S_nom_v1","E.S_on_v1","E.S_op_magnitude_v1","E.S_I_v1")) || startswith(id,"F.") && !(id in ("F.dual_cone_violation","F.complementarity_residual")) ? "case_or_horizon" : "snapshot_region_or_edge"
 function write_metrics(input,out)
     newoutput(out);records=readjson(joinpath(input,"matrices.json"))["records"];m=metric_rows(records)
     open(joinpath(out,"metrics.json"),"w") do io
@@ -376,10 +381,12 @@ function write_metrics(input,out)
     end
     flat=[(run_id=x["run_id"],case_id=x["case_id"],formulation=x["formulation_id"],snapshot_id=x["snapshot_id"],metric_id=x["metric_id"],value_json=JSON.json(x["value"]),unit=x["unit"],status=x["status"],base=x["base"],tolerance=x["tolerance"]) for x in m]
     CSV.write(joinpath(out,"metrics.csv"),flat)
-    registry=Dict{String,Any}()
+    registry=Dict{String,Any}();typed=Set{String}()
     for x in m
+        x["metric_id"] in typed && continue
         haskey(registry,x["metric_id"]) && x["value"]===nothing && continue
-        registry[x["metric_id"]]=merge(Dict(k=>x[k] for k in ("unit","method","theorem","tolerance")),Dict("shape"=>x["value"] isa Vector ? "vector_or_matrix_or_ledger" : "scalar_or_status","scope"=>"snapshot_region_order_in_record","formula"=>metric_formula(x["metric_id"]),"domain"=>"per_record_status_and_frozen_theorem_assumptions"))
+        x["value"]===nothing || push!(typed,x["metric_id"])
+        registry[x["metric_id"]]=merge(Dict(k=>x[k] for k in ("unit","method","theorem","tolerance")),Dict("shape"=>x["value"] isa Vector ? "vector_or_matrix_or_ledger" : x["value"] isa AbstractDict ? "record" : "scalar_or_status","scope"=>metric_scope(x["metric_id"]),"formula"=>metric_formula(x["metric_id"]),"domain"=>"per_record_status_and_frozen_theorem_assumptions"))
     end
     writejson(joinpath(out,"metric_registry.json"),registry);return m
 end

@@ -39,6 +39,9 @@ root=abspath(ARGS[1]);load(path)=JSON.parsefile(joinpath(root,path))
     end
     economics=load("planning_final/planning.json")["records"]
     @test !isempty(economics)
+    horizon_events=filter(m->m["metric_id"]=="E.events",metrics)
+    @test length(horizon_events)==length(economics)
+    @test all(m->m["snapshot_id"]=="all" && m["scope"]=="case_or_horizon",horizon_events)
     for r in economics
         # Independent conic/mixed-integer numerical accuracy; report raw values.
         @test r["objective_residual"]<1.
