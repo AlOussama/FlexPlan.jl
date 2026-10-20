@@ -32,3 +32,6 @@ output/
 # VS Code files
 .vscode/
 *.code-workspace
+
+# Exact large metric JSON artifacts are published in adjacent ZIP archives.
+reports/ap3_runs/**/metrics.json
