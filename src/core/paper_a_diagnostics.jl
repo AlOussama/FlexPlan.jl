@@ -146,7 +146,11 @@ end
 function evaluate(B,p,alpha; r=ones(length(p)),W=Matrix{Float64}(I,length(p),length(p)),Bmin=nothing,witness=nothing,tol=DEFAULT_TOL)
     B=matrix(B);p=Float64.(p);n=length(p)
     size(B)==(n,n) && all(isfinite,B) && all(isfinite,p) && isfinite(alpha) && alpha>=0 || throw(ArgumentError("invalid matrices/alpha"))
-    norm(B-B',Inf)<=tol && minimum(p)>=0 || throw(ArgumentError("asymmetric B or negative exposure"))
+    norm(B-B',Inf)<=tol && minimum(p)>=-tol || throw(ArgumentError("asymmetric B or negative exposure"))
+    exposure_roundoff=max(0.,-minimum(p))
+    # Solver feasibility roundoff is not positive epsilon exposure: preserve
+    # exact zeros and record the removed negative roundoff explicitly.
+    p=max.(0.,p)
     length(r)==n && minimum(r)>0 && all(isfinite,r) || throw(ArgumentError("invalid fixed r"))
     W=matrix(W);size(W)==(n,n) && minimum(W)>=0 && all(diag(W).==1) || throw(ArgumentError("invalid W"))
     M=B-alpha*Diagonal(p);eB=eigvals(Symmetric(B));eM=eigvals(Symmetric(M));scale=max(1.,opnorm(B,Inf));etol=tol*scale
@@ -154,6 +158,7 @@ function evaluate(B,p,alpha; r=ones(length(p)),W=Matrix{Float64}(I,length(p),len
     spectrum=finite_spectrum(B,p;tol)
     m=Dict{String,Any}()
     put(id,v;kw...)=m[id]=entry(v;kw...)
+    put("A.exposure_roundoff_correction",exposure_roundoff;method="max(0,-minimum(raw_p)); negative solver roundoff <= tolerance projected to zero")
     put("A.symmetry",sym);put("A.positive_offdiagonal",max(0.,off));put("A.Z_class",off<=tol;unit="boolean")
     put("A.B_eigenvalues",eB);put("A.M_eigenvalues",eM)
     put("A.inertia",[count(<(-etol),eB),count(x->abs(x)<=etol,eB),count(>(etol),eB)];unit="count")

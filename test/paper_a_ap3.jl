@@ -84,6 +84,8 @@ end
     @test AP3D.finite_spectrum([2. 0.;0. 0.],[1.,0.])["gamma"]≈2.
     @test AP3D.finite_spectrum([1. 1.;1. 0.],[1.,0.])["status"]=="domain_invalid_range_condition"
     @test AP3D.finite_spectrum(B,zeros(2))["gamma"]===nothing
+    @test AP3D.evaluate(B,[-1e-12,0.],1.)["A.exposure_roundoff_correction"]["value"]==1e-12
+    @test_throws ArgumentError AP3D.evaluate(B,[-.01,0.],1.)
     @test AP3D.finite_spectrum([1. 0.;0. -1.],[1.,0.])["status"]=="domain_invalid_zero_block"
     @test AP3D.evaluate(Diagonal([1.,1e-14]),ones(2),1.)["C.M0"]["value"]===nothing
     @test AP3D.evaluate([1. .2;.2 1.],ones(2),1.)["C.M0"]["status"]=="domain_invalid_inverse_sign"
