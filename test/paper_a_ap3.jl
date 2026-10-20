@@ -91,6 +91,7 @@ end
     @test AP3D.evaluate(Diagonal([1.,1e-14]),ones(2),1.)["C.M0"]["value"]===nothing
     @test AP3D.evaluate([1. .2;.2 1.],ones(2),1.)["C.M0"]["status"]=="domain_invalid_inverse_sign"
     @test AP3D.evaluate(B,ones(2),0.)["C.M0"]["status"]=="undefined_alpha_zero"
+    @test AP3D.evaluate(B,ones(2),0.;Bmin=B)["C.M1"]["status"]=="undefined_alpha_zero"
     @test_throws ArgumentError AP3D.evaluate([1. 1.;0. 1.],ones(2),1.)
     @test_throws ArgumentError _FP.FixedScalingGSCR([0.,1.];provenance="fixture")
     @test_throws ArgumentError _FP.InteractionGSCR([1. -.1;0. 1.];provenance="fixture")

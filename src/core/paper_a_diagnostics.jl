@@ -208,7 +208,7 @@ function evaluate(B,p,alpha; r=ones(length(p)),W=Matrix{Float64}(I,length(p),len
             Zub=A\Matrix{Float64}(I,n,n);lower=max(0.,maximum(A-B));order=max(0.,maximum(Z-Zub))
             put("C.M1_lower_violation",lower);put("C.M1_order_violation",order)
             put("C.M1_upper_burden",Zub*p;status=lower<=etol ? "valid" : "domain_invalid_unenforced_Bmin")
-            put("C.M1",lower<=etol && order<=ztol && alpha>0 && maximum(Zub*p)<=1/alpha+tol*max(1.,norm(Zub*p,Inf));unit="boolean",status=lower<=etol ? "valid" : "domain_invalid_unenforced_Bmin")
+            put("C.M1",alpha==0 ? nothing : lower<=etol && order<=ztol && maximum(Zub*p)<=1/alpha+tol*max(1.,norm(Zub*p,Inf));unit="boolean",status=alpha==0 ? "undefined_alpha_zero" : lower<=etol ? "valid" : "domain_invalid_unenforced_Bmin")
         end
     end
     for k in ("SCR_external","ESCR_external","MSCR_external","gSCR_external");m["C.$k"]=undefined("not_comparable_missing_source_fault_convention");end
