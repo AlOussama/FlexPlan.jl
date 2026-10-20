@@ -294,7 +294,7 @@ function evaluate_record(rec)
     m["A.network_domain"]=D.entry(rec["network_domain"];method="raw_island_reference_inventory")
     for k in ("dual_cone_violation","complementarity_residual")
         dual=get(rec,"conic_dual",Dict("status"=>"not_recorded","dual_cone_violation"=>nothing,"complementarity_residual"=>nothing))
-        m["F.$k"]=D.entry(dual[k];status=dual["status"],method="solver_dual_cone_eigen_or_RSOC_product_and_primal_dual_inner_product")
+        m["F.$k"]=D.entry(dual[k];status=dual["status"],unit=k=="complementarity_residual" ? "scaled_objective" : "dual_cone_coordinates",method="solver_dual_cone_eigen_or_RSOC_product_and_primal_dual_inner_product")
     end
     for (k,v) in rec["planning"]
         k in ("schema","case_id","formulation","relaxed","unit") && continue
@@ -317,7 +317,22 @@ function evaluate_record(rec)
         m["D.E2_false_acceptance"]=D.entry(exact===nothing ? nothing : maximum(estimated)<=1/rec["alpha"] && !exact;status=exact===nothing ? "undefined_inverse_domain" : "exploratory_noncertifying",unit="boolean")
         m["D.E2_conservative_rejection"]=D.entry(exact===nothing ? nothing : maximum(estimated)>1/rec["alpha"] && exact;status=exact===nothing ? "undefined_inverse_domain" : "exploratory_noncertifying",unit="boolean")
     end
+    for (id,v) in m;v["unit"]=metric_unit(id,v["unit"]);end
     return m
+end
+function metric_unit(id,default)
+    id in ("B.gamma","B.gamma_margin","B.participation","C.rho_diag","C.rho_Zp","C.MIIF","C.M0_slack","C.Zp","C.M1_upper_burden","D.E_norm_inf","D.spectral_radius") && return "dimensionless"
+    id in ("C.M0","D.series_converges","D.trust_region_norm_valid","D.one_sided_safety_certified") && return "boolean"
+    id in ("C.Z","C.Z_diag","C.inverse_min","C.M1_order_violation","D.truncation","D.actual_error","D.remainder_bound","D.woodbury_residual","D.exact_remainder_residual") && return "pu_impedance"
+    id in ("C.Wp","A.S_diag","E.S_nom_v1","E.S_on_v1","E.S_op_magnitude_v1","A.exposure_roundoff_correction") && return "MW_per_system_MVA"
+    id in ("A.source_ledger","E.portfolio","E.FOM","A.network_domain") && return "explicit_field_ledger"
+    id in ("E.investment","E.generation","E.events","E.storage","E.no_load","E.objective_residual","F.bound") && return "declared_currency_per_represented_horizon"
+    id in ("E.bounds_violation_blocks","E.integrality_residual","E.UC_transition_residual","D.order","F.nodes","F.barrier_iterations","F.simplex_iterations","B.multiplicity","B.G3_edges") && return "count_or_index"
+    startswith(id,"B.G3_cone_product") && return "pu_admittance_squared"
+    id in ("B.G3_q","B.G3_minimum_q","B.G3_node_budget","C.equivalent_strength","C.LOCAL_eigmin","C.M2_rows","C.M1_lower_violation") && return "pu_admittance"
+    id in ("B.G3_status","D.status","F.termination","F.primal_status","F.dual_status","F.solver") && return "status"
+    id=="F.relative_gap" && return "dimensionless"
+    return default
 end
 function metric_rows(records)
     output=Any[];ap3_sha=head()

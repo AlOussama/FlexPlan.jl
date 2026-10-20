@@ -175,9 +175,10 @@ function evaluate(B,p,alpha; r=ones(length(p)),W=Matrix{Float64}(I,length(p),len
     witness===nothing && (witness=closed_sdd_witness(M;tol))
     if witness===nothing
         m["B.G3"]=undefined("not_executed_missing_witness")
-        for k in ("status","valid","edges_complete","cone_product_slacks","node_budget","minimum_q","reconstruction_residual");m["B.G3_$k"]=undefined("not_executed_missing_witness");end
+        for k in ("status","valid","edges","q","edges_complete","cone_product_slacks","node_budget","minimum_q","reconstruction_residual");m["B.G3_$k"]=undefined("not_executed_missing_witness");end
     else
         g=verify_g3(M,witness;tol=etol)
+        g["edges"]=witness["edges"];g["q"]=witness["q"]
         m["B.G3"]=entry(g["valid"];unit="boolean",status=g["status"])
         for (k,v) in g;put("B.G3_$k",v;status=g["status"]);end
     end
