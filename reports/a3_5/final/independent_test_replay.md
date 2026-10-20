@@ -1,0 +1,4 @@
+# Independent replay limitations
+Completed: separate SymPy exact-rational numerical calculations in coordinator environment (G0 not M0; M0 not G1; missing inverse positivity). Exact inputs, outputs recorded in research-map A3.5-FINAL report. The committed independent_oracle.py is designed to reproduce the three cases but its GitHub copy was not executed as a Julia or end-to-end pipeline.
+Not performed: Julia/BigFloat execution; native JuMP G3 MISOCP; full P001–010 registered cases, 124 metrics and eight CLI actions; producer datasets; 9 integer global certificates; LFS/ZIP full-byte verification; local worktree inspection. Legacy reports claiming 6087/6087, 4108/4108, 30/30 remain third-party evidence.
+No fixes committed. No independent_A3_5 acceptance.
