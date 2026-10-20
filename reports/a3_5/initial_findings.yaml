@@ -1,0 +1,36 @@
+review_target_sha: 485b637cc1998a327206c5929434bd26c6f0be16
+review_branch: review/paper-a-a3-5-independent-acceptance-v1
+baseline_branch_head: 5e98feab298295dd0a5bda9ca334f75d63c66be1
+findings:
+  - id: A35-EVID-001
+    severity: blocking
+    type: acceptance_evidence_gap
+    status: confirmed
+    affected_gate: independent_A3_5_accepted
+    location: reports/paper_a_ap3_status.yaml
+    theorem: T-C2A-001-T-C2A-028
+    independent_evidence: "Only static GitHub inspection and standalone SymPy rational exercise executed; no Julia process"
+    expected: "Clean Julia execution and independent theorem/code/metric/CLI coverage"
+    reproduction: "command -v julia; git ls-remote https://github.com/AlOussama/FlexPlan.jl.git"
+  - id: A35-SOLVER-B1
+    severity: blocking
+    type: unresolved_solver_inconsistency
+    status: not_verified
+    affected_gate: native_G3_MISOCP_solver
+    location: reports/ap3_runs/20261020_macro/integer_bound_audit.json
+    theorem: T-C2A-017-T-C2A-020
+    independent_evidence: "Reported G3 INFEASIBLE and G0 numerical witness are not a full independently checked original-model counter-witness"
+    expected: "Identical-model primal witness and conic/MOI-bridge verification"
+    reproduction: "Fresh native G3 MISOCP and fixed-integer SOCP runs required"
+  - id: A35-INTEGER-001
+    severity: major
+    type: unverified_global_bound
+    status: not_verified
+    affected_gate: integer_global_bounds
+    location: reports/ap3_runs/20261020_macro/integer_bound_audit.json
+    theorem: T-C2A-018-T-C2A-020
+    independent_evidence: "Reported lower/upper bound origin and objective rebasing not independently reconstructed"
+    expected: "Original-currency full primal feasibility and valid minimizing dual global bound"
+    reproduction: "Independent parse of case, solver primal and dual logs with objective offsets"
+confirmed_source_code_defects: 0
+code_corrections_applied: 0
