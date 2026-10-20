@@ -172,6 +172,10 @@ function evaluate(B,p,alpha; r=ones(length(p)),W=Matrix{Float64}(I,length(p),len
     put("B.G1_binding",abs.(M*ones(n)).<=etol;unit="boolean");put("B.G2_binding",abs.(M*r).<=etol;unit="boolean")
     put("B.G1_false_rejection",minimum(eM)>=-etol && minimum(M*ones(n)) < -etol;unit="boolean")
     put("C.Wp",W*p);put("C.M2_rows",B*ones(n)-alpha*W*p);put("C.M2",minimum(B*ones(n)-alpha*W*p)>=-etol;unit="boolean")
+    # The rank-one matrix test remains defined on singular B; only its
+    # impedance-ratio equivalence needs an ordinary inverse.
+    local_e=[eigmin(Symmetric(B-alpha*p[i]*(Matrix{Float64}(I,n,n)[:,i]*Matrix{Float64}(I,n,n)[:,i]'))) for i in 1:n]
+    put("C.LOCAL_eigmin",local_e);put("C.LOCAL",minimum(local_e)>=-etol;unit="boolean")
     witness===nothing && (witness=closed_sdd_witness(M;tol))
     if witness===nothing
         m["B.G3"]=undefined("not_executed_missing_witness")
@@ -182,7 +186,7 @@ function evaluate(B,p,alpha; r=ones(length(p)),W=Matrix{Float64}(I,length(p),len
         m["B.G3"]=entry(g["valid"];unit="boolean",status=g["status"])
         for (k,v) in g;put("B.G3_$k",v;status=g["status"]);end
     end
-    invkeys=("Z","Z_diag","equivalent_strength","inverse_min","solve_residual","Zp","rho_diag","rho_Zp","M0_slack","M0","MIIF","LOCAL_eigmin","LOCAL","M1_upper_burden","M1_order_violation","M1_lower_violation","M1")
+    invkeys=("Z","Z_diag","equivalent_strength","inverse_min","solve_residual","Zp","rho_diag","rho_Zp","M0_slack","M0","MIIF","M1_upper_burden","M1_order_violation","M1_lower_violation","M1")
     if minimum(eB)<=etol || c>1e12
         reason=c>1e12 && minimum(eB)>0 ? "solver_inconclusive_ill_conditioned" : "undefined_non_PD"
         for key in invkeys;m["C.$key"]=undefined(reason);end
@@ -193,8 +197,6 @@ function evaluate(B,p,alpha; r=ones(length(p)),W=Matrix{Float64}(I,length(p),len
         put("C.Zp",y);put("C.rho_diag",[p[i]>0 ? 1/(Z[i,i]*p[i]) : nothing for i in 1:n];status=any(==(0.),p) ? "valid_with_undefined_zero_denominators" : "valid")
         put("C.rho_Zp",[y[i]>etol ? 1/y[i] : nothing for i in 1:n];status=any(y.<=etol) ? "valid_with_undefined_zero_denominators" : "valid")
         put("C.MIIF",rows(Z ./diag(Z)))
-        local_e=[eigmin(Symmetric(B-alpha*p[i]*(Matrix{Float64}(I,n,n)[:,i]*Matrix{Float64}(I,n,n)[:,i]'))) for i in 1:n]
-        put("C.LOCAL_eigmin",local_e);put("C.LOCAL",minimum(local_e)>=-etol;unit="boolean")
         for (k,v) in (("M0_slack",alpha>0 ? 1/alpha .-y : nothing),("M0",alpha>0 ? maximum(y)<=1/alpha+etol : nothing))
             put("C.$k",positive && alpha>0 ? v : nothing;status=!positive ? "domain_invalid_inverse_sign" : alpha==0 ? "undefined_alpha_zero" : "valid")
         end

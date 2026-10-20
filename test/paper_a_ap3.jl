@@ -75,6 +75,7 @@ end
     for M in ([1. -1.;-1. 1.],[1. -1. 0.;-1. 1. 0.;0. 0. 0.])
         a=AP3D.evaluate(M,zeros(size(M,1)),1.)
         @test a["B.G0"]["value"] && a["C.M0"]["value"]===nothing
+        @test a["C.LOCAL"]["value"] && a["C.rho_diag"]["value"]===nothing
         m,c=_ap3_conic(M,zeros(size(M,1)),1.,_FP.ExactEdgeSOCGSCR())
         @test JuMP.termination_status(m)==JuMP.MOI.OPTIMAL
         w=Dict("edges"=>[[i,j] for (i,j) in c.edges],"q"=>[[JuMP.value(c.q[k,1]),JuMP.value(c.q[k,2])] for k in eachindex(c.edges)])
