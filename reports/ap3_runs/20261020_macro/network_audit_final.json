@@ -1,0 +1,148 @@
+{
+  "network_audit": [
+    {
+      "Y_real_residual": 0.0,
+      "L_residual": 0.0,
+      "Y_imag_residual": 0.0,
+      "case_sha256": "b0d2363e84d28a266cb5e4313ff94177c41e3e19dbf3db7863c47303fdd83121",
+      "passive_domain_issues": [
+        "fixed_shunt_inventory_unverified",
+        "baseline_source_accounting_unverified",
+        "grounding_reference_unverified"
+      ],
+      "scenario_id": "reference_3snap",
+      "eliminated_nodes": 0,
+      "theorem_domain_valid": false,
+      "B0_residual": 0.0,
+      "Schur_elimination_residual": 0.0
+    },
+    {
+      "Y_real_residual": 0.0,
+      "L_residual": 0.0,
+      "Y_imag_residual": 0.0,
+      "case_sha256": "bc3f847fe10dce0ba08dce6443fea92334e93a1a4595141e34838bde49d711ad",
+      "passive_domain_issues": [
+        "fixed_shunt_inventory_unverified",
+        "baseline_source_accounting_unverified",
+        "grounding_reference_unverified"
+      ],
+      "scenario_id": "reference_6snap",
+      "eliminated_nodes": 0,
+      "theorem_domain_valid": false,
+      "B0_residual": 0.0,
+      "Schur_elimination_residual": 0.0
+    },
+    {
+      "Y_real_residual": 0.0,
+      "L_residual": 0.0,
+      "Y_imag_residual": 0.0,
+      "case_sha256": "d74a295602d3916147b47d08070ebc650a28c1fd392473219b87f140ee0d551f",
+      "passive_domain_issues": [
+        "fixed_shunt_inventory_unverified",
+        "baseline_source_accounting_unverified",
+        "grounding_reference_unverified"
+      ],
+      "scenario_id": "reference_24snap",
+      "eliminated_nodes": 0,
+      "theorem_domain_valid": false,
+      "B0_residual": 0.0,
+      "Schur_elimination_residual": 0.0
+    },
+    {
+      "Y_real_residual": 0.0,
+      "L_residual": 0.0,
+      "Y_imag_residual": 0.0,
+      "case_sha256": "8cfe46680d6f0a8be1378d1b21d2bd3efc4c82985389f22ee6fc52d5d40b6d78",
+      "passive_domain_issues": [
+        "fixed_shunt_inventory_unverified",
+        "baseline_source_accounting_unverified",
+        "grounding_reference_unverified"
+      ],
+      "scenario_id": "source_reactance_3snap",
+      "eliminated_nodes": 0,
+      "theorem_domain_valid": false,
+      "B0_residual": 0.0,
+      "Schur_elimination_residual": 0.0
+    },
+    {
+      "Y_real_residual": 0.0,
+      "L_residual": 0.0,
+      "Y_imag_residual": 0.0,
+      "case_sha256": "8d340cc4e63b575bde4ba3d3a605227ec0c7db4b909b77618f814a8a2647435d",
+      "passive_domain_issues": [
+        "fixed_shunt_inventory_unverified",
+        "baseline_source_accounting_unverified",
+        "grounding_reference_unverified"
+      ],
+      "scenario_id": "exposure_multiplier_3snap",
+      "eliminated_nodes": 0,
+      "theorem_domain_valid": false,
+      "B0_residual": 0.0,
+      "Schur_elimination_residual": 0.0
+    },
+    {
+      "Y_real_residual": 0.0,
+      "L_residual": 0.0,
+      "Y_imag_residual": 0.0,
+      "case_sha256": "f2a931f452675dc9206bca4af62262c7c29e9d2daf05b13b16b8535ea197b243",
+      "passive_domain_issues": [
+        "fixed_shunt_inventory_unverified",
+        "baseline_source_accounting_unverified",
+        "grounding_reference_unverified"
+      ],
+      "scenario_id": "bess_premium_3snap",
+      "eliminated_nodes": 0,
+      "theorem_domain_valid": false,
+      "B0_residual": 0.0,
+      "Schur_elimination_residual": 0.0
+    },
+    {
+      "Y_real_residual": 0.0,
+      "L_residual": 0.0,
+      "Y_imag_residual": 0.0,
+      "case_sha256": "907d1290f93b29dc796bfe0fedbc026458a6f84113f3c78fd0815af877bccdac",
+      "passive_domain_issues": [
+        "fixed_shunt_inventory_unverified",
+        "baseline_source_accounting_unverified",
+        "grounding_reference_unverified"
+      ],
+      "scenario_id": "threshold_3snap",
+      "eliminated_nodes": 0,
+      "theorem_domain_valid": false,
+      "B0_residual": 0.0,
+      "Schur_elimination_residual": 0.0
+    },
+    {
+      "Y_real_residual": 0.0,
+      "L_residual": 0.0,
+      "Y_imag_residual": 0.0,
+      "case_sha256": "c52e648b1497fbd3b5facfcd272cf535a02f5bda3d86cff34d3f433e703e0bf3",
+      "passive_domain_issues": [
+        "fixed_shunt_inventory_unverified",
+        "baseline_source_accounting_unverified",
+        "grounding_reference_unverified"
+      ],
+      "scenario_id": "connectivity_3snap",
+      "eliminated_nodes": 0,
+      "theorem_domain_valid": false,
+      "B0_residual": 0.0,
+      "Schur_elimination_residual": 0.0
+    },
+    {
+      "Y_real_residual": 0.0,
+      "L_residual": 0.0,
+      "Y_imag_residual": 0.0,
+      "case_sha256": "cb9d2f37cfff5caaea42268941e531baf2d53f4e50a01dfe03bedbe235d4cf6b",
+      "passive_domain_issues": [
+        "fixed_shunt_inventory_unverified",
+        "baseline_source_accounting_unverified",
+        "grounding_reference_unverified"
+      ],
+      "scenario_id": "event_price_3snap",
+      "eliminated_nodes": 0,
+      "theorem_domain_valid": false,
+      "B0_residual": 0.0,
+      "Schur_elimination_residual": 0.0
+    }
+  ]
+}

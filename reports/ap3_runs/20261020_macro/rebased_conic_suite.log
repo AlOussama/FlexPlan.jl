@@ -1,0 +1,18 @@
+Set parameter Username
+Set parameter LicenseID to value 2721113
+┌ Warning: warm start is only partial so will be ignored
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\models.jl:121
+new incumbent
+event_price_3snap G0_integer optimal 5.608912202456509e6
+┌ Warning: warm start is only partial so will be ignored
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\models.jl:121
+┌ Warning: The model has been modified since the last call to `optimize!` (or `optimize!` has not been called yet). If you are iteratively querying solution information and modifying a model, query all the results first, then modify the model.
+└ @ JuMP C:\Users\User\.julia\packages\JuMP\R9AEA\src\optimizer_interface.jl:1240
+event_price_3snap G3_integer optimal 5.608912202474685e6
+┌ Warning: warm start is only partial so will be ignored
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\models.jl:121
+new incumbent
+reference_24snap G0_integer optimal 1.4128094086291201e7
+┌ Warning: warm start is only partial so will be ignored
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\models.jl:121
+reference_24snap G3_integer numerical_inconclusive nothing

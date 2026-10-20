@@ -1,0 +1,44 @@
+Test Summary:                                        | Pass  Total   Time
+AP3 frozen mathematics, conic and domain regressions |   45     45  27.3s
+[info | PowerModels]: extending matpower format with data: storage_extra 1x5
+[info | PowerModels]: extending matpower format with data: ne_storage 1x26
+[info | PowerModels]: extending matpower format with data: load_extra 1x17
+[info | PowerModels]: extending matpower format with constant data: time_elapsed
+[info | PowerModels]: extending matpower format by appending matrix "storage_extra" in to "storage"
+AP3 integrated AP2 common physical model: Error During Test at D:\Projekte\Code\FlexPlan_AP3\test\paper_a_ap3.jl:86
+  Got exception outside of a @test
+  ArgumentError: AP1 CAPEX must pass scale_data! or scale_paper_a_costs! once
+  Stacktrace:
+    [1] _paper_a_add_reference!(nw_ref::Dict{Symbol, Any}, data::Dict{String, Any}, nw::Int64; validation_scope::Symbol)
+      @ FlexPlan D:\Projekte\Code\FlexPlan_AP3\src\core\paper_a_integration.jl:152
+    [2] ref_add_uc_gscr_block!(ref::Dict{Symbol, Any}, data::Dict{String, Any}; paper_a_validation_scope::Symbol)
+      @ FlexPlan D:\Projekte\Code\FlexPlan_AP3\src\core\ref_extension.jl:116
+    [3] ref_add_uc_gscr_block!
+      @ D:\Projekte\Code\FlexPlan_AP3\src\core\ref_extension.jl:95 [inlined]
+    [4] (::var"#14#16"{FlexPlan.UCGSCRBlockTemplate})(ref::Dict{Symbol, Any}, data::Dict{String, Any})
+      @ Main D:\Projekte\Code\FlexPlan_AP3\test\paper_a_fixtures.jl:82
+    [5] instantiate_model(data::Dict{String, Any}, model_type::Type, build_method::var"#13#15"{FlexPlan.UCGSCRBlockTemplate, @Kwargs{relax_block_variables::Bool, storage_terminal_policy::Symbol}}, ref_add_core!::typeof(PowerModels.ref_add_core!), global_keys::Set{String}, it::Symbol; ref_extensions::Vector{Function}, kwargs::@Kwargs{})
+      @ InfrastructureModels C:\Users\User\.julia\packages\InfrastructureModels\3h9nD\src\core\base.jl:364
+    [6] instantiate_model
+      @ C:\Users\User\.julia\packages\InfrastructureModels\3h9nD\src\core\base.jl:350 [inlined]
+    [7] #instantiate_model#292
+      @ C:\Users\User\.julia\packages\PowerModels\LnSmr\src\core\base.jl:48 [inlined]
+    [8] instantiate_model
+      @ C:\Users\User\.julia\packages\PowerModels\LnSmr\src\core\base.jl:47 [inlined]
+    [9] #_ap2_model#12
+      @ D:\Projekte\Code\FlexPlan_AP3\test\paper_a_fixtures.jl:79 [inlined]
+   [10] macro expansion
+      @ D:\Projekte\Code\FlexPlan_AP3\test\paper_a_ap3.jl:91 [inlined]
+   [11] macro expansion
+      @ C:\Users\User\.julia\juliaup\julia-1.10.11+0.x64.w64.mingw32\share\julia\stdlib\v1.10\Test\src\Test.jl:1582 [inlined]
+   [12] top-level scope
+      @ D:\Projekte\Code\FlexPlan_AP3\test\paper_a_ap3.jl:87
+   [13] include(fname::String)
+      @ Base.MainInclude .\client.jl:487
+   [14] top-level scope
+      @ D:\Projekte\Code\FlexPlan_AP3\test\run_paper_a_ap3.jl:5
+Test Summary:                            | Error  Total   Time
+AP3 integrated AP2 common physical model |     1      1  15.7s
+ERROR: LoadError: Some tests did not pass: 0 passed, 0 failed, 1 errored, 0 broken.
+in expression starting at D:\Projekte\Code\FlexPlan_AP3\test\paper_a_ap3.jl:86
+in expression starting at D:\Projekte\Code\FlexPlan_AP3\test\run_paper_a_ap3.jl:5

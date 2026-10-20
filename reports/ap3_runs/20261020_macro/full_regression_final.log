@@ -1,0 +1,618 @@
+[error | FlexPlan]: UC/gSCR block schema v2 converter output requires `operation_weight`; provide `genericParameters.operation_weight` or `genericParameters.operationWeight` in the source data.
+[error | FlexPlan]: UC/gSCR block schema v2 rejects source field `type` on component <unknown>. Use schema-v2 names only.
+[error | FlexPlan]: UC/gSCR block schema v2 rejects source field `cost_inv_block` on component <unknown>. Use schema-v2 names only.
+[error | FlexPlan]: UC/gSCR block schema v2 rejects source field `startup_block_cost` on component <unknown>. Use schema-v2 names only.
+[error | FlexPlan]: UC/gSCR block schema v2 rejects source field `shutdown_block_cost` on component <unknown>. Use schema-v2 names only.
+[error | FlexPlan]: UC/gSCR block schema v2 rejects source field `activation_policy` on component <unknown>. Use schema-v2 names only.
+[error | FlexPlan]: UC/gSCR block schema v2 rejects source field `uc_policy` on component <unknown>. Use schema-v2 names only.
+[error | FlexPlan]: UC/gSCR block schema v2 rejects source field `gscr_exposure_policy` on component <unknown>. Use schema-v2 names only.
+[error | FlexPlan]: Missing UC/gSCR block CAPEX basis. Set data["uc_gscr_block_cost_convention"]["capex_basis"] to "overnight_per_mw" or "annualized_per_mw_year", or pass uc_gscr_block_capex_basis explicitly to scale_data!.
+[error | FlexPlan]: Expandable UC/gSCR block device requires device-level lifetime. gen 1 is expandable and no case-level lifetime fallback is supported.
+[error | FlexPlan]: UC/gSCR block CAPEX annualization requires `discount_rate` for gen 1; discount_rate must be set on the device or in uc_gscr_block_cost_assumptions.
+[error | FlexPlan]: UC/gSCR block CAPEX annualization requires `fixed_om_percent` for gen 1; fixed_om_percent must be set on the device or in uc_gscr_block_cost_assumptions.
+[error | FlexPlan]: Expandable UC/gSCR block device requires device-level lifetime. gen 1 is expandable and no case-level lifetime fallback is supported.
+[error | FlexPlan]: UC/gSCR block CAPEX basis conflict: metadata declares `overnight_per_mw` but scale_data! was called with `annualized_per_mw_year`. Do not silently override cost convention metadata.
+[error | FlexPlan]: UC/gSCR block template has no formulation assignment for block-enabled GEN device 1 with carrier `GFL` in network 1.
+[error | FlexPlan]: UC/gSCR block schema v2 validation failed: block data requires block_model_schema.name="uc_gscr_block" and version="2.0".
+[error | FlexPlan]: UC/gSCR block schema v2 validation failed: block_model_schema.name must be "uc_gscr_block".
+[error | FlexPlan]: UC/gSCR block schema v2 validation failed: block_model_schema.version must be "2.0".
+[error | FlexPlan]: UC/gSCR block schema v2 validation failed due to rejected old or policy fields. Rejected-field report: GEN 1: type. Use grid_control_mode and cost_inv_per_mw, and provide formulation policy through a model template.
+[warn | FlexPlan]: GEN device 1 is missing required UC/gSCR block fields: grid_control_mode.
+[error | FlexPlan]: UC/gSCR block schema validation failed due to missing required fields. Missing-field report: GEN 1: grid_control_mode. No silent defaults are applied.
+[error | FlexPlan]: GEN device 1 has invalid UC/gSCR block field `grid_control_mode=grid-forming`. Expected `gfl` or `gfm`.
+[warn | FlexPlan]: GEN device 1 is missing required UC/gSCR block fields: carrier.
+[error | FlexPlan]: UC/gSCR block schema validation failed due to missing required fields. Missing-field report: GEN 1: carrier. No silent defaults are applied.
+[error | FlexPlan]: UC/gSCR block schema v2 validation failed due to rejected old or policy fields. Rejected-field report: GEN 1: startup_block_cost. Use grid_control_mode and cost_inv_per_mw, and provide formulation policy through a model template.
+[error | FlexPlan]: UC/gSCR block schema v2 validation failed due to rejected old or policy fields. Rejected-field report: GEN 1: shutdown_block_cost. Use grid_control_mode and cost_inv_per_mw, and provide formulation policy through a model template.
+[error | FlexPlan]: UC/gSCR block schema v2 validation failed due to rejected old or policy fields. Rejected-field report: GEN 1: cost_inv_block. Use grid_control_mode and cost_inv_per_mw, and provide formulation policy through a model template.
+[error | FlexPlan]: UC/gSCR block schema v2 validation failed due to rejected old or policy fields. Rejected-field report: GEN 1: activation_policy. Use grid_control_mode and cost_inv_per_mw, and provide formulation policy through a model template.
+[error | FlexPlan]: UC/gSCR block schema v2 validation failed due to rejected old or policy fields. Rejected-field report: GEN 1: uc_policy. Use grid_control_mode and cost_inv_per_mw, and provide formulation policy through a model template.
+[error | FlexPlan]: UC/gSCR block schema v2 validation failed due to rejected old or policy fields. Rejected-field report: GEN 1: gscr_exposure_policy. Use grid_control_mode and cost_inv_per_mw, and provide formulation policy through a model template.
+[error | FlexPlan]: GEN device 1 has invalid UC/gSCR active-block initial state: require numeric 0 <= na0 <= n0 <= nmax.
+[error | FlexPlan]: GEN device 1 has invalid UC/gSCR block bounds: require numeric 0 <= n0 <= nmax.
+[error | FlexPlan]: GEN device 1 has invalid UC/gSCR block bounds: require numeric 0 <= n0 <= nmax.
+[error | FlexPlan]: GEN device 1 has invalid `p_block_max=10`. Expected a numeric value.
+[error | FlexPlan]: GEN device 1 has invalid reactive block bounds: q_block_min and q_block_max must be numeric.
+[error | FlexPlan]: GEN device 1 has invalid reactive block bounds: q_block_min and q_block_max must be numeric.
+[error | FlexPlan]: GEN device 1 has invalid `b_block=bad`. Expected a numeric value.
+[error | FlexPlan]: GEN device 1 has invalid `cost_inv_per_mw=bad`. Expected a nonnegative numeric value.
+[error | FlexPlan]: GEN device 1 has invalid `cost_inv_per_mw=-1.0`. Expected a nonnegative numeric value.
+[error | FlexPlan]: GEN device 1 has invalid reactive block bounds: require q_block_min <= q_block_max.
+[error | FlexPlan]: GEN device 1 has invalid expandable UC/gSCR block capacity: require p_block_max > 0 when nmax > n0.
+[error | FlexPlan]: GEN device 1 has invalid scalar active-power per-unit bounds: require 0 <= p_min_pu <= p_max_pu.
+[error | FlexPlan]: GEN device 1 has invalid `p_min_pu`: numeric values must be nonnegative.
+[error | FlexPlan]: GEN device 1 has invalid vector active-power per-unit bounds: require p_min_pu <= p_max_pu at each comparable snapshot.
+[error | FlexPlan]: GEN device 1 has invalid snapshot-keyed active-power per-unit bounds at 2: require p_min_pu <= p_max_pu.
+[error | FlexPlan]: UC/gSCR block schema v2 validation failed: p_max_pu time-series values must be finite numeric values.
+[error | FlexPlan]: UC/gSCR block schema v2 validation failed: network snapshot 1 is missing required field `operation_weight`.
+[warn | FlexPlan]: STORAGE device 1 is missing required UC/gSCR block fields: e_block.
+[error | FlexPlan]: UC/gSCR block schema validation failed due to missing required fields. Missing-field report: STORAGE 1: e_block. No silent defaults are applied.
+[warn | FlexPlan]: NE_STORAGE device 1 is missing required UC/gSCR block fields: e_block.
+[error | FlexPlan]: UC/gSCR block schema validation failed due to missing required fields. Missing-field report: NE_STORAGE 1: e_block. No silent defaults are applied.
+[error | FlexPlan]: UC/gSCR block template has no formulation assignment for block-enabled GEN device 1 with carrier `biomass` in network 1.
+[error | FlexPlan]: UC/gSCR block template has no formulation assignment for block-enabled GEN device 1 with carrier `CCGT` in network 1.
+[error | FlexPlan]: UC/gSCR block template override (:gen, 99) does not reference a block-enabled device in network 1.
+[error | FlexPlan]: UC/gSCR block template carrier assignment uses unsupported table `load`. Supported tables are gen, storage, and ne_storage.
+[error | FlexPlan]: UC/gSCR block template device override uses unsupported table `load`. Supported tables are gen, storage, and ne_storage.
+[error | FlexPlan]: UC/gSCR block template validation failed: GEN device 1 uses BlockThermalCommitment and is missing required field `startup_cost_per_mw`.
+[error | FlexPlan]: UC/gSCR block template validation failed: GershgorinGSCR requires network 1 field `g_min`.
+[error | FlexPlan]: Unsupported UC/gSCR block template gSCR formulation `_UnsupportedTemplateGSCR`.
+[error | FlexPlan]: UC/gSCR block formulation-specific model construction requires a resolved UCGSCRBlockTemplate for network 1. Pass `template=...` to `uc_gscr_block_integration` or call `resolve_uc_gscr_block_template!` before creating block variables or constraints.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: STORAGE device 3 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: NE_STORAGE device 4 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[error | FlexPlan]: UC/gSCR AC-side extraction is ambiguous: branch 1 endpoint(s) (1, 99) are not present in AC `:bus`.
+[warn | FlexPlan]: GEN device 1 is missing required UC/gSCR block fields: b_block.
+[error | FlexPlan]: UC/gSCR block schema validation failed due to missing required fields. Missing-field report: GEN 1: b_block. No silent defaults are applied.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=0.5 < p_block_max=10.0. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=3) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=0.5 < p_block_max=10.0. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=3) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: UC/gSCR block schema v2 prefers explicit `time_elapsed`; continuing with existing storage default behavior for snapshot 2.
+[warn | FlexPlan]: UC/gSCR block schema v2 prefers explicit `time_elapsed`; continuing with existing storage default behavior for snapshot 1.
+[warn | FlexPlan]: UC/gSCR block schema v2 prefers explicit `time_elapsed`; continuing with existing storage default behavior for snapshot 2.
+[warn | FlexPlan]: UC/gSCR block schema v2 prefers explicit `time_elapsed`; continuing with existing storage default behavior for snapshot 1.
+[warn | FlexPlan]: UC/gSCR block schema v2 prefers explicit `time_elapsed`; continuing with existing storage default behavior for snapshot 2.
+[warn | FlexPlan]: UC/gSCR block schema v2 prefers explicit `time_elapsed`; continuing with existing storage default behavior for snapshot 1.
+[warn | FlexPlan]: UC/gSCR block schema v2 prefers explicit `time_elapsed`; continuing with existing storage default behavior for snapshot 2.
+[warn | FlexPlan]: UC/gSCR block schema v2 prefers explicit `time_elapsed`; continuing with existing storage default behavior for snapshot 1.
+[warn | FlexPlan]: UC/gSCR block schema v2 prefers explicit `time_elapsed`; continuing with existing storage default behavior for snapshot 2.
+[warn | FlexPlan]: UC/gSCR block schema v2 prefers explicit `time_elapsed`; continuing with existing storage default behavior for snapshot 1.
+[warn | FlexPlan]: UC/gSCR block schema v2 prefers explicit `time_elapsed`; continuing with existing storage default behavior for snapshot 2.
+[warn | FlexPlan]: UC/gSCR block schema v2 prefers explicit `time_elapsed`; continuing with existing storage default behavior for snapshot 1.
+[warn | FlexPlan]: UC/gSCR block schema v2 prefers explicit `time_elapsed`; continuing with existing storage default behavior for snapshot 2.
+[warn | FlexPlan]: UC/gSCR block schema v2 prefers explicit `time_elapsed`; continuing with existing storage default behavior for snapshot 1.
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=1.0 < p_block_max=10.0. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=4) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=1.0 < p_block_max=10.0. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=4) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=1.0 < p_block_max=10.0. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=4) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=1.0 < p_block_max=10.0. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=4) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=1.0 < p_block_max=10.0. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=4) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=1.0 < p_block_max=10.0. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=4) to avoid this conflict.
+[warn | FlexPlan]: UC/gSCR block schema v2 prefers explicit `time_elapsed`; continuing with existing storage default behavior for snapshot 2.
+[warn | FlexPlan]: UC/gSCR block schema v2 prefers explicit `time_elapsed`; continuing with existing storage default behavior for snapshot 1.
+[warn | FlexPlan]: UC/gSCR block schema v2 prefers explicit `time_elapsed`; continuing with existing storage default behavior for snapshot 2.
+[warn | FlexPlan]: UC/gSCR block schema v2 prefers explicit `time_elapsed`; continuing with existing storage default behavior for snapshot 1.
+[warn | FlexPlan]: UC/gSCR block schema v2 prefers explicit `time_elapsed`; continuing with existing storage default behavior for snapshot 2.
+[warn | FlexPlan]: UC/gSCR block schema v2 prefers explicit `time_elapsed`; continuing with existing storage default behavior for snapshot 1.
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=1.0 < p_block_max=2.5. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=4) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=1.0 < p_block_max=2.5. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=4) to avoid this conflict.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: NE_STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=1.0 < p_block_max=2.5. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=4) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=1.0 < p_block_max=2.5. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=4) to avoid this conflict.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: NE_STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=1.0 < p_block_max=2.5. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=4) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=1.0 < p_block_max=2.5. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=4) to avoid this conflict.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: NE_STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=1.0 < p_block_max=2.5. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=4) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=1.0 < p_block_max=2.5. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=4) to avoid this conflict.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: NE_STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=1.0 < p_block_max=2.5. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=4) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=1.0 < p_block_max=2.5. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=4) to avoid this conflict.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: NE_STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: UC/gSCR block field `p_max_pu` is a time series of length 2 but snapshot index nw=5 is out of range or non-numeric. Using default 1.0. Check that the time-series length matches the horizon.
+[warn | FlexPlan]: UC/gSCR block field `p_min_pu` is a time series of length 1 but snapshot index nw=3 is out of range or non-numeric. Using default 0.0. Check that the time-series length matches the horizon.
+[warn | FlexPlan]: UC/gSCR block field `p_max_pu` is a Dict but snapshot key nw=5 (or "5") is missing or non-numeric. Using default 1.0. Check that all snapshot keys are present in the time-series Dict.
+[warn | FlexPlan]: UC/gSCR block field `p_max_pu` has unsupported type String. Expected Number, Vector, Tuple, or Dict. Using default 1.0.
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=1.0 < p_block_max=2.5. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=4) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=1.0 < p_block_max=2.5. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=4) to avoid this conflict.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: NE_STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=1.0 < p_block_max=2.5. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=4) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=1.0 < p_block_max=2.5. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=4) to avoid this conflict.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: NE_STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=1.0 < p_block_max=2.5. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=4) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=1.0 < p_block_max=2.5. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=4) to avoid this conflict.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: NE_STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=1.0 < p_block_max=2.5. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=4) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=1.0 < p_block_max=2.5. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=4) to avoid this conflict.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: NE_STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=1.0 < p_block_max=2.5. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=4) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=1.0 < p_block_max=2.5. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=4) to avoid this conflict.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: NE_STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=1.0 < p_block_max=2.5. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=4) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=1.0 < p_block_max=2.5. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=4) to avoid this conflict.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: NE_STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=1.0 < p_block_max=2.5. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=4) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=1.0 < p_block_max=2.5. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=4) to avoid this conflict.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: NE_STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=1.0 < p_block_max=1.5. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=3) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=1.0 < p_block_max=1.5. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=3) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=1.0 < p_block_max=1.5. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=3) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=1.0 < p_block_max=1.5. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=3) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=1.0 < p_block_max=1.5. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=3) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=1.0 < p_block_max=1.5. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=3) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=1.0 < p_block_max=1.5. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=3) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=1.0 < p_block_max=1.5. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=3) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=1.0 < p_block_max=1.5. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=3) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=1.0 < p_block_max=1.5. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=3) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=1.0 < p_block_max=1.5. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=3) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=1.0 < p_block_max=1.5. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=3) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=1.0 < p_block_max=1.5. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=3) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=1.0 < p_block_max=1.5. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=3) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=1.0 < p_block_max=1.5. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=3) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=1.0 < p_block_max=1.5. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=3) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=1.0 < p_block_max=1.5. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=3) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=1.0 < p_block_max=1.5. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=3) to avoid this conflict.
+[warn | FlexPlan]: STORAGE device 1 is missing required UC/gSCR block fields: cost_inv_per_mw.
+[error | FlexPlan]: UC/gSCR block schema validation failed due to missing required fields. Missing-field report: STORAGE 1: cost_inv_per_mw. No silent defaults are applied.
+[warn | FlexPlan]: GEN device 1 is missing required UC/gSCR block fields: p_block_max.
+[error | FlexPlan]: UC/gSCR block schema validation failed due to missing required fields. Missing-field report: GEN 1: p_block_max. No silent defaults are applied.
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=1.0 < p_block_max=1.5. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=3) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=1.0 < p_block_max=1.5. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=3) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=1.0 < p_block_max=1.5. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=3) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=1.0 < p_block_max=1.5. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=3) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=1.0 < p_block_max=1.5. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=3) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=1.0 < p_block_max=1.5. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=3) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=1.0 < p_block_max=1.5. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=3) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=1.0 < p_block_max=1.5. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=3) to avoid this conflict.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: UC/gSCR block schema v2 prefers explicit `time_elapsed`; continuing with existing storage default behavior for snapshot 1.
+[warn | FlexPlan]: UC/gSCR block schema v2 prefers explicit `time_elapsed`; continuing with existing storage default behavior for snapshot 1.
+[warn | FlexPlan]: UC/gSCR block schema v2 prefers explicit `time_elapsed`; continuing with existing storage default behavior for snapshot 1.
+[warn | FlexPlan]: UC/gSCR block schema v2 prefers explicit `time_elapsed`; continuing with existing storage default behavior for snapshot 1.
+[error | FlexPlan]: Network 1 is missing required global field `g_min`. The gSCR Gershgorin constraint uses g_min as the minimum strength threshold; no silent default is applied.
+[warn | FlexPlan]: UC/gSCR block schema v2 prefers explicit `time_elapsed`; continuing with existing storage default behavior for snapshot 1.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[error | FlexPlan]: UC/gSCR block formulation-specific model construction requires a resolved UCGSCRBlockTemplate for network 1. Pass `template=...` to `uc_gscr_block_integration` or call `resolve_uc_gscr_block_template!` before creating block variables or constraints.
+[warn | FlexPlan]: UC/gSCR block schema v2 prefers explicit `time_elapsed`; continuing with existing storage default behavior for snapshot 1.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[error | FlexPlan]: UC/gSCR block formulation-specific model construction requires a resolved UCGSCRBlockTemplate for network 1. Pass `template=...` to `uc_gscr_block_integration` or call `resolve_uc_gscr_block_template!` before creating block variables or constraints.
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=1.0 < p_block_max=5.0. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=8.0) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=1.0 < p_block_max=5.0. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=8.0) to avoid this conflict.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: NE_STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=1.0 < p_block_max=5.0. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=8.0) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=1.0 < p_block_max=5.0. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=8.0) to avoid this conflict.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: NE_STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=1.0 < p_block_max=5.0. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=8.0) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=1.0 < p_block_max=5.0. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=8.0) to avoid this conflict.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: NE_STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=1.0 < p_block_max=5.0. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=8.0) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=1.0 < p_block_max=5.0. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=8.0) to avoid this conflict.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: NE_STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=1.0 < p_block_max=5.0. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=8.0) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=1.0 < p_block_max=5.0. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=8.0) to avoid this conflict.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: NE_STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=1.0 < p_block_max=5.0. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=8.0) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=1.0 < p_block_max=5.0. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=8.0) to avoid this conflict.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: NE_STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=1.0 < p_block_max=5.0. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=8.0) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=1.0 < p_block_max=5.0. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=8.0) to avoid this conflict.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: NE_STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=1.0 < p_block_max=5.0. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=8.0) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=1.0 < p_block_max=5.0. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=8.0) to avoid this conflict.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: NE_STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=1.0 < p_block_max=5.0. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=8.0) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=1.0 < p_block_max=5.0. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=8.0) to avoid this conflict.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: NE_STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=1.0 < p_block_max=5.0. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=8.0) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=1.0 < p_block_max=5.0. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=8.0) to avoid this conflict.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: NE_STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[error | FlexPlan]: Unsupported storage_terminal_policy=`bad_policy` in build_uc_gscr_block_integration.
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=1.0 < p_block_max=5.0. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=8.0) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=1.0 < p_block_max=5.0. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=8.0) to avoid this conflict.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: NE_STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=1.0 < p_block_max=5.0. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=8.0) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=1.0 < p_block_max=5.0. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=8.0) to avoid this conflict.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: NE_STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[error | FlexPlan]: Invalid storage_terminal_fraction=-0.1 in build_uc_gscr_block_integration; expected a finite value in [0, 1].
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=1.0 < p_block_max=5.0. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=8.0) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=1.0 < p_block_max=5.0. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=8.0) to avoid this conflict.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: NE_STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=1.0 < p_block_max=5.0. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=8.0) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=1.0 < p_block_max=5.0. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=8.0) to avoid this conflict.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: NE_STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[error | FlexPlan]: Invalid storage_terminal_fraction=1.1 in build_uc_gscr_block_integration; expected a finite value in [0, 1].
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=1.0 < p_block_max=5.0. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=8.0) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=1.0 < p_block_max=5.0. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=8.0) to avoid this conflict.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: NE_STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=1.0 < p_block_max=5.0. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=8.0) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=1.0 < p_block_max=5.0. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=8.0) to avoid this conflict.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: NE_STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: `final_storage_policy` is deprecated in build_uc_gscr_block_integration; use `storage_terminal_policy` instead.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[error | FlexPlan]: UC/gSCR block template validation failed: GershgorinGSCR requires network 1 field `g_min`.
+[warn | FlexPlan]: UC/gSCR block schema v2 prefers explicit `time_elapsed`; continuing with existing storage default behavior for snapshot 1.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: UC/gSCR block schema v2 prefers explicit `time_elapsed`; continuing with existing storage default behavior for snapshot 1.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: UC/gSCR block schema v2 prefers explicit `time_elapsed`; continuing with existing storage default behavior for snapshot 1.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=1.0 < p_block_max=5.0. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=8.0) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=1.0 < p_block_max=5.0. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=8.0) to avoid this conflict.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: NE_STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 is missing required UC/gSCR block fields: na0.
+[error | FlexPlan]: UC/gSCR block schema validation failed due to missing required fields. Missing-field report: GEN 1: na0. No silent defaults are applied.
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=0.0 < p_block_max=5.0. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=3) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=0.0 < p_block_max=5.0. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=3) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=0.0 < p_block_max=5.0. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=3) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=0.0 < p_block_max=5.0. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=3) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=0.0 < p_block_max=5.0. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=3) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=0.0 < p_block_max=5.0. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=3) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=0.0 < p_block_max=5.0. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=3) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=0.0 < p_block_max=5.0. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=3) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[error | FlexPlan]: UC/gSCR block storage architecture guard failed. Block-enabled candidate storage must use block variables and block-scaled constraints only; standard FlexPlan candidate-storage binary investment/activation logic is forbidden. table=ne_storage device=1 nw=1 offending variable family=z_strg_ne
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=0.0 < p_block_max=5.0. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=3) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=0.0 < p_block_max=5.0. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=3) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=0.0 < p_block_max=5.0. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=3) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=0.0 < p_block_max=5.0. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=3) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[error | FlexPlan]: UC/gSCR block storage architecture guard failed. Block-enabled candidate storage must use block variables and block-scaled constraints only; standard FlexPlan candidate-storage binary investment/activation logic is forbidden. table=ne_storage device=1 nw=1 offending variable family=z_strg_ne_investment
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=0.0 < p_block_max=5.0. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=3) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=0.0 < p_block_max=5.0. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=3) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=0.0 < p_block_max=5.0. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=3) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=0.0 < p_block_max=5.0. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=3) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[error | FlexPlan]: UC/gSCR block storage architecture guard failed. Block-enabled candidate storage must use block variables and block-scaled constraints only; standard FlexPlan candidate-storage binary investment/activation logic is forbidden. table=ne_storage device=1 nw=1 offending constraint family=ne_storage_activation
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=0.0 < p_block_max=5.0. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=3) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=0.0 < p_block_max=5.0. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=3) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=0.0 < p_block_max=5.0. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=3) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=0.0 < p_block_max=5.0. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=3) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[error | FlexPlan]: UC/gSCR block storage architecture guard failed. Block-enabled candidate storage must use block variables and block-scaled constraints only; standard FlexPlan candidate-storage binary investment/activation logic is forbidden. table=ne_storage device=1 nw=1 offending constraint family=storage_bounds_ne
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=1.0 < p_block_max=5.0. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=8) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=1.0 < p_block_max=5.0. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=8) to avoid this conflict.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: NE_STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=1.0 < p_block_max=5.0. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=8) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=1.0 < p_block_max=5.0. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=8) to avoid this conflict.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: NE_STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: NE_STORAGE device 1 has charge_rating=1.0 < p_block_max=5.0. The standard charge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sc <= p_block_max * na_block. Set charge_rating >= p_block_max (ideally >= p_block_max * nmax=8) to avoid this conflict.
+[warn | FlexPlan]: NE_STORAGE device 1 has discharge_rating=1.0 < p_block_max=5.0. The standard discharge_rating sets a hard variable upper bound via constraint_storage_bounds_ne that will be binding before the block-scaled bound sd <= p_block_max * na_block. Set discharge_rating >= p_block_max (ideally >= p_block_max * nmax=8) to avoid this conflict.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: NE_STORAGE device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 1 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+[warn | FlexPlan]: GEN device 2 sets deprecated field `p_block_min`. It is ignored by active block dispatch bounds; use p_min_pu and p_block_max.
+Test Summary: | Pass  Total     Time
+FlexPlan      | 6079   6079  5m24.8s

@@ -1,0 +1,1409 @@
+{
+  "records": [
+    {
+      "additional_cost_interval": [
+        6.472691893577576e-7,
+        1.1473894119262695e-6
+      ],
+      "reference_method": "independent feasible point and global solver bounds on identical fixed symmetric Z projection; frozen T018-T020; not interval arithmetic or independent A3.5 acceptance",
+      "native_status": "optimal",
+      "reference_upper": 2.5245961218997063e6,
+      "relative_to_reference_upper": 2.563852426703012e-13,
+      "reference_gap": 1.980991011711536e-13,
+      "formulation": "BASE",
+      "reference_lower": 2.524596121899206e6,
+      "reference_certified": true,
+      "native_termination": "OPTIMAL",
+      "case_id": "bess_premium_3snap",
+      "unit": "declared_currency_per_represented_horizon",
+      "candidate_objective": 2.5245961219003536e6
+    },
+    {
+      "additional_cost_interval": [
+        0.24808976892381907,
+        0.24809026904404163
+      ],
+      "reference_method": "independent feasible point and global solver bounds on identical fixed symmetric Z projection; frozen T018-T020; not interval arithmetic or independent A3.5 acceptance",
+      "native_status": "optimal",
+      "reference_upper": 2.5245961218997063e6,
+      "relative_to_reference_upper": 9.826909214181025e-8,
+      "reference_gap": 1.980991011711536e-13,
+      "formulation": "G0",
+      "reference_lower": 2.524596121899206e6,
+      "reference_certified": true,
+      "native_termination": "OPTIMAL",
+      "case_id": "bess_premium_3snap",
+      "unit": "declared_currency_per_represented_horizon",
+      "candidate_objective": 2.5245963699894752e6
+    },
+    {
+      "additional_cost_interval": [
+        12385.659723984078,
+        12385.659724484198
+      ],
+      "reference_method": "independent feasible point and global solver bounds on identical fixed symmetric Z projection; frozen T018-T020; not interval arithmetic or independent A3.5 acceptance",
+      "native_status": "optimal",
+      "reference_upper": 2.5245961218997063e6,
+      "relative_to_reference_upper": 0.004905996494466658,
+      "reference_gap": 1.980991011711536e-13,
+      "formulation": "G1",
+      "reference_lower": 2.524596121899206e6,
+      "reference_certified": true,
+      "native_termination": "OPTIMAL",
+      "case_id": "bess_premium_3snap",
+      "unit": "declared_currency_per_represented_horizon",
+      "candidate_objective": 2.5369817816236904e6
+    },
+    {
+      "additional_cost_interval": [
+        12385.659723984078,
+        12385.659724484198
+      ],
+      "reference_method": "independent feasible point and global solver bounds on identical fixed symmetric Z projection; frozen T018-T020; not interval arithmetic or independent A3.5 acceptance",
+      "native_status": "optimal",
+      "reference_upper": 2.5245961218997063e6,
+      "relative_to_reference_upper": 0.004905996494466658,
+      "reference_gap": 1.980991011711536e-13,
+      "formulation": "G2_identity",
+      "reference_lower": 2.524596121899206e6,
+      "reference_certified": true,
+      "native_termination": "OPTIMAL",
+      "case_id": "bess_premium_3snap",
+      "unit": "declared_currency_per_represented_horizon",
+      "candidate_objective": 2.5369817816236904e6
+    },
+    {
+      "additional_cost_interval": null,
+      "reference_method": "independent feasible point and global solver bounds on identical fixed symmetric Z projection; frozen T018-T020; not interval arithmetic or independent A3.5 acceptance",
+      "native_status": "infeasible",
+      "reference_upper": 2.5245961218997063e6,
+      "relative_to_reference_upper": null,
+      "reference_gap": 1.980991011711536e-13,
+      "formulation": "G2_degree",
+      "reference_lower": 2.524596121899206e6,
+      "reference_certified": true,
+      "native_termination": "INFEASIBLE",
+      "case_id": "bess_premium_3snap",
+      "unit": "declared_currency_per_represented_horizon",
+      "candidate_objective": null
+    },
+    {
+      "additional_cost_interval": [
+        0.24777529202401638,
+        0.24777579214423895
+      ],
+      "reference_method": "independent feasible point and global solver bounds on identical fixed symmetric Z projection; frozen T018-T020; not interval arithmetic or independent A3.5 acceptance",
+      "native_status": "optimal",
+      "reference_upper": 2.5245961218997063e6,
+      "relative_to_reference_upper": 9.814452691053434e-8,
+      "reference_gap": 1.980991011711536e-13,
+      "formulation": "G3",
+      "reference_lower": 2.524596121899206e6,
+      "reference_certified": true,
+      "native_termination": "OPTIMAL",
+      "case_id": "bess_premium_3snap",
+      "unit": "declared_currency_per_represented_horizon",
+      "candidate_objective": 2.5245963696749983e6
+    },
+    {
+      "additional_cost_interval": null,
+      "reference_method": "independent feasible point and global solver bounds on identical fixed symmetric Z projection; frozen T018-T020; not interval arithmetic or independent A3.5 acceptance",
+      "native_status": "infeasible",
+      "reference_upper": 2.5245961218997063e6,
+      "relative_to_reference_upper": null,
+      "reference_gap": 1.980991011711536e-13,
+      "formulation": "M1",
+      "reference_lower": 2.524596121899206e6,
+      "reference_certified": true,
+      "native_termination": "INFEASIBLE",
+      "case_id": "bess_premium_3snap",
+      "unit": "declared_currency_per_represented_horizon",
+      "candidate_objective": null
+    },
+    {
+      "additional_cost_interval": [
+        23803.56486092601,
+        23803.56486142613
+      ],
+      "reference_method": "independent feasible point and global solver bounds on identical fixed symmetric Z projection; frozen T018-T020; not interval arithmetic or independent A3.5 acceptance",
+      "native_status": "optimal",
+      "reference_upper": 2.5245961218997063e6,
+      "relative_to_reference_upper": 0.009428662531183135,
+      "reference_gap": 1.980991011711536e-13,
+      "formulation": "M2_full",
+      "reference_lower": 2.524596121899206e6,
+      "reference_certified": true,
+      "native_termination": "OPTIMAL",
+      "case_id": "bess_premium_3snap",
+      "unit": "declared_currency_per_represented_horizon",
+      "candidate_objective": 2.5483996867606323e6
+    },
+    {
+      "additional_cost_interval": [
+        13192.37914190907,
+        13192.37914240919
+      ],
+      "reference_method": "independent feasible point and global solver bounds on identical fixed symmetric Z projection; frozen T018-T020; not interval arithmetic or independent A3.5 acceptance",
+      "native_status": "optimal",
+      "reference_upper": 2.5245961218997063e6,
+      "relative_to_reference_upper": 0.005225540444854236,
+      "reference_gap": 1.980991011711536e-13,
+      "formulation": "M2_neighbor",
+      "reference_lower": 2.524596121899206e6,
+      "reference_certified": true,
+      "native_termination": "OPTIMAL",
+      "case_id": "bess_premium_3snap",
+      "unit": "declared_currency_per_represented_horizon",
+      "candidate_objective": 2.5377885010416154e6
+    },
+    {
+      "additional_cost_interval": [
+        6.477348506450653e-7,
+        1.5213154256343842e-6
+      ],
+      "reference_method": "independent feasible point and global solver bounds on identical fixed symmetric Z projection; frozen T018-T020; not interval arithmetic or independent A3.5 acceptance",
+      "native_status": "optimal",
+      "reference_upper": 2.594530970258845e6,
+      "relative_to_reference_upper": 2.496539290029919e-13,
+      "reference_gap": 3.367007698128057e-13,
+      "formulation": "BASE",
+      "reference_lower": 2.5945309702579714e6,
+      "reference_certified": true,
+      "native_termination": "OPTIMAL",
+      "case_id": "connectivity_3snap",
+      "unit": "declared_currency_per_represented_horizon",
+      "candidate_objective": 2.5945309702594928e6
+    },
+    {
+      "additional_cost_interval": [
+        6.458722054958344e-7,
+        1.5194527804851532e-6
+      ],
+      "reference_method": "independent feasible point and global solver bounds on identical fixed symmetric Z projection; frozen T018-T020; not interval arithmetic or independent A3.5 acceptance",
+      "native_status": "optimal",
+      "reference_upper": 2.594530970258845e6,
+      "relative_to_reference_upper": 2.4893601691383875e-13,
+      "reference_gap": 3.367007698128057e-13,
+      "formulation": "G0",
+      "reference_lower": 2.5945309702579714e6,
+      "reference_certified": true,
+      "native_termination": "OPTIMAL",
+      "case_id": "connectivity_3snap",
+      "unit": "declared_currency_per_represented_horizon",
+      "candidate_objective": 2.594530970259491e6
+    },
+    {
+      "additional_cost_interval": [
+        6.477348506450653e-7,
+        1.5213154256343842e-6
+      ],
+      "reference_method": "independent feasible point and global solver bounds on identical fixed symmetric Z projection; frozen T018-T020; not interval arithmetic or independent A3.5 acceptance",
+      "native_status": "optimal",
+      "reference_upper": 2.594530970258845e6,
+      "relative_to_reference_upper": 2.496539290029919e-13,
+      "reference_gap": 3.367007698128057e-13,
+      "formulation": "G1",
+      "reference_lower": 2.5945309702579714e6,
+      "reference_certified": true,
+      "native_termination": "OPTIMAL",
+      "case_id": "connectivity_3snap",
+      "unit": "declared_currency_per_represented_horizon",
+      "candidate_objective": 2.5945309702594928e6
+    },
+    {
+      "additional_cost_interval": [
+        6.477348506450653e-7,
+        1.5213154256343842e-6
+      ],
+      "reference_method": "independent feasible point and global solver bounds on identical fixed symmetric Z projection; frozen T018-T020; not interval arithmetic or independent A3.5 acceptance",
+      "native_status": "optimal",
+      "reference_upper": 2.594530970258845e6,
+      "relative_to_reference_upper": 2.496539290029919e-13,
+      "reference_gap": 3.367007698128057e-13,
+      "formulation": "G2_identity",
+      "reference_lower": 2.5945309702579714e6,
+      "reference_certified": true,
+      "native_termination": "OPTIMAL",
+      "case_id": "connectivity_3snap",
+      "unit": "declared_currency_per_represented_horizon",
+      "candidate_objective": 2.5945309702594928e6
+    },
+    {
+      "additional_cost_interval": null,
+      "reference_method": "independent feasible point and global solver bounds on identical fixed symmetric Z projection; frozen T018-T020; not interval arithmetic or independent A3.5 acceptance",
+      "native_status": "infeasible",
+      "reference_upper": 2.594530970258845e6,
+      "relative_to_reference_upper": null,
+      "reference_gap": 3.367007698128057e-13,
+      "formulation": "G2_degree",
+      "reference_lower": 2.5945309702579714e6,
+      "reference_certified": true,
+      "native_termination": "INFEASIBLE",
+      "case_id": "connectivity_3snap",
+      "unit": "declared_currency_per_represented_horizon",
+      "candidate_objective": null
+    },
+    {
+      "additional_cost_interval": [
+        0.2859243080019951,
+        0.2859251815825701
+      ],
+      "reference_method": "independent feasible point and global solver bounds on identical fixed symmetric Z projection; frozen T018-T020; not interval arithmetic or independent A3.5 acceptance",
+      "native_status": "optimal",
+      "reference_upper": 2.594530970258845e6,
+      "relative_to_reference_upper": 1.1020269608632563e-7,
+      "reference_gap": 3.367007698128057e-13,
+      "formulation": "G3",
+      "reference_lower": 2.5945309702579714e6,
+      "reference_certified": true,
+      "native_termination": "OPTIMAL",
+      "case_id": "connectivity_3snap",
+      "unit": "declared_currency_per_represented_horizon",
+      "candidate_objective": 2.594531256183153e6
+    },
+    {
+      "additional_cost_interval": null,
+      "reference_method": "independent feasible point and global solver bounds on identical fixed symmetric Z projection; frozen T018-T020; not interval arithmetic or independent A3.5 acceptance",
+      "native_status": "infeasible",
+      "reference_upper": 2.594530970258845e6,
+      "relative_to_reference_upper": null,
+      "reference_gap": 3.367007698128057e-13,
+      "formulation": "M1",
+      "reference_lower": 2.5945309702579714e6,
+      "reference_certified": true,
+      "native_termination": "INFEASIBLE",
+      "case_id": "connectivity_3snap",
+      "unit": "declared_currency_per_represented_horizon",
+      "candidate_objective": null
+    },
+    {
+      "additional_cost_interval": [
+        5263.943819816224,
+        5263.943820689805
+      ],
+      "reference_method": "independent feasible point and global solver bounds on identical fixed symmetric Z projection; frozen T018-T020; not interval arithmetic or independent A3.5 acceptance",
+      "native_status": "optimal",
+      "reference_upper": 2.594530970258845e6,
+      "relative_to_reference_upper": 0.0020288614320495327,
+      "reference_gap": 3.367007698128057e-13,
+      "formulation": "M2_full",
+      "reference_lower": 2.5945309702579714e6,
+      "reference_certified": true,
+      "native_termination": "OPTIMAL",
+      "case_id": "connectivity_3snap",
+      "unit": "declared_currency_per_represented_horizon",
+      "candidate_objective": 2.5997949140786612e6
+    },
+    {
+      "additional_cost_interval": [
+        6.477348506450653e-7,
+        1.5213154256343842e-6
+      ],
+      "reference_method": "independent feasible point and global solver bounds on identical fixed symmetric Z projection; frozen T018-T020; not interval arithmetic or independent A3.5 acceptance",
+      "native_status": "optimal",
+      "reference_upper": 2.594530970258845e6,
+      "relative_to_reference_upper": 2.496539290029919e-13,
+      "reference_gap": 3.367007698128057e-13,
+      "formulation": "M2_neighbor",
+      "reference_lower": 2.5945309702579714e6,
+      "reference_certified": true,
+      "native_termination": "OPTIMAL",
+      "case_id": "connectivity_3snap",
+      "unit": "declared_currency_per_represented_horizon",
+      "candidate_objective": 2.5945309702594928e6
+    },
+    {
+      "additional_cost_interval": [
+        3.2782554626464844e-7,
+        -3.2223761081695557e-7
+      ],
+      "reference_method": "independent feasible point and global solver bounds on identical fixed symmetric Z projection; frozen T018-T020; not interval arithmetic or independent A3.5 acceptance",
+      "native_status": "optimal",
+      "reference_upper": 5.60891220245618e6,
+      "relative_to_reference_upper": 5.844725936717131e-14,
+      "reference_gap": 1.1589825863149311e-13,
+      "formulation": "BASE",
+      "reference_lower": 5.60891220245683e6,
+      "reference_certified": true,
+      "native_termination": "OPTIMAL",
+      "case_id": "event_price_3snap",
+      "unit": "declared_currency_per_represented_horizon",
+      "candidate_objective": 5.608912202456508e6
+    },
+    {
+      "additional_cost_interval": [
+        4.4209882616996765e-6,
+        3.7709251046180725e-6
+      ],
+      "reference_method": "independent feasible point and global solver bounds on identical fixed symmetric Z projection; frozen T018-T020; not interval arithmetic or independent A3.5 acceptance",
+      "native_status": "numerical_inconclusive",
+      "reference_upper": 5.60891220245618e6,
+      "relative_to_reference_upper": 7.882077847044381e-13,
+      "reference_gap": 1.1589825863149311e-13,
+      "formulation": "G0",
+      "reference_lower": 5.60891220245683e6,
+      "reference_certified": true,
+      "native_termination": "OPTIMAL",
+      "case_id": "event_price_3snap",
+      "unit": "declared_currency_per_represented_horizon",
+      "candidate_objective": 5.608912202460601e6
+    },
+    {
+      "additional_cost_interval": [
+        3.287568688392639e-7,
+        -3.213062882423401e-7
+      ],
+      "reference_method": "independent feasible point and global solver bounds on identical fixed symmetric Z projection; frozen T018-T020; not interval arithmetic or independent A3.5 acceptance",
+      "native_status": "optimal",
+      "reference_upper": 5.60891220245618e6,
+      "relative_to_reference_upper": 5.861330271764623e-14,
+      "reference_gap": 1.1589825863149311e-13,
+      "formulation": "G1",
+      "reference_lower": 5.60891220245683e6,
+      "reference_certified": true,
+      "native_termination": "OPTIMAL",
+      "case_id": "event_price_3snap",
+      "unit": "declared_currency_per_represented_horizon",
+      "candidate_objective": 5.608912202456509e6
+    },
+    {
+      "additional_cost_interval": [
+        3.287568688392639e-7,
+        -3.213062882423401e-7
+      ],
+      "reference_method": "independent feasible point and global solver bounds on identical fixed symmetric Z projection; frozen T018-T020; not interval arithmetic or independent A3.5 acceptance",
+      "native_status": "optimal",
+      "reference_upper": 5.60891220245618e6,
+      "relative_to_reference_upper": 5.861330271764623e-14,
+      "reference_gap": 1.1589825863149311e-13,
+      "formulation": "G2_identity",
+      "reference_lower": 5.60891220245683e6,
+      "reference_certified": true,
+      "native_termination": "OPTIMAL",
+      "case_id": "event_price_3snap",
+      "unit": "declared_currency_per_represented_horizon",
+      "candidate_objective": 5.608912202456509e6
+    },
+    {
+      "additional_cost_interval": null,
+      "reference_method": "independent feasible point and global solver bounds on identical fixed symmetric Z projection; frozen T018-T020; not interval arithmetic or independent A3.5 acceptance",
+      "native_status": "infeasible",
+      "reference_upper": 5.60891220245618e6,
+      "relative_to_reference_upper": null,
+      "reference_gap": 1.1589825863149311e-13,
+      "formulation": "G2_degree",
+      "reference_lower": 5.60891220245683e6,
+      "reference_certified": true,
+      "native_termination": "INFEASIBLE",
+      "case_id": "event_price_3snap",
+      "unit": "declared_currency_per_represented_horizon",
+      "candidate_objective": null
+    },
+    {
+      "additional_cost_interval": [
+        0.016828284598886967,
+        0.016827634535729885
+      ],
+      "reference_method": "independent feasible point and global solver bounds on identical fixed symmetric Z projection; frozen T018-T020; not interval arithmetic or independent A3.5 acceptance",
+      "native_status": "optimal",
+      "reference_upper": 5.60891220245618e6,
+      "relative_to_reference_upper": 3.000275987831963e-9,
+      "reference_gap": 1.1589825863149311e-13,
+      "formulation": "G3",
+      "reference_lower": 5.60891220245683e6,
+      "reference_certified": true,
+      "native_termination": "OPTIMAL",
+      "case_id": "event_price_3snap",
+      "unit": "declared_currency_per_represented_horizon",
+      "candidate_objective": 5.608912219284465e6
+    },
+    {
+      "additional_cost_interval": null,
+      "reference_method": "independent feasible point and global solver bounds on identical fixed symmetric Z projection; frozen T018-T020; not interval arithmetic or independent A3.5 acceptance",
+      "native_status": "infeasible",
+      "reference_upper": 5.60891220245618e6,
+      "relative_to_reference_upper": null,
+      "reference_gap": 1.1589825863149311e-13,
+      "formulation": "M1",
+      "reference_lower": 5.60891220245683e6,
+      "reference_certified": true,
+      "native_termination": "INFEASIBLE",
+      "case_id": "event_price_3snap",
+      "unit": "declared_currency_per_represented_horizon",
+      "candidate_objective": null
+    },
+    {
+      "additional_cost_interval": [
+        27567.17867898941,
+        27567.178678339347
+      ],
+      "reference_method": "independent feasible point and global solver bounds on identical fixed symmetric Z projection; frozen T018-T020; not interval arithmetic or independent A3.5 acceptance",
+      "native_status": "optimal",
+      "reference_upper": 5.60891220245618e6,
+      "relative_to_reference_upper": 0.004914888606549691,
+      "reference_gap": 1.1589825863149311e-13,
+      "formulation": "M2_full",
+      "reference_lower": 5.60891220245683e6,
+      "reference_certified": true,
+      "native_termination": "OPTIMAL",
+      "case_id": "event_price_3snap",
+      "unit": "declared_currency_per_represented_horizon",
+      "candidate_objective": 5.636479381135169e6
+    },
+    {
+      "additional_cost_interval": [
+        5961.546459425241,
+        5961.546458775178
+      ],
+      "reference_method": "independent feasible point and global solver bounds on identical fixed symmetric Z projection; frozen T018-T020; not interval arithmetic or independent A3.5 acceptance",
+      "native_status": "optimal",
+      "reference_upper": 5.60891220245618e6,
+      "relative_to_reference_upper": 0.0010628703470905892,
+      "reference_gap": 1.1589825863149311e-13,
+      "formulation": "M2_neighbor",
+      "reference_lower": 5.60891220245683e6,
+      "reference_certified": true,
+      "native_termination": "OPTIMAL",
+      "case_id": "event_price_3snap",
+      "unit": "declared_currency_per_represented_horizon",
+      "candidate_objective": 5.614873748915605e6
+    },
+    {
+      "additional_cost_interval": [
+        6.472691893577576e-7,
+        1.1473894119262695e-6
+      ],
+      "reference_method": "independent feasible point and global solver bounds on identical fixed symmetric Z projection; frozen T018-T020; not interval arithmetic or independent A3.5 acceptance",
+      "native_status": "optimal",
+      "reference_upper": 2.5245961218997063e6,
+      "relative_to_reference_upper": 2.563852426703012e-13,
+      "reference_gap": 1.980991011711536e-13,
+      "formulation": "BASE",
+      "reference_lower": 2.524596121899206e6,
+      "reference_certified": true,
+      "native_termination": "OPTIMAL",
+      "case_id": "exposure_multiplier_3snap",
+      "unit": "declared_currency_per_represented_horizon",
+      "candidate_objective": 2.5245961219003536e6
+    },
+    {
+      "additional_cost_interval": [
+        0.24835350550711155,
+        0.24835400562733412
+      ],
+      "reference_method": "independent feasible point and global solver bounds on identical fixed symmetric Z projection; frozen T018-T020; not interval arithmetic or independent A3.5 acceptance",
+      "native_status": "optimal",
+      "reference_upper": 2.5245961218997063e6,
+      "relative_to_reference_upper": 9.837355898345858e-8,
+      "reference_gap": 1.980991011711536e-13,
+      "formulation": "G0",
+      "reference_lower": 2.524596121899206e6,
+      "reference_certified": true,
+      "native_termination": "OPTIMAL",
+      "case_id": "exposure_multiplier_3snap",
+      "unit": "declared_currency_per_represented_horizon",
+      "candidate_objective": 2.524596370253212e6
+    },
+    {
+      "additional_cost_interval": [
+        12605.578939143103,
+        12605.578939643223
+      ],
+      "reference_method": "independent feasible point and global solver bounds on identical fixed symmetric Z projection; frozen T018-T020; not interval arithmetic or independent A3.5 acceptance",
+      "native_status": "optimal",
+      "reference_upper": 2.5245961218997063e6,
+      "relative_to_reference_upper": 0.004993107146840448,
+      "reference_gap": 1.980991011711536e-13,
+      "formulation": "G1",
+      "reference_lower": 2.524596121899206e6,
+      "reference_certified": true,
+      "native_termination": "OPTIMAL",
+      "case_id": "exposure_multiplier_3snap",
+      "unit": "declared_currency_per_represented_horizon",
+      "candidate_objective": 2.5372017008388494e6
+    },
+    {
+      "additional_cost_interval": [
+        12605.578939143103,
+        12605.578939643223
+      ],
+      "reference_method": "independent feasible point and global solver bounds on identical fixed symmetric Z projection; frozen T018-T020; not interval arithmetic or independent A3.5 acceptance",
+      "native_status": "optimal",
+      "reference_upper": 2.5245961218997063e6,
+      "relative_to_reference_upper": 0.004993107146840448,
+      "reference_gap": 1.980991011711536e-13,
+      "formulation": "G2_identity",
+      "reference_lower": 2.524596121899206e6,
+      "reference_certified": true,
+      "native_termination": "OPTIMAL",
+      "case_id": "exposure_multiplier_3snap",
+      "unit": "declared_currency_per_represented_horizon",
+      "candidate_objective": 2.5372017008388494e6
+    },
+    {
+      "additional_cost_interval": null,
+      "reference_method": "independent feasible point and global solver bounds on identical fixed symmetric Z projection; frozen T018-T020; not interval arithmetic or independent A3.5 acceptance",
+      "native_status": "infeasible",
+      "reference_upper": 2.5245961218997063e6,
+      "relative_to_reference_upper": null,
+      "reference_gap": 1.980991011711536e-13,
+      "formulation": "G2_degree",
+      "reference_lower": 2.524596121899206e6,
+      "reference_certified": true,
+      "native_termination": "INFEASIBLE",
+      "case_id": "exposure_multiplier_3snap",
+      "unit": "declared_currency_per_represented_horizon",
+      "candidate_objective": null
+    },
+    {
+      "additional_cost_interval": [
+        0.24793071718886495,
+        0.24793121730908751
+      ],
+      "reference_method": "independent feasible point and global solver bounds on identical fixed symmetric Z projection; frozen T018-T020; not interval arithmetic or independent A3.5 acceptance",
+      "native_status": "optimal",
+      "reference_upper": 2.5245961218997063e6,
+      "relative_to_reference_upper": 9.82060912785932e-8,
+      "reference_gap": 1.980991011711536e-13,
+      "formulation": "G3",
+      "reference_lower": 2.524596121899206e6,
+      "reference_certified": true,
+      "native_termination": "OPTIMAL",
+      "case_id": "exposure_multiplier_3snap",
+      "unit": "declared_currency_per_represented_horizon",
+      "candidate_objective": 2.5245963698304235e6
+    },
+    {
+      "additional_cost_interval": null,
+      "reference_method": "independent feasible point and global solver bounds on identical fixed symmetric Z projection; frozen T018-T020; not interval arithmetic or independent A3.5 acceptance",
+      "native_status": "infeasible",
+      "reference_upper": 2.5245961218997063e6,
+      "relative_to_reference_upper": null,
+      "reference_gap": 1.980991011711536e-13,
+      "formulation": "M1",
+      "reference_lower": 2.524596121899206e6,
+      "reference_certified": true,
+      "native_termination": "INFEASIBLE",
+      "case_id": "exposure_multiplier_3snap",
+      "unit": "declared_currency_per_represented_horizon",
+      "candidate_objective": null
+    },
+    {
+      "additional_cost_interval": [
+        24604.05934300553,
+        24604.05934350565
+      ],
+      "reference_method": "independent feasible point and global solver bounds on identical fixed symmetric Z projection; frozen T018-T020; not interval arithmetic or independent A3.5 acceptance",
+      "native_status": "optimal",
+      "reference_upper": 2.5245961218997063e6,
+      "relative_to_reference_upper": 0.009745740766048347,
+      "reference_gap": 1.980991011711536e-13,
+      "formulation": "M2_full",
+      "reference_lower": 2.524596121899206e6,
+      "reference_certified": true,
+      "native_termination": "OPTIMAL",
+      "case_id": "exposure_multiplier_3snap",
+      "unit": "declared_currency_per_represented_horizon",
+      "candidate_objective": 2.549200181242712e6
+    },
+    {
+      "additional_cost_interval": [
+        15714.69068988366,
+        15714.69069038378
+      ],
+      "reference_method": "independent feasible point and global solver bounds on identical fixed symmetric Z projection; frozen T018-T020; not interval arithmetic or independent A3.5 acceptance",
+      "native_status": "optimal",
+      "reference_upper": 2.5245961218997063e6,
+      "relative_to_reference_upper": 0.006224635518357163,
+      "reference_gap": 1.980991011711536e-13,
+      "formulation": "M2_neighbor",
+      "reference_lower": 2.524596121899206e6,
+      "reference_certified": true,
+      "native_termination": "OPTIMAL",
+      "case_id": "exposure_multiplier_3snap",
+      "unit": "declared_currency_per_represented_horizon",
+      "candidate_objective": 2.54031081258959e6
+    },
+    {
+      "additional_cost_interval": [
+        1.6130506992340088e-6,
+        -4.6566128730773926e-8
+      ],
+      "reference_method": "independent feasible point and global solver bounds on identical fixed symmetric Z projection; frozen T018-T020; not interval arithmetic or independent A3.5 acceptance",
+      "native_status": "optimal",
+      "reference_upper": 1.4128094086289586e7,
+      "relative_to_reference_upper": 1.1417326989628215e-13,
+      "reference_gap": 1.1746926498566674e-13,
+      "formulation": "BASE",
+      "reference_lower": 1.4128094086291246e7,
+      "reference_certified": true,
+      "native_termination": "OPTIMAL",
+      "case_id": "reference_24snap",
+      "unit": "declared_currency_per_represented_horizon",
+      "candidate_objective": 1.41280940862912e7
+    },
+    {
+      "additional_cost_interval": [
+        0.974899023771286,
+        0.974897364154458
+      ],
+      "reference_method": "independent feasible point and global solver bounds on identical fixed symmetric Z projection; frozen T018-T020; not interval arithmetic or independent A3.5 acceptance",
+      "native_status": "optimal",
+      "reference_upper": 1.4128094086289586e7,
+      "relative_to_reference_upper": 6.900428449987202e-8,
+      "reference_gap": 1.1746926498566674e-13,
+      "formulation": "G0",
+      "reference_lower": 1.4128094086291246e7,
+      "reference_certified": true,
+      "native_termination": "OPTIMAL",
+      "case_id": "reference_24snap",
+      "unit": "declared_currency_per_represented_horizon",
+      "candidate_objective": 1.412809506118861e7
+    },
+    {
+      "additional_cost_interval": [
+        59831.00608732551,
+        59831.0060856659
+      ],
+      "reference_method": "independent feasible point and global solver bounds on identical fixed symmetric Z projection; frozen T018-T020; not interval arithmetic or independent A3.5 acceptance",
+      "native_status": "optimal",
+      "reference_upper": 1.4128094086289586e7,
+      "relative_to_reference_upper": 0.004234895784378141,
+      "reference_gap": 1.1746926498566674e-13,
+      "formulation": "G1",
+      "reference_lower": 1.4128094086291246e7,
+      "reference_certified": true,
+      "native_termination": "OPTIMAL",
+      "case_id": "reference_24snap",
+      "unit": "declared_currency_per_represented_horizon",
+      "candidate_objective": 1.4187925092376912e7
+    },
+    {
+      "additional_cost_interval": [
+        59831.00608732551,
+        59831.0060856659
+      ],
+      "reference_method": "independent feasible point and global solver bounds on identical fixed symmetric Z projection; frozen T018-T020; not interval arithmetic or independent A3.5 acceptance",
+      "native_status": "optimal",
+      "reference_upper": 1.4128094086289586e7,
+      "relative_to_reference_upper": 0.004234895784378141,
+      "reference_gap": 1.1746926498566674e-13,
+      "formulation": "G2_identity",
+      "reference_lower": 1.4128094086291246e7,
+      "reference_certified": true,
+      "native_termination": "OPTIMAL",
+      "case_id": "reference_24snap",
+      "unit": "declared_currency_per_represented_horizon",
+      "candidate_objective": 1.4187925092376912e7
+    },
+    {
+      "additional_cost_interval": null,
+      "reference_method": "independent feasible point and global solver bounds on identical fixed symmetric Z projection; frozen T018-T020; not interval arithmetic or independent A3.5 acceptance",
+      "native_status": "infeasible",
+      "reference_upper": 1.4128094086289586e7,
+      "relative_to_reference_upper": null,
+      "reference_gap": 1.1746926498566674e-13,
+      "formulation": "G2_degree",
+      "reference_lower": 1.4128094086291246e7,
+      "reference_certified": true,
+      "native_termination": "INFEASIBLE",
+      "case_id": "reference_24snap",
+      "unit": "declared_currency_per_represented_horizon",
+      "candidate_objective": null
+    },
+    {
+      "additional_cost_interval": [
+        0.8751034568995237,
+        0.8751017972826958
+      ],
+      "reference_method": "independent feasible point and global solver bounds on identical fixed symmetric Z projection; frozen T018-T020; not interval arithmetic or independent A3.5 acceptance",
+      "native_status": "numerical_inconclusive",
+      "reference_upper": 1.4128094086289586e7,
+      "relative_to_reference_upper": 6.194065891369988e-8,
+      "reference_gap": 1.1746926498566674e-13,
+      "formulation": "G3",
+      "reference_lower": 1.4128094086291246e7,
+      "reference_certified": true,
+      "native_termination": "OPTIMAL",
+      "case_id": "reference_24snap",
+      "unit": "declared_currency_per_represented_horizon",
+      "candidate_objective": 1.4128094961393043e7
+    },
+    {
+      "additional_cost_interval": null,
+      "reference_method": "independent feasible point and global solver bounds on identical fixed symmetric Z projection; frozen T018-T020; not interval arithmetic or independent A3.5 acceptance",
+      "native_status": "infeasible",
+      "reference_upper": 1.4128094086289586e7,
+      "relative_to_reference_upper": null,
+      "reference_gap": 1.1746926498566674e-13,
+      "formulation": "M1",
+      "reference_lower": 1.4128094086291246e7,
+      "reference_certified": true,
+      "native_termination": "INFEASIBLE",
+      "case_id": "reference_24snap",
+      "unit": "declared_currency_per_represented_horizon",
+      "candidate_objective": null
+    },
+    {
+      "additional_cost_interval": [
+        197219.5833251439,
+        197219.5833234843
+      ],
+      "reference_method": "independent feasible point and global solver bounds on identical fixed symmetric Z projection; frozen T018-T020; not interval arithmetic or independent A3.5 acceptance",
+      "native_status": "optimal",
+      "reference_upper": 1.4128094086289586e7,
+      "relative_to_reference_upper": 0.013959390567517023,
+      "reference_gap": 1.1746926498566674e-13,
+      "formulation": "M2_full",
+      "reference_lower": 1.4128094086291246e7,
+      "reference_certified": true,
+      "native_termination": "OPTIMAL",
+      "case_id": "reference_24snap",
+      "unit": "declared_currency_per_represented_horizon",
+      "candidate_objective": 1.432531366961473e7
+    },
+    {
+      "additional_cost_interval": [
+        99132.60886644572,
+        99132.6088647861
+      ],
+      "reference_method": "independent feasible point and global solver bounds on identical fixed symmetric Z projection; frozen T018-T020; not interval arithmetic or independent A3.5 acceptance",
+      "native_status": "optimal",
+      "reference_upper": 1.4128094086289586e7,
+      "relative_to_reference_upper": 0.007016700785044148,
+      "reference_gap": 1.1746926498566674e-13,
+      "formulation": "M2_neighbor",
+      "reference_lower": 1.4128094086291246e7,
+      "reference_certified": true,
+      "native_termination": "OPTIMAL",
+      "case_id": "reference_24snap",
+      "unit": "declared_currency_per_represented_horizon",
+      "candidate_objective": 1.4227226695156032e7
+    },
+    {
+      "additional_cost_interval": [
+        6.472691893577576e-7,
+        1.1473894119262695e-6
+      ],
+      "reference_method": "independent feasible point and global solver bounds on identical fixed symmetric Z projection; frozen T018-T020; not interval arithmetic or independent A3.5 acceptance",
+      "native_status": "optimal",
+      "reference_upper": 2.5245961218997063e6,
+      "relative_to_reference_upper": 2.563852426703012e-13,
+      "reference_gap": 1.980991011711536e-13,
+      "formulation": "BASE",
+      "reference_lower": 2.524596121899206e6,
+      "reference_certified": true,
+      "native_termination": "OPTIMAL",
+      "case_id": "reference_3snap",
+      "unit": "declared_currency_per_represented_horizon",
+      "candidate_objective": 2.5245961219003536e6
+    },
+    {
+      "additional_cost_interval": [
+        0.24808976892381907,
+        0.24809026904404163
+      ],
+      "reference_method": "independent feasible point and global solver bounds on identical fixed symmetric Z projection; frozen T018-T020; not interval arithmetic or independent A3.5 acceptance",
+      "native_status": "optimal",
+      "reference_upper": 2.5245961218997063e6,
+      "relative_to_reference_upper": 9.826909214181025e-8,
+      "reference_gap": 1.980991011711536e-13,
+      "formulation": "G0",
+      "reference_lower": 2.524596121899206e6,
+      "reference_certified": true,
+      "native_termination": "OPTIMAL",
+      "case_id": "reference_3snap",
+      "unit": "declared_currency_per_represented_horizon",
+      "candidate_objective": 2.5245963699894752e6
+    },
+    {
+      "additional_cost_interval": [
+        10527.827595656272,
+        10527.827596156392
+      ],
+      "reference_method": "independent feasible point and global solver bounds on identical fixed symmetric Z projection; frozen T018-T020; not interval arithmetic or independent A3.5 acceptance",
+      "native_status": "optimal",
+      "reference_upper": 2.5245961218997063e6,
+      "relative_to_reference_upper": 0.004170103686816369,
+      "reference_gap": 1.980991011711536e-13,
+      "formulation": "G1",
+      "reference_lower": 2.524596121899206e6,
+      "reference_certified": true,
+      "native_termination": "OPTIMAL",
+      "case_id": "reference_3snap",
+      "unit": "declared_currency_per_represented_horizon",
+      "candidate_objective": 2.5351239494953626e6
+    },
+    {
+      "additional_cost_interval": [
+        10527.827595656272,
+        10527.827596156392
+      ],
+      "reference_method": "independent feasible point and global solver bounds on identical fixed symmetric Z projection; frozen T018-T020; not interval arithmetic or independent A3.5 acceptance",
+      "native_status": "optimal",
+      "reference_upper": 2.5245961218997063e6,
+      "relative_to_reference_upper": 0.004170103686816369,
+      "reference_gap": 1.980991011711536e-13,
+      "formulation": "G2_identity",
+      "reference_lower": 2.524596121899206e6,
+      "reference_certified": true,
+      "native_termination": "OPTIMAL",
+      "case_id": "reference_3snap",
+      "unit": "declared_currency_per_represented_horizon",
+      "candidate_objective": 2.5351239494953626e6
+    },
+    {
+      "additional_cost_interval": null,
+      "reference_method": "independent feasible point and global solver bounds on identical fixed symmetric Z projection; frozen T018-T020; not interval arithmetic or independent A3.5 acceptance",
+      "native_status": "infeasible",
+      "reference_upper": 2.5245961218997063e6,
+      "relative_to_reference_upper": null,
+      "reference_gap": 1.980991011711536e-13,
+      "formulation": "G2_degree",
+      "reference_lower": 2.524596121899206e6,
+      "reference_certified": true,
+      "native_termination": "INFEASIBLE",
+      "case_id": "reference_3snap",
+      "unit": "declared_currency_per_represented_horizon",
+      "candidate_objective": null
+    },
+    {
+      "additional_cost_interval": [
+        0.24777529202401638,
+        0.24777579214423895
+      ],
+      "reference_method": "independent feasible point and global solver bounds on identical fixed symmetric Z projection; frozen T018-T020; not interval arithmetic or independent A3.5 acceptance",
+      "native_status": "optimal",
+      "reference_upper": 2.5245961218997063e6,
+      "relative_to_reference_upper": 9.814452691053434e-8,
+      "reference_gap": 1.980991011711536e-13,
+      "formulation": "G3",
+      "reference_lower": 2.524596121899206e6,
+      "reference_certified": true,
+      "native_termination": "OPTIMAL",
+      "case_id": "reference_3snap",
+      "unit": "declared_currency_per_represented_horizon",
+      "candidate_objective": 2.5245963696749983e6
+    },
+    {
+      "additional_cost_interval": null,
+      "reference_method": "independent feasible point and global solver bounds on identical fixed symmetric Z projection; frozen T018-T020; not interval arithmetic or independent A3.5 acceptance",
+      "native_status": "infeasible",
+      "reference_upper": 2.5245961218997063e6,
+      "relative_to_reference_upper": null,
+      "reference_gap": 1.980991011711536e-13,
+      "formulation": "M1",
+      "reference_lower": 2.524596121899206e6,
+      "reference_certified": true,
+      "native_termination": "INFEASIBLE",
+      "case_id": "reference_3snap",
+      "unit": "declared_currency_per_represented_horizon",
+      "candidate_objective": null
+    },
+    {
+      "additional_cost_interval": [
+        21016.791423175484,
+        21016.791423675604
+      ],
+      "reference_method": "independent feasible point and global solver bounds on identical fixed symmetric Z projection; frozen T018-T020; not interval arithmetic or independent A3.5 acceptance",
+      "native_status": "optimal",
+      "reference_upper": 2.5245961218997063e6,
+      "relative_to_reference_upper": 0.008324813319985925,
+      "reference_gap": 1.980991011711536e-13,
+      "formulation": "M2_full",
+      "reference_lower": 2.524596121899206e6,
+      "reference_certified": true,
+      "native_termination": "OPTIMAL",
+      "case_id": "reference_3snap",
+      "unit": "declared_currency_per_represented_horizon",
+      "candidate_objective": 2.545612913322882e6
+    },
+    {
+      "additional_cost_interval": [
+        11334.53018340841,
+        11334.53018390853
+      ],
+      "reference_method": "independent feasible point and global solver bounds on identical fixed symmetric Z projection; frozen T018-T020; not interval arithmetic or independent A3.5 acceptance",
+      "native_status": "optimal",
+      "reference_upper": 2.5245961218997063e6,
+      "relative_to_reference_upper": 0.00448964097072264,
+      "reference_gap": 1.980991011711536e-13,
+      "formulation": "M2_neighbor",
+      "reference_lower": 2.524596121899206e6,
+      "reference_certified": true,
+      "native_termination": "OPTIMAL",
+      "case_id": "reference_3snap",
+      "unit": "declared_currency_per_represented_horizon",
+      "candidate_objective": 2.5359306520831147e6
+    },
+    {
+      "additional_cost_interval": [
+        3.8137659430503845e-7,
+        0.004317240323871374
+      ],
+      "reference_method": "independent feasible point and global solver bounds on identical fixed symmetric Z projection; frozen T018-T020; not interval arithmetic or independent A3.5 acceptance",
+      "native_status": "optimal",
+      "reference_upper": 4.08528471990484e6,
+      "relative_to_reference_upper": 9.335373675348679e-14,
+      "reference_gap": 1.056684966470984e-9,
+      "formulation": "BASE",
+      "reference_lower": 4.085284715587981e6,
+      "reference_certified": true,
+      "native_termination": "OPTIMAL",
+      "case_id": "reference_6snap",
+      "unit": "declared_currency_per_represented_horizon",
+      "candidate_objective": 4.0852847199052214e6
+    },
+    {
+      "additional_cost_interval": [
+        1.2757610199041665,
+        1.2800778788514435
+      ],
+      "reference_method": "independent feasible point and global solver bounds on identical fixed symmetric Z projection; frozen T018-T020; not interval arithmetic or independent A3.5 acceptance",
+      "native_status": "optimal",
+      "reference_upper": 4.08528471990484e6,
+      "relative_to_reference_upper": 3.122820335356903e-7,
+      "reference_gap": 1.056684966470984e-9,
+      "formulation": "G0",
+      "reference_lower": 4.085284715587981e6,
+      "reference_certified": true,
+      "native_termination": "OPTIMAL",
+      "case_id": "reference_6snap",
+      "unit": "declared_currency_per_represented_horizon",
+      "candidate_objective": 4.08528599566586e6
+    },
+    {
+      "additional_cost_interval": [
+        31583.460563160945,
+        31583.464880019892
+      ],
+      "reference_method": "independent feasible point and global solver bounds on identical fixed symmetric Z projection; frozen T018-T020; not interval arithmetic or independent A3.5 acceptance",
+      "native_status": "optimal",
+      "reference_upper": 4.08528471990484e6,
+      "relative_to_reference_upper": 0.007731030449181674,
+      "reference_gap": 1.056684966470984e-9,
+      "formulation": "G1",
+      "reference_lower": 4.085284715587981e6,
+      "reference_certified": true,
+      "native_termination": "OPTIMAL",
+      "case_id": "reference_6snap",
+      "unit": "declared_currency_per_represented_horizon",
+      "candidate_objective": 4.116868180468001e6
+    },
+    {
+      "additional_cost_interval": [
+        31583.460563160945,
+        31583.464880019892
+      ],
+      "reference_method": "independent feasible point and global solver bounds on identical fixed symmetric Z projection; frozen T018-T020; not interval arithmetic or independent A3.5 acceptance",
+      "native_status": "optimal",
+      "reference_upper": 4.08528471990484e6,
+      "relative_to_reference_upper": 0.007731030449181674,
+      "reference_gap": 1.056684966470984e-9,
+      "formulation": "G2_identity",
+      "reference_lower": 4.085284715587981e6,
+      "reference_certified": true,
+      "native_termination": "OPTIMAL",
+      "case_id": "reference_6snap",
+      "unit": "declared_currency_per_represented_horizon",
+      "candidate_objective": 4.116868180468001e6
+    },
+    {
+      "additional_cost_interval": null,
+      "reference_method": "independent feasible point and global solver bounds on identical fixed symmetric Z projection; frozen T018-T020; not interval arithmetic or independent A3.5 acceptance",
+      "native_status": "infeasible",
+      "reference_upper": 4.08528471990484e6,
+      "relative_to_reference_upper": null,
+      "reference_gap": 1.056684966470984e-9,
+      "formulation": "G2_degree",
+      "reference_lower": 4.085284715587981e6,
+      "reference_certified": true,
+      "native_termination": "INFEASIBLE",
+      "case_id": "reference_6snap",
+      "unit": "declared_currency_per_represented_horizon",
+      "candidate_objective": null
+    },
+    {
+      "additional_cost_interval": [
+        1.9180409391410649,
+        1.922357798088342
+      ],
+      "reference_method": "independent feasible point and global solver bounds on identical fixed symmetric Z projection; frozen T018-T020; not interval arithmetic or independent A3.5 acceptance",
+      "native_status": "optimal",
+      "reference_upper": 4.08528471990484e6,
+      "relative_to_reference_upper": 4.694999420225826e-7,
+      "reference_gap": 1.056684966470984e-9,
+      "formulation": "G3",
+      "reference_lower": 4.085284715587981e6,
+      "reference_certified": true,
+      "native_termination": "OPTIMAL",
+      "case_id": "reference_6snap",
+      "unit": "declared_currency_per_represented_horizon",
+      "candidate_objective": 4.085286637945779e6
+    },
+    {
+      "additional_cost_interval": null,
+      "reference_method": "independent feasible point and global solver bounds on identical fixed symmetric Z projection; frozen T018-T020; not interval arithmetic or independent A3.5 acceptance",
+      "native_status": "infeasible",
+      "reference_upper": 4.08528471990484e6,
+      "relative_to_reference_upper": null,
+      "reference_gap": 1.056684966470984e-9,
+      "formulation": "M1",
+      "reference_lower": 4.085284715587981e6,
+      "reference_certified": true,
+      "native_termination": "INFEASIBLE",
+      "case_id": "reference_6snap",
+      "unit": "declared_currency_per_represented_horizon",
+      "candidate_objective": null
+    },
+    {
+      "additional_cost_interval": [
+        53011.01679925015,
+        53011.0211161091
+      ],
+      "reference_method": "independent feasible point and global solver bounds on identical fixed symmetric Z projection; frozen T018-T020; not interval arithmetic or independent A3.5 acceptance",
+      "native_status": "optimal",
+      "reference_upper": 4.08528471990484e6,
+      "relative_to_reference_upper": 0.01297608867772745,
+      "reference_gap": 1.056684966470984e-9,
+      "formulation": "M2_full",
+      "reference_lower": 4.085284715587981e6,
+      "reference_certified": true,
+      "native_termination": "OPTIMAL",
+      "case_id": "reference_6snap",
+      "unit": "declared_currency_per_represented_horizon",
+      "candidate_objective": 4.13829573670409e6
+    },
+    {
+      "additional_cost_interval": [
+        31583.460563160945,
+        31583.464880019892
+      ],
+      "reference_method": "independent feasible point and global solver bounds on identical fixed symmetric Z projection; frozen T018-T020; not interval arithmetic or independent A3.5 acceptance",
+      "native_status": "optimal",
+      "reference_upper": 4.08528471990484e6,
+      "relative_to_reference_upper": 0.007731030449181674,
+      "reference_gap": 1.056684966470984e-9,
+      "formulation": "M2_neighbor",
+      "reference_lower": 4.085284715587981e6,
+      "reference_certified": true,
+      "native_termination": "OPTIMAL",
+      "case_id": "reference_6snap",
+      "unit": "declared_currency_per_represented_horizon",
+      "candidate_objective": 4.116868180468001e6
+    },
+    {
+      "additional_cost_interval": [
+        6.472691893577576e-7,
+        1.1473894119262695e-6
+      ],
+      "reference_method": "independent feasible point and global solver bounds on identical fixed symmetric Z projection; frozen T018-T020; not interval arithmetic or independent A3.5 acceptance",
+      "native_status": "optimal",
+      "reference_upper": 2.5245961218997063e6,
+      "relative_to_reference_upper": 2.563852426703012e-13,
+      "reference_gap": 1.980991011711536e-13,
+      "formulation": "BASE",
+      "reference_lower": 2.524596121899206e6,
+      "reference_certified": true,
+      "native_termination": "OPTIMAL",
+      "case_id": "source_reactance_3snap",
+      "unit": "declared_currency_per_represented_horizon",
+      "candidate_objective": 2.5245961219003536e6
+    },
+    {
+      "additional_cost_interval": [
+        0.2698294324800372,
+        0.2698299326002598
+      ],
+      "reference_method": "independent feasible point and global solver bounds on identical fixed symmetric Z projection; frozen T018-T020; not interval arithmetic or independent A3.5 acceptance",
+      "native_status": "optimal",
+      "reference_upper": 2.5245961218997063e6,
+      "relative_to_reference_upper": 1.0688023725434393e-7,
+      "reference_gap": 1.980991011711536e-13,
+      "formulation": "G0",
+      "reference_lower": 2.524596121899206e6,
+      "reference_certified": true,
+      "native_termination": "OPTIMAL",
+      "case_id": "source_reactance_3snap",
+      "unit": "declared_currency_per_represented_horizon",
+      "candidate_objective": 2.524596391729139e6
+    },
+    {
+      "additional_cost_interval": [
+        15791.71614790149,
+        15791.71614840161
+      ],
+      "reference_method": "independent feasible point and global solver bounds on identical fixed symmetric Z projection; frozen T018-T020; not interval arithmetic or independent A3.5 acceptance",
+      "native_status": "optimal",
+      "reference_upper": 2.5245961218997063e6,
+      "relative_to_reference_upper": 0.006255145530374399,
+      "reference_gap": 1.980991011711536e-13,
+      "formulation": "G1",
+      "reference_lower": 2.524596121899206e6,
+      "reference_certified": true,
+      "native_termination": "OPTIMAL",
+      "case_id": "source_reactance_3snap",
+      "unit": "declared_currency_per_represented_horizon",
+      "candidate_objective": 2.540387838047608e6
+    },
+    {
+      "additional_cost_interval": [
+        15791.71614790149,
+        15791.71614840161
+      ],
+      "reference_method": "independent feasible point and global solver bounds on identical fixed symmetric Z projection; frozen T018-T020; not interval arithmetic or independent A3.5 acceptance",
+      "native_status": "optimal",
+      "reference_upper": 2.5245961218997063e6,
+      "relative_to_reference_upper": 0.006255145530374399,
+      "reference_gap": 1.980991011711536e-13,
+      "formulation": "G2_identity",
+      "reference_lower": 2.524596121899206e6,
+      "reference_certified": true,
+      "native_termination": "OPTIMAL",
+      "case_id": "source_reactance_3snap",
+      "unit": "declared_currency_per_represented_horizon",
+      "candidate_objective": 2.540387838047608e6
+    },
+    {
+      "additional_cost_interval": null,
+      "reference_method": "independent feasible point and global solver bounds on identical fixed symmetric Z projection; frozen T018-T020; not interval arithmetic or independent A3.5 acceptance",
+      "native_status": "infeasible",
+      "reference_upper": 2.5245961218997063e6,
+      "relative_to_reference_upper": null,
+      "reference_gap": 1.980991011711536e-13,
+      "formulation": "G2_degree",
+      "reference_lower": 2.524596121899206e6,
+      "reference_certified": true,
+      "native_termination": "INFEASIBLE",
+      "case_id": "source_reactance_3snap",
+      "unit": "declared_currency_per_represented_horizon",
+      "candidate_objective": null
+    },
+    {
+      "additional_cost_interval": [
+        0.2498700963333249,
+        0.24987059645354748
+      ],
+      "reference_method": "independent feasible point and global solver bounds on identical fixed symmetric Z projection; frozen T018-T020; not interval arithmetic or independent A3.5 acceptance",
+      "native_status": "optimal",
+      "reference_upper": 2.5245961218997063e6,
+      "relative_to_reference_upper": 9.897428510081955e-8,
+      "reference_gap": 1.980991011711536e-13,
+      "formulation": "G3",
+      "reference_lower": 2.524596121899206e6,
+      "reference_certified": true,
+      "native_termination": "OPTIMAL",
+      "case_id": "source_reactance_3snap",
+      "unit": "declared_currency_per_represented_horizon",
+      "candidate_objective": 2.5245963717698026e6
+    },
+    {
+      "additional_cost_interval": null,
+      "reference_method": "independent feasible point and global solver bounds on identical fixed symmetric Z projection; frozen T018-T020; not interval arithmetic or independent A3.5 acceptance",
+      "native_status": "infeasible",
+      "reference_upper": 2.5245961218997063e6,
+      "relative_to_reference_upper": null,
+      "reference_gap": 1.980991011711536e-13,
+      "formulation": "M1",
+      "reference_lower": 2.524596121899206e6,
+      "reference_certified": true,
+      "native_termination": "INFEASIBLE",
+      "case_id": "source_reactance_3snap",
+      "unit": "declared_currency_per_represented_horizon",
+      "candidate_objective": null
+    },
+    {
+      "additional_cost_interval": [
+        29712.977836693637,
+        29712.977837193757
+      ],
+      "reference_method": "independent feasible point and global solver bounds on identical fixed symmetric Z projection; frozen T018-T020; not interval arithmetic or independent A3.5 acceptance",
+      "native_status": "optimal",
+      "reference_upper": 2.5245961218997063e6,
+      "relative_to_reference_upper": 0.011769398510497289,
+      "reference_gap": 1.980991011711536e-13,
+      "formulation": "M2_full",
+      "reference_lower": 2.524596121899206e6,
+      "reference_certified": true,
+      "native_termination": "OPTIMAL",
+      "case_id": "source_reactance_3snap",
+      "unit": "declared_currency_per_represented_horizon",
+      "candidate_objective": 2.5543090997364e6
+    },
+    {
+      "additional_cost_interval": [
+        16437.29153694166,
+        16437.29153744178
+      ],
+      "reference_method": "independent feasible point and global solver bounds on identical fixed symmetric Z projection; frozen T018-T020; not interval arithmetic or independent A3.5 acceptance",
+      "native_status": "optimal",
+      "reference_upper": 2.5245961218997063e6,
+      "relative_to_reference_upper": 0.006510859853723033,
+      "reference_gap": 1.980991011711536e-13,
+      "formulation": "M2_neighbor",
+      "reference_lower": 2.524596121899206e6,
+      "reference_certified": true,
+      "native_termination": "OPTIMAL",
+      "case_id": "source_reactance_3snap",
+      "unit": "declared_currency_per_represented_horizon",
+      "candidate_objective": 2.541033413436648e6
+    },
+    {
+      "additional_cost_interval": [
+        6.472691893577576e-7,
+        1.1473894119262695e-6
+      ],
+      "reference_method": "independent feasible point and global solver bounds on identical fixed symmetric Z projection; frozen T018-T020; not interval arithmetic or independent A3.5 acceptance",
+      "native_status": "optimal",
+      "reference_upper": 2.5245961218997063e6,
+      "relative_to_reference_upper": 2.563852426703012e-13,
+      "reference_gap": 1.980991011711536e-13,
+      "formulation": "BASE",
+      "reference_lower": 2.524596121899206e6,
+      "reference_certified": true,
+      "native_termination": "OPTIMAL",
+      "case_id": "threshold_3snap",
+      "unit": "declared_currency_per_represented_horizon",
+      "candidate_objective": 2.5245961219003536e6
+    },
+    {
+      "additional_cost_interval": [
+        0.2507997900247574,
+        0.25080029014497995
+      ],
+      "reference_method": "independent feasible point and global solver bounds on identical fixed symmetric Z projection; frozen T018-T020; not interval arithmetic or independent A3.5 acceptance",
+      "native_status": "optimal",
+      "reference_upper": 2.5245961218997063e6,
+      "relative_to_reference_upper": 9.934253952510857e-8,
+      "reference_gap": 1.980991011711536e-13,
+      "formulation": "G0",
+      "reference_lower": 2.524596121899206e6,
+      "reference_certified": true,
+      "native_termination": "OPTIMAL",
+      "case_id": "threshold_3snap",
+      "unit": "declared_currency_per_represented_horizon",
+      "candidate_objective": 2.5245963726994963e6
+    },
+    {
+      "additional_cost_interval": [
+        26497.19276698446,
+        26497.19276748458
+      ],
+      "reference_method": "independent feasible point and global solver bounds on identical fixed symmetric Z projection; frozen T018-T020; not interval arithmetic or independent A3.5 acceptance",
+      "native_status": "optimal",
+      "reference_upper": 2.5245961218997063e6,
+      "relative_to_reference_upper": 0.010495616521444179,
+      "reference_gap": 1.980991011711536e-13,
+      "formulation": "G1",
+      "reference_lower": 2.524596121899206e6,
+      "reference_certified": true,
+      "native_termination": "OPTIMAL",
+      "case_id": "threshold_3snap",
+      "unit": "declared_currency_per_represented_horizon",
+      "candidate_objective": 2.551093314666691e6
+    },
+    {
+      "additional_cost_interval": [
+        26497.19276698446,
+        26497.19276748458
+      ],
+      "reference_method": "independent feasible point and global solver bounds on identical fixed symmetric Z projection; frozen T018-T020; not interval arithmetic or independent A3.5 acceptance",
+      "native_status": "optimal",
+      "reference_upper": 2.5245961218997063e6,
+      "relative_to_reference_upper": 0.010495616521444179,
+      "reference_gap": 1.980991011711536e-13,
+      "formulation": "G2_identity",
+      "reference_lower": 2.524596121899206e6,
+      "reference_certified": true,
+      "native_termination": "OPTIMAL",
+      "case_id": "threshold_3snap",
+      "unit": "declared_currency_per_represented_horizon",
+      "candidate_objective": 2.551093314666691e6
+    },
+    {
+      "additional_cost_interval": null,
+      "reference_method": "independent feasible point and global solver bounds on identical fixed symmetric Z projection; frozen T018-T020; not interval arithmetic or independent A3.5 acceptance",
+      "native_status": "infeasible",
+      "reference_upper": 2.5245961218997063e6,
+      "relative_to_reference_upper": null,
+      "reference_gap": 1.980991011711536e-13,
+      "formulation": "G2_degree",
+      "reference_lower": 2.524596121899206e6,
+      "reference_certified": true,
+      "native_termination": "INFEASIBLE",
+      "case_id": "threshold_3snap",
+      "unit": "declared_currency_per_represented_horizon",
+      "candidate_objective": null
+    },
+    {
+      "additional_cost_interval": [
+        0.24851659126579762,
+        0.24851709138602018
+      ],
+      "reference_method": "independent feasible point and global solver bounds on identical fixed symmetric Z projection; frozen T018-T020; not interval arithmetic or independent A3.5 acceptance",
+      "native_status": "optimal",
+      "reference_upper": 2.5245961218997063e6,
+      "relative_to_reference_upper": 9.843815773542186e-8,
+      "reference_gap": 1.980991011711536e-13,
+      "formulation": "G3",
+      "reference_lower": 2.524596121899206e6,
+      "reference_certified": true,
+      "native_termination": "OPTIMAL",
+      "case_id": "threshold_3snap",
+      "unit": "declared_currency_per_represented_horizon",
+      "candidate_objective": 2.5245963704162976e6
+    },
+    {
+      "additional_cost_interval": null,
+      "reference_method": "independent feasible point and global solver bounds on identical fixed symmetric Z projection; frozen T018-T020; not interval arithmetic or independent A3.5 acceptance",
+      "native_status": "infeasible",
+      "reference_upper": 2.5245961218997063e6,
+      "relative_to_reference_upper": null,
+      "reference_gap": 1.980991011711536e-13,
+      "formulation": "M1",
+      "reference_lower": 2.524596121899206e6,
+      "reference_certified": true,
+      "native_termination": "INFEASIBLE",
+      "case_id": "threshold_3snap",
+      "unit": "declared_currency_per_represented_horizon",
+      "candidate_objective": null
+    },
+    {
+      "additional_cost_interval": [
+        51221.355797712225,
+        51221.355798212346
+      ],
+      "reference_method": "independent feasible point and global solver bounds on identical fixed symmetric Z projection; frozen T018-T020; not interval arithmetic or independent A3.5 acceptance",
+      "native_status": "optimal",
+      "reference_upper": 2.5245961218997063e6,
+      "relative_to_reference_upper": 0.020288930713863736,
+      "reference_gap": 1.980991011711536e-13,
+      "formulation": "M2_full",
+      "reference_lower": 2.524596121899206e6,
+      "reference_certified": true,
+      "native_termination": "OPTIMAL",
+      "case_id": "threshold_3snap",
+      "unit": "declared_currency_per_represented_horizon",
+      "candidate_objective": 2.5758174776974185e6
+    },
+    {
+      "additional_cost_interval": [
+        31725.338267901447,
+        31725.338268401567
+      ],
+      "reference_method": "independent feasible point and global solver bounds on identical fixed symmetric Z projection; frozen T018-T020; not interval arithmetic or independent A3.5 acceptance",
+      "native_status": "optimal",
+      "reference_upper": 2.5245961218997063e6,
+      "relative_to_reference_upper": 0.012566500436524788,
+      "reference_gap": 1.980991011711536e-13,
+      "formulation": "M2_neighbor",
+      "reference_lower": 2.524596121899206e6,
+      "reference_certified": true,
+      "native_termination": "OPTIMAL",
+      "case_id": "threshold_3snap",
+      "unit": "declared_currency_per_represented_horizon",
+      "candidate_objective": 2.5563214601676078e6
+    }
+  ],
+  "schema": "paper_a_ap3/1.0"
+}

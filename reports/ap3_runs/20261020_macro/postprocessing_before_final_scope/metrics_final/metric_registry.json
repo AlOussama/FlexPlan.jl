@@ -1,0 +1,1242 @@
+{
+  "A.symmetry": {
+    "shape": "scalar_or_status",
+    "method": "independent_linear_algebra",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "norm(B-transpose(B),Inf)",
+    "theorem": "T-C2A-001:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "pu",
+    "tolerance": 1.0e-7
+  },
+  "C.rho_diag": {
+    "shape": "vector_or_matrix_or_ledger",
+    "method": "independent_linear_algebra",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "1/(Zii*pi), positive denominator only",
+    "theorem": "T-C2A-001:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "dimensionless",
+    "tolerance": 1.0e-7
+  },
+  "D.E_norm_inf": {
+    "shape": "scalar_or_status",
+    "method": "independent_linear_algebra",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "T025 Woodbury or T027/T028 induced-infinity-norm truncation/remainder in inverse_updates(); no one-sided certification",
+    "theorem": "T-C2A-025:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "dimensionless",
+    "tolerance": 1.0e-7
+  },
+  "C.MIIF": {
+    "shape": "vector_or_matrix_or_ledger",
+    "method": "independent_linear_algebra",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "independent evaluate()/verify_g3() definition; prerequisite status included; theorem T001-T028",
+    "theorem": "T-C2A-001:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "dimensionless",
+    "tolerance": 1.0e-7
+  },
+  "D.truncation": {
+    "shape": "vector_or_matrix_or_ledger",
+    "method": "independent_linear_algebra",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "T025 Woodbury or T027/T028 induced-infinity-norm truncation/remainder in inverse_updates(); no one-sided certification",
+    "theorem": "T-C2A-025:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "pu_impedance",
+    "tolerance": 1.0e-7
+  },
+  "A.source_ledger": {
+    "shape": "vector_or_matrix_or_ledger",
+    "method": "independent_raw_stamp_and_solved_blocks",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "independent raw physical stamp/reduction or matrix-class diagnostic in reconstruct()/evaluate()",
+    "theorem": "T-C2A-001:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "explicit_field_ledger",
+    "tolerance": 1.0e-7
+  },
+  "A.network_domain": {
+    "shape": "scalar_or_status",
+    "method": "raw_island_reference_inventory",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "independent raw physical stamp/reduction or matrix-class diagnostic in reconstruct()/evaluate()",
+    "theorem": "T-C2A-001:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "explicit_field_ledger",
+    "tolerance": 1.0e-7
+  },
+  "A.L": {
+    "shape": "vector_or_matrix_or_ledger",
+    "method": "independent_raw_stamp_and_solved_blocks",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "independent raw physical stamp/reduction or matrix-class diagnostic in reconstruct()/evaluate()",
+    "theorem": "T-C2A-001:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "pu",
+    "tolerance": 1.0e-7
+  },
+  "E.events": {
+    "shape": "scalar_or_status",
+    "method": "independent_raw_prices_durations_and_solved_quantities",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "raw quantity/price/duration/event ledger; planning() is executable definition; event weight excludes delta_t",
+    "theorem": "T-C2A-001:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "declared_currency_per_represented_horizon",
+    "tolerance": 1.0e-7
+  },
+  "B.G3_cone_product_slacks": {
+    "shape": "vector_or_matrix_or_ledger",
+    "method": "independent_linear_algebra",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "qij*qji-mij^2",
+    "theorem": "T-C2A-001:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "pu_admittance_squared",
+    "tolerance": 1.0e-7
+  },
+  "B.G2": {
+    "shape": "scalar_or_status",
+    "method": "independent_linear_algebra",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "independent evaluate()/verify_g3() definition; prerequisite status included; theorem T001-T028",
+    "theorem": "T-C2A-001:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "boolean",
+    "tolerance": 1.0e-7
+  },
+  "A.B0": {
+    "shape": "vector_or_matrix_or_ledger",
+    "method": "independent_raw_stamp_and_solved_blocks",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "independent raw physical stamp/reduction or matrix-class diagnostic in reconstruct()/evaluate()",
+    "theorem": "T-C2A-001:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "pu",
+    "tolerance": 1.0e-7
+  },
+  "C.Zp": {
+    "shape": "vector_or_matrix_or_ledger",
+    "method": "independent_linear_algebra",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "B\\p",
+    "theorem": "T-C2A-001:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "dimensionless",
+    "tolerance": 1.0e-7
+  },
+  "E.S_nom_v1": {
+    "shape": "vector_or_matrix_or_ledger",
+    "method": "independent_raw_stamp_and_solved_blocks",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "raw quantity/price/duration/event ledger; planning() is executable definition; event weight excludes delta_t",
+    "theorem": "T-C2A-001:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "MW_per_system_MVA",
+    "tolerance": 1.0e-7
+  },
+  "E.generation": {
+    "shape": "scalar_or_status",
+    "method": "independent_raw_prices_durations_and_solved_quantities",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "raw quantity/price/duration/event ledger; planning() is executable definition; event weight excludes delta_t",
+    "theorem": "T-C2A-001:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "declared_currency_per_represented_horizon",
+    "tolerance": 1.0e-7
+  },
+  "A.nullity": {
+    "shape": "scalar_or_status",
+    "method": "independent_linear_algebra",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "independent raw physical stamp/reduction or matrix-class diagnostic in reconstruct()/evaluate()",
+    "theorem": "T-C2A-001:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "count",
+    "tolerance": 1.0e-7
+  },
+  "C.inverse_min": {
+    "shape": "scalar_or_status",
+    "method": "independent_linear_algebra",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "independent evaluate()/verify_g3() definition; prerequisite status included; theorem T001-T028",
+    "theorem": "T-C2A-001:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "pu_impedance",
+    "tolerance": 1.0e-7
+  },
+  "B.G3_status": {
+    "shape": "scalar_or_status",
+    "method": "independent_linear_algebra",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "independent evaluate()/verify_g3() definition; prerequisite status included; theorem T001-T028",
+    "theorem": "T-C2A-001:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "status",
+    "tolerance": 1.0e-7
+  },
+  "E.UC_transition_residual": {
+    "shape": "scalar_or_status",
+    "method": "independent_raw_prices_durations_and_solved_quantities",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "raw quantity/price/duration/event ledger; planning() is executable definition; event weight excludes delta_t",
+    "theorem": "T-C2A-001:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "count_or_index",
+    "tolerance": 1.0e-7
+  },
+  "F.dual_status": {
+    "shape": "scalar_or_status",
+    "method": "recorded_runtime_solver_attribute",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "runtime solver/model attribute; missing values are not replaced",
+    "theorem": "T-C2A-001:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "status",
+    "tolerance": 1.0e-7
+  },
+  "F.simplex_iterations": {
+    "shape": "scalar_or_status",
+    "method": "recorded_runtime_solver_attribute",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "runtime solver/model attribute; missing values are not replaced",
+    "theorem": "T-C2A-001:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "count_or_index",
+    "tolerance": 1.0e-7
+  },
+  "A.Z_class": {
+    "shape": "scalar_or_status",
+    "method": "independent_linear_algebra",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "independent raw physical stamp/reduction or matrix-class diagnostic in reconstruct()/evaluate()",
+    "theorem": "T-C2A-001:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "boolean",
+    "tolerance": 1.0e-7
+  },
+  "E.thermal_violation_MW": {
+    "shape": "scalar_or_status",
+    "method": "independent_raw_prices_durations_and_solved_quantities",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "raw quantity/price/duration/event ledger; planning() is executable definition; event weight excludes delta_t",
+    "theorem": "T-C2A-001:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "MW",
+    "tolerance": 1.0e-7
+  },
+  "A.B_eigenvalues": {
+    "shape": "vector_or_matrix_or_ledger",
+    "method": "independent_linear_algebra",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "independent raw physical stamp/reduction or matrix-class diagnostic in reconstruct()/evaluate()",
+    "theorem": "T-C2A-001:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "pu",
+    "tolerance": 1.0e-7
+  },
+  "F.relative_gap": {
+    "shape": "scalar_or_status",
+    "method": "recorded_runtime_solver_attribute",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "runtime solver/model attribute; missing values are not replaced",
+    "theorem": "T-C2A-001:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "dimensionless",
+    "tolerance": 1.0e-7
+  },
+  "F.solve_wall_s": {
+    "shape": "scalar_or_status",
+    "method": "recorded_runtime_solver_attribute",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "runtime solver/model attribute; missing values are not replaced",
+    "theorem": "T-C2A-001:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "s",
+    "tolerance": 1.0e-7
+  },
+  "C.ESCR_external": {
+    "shape": "scalar_or_status",
+    "method": "independent_linear_algebra",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "independent evaluate()/verify_g3() definition; prerequisite status included; theorem T001-T028",
+    "theorem": "T-C2A-001:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "pu",
+    "tolerance": 1.0e-7
+  },
+  "E.FOM": {
+    "shape": "scalar_or_status",
+    "method": "independent_raw_prices_durations_and_solved_quantities",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "raw quantity/price/duration/event ledger; planning() is executable definition; event weight excludes delta_t",
+    "theorem": "T-C2A-001:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "explicit_field_ledger",
+    "tolerance": 1.0e-7
+  },
+  "F.complementarity_residual": {
+    "shape": "scalar_or_status",
+    "method": "solver_dual_cone_eigen_or_RSOC_product_and_primal_dual_inner_product",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "runtime solver/model attribute; missing values are not replaced",
+    "theorem": "T-C2A-001:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "scaled_objective",
+    "tolerance": 1.0e-7
+  },
+  "A.B": {
+    "shape": "vector_or_matrix_or_ledger",
+    "method": "independent_raw_stamp_and_solved_blocks",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "independent raw physical stamp/reduction or matrix-class diagnostic in reconstruct()/evaluate()",
+    "theorem": "T-C2A-001:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "pu",
+    "tolerance": 1.0e-7
+  },
+  "C.M0_slack": {
+    "shape": "vector_or_matrix_or_ledger",
+    "method": "independent_linear_algebra",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "1/alpha-B\\p, PD inverse-positive B, alpha>0",
+    "theorem": "T-C2A-001:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "dimensionless",
+    "tolerance": 1.0e-7
+  },
+  "E.portfolio": {
+    "shape": "vector_or_matrix_or_ledger",
+    "method": "independent_raw_prices_durations_and_solved_quantities",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "raw quantity/price/duration/event ledger; planning() is executable definition; event weight excludes delta_t",
+    "theorem": "T-C2A-001:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "explicit_field_ledger",
+    "tolerance": 1.0e-7
+  },
+  "B.G3_edges": {
+    "shape": "vector_or_matrix_or_ledger",
+    "method": "independent_linear_algebra",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "independent evaluate()/verify_g3() definition; prerequisite status included; theorem T001-T028",
+    "theorem": "T-C2A-001:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "count_or_index",
+    "tolerance": 1.0e-7
+  },
+  "F.model": {
+    "shape": "scalar_or_status",
+    "method": "recorded_runtime_solver_attribute",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "runtime solver/model attribute; missing values are not replaced",
+    "theorem": "T-C2A-001:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "solver_metadata",
+    "tolerance": 1.0e-7
+  },
+  "C.M0": {
+    "shape": "scalar_or_status",
+    "method": "independent_linear_algebra",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "independent evaluate()/verify_g3() definition; prerequisite status included; theorem T001-T028",
+    "theorem": "T-C2A-001:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "boolean",
+    "tolerance": 1.0e-7
+  },
+  "F.barrier_iterations": {
+    "shape": "scalar_or_status",
+    "method": "recorded_runtime_solver_attribute",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "runtime solver/model attribute; missing values are not replaced",
+    "theorem": "T-C2A-001:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "count_or_index",
+    "tolerance": 1.0e-7
+  },
+  "E.SOC_residual_MWh": {
+    "shape": "scalar_or_status",
+    "method": "independent_raw_prices_durations_and_solved_quantities",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "raw quantity/price/duration/event ledger; planning() is executable definition; event weight excludes delta_t",
+    "theorem": "T-C2A-001:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "MWh",
+    "tolerance": 1.0e-7
+  },
+  "D.actual_error": {
+    "shape": "scalar_or_status",
+    "method": "independent_linear_algebra",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "T025 Woodbury or T027/T028 induced-infinity-norm truncation/remainder in inverse_updates(); no one-sided certification",
+    "theorem": "T-C2A-025:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "pu_impedance",
+    "tolerance": 1.0e-7
+  },
+  "E.objective_residual": {
+    "shape": "scalar_or_status",
+    "method": "independent_raw_prices_durations_and_solved_quantities",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "raw quantity/price/duration/event ledger; planning() is executable definition; event weight excludes delta_t",
+    "theorem": "T-C2A-001:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "declared_currency_per_represented_horizon",
+    "tolerance": 1.0e-7
+  },
+  "C.Z": {
+    "shape": "vector_or_matrix_or_ledger",
+    "method": "independent_linear_algebra",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "independent evaluate()/verify_g3() definition; prerequisite status included; theorem T001-T028",
+    "theorem": "T-C2A-001:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "pu_impedance",
+    "tolerance": 1.0e-7
+  },
+  "E.terminal_residual_MWh": {
+    "shape": "scalar_or_status",
+    "method": "independent_raw_prices_durations_and_solved_quantities",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "raw quantity/price/duration/event ledger; planning() is executable definition; event weight excludes delta_t",
+    "theorem": "T-C2A-001:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "MWh",
+    "tolerance": 1.0e-7
+  },
+  "C.LOCAL": {
+    "shape": "scalar_or_status",
+    "method": "independent_linear_algebra",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "independent evaluate()/verify_g3() definition; prerequisite status included; theorem T001-T028",
+    "theorem": "T-C2A-001:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "boolean",
+    "tolerance": 1.0e-7
+  },
+  "B.G1_rows": {
+    "shape": "vector_or_matrix_or_ledger",
+    "method": "independent_linear_algebra",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "(B-alpha*Diagonal(p))*ones(n)",
+    "theorem": "T-C2A-001:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "pu",
+    "tolerance": 1.0e-7
+  },
+  "B.G2_binding": {
+    "shape": "scalar_or_status",
+    "method": "independent_linear_algebra",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "independent evaluate()/verify_g3() definition; prerequisite status included; theorem T001-T028",
+    "theorem": "T-C2A-001:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "boolean",
+    "tolerance": 1.0e-7
+  },
+  "B.G3_minimum_q": {
+    "shape": "scalar_or_status",
+    "method": "independent_linear_algebra",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "independent evaluate()/verify_g3() definition; prerequisite status included; theorem T001-T028",
+    "theorem": "T-C2A-001:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "pu_admittance",
+    "tolerance": 1.0e-7
+  },
+  "F.nodes": {
+    "shape": "scalar_or_status",
+    "method": "recorded_runtime_solver_attribute",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "runtime solver/model attribute; missing values are not replaced",
+    "theorem": "T-C2A-001:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "count_or_index",
+    "tolerance": 1.0e-7
+  },
+  "E.S_on_v1": {
+    "shape": "vector_or_matrix_or_ledger",
+    "method": "independent_raw_stamp_and_solved_blocks",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "raw quantity/price/duration/event ledger; planning() is executable definition; event weight excludes delta_t",
+    "theorem": "T-C2A-001:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "MW_per_system_MVA",
+    "tolerance": 1.0e-7
+  },
+  "C.equivalent_strength_MVA": {
+    "shape": "vector_or_matrix_or_ledger",
+    "method": "independent_linear_algebra",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "independent evaluate()/verify_g3() definition; prerequisite status included; theorem T001-T028",
+    "theorem": "T-C2A-001:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "MVA_model_Thevenin_equivalent_not_fault_qualification",
+    "tolerance": 1.0e-7
+  },
+  "B.eigenspace": {
+    "shape": "vector_or_matrix_or_ledger",
+    "method": "independent_linear_algebra",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "independent evaluate()/verify_g3() definition; prerequisite status included; theorem T001-T028",
+    "theorem": "T-C2A-001:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "pu",
+    "tolerance": 1.0e-7
+  },
+  "E.bounds_violation_blocks": {
+    "shape": "scalar_or_status",
+    "method": "independent_raw_prices_durations_and_solved_quantities",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "raw quantity/price/duration/event ledger; planning() is executable definition; event weight excludes delta_t",
+    "theorem": "T-C2A-001:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "count_or_index",
+    "tolerance": 1.0e-7
+  },
+  "E.S_op_magnitude_v1": {
+    "shape": "vector_or_matrix_or_ledger",
+    "method": "independent_raw_stamp_and_solved_blocks",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "raw quantity/price/duration/event ledger; planning() is executable definition; event weight excludes delta_t",
+    "theorem": "T-C2A-001:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "MW_per_system_MVA",
+    "tolerance": 1.0e-7
+  },
+  "D.order": {
+    "shape": "scalar_or_status",
+    "method": "independent_linear_algebra",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "T025 Woodbury or T027/T028 induced-infinity-norm truncation/remainder in inverse_updates(); no one-sided certification",
+    "theorem": "T-C2A-025:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "count_or_index",
+    "tolerance": 1.0e-7
+  },
+  "F.solver": {
+    "shape": "scalar_or_status",
+    "method": "recorded_runtime_solver_attribute",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "runtime solver/model attribute; missing values are not replaced",
+    "theorem": "T-C2A-001:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "status",
+    "tolerance": 1.0e-7
+  },
+  "F.solver_time_s": {
+    "shape": "scalar_or_status",
+    "method": "recorded_runtime_solver_attribute",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "runtime solver/model attribute; missing values are not replaced",
+    "theorem": "T-C2A-001:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "s",
+    "tolerance": 1.0e-7
+  },
+  "E.curtailment_MWh": {
+    "shape": "scalar_or_status",
+    "method": "independent_raw_prices_durations_and_solved_quantities",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "raw quantity/price/duration/event ledger; planning() is executable definition; event weight excludes delta_t",
+    "theorem": "T-C2A-001:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "MWh",
+    "tolerance": 1.0e-7
+  },
+  "B.participation": {
+    "shape": "vector_or_matrix_or_ledger",
+    "method": "independent_linear_algebra",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "independent evaluate()/verify_g3() definition; prerequisite status included; theorem T001-T028",
+    "theorem": "T-C2A-001:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "dimensionless",
+    "tolerance": 1.0e-7
+  },
+  "B.gamma": {
+    "shape": "scalar_or_status",
+    "method": "independent_linear_algebra",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "lambda_min(Sa^-1/2*(Baa-Baz*Bzz_dagger*Bza)*Sa^-1/2), with PSD and range tests",
+    "theorem": "T-C2A-004/006",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "dimensionless",
+    "tolerance": 1.0e-7
+  },
+  "D.spectral_radius": {
+    "shape": "scalar_or_status",
+    "method": "independent_linear_algebra",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "T025 Woodbury or T027/T028 induced-infinity-norm truncation/remainder in inverse_updates(); no one-sided certification",
+    "theorem": "T-C2A-025:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "dimensionless",
+    "tolerance": 1.0e-7
+  },
+  "C.Wp": {
+    "shape": "vector_or_matrix_or_ledger",
+    "method": "independent_linear_algebra",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "independent evaluate()/verify_g3() definition; prerequisite status included; theorem T001-T028",
+    "theorem": "T-C2A-001:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "MW_per_system_MVA",
+    "tolerance": 1.0e-7
+  },
+  "B.eigen_residual": {
+    "shape": "scalar_or_status",
+    "method": "independent_linear_algebra",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "independent evaluate()/verify_g3() definition; prerequisite status included; theorem T001-T028",
+    "theorem": "T-C2A-001:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "pu",
+    "tolerance": 1.0e-7
+  },
+  "D.exact_remainder_residual": {
+    "shape": "scalar_or_status",
+    "method": "independent_linear_algebra",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "T025 Woodbury or T027/T028 induced-infinity-norm truncation/remainder in inverse_updates(); no one-sided certification",
+    "theorem": "T-C2A-025:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "pu_impedance",
+    "tolerance": 1.0e-7
+  },
+  "A.exposure_roundoff_correction": {
+    "shape": "scalar_or_status",
+    "method": "max(0,-minimum(raw_p)); negative solver roundoff <= tolerance projected to zero",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "independent raw physical stamp/reduction or matrix-class diagnostic in reconstruct()/evaluate()",
+    "theorem": "T-C2A-001:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "MW_per_system_MVA",
+    "tolerance": 1.0e-7
+  },
+  "B.multiplicity": {
+    "shape": "scalar_or_status",
+    "method": "independent_linear_algebra",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "independent evaluate()/verify_g3() definition; prerequisite status included; theorem T001-T028",
+    "theorem": "T-C2A-001:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "count_or_index",
+    "tolerance": 1.0e-7
+  },
+  "A.M": {
+    "shape": "vector_or_matrix_or_ledger",
+    "method": "independent_raw_stamp_and_solved_blocks",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "independent raw physical stamp/reduction or matrix-class diagnostic in reconstruct()/evaluate()",
+    "theorem": "T-C2A-001:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "pu",
+    "tolerance": 1.0e-7
+  },
+  "A.M_eigenvalues": {
+    "shape": "vector_or_matrix_or_ledger",
+    "method": "independent_linear_algebra",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "independent raw physical stamp/reduction or matrix-class diagnostic in reconstruct()/evaluate()",
+    "theorem": "T-C2A-001:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "pu",
+    "tolerance": 1.0e-7
+  },
+  "E.S_I_v1": {
+    "shape": "scalar_or_status",
+    "method": "independent_linear_algebra",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "raw quantity/price/duration/event ledger; planning() is executable definition; event weight excludes delta_t",
+    "theorem": "T-C2A-001:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "pu",
+    "tolerance": 1.0e-7
+  },
+  "D.series_converges": {
+    "shape": "scalar_or_status",
+    "method": "independent_linear_algebra",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "T025 Woodbury or T027/T028 induced-infinity-norm truncation/remainder in inverse_updates(); no one-sided certification",
+    "theorem": "T-C2A-025:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "boolean",
+    "tolerance": 1.0e-7
+  },
+  "B.range_residual": {
+    "shape": "scalar_or_status",
+    "method": "independent_linear_algebra",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "independent evaluate()/verify_g3() definition; prerequisite status included; theorem T001-T028",
+    "theorem": "T-C2A-001:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "pu",
+    "tolerance": 1.0e-7
+  },
+  "C.gSCR_external": {
+    "shape": "scalar_or_status",
+    "method": "independent_linear_algebra",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "independent evaluate()/verify_g3() definition; prerequisite status included; theorem T001-T028",
+    "theorem": "T-C2A-001:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "pu",
+    "tolerance": 1.0e-7
+  },
+  "C.SCR_external": {
+    "shape": "scalar_or_status",
+    "method": "independent_linear_algebra",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "independent evaluate()/verify_g3() definition; prerequisite status included; theorem T001-T028",
+    "theorem": "T-C2A-001:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "pu",
+    "tolerance": 1.0e-7
+  },
+  "C.M1": {
+    "shape": "scalar_or_status",
+    "method": "independent_linear_algebra",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "independent evaluate()/verify_g3() definition; prerequisite status included; theorem T001-T028",
+    "theorem": "T-C2A-001:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "boolean",
+    "tolerance": 1.0e-7
+  },
+  "A.positive_offdiagonal": {
+    "shape": "scalar_or_status",
+    "method": "independent_linear_algebra",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "independent raw physical stamp/reduction or matrix-class diagnostic in reconstruct()/evaluate()",
+    "theorem": "T-C2A-001:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "pu",
+    "tolerance": 1.0e-7
+  },
+  "B.G3_edges_complete": {
+    "shape": "scalar_or_status",
+    "method": "independent_linear_algebra",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "independent evaluate()/verify_g3() definition; prerequisite status included; theorem T001-T028",
+    "theorem": "T-C2A-001:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "pu",
+    "tolerance": 1.0e-7
+  },
+  "C.M1_upper_burden": {
+    "shape": "vector_or_matrix_or_ledger",
+    "method": "independent_linear_algebra",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "(Bmin\\I)*p, enforced B>=Bmin",
+    "theorem": "T-C2A-001:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "dimensionless",
+    "tolerance": 1.0e-7
+  },
+  "C.M2": {
+    "shape": "scalar_or_status",
+    "method": "independent_linear_algebra",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "independent evaluate()/verify_g3() definition; prerequisite status included; theorem T001-T028",
+    "theorem": "T-C2A-001:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "boolean",
+    "tolerance": 1.0e-7
+  },
+  "C.equivalent_strength": {
+    "shape": "vector_or_matrix_or_ledger",
+    "method": "independent_linear_algebra",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "independent evaluate()/verify_g3() definition; prerequisite status included; theorem T001-T028",
+    "theorem": "T-C2A-001:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "pu_admittance",
+    "tolerance": 1.0e-7
+  },
+  "A.Y_imag": {
+    "shape": "vector_or_matrix_or_ledger",
+    "method": "independent_raw_stamp_and_solved_blocks",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "independent raw physical stamp/reduction or matrix-class diagnostic in reconstruct()/evaluate()",
+    "theorem": "T-C2A-001:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "pu",
+    "tolerance": 1.0e-7
+  },
+  "B.G3_node_budget": {
+    "shape": "vector_or_matrix_or_ledger",
+    "method": "independent_linear_algebra",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "mii-sum_j(qij)",
+    "theorem": "T-C2A-001:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "pu_admittance",
+    "tolerance": 1.0e-7
+  },
+  "E.integrality_residual": {
+    "shape": "scalar_or_status",
+    "method": "independent_raw_prices_durations_and_solved_quantities",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "raw quantity/price/duration/event ledger; planning() is executable definition; event weight excludes delta_t",
+    "theorem": "T-C2A-001:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "count_or_index",
+    "tolerance": 1.0e-7
+  },
+  "F.termination": {
+    "shape": "scalar_or_status",
+    "method": "recorded_runtime_solver_attribute",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "runtime solver/model attribute; missing values are not replaced",
+    "theorem": "T-C2A-001:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "status",
+    "tolerance": 1.0e-7
+  },
+  "C.M2_rows": {
+    "shape": "vector_or_matrix_or_ledger",
+    "method": "independent_linear_algebra",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "B*1-alpha*W*p",
+    "theorem": "T-C2A-001:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "pu_admittance",
+    "tolerance": 1.0e-7
+  },
+  "B.G1": {
+    "shape": "scalar_or_status",
+    "method": "independent_linear_algebra",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "independent evaluate()/verify_g3() definition; prerequisite status included; theorem T001-T028",
+    "theorem": "T-C2A-001:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "boolean",
+    "tolerance": 1.0e-7
+  },
+  "A.schur_residual": {
+    "shape": "scalar_or_status",
+    "method": "independent_raw_stamp_and_solved_blocks",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "independent raw physical stamp/reduction or matrix-class diagnostic in reconstruct()/evaluate()",
+    "theorem": "T-C2A-001:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "pu",
+    "tolerance": 1.0e-7
+  },
+  "C.Z_diag": {
+    "shape": "vector_or_matrix_or_ledger",
+    "method": "independent_linear_algebra",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "independent evaluate()/verify_g3() definition; prerequisite status included; theorem T001-T028",
+    "theorem": "T-C2A-001:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "pu_impedance",
+    "tolerance": 1.0e-7
+  },
+  "D.E2_conservative_rejection": {
+    "shape": "scalar_or_status",
+    "method": "independent_linear_algebra",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "T025 Woodbury or T027/T028 induced-infinity-norm truncation/remainder in inverse_updates(); no one-sided certification",
+    "theorem": "T-C2A-001:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "boolean",
+    "tolerance": 1.0e-7
+  },
+  "B.gamma_margin": {
+    "shape": "scalar_or_status",
+    "method": "independent_linear_algebra",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "independent evaluate()/verify_g3() definition; prerequisite status included; theorem T001-T028",
+    "theorem": "T-C2A-001:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "dimensionless",
+    "tolerance": 1.0e-7
+  },
+  "D.woodbury_residual": {
+    "shape": "scalar_or_status",
+    "method": "independent_linear_algebra",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "T025 Woodbury or T027/T028 induced-infinity-norm truncation/remainder in inverse_updates(); no one-sided certification",
+    "theorem": "T-C2A-025:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "pu_impedance",
+    "tolerance": 1.0e-7
+  },
+  "D.one_sided_safety_certified": {
+    "shape": "scalar_or_status",
+    "method": "independent_linear_algebra",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "T025 Woodbury or T027/T028 induced-infinity-norm truncation/remainder in inverse_updates(); no one-sided certification",
+    "theorem": "T-C2A-025:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "boolean",
+    "tolerance": 1.0e-7
+  },
+  "E.no_load": {
+    "shape": "scalar_or_status",
+    "method": "independent_raw_prices_durations_and_solved_quantities",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "raw quantity/price/duration/event ledger; planning() is executable definition; event weight excludes delta_t",
+    "theorem": "T-C2A-001:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "declared_currency_per_represented_horizon",
+    "tolerance": 1.0e-7
+  },
+  "C.MSCR_external": {
+    "shape": "scalar_or_status",
+    "method": "independent_linear_algebra",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "independent evaluate()/verify_g3() definition; prerequisite status included; theorem T001-T028",
+    "theorem": "T-C2A-001:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "pu",
+    "tolerance": 1.0e-7
+  },
+  "B.G3_q": {
+    "shape": "vector_or_matrix_or_ledger",
+    "method": "independent_linear_algebra",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "independent evaluate()/verify_g3() definition; prerequisite status included; theorem T001-T028",
+    "theorem": "T-C2A-001:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "pu_admittance",
+    "tolerance": 1.0e-7
+  },
+  "E.storage": {
+    "shape": "scalar_or_status",
+    "method": "independent_raw_prices_durations_and_solved_quantities",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "raw quantity/price/duration/event ledger; planning() is executable definition; event weight excludes delta_t",
+    "theorem": "T-C2A-001:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "declared_currency_per_represented_horizon",
+    "tolerance": 1.0e-7
+  },
+  "E.investment": {
+    "shape": "scalar_or_status",
+    "method": "independent_raw_prices_durations_and_solved_quantities",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "raw quantity/price/duration/event ledger; planning() is executable definition; event weight excludes delta_t",
+    "theorem": "T-C2A-001:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "declared_currency_per_represented_horizon",
+    "tolerance": 1.0e-7
+  },
+  "B.G3_reconstruction_residual": {
+    "shape": "scalar_or_status",
+    "method": "independent_linear_algebra",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "independent evaluate()/verify_g3() definition; prerequisite status included; theorem T001-T028",
+    "theorem": "T-C2A-001:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "pu",
+    "tolerance": 1.0e-7
+  },
+  "B.G3": {
+    "shape": "scalar_or_status",
+    "method": "independent_linear_algebra",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "independent evaluate()/verify_g3() definition; prerequisite status included; theorem T001-T028",
+    "theorem": "T-C2A-001:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "boolean",
+    "tolerance": 1.0e-7
+  },
+  "D.remainder_bound": {
+    "shape": "scalar_or_status",
+    "method": "independent_linear_algebra",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "norm(E)^(m+1)*norm(inv(A))/(1-norm(E)), norm(E)<1",
+    "theorem": "T-C2A-025:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "pu_impedance",
+    "tolerance": 1.0e-7
+  },
+  "F.build_wall_s": {
+    "shape": "scalar_or_status",
+    "method": "recorded_runtime_solver_attribute",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "runtime solver/model attribute; missing values are not replaced",
+    "theorem": "T-C2A-001:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "s",
+    "tolerance": 1.0e-7
+  },
+  "A.affine_reconstruction_residual": {
+    "shape": "scalar_or_status",
+    "method": "independent_raw_stamp_and_solved_blocks",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "max(norm(Braw-Baff),norm(Mraw-Maff),norm(praw-paff))",
+    "theorem": "T-C2A-001:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "pu",
+    "tolerance": 1.0e-7
+  },
+  "D.trust_region_norm_valid": {
+    "shape": "scalar_or_status",
+    "method": "independent_linear_algebra",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "T025 Woodbury or T027/T028 induced-infinity-norm truncation/remainder in inverse_updates(); no one-sided certification",
+    "theorem": "T-C2A-025:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "boolean",
+    "tolerance": 1.0e-7
+  },
+  "A.Y_real": {
+    "shape": "vector_or_matrix_or_ledger",
+    "method": "independent_raw_stamp_and_solved_blocks",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "independent raw physical stamp/reduction or matrix-class diagnostic in reconstruct()/evaluate()",
+    "theorem": "T-C2A-001:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "pu",
+    "tolerance": 1.0e-7
+  },
+  "B.G0": {
+    "shape": "scalar_or_status",
+    "method": "independent_linear_algebra",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "independent evaluate()/verify_g3() definition; prerequisite status included; theorem T001-T028",
+    "theorem": "T-C2A-005",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "boolean",
+    "tolerance": 1.0e-7
+  },
+  "C.M1_order_violation": {
+    "shape": "scalar_or_status",
+    "method": "independent_linear_algebra",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "independent evaluate()/verify_g3() definition; prerequisite status included; theorem T001-T028",
+    "theorem": "T-C2A-001:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "pu_impedance",
+    "tolerance": 1.0e-7
+  },
+  "A.condition": {
+    "shape": "scalar_or_status",
+    "method": "independent_linear_algebra",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "independent raw physical stamp/reduction or matrix-class diagnostic in reconstruct()/evaluate()",
+    "theorem": "T-C2A-001:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "dimensionless",
+    "tolerance": 1.0e-7
+  },
+  "B.G1_false_rejection": {
+    "shape": "scalar_or_status",
+    "method": "independent_linear_algebra",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "independent evaluate()/verify_g3() definition; prerequisite status included; theorem T001-T028",
+    "theorem": "T-C2A-001:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "boolean",
+    "tolerance": 1.0e-7
+  },
+  "D.status": {
+    "shape": "scalar_or_status",
+    "method": "independent_linear_algebra",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "T025 Woodbury or T027/T028 induced-infinity-norm truncation/remainder in inverse_updates(); no one-sided certification",
+    "theorem": "T-C2A-025:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "status",
+    "tolerance": 1.0e-7
+  },
+  "C.rho_Zp": {
+    "shape": "vector_or_matrix_or_ledger",
+    "method": "independent_linear_algebra",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "1/(B\\p)i, positive denominator only",
+    "theorem": "T-C2A-001:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "dimensionless",
+    "tolerance": 1.0e-7
+  },
+  "E.power_balance_MW": {
+    "shape": "scalar_or_status",
+    "method": "independent_raw_prices_durations_and_solved_quantities",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "raw quantity/price/duration/event ledger; planning() is executable definition; event weight excludes delta_t",
+    "theorem": "T-C2A-001:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "MW",
+    "tolerance": 1.0e-7
+  },
+  "A.producer_B0_residual": {
+    "shape": "scalar_or_status",
+    "method": "independent_raw_stamp_and_solved_blocks",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "independent raw physical stamp/reduction or matrix-class diagnostic in reconstruct()/evaluate()",
+    "theorem": "T-C2A-001:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "pu",
+    "tolerance": 1.0e-7
+  },
+  "B.G0_eigmin": {
+    "shape": "scalar_or_status",
+    "method": "independent_linear_algebra",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "eigmin(B-alpha*Diagonal(p))",
+    "theorem": "T-C2A-001:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "pu",
+    "tolerance": 1.0e-7
+  },
+  "C.solve_residual": {
+    "shape": "scalar_or_status",
+    "method": "independent_linear_algebra",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "independent evaluate()/verify_g3() definition; prerequisite status included; theorem T001-T028",
+    "theorem": "T-C2A-001:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "pu",
+    "tolerance": 1.0e-7
+  },
+  "F.primal_status": {
+    "shape": "scalar_or_status",
+    "method": "recorded_runtime_solver_attribute",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "runtime solver/model attribute; missing values are not replaced",
+    "theorem": "T-C2A-001:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "status",
+    "tolerance": 1.0e-7
+  },
+  "F.bound": {
+    "shape": "scalar_or_status",
+    "method": "recorded_runtime_solver_attribute",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "runtime solver/model attribute; missing values are not replaced",
+    "theorem": "T-C2A-001:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "declared_currency_per_represented_horizon",
+    "tolerance": 1.0e-7
+  },
+  "A.connection_violation": {
+    "shape": "scalar_or_status",
+    "method": "independent_raw_stamp_and_solved_blocks",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "independent raw physical stamp/reduction or matrix-class diagnostic in reconstruct()/evaluate()",
+    "theorem": "T-C2A-001:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "pu",
+    "tolerance": 1.0e-7
+  },
+  "A.S_diag": {
+    "shape": "vector_or_matrix_or_ledger",
+    "method": "independent_raw_stamp_and_solved_blocks",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "independent raw physical stamp/reduction or matrix-class diagnostic in reconstruct()/evaluate()",
+    "theorem": "T-C2A-001:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "MW_per_system_MVA",
+    "tolerance": 1.0e-7
+  },
+  "D.E2_false_acceptance": {
+    "shape": "scalar_or_status",
+    "method": "independent_linear_algebra",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "T025 Woodbury or T027/T028 induced-infinity-norm truncation/remainder in inverse_updates(); no one-sided certification",
+    "theorem": "T-C2A-001:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "boolean",
+    "tolerance": 1.0e-7
+  },
+  "F.dual_cone_violation": {
+    "shape": "scalar_or_status",
+    "method": "solver_dual_cone_eigen_or_RSOC_product_and_primal_dual_inner_product",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "runtime solver/model attribute; missing values are not replaced",
+    "theorem": "T-C2A-001:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "dual_cone_coordinates",
+    "tolerance": 1.0e-7
+  },
+  "B.G3_valid": {
+    "shape": "scalar_or_status",
+    "method": "independent_linear_algebra",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "independent evaluate()/verify_g3() definition; prerequisite status included; theorem T001-T028",
+    "theorem": "T-C2A-001:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "pu",
+    "tolerance": 1.0e-7
+  },
+  "C.LOCAL_eigmin": {
+    "shape": "vector_or_matrix_or_ledger",
+    "method": "independent_linear_algebra",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "independent evaluate()/verify_g3() definition; prerequisite status included; theorem T001-T028",
+    "theorem": "T-C2A-001:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "pu_admittance",
+    "tolerance": 1.0e-7
+  },
+  "C.M1_lower_violation": {
+    "shape": "scalar_or_status",
+    "method": "independent_linear_algebra",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "independent evaluate()/verify_g3() definition; prerequisite status included; theorem T001-T028",
+    "theorem": "T-C2A-001:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "pu_admittance",
+    "tolerance": 1.0e-7
+  },
+  "B.G1_binding": {
+    "shape": "scalar_or_status",
+    "method": "independent_linear_algebra",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "independent evaluate()/verify_g3() definition; prerequisite status included; theorem T001-T028",
+    "theorem": "T-C2A-001:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "boolean",
+    "tolerance": 1.0e-7
+  },
+  "B.G2_rows": {
+    "shape": "vector_or_matrix_or_ledger",
+    "method": "independent_linear_algebra",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "(B-alpha*Diagonal(p))*r_offline",
+    "theorem": "T-C2A-001:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "pu",
+    "tolerance": 1.0e-7
+  },
+  "A.rank": {
+    "shape": "scalar_or_status",
+    "method": "independent_linear_algebra",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "independent raw physical stamp/reduction or matrix-class diagnostic in reconstruct()/evaluate()",
+    "theorem": "T-C2A-001:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "count",
+    "tolerance": 1.0e-7
+  },
+  "A.source_base_residual": {
+    "shape": "scalar_or_status",
+    "method": "independent_raw_stamp_and_solved_blocks",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "independent raw physical stamp/reduction or matrix-class diagnostic in reconstruct()/evaluate()",
+    "theorem": "T-C2A-001:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "pu",
+    "tolerance": 1.0e-7
+  },
+  "A.inertia": {
+    "shape": "vector_or_matrix_or_ledger",
+    "method": "independent_linear_algebra",
+    "scope": "snapshot_region_order_in_record",
+    "formula": "independent raw physical stamp/reduction or matrix-class diagnostic in reconstruct()/evaluate()",
+    "theorem": "T-C2A-001:028",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "count",
+    "tolerance": 1.0e-7
+  }
+}

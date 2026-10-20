@@ -91,14 +91,16 @@ HiGHS: 1 Thread, Seed 20261020, mip_rel_gap=1e-8, Zeitlimit 120s; Clarabel: feas
 
 | Neuer Lauf | Ergebnis / Prozess-Exit | Log im Laufverzeichnis |
 |---|---|---|
-| vollständige historische Consumer-Suite plus AP3 | **6086/6086**, Exit 0, 5m00,6s | full_regression_frozen_final.log |
+| vollständige historische Consumer-Suite plus AP3, finaler eingefrorener Quellstand | **6087/6087**, Exit 0, 4m03,5s | full_regression_terminal.log; terminal_run_contract.json; terminal_process_result.json |
 | AP2 | **153/153**, Exit 0 | ap2_final.log |
 | qualifizierter parametrischer Consumer | **291/291**, Exit 0 | parametric_acceptance_final.log |
 | physischer Netz-/Schur-Audit | **54/54**, Exit 0 | network_audit_final.log |
 | gepinnter historischer Producer-Consumer-Test | **51/51**, Exit 0 | historical_producer_final.log |
-| endgültige gespeicherte CLI-/Schema-/Residualprüfung | **4108/4108**, Exit 0 | evidence_acceptance_release_fixed.log |
+| endgültige gespeicherte CLI-/Schema-/Residualprüfung | **4108/4108**, Exit 0 | evidence_acceptance_terminal.log |
 
-Die alten 5987 Consumer- und 4162 Producer-Tests werden nicht als neue Läufe ausgegeben. Der neue Gesamtconsumerlauf enthält 99 AP3-Prüfungen zusätzlich zu den 5987 historischen Prüfungen. Producer 4162 bleibt übernommene Strang-B-Evidenz. Die drei alten Integer-INFEASIBLE und drei LP-OPTIMAL synthetischen Fälle sind frisch als negative/positive Regression bestätigt. Der Kernquellstand der Vollregression bleibt nachher unverändert; spätere Exportstatus-/Schema- und Plotänderungen werden durch tatsächliche CLI-/Evidenzläufe geprüft.
+Die alten 5987 Consumer- und 4162 Producer-Tests werden nicht als neue Läufe ausgegeben. Der neue Gesamtconsumerlauf enthält 100 AP3-Prüfungen zusätzlich zu den 5987 historischen Prüfungen, einschließlich des abschließenden M1-alpha=0-Domänenfalls. Producer 4162 bleibt übernommene Strang-B-Evidenz. Die drei alten Integer-INFEASIBLE und drei LP-OPTIMAL synthetischen Fälle sind frisch als negative/positive Regression bestätigt. Der Kernquellstand der finalen Vollregression bleibt nachher unverändert; die abschließende menschenlesbare Exportübersicht wird durch den tatsächlichen achten CLI-Lauf geprüft. Frühere neue Vollregressionen mit 6086/6086 bleiben ebenfalls erhalten.
+
+Der finale Volltest lief auf Quellcommit 3a8ec7a9f5575e64a586b73cf0cfd97c63bc6f5f mit vorab erfassten und anschließend unveränderten Hashes. Separate CLI-Negativtests bestätigten Exit 1 bei vorhandener Ausgabe beziehungsweise fehlender Eingabe; die geschützte Matrix blieb SHA256-identisch und bei fehlender Eingabe entstand kein Ausgabeordner (CLI_negative_guard_results.json). Der achte CLI-Befehl erzeugt zusätzlich zum Index eine aus den gespeicherten Zahlen abgeleitete evidence_report.md mit relativen Tabellen-/Grafikverweisen.
 
 Fehlversuche sind erhalten: anfängliche Compile-/API-/Fixturefehler, mathematische Testkorrekturen, M1-Stempelrundung, gemischter laufender/geladener Quellstand in früheren Testprozessen, Pajarito-Konussolverversuche, per-Zeile-Git-SHA-Exportperformance, fehlende CSV-Nothing-Konversion und vorübergehend fehlender Not-applicable-Status für LP-Integrality. Die abschließende strengere Schemaerweiterung fand genau diesen LP-Statusfehler (4105 PASS/1 FAIL); nach Korrektur ist der neue Lauf bestanden. Frühere Logs werden nicht gelöscht oder als gültige Endresultate ausgegeben. Ordner mit before/attempt/smoke sind historische Versuche, keine autoritativen finalen Ausgaben.
 

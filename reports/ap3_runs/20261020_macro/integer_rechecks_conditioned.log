@@ -1,0 +1,7 @@
+ERROR: LoadError: ArgumentError: asymmetric B or negative exposure
+Stacktrace:
+ [1] evaluate(B::Matrix{Float64}, p::Vector{Float64}, alpha::Float64; r::Vector{Float64}, W::Matrix{Float64}, Bmin::Nothing, witness::Dict{String, Vector}, tol::Float64)
+   @ FlexPlan.PaperADiagnostics D:\Projekte\Code\FlexPlan_AP3\src\core\paper_a_diagnostics.jl:149
+ [2] top-level scope
+   @ D:\Projekte\Code\FlexPlan_AP3\test\recheck_ap3_integer_conic.jl:42
+in expression starting at D:\Projekte\Code\FlexPlan_AP3\test\recheck_ap3_integer_conic.jl:9

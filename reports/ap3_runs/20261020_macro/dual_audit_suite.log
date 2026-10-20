@@ -1,0 +1,20 @@
+Set parameter Username
+Set parameter LicenseID to value 2721113
+bess_premium_3snap G0_continuous optimal 2.5245964910143963e6
+bess_premium_3snap G3_continuous optimal 2.5245965212968206e6
+connectivity_3snap G0_continuous optimal 2.585243072463378e6
+connectivity_3snap G3_continuous optimal 2.5852431125671915e6
+event_price_3snap G0_continuous optimal 5.607032758267216e6
+event_price_3snap G3_continuous optimal 5.607032771313198e6
+exposure_multiplier_3snap G0_continuous optimal 2.524596530254054e6
+exposure_multiplier_3snap G3_continuous optimal 2.524596528869918e6
+reference_24snap G0_continuous optimal 1.4127985140643205e7
+reference_24snap G3_continuous optimal 1.4127985744703684e7
+reference_3snap G0_continuous optimal 2.5245965294914762e6
+reference_3snap G3_continuous optimal 2.5245965252315435e6
+reference_6snap G0_continuous optimal 4.0852863248748602e6
+reference_6snap G3_continuous optimal 4.085287515554148e6
+source_reactance_3snap G0_continuous optimal 2.524596482341985e6
+source_reactance_3snap G3_continuous optimal 2.5245965052447272e6
+threshold_3snap G0_continuous optimal 2.5245964212932955e6
+threshold_3snap G3_continuous optimal 2.5245965140428892e6

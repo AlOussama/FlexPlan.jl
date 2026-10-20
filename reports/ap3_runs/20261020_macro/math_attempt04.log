@@ -1,0 +1,73 @@
+Test Summary:                                        | Pass  Total   Time
+AP3 frozen mathematics, conic and domain regressions |   45     45  24.5s
+[info | PowerModels]: extending matpower format with data: storage_extra 1x5
+[info | PowerModels]: extending matpower format with data: ne_storage 1x26
+[info | PowerModels]: extending matpower format with data: load_extra 1x17
+[info | PowerModels]: extending matpower format with constant data: time_elapsed
+[info | PowerModels]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[info | PowerModels]: extending matpower format with data: storage_extra 1x5
+[info | PowerModels]: extending matpower format with data: ne_storage 1x26
+[info | PowerModels]: extending matpower format with data: load_extra 1x17
+[info | PowerModels]: extending matpower format with constant data: time_elapsed
+[info | PowerModels]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[info | PowerModels]: extending matpower format with data: storage_extra 1x5
+[info | PowerModels]: extending matpower format with data: ne_storage 1x26
+[info | PowerModels]: extending matpower format with data: load_extra 1x17
+[info | PowerModels]: extending matpower format with constant data: time_elapsed
+[info | PowerModels]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[info | PowerModels]: extending matpower format with data: storage_extra 1x5
+[info | PowerModels]: extending matpower format with data: ne_storage 1x26
+[info | PowerModels]: extending matpower format with data: load_extra 1x17
+[info | PowerModels]: extending matpower format with constant data: time_elapsed
+[info | PowerModels]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[info | PowerModels]: extending matpower format with data: storage_extra 1x5
+[info | PowerModels]: extending matpower format with data: ne_storage 1x26
+[info | PowerModels]: extending matpower format with data: load_extra 1x17
+[info | PowerModels]: extending matpower format with constant data: time_elapsed
+[info | PowerModels]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[info | PowerModels]: extending matpower format with data: storage_extra 1x5
+[info | PowerModels]: extending matpower format with data: ne_storage 1x26
+[info | PowerModels]: extending matpower format with data: load_extra 1x17
+[info | PowerModels]: extending matpower format with constant data: time_elapsed
+[info | PowerModels]: extending matpower format by appending matrix "storage_extra" in to "storage"
+AP3 integrated AP2 common physical model: Error During Test at D:\Projekte\Code\FlexPlan_AP3\test\paper_a_ap3.jl:86
+  Got exception outside of a @test
+  ArgumentError: M1 Bmin must share passive offdiagonals
+  Stacktrace:
+    [1] _validate_paper_a_formulation(pm::PowerModels.DCPPowerModel, f::FlexPlan.InverseBoundGSCR)
+      @ FlexPlan D:\Projekte\Code\FlexPlan_AP3\src\core\paper_a_formulations.jl:48
+    [2] _validate_uc_gscr_block_template_gscr(pm::PowerModels.DCPPowerModel, gscr::FlexPlan.InverseBoundGSCR)
+      @ FlexPlan D:\Projekte\Code\FlexPlan_AP3\src\core\block_template.jl:205
+    [3] resolve_uc_gscr_block_template!(pm::PowerModels.DCPPowerModel, template::FlexPlan.UCGSCRBlockTemplate)
+      @ FlexPlan D:\Projekte\Code\FlexPlan_AP3\src\core\block_template.jl:85
+    [4] build_uc_gscr_block_integration(pm::PowerModels.DCPPowerModel; objective::Bool, intertemporal_constraints::Bool, storage_terminal_policy::Symbol, storage_terminal_fraction::Float64, final_storage_policy::Nothing, relax_block_variables::Bool, template::FlexPlan.UCGSCRBlockTemplate)
+      @ FlexPlan D:\Projekte\Code\FlexPlan_AP3\src\prob\uc_gscr_block_integration.jl:90
+    [5] build_uc_gscr_block_integration
+      @ D:\Projekte\Code\FlexPlan_AP3\src\prob\uc_gscr_block_integration.jl:65 [inlined]
+    [6] (::var"#13#15"{FlexPlan.UCGSCRBlockTemplate, @Kwargs{relax_block_variables::Bool, storage_terminal_policy::Symbol}})(pm::PowerModels.DCPPowerModel)
+      @ Main D:\Projekte\Code\FlexPlan_AP3\test\paper_a_fixtures.jl:80
+    [7] instantiate_model(data::Dict{String, Any}, model_type::Type, build_method::var"#13#15"{FlexPlan.UCGSCRBlockTemplate, @Kwargs{relax_block_variables::Bool, storage_terminal_policy::Symbol}}, ref_add_core!::typeof(PowerModels.ref_add_core!), global_keys::Set{String}, it::Symbol; ref_extensions::Vector{Function}, kwargs::@Kwargs{})
+      @ InfrastructureModels C:\Users\User\.julia\packages\InfrastructureModels\3h9nD\src\core\base.jl:370
+    [8] instantiate_model
+      @ C:\Users\User\.julia\packages\InfrastructureModels\3h9nD\src\core\base.jl:350 [inlined]
+    [9] #instantiate_model#292
+      @ C:\Users\User\.julia\packages\PowerModels\LnSmr\src\core\base.jl:48 [inlined]
+   [10] instantiate_model
+      @ C:\Users\User\.julia\packages\PowerModels\LnSmr\src\core\base.jl:47 [inlined]
+   [11] #_ap2_model#12
+      @ D:\Projekte\Code\FlexPlan_AP3\test\paper_a_fixtures.jl:79 [inlined]
+   [12] macro expansion
+      @ D:\Projekte\Code\FlexPlan_AP3\test\paper_a_ap3.jl:92 [inlined]
+   [13] macro expansion
+      @ C:\Users\User\.julia\juliaup\julia-1.10.11+0.x64.w64.mingw32\share\julia\stdlib\v1.10\Test\src\Test.jl:1582 [inlined]
+   [14] top-level scope
+      @ D:\Projekte\Code\FlexPlan_AP3\test\paper_a_ap3.jl:87
+   [15] include(fname::String)
+      @ Base.MainInclude .\client.jl:487
+   [16] top-level scope
+      @ D:\Projekte\Code\FlexPlan_AP3\test\run_paper_a_ap3.jl:5
+Test Summary:                            | Pass  Error  Total   Time
+AP3 integrated AP2 common physical model |   14      1     15  33.2s
+ERROR: LoadError: Some tests did not pass: 14 passed, 0 failed, 1 errored, 0 broken.
+in expression starting at D:\Projekte\Code\FlexPlan_AP3\test\paper_a_ap3.jl:86
+in expression starting at D:\Projekte\Code\FlexPlan_AP3\test\run_paper_a_ap3.jl:5

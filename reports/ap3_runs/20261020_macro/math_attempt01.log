@@ -1,0 +1,156 @@
+AP3 frozen mathematics, conic and domain regressions: Error During Test at D:\Projekte\Code\FlexPlan_AP3\test\paper_a_ap3.jl:28
+  Test threw exception
+  Expression: (AP3D.verify_g3(M, w))["valid"]
+  UndefVarError: `i` not defined
+  Stacktrace:
+   [1] verify_g3(M::Matrix{Float64}, witness::Dict{String, Vector}; tol::Float64)
+     @ FlexPlan.PaperADiagnostics D:\Projekte\Code\FlexPlan_AP3\src\core\paper_a_diagnostics.jl:91
+   [2] verify_g3(M::Matrix{Float64}, witness::Dict{String, Vector})
+     @ FlexPlan.PaperADiagnostics D:\Projekte\Code\FlexPlan_AP3\src\core\paper_a_diagnostics.jl:90
+   [3] macro expansion
+     @ D:\Projekte\Code\FlexPlan_AP3\test\paper_a_ap3.jl:28 [inlined]
+   [4] macro expansion
+     @ C:\Users\User\.julia\juliaup\julia-1.10.11+0.x64.w64.mingw32\share\julia\stdlib\v1.10\Test\src\Test.jl:670 [inlined]
+   [5] macro expansion
+     @ D:\Projekte\Code\FlexPlan_AP3\test\paper_a_ap3.jl:28 [inlined]
+   [6] macro expansion
+     @ C:\Users\User\.julia\juliaup\julia-1.10.11+0.x64.w64.mingw32\share\julia\stdlib\v1.10\Test\src\Test.jl:1582 [inlined]
+   [7] top-level scope
+     @ D:\Projekte\Code\FlexPlan_AP3\test\paper_a_ap3.jl:22
+AP3 frozen mathematics, conic and domain regressions: Error During Test at D:\Projekte\Code\FlexPlan_AP3\test\paper_a_ap3.jl:29
+  Test threw exception
+  Expression: !((AP3D.verify_g3(M, Dict("edges" => [], "q" => [])))["valid"])
+  UndefVarError: `i` not defined
+  Stacktrace:
+   [1] verify_g3(M::Matrix{Float64}, witness::Dict{String, Vector{Any}}; tol::Float64)
+     @ FlexPlan.PaperADiagnostics D:\Projekte\Code\FlexPlan_AP3\src\core\paper_a_diagnostics.jl:91
+   [2] verify_g3(M::Matrix{Float64}, witness::Dict{String, Vector{Any}})
+     @ FlexPlan.PaperADiagnostics D:\Projekte\Code\FlexPlan_AP3\src\core\paper_a_diagnostics.jl:90
+   [3] macro expansion
+     @ D:\Projekte\Code\FlexPlan_AP3\test\paper_a_ap3.jl:29 [inlined]
+   [4] macro expansion
+     @ C:\Users\User\.julia\juliaup\julia-1.10.11+0.x64.w64.mingw32\share\julia\stdlib\v1.10\Test\src\Test.jl:670 [inlined]
+   [5] macro expansion
+     @ D:\Projekte\Code\FlexPlan_AP3\test\paper_a_ap3.jl:29 [inlined]
+   [6] macro expansion
+     @ C:\Users\User\.julia\juliaup\julia-1.10.11+0.x64.w64.mingw32\share\julia\stdlib\v1.10\Test\src\Test.jl:1582 [inlined]
+   [7] top-level scope
+     @ D:\Projekte\Code\FlexPlan_AP3\test\paper_a_ap3.jl:22
+AP3 frozen mathematics, conic and domain regressions: Error During Test at D:\Projekte\Code\FlexPlan_AP3\test\paper_a_ap3.jl:30
+  Test threw exception
+  Expression: !((AP3D.verify_g3(M, Dict("edges" => [[1, 2], [1, 2]], "q" => [[0.75, 1 / 3], [0.75, 1 / 3]])))["valid"])
+  UndefVarError: `i` not defined
+  Stacktrace:
+   [1] verify_g3(M::Matrix{Float64}, witness::Dict{String, Vector}; tol::Float64)
+     @ FlexPlan.PaperADiagnostics D:\Projekte\Code\FlexPlan_AP3\src\core\paper_a_diagnostics.jl:91
+   [2] verify_g3(M::Matrix{Float64}, witness::Dict{String, Vector})
+     @ FlexPlan.PaperADiagnostics D:\Projekte\Code\FlexPlan_AP3\src\core\paper_a_diagnostics.jl:90
+   [3] macro expansion
+     @ D:\Projekte\Code\FlexPlan_AP3\test\paper_a_ap3.jl:30 [inlined]
+   [4] macro expansion
+     @ C:\Users\User\.julia\juliaup\julia-1.10.11+0.x64.w64.mingw32\share\julia\stdlib\v1.10\Test\src\Test.jl:670 [inlined]
+   [5] macro expansion
+     @ D:\Projekte\Code\FlexPlan_AP3\test\paper_a_ap3.jl:30 [inlined]
+   [6] macro expansion
+     @ C:\Users\User\.julia\juliaup\julia-1.10.11+0.x64.w64.mingw32\share\julia\stdlib\v1.10\Test\src\Test.jl:1582 [inlined]
+   [7] top-level scope
+     @ D:\Projekte\Code\FlexPlan_AP3\test\paper_a_ap3.jl:22
+AP3 frozen mathematics, conic and domain regressions: Error During Test at D:\Projekte\Code\FlexPlan_AP3\test\paper_a_ap3.jl:31
+  Test threw exception
+  Expression: !((AP3D.verify_g3(M, Dict("edges" => [[1, 2]], "q" => [[0.75, 1 / 6]])))["valid"])
+  UndefVarError: `i` not defined
+  Stacktrace:
+   [1] verify_g3(M::Matrix{Float64}, witness::Dict{String, Vector}; tol::Float64)
+     @ FlexPlan.PaperADiagnostics D:\Projekte\Code\FlexPlan_AP3\src\core\paper_a_diagnostics.jl:91
+   [2] verify_g3(M::Matrix{Float64}, witness::Dict{String, Vector})
+     @ FlexPlan.PaperADiagnostics D:\Projekte\Code\FlexPlan_AP3\src\core\paper_a_diagnostics.jl:90
+   [3] macro expansion
+     @ D:\Projekte\Code\FlexPlan_AP3\test\paper_a_ap3.jl:31 [inlined]
+   [4] macro expansion
+     @ C:\Users\User\.julia\juliaup\julia-1.10.11+0.x64.w64.mingw32\share\julia\stdlib\v1.10\Test\src\Test.jl:670 [inlined]
+   [5] macro expansion
+     @ D:\Projekte\Code\FlexPlan_AP3\test\paper_a_ap3.jl:31 [inlined]
+   [6] macro expansion
+     @ C:\Users\User\.julia\juliaup\julia-1.10.11+0.x64.w64.mingw32\share\julia\stdlib\v1.10\Test\src\Test.jl:1582 [inlined]
+   [7] top-level scope
+     @ D:\Projekte\Code\FlexPlan_AP3\test\paper_a_ap3.jl:22
+AP3 frozen mathematics, conic and domain regressions: Error During Test at D:\Projekte\Code\FlexPlan_AP3\test\paper_a_ap3.jl:45
+  Test threw exception
+  Expression: (AP3D.verify_g3(M, w))["valid"]
+  UndefVarError: `i` not defined
+  Stacktrace:
+   [1] verify_g3(M::Matrix{Float64}, witness::Dict{String, Vector}; tol::Float64)
+     @ FlexPlan.PaperADiagnostics D:\Projekte\Code\FlexPlan_AP3\src\core\paper_a_diagnostics.jl:91
+   [2] verify_g3(M::Matrix{Float64}, witness::Dict{String, Vector})
+     @ FlexPlan.PaperADiagnostics D:\Projekte\Code\FlexPlan_AP3\src\core\paper_a_diagnostics.jl:90
+   [3] macro expansion
+     @ D:\Projekte\Code\FlexPlan_AP3\test\paper_a_ap3.jl:45 [inlined]
+   [4] macro expansion
+     @ C:\Users\User\.julia\juliaup\julia-1.10.11+0.x64.w64.mingw32\share\julia\stdlib\v1.10\Test\src\Test.jl:670 [inlined]
+   [5] macro expansion
+     @ D:\Projekte\Code\FlexPlan_AP3\test\paper_a_ap3.jl:45 [inlined]
+   [6] macro expansion
+     @ C:\Users\User\.julia\juliaup\julia-1.10.11+0.x64.w64.mingw32\share\julia\stdlib\v1.10\Test\src\Test.jl:1582 [inlined]
+   [7] top-level scope
+     @ D:\Projekte\Code\FlexPlan_AP3\test\paper_a_ap3.jl:22
+AP3 frozen mathematics, conic and domain regressions: Error During Test at D:\Projekte\Code\FlexPlan_AP3\test\paper_a_ap3.jl:45
+  Test threw exception
+  Expression: (AP3D.verify_g3(M, w))["valid"]
+  UndefVarError: `i` not defined
+  Stacktrace:
+   [1] verify_g3(M::Matrix{Float64}, witness::Dict{String, Vector}; tol::Float64)
+     @ FlexPlan.PaperADiagnostics D:\Projekte\Code\FlexPlan_AP3\src\core\paper_a_diagnostics.jl:91
+   [2] verify_g3(M::Matrix{Float64}, witness::Dict{String, Vector})
+     @ FlexPlan.PaperADiagnostics D:\Projekte\Code\FlexPlan_AP3\src\core\paper_a_diagnostics.jl:90
+   [3] macro expansion
+     @ D:\Projekte\Code\FlexPlan_AP3\test\paper_a_ap3.jl:45 [inlined]
+   [4] macro expansion
+     @ C:\Users\User\.julia\juliaup\julia-1.10.11+0.x64.w64.mingw32\share\julia\stdlib\v1.10\Test\src\Test.jl:670 [inlined]
+   [5] macro expansion
+     @ D:\Projekte\Code\FlexPlan_AP3\test\paper_a_ap3.jl:45 [inlined]
+   [6] macro expansion
+     @ C:\Users\User\.julia\juliaup\julia-1.10.11+0.x64.w64.mingw32\share\julia\stdlib\v1.10\Test\src\Test.jl:1582 [inlined]
+   [7] top-level scope
+     @ D:\Projekte\Code\FlexPlan_AP3\test\paper_a_ap3.jl:22
+AP3 frozen mathematics, conic and domain regressions: Error During Test at D:\Projekte\Code\FlexPlan_AP3\test\paper_a_ap3.jl:21
+  Got exception outside of a @test
+  At D:\Projekte\Code\FlexPlan_AP3\src\core\paper_a_formulations.jl:67: `@constraint(model, Symmetric(M) in JuMP.PSDCone())`:
+  
+  Unrecognized constraint format: no method `build_constraint(error, [0.75 -0.5; -0.5 0.33333333333333337], PSDCone())` exists.
+  
+  This is due to an unrecognized function, constraint set, and/or extra arguments. If you are writing a JuMP extension, implement `build_constraint` to accommodate these arguments.
+  
+  Stacktrace:
+    [1] error(::String, ::String)
+      @ Base .\error.jl:44
+    [2] (::JuMP.Containers.var"#error_fn#100"{LineNumberNode, String})(str::String)
+      @ JuMP.Containers C:\Users\User\.julia\packages\JuMP\R9AEA\src\Containers\macro.jl:384
+    [3] build_constraint(::JuMP.Containers.var"#error_fn#100"{LineNumberNode, String}, ::Symmetric{Float64, Matrix{Float64}}, ::PSDCone; kwargs::@Kwargs{})
+      @ JuMP C:\Users\User\.julia\packages\JuMP\R9AEA\src\macros\@constraint.jl:1047
+    [4] build_constraint(::Function, ::Symmetric{Float64, Matrix{Float64}}, ::PSDCone)
+      @ JuMP C:\Users\User\.julia\packages\JuMP\R9AEA\src\macros\@constraint.jl:1042
+    [5] macro expansion
+      @ C:\Users\User\.julia\packages\JuMP\R9AEA\src\macros\@constraint.jl:203 [inlined]
+    [6] macro expansion
+      @ C:\Users\User\.julia\packages\JuMP\R9AEA\src\macros.jl:414 [inlined]
+    [7] add_paper_a_constraints!(model::Model, B::Matrix{Float64}, p::Vector{Float64}, M::Matrix{Float64}, f::FlexPlan.ExactPSDGSCR; alpha::Float64)
+      @ FlexPlan D:\Projekte\Code\FlexPlan_AP3\src\core\paper_a_formulations.jl:67
+    [8] _ap3_conic(B::Matrix{Float64}, p::Vector{Float64}, alpha::Float64, f::FlexPlan.ExactPSDGSCR; cost::Nothing)
+      @ Main D:\Projekte\Code\FlexPlan_AP3\test\paper_a_ap3.jl:16
+    [9] _ap3_conic(B::Matrix{Float64}, p::Vector{Float64}, alpha::Float64, f::FlexPlan.ExactPSDGSCR)
+      @ Main D:\Projekte\Code\FlexPlan_AP3\test\paper_a_ap3.jl:5
+   [10] macro expansion
+      @ D:\Projekte\Code\FlexPlan_AP3\test\paper_a_ap3.jl:64 [inlined]
+   [11] macro expansion
+      @ C:\Users\User\.julia\juliaup\julia-1.10.11+0.x64.w64.mingw32\share\julia\stdlib\v1.10\Test\src\Test.jl:1582 [inlined]
+   [12] top-level scope
+      @ D:\Projekte\Code\FlexPlan_AP3\test\paper_a_ap3.jl:22
+   [13] include(fname::String)
+      @ Base.MainInclude .\client.jl:487
+   [14] top-level scope
+      @ D:\Projekte\Code\FlexPlan_AP3\test\run_paper_a_ap3.jl:5
+Test Summary:                                        | Pass  Error  Total   Time
+AP3 frozen mathematics, conic and domain regressions |   27      7     34  19.2s
+ERROR: LoadError: Some tests did not pass: 27 passed, 0 failed, 7 errored, 0 broken.
+in expression starting at D:\Projekte\Code\FlexPlan_AP3\test\paper_a_ap3.jl:21
+in expression starting at D:\Projekte\Code\FlexPlan_AP3\test\run_paper_a_ap3.jl:5

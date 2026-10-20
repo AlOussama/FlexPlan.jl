@@ -1,0 +1,19 @@
+AP3 saved input solution independent CLI evidence: Test Failed at D:\Projekte\Code\FlexPlan_AP3\test\run_paper_a_ap3_evidence.jl:44
+  Expression: all((m->begin
+            #= D:\Projekte\Code\FlexPlan_AP3\test\run_paper_a_ap3_evidence.jl:44 =#
+            m["value_or_null"] !== nothing || m["validity_status"] != "valid"
+        end), rows)
+
+Stacktrace:
+ [1] macro expansion
+   @ C:\Users\User\.julia\juliaup\julia-1.10.11+0.x64.w64.mingw32\share\julia\stdlib\v1.10\Test\src\Test.jl:673 [inlined]
+ [2] macro expansion
+   @ D:\Projekte\Code\FlexPlan_AP3\test\run_paper_a_ap3_evidence.jl:44 [inlined]
+ [3] macro expansion
+   @ C:\Users\User\.julia\juliaup\julia-1.10.11+0.x64.w64.mingw32\share\julia\stdlib\v1.10\Test\src\Test.jl:1582 [inlined]
+ [4] top-level scope
+   @ D:\Projekte\Code\FlexPlan_AP3\test\run_paper_a_ap3_evidence.jl:8
+Test Summary:                                     | Pass  Fail  Total   Time
+AP3 saved input solution independent CLI evidence | 4105     1   4106  44.4s
+ERROR: LoadError: Some tests did not pass: 4105 passed, 1 failed, 0 errored, 0 broken.
+in expression starting at D:\Projekte\Code\FlexPlan_AP3\test\run_paper_a_ap3_evidence.jl:7

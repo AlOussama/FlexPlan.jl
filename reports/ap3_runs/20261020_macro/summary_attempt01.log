@@ -1,0 +1,25 @@
+ERROR: LoadError: MethodError: reducing over an empty collection is not allowed; consider supplying `init` to the reducer
+Stacktrace:
+  [1] mapreduce_empty(::typeof(identity), op::Function, T::Type)
+    @ Base .\reduce.jl:372
+  [2] reduce_empty(op::Base.MappingRF{typeof(identity), typeof(max)}, ::Type{Any})
+    @ Base .\reduce.jl:361
+  [3] reduce_empty_iter
+    @ .\reduce.jl:384 [inlined]
+  [4] mapreduce_empty_iter(f::Function, op::Function, itr::Vector{Any}, ItrEltype::Base.HasEltype)
+    @ Base .\reduce.jl:380
+  [5] _mapreduce(f::typeof(identity), op::typeof(max), ::IndexLinear, A::Vector{Any})
+    @ Base .\reduce.jl:432
+  [6] _mapreduce_dim
+    @ .\reducedim.jl:367 [inlined]
+  [7] mapreduce
+    @ .\reducedim.jl:359 [inlined]
+  [8] _maximum
+    @ .\reducedim.jl:1017 [inlined]
+  [9] _maximum
+    @ .\reducedim.jl:1016 [inlined]
+ [10] maximum(a::Vector{Any})
+    @ Base .\reducedim.jl:1012
+ [11] top-level scope
+    @ D:\Projekte\Code\FlexPlan_AP3\reports\ap3_runs\20261020_macro\summarize_validation.jl:21
+in expression starting at D:\Projekte\Code\FlexPlan_AP3\reports\ap3_runs\20261020_macro\summarize_validation.jl:21

@@ -1,0 +1,34 @@
+{
+  "science_status": null,
+  "schema": "paper_a_ap3/1.0",
+  "producer_remote": [
+    "b9e4efec8c2939bff1a65ae4ccb66cfbcf9cb62c\trefs/heads/implementation/paper-a-ap1-data-contract-v1"
+  ],
+  "observed_at": "2026-10-20T03:12:57.3945565+02:00",
+  "ap2_status": "?? audit/",
+  "branch": "implementation/paper-a-ap3-all-formulations-v1",
+  "baseline": "e992edc88d39fa0eb2d72e2490e157441223f568",
+  "strang_b_status": null,
+  "producer_status": null,
+  "science_remote": [
+    "a6c19790bb009b5956475a6368a23e339a82dab7\trefs/heads/codex/paper-a-strang-b-parameter-qualification",
+    "e8118425adc335a99e85120d943763305f211315\trefs/heads/main"
+  ],
+  "preservation": "Only AP3 worktree modified; no reset, merge, force, deletion or PR; regenerated legacy reports copied then baseline versions restored",
+  "code_remote": "adf1a974741eb5393a91bef46e8274a68aac1c66\trefs/heads/implementation/paper-a-ap2-regional-optimization-v1",
+  "worktrees": [
+    "worktree D:/Projekte/Code/FlexPlan_UC_GSCR",
+    "HEAD 725de2e6c1cea21f63902474f72ec614b2358356",
+    "branch refs/heads/implementation/paper-a-ap2-regional-optimization-v1",
+    "",
+    "worktree D:/Projekte/Code/FlexPlan_AP3",
+    "HEAD 86036fe697ba453603aa3cfbdc86b3be9fa62394",
+    "branch refs/heads/implementation/paper-a-ap3-all-formulations-v1",
+    "",
+    "worktree D:/Projekte/Code/FlexPlan_StrangB",
+    "HEAD e992edc88d39fa0eb2d72e2490e157441223f568",
+    "branch refs/heads/integration/paper-a-parameter-qualification-v1",
+    ""
+  ],
+  "source_before_release": "86036fe697ba453603aa3cfbdc86b3be9fa62394"
+}

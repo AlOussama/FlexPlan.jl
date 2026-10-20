@@ -1,0 +1,417 @@
+Set parameter Username
+Set parameter LicenseID to value 2721113
+bess_premium_3snap BASE_continuous optimal 2.524596121900354e6
+bess_premium_3snap G0_continuous optimal 2.5245964910143963e6
+bess_premium_3snap G1_continuous optimal 2.53580022071103e6
+bess_premium_3snap G2_identity_continuous optimal 2.53580022071103e6
+bess_premium_3snap G2_degree_continuous infeasible nothing
+bess_premium_3snap G3_continuous optimal 2.5245965212968206e6
+bess_premium_3snap M1_continuous infeasible nothing
+bess_premium_3snap M2_full_continuous optimal 2.547379398798947e6
+bess_premium_3snap M2_neighbor_continuous optimal 2.53747836030912e6
+bess_premium_3snap BASE_integer optimal 2.5245961219003536e6
+┌ Warning: warm start is only partial so will be ignored
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\models.jl:121
+bess_premium_3snap G0_integer optimal 2.5245963699894752e6
+bess_premium_3snap G1_integer optimal 2.5369817816236904e6
+bess_premium_3snap G2_identity_integer optimal 2.5369817816236904e6
+bess_premium_3snap G2_degree_integer infeasible nothing
+┌ Warning: warm start is only partial so will be ignored
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\models.jl:121
+┌ Warning: The model has been modified since the last call to `optimize!` (or `optimize!` has not been called yet). If you are iteratively querying solution information and modifying a model, query all the results first, then modify the model.
+└ @ JuMP C:\Users\User\.julia\packages\JuMP\R9AEA\src\optimizer_interface.jl:1240
+bess_premium_3snap G3_integer optimal 2.5245963696749983e6
+bess_premium_3snap M1_integer infeasible nothing
+bess_premium_3snap M2_full_integer optimal 2.5483996867606323e6
+bess_premium_3snap M2_neighbor_integer optimal 2.5377885010416154e6
+connectivity_3snap BASE_continuous optimal 2.585242788803728e6
+connectivity_3snap G0_continuous optimal 2.585243072463378e6
+connectivity_3snap G1_continuous optimal 2.58699039599765e6
+connectivity_3snap G2_identity_continuous optimal 2.58699039599765e6
+connectivity_3snap G2_degree_continuous infeasible nothing
+connectivity_3snap G3_continuous optimal 2.5852431125671915e6
+connectivity_3snap M1_continuous infeasible nothing
+connectivity_3snap M2_full_continuous optimal 2.59486427169308e6
+connectivity_3snap M2_neighbor_continuous optimal 2.5881315359382066e6
+connectivity_3snap BASE_integer optimal 2.5945309702594928e6
+┌ Warning: warm start is only partial so will be ignored
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\models.jl:121
+new incumbent
+connectivity_3snap G0_integer optimal 2.594530970259491e6
+connectivity_3snap G1_integer optimal 2.5945309702594928e6
+connectivity_3snap G2_identity_integer optimal 2.5945309702594928e6
+connectivity_3snap G2_degree_integer infeasible nothing
+┌ Warning: warm start is only partial so will be ignored
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\models.jl:121
+┌ Warning: The model has been modified since the last call to `optimize!` (or `optimize!` has not been called yet). If you are iteratively querying solution information and modifying a model, query all the results first, then modify the model.
+└ @ JuMP C:\Users\User\.julia\packages\JuMP\R9AEA\src\optimizer_interface.jl:1240
+connectivity_3snap G3_integer optimal 2.594531256183153e6
+connectivity_3snap M1_integer infeasible nothing
+connectivity_3snap M2_full_integer optimal 2.5997949140786612e6
+connectivity_3snap M2_neighbor_integer optimal 2.5945309702594928e6
+event_price_3snap BASE_continuous optimal 5.6070318844468035e6
+event_price_3snap G0_continuous optimal 5.607032758267216e6
+event_price_3snap G1_continuous optimal 5.607852418203073e6
+event_price_3snap G2_identity_continuous optimal 5.607852418203073e6
+event_price_3snap G2_degree_continuous infeasible nothing
+event_price_3snap G3_continuous optimal 5.607032771313198e6
+event_price_3snap M1_continuous infeasible nothing
+event_price_3snap M2_full_continuous optimal 5.62907176150882e6
+event_price_3snap M2_neighbor_continuous optimal 5.611555290215976e6
+event_price_3snap BASE_integer optimal 5.608912202456508e6
+┌ Warning: warm start is only partial so will be ignored
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\models.jl:121
+new incumbent
+┌ Warning: integral solution repeated
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\algorithms.jl:103
+┌ Warning: integral solution repeated
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\algorithms.jl:103
+┌ Warning: integral solution repeated
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\algorithms.jl:103
+┌ Warning: integral solution repeated
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\algorithms.jl:103
+┌ Warning: integral solution repeated
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\algorithms.jl:103
+┌ Warning: integral solution repeated
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\algorithms.jl:103
+┌ Warning: integral solution repeated
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\algorithms.jl:103
+┌ Warning: integral solution repeated
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\algorithms.jl:103
+┌ Warning: integral solution repeated
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\algorithms.jl:103
+┌ Warning: integral solution repeated
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\algorithms.jl:103
+┌ Warning: integral solution repeated
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\algorithms.jl:103
+┌ Warning: integral solution repeated
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\algorithms.jl:103
+┌ Warning: integral solution repeated
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\algorithms.jl:103
+┌ Warning: integral solution repeated
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\algorithms.jl:103
+┌ Warning: integral solution repeated
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\algorithms.jl:103
+┌ Warning: integral solution repeated
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\algorithms.jl:103
+┌ Warning: integral solution repeated
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\algorithms.jl:103
+┌ Warning: integral solution repeated
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\algorithms.jl:103
+┌ Warning: integral solution repeated
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\algorithms.jl:103
+┌ Warning: integral solution repeated
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\algorithms.jl:103
+┌ Warning: integral solution repeated
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\algorithms.jl:103
+┌ Warning: integral solution repeated
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\algorithms.jl:103
+┌ Warning: integral solution repeated
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\algorithms.jl:103
+┌ Warning: integral solution repeated
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\algorithms.jl:103
+┌ Warning: integral solution repeated
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\algorithms.jl:103
+┌ Warning: integral solution repeated
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\algorithms.jl:103
+┌ Warning: integral solution repeated
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\algorithms.jl:103
+┌ Warning: integral solution repeated
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\algorithms.jl:103
+┌ Warning: integral solution repeated
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\algorithms.jl:103
+┌ Warning: integral solution repeated
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\algorithms.jl:103
+┌ Warning: integral solution repeated
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\algorithms.jl:103
+┌ Warning: integral solution repeated
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\algorithms.jl:103
+┌ Warning: integral solution repeated
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\algorithms.jl:103
+┌ Warning: integral solution repeated
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\algorithms.jl:103
+┌ Warning: integral solution repeated
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\algorithms.jl:103
+┌ Warning: integral solution repeated
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\algorithms.jl:103
+┌ Warning: integral solution repeated
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\algorithms.jl:103
+┌ Warning: integral solution repeated
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\algorithms.jl:103
+┌ Warning: integral solution repeated
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\algorithms.jl:103
+┌ Warning: integral solution repeated
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\algorithms.jl:103
+┌ Warning: integral solution repeated
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\algorithms.jl:103
+┌ Warning: integral solution repeated
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\algorithms.jl:103
+┌ Warning: integral solution repeated
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\algorithms.jl:103
+┌ Warning: integral solution repeated
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\algorithms.jl:103
+┌ Warning: integral solution repeated
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\algorithms.jl:103
+┌ Warning: integral solution repeated
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\algorithms.jl:103
+┌ Warning: integral solution repeated
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\algorithms.jl:103
+┌ Warning: integral solution repeated
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\algorithms.jl:103
+┌ Warning: integral solution repeated
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\algorithms.jl:103
+┌ Warning: integral solution repeated
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\algorithms.jl:103
+┌ Warning: integral solution repeated
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\algorithms.jl:103
+┌ Warning: integral solution repeated
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\algorithms.jl:103
+┌ Warning: integral solution repeated
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\algorithms.jl:103
+┌ Warning: integral solution repeated
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\algorithms.jl:103
+┌ Warning: integral solution repeated
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\algorithms.jl:103
+┌ Warning: integral solution repeated
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\algorithms.jl:103
+┌ Warning: integral solution repeated
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\algorithms.jl:103
+┌ Warning: integral solution repeated
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\algorithms.jl:103
+┌ Warning: integral solution repeated
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\algorithms.jl:103
+┌ Warning: integral solution repeated
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\algorithms.jl:103
+┌ Warning: integral solution repeated
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\algorithms.jl:103
+┌ Warning: integral solution repeated
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\algorithms.jl:103
+┌ Warning: integral solution repeated
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\algorithms.jl:103
+┌ Warning: integral solution repeated
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\algorithms.jl:103
+┌ Warning: integral solution repeated
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\algorithms.jl:103
+┌ Warning: integral solution repeated
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\algorithms.jl:103
+┌ Warning: integral solution repeated
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\algorithms.jl:103
+┌ Warning: integral solution repeated
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\algorithms.jl:103
+┌ Warning: integral solution repeated
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\algorithms.jl:103
+┌ Warning: integral solution repeated
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\algorithms.jl:103
+┌ Warning: integral solution repeated
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\algorithms.jl:103
+┌ Warning: integral solution repeated
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\algorithms.jl:103
+┌ Warning: integral solution repeated
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\algorithms.jl:103
+┌ Warning: integral solution repeated
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\algorithms.jl:103
+┌ Warning: integral solution repeated
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\algorithms.jl:103
+┌ Warning: integral solution repeated
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\algorithms.jl:103
+┌ Warning: integral solution repeated
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\algorithms.jl:103
+┌ Warning: integral solution repeated
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\algorithms.jl:103
+┌ Warning: integral solution repeated
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\algorithms.jl:103
+┌ Warning: integral solution repeated
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\algorithms.jl:103
+┌ Warning: integral solution repeated
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\algorithms.jl:103
+┌ Warning: integral solution repeated
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\algorithms.jl:103
+┌ Warning: integral solution repeated
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\algorithms.jl:103
+┌ Warning: integral solution repeated
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\algorithms.jl:103
+┌ Warning: integral solution repeated
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\algorithms.jl:103
+┌ Warning: integral solution repeated
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\algorithms.jl:103
+┌ Warning: integral solution repeated
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\algorithms.jl:103
+┌ Warning: integral solution repeated
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\algorithms.jl:103
+┌ Warning: integral solution repeated
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\algorithms.jl:103
+┌ Warning: integral solution repeated
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\algorithms.jl:103
+┌ Warning: integral solution repeated
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\algorithms.jl:103
+┌ Warning: integral solution repeated
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\algorithms.jl:103
+┌ Warning: integral solution repeated
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\algorithms.jl:103
+┌ Warning: integral solution repeated
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\algorithms.jl:103
+┌ Warning: integral solution repeated
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\algorithms.jl:103
+┌ Warning: integral solution repeated
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\algorithms.jl:103
+┌ Warning: integral solution repeated
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\algorithms.jl:103
+┌ Warning: integral solution repeated
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\algorithms.jl:103
+┌ Warning: integral solution repeated
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\algorithms.jl:103
+event_price_3snap G0_integer numerical_inconclusive nothing
+event_price_3snap G1_integer optimal 5.608912202456509e6
+event_price_3snap G2_identity_integer optimal 5.608912202456509e6
+event_price_3snap G2_degree_integer infeasible nothing
+┌ Warning: warm start is only partial so will be ignored
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\models.jl:121
+┌ Warning: The model has been modified since the last call to `optimize!` (or `optimize!` has not been called yet). If you are iteratively querying solution information and modifying a model, query all the results first, then modify the model.
+└ @ JuMP C:\Users\User\.julia\packages\JuMP\R9AEA\src\optimizer_interface.jl:1240
+event_price_3snap G3_integer optimal 5.608912219284465e6
+event_price_3snap M1_integer infeasible nothing
+event_price_3snap M2_full_integer optimal 5.636479381135169e6
+event_price_3snap M2_neighbor_integer optimal 5.614873748915605e6
+exposure_multiplier_3snap BASE_continuous optimal 2.524596121900354e6
+exposure_multiplier_3snap G0_continuous optimal 2.524596530254054e6
+exposure_multiplier_3snap G1_continuous optimal 2.536294307568848e6
+exposure_multiplier_3snap G2_identity_continuous optimal 2.536294307568848e6
+exposure_multiplier_3snap G2_degree_continuous infeasible nothing
+exposure_multiplier_3snap G3_continuous optimal 2.524596528869918e6
+exposure_multiplier_3snap M1_continuous infeasible nothing
+exposure_multiplier_3snap M2_full_continuous optimal 2.5485372240465e6
+exposure_multiplier_3snap M2_neighbor_continuous optimal 2.538068641013006e6
+exposure_multiplier_3snap BASE_integer optimal 2.5245961219003536e6
+┌ Warning: warm start is only partial so will be ignored
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\models.jl:121
+exposure_multiplier_3snap G0_integer optimal 2.524596370253212e6
+exposure_multiplier_3snap G1_integer optimal 2.5372017008388494e6
+exposure_multiplier_3snap G2_identity_integer optimal 2.5372017008388494e6
+exposure_multiplier_3snap G2_degree_integer infeasible nothing
+┌ Warning: warm start is only partial so will be ignored
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\models.jl:121
+┌ Warning: The model has been modified since the last call to `optimize!` (or `optimize!` has not been called yet). If you are iteratively querying solution information and modifying a model, query all the results first, then modify the model.
+└ @ JuMP C:\Users\User\.julia\packages\JuMP\R9AEA\src\optimizer_interface.jl:1240
+exposure_multiplier_3snap G3_integer optimal 2.5245963698304235e6
+exposure_multiplier_3snap M1_integer infeasible nothing
+exposure_multiplier_3snap M2_full_integer optimal 2.549200181242712e6
+exposure_multiplier_3snap M2_neighbor_integer optimal 2.54031081258959e6
+reference_24snap BASE_continuous optimal 1.4127976852377668e7
+reference_24snap G0_continuous optimal 1.4127985140643205e7
+reference_24snap G1_continuous optimal 1.4161318726905368e7
+reference_24snap G2_identity_continuous optimal 1.416131872690536e7
+reference_24snap G2_degree_continuous infeasible nothing
+reference_24snap G3_continuous optimal 1.4127985744703684e7
+reference_24snap M1_continuous infeasible nothing
+reference_24snap M2_full_continuous optimal 1.43028264941657e7
+reference_24snap M2_neighbor_continuous optimal 1.4207866909977423e7
+reference_24snap BASE_integer optimal 1.41280940862912e7
+┌ Warning: warm start is only partial so will be ignored
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\models.jl:121
+new incumbent
+reference_24snap G0_integer optimal 1.412809506118861e7
+reference_24snap G1_integer optimal 1.4187925092376912e7
+reference_24snap G2_identity_integer optimal 1.4187925092376912e7
+reference_24snap G2_degree_integer infeasible nothing
+┌ Warning: warm start is only partial so will be ignored
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\models.jl:121
+reference_24snap G3_integer infeasible nothing
+reference_24snap M1_integer infeasible nothing
+reference_24snap M2_full_integer optimal 1.432531366961473e7
+reference_24snap M2_neighbor_integer optimal 1.4227226695156032e7
+reference_3snap BASE_continuous optimal 2.524596121900354e6
+reference_3snap G0_continuous optimal 2.5245965294914762e6
+reference_3snap G1_continuous optimal 2.5341196477331854e6
+reference_3snap G2_identity_continuous optimal 2.5341196477331854e6
+reference_3snap G2_degree_continuous infeasible nothing
+reference_3snap G3_continuous optimal 2.5245965252315435e6
+reference_3snap M1_continuous infeasible nothing
+reference_3snap M2_full_continuous optimal 2.5439619923524735e6
+reference_3snap M2_neighbor_continuous optimal 2.5355460726588806e6
+reference_3snap BASE_integer optimal 2.5245961219003536e6
+┌ Warning: warm start is only partial so will be ignored
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\models.jl:121
+reference_3snap G0_integer optimal 2.5245963699894752e6
+reference_3snap G1_integer optimal 2.5351239494953626e6
+reference_3snap G2_identity_integer optimal 2.5351239494953626e6
+reference_3snap G2_degree_integer infeasible nothing
+┌ Warning: warm start is only partial so will be ignored
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\models.jl:121
+┌ Warning: The model has been modified since the last call to `optimize!` (or `optimize!` has not been called yet). If you are iteratively querying solution information and modifying a model, query all the results first, then modify the model.
+└ @ JuMP C:\Users\User\.julia\packages\JuMP\R9AEA\src\optimizer_interface.jl:1240
+reference_3snap G3_integer optimal 2.5245963696749983e6
+reference_3snap M1_integer infeasible nothing
+reference_3snap M2_full_integer optimal 2.545612913322882e6
+reference_3snap M2_neighbor_integer optimal 2.5359306520831147e6
+reference_6snap BASE_continuous optimal 4.085284715587052e6
+reference_6snap G0_continuous optimal 4.0852863248748602e6
+reference_6snap G1_continuous optimal 4.1119876399003146e6
+reference_6snap G2_identity_continuous optimal 4.111987639900314e6
+reference_6snap G2_degree_continuous infeasible nothing
+reference_6snap G3_continuous optimal 4.085287515554148e6
+reference_6snap M1_continuous infeasible nothing
+reference_6snap M2_full_continuous optimal 4.133190863549173e6
+reference_6snap M2_neighbor_continuous optimal 4.1149277793189986e6
+reference_6snap BASE_integer optimal 4.0852847199052214e6
+┌ Warning: warm start is only partial so will be ignored
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\models.jl:121
+reference_6snap G0_integer optimal 4.08528599566586e6
+reference_6snap G1_integer optimal 4.116868180468001e6
+reference_6snap G2_identity_integer optimal 4.116868180468001e6
+reference_6snap G2_degree_integer infeasible nothing
+┌ Warning: warm start is only partial so will be ignored
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\models.jl:121
+┌ Warning: The model has been modified since the last call to `optimize!` (or `optimize!` has not been called yet). If you are iteratively querying solution information and modifying a model, query all the results first, then modify the model.
+└ @ JuMP C:\Users\User\.julia\packages\JuMP\R9AEA\src\optimizer_interface.jl:1240
+reference_6snap G3_integer optimal 4.085286637945779e6
+reference_6snap M1_integer infeasible nothing
+reference_6snap M2_full_integer optimal 4.13829573670409e6
+reference_6snap M2_neighbor_integer optimal 4.116868180468001e6
+source_reactance_3snap BASE_continuous optimal 2.524596121900354e6
+source_reactance_3snap G0_continuous optimal 2.524596482341985e6
+source_reactance_3snap G1_continuous optimal 2.538742718525822e6
+source_reactance_3snap G2_identity_continuous optimal 2.538742718525822e6
+source_reactance_3snap G2_degree_continuous infeasible nothing
+source_reactance_3snap G3_continuous optimal 2.5245965052447272e6
+source_reactance_3snap M1_continuous infeasible nothing
+source_reactance_3snap M2_full_continuous optimal 2.553585561991223e6
+source_reactance_3snap M2_neighbor_continuous optimal 2.5408615827358365e6
+source_reactance_3snap BASE_integer optimal 2.5245961219003536e6
+┌ Warning: warm start is only partial so will be ignored
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\models.jl:121
+source_reactance_3snap G0_integer optimal 2.524596391729139e6
+source_reactance_3snap G1_integer optimal 2.540387838047608e6
+source_reactance_3snap G2_identity_integer optimal 2.540387838047608e6
+source_reactance_3snap G2_degree_integer infeasible nothing
+┌ Warning: warm start is only partial so will be ignored
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\models.jl:121
+┌ Warning: The model has been modified since the last call to `optimize!` (or `optimize!` has not been called yet). If you are iteratively querying solution information and modifying a model, query all the results first, then modify the model.
+└ @ JuMP C:\Users\User\.julia\packages\JuMP\R9AEA\src\optimizer_interface.jl:1240
+source_reactance_3snap G3_integer optimal 2.5245963717698026e6
+source_reactance_3snap M1_integer infeasible nothing
+source_reactance_3snap M2_full_integer optimal 2.5543090997364e6
+source_reactance_3snap M2_neighbor_integer optimal 2.541033413436648e6
+threshold_3snap BASE_continuous optimal 2.524596121900354e6
+threshold_3snap G0_continuous optimal 2.5245964212932955e6
+threshold_3snap G1_continuous optimal 2.550942487971332e6
+threshold_3snap G2_identity_continuous optimal 2.5509424879713315e6
+threshold_3snap G2_degree_continuous infeasible nothing
+threshold_3snap G3_continuous optimal 2.5245965140428892e6
+threshold_3snap M1_continuous infeasible nothing
+threshold_3snap M2_full_continuous optimal 2.5750125706622293e6
+threshold_3snap M2_neighbor_continuous optimal 2.5558327043744065e6
+threshold_3snap BASE_integer optimal 2.5245961219003536e6
+┌ Warning: warm start is only partial so will be ignored
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\models.jl:121
+threshold_3snap G0_integer optimal 2.5245963726994963e6
+threshold_3snap G1_integer optimal 2.551093314666691e6
+threshold_3snap G2_identity_integer optimal 2.551093314666691e6
+threshold_3snap G2_degree_integer infeasible nothing
+┌ Warning: warm start is only partial so will be ignored
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\models.jl:121
+┌ Warning: The model has been modified since the last call to `optimize!` (or `optimize!` has not been called yet). If you are iteratively querying solution information and modifying a model, query all the results first, then modify the model.
+└ @ JuMP C:\Users\User\.julia\packages\JuMP\R9AEA\src\optimizer_interface.jl:1240
+threshold_3snap G3_integer optimal 2.5245963704162976e6
+threshold_3snap M1_integer infeasible nothing
+threshold_3snap M2_full_integer optimal 2.5758174776974185e6
+threshold_3snap M2_neighbor_integer optimal 2.5563214601676078e6

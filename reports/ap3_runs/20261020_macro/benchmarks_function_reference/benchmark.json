@@ -1,0 +1,162 @@
+{
+  "records": [
+    {
+      "build_wall_s": 3.064841,
+      "solve_wall_s": 6.3731132,
+      "allocated_bytes": 411041088,
+      "peak_memory_bytes": null,
+      "model": {
+        "variables": 2,
+        "constraints": {
+          "Vector{JuMP.AffExpr} in MathOptInterface.PositiveSemidefiniteConeTriangle": 1,
+          "JuMP.VariableRef in MathOptInterface.GreaterThan{Float64}": 2
+        },
+        "integer": 0
+      },
+      "objective": 0.19999999985468148,
+      "termination": "OPTIMAL",
+      "edges": 1,
+      "formulation": "G0",
+      "n": 2
+    },
+    {
+      "build_wall_s": 1.4317413,
+      "solve_wall_s": 2.5804153,
+      "allocated_bytes": 70761848,
+      "peak_memory_bytes": null,
+      "model": {
+        "variables": 4,
+        "constraints": {
+          "JuMP.VariableRef in MathOptInterface.GreaterThan{Float64}": 4,
+          "Vector{JuMP.AffExpr} in MathOptInterface.RotatedSecondOrderCone": 1,
+          "JuMP.AffExpr in MathOptInterface.GreaterThan{Float64}": 2
+        },
+        "integer": 0
+      },
+      "objective": 0.1999999971610756,
+      "termination": "OPTIMAL",
+      "edges": 1,
+      "formulation": "G3",
+      "n": 2
+    },
+    {
+      "build_wall_s": 0.0064626,
+      "solve_wall_s": 3.2953699,
+      "allocated_bytes": 123759432,
+      "peak_memory_bytes": null,
+      "model": {
+        "variables": 4,
+        "constraints": {
+          "Vector{JuMP.AffExpr} in MathOptInterface.PositiveSemidefiniteConeTriangle": 1,
+          "JuMP.VariableRef in MathOptInterface.GreaterThan{Float64}": 4
+        },
+        "integer": 0
+      },
+      "objective": 0.39999999954146687,
+      "termination": "OPTIMAL",
+      "edges": 3,
+      "formulation": "G0",
+      "n": 4
+    },
+    {
+      "build_wall_s": 0.0042764,
+      "solve_wall_s": 0.0009199,
+      "allocated_bytes": 209128,
+      "peak_memory_bytes": null,
+      "model": {
+        "variables": 10,
+        "constraints": {
+          "JuMP.VariableRef in MathOptInterface.GreaterThan{Float64}": 10,
+          "Vector{JuMP.AffExpr} in MathOptInterface.RotatedSecondOrderCone": 3,
+          "JuMP.AffExpr in MathOptInterface.GreaterThan{Float64}": 4
+        },
+        "integer": 0
+      },
+      "objective": 0.3999999993074542,
+      "termination": "OPTIMAL",
+      "edges": 3,
+      "formulation": "G3",
+      "n": 4
+    },
+    {
+      "build_wall_s": 0.0038447,
+      "solve_wall_s": 0.001586,
+      "allocated_bytes": 405424,
+      "peak_memory_bytes": null,
+      "model": {
+        "variables": 8,
+        "constraints": {
+          "Vector{JuMP.AffExpr} in MathOptInterface.PositiveSemidefiniteConeTriangle": 1,
+          "JuMP.VariableRef in MathOptInterface.GreaterThan{Float64}": 8
+        },
+        "integer": 0
+      },
+      "objective": 0.7999999998658951,
+      "termination": "OPTIMAL",
+      "edges": 7,
+      "formulation": "G0",
+      "n": 8
+    },
+    {
+      "build_wall_s": 0.0035861,
+      "solve_wall_s": 0.0013572,
+      "allocated_bytes": 359696,
+      "peak_memory_bytes": null,
+      "model": {
+        "variables": 22,
+        "constraints": {
+          "JuMP.VariableRef in MathOptInterface.GreaterThan{Float64}": 22,
+          "Vector{JuMP.AffExpr} in MathOptInterface.RotatedSecondOrderCone": 7,
+          "JuMP.AffExpr in MathOptInterface.GreaterThan{Float64}": 8
+        },
+        "integer": 0
+      },
+      "objective": 0.7999999963248109,
+      "termination": "OPTIMAL",
+      "edges": 7,
+      "formulation": "G3",
+      "n": 8
+    },
+    {
+      "build_wall_s": 0.0036988,
+      "solve_wall_s": 0.0023886,
+      "allocated_bytes": 811488,
+      "peak_memory_bytes": null,
+      "model": {
+        "variables": 16,
+        "constraints": {
+          "Vector{JuMP.AffExpr} in MathOptInterface.PositiveSemidefiniteConeTriangle": 1,
+          "JuMP.VariableRef in MathOptInterface.GreaterThan{Float64}": 16
+        },
+        "integer": 0
+      },
+      "objective": 1.5999999889958914,
+      "termination": "OPTIMAL",
+      "edges": 15,
+      "formulation": "G0",
+      "n": 16
+    },
+    {
+      "build_wall_s": 0.0037138,
+      "solve_wall_s": 0.0019673,
+      "allocated_bytes": 705848,
+      "peak_memory_bytes": null,
+      "model": {
+        "variables": 46,
+        "constraints": {
+          "JuMP.VariableRef in MathOptInterface.GreaterThan{Float64}": 46,
+          "Vector{JuMP.AffExpr} in MathOptInterface.RotatedSecondOrderCone": 15,
+          "JuMP.AffExpr in MathOptInterface.GreaterThan{Float64}": 16
+        },
+        "integer": 0
+      },
+      "objective": 1.5999999928588895,
+      "termination": "OPTIMAL",
+      "edges": 15,
+      "formulation": "G3",
+      "n": 16
+    }
+  ],
+  "seed": 20261020,
+  "schema": "paper_a_ap3/1.0"
+}

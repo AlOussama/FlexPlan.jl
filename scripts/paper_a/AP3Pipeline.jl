@@ -626,6 +626,27 @@ function export_evidence(input,out)
     end
     writejson(joinpath(out,"evidence_index.json"),Dict("schema"=>SCHEMA,"files"=>index,"provenance"=>provenance()))
     CSV.write(joinpath(out,"evidence_index.csv"),[(path=x["path"],bytes=x["bytes"],sha256=x["sha256"]) for x in index])
+    open(joinpath(out,"evidence_report.md"),"w") do io
+        println(io,"# Paper A AP3 — Evidenzexport\n")
+        println(io,"Schema: $SCHEMA. Indizierte Dateien: $(length(index)); Rohbytes: $(sum(x["bytes"] for x in index)). Der Index prüft die gespeicherten Bytes; er ist keine unabhängige wissenschaftliche Abnahme.\n")
+        println(io,"Empirische Freigabe=false; A3_closed=false; AP4_ready=false. Native Solverstatus und separate Referenzintervalle bleiben getrennt.\n")
+        summary=joinpath(input,"validation_summary.json")
+        if isfile(summary)
+            s=readjson(summary)
+            println(io,"| Aus gespeicherten Ergebnissen | Wert |\n|---|---:|")
+            for key in ("snapshot_records","planning_records","metric_ids","metrics_count","integer_reference_pass","integer_reference_total","G0_G3_continuous_max_relative_objective_difference")
+                haskey(s,key) && println(io,"| $key | $(s[key]) |")
+            end
+            println(io)
+        end
+        println(io,"| Artefakt | Relativer Pfad |\n|---|---|")
+        for rel in ("README.md","parametric_comparison.md","validation_summary.json","blocker_register.json","metric_archive_verification.json","accepted_suite/runs.json","metrics_final/metric_registry.json","comparisons_final/integer_reference_comparisons.json","planning_final/planning.json","plots_final/cost_conservatism.png")
+            path=joinpath(input,rel);isfile(path) || continue
+            link=replace(relpath(path,out),'\\'=>'/')
+            println(io,"| $rel | [$rel]($link) |")
+        end
+        println(io,"\nGroße metrics.json/metrics.csv vor vollständiger Prüfung aus den benachbarten ZIPs extrahieren. Archivinhalt und Rohdatei sind separat SHA256-geprüft. Die neu erzeugten Exportdateien selbst werden nicht selbstreferenziell indiziert.")
+    end
     return index
 end
 function main(args)

@@ -1,0 +1,51 @@
+[info | PowerModels]: extending matpower format with data: storage_extra 1x5
+[info | PowerModels]: extending matpower format with data: ne_storage 1x26
+[info | PowerModels]: extending matpower format with data: load_extra 1x17
+[info | PowerModels]: extending matpower format with constant data: time_elapsed
+[info | PowerModels]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[info | PowerModels]: extending matpower format with data: storage_extra 1x5
+[info | PowerModels]: extending matpower format with data: ne_storage 1x26
+[info | PowerModels]: extending matpower format with data: load_extra 1x17
+[info | PowerModels]: extending matpower format with constant data: time_elapsed
+[info | PowerModels]: extending matpower format by appending matrix "storage_extra" in to "storage"
+Test Summary:                                                   | Pass  Total   Time
+AP3 complete integer conic reference in existing planning model |   23     23  48.7s
+Test Summary:                                        | Pass  Total   Time
+AP3 frozen mathematics, conic and domain regressions |   45     45  11.8s
+[info | PowerModels]: extending matpower format with data: storage_extra 1x5
+[info | PowerModels]: extending matpower format with data: ne_storage 1x26
+[info | PowerModels]: extending matpower format with data: load_extra 1x17
+[info | PowerModels]: extending matpower format with constant data: time_elapsed
+[info | PowerModels]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[info | PowerModels]: extending matpower format with data: storage_extra 1x5
+[info | PowerModels]: extending matpower format with data: ne_storage 1x26
+[info | PowerModels]: extending matpower format with data: load_extra 1x17
+[info | PowerModels]: extending matpower format with constant data: time_elapsed
+[info | PowerModels]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[info | PowerModels]: extending matpower format with data: storage_extra 1x5
+[info | PowerModels]: extending matpower format with data: ne_storage 1x26
+[info | PowerModels]: extending matpower format with data: load_extra 1x17
+[info | PowerModels]: extending matpower format with constant data: time_elapsed
+[info | PowerModels]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[info | PowerModels]: extending matpower format with data: storage_extra 1x5
+[info | PowerModels]: extending matpower format with data: ne_storage 1x26
+[info | PowerModels]: extending matpower format with data: load_extra 1x17
+[info | PowerModels]: extending matpower format with constant data: time_elapsed
+[info | PowerModels]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[info | PowerModels]: extending matpower format with data: storage_extra 1x5
+[info | PowerModels]: extending matpower format with data: ne_storage 1x26
+[info | PowerModels]: extending matpower format with data: load_extra 1x17
+[info | PowerModels]: extending matpower format with constant data: time_elapsed
+[info | PowerModels]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[info | PowerModels]: extending matpower format with data: storage_extra 1x5
+[info | PowerModels]: extending matpower format with data: ne_storage 1x26
+[info | PowerModels]: extending matpower format with data: load_extra 1x17
+[info | PowerModels]: extending matpower format with constant data: time_elapsed
+[info | PowerModels]: extending matpower format by appending matrix "storage_extra" in to "storage"
+[info | PowerModels]: extending matpower format with data: storage_extra 1x5
+[info | PowerModels]: extending matpower format with data: ne_storage 1x26
+[info | PowerModels]: extending matpower format with data: load_extra 1x17
+[info | PowerModels]: extending matpower format with constant data: time_elapsed
+[info | PowerModels]: extending matpower format by appending matrix "storage_extra" in to "storage"
+Test Summary:                            | Pass  Total  Time
+AP3 integrated AP2 common physical model |   20     20  4.4s

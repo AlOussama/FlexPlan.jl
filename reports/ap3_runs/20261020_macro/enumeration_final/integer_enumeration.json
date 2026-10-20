@@ -1,0 +1,1238 @@
+{
+  "records": [
+    {
+      "feasible": false,
+      "B": [
+        [
+          0.5,
+          -0.5
+        ],
+        [
+          -0.5,
+          0.5
+        ]
+      ],
+      "cost": 0.0,
+      "minimum_M_eigenvalue": -0.4999999999999999,
+      "status": "INFEASIBLE",
+      "assignment": [
+        0,
+        0
+      ],
+      "formulation": "G0",
+      "p": [
+        0.25,
+        0.6666666666666666
+      ]
+    },
+    {
+      "feasible": false,
+      "B": [
+        [
+          0.5,
+          -0.5
+        ],
+        [
+          -0.5,
+          1.0
+        ]
+      ],
+      "cost": 3.0,
+      "minimum_M_eigenvalue": -0.21006644078301234,
+      "status": "INFEASIBLE",
+      "assignment": [
+        0,
+        1
+      ],
+      "formulation": "G0",
+      "p": [
+        0.25,
+        0.6666666666666666
+      ]
+    },
+    {
+      "feasible": false,
+      "B": [
+        [
+          0.5,
+          -0.5
+        ],
+        [
+          -0.5,
+          1.5
+        ]
+      ],
+      "cost": 6.0,
+      "minimum_M_eigenvalue": -0.037185166227075094,
+      "status": "INFEASIBLE",
+      "assignment": [
+        0,
+        2
+      ],
+      "formulation": "G0",
+      "p": [
+        0.25,
+        0.6666666666666666
+      ]
+    },
+    {
+      "feasible": true,
+      "B": [
+        [
+          0.5,
+          -0.5
+        ],
+        [
+          -0.5,
+          2.0
+        ]
+      ],
+      "cost": 9.0,
+      "minimum_M_eigenvalue": 0.0545080827935777,
+      "status": "OPTIMAL",
+      "assignment": [
+        0,
+        3
+      ],
+      "formulation": "G0",
+      "p": [
+        0.25,
+        0.6666666666666666
+      ]
+    },
+    {
+      "feasible": false,
+      "B": [
+        [
+          1.0,
+          -0.5
+        ],
+        [
+          -0.5,
+          0.5
+        ]
+      ],
+      "cost": 1.0,
+      "minimum_M_eigenvalue": -0.3866175248374877,
+      "status": "INFEASIBLE",
+      "assignment": [
+        1,
+        0
+      ],
+      "formulation": "G0",
+      "p": [
+        0.25,
+        0.6666666666666666
+      ]
+    },
+    {
+      "feasible": true,
+      "B": [
+        [
+          1.0,
+          -0.5
+        ],
+        [
+          -0.5,
+          1.0
+        ]
+      ],
+      "cost": 4.0,
+      "minimum_M_eigenvalue": 2.938825653419678e-17,
+      "status": "OPTIMAL",
+      "assignment": [
+        1,
+        1
+      ],
+      "formulation": "G0",
+      "p": [
+        0.25,
+        0.6666666666666666
+      ]
+    },
+    {
+      "feasible": true,
+      "B": [
+        [
+          1.0,
+          -0.5
+        ],
+        [
+          -0.5,
+          1.5
+        ]
+      ],
+      "cost": 7.0,
+      "minimum_M_eigenvalue": 0.2899335592169877,
+      "status": "OPTIMAL",
+      "assignment": [
+        1,
+        2
+      ],
+      "formulation": "G0",
+      "p": [
+        0.25,
+        0.6666666666666666
+      ]
+    },
+    {
+      "feasible": true,
+      "B": [
+        [
+          1.0,
+          -0.5
+        ],
+        [
+          -0.5,
+          2.0
+        ]
+      ],
+      "cost": 10.0,
+      "minimum_M_eigenvalue": 0.4628148337729248,
+      "status": "OPTIMAL",
+      "assignment": [
+        1,
+        3
+      ],
+      "formulation": "G0",
+      "p": [
+        0.25,
+        0.6666666666666666
+      ]
+    },
+    {
+      "feasible": false,
+      "B": [
+        [
+          1.5,
+          -0.5
+        ],
+        [
+          -0.5,
+          0.5
+        ]
+      ],
+      "cost": 2.0,
+      "minimum_M_eigenvalue": -0.3253605019452006,
+      "status": "INFEASIBLE",
+      "assignment": [
+        2,
+        0
+      ],
+      "formulation": "G0",
+      "p": [
+        0.25,
+        0.6666666666666666
+      ]
+    },
+    {
+      "feasible": true,
+      "B": [
+        [
+          1.5,
+          -0.5
+        ],
+        [
+          -0.5,
+          1.0
+        ]
+      ],
+      "cost": 5.0,
+      "minimum_M_eigenvalue": 0.11338247516251224,
+      "status": "OPTIMAL",
+      "assignment": [
+        2,
+        1
+      ],
+      "formulation": "G0",
+      "p": [
+        0.25,
+        0.6666666666666666
+      ]
+    },
+    {
+      "feasible": true,
+      "B": [
+        [
+          1.5,
+          -0.5
+        ],
+        [
+          -0.5,
+          1.5
+        ]
+      ],
+      "cost": 8.0,
+      "minimum_M_eigenvalue": 0.49999999999999994,
+      "status": "OPTIMAL",
+      "assignment": [
+        2,
+        2
+      ],
+      "formulation": "G0",
+      "p": [
+        0.25,
+        0.6666666666666666
+      ]
+    },
+    {
+      "feasible": true,
+      "B": [
+        [
+          1.5,
+          -0.5
+        ],
+        [
+          -0.5,
+          2.0
+        ]
+      ],
+      "cost": 11.0,
+      "minimum_M_eigenvalue": 0.7899335592169877,
+      "status": "OPTIMAL",
+      "assignment": [
+        2,
+        3
+      ],
+      "formulation": "G0",
+      "p": [
+        0.25,
+        0.6666666666666666
+      ]
+    },
+    {
+      "feasible": false,
+      "B": [
+        [
+          2.0,
+          -0.5
+        ],
+        [
+          -0.5,
+          0.5
+        ]
+      ],
+      "cost": 3.0,
+      "minimum_M_eigenvalue": -0.2892601475894039,
+      "status": "INFEASIBLE",
+      "assignment": [
+        3,
+        0
+      ],
+      "formulation": "G0",
+      "p": [
+        0.25,
+        0.6666666666666666
+      ]
+    },
+    {
+      "feasible": true,
+      "B": [
+        [
+          2.0,
+          -0.5
+        ],
+        [
+          -0.5,
+          1.0
+        ]
+      ],
+      "cost": 6.0,
+      "minimum_M_eigenvalue": 0.17463949805479964,
+      "status": "OPTIMAL",
+      "assignment": [
+        3,
+        1
+      ],
+      "formulation": "G0",
+      "p": [
+        0.25,
+        0.6666666666666666
+      ]
+    },
+    {
+      "feasible": true,
+      "B": [
+        [
+          2.0,
+          -0.5
+        ],
+        [
+          -0.5,
+          1.5
+        ]
+      ],
+      "cost": 9.0,
+      "minimum_M_eigenvalue": 0.6133824751625123,
+      "status": "OPTIMAL",
+      "assignment": [
+        3,
+        2
+      ],
+      "formulation": "G0",
+      "p": [
+        0.25,
+        0.6666666666666666
+      ]
+    },
+    {
+      "feasible": true,
+      "B": [
+        [
+          2.0,
+          -0.5
+        ],
+        [
+          -0.5,
+          2.0
+        ]
+      ],
+      "cost": 12.0,
+      "minimum_M_eigenvalue": 1.0000000000000002,
+      "status": "OPTIMAL",
+      "assignment": [
+        3,
+        3
+      ],
+      "formulation": "G0",
+      "p": [
+        0.25,
+        0.6666666666666666
+      ]
+    },
+    {
+      "feasible": false,
+      "B": [
+        [
+          0.5,
+          -0.5
+        ],
+        [
+          -0.5,
+          0.5
+        ]
+      ],
+      "cost": 0.0,
+      "minimum_M_eigenvalue": -0.4999999999999999,
+      "status": "INFEASIBLE",
+      "assignment": [
+        0,
+        0
+      ],
+      "formulation": "G3",
+      "p": [
+        0.25,
+        0.6666666666666666
+      ]
+    },
+    {
+      "feasible": false,
+      "B": [
+        [
+          0.5,
+          -0.5
+        ],
+        [
+          -0.5,
+          1.0
+        ]
+      ],
+      "cost": 3.0,
+      "minimum_M_eigenvalue": -0.21006644078301234,
+      "status": "INFEASIBLE",
+      "assignment": [
+        0,
+        1
+      ],
+      "formulation": "G3",
+      "p": [
+        0.25,
+        0.6666666666666666
+      ]
+    },
+    {
+      "feasible": false,
+      "B": [
+        [
+          0.5,
+          -0.5
+        ],
+        [
+          -0.5,
+          1.5
+        ]
+      ],
+      "cost": 6.0,
+      "minimum_M_eigenvalue": -0.037185166227075094,
+      "status": "INFEASIBLE",
+      "assignment": [
+        0,
+        2
+      ],
+      "formulation": "G3",
+      "p": [
+        0.25,
+        0.6666666666666666
+      ]
+    },
+    {
+      "feasible": true,
+      "B": [
+        [
+          0.5,
+          -0.5
+        ],
+        [
+          -0.5,
+          2.0
+        ]
+      ],
+      "cost": 9.0,
+      "minimum_M_eigenvalue": 0.0545080827935777,
+      "status": "OPTIMAL",
+      "assignment": [
+        0,
+        3
+      ],
+      "formulation": "G3",
+      "p": [
+        0.25,
+        0.6666666666666666
+      ]
+    },
+    {
+      "feasible": false,
+      "B": [
+        [
+          1.0,
+          -0.5
+        ],
+        [
+          -0.5,
+          0.5
+        ]
+      ],
+      "cost": 1.0,
+      "minimum_M_eigenvalue": -0.3866175248374877,
+      "status": "INFEASIBLE",
+      "assignment": [
+        1,
+        0
+      ],
+      "formulation": "G3",
+      "p": [
+        0.25,
+        0.6666666666666666
+      ]
+    },
+    {
+      "feasible": true,
+      "B": [
+        [
+          1.0,
+          -0.5
+        ],
+        [
+          -0.5,
+          1.0
+        ]
+      ],
+      "cost": 4.0,
+      "minimum_M_eigenvalue": 2.938825653419678e-17,
+      "status": "OPTIMAL",
+      "assignment": [
+        1,
+        1
+      ],
+      "formulation": "G3",
+      "p": [
+        0.25,
+        0.6666666666666666
+      ]
+    },
+    {
+      "feasible": true,
+      "B": [
+        [
+          1.0,
+          -0.5
+        ],
+        [
+          -0.5,
+          1.5
+        ]
+      ],
+      "cost": 7.0,
+      "minimum_M_eigenvalue": 0.2899335592169877,
+      "status": "OPTIMAL",
+      "assignment": [
+        1,
+        2
+      ],
+      "formulation": "G3",
+      "p": [
+        0.25,
+        0.6666666666666666
+      ]
+    },
+    {
+      "feasible": true,
+      "B": [
+        [
+          1.0,
+          -0.5
+        ],
+        [
+          -0.5,
+          2.0
+        ]
+      ],
+      "cost": 10.0,
+      "minimum_M_eigenvalue": 0.4628148337729248,
+      "status": "OPTIMAL",
+      "assignment": [
+        1,
+        3
+      ],
+      "formulation": "G3",
+      "p": [
+        0.25,
+        0.6666666666666666
+      ]
+    },
+    {
+      "feasible": false,
+      "B": [
+        [
+          1.5,
+          -0.5
+        ],
+        [
+          -0.5,
+          0.5
+        ]
+      ],
+      "cost": 2.0,
+      "minimum_M_eigenvalue": -0.3253605019452006,
+      "status": "INFEASIBLE",
+      "assignment": [
+        2,
+        0
+      ],
+      "formulation": "G3",
+      "p": [
+        0.25,
+        0.6666666666666666
+      ]
+    },
+    {
+      "feasible": true,
+      "B": [
+        [
+          1.5,
+          -0.5
+        ],
+        [
+          -0.5,
+          1.0
+        ]
+      ],
+      "cost": 5.0,
+      "minimum_M_eigenvalue": 0.11338247516251224,
+      "status": "OPTIMAL",
+      "assignment": [
+        2,
+        1
+      ],
+      "formulation": "G3",
+      "p": [
+        0.25,
+        0.6666666666666666
+      ]
+    },
+    {
+      "feasible": true,
+      "B": [
+        [
+          1.5,
+          -0.5
+        ],
+        [
+          -0.5,
+          1.5
+        ]
+      ],
+      "cost": 8.0,
+      "minimum_M_eigenvalue": 0.49999999999999994,
+      "status": "OPTIMAL",
+      "assignment": [
+        2,
+        2
+      ],
+      "formulation": "G3",
+      "p": [
+        0.25,
+        0.6666666666666666
+      ]
+    },
+    {
+      "feasible": true,
+      "B": [
+        [
+          1.5,
+          -0.5
+        ],
+        [
+          -0.5,
+          2.0
+        ]
+      ],
+      "cost": 11.0,
+      "minimum_M_eigenvalue": 0.7899335592169877,
+      "status": "OPTIMAL",
+      "assignment": [
+        2,
+        3
+      ],
+      "formulation": "G3",
+      "p": [
+        0.25,
+        0.6666666666666666
+      ]
+    },
+    {
+      "feasible": false,
+      "B": [
+        [
+          2.0,
+          -0.5
+        ],
+        [
+          -0.5,
+          0.5
+        ]
+      ],
+      "cost": 3.0,
+      "minimum_M_eigenvalue": -0.2892601475894039,
+      "status": "INFEASIBLE",
+      "assignment": [
+        3,
+        0
+      ],
+      "formulation": "G3",
+      "p": [
+        0.25,
+        0.6666666666666666
+      ]
+    },
+    {
+      "feasible": true,
+      "B": [
+        [
+          2.0,
+          -0.5
+        ],
+        [
+          -0.5,
+          1.0
+        ]
+      ],
+      "cost": 6.0,
+      "minimum_M_eigenvalue": 0.17463949805479964,
+      "status": "OPTIMAL",
+      "assignment": [
+        3,
+        1
+      ],
+      "formulation": "G3",
+      "p": [
+        0.25,
+        0.6666666666666666
+      ]
+    },
+    {
+      "feasible": true,
+      "B": [
+        [
+          2.0,
+          -0.5
+        ],
+        [
+          -0.5,
+          1.5
+        ]
+      ],
+      "cost": 9.0,
+      "minimum_M_eigenvalue": 0.6133824751625123,
+      "status": "OPTIMAL",
+      "assignment": [
+        3,
+        2
+      ],
+      "formulation": "G3",
+      "p": [
+        0.25,
+        0.6666666666666666
+      ]
+    },
+    {
+      "feasible": true,
+      "B": [
+        [
+          2.0,
+          -0.5
+        ],
+        [
+          -0.5,
+          2.0
+        ]
+      ],
+      "cost": 12.0,
+      "minimum_M_eigenvalue": 1.0000000000000002,
+      "status": "OPTIMAL",
+      "assignment": [
+        3,
+        3
+      ],
+      "formulation": "G3",
+      "p": [
+        0.25,
+        0.6666666666666666
+      ]
+    },
+    {
+      "feasible": false,
+      "B": [
+        [
+          0.5,
+          -0.5
+        ],
+        [
+          -0.5,
+          0.5
+        ]
+      ],
+      "cost": 0.0,
+      "status": "infeasible_or_inverse_domain_invalid",
+      "assignment": [
+        0,
+        0
+      ],
+      "formulation": "M0",
+      "p": [
+        0.25,
+        0.6666666666666666
+      ]
+    },
+    {
+      "feasible": false,
+      "B": [
+        [
+          0.5,
+          -0.5
+        ],
+        [
+          -0.5,
+          1.0
+        ]
+      ],
+      "cost": 3.0,
+      "status": "infeasible_or_inverse_domain_invalid",
+      "assignment": [
+        0,
+        1
+      ],
+      "formulation": "M0",
+      "p": [
+        0.25,
+        0.6666666666666666
+      ]
+    },
+    {
+      "feasible": false,
+      "B": [
+        [
+          0.5,
+          -0.5
+        ],
+        [
+          -0.5,
+          1.5
+        ]
+      ],
+      "cost": 6.0,
+      "status": "infeasible_or_inverse_domain_invalid",
+      "assignment": [
+        0,
+        2
+      ],
+      "formulation": "M0",
+      "p": [
+        0.25,
+        0.6666666666666666
+      ]
+    },
+    {
+      "feasible": false,
+      "B": [
+        [
+          0.5,
+          -0.5
+        ],
+        [
+          -0.5,
+          2.0
+        ]
+      ],
+      "cost": 9.0,
+      "status": "infeasible_or_inverse_domain_invalid",
+      "assignment": [
+        0,
+        3
+      ],
+      "formulation": "M0",
+      "p": [
+        0.25,
+        0.6666666666666666
+      ]
+    },
+    {
+      "feasible": false,
+      "B": [
+        [
+          1.0,
+          -0.5
+        ],
+        [
+          -0.5,
+          0.5
+        ]
+      ],
+      "cost": 1.0,
+      "status": "infeasible_or_inverse_domain_invalid",
+      "assignment": [
+        1,
+        0
+      ],
+      "formulation": "M0",
+      "p": [
+        0.25,
+        0.6666666666666666
+      ]
+    },
+    {
+      "feasible": false,
+      "B": [
+        [
+          1.0,
+          -0.5
+        ],
+        [
+          -0.5,
+          1.0
+        ]
+      ],
+      "cost": 4.0,
+      "status": "infeasible_or_inverse_domain_invalid",
+      "assignment": [
+        1,
+        1
+      ],
+      "formulation": "M0",
+      "p": [
+        0.25,
+        0.6666666666666666
+      ]
+    },
+    {
+      "feasible": true,
+      "B": [
+        [
+          1.0,
+          -0.5
+        ],
+        [
+          -0.5,
+          1.5
+        ]
+      ],
+      "cost": 7.0,
+      "status": "feasible_exact_inverse",
+      "assignment": [
+        1,
+        2
+      ],
+      "formulation": "M0",
+      "p": [
+        0.25,
+        0.6666666666666666
+      ]
+    },
+    {
+      "feasible": true,
+      "B": [
+        [
+          1.0,
+          -0.5
+        ],
+        [
+          -0.5,
+          2.0
+        ]
+      ],
+      "cost": 10.0,
+      "status": "feasible_exact_inverse",
+      "assignment": [
+        1,
+        3
+      ],
+      "formulation": "M0",
+      "p": [
+        0.25,
+        0.6666666666666666
+      ]
+    },
+    {
+      "feasible": false,
+      "B": [
+        [
+          1.5,
+          -0.5
+        ],
+        [
+          -0.5,
+          0.5
+        ]
+      ],
+      "cost": 2.0,
+      "status": "infeasible_or_inverse_domain_invalid",
+      "assignment": [
+        2,
+        0
+      ],
+      "formulation": "M0",
+      "p": [
+        0.25,
+        0.6666666666666666
+      ]
+    },
+    {
+      "feasible": true,
+      "B": [
+        [
+          1.5,
+          -0.5
+        ],
+        [
+          -0.5,
+          1.0
+        ]
+      ],
+      "cost": 5.0,
+      "status": "feasible_exact_inverse",
+      "assignment": [
+        2,
+        1
+      ],
+      "formulation": "M0",
+      "p": [
+        0.25,
+        0.6666666666666666
+      ]
+    },
+    {
+      "feasible": true,
+      "B": [
+        [
+          1.5,
+          -0.5
+        ],
+        [
+          -0.5,
+          1.5
+        ]
+      ],
+      "cost": 8.0,
+      "status": "feasible_exact_inverse",
+      "assignment": [
+        2,
+        2
+      ],
+      "formulation": "M0",
+      "p": [
+        0.25,
+        0.6666666666666666
+      ]
+    },
+    {
+      "feasible": true,
+      "B": [
+        [
+          1.5,
+          -0.5
+        ],
+        [
+          -0.5,
+          2.0
+        ]
+      ],
+      "cost": 11.0,
+      "status": "feasible_exact_inverse",
+      "assignment": [
+        2,
+        3
+      ],
+      "formulation": "M0",
+      "p": [
+        0.25,
+        0.6666666666666666
+      ]
+    },
+    {
+      "feasible": false,
+      "B": [
+        [
+          2.0,
+          -0.5
+        ],
+        [
+          -0.5,
+          0.5
+        ]
+      ],
+      "cost": 3.0,
+      "status": "infeasible_or_inverse_domain_invalid",
+      "assignment": [
+        3,
+        0
+      ],
+      "formulation": "M0",
+      "p": [
+        0.25,
+        0.6666666666666666
+      ]
+    },
+    {
+      "feasible": true,
+      "B": [
+        [
+          2.0,
+          -0.5
+        ],
+        [
+          -0.5,
+          1.0
+        ]
+      ],
+      "cost": 6.0,
+      "status": "feasible_exact_inverse",
+      "assignment": [
+        3,
+        1
+      ],
+      "formulation": "M0",
+      "p": [
+        0.25,
+        0.6666666666666666
+      ]
+    },
+    {
+      "feasible": true,
+      "B": [
+        [
+          2.0,
+          -0.5
+        ],
+        [
+          -0.5,
+          1.5
+        ]
+      ],
+      "cost": 9.0,
+      "status": "feasible_exact_inverse",
+      "assignment": [
+        3,
+        2
+      ],
+      "formulation": "M0",
+      "p": [
+        0.25,
+        0.6666666666666666
+      ]
+    },
+    {
+      "feasible": true,
+      "B": [
+        [
+          2.0,
+          -0.5
+        ],
+        [
+          -0.5,
+          2.0
+        ]
+      ],
+      "cost": 12.0,
+      "status": "feasible_exact_inverse",
+      "assignment": [
+        3,
+        3
+      ],
+      "formulation": "M0",
+      "p": [
+        0.25,
+        0.6666666666666666
+      ]
+    }
+  ],
+  "scope": "tiny_2_region_integer_strengthening_reference_not_full_UC",
+  "alpha": 1.0,
+  "step_pu": 0.5,
+  "cost_per_block": [
+    1.0,
+    3.0
+  ],
+  "schema": "paper_a_ap3/1.0",
+  "bounds": [
+    0,
+    3
+  ],
+  "certificate": {
+    "G3": {
+      "optimum": 4.0,
+      "executed_assignments": 16,
+      "complete": true,
+      "optimal_assignments": [
+        [
+          1,
+          1
+        ]
+      ],
+      "expected_assignments": 16
+    },
+    "M0": {
+      "optimum": 5.0,
+      "executed_assignments": 16,
+      "complete": true,
+      "optimal_assignments": [
+        [
+          2,
+          1
+        ]
+      ],
+      "expected_assignments": 16
+    },
+    "G0": {
+      "optimum": 4.0,
+      "executed_assignments": 16,
+      "complete": true,
+      "optimal_assignments": [
+        [
+          1,
+          1
+        ]
+      ],
+      "expected_assignments": 16
+    }
+  }
+}

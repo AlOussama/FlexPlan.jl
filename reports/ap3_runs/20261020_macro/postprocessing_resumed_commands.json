@@ -1,0 +1,46 @@
+[
+  {
+    "arguments": [
+      "--startup-file=no",
+      "--project=.",
+      "scripts/paper_a/ap3.jl",
+      "evaluate_strength_metrics",
+      "D:\\Projekte\\Code\\FlexPlan_AP3\\reports\\ap3_runs\\20261020_macro\\matrices_final",
+      "D:\\Projekte\\Code\\FlexPlan_AP3\\reports\\ap3_runs\\20261020_macro\\metrics_final"
+    ],
+    "action": "evaluate_strength_metrics"
+  },
+  {
+    "arguments": [
+      "--startup-file=no",
+      "--project=.",
+      "scripts/paper_a/ap3.jl",
+      "verify_certificates",
+      "D:\\Projekte\\Code\\FlexPlan_AP3\\reports\\ap3_runs\\20261020_macro\\matrices_final",
+      "D:\\Projekte\\Code\\FlexPlan_AP3\\reports\\ap3_runs\\20261020_macro\\certificates_final"
+    ],
+    "action": "verify_certificates"
+  },
+  {
+    "arguments": [
+      "--startup-file=no",
+      "--project=.",
+      "scripts/paper_a/ap3.jl",
+      "compare_formulations",
+      "D:\\Projekte\\Code\\FlexPlan_AP3\\reports\\ap3_runs\\20261020_macro\\accepted_suite",
+      "D:\\Projekte\\Code\\FlexPlan_AP3\\reports\\ap3_runs\\20261020_macro\\comparisons_final"
+    ],
+    "action": "compare_formulations"
+  },
+  {
+    "arguments": [
+      "--startup-file=no",
+      "--project=.",
+      "scripts/paper_a/ap3.jl",
+      "assess_planning_results",
+      "D:\\Projekte\\Code\\FlexPlan_AP3\\reports\\ap3_runs\\20261020_macro\\accepted_suite",
+      "D:\\Projekte\\Code\\FlexPlan_AP3\\reports\\ap3_runs\\20261020_macro\\planning_final"
+    ],
+    "action": "assess_planning_results"
+  }
+]

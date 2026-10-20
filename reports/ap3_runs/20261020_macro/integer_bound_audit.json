@@ -1,0 +1,1354 @@
+{
+  "records": [
+    {
+      "points": [
+        {
+          "minimum_PSD_violation": 0.0,
+          "solution_sha256": "edf9bcd8d4912a6a91779c4e3f349b43c7f3e84e6f247c585cd134efaf2a242a",
+          "folder": "suite_final",
+          "domain_and_operating_residuals_pass": true,
+          "objective_residual": 6.48932005020697e-7,
+          "formulation": "G0",
+          "independent_cost": 2.524596369988826e6
+        },
+        {
+          "minimum_PSD_violation": 0.0,
+          "solution_sha256": "6f044e647d196976306651a7397799d7ddd0a428a9253acd3d26d0464d661cf5",
+          "folder": "suite_final",
+          "domain_and_operating_residuals_pass": true,
+          "objective_residual": 6.476111416020558e-7,
+          "formulation": "G3",
+          "independent_cost": 2.5245963696743506e6
+        },
+        {
+          "minimum_PSD_violation": 0.0,
+          "solution_sha256": "e51d6b54b5d46360882b505451e3ccb4c40ea8994aa300b8af89ebbf2fd27fcc",
+          "folder": "conditioned_conic_suite",
+          "domain_and_operating_residuals_pass": true,
+          "objective_residual": 6.475042582110291e-7,
+          "formulation": "G0",
+          "independent_cost": 2.5245961218997063e6
+        }
+      ],
+      "method": "independent feasible point and global solver bounds on identical fixed symmetric Z projection; frozen T018-T020; not interval arithmetic or independent A3.5 acceptance",
+      "native_attempts": [
+        {
+          "folder": "suite_final",
+          "reported_gap": 3.2756600005039638e-9,
+          "status": "optimal",
+          "objective": 2.5245963699894752e6,
+          "termination": "OPTIMAL",
+          "bound": 2.5245784405520177e6,
+          "formulation": "G0"
+        },
+        {
+          "folder": "suite_final",
+          "reported_gap": 3.2756026044696433e-9,
+          "status": "optimal",
+          "objective": 2.5245963696749983e6,
+          "termination": "OPTIMAL",
+          "bound": 2.5245784405520177e6,
+          "formulation": "G3"
+        },
+        {
+          "folder": "conditioned_conic_suite",
+          "reported_gap": 0.0,
+          "status": "optimal",
+          "objective": 2.524596121900354e6,
+          "termination": "OPTIMAL",
+          "bound": 2.524596121899206e6,
+          "formulation": "G0"
+        },
+        {
+          "folder": "conditioned_conic_suite",
+          "reported_gap": null,
+          "status": "infeasible",
+          "objective": null,
+          "termination": "INFEASIBLE",
+          "bound": 2.5245960357653517e6,
+          "formulation": "G3"
+        }
+      ],
+      "integer_optimum_certified": true,
+      "status": "numerically_verified_reference",
+      "case_sha256": "f2a931f452675dc9206bca4af62262c7c29e9d2daf05b13b16b8535ea197b243",
+      "shared_lower_bound": 2.524596121899206e6,
+      "case_id": "bess_premium_3snap",
+      "shared_G0_G3_upper_bound": 2.5245961218997063e6,
+      "original_currency_relative_gap": 1.980991011711536e-13,
+      "bounds": [
+        {
+          "folder": "suite_final",
+          "value": 2.5245784405520177e6,
+          "formulation": "G0"
+        },
+        {
+          "folder": "suite_final",
+          "value": 2.5245784405520177e6,
+          "formulation": "G3"
+        },
+        {
+          "folder": "conditioned_conic_suite",
+          "value": 2.524596121899206e6,
+          "formulation": "G0"
+        }
+      ],
+      "tolerance": 1.0e-6
+    },
+    {
+      "points": [
+        {
+          "minimum_PSD_violation": 0.0,
+          "solution_sha256": "17eae42f57d470c14d221a9d5030fadcec49ff78ebf1d6dabcae948f0a1a297b",
+          "folder": "suite_final",
+          "domain_and_operating_residuals_pass": true,
+          "objective_residual": 6.458813857079804e-7,
+          "formulation": "G0",
+          "independent_cost": 2.594530970258845e6
+        },
+        {
+          "minimum_PSD_violation": 0.0,
+          "solution_sha256": "71d84c5399fb2f83ed7a9846e612d1e27d5cf6829446ad67061cc78b4e13c033",
+          "folder": "suite_final",
+          "domain_and_operating_residuals_pass": true,
+          "objective_residual": 6.481831285043427e-7,
+          "formulation": "G3",
+          "independent_cost": 2.594531256182505e6
+        },
+        {
+          "minimum_PSD_violation": 0.0,
+          "solution_sha256": "44d4814af75f86db189daff75595552cd84df3311310dfa30ede65fcc9a2f88f",
+          "folder": "conditioned_conic_suite",
+          "domain_and_operating_residuals_pass": true,
+          "objective_residual": 6.482096495119549e-7,
+          "formulation": "G0",
+          "independent_cost": 2.594530970258845e6
+        },
+        {
+          "minimum_PSD_violation": 0.0,
+          "solution_sha256": "5bdfa59698560b3d34131b3b28116c64355a16c874ea3963b5f24bc5792991d4",
+          "folder": "conditioned_conic_suite",
+          "domain_and_operating_residuals_pass": true,
+          "objective_residual": 6.487994141934905e-7,
+          "formulation": "G3",
+          "independent_cost": 2.5945309702690197e6
+        }
+      ],
+      "method": "independent feasible point and global solver bounds on identical fixed symmetric Z projection; frozen T018-T020; not interval arithmetic or independent A3.5 acceptance",
+      "native_attempts": [
+        {
+          "folder": "suite_final",
+          "reported_gap": 4.392811112299274e-8,
+          "status": "optimal",
+          "objective": 2.594530970259491e6,
+          "termination": "OPTIMAL",
+          "bound": 2.5942905251881015e6,
+          "formulation": "G0"
+        },
+        {
+          "folder": "suite_final",
+          "reported_gap": 3.246484023519919e-9,
+          "status": "optimal",
+          "objective": 2.594531256183153e6,
+          "termination": "OPTIMAL",
+          "bound": 2.5945134862139053e6,
+          "formulation": "G3"
+        },
+        {
+          "folder": "conditioned_conic_suite",
+          "reported_gap": 0.0,
+          "status": "optimal",
+          "objective": 2.594530970259493e6,
+          "termination": "OPTIMAL",
+          "bound": 2.5945309702579714e6,
+          "formulation": "G0"
+        },
+        {
+          "folder": "conditioned_conic_suite",
+          "reported_gap": 1.933041925499868e-15,
+          "status": "optimal",
+          "objective": 2.5945309702696684e6,
+          "termination": "OPTIMAL",
+          "bound": 2.5945309702579714e6,
+          "formulation": "G3"
+        }
+      ],
+      "integer_optimum_certified": true,
+      "status": "numerically_verified_reference",
+      "case_sha256": "c52e648b1497fbd3b5facfcd272cf535a02f5bda3d86cff34d3f433e703e0bf3",
+      "shared_lower_bound": 2.5945309702579714e6,
+      "case_id": "connectivity_3snap",
+      "shared_G0_G3_upper_bound": 2.594530970258845e6,
+      "original_currency_relative_gap": 3.367007698128057e-13,
+      "bounds": [
+        {
+          "folder": "suite_final",
+          "value": 2.5942905251881015e6,
+          "formulation": "G0"
+        },
+        {
+          "folder": "suite_final",
+          "value": 2.5945134862139053e6,
+          "formulation": "G3"
+        },
+        {
+          "folder": "conditioned_conic_suite",
+          "value": 2.5945309702579714e6,
+          "formulation": "G0"
+        },
+        {
+          "folder": "conditioned_conic_suite",
+          "value": 2.5945309702579714e6,
+          "formulation": "G3"
+        }
+      ],
+      "tolerance": 1.0e-6
+    },
+    {
+      "points": [
+        {
+          "minimum_PSD_violation": 0.0,
+          "solution_sha256": "90bb7423a609d848736f35092151977f6ffeaaf234ed7e59e45b9cc5075d7580",
+          "folder": "suite_final",
+          "domain_and_operating_residuals_pass": true,
+          "objective_residual": 3.287568688392639e-7,
+          "formulation": "G3",
+          "independent_cost": 5.608912219284136e6
+        },
+        {
+          "minimum_PSD_violation": 0.0,
+          "solution_sha256": "8f2cc2e90409586e97167404702cca87369ff8cfc2965b864a7c95fc31d4d44e",
+          "folder": "conditioned_conic_suite",
+          "domain_and_operating_residuals_pass": true,
+          "objective_residual": 3.2782554626464844e-7,
+          "formulation": "G0",
+          "independent_cost": 5.608912202456182e6
+        },
+        {
+          "minimum_PSD_violation": 0.0,
+          "solution_sha256": "6d54da5ceb311d1f54c7ad23f68eb4bd52aaa67d15a868e55a541b2d58932f18",
+          "folder": "conditioned_conic_suite",
+          "domain_and_operating_residuals_pass": true,
+          "objective_residual": 3.2689422369003296e-7,
+          "formulation": "G3",
+          "independent_cost": 5.608912202458664e6
+        },
+        {
+          "minimum_PSD_violation": 0.0,
+          "solution_sha256": "cd52434bd3b525f4a940347f5d0d11c6cef6c909d77dabe0694220c2c7b91f19",
+          "folder": "rebased_conic_suite",
+          "domain_and_operating_residuals_pass": true,
+          "objective_residual": 3.2782554626464844e-7,
+          "formulation": "G0",
+          "independent_cost": 5.60891220245618e6
+        },
+        {
+          "minimum_PSD_violation": 0.0,
+          "solution_sha256": "ca8c52cb63f9821a552a35b03299ca15b378cbb067f869d527601f8fc6f2f749",
+          "folder": "rebased_conic_suite",
+          "domain_and_operating_residuals_pass": true,
+          "objective_residual": 3.2689422369003296e-7,
+          "formulation": "G3",
+          "independent_cost": 5.608912202474358e6
+        },
+        {
+          "minimum_PSD_violation": 0.0,
+          "solution_sha256": "83b9413872d8e720937ed914df45bb163d6b7b6184ca5c9d0ecab4976f08e24e",
+          "folder": "integer_rechecks",
+          "domain_and_operating_residuals_pass": true,
+          "objective_residual": 8.294591680169106e-5,
+          "formulation": "G0",
+          "independent_cost": 5.608912217875714e6
+        },
+        {
+          "minimum_PSD_violation": 0.0,
+          "solution_sha256": "31f1cb72ae630ac69bdda47fd7b463daf4958d875e4511f4c86ddfdfb58beeab",
+          "folder": "integer_rechecks_roundoff",
+          "domain_and_operating_residuals_pass": true,
+          "objective_residual": 3.995373845100403e-6,
+          "formulation": "G0",
+          "independent_cost": 5.608912202456605e6
+        }
+      ],
+      "method": "independent feasible point and global solver bounds on identical fixed symmetric Z projection; frozen T018-T020; not interval arithmetic or independent A3.5 acceptance",
+      "native_attempts": [
+        {
+          "folder": "suite_final",
+          "reported_gap": 1.3611070953794165e-7,
+          "status": "numerical_inconclusive",
+          "objective": null,
+          "termination": "ITERATION_LIMIT",
+          "bound": 5.60816677620281e6,
+          "formulation": "G0"
+        },
+        {
+          "folder": "suite_final",
+          "reported_gap": 8.537575902525025e-8,
+          "status": "optimal",
+          "objective": 5.608912219284465e6,
+          "termination": "OPTIMAL",
+          "bound": 5.608444648861325e6,
+          "formulation": "G3"
+        },
+        {
+          "folder": "conditioned_conic_suite",
+          "reported_gap": 1.1639420405939922e-16,
+          "status": "optimal",
+          "objective": 5.608912202456511e6,
+          "termination": "OPTIMAL",
+          "bound": 5.608912202454753e6,
+          "formulation": "G0"
+        },
+        {
+          "folder": "conditioned_conic_suite",
+          "reported_gap": 5.819710202969959e-16,
+          "status": "optimal",
+          "objective": 5.608912202458991e6,
+          "termination": "OPTIMAL",
+          "bound": 5.608912202454753e6,
+          "formulation": "G3"
+        },
+        {
+          "folder": "rebased_conic_suite",
+          "reported_gap": 0.0,
+          "status": "optimal",
+          "objective": 5.608912202456509e6,
+          "termination": "OPTIMAL",
+          "bound": 5.60891220245683e6,
+          "formulation": "G0"
+        },
+        {
+          "folder": "rebased_conic_suite",
+          "reported_gap": 8.208383600090293e-10,
+          "status": "optimal",
+          "objective": 5.608912202474685e6,
+          "termination": "OPTIMAL",
+          "bound": 5.608912202456827e6,
+          "formulation": "G3"
+        },
+        {
+          "folder": "integer_rechecks",
+          "reported_gap": 8.33618140498587e-5,
+          "status": "numerical_inconclusive",
+          "objective": 5.608912217958661e6,
+          "termination": "OPTIMAL",
+          "bound": 5.608444648861325e6,
+          "formulation": "G0"
+        },
+        {
+          "folder": "integer_rechecks_roundoff",
+          "reported_gap": 8.335905116691525e-5,
+          "status": "numerical_inconclusive",
+          "objective": 5.608912202460601e6,
+          "termination": "OPTIMAL",
+          "bound": 5.608444648861325e6,
+          "formulation": "G0"
+        }
+      ],
+      "integer_optimum_certified": true,
+      "status": "numerically_verified_reference",
+      "case_sha256": "cb9d2f37cfff5caaea42268941e531baf2d53f4e50a01dfe03bedbe235d4cf6b",
+      "shared_lower_bound": 5.60891220245683e6,
+      "case_id": "event_price_3snap",
+      "shared_G0_G3_upper_bound": 5.60891220245618e6,
+      "original_currency_relative_gap": 1.1589825863149311e-13,
+      "bounds": [
+        {
+          "folder": "suite_final",
+          "value": 5.60816677620281e6,
+          "formulation": "G0"
+        },
+        {
+          "folder": "suite_final",
+          "value": 5.608444648861325e6,
+          "formulation": "G3"
+        },
+        {
+          "folder": "conditioned_conic_suite",
+          "value": 5.608912202454753e6,
+          "formulation": "G0"
+        },
+        {
+          "folder": "conditioned_conic_suite",
+          "value": 5.608912202454753e6,
+          "formulation": "G3"
+        },
+        {
+          "folder": "rebased_conic_suite",
+          "value": 5.60891220245683e6,
+          "formulation": "G0"
+        },
+        {
+          "folder": "rebased_conic_suite",
+          "value": 5.608912202456827e6,
+          "formulation": "G3"
+        },
+        {
+          "folder": "integer_rechecks",
+          "value": 5.608444648861325e6,
+          "formulation": "G0"
+        },
+        {
+          "folder": "integer_rechecks_roundoff",
+          "value": 5.608444648861325e6,
+          "formulation": "G0"
+        }
+      ],
+      "tolerance": 1.0e-6
+    },
+    {
+      "points": [
+        {
+          "minimum_PSD_violation": 0.0,
+          "solution_sha256": "1f39402342968fd9b88c8909a71363c63a904d6cacdac5eb0317bf4d3ac355a8",
+          "folder": "suite_final",
+          "domain_and_operating_residuals_pass": true,
+          "objective_residual": 6.475271696615437e-7,
+          "formulation": "G0",
+          "independent_cost": 2.524596370252564e6
+        },
+        {
+          "minimum_PSD_violation": 0.0,
+          "solution_sha256": "ab6d55ad7b634fc8527c6cb14fb55f3511065a292fa09ccf065ee0012d2a5501",
+          "folder": "suite_final",
+          "domain_and_operating_residuals_pass": true,
+          "objective_residual": 6.487026027457432e-7,
+          "formulation": "G3",
+          "independent_cost": 2.524596369829775e6
+        },
+        {
+          "minimum_PSD_violation": 0.0,
+          "solution_sha256": "91273be2a6032d4b7ed31740f0a8742286a524f32b577ea263e6b5c4d3afe263",
+          "folder": "conditioned_conic_suite",
+          "domain_and_operating_residuals_pass": true,
+          "objective_residual": 6.475042582110291e-7,
+          "formulation": "G0",
+          "independent_cost": 2.5245961218997063e6
+        }
+      ],
+      "method": "independent feasible point and global solver bounds on identical fixed symmetric Z projection; frozen T018-T020; not interval arithmetic or independent A3.5 acceptance",
+      "native_attempts": [
+        {
+          "folder": "suite_final",
+          "reported_gap": 3.2757081984558613e-9,
+          "status": "optimal",
+          "objective": 2.524596370253212e6,
+          "termination": "OPTIMAL",
+          "bound": 2.5245784405520177e6,
+          "formulation": "G0"
+        },
+        {
+          "folder": "suite_final",
+          "reported_gap": 3.2756309345635066e-9,
+          "status": "optimal",
+          "objective": 2.5245963698304235e6,
+          "termination": "OPTIMAL",
+          "bound": 2.5245784405520177e6,
+          "formulation": "G3"
+        },
+        {
+          "folder": "conditioned_conic_suite",
+          "reported_gap": 0.0,
+          "status": "optimal",
+          "objective": 2.524596121900354e6,
+          "termination": "OPTIMAL",
+          "bound": 2.524596121899206e6,
+          "formulation": "G0"
+        },
+        {
+          "folder": "conditioned_conic_suite",
+          "reported_gap": null,
+          "status": "infeasible",
+          "objective": null,
+          "termination": "INFEASIBLE",
+          "bound": 2.524596029616378e6,
+          "formulation": "G3"
+        }
+      ],
+      "integer_optimum_certified": true,
+      "status": "numerically_verified_reference",
+      "case_sha256": "8d340cc4e63b575bde4ba3d3a605227ec0c7db4b909b77618f814a8a2647435d",
+      "shared_lower_bound": 2.524596121899206e6,
+      "case_id": "exposure_multiplier_3snap",
+      "shared_G0_G3_upper_bound": 2.5245961218997063e6,
+      "original_currency_relative_gap": 1.980991011711536e-13,
+      "bounds": [
+        {
+          "folder": "suite_final",
+          "value": 2.5245784405520177e6,
+          "formulation": "G0"
+        },
+        {
+          "folder": "suite_final",
+          "value": 2.5245784405520177e6,
+          "formulation": "G3"
+        },
+        {
+          "folder": "conditioned_conic_suite",
+          "value": 2.524596121899206e6,
+          "formulation": "G0"
+        }
+      ],
+      "tolerance": 1.0e-6
+    },
+    {
+      "points": [
+        {
+          "minimum_PSD_violation": 0.0,
+          "solution_sha256": "b379324dd847467311adc45c96f49d1e72063dc27245f15971b9a9303e28f583",
+          "folder": "suite_final",
+          "domain_and_operating_residuals_pass": true,
+          "objective_residual": 1.611078474184069e-6,
+          "formulation": "G0",
+          "independent_cost": 1.4128095061187e7
+        },
+        {
+          "minimum_PSD_violation": 0.0,
+          "solution_sha256": "54293fd89ca7a0e7f0f1b1b5ddfb19a0b2773f05f0d5afa906b303d593bfaa2c",
+          "folder": "conditioned_conic_suite",
+          "domain_and_operating_residuals_pass": true,
+          "objective_residual": 1.6092155874503078e-6,
+          "formulation": "G0",
+          "independent_cost": 1.4128094086289586e7
+        },
+        {
+          "minimum_PSD_violation": 0.0,
+          "solution_sha256": "c03a98e44bcbc5ab12a8f5e723f349b82865d4ef86ce6134fbbf3ec3e9262f73",
+          "folder": "rebased_conic_suite",
+          "domain_and_operating_residuals_pass": true,
+          "objective_residual": 1.612940764061932e-6,
+          "formulation": "G0",
+          "independent_cost": 1.4128094086289588e7
+        },
+        {
+          "minimum_PSD_violation": 0.0,
+          "solution_sha256": "058a6bdbd9c4ddd96542fb5c9c4d2df76a2efe68265c938e2dcbdc4c8fe50445",
+          "folder": "integer_rechecks",
+          "domain_and_operating_residuals_pass": true,
+          "objective_residual": 0.00047247590929089256,
+          "formulation": "G3",
+          "independent_cost": 1.4128100450848063e7
+        },
+        {
+          "minimum_PSD_violation": 0.0,
+          "solution_sha256": "50396aa790f99f7275d4f305bd1c0a19576ba69a6f72143cea3a7dcb1228b89b",
+          "folder": "integer_rechecks_roundoff",
+          "domain_and_operating_residuals_pass": true,
+          "objective_residual": 2.9041581058208976e-5,
+          "formulation": "G3",
+          "independent_cost": 1.4128094961422086e7
+        }
+      ],
+      "method": "independent feasible point and global solver bounds on identical fixed symmetric Z projection; frozen T018-T020; not interval arithmetic or independent A3.5 acceptance",
+      "native_attempts": [
+        {
+          "folder": "suite_final",
+          "reported_gap": 5.1802948523321116e-8,
+          "status": "optimal",
+          "objective": 1.412809506118861e7,
+          "termination": "OPTIMAL",
+          "bound": 1.4127810651615297e7,
+          "formulation": "G0"
+        },
+        {
+          "folder": "suite_final",
+          "reported_gap": null,
+          "status": "infeasible",
+          "objective": null,
+          "termination": "INFEASIBLE",
+          "bound": 1.4127986123806594e7,
+          "formulation": "G3"
+        },
+        {
+          "folder": "conditioned_conic_suite",
+          "reported_gap": 8.481578817101502e-9,
+          "status": "numerical_inconclusive",
+          "objective": 1.4128094086291196e7,
+          "termination": "OPTIMAL",
+          "bound": 1.4128047520621806e7,
+          "formulation": "G0"
+        },
+        {
+          "folder": "conditioned_conic_suite",
+          "reported_gap": null,
+          "status": "infeasible",
+          "objective": null,
+          "termination": "INFEASIBLE",
+          "bound": 1.4127983112573646e7,
+          "formulation": "G3"
+        },
+        {
+          "folder": "rebased_conic_suite",
+          "reported_gap": 0.0,
+          "status": "optimal",
+          "objective": 1.4128094086291201e7,
+          "termination": "OPTIMAL",
+          "bound": 1.4128094086291246e7,
+          "formulation": "G0"
+        },
+        {
+          "folder": "rebased_conic_suite",
+          "reported_gap": 1.1366047352010901e-7,
+          "status": "numerical_inconclusive",
+          "objective": null,
+          "termination": "INFEASIBLE",
+          "bound": 1.4128094175284594e7,
+          "formulation": "G3"
+        },
+        {
+          "folder": "integer_rechecks",
+          "reported_gap": 2.0512290823615345e-5,
+          "status": "numerical_inconclusive",
+          "objective": 1.412810045132054e7,
+          "termination": "OPTIMAL",
+          "bound": 1.4127810651615297e7,
+          "formulation": "G3"
+        },
+        {
+          "folder": "integer_rechecks_roundoff",
+          "reported_gap": 2.0123716504092908e-5,
+          "status": "numerical_inconclusive",
+          "objective": 1.4128094961393043e7,
+          "termination": "OPTIMAL",
+          "bound": 1.4127810651615297e7,
+          "formulation": "G3"
+        }
+      ],
+      "integer_optimum_certified": true,
+      "status": "numerically_verified_reference",
+      "case_sha256": "d74a295602d3916147b47d08070ebc650a28c1fd392473219b87f140ee0d551f",
+      "shared_lower_bound": 1.4128094086291246e7,
+      "case_id": "reference_24snap",
+      "shared_G0_G3_upper_bound": 1.4128094086289586e7,
+      "original_currency_relative_gap": 1.1746926498566674e-13,
+      "bounds": [
+        {
+          "folder": "suite_final",
+          "value": 1.4127810651615297e7,
+          "formulation": "G0"
+        },
+        {
+          "folder": "conditioned_conic_suite",
+          "value": 1.4128047520621806e7,
+          "formulation": "G0"
+        },
+        {
+          "folder": "rebased_conic_suite",
+          "value": 1.4128094086291246e7,
+          "formulation": "G0"
+        },
+        {
+          "folder": "integer_rechecks",
+          "value": 1.4127810651615297e7,
+          "formulation": "G3"
+        },
+        {
+          "folder": "integer_rechecks_roundoff",
+          "value": 1.4127810651615297e7,
+          "formulation": "G3"
+        }
+      ],
+      "tolerance": 1.0e-6
+    },
+    {
+      "points": [
+        {
+          "minimum_PSD_violation": 0.0,
+          "solution_sha256": "edf9bcd8d4912a6a91779c4e3f349b43c7f3e84e6f247c585cd134efaf2a242a",
+          "folder": "suite_final",
+          "domain_and_operating_residuals_pass": true,
+          "objective_residual": 6.48932005020697e-7,
+          "formulation": "G0",
+          "independent_cost": 2.524596369988826e6
+        },
+        {
+          "minimum_PSD_violation": 0.0,
+          "solution_sha256": "6f044e647d196976306651a7397799d7ddd0a428a9253acd3d26d0464d661cf5",
+          "folder": "suite_final",
+          "domain_and_operating_residuals_pass": true,
+          "objective_residual": 6.476111416020558e-7,
+          "formulation": "G3",
+          "independent_cost": 2.5245963696743506e6
+        },
+        {
+          "minimum_PSD_violation": 0.0,
+          "solution_sha256": "e51d6b54b5d46360882b505451e3ccb4c40ea8994aa300b8af89ebbf2fd27fcc",
+          "folder": "conditioned_conic_suite",
+          "domain_and_operating_residuals_pass": true,
+          "objective_residual": 6.475042582110291e-7,
+          "formulation": "G0",
+          "independent_cost": 2.5245961218997063e6
+        }
+      ],
+      "method": "independent feasible point and global solver bounds on identical fixed symmetric Z projection; frozen T018-T020; not interval arithmetic or independent A3.5 acceptance",
+      "native_attempts": [
+        {
+          "folder": "suite_final",
+          "reported_gap": 3.2756600005039638e-9,
+          "status": "optimal",
+          "objective": 2.5245963699894752e6,
+          "termination": "OPTIMAL",
+          "bound": 2.5245784405520177e6,
+          "formulation": "G0"
+        },
+        {
+          "folder": "suite_final",
+          "reported_gap": 3.2756026044696433e-9,
+          "status": "optimal",
+          "objective": 2.5245963696749983e6,
+          "termination": "OPTIMAL",
+          "bound": 2.5245784405520177e6,
+          "formulation": "G3"
+        },
+        {
+          "folder": "conditioned_conic_suite",
+          "reported_gap": 0.0,
+          "status": "optimal",
+          "objective": 2.524596121900354e6,
+          "termination": "OPTIMAL",
+          "bound": 2.524596121899206e6,
+          "formulation": "G0"
+        },
+        {
+          "folder": "conditioned_conic_suite",
+          "reported_gap": null,
+          "status": "infeasible",
+          "objective": null,
+          "termination": "INFEASIBLE",
+          "bound": 2.5245960285808337e6,
+          "formulation": "G3"
+        }
+      ],
+      "integer_optimum_certified": true,
+      "status": "numerically_verified_reference",
+      "case_sha256": "b0d2363e84d28a266cb5e4313ff94177c41e3e19dbf3db7863c47303fdd83121",
+      "shared_lower_bound": 2.524596121899206e6,
+      "case_id": "reference_3snap",
+      "shared_G0_G3_upper_bound": 2.5245961218997063e6,
+      "original_currency_relative_gap": 1.980991011711536e-13,
+      "bounds": [
+        {
+          "folder": "suite_final",
+          "value": 2.5245784405520177e6,
+          "formulation": "G0"
+        },
+        {
+          "folder": "suite_final",
+          "value": 2.5245784405520177e6,
+          "formulation": "G3"
+        },
+        {
+          "folder": "conditioned_conic_suite",
+          "value": 2.524596121899206e6,
+          "formulation": "G0"
+        }
+      ],
+      "tolerance": 1.0e-6
+    },
+    {
+      "points": [
+        {
+          "minimum_PSD_violation": 0.0,
+          "solution_sha256": "3446d0f667917f90230286ad0b85a8a32e0e48f703567f48504c95de8ad7fc30",
+          "folder": "suite_final",
+          "domain_and_operating_residuals_pass": true,
+          "objective_residual": 3.8026731630225186e-7,
+          "formulation": "G0",
+          "independent_cost": 4.0852859956654795e6
+        },
+        {
+          "minimum_PSD_violation": 0.0,
+          "solution_sha256": "6984c6bb1e56bfcdbc4cc6f96114de74b65cca9f4e21144abbe71306ff2c19ba",
+          "folder": "suite_final",
+          "domain_and_operating_residuals_pass": true,
+          "objective_residual": 3.7988536050193034e-7,
+          "formulation": "G3",
+          "independent_cost": 4.085286637945399e6
+        },
+        {
+          "minimum_PSD_violation": 0.0,
+          "solution_sha256": "2148a6e194b9f402029e15e4159a216b589c663109642eae5f2ad9d3aa1c2c11",
+          "folder": "conditioned_conic_suite",
+          "domain_and_operating_residuals_pass": true,
+          "objective_residual": 3.799003174265181e-7,
+          "formulation": "G0",
+          "independent_cost": 4.08528471990484e6
+        },
+        {
+          "minimum_PSD_violation": 0.0,
+          "solution_sha256": "3d5a6516bcd7ba3f8ef8ebb333574cdc40b79db05a169df74ed8165212716bf7",
+          "folder": "conditioned_conic_suite",
+          "domain_and_operating_residuals_pass": true,
+          "objective_residual": 3.800154821931301e-7,
+          "formulation": "G3",
+          "independent_cost": 4.0852847200423973e6
+        }
+      ],
+      "method": "independent feasible point and global solver bounds on identical fixed symmetric Z projection; frozen T018-T020; not interval arithmetic or independent A3.5 acceptance",
+      "native_attempts": [
+        {
+          "folder": "suite_final",
+          "reported_gap": 6.2579108554229525e-9,
+          "status": "optimal",
+          "objective": 4.08528599566586e6,
+          "termination": "OPTIMAL",
+          "bound": 4.085251728468433e6,
+          "formulation": "G0"
+        },
+        {
+          "folder": "suite_final",
+          "reported_gap": 6.284444454153535e-9,
+          "status": "optimal",
+          "objective": 4.085286637945779e6,
+          "termination": "OPTIMAL",
+          "bound": 4.085252225455423e6,
+          "formulation": "G3"
+        },
+        {
+          "folder": "conditioned_conic_suite",
+          "reported_gap": 7.884606521638741e-13,
+          "status": "optimal",
+          "objective": 4.08528471990522e6,
+          "termination": "OPTIMAL",
+          "bound": 4.085284715587981e6,
+          "formulation": "G0"
+        },
+        {
+          "folder": "conditioned_conic_suite",
+          "reported_gap": 8.133969077292776e-13,
+          "status": "optimal",
+          "objective": 4.0852847200427772e6,
+          "termination": "OPTIMAL",
+          "bound": 4.085284715587981e6,
+          "formulation": "G3"
+        }
+      ],
+      "integer_optimum_certified": true,
+      "status": "numerically_verified_reference",
+      "case_sha256": "bc3f847fe10dce0ba08dce6443fea92334e93a1a4595141e34838bde49d711ad",
+      "shared_lower_bound": 4.085284715587981e6,
+      "case_id": "reference_6snap",
+      "shared_G0_G3_upper_bound": 4.08528471990484e6,
+      "original_currency_relative_gap": 1.056684966470984e-9,
+      "bounds": [
+        {
+          "folder": "suite_final",
+          "value": 4.085251728468433e6,
+          "formulation": "G0"
+        },
+        {
+          "folder": "suite_final",
+          "value": 4.085252225455423e6,
+          "formulation": "G3"
+        },
+        {
+          "folder": "conditioned_conic_suite",
+          "value": 4.085284715587981e6,
+          "formulation": "G0"
+        },
+        {
+          "folder": "conditioned_conic_suite",
+          "value": 4.085284715587981e6,
+          "formulation": "G3"
+        }
+      ],
+      "tolerance": 1.0e-6
+    },
+    {
+      "points": [
+        {
+          "minimum_PSD_violation": 0.0,
+          "solution_sha256": "1b8e04941582bd917de71f69c66d23a63cc6413e9e5ca58743f590c6f50db8b2",
+          "folder": "suite_final",
+          "domain_and_operating_residuals_pass": true,
+          "objective_residual": 6.479919747448548e-7,
+          "formulation": "G0",
+          "independent_cost": 2.5245963917284906e6
+        },
+        {
+          "minimum_PSD_violation": 0.0,
+          "solution_sha256": "c5383c233170f9e36f409b0109030641e50b37263feb6c7b3f5ba0470cdc4742",
+          "folder": "suite_final",
+          "domain_and_operating_residuals_pass": true,
+          "objective_residual": 6.482086583048385e-7,
+          "formulation": "G3",
+          "independent_cost": 2.5245963717691544e6
+        },
+        {
+          "minimum_PSD_violation": 0.0,
+          "solution_sha256": "0d03a62c4b995729a75981a3a66c63fd5caf8b2d362e510e1f75d170aa16fc4e",
+          "folder": "conditioned_conic_suite",
+          "domain_and_operating_residuals_pass": true,
+          "objective_residual": 6.475042582110291e-7,
+          "formulation": "G0",
+          "independent_cost": 2.5245961218997063e6
+        }
+      ],
+      "method": "independent feasible point and global solver bounds on identical fixed symmetric Z projection; frozen T018-T020; not interval arithmetic or independent A3.5 acceptance",
+      "native_attempts": [
+        {
+          "folder": "suite_final",
+          "reported_gap": 3.2796317324942807e-9,
+          "status": "optimal",
+          "objective": 2.524596391729139e6,
+          "termination": "OPTIMAL",
+          "bound": 2.5245784405520177e6,
+          "formulation": "G0"
+        },
+        {
+          "folder": "suite_final",
+          "reported_gap": 3.2759852446984478e-9,
+          "status": "optimal",
+          "objective": 2.5245963717698026e6,
+          "termination": "OPTIMAL",
+          "bound": 2.5245784405520177e6,
+          "formulation": "G3"
+        },
+        {
+          "folder": "conditioned_conic_suite",
+          "reported_gap": 0.0,
+          "status": "optimal",
+          "objective": 2.524596121900354e6,
+          "termination": "OPTIMAL",
+          "bound": 2.524596121899206e6,
+          "formulation": "G0"
+        },
+        {
+          "folder": "conditioned_conic_suite",
+          "reported_gap": null,
+          "status": "infeasible",
+          "objective": null,
+          "termination": "INFEASIBLE",
+          "bound": 2.5245960369225894e6,
+          "formulation": "G3"
+        }
+      ],
+      "integer_optimum_certified": true,
+      "status": "numerically_verified_reference",
+      "case_sha256": "8cfe46680d6f0a8be1378d1b21d2bd3efc4c82985389f22ee6fc52d5d40b6d78",
+      "shared_lower_bound": 2.524596121899206e6,
+      "case_id": "source_reactance_3snap",
+      "shared_G0_G3_upper_bound": 2.5245961218997063e6,
+      "original_currency_relative_gap": 1.980991011711536e-13,
+      "bounds": [
+        {
+          "folder": "suite_final",
+          "value": 2.5245784405520177e6,
+          "formulation": "G0"
+        },
+        {
+          "folder": "suite_final",
+          "value": 2.5245784405520177e6,
+          "formulation": "G3"
+        },
+        {
+          "folder": "conditioned_conic_suite",
+          "value": 2.524596121899206e6,
+          "formulation": "G0"
+        }
+      ],
+      "tolerance": 1.0e-6
+    },
+    {
+      "points": [
+        {
+          "minimum_PSD_violation": 0.0,
+          "solution_sha256": "d3854d15c834fddc3ebd925313cb6378aedebe76baa6dbe3c62d373e73b02359",
+          "folder": "suite_final",
+          "domain_and_operating_residuals_pass": true,
+          "objective_residual": 6.483146073321677e-7,
+          "formulation": "G0",
+          "independent_cost": 2.524596372698848e6
+        },
+        {
+          "minimum_PSD_violation": 0.0,
+          "solution_sha256": "d0061e0b5903e90ac32d217d5801783032f437d7fdf951dd1d8eb22103f193eb",
+          "folder": "suite_final",
+          "domain_and_operating_residuals_pass": true,
+          "objective_residual": 6.478510599094989e-7,
+          "formulation": "G3",
+          "independent_cost": 2.52459637041565e6
+        },
+        {
+          "minimum_PSD_violation": 0.0,
+          "solution_sha256": "51b1d7755e7cbffa2c946dd085b39d551c64795b692a635e117f2277d7156131",
+          "folder": "conditioned_conic_suite",
+          "domain_and_operating_residuals_pass": true,
+          "objective_residual": 6.475042582110291e-7,
+          "formulation": "G0",
+          "independent_cost": 2.5245961218997063e6
+        }
+      ],
+      "method": "independent feasible point and global solver bounds on identical fixed symmetric Z projection; frozen T018-T020; not interval arithmetic or independent A3.5 acceptance",
+      "native_attempts": [
+        {
+          "folder": "suite_final",
+          "reported_gap": 3.276155102620529e-9,
+          "status": "optimal",
+          "objective": 2.5245963726994963e6,
+          "termination": "OPTIMAL",
+          "bound": 2.5245784405520177e6,
+          "formulation": "G0"
+        },
+        {
+          "folder": "suite_final",
+          "reported_gap": 3.2757380002429122e-9,
+          "status": "optimal",
+          "objective": 2.5245963704162976e6,
+          "termination": "OPTIMAL",
+          "bound": 2.5245784405520177e6,
+          "formulation": "G3"
+        },
+        {
+          "folder": "conditioned_conic_suite",
+          "reported_gap": 0.0,
+          "status": "optimal",
+          "objective": 2.524596121900354e6,
+          "termination": "OPTIMAL",
+          "bound": 2.524596121899206e6,
+          "formulation": "G0"
+        },
+        {
+          "folder": "conditioned_conic_suite",
+          "reported_gap": null,
+          "status": "infeasible",
+          "objective": null,
+          "termination": "INFEASIBLE",
+          "bound": 2.524596025328398e6,
+          "formulation": "G3"
+        }
+      ],
+      "integer_optimum_certified": true,
+      "status": "numerically_verified_reference",
+      "case_sha256": "907d1290f93b29dc796bfe0fedbc026458a6f84113f3c78fd0815af877bccdac",
+      "shared_lower_bound": 2.524596121899206e6,
+      "case_id": "threshold_3snap",
+      "shared_G0_G3_upper_bound": 2.5245961218997063e6,
+      "original_currency_relative_gap": 1.980991011711536e-13,
+      "bounds": [
+        {
+          "folder": "suite_final",
+          "value": 2.5245784405520177e6,
+          "formulation": "G0"
+        },
+        {
+          "folder": "suite_final",
+          "value": 2.5245784405520177e6,
+          "formulation": "G3"
+        },
+        {
+          "folder": "conditioned_conic_suite",
+          "value": 2.524596121899206e6,
+          "formulation": "G0"
+        }
+      ],
+      "tolerance": 1.0e-6
+    }
+  ],
+  "provenance": {
+    "empirical_approved": false,
+    "source_dirty": false,
+    "source_sha256": {
+      "src\\benders\\modern.jl": "85f73fc10bfc5dc4e8e8fc2689d441f46529dea5a1428f23ca61cf8f226a5952",
+      "src\\io\\multinetwork.jl": "b8225a9338ffdb7eb64585fc90043dbf092196683b21ab085e0bc3dc626ecc37",
+      "src\\core\\block_variable.jl": "2f7da3f607d0f98061b02618244b0b09f92cfd7b9abff433004aadf0529c885b",
+      "src\\core\\objective.jl": "60d42c73dc553f8a599e025662afcbd07d04a1b167e59f9ebdaccf28fdf4c1a4",
+      "src\\io\\scale.jl": "0bbbe8fded6f79cde56bc1fd995eb9687fa779b60a0a2d45b08147e224c0a7b4",
+      "src\\core\\constraint.jl": "bc922b60653412dcc77d0b3d34285c9613ef07c4b1b311313532b7f873453951",
+      "Project.toml": "23f90a015f17a094d017f3ea691bce44d0eb4f1d4db700ce6dead43d11a8a2c4",
+      "src\\json_converter\\json_converter.jl": "c9cbb61d902c9ee0ea281b3e5c2cbc7d01916a207ef51e60f18cdef4f30f0398",
+      "src\\prob\\simple_stochastic_flexible_tnep.jl": "0e56c74c9c835b64f87ee17e3e83a8fe1a4c0cb768677b4e45b9ee3f51ac3006",
+      "src\\core\\ref_extension.jl": "db2052882a6786094b85a30b3f54e2a0ac14414c5b123f55d81cf98c6865200f",
+      "src\\json_converter\\nw.jl": "8e86e18836877c6ea9543304244546595f5e1163bb499ef78fe5fe5bce10368e",
+      "src\\FlexPlan.jl": "4fcfa995dfe5c02d7e2f9e158cac52204d78c748beed3038c6489dcf9962b520",
+      "src\\prob\\uc_gscr_block_integration.jl": "6b668aab01a7c42d9a213616a64ade5c1a5b574fc31d5d9c92f93dba07ff8b80",
+      "src\\form\\bfarad.jl": "db3f24c6b253d0850b822408407a6121edcfd22a6b1ac82d855ba557790b3248",
+      "src\\benders\\common.jl": "72ca089082b755be77631c800bff22834562888199b3b9296cba07f2a1e8731d",
+      "src\\core\\td_coupling.jl": "11c58666323b58c32e0036ab4b74a3cc27a51e38547f1762046b302f84fa6715",
+      "src\\core\\flexible_demand.jl": "8f2c2a054d0a11ae5da10440beb65dac1db8c082075f32ec34ff1c92eb91fad9",
+      "src\\benders\\benders.jl": "d8ff84a2cc19b3583dd2098f33e186e1a49cf30a11338b9edba435b5942b6e02",
+      "src\\core\\block_template.jl": "8c55193166ca0a4bd74a5bacdfacc1ff73724a97c8c81e9d0a9a4060038bc2c9",
+      "src\\io\\time_series.jl": "5fe881c62e6d7b61708d1e7986d66c094e2376e4264328b89df2e17a1e0e0529",
+      "Manifest-v1.10.toml": "b9eedeeafffcb54fffea110f84d137b7115171020c80566c57abd1107220ab40",
+      "src\\benders\\classical.jl": "f6a2afca0e0b331c794d2870dc75a5751c67628ec0ed384930c43356792b162f",
+      "src\\core\\constraint_template.jl": "09e226b840eea05b528c1b9b1f9d7f545f241db2fa68e47f6e2d4c96031317a7",
+      "src\\json_converter\\singular_data.jl": "fc139a5246f2fe1b0518e58c81d05dc948fc5ac81ff043077138e4856e9a2c40",
+      "src\\td_decoupling\\probe_flexibility.jl": "e81e2f73df2805fa300ea83bff16a03ce586eadf4651621f62a7c6c22e8f2f87",
+      "src\\td_decoupling\\transmission.jl": "655e7d28ce9f3a85aaee10497735c3f5d8b761996b70b01c0e58e05f18c628da",
+      "src\\core\\paper_a_diagnostics.jl": "385f1f10bff9152b18270266a036ea1c6b6d347a746d4be1761452a104a5c2a6",
+      "src\\prob\\storage_tnep.jl": "989221ef79adc2040e687d82d4d3f07e2d9cca660a071d7d31c67cfc0b53452d",
+      "src\\io\\plot_geo_data.jl": "98cdca6c8b026889a245d226626d63aa26c1d77ddaee3dc5d88d769a530298c3",
+      "src\\core\\variable.jl": "20b199b46fbb7e18e7c37bd12251338ac339dfcd748bfbc07d927b29d6720e35",
+      "src\\io\\parse.jl": "c0fd4e4e03aff4849e08be94340d06ac5b43fb05f9b40f8a1e1297668646b7d0",
+      "src\\td_decoupling\\surrogate_model.jl": "3d445b0c05c44404c607da2562a958435689a04e88a4e8e047cb986b0654aae6",
+      "src\\core\\paper_a_integration.jl": "8088203b5cdc06a6ad8f85caef2f18ee83a253247b2616bb45043f51f80a2d14",
+      "src\\td_decoupling\\base.jl": "3141331944110f15cbcb81baf3a47fb01534850fbe662b1e8e6c93cd4fdd5437",
+      "src\\prob\\flexible_tnep.jl": "c9ce2f8d2066ddc9f0cd753da7c487fc0b7005c1eb7d806995a2733bf47c9eed",
+      "src\\json_converter\\td.jl": "d96056bad7f25847f215001bcc039fc2f1dd69270fe43b7fbc4e96a2e39c7852",
+      "src\\core\\variableconv.jl": "c4a0c91108b8520d0998cfa96f2d5d65636218a18e5b2c4d0a9be1d8bceb0094",
+      "src\\json_converter\\time_series.jl": "af97c0ebb15649f49949af835b8a884dfc62ce8d36db9454eb3dc167daecbab8",
+      "scripts\\paper_a\\ap3.jl": "c32dd84e9f572ddbad0cdc9a969799be4513a289dae73594e71e948dfb16e512",
+      "src\\core\\distribution.jl": "0eb8f61b0619d2662a4122c28e71ca492d6633608e5c9971fde35f86ee1f42a5",
+      "scripts\\paper_a\\AP3Pipeline.jl": "cc281d3775cd1b1dbeb79a4b3ce933f34bb80b685ee1c81f500328634841dc93",
+      "src\\core\\line_replacement.jl": "4ff654656559387eb33d2b3e09a3138b1c02e8c6578ab5c32df00b16ec56910f",
+      "src\\core\\paper_a_formulations.jl": "80ec3b9f458f982ce687a9c93be4b28eed435fc933edb65f697fa1b00e5c237e",
+      "src\\core\\solution.jl": "f7af27ddcaef624672fec338b0fc961d0360f4b164b7c7c1e2923c711324b7f8",
+      "src\\core\\dimensions.jl": "fd0b294e205acf83679a609fab5ff8eb9503a96cab7b037049ef66f12b8fdd8d",
+      "src\\core\\types.jl": "ccce6abf56ecffe9c30562ab72a86e93498b9b9686afd83e0ae55dd3c861b81c",
+      "src\\core\\gen.jl": "750d29c63b8712e3603fa209fd8a44d0a1b87f25865b97670bd49c3bef20bb85",
+      "scripts\\paper_a\\plot_ap3_results.jl": "077de1f9081b02060a98332ff2b7a45a088b43512dfead58f4ef45551205c324",
+      "src\\td_decoupling\\distribution.jl": "49433c4420b5491b586f8e46b4a36a0fcb8039e9aa89e21f530ec02867341380",
+      "src\\prob\\stochastic_flexible_tnep.jl": "9bacbd8a7e4d232f6ed83092dd403408b8ebd105a85ce629372fd399deefc0e3",
+      "src\\core\\storage.jl": "7f75545cfb9d6e73a9d2395aae93b0831ecba2f726ec99401ca662c42b03be09",
+      "src\\form\\bf.jl": "15cf8b10ddf7c056905a5afe19e1dd7cac67ee2f618efda12ee1a98f9e50d291",
+      "src\\formconv\\dcp.jl": "b9c90daff683cc95756bf9000229c452c6202944bbf03e98de6c62f480de4ceb",
+      "src\\core\\paper_a_regional.jl": "8c07b3ed920895cae190a789ad83758ce234ba403be57ca2f538b029318667c2",
+      "scripts\\paper_a\\make_suite_config.jl": "f42a2084dd32b45421d1306c1f26854391779f683b4f3c96894e8df51fe27c58",
+      "src\\core\\variabledcgrid.jl": "512df14b2d37f842882498155bc0e0495ab04e408914308881963413a5d13ee6",
+      "src\\core\\paper_a_qualification.jl": "1b3e57c2dec1eb14a234045916fb5a2048903aff091f2292301e693f0299bd9e",
+      "src\\json_converter\\base.jl": "26028ed8469f2ca35c68d2aebae6cadefa3dc78adde3f8fdcb456bb21899478c",
+      "src\\td_decoupling\\td_decoupling.jl": "6115d2d29f5660e851c475378c9f141bbc0d3c0a8181fc57b82310e57bda488c"
+    },
+    "packages": {
+      "HiGHS": "1.24.1",
+      "MathOptIIS": "0.2.0",
+      "xkbcommon_jll": "1.13.0+0",
+      "TableTraits": "1.0.1",
+      "ConstructionBase": "1.6.0",
+      "IrrationalConstants": "0.2.6",
+      "MUMPS_seq_jll": "500.900.0+0",
+      "RelocatableFolders": "1.0.1",
+      "ColorVectorSpace": "0.11.0",
+      "PowerModels": "0.21.4",
+      "Latexify": "0.16.11",
+      "RecipesBase": "1.3.4",
+      "ExprTools": "0.1.11",
+      "XZ_jll": "5.8.3+0",
+      "HarfBuzz_jll": "8.5.1+0",
+      "Xorg_libxcb_jll": "1.17.1+0",
+      "Opus_jll": "1.6.1+0",
+      "PooledArrays": "1.4.3",
+      "FixedPointNumbers": "0.8.6",
+      "Xorg_libSM_jll": "1.2.6+0",
+      "UnicodeFun": "0.4.1",
+      "Xorg_xcb_util_keysyms_jll": "0.4.1+0",
+      "NetworkOptions": "1.2.0",
+      "ASL_jll": "0.1.3+0",
+      "Xorg_libpciaccess_jll": "0.19.0+0",
+      "Libiconv_jll": "1.18.0+0",
+      "nghttp2_jll": "1.52.0+1",
+      "FFMPEG_jll": "8.1.2+0",
+      "RecipesPipeline": "0.6.12",
+      "Memento": "1.4.1",
+      "CommonSubexpressions": "0.3.1",
+      "libblastrampoline_jll": "5.11.0+0",
+      "StatsBase": "0.34.12",
+      "ConcurrentUtilities": "2.5.1",
+      "libass_jll": "0.17.4+0",
+      "Ogg_jll": "1.3.6+0",
+      "Libuuid_jll": "2.42.0+0",
+      "Parsers": "2.8.6",
+      "libdecor_jll": "0.2.2+0",
+      "SimpleBufferStream": "1.2.0",
+      "SentinelArrays": "1.4.10",
+      "Downloads": "1.6.0",
+      "Zlib_jll": "1.2.13+1",
+      "Xorg_libXrender_jll": "0.9.12+0",
+      "x264_jll": "10164.0.1+0",
+      "libvorbis_jll": "1.3.8+0",
+      "Grisu": "1.0.2",
+      "LERC_jll": "4.1.0+0",
+      "StatsAPI": "1.8.0",
+      "CodecBzip2": "0.8.5",
+      "Glib_jll": "2.86.3+0",
+      "Colors": "0.13.1",
+      "MacroTools": "0.5.16",
+      "NLsolve": "4.5.1",
+      "FilePathsBase": "0.9.24",
+      "Setfield": "1.1.2",
+      "Xorg_libXdmcp_jll": "1.1.6+0",
+      "GettextRuntime_jll": "0.22.4+0",
+      "Pango_jll": "1.57.1+0",
+      "OrderedCollections": "1.8.2",
+      "FreeType2_jll": "2.14.3+1",
+      "Xorg_libxkbfile_jll": "1.2.0+0",
+      "DataStructures": "0.19.6",
+      "Compat": "4.18.1",
+      "Graphite2_jll": "1.3.16+0",
+      "Expat_jll": "2.8.2+0",
+      "Zstd_jll": "1.5.7+1",
+      "Adapt": "4.7.0",
+      "Showoff": "1.0.3",
+      "OpenBLAS32_jll": "0.3.24+0",
+      "FriBidi_jll": "1.0.17+0",
+      "SHA": "0.7.0",
+      "LoggingExtras": "1.2.0",
+      "GLFW_jll": "3.4.1+1",
+      "Qt6Svg_jll": "6.10.2+0",
+      "Format": "1.3.7",
+      "ColorTypes": "0.12.1",
+      "ExceptionUnwrapping": "0.1.11",
+      "mtdev_jll": "1.1.7+0",
+      "MbedTLS_jll": "2.28.1010+0",
+      "OpenSSL_jll": "3.5.7+0",
+      "Xorg_libXext_jll": "1.3.8+0",
+      "Gurobi": "1.9.2",
+      "Contour": "0.6.3",
+      "OpenLibm_jll": "0.8.5+0",
+      "URIs": "1.6.1",
+      "SortingAlgorithms": "1.2.3",
+      "Xorg_xtrans_jll": "1.6.0+0",
+      "PrecompileTools": "1.2.1",
+      "PlotUtils": "1.4.4",
+      "JSON": "0.21.4",
+      "x265_jll": "4.1.0+0",
+      "EpollShim_jll": "0.0.20230411+1",
+      "XML2_jll": "2.13.9+0",
+      "Plots": "1.41.6",
+      "OpenSSL": "1.6.1",
+      "Dbus_jll": "1.16.2+0",
+      "LibSSH2_jll": "1.11.0+1",
+      "OpenBLAS_jll": "0.3.23+5",
+      "Ghostscript_jll": "9.55.1+0",
+      "Fontconfig_jll": "2.17.1+0",
+      "LineSearches": "7.5.1",
+      "DelimitedFiles": "1.9.1",
+      "Ipopt_jll": "300.1400.1902+0",
+      "DataValueInterfaces": "1.0.0",
+      "libdrm_jll": "2.4.134+0",
+      "MutableArithmetics": "1.8.0",
+      "eudev_jll": "3.2.14+0",
+      "InvertedIndices": "1.3.1",
+      "Wayland_jll": "1.24.0+0",
+      "IteratorInterfaceExtensions": "1.0.0",
+      "InfrastructureModels": "0.7.9",
+      "libfdk_aac_jll": "2.0.4+0",
+      "DataFrames": "1.8.2",
+      "SpecialFunctions": "2.8.0",
+      "Requires": "1.3.1",
+      "StringManipulation": "0.4.7",
+      "SPRAL_jll": "2025.9.18+0",
+      "Xorg_libXau_jll": "1.0.13+0",
+      "LogExpFunctions": "1.0.1",
+      "OpenSpecFun_jll": "0.5.6+0",
+      "Cairo_jll": "1.18.7+0",
+      "Clarabel": "0.11.1",
+      "Missings": "1.2.0",
+      "ArgTools": "1.1.1",
+      "FFMPEG": "0.4.5",
+      "Xorg_xcb_util_renderutil_jll": "0.3.10+0",
+      "Hwloc_jll": "2.14.0+0",
+      "PlotThemes": "3.3.0",
+      "Libffi_jll": "3.4.7+0",
+      "LLVMOpenMP_jll": "22.1.7+0",
+      "Xorg_xkeyboard_config_jll": "2.47.0+2",
+      "libinput_jll": "1.28.1+0",
+      "MozillaCACerts_jll": "2025.12.2",
+      "DocStringExtensions": "0.9.5",
+      "libva_jll": "2.23.0+0",
+      "StaticArrays": "1.9.23",
+      "TensorCore": "0.1.1",
+      "Xorg_libXinerama_jll": "1.1.7+0",
+      "MathOptInterface": "1.51.2",
+      "NaNMath": "1.1.4",
+      "Qt6Wayland_jll": "6.10.2+1",
+      "InlineStrings": "1.4.5",
+      "LibGit2_jll": "1.6.4+0",
+      "Xorg_xcb_util_image_jll": "0.4.1+0",
+      "JuMP": "1.31.1",
+      "Pixman_jll": "0.46.4+0",
+      "DifferentiationInterface": "0.7.20",
+      "Libmount_jll": "2.42.0+0",
+      "PowerModelsACDC": "0.9.4",
+      "libaom_jll": "3.13.3+0",
+      "Xorg_xkbcomp_jll": "1.4.7+0",
+      "Ipopt": "1.15.0",
+      "LaTeXStrings": "1.4.0",
+      "SnoopPrecompile": "1.0.3",
+      "LibCURL": "0.6.4",
+      "Bzip2_jll": "1.0.9+0",
+      "DiffRules": "1.16.0",
+      "Pajarito": "0.8.3",
+      "libpng_jll": "1.6.58+0",
+      "PCRE2_jll": "10.42.0+1",
+      "p7zip_jll": "17.6.1+0",
+      "Pkg": "1.10.0",
+      "ForwardDiff": "1.4.3",
+      "HTTP": "1.11.0",
+      "libevdev_jll": "1.13.4+0",
+      "GR_jll": "0.73.26+0",
+      "Measures": "0.3.3",
+      "HiGHS_jll": "1.15.1+1",
+      "CompilerSupportLibraries_jll": "1.1.1+0",
+      "BitFlags": "0.1.10",
+      "TranscodingStreams": "0.11.3",
+      "Libglvnd_jll": "1.7.1+1",
+      "GR": "0.73.26",
+      "Tar": "1.10.0",
+      "Qt6Declarative_jll": "6.10.2+2",
+      "WorkerUtilities": "1.6.1",
+      "Xorg_libXcursor_jll": "1.2.4+0",
+      "TimerOutputs": "0.5.29",
+      "Gurobi_jll": "13.0.2",
+      "JLFzf": "0.1.11",
+      "Xorg_libICE_jll": "1.1.2+0",
+      "Xorg_libXfixes_jll": "6.0.2+0",
+      "JLLWrappers": "1.8.0",
+      "CodecZlib": "0.7.8",
+      "Xorg_libXrandr_jll": "1.5.6+0",
+      "ArrayInterface": "7.28.1",
+      "MbedTLS": "1.1.10",
+      "PrettyTables": "3.4.3",
+      "Xorg_xcb_util_cursor_jll": "0.1.6+0",
+      "CSV": "0.10.16",
+      "AliasTables": "1.1.3",
+      "LAME_jll": "3.100.3+0",
+      "Qt6ShaderTools_jll": "6.10.2+1",
+      "QDLDL": "0.4.1",
+      "FiniteDiff": "2.32.0",
+      "ColorSchemes": "3.31.0",
+      "Unzip": "0.2.0",
+      "WeakRefStrings": "1.4.3",
+      "SuiteSparse_jll": "7.2.1+1",
+      "Xorg_xcb_util_jll": "0.4.1+0",
+      "Xorg_xcb_util_wm_jll": "0.4.2+0",
+      "Distances": "0.10.12",
+      "Xorg_libX11_jll": "1.8.13+0",
+      "NLSolversBase": "7.10.0",
+      "Preferences": "1.5.2",
+      "LibCURL_jll": "8.4.0+0",
+      "DataAPI": "1.16.0",
+      "ADTypes": "1.22.3",
+      "TOML": "1.0.3",
+      "fzf_jll": "0.61.1+0",
+      "Reexport": "1.2.2",
+      "Qt6Base_jll": "6.10.2+2",
+      "Statistics": "1.10.0",
+      "StaticArraysCore": "1.4.4",
+      "JpegTurbo_jll": "3.2.0+0",
+      "DiffResults": "1.1.0",
+      "GenericLinearAlgebra": "0.3.19",
+      "Vulkan_Loader_jll": "1.3.243+0",
+      "AMD": "0.5.4",
+      "StableRNGs": "1.0.4",
+      "Libtiff_jll": "4.7.3+0",
+      "Tables": "1.13.0",
+      "Scratch": "1.3.0",
+      "SparseArrays": "1.10.0",
+      "METIS_jll": "5.1.3+0",
+      "Crayons": "4.2.0",
+      "Xorg_libXi_jll": "1.8.3+0",
+      "PtrArrays": "1.4.0"
+    },
+    "science_SHA": "2c2fce769b2ed6ffd4f1ced60c0798776acccc93",
+    "AP2_SHA": "e992edc88d39fa0eb2d72e2490e157441223f568",
+    "schema": "paper_a_ap3/1.0",
+    "scientific_design": "conditional_owner_review_pending",
+    "julia": "1.10.11",
+    "AP4_ready": false,
+    "AP3_SHA": "a19fb1a0ef9bba2afb2bbf51f89d87a1d1196744",
+    "seed": 20261020,
+    "A3_closed": false
+  },
+  "schema": "paper_a_ap3/1.0"
+}

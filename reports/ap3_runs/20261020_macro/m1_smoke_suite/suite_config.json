@@ -1,0 +1,18 @@
+{
+  "cases": [
+    {
+      "id": "reference_3snap",
+      "case": "D:\\Projekte\\Code\\FlexPlan_UC_GSCR\\.git\\ap3-producer-3b8\\data\\paper_a_study\\cases\\reference_3snap\\study_3snap\\case.json",
+      "scenarios": "D:/Projekte/Code/FlexPlan_UC_GSCR/.git/ap3-producer-3b8/data/paper_a_study/study_scenarios.toml",
+      "registry": "D:/Projekte/Code/FlexPlan_UC_GSCR/.git/ap3-producer-3b8/data/paper_a_study/parameter_registry.csv"
+    }
+  ],
+  "AP1_SHA": "3b8fdb01d931225edc5f8fe1e2c200d0da288a09",
+  "relaxations": [
+    true,
+    false
+  ],
+  "formulations": [
+    "M1"
+  ]
+}

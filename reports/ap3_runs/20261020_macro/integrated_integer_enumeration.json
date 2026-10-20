@@ -1,0 +1,70 @@
+{
+  "optima": {
+    "G3": 1084.9999985678342,
+    "G0": 1084.9999999213883
+  },
+  "executed": [
+    {
+      "objective": null,
+      "termination": "INFEASIBLE",
+      "assignment_SYN": 0,
+      "formulation": "G0"
+    },
+    {
+      "objective": null,
+      "termination": "INFEASIBLE",
+      "assignment_SYN": 1,
+      "formulation": "G0"
+    },
+    {
+      "objective": 1084.9999999213883,
+      "termination": "OPTIMAL",
+      "assignment_SYN": 2,
+      "formulation": "G0"
+    },
+    {
+      "objective": 1477.4999999315833,
+      "termination": "OPTIMAL",
+      "assignment_SYN": 3,
+      "formulation": "G0"
+    },
+    {
+      "objective": 1869.9999997536374,
+      "termination": "OPTIMAL",
+      "assignment_SYN": 4,
+      "formulation": "G0"
+    },
+    {
+      "objective": null,
+      "termination": "INFEASIBLE",
+      "assignment_SYN": 0,
+      "formulation": "G3"
+    },
+    {
+      "objective": null,
+      "termination": "INFEASIBLE",
+      "assignment_SYN": 1,
+      "formulation": "G3"
+    },
+    {
+      "objective": 1084.9999985678342,
+      "termination": "OPTIMAL",
+      "assignment_SYN": 2,
+      "formulation": "G3"
+    },
+    {
+      "objective": 1477.499998669228,
+      "termination": "OPTIMAL",
+      "assignment_SYN": 3,
+      "formulation": "G3"
+    },
+    {
+      "objective": 1869.99999834566,
+      "termination": "OPTIMAL",
+      "assignment_SYN": 4,
+      "formulation": "G3"
+    }
+  ],
+  "expected_assignments_per_formulation": 5,
+  "certificate": "complete_all_independent_integer_choices; all_online_equal_installed; no_event_variables"
+}

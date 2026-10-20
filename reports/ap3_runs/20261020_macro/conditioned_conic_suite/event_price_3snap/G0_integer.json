@@ -1,0 +1,1111 @@
+{
+  "snapshots": {
+    "1": {
+      "affine": {
+        "B": [
+          [
+            886.5987837741752,
+            -116.9259116063088,
+            -419.22538897129584,
+            -164.48245635129533,
+            -0.0
+          ],
+          [
+            -116.9259116063088,
+            675.6435796117576,
+            -95.31168906141838,
+            -0.0,
+            -197.0805133423581
+          ],
+          [
+            -419.22538897129584,
+            -95.31168906141838,
+            760.1770392955484,
+            -0.0,
+            -234.90187336926073
+          ],
+          [
+            -164.48245635129533,
+            -0.0,
+            -0.0,
+            163.9055057127228,
+            -0.0
+          ],
+          [
+            -0.0,
+            -197.0805133423581,
+            -234.90187336926073,
+            -0.0,
+            445.3766417828063
+          ]
+        ],
+        "M": [
+          [
+            883.9397583413108,
+            -116.9259116063088,
+            -419.22538897129584,
+            -164.48245635129533,
+            -0.0
+          ],
+          [
+            -116.9259116063088,
+            670.3952200435413,
+            -95.31168906141838,
+            -0.0,
+            -197.0805133423581
+          ],
+          [
+            -419.22538897129584,
+            -95.31168906141838,
+            759.8498853569735,
+            -0.0,
+            -234.90187336926073
+          ],
+          [
+            -164.48245635129533,
+            -0.0,
+            -0.0,
+            156.89984212503634,
+            -0.0
+          ],
+          [
+            -0.0,
+            -197.0805133423581,
+            -234.90187336926073,
+            -0.0,
+            443.09215266944295
+          ]
+        ],
+        "p": [
+          26.590254328643336,
+          52.483595682162786,
+          3.2715393857499997,
+          70.05663587686448,
+          22.844891133633332
+        ]
+      },
+      "conic_dual": {
+        "status": "not_available_integer_or_no_dual_solution",
+        "dual_cone_violation": null,
+        "complementarity_residual": null
+      },
+      "branch_flows_MW": {
+        "4": [
+          310.3263582959027,
+          -310.3263582959027
+        ],
+        "1": [
+          -176.00897659396324,
+          176.00897659396324
+        ],
+        "5": [
+          1003.5490539399632,
+          -1003.5490539399632
+        ],
+        "2": [
+          733.8990550297176,
+          -733.8990550297176
+        ],
+        "6": [
+          431.3187654607873,
+          -431.3187654607873
+        ],
+        "3": [
+          1453.1549051870443,
+          -1453.1549051870443
+        ]
+      },
+      "assets": {
+        "gen:10": {
+          "online": 8.0,
+          "dispatch_MW": 2394.0444444444447,
+          "shutdown": -0.0,
+          "startup": 7.0,
+          "installed": 9.0
+        },
+        "storage:8": {
+          "online": -0.0,
+          "dispatch_MW": 0.0,
+          "energy_MWh": 0.0,
+          "charge_MW": 0.0,
+          "shutdown": 0.0,
+          "startup": 0.0,
+          "installed": -0.0
+        },
+        "gen:16": {
+          "online": 1.0,
+          "dispatch_MW": 232.4999999999998,
+          "shutdown": -0.0,
+          "startup": 0.0,
+          "installed": 2.0
+        },
+        "gen:8": {
+          "online": 42.0,
+          "dispatch_MW": 212.05235599757847,
+          "shutdown": 0.0,
+          "startup": 0.0,
+          "installed": 42.0
+        },
+        "storage:5": {
+          "online": -0.0,
+          "dispatch_MW": 0.0,
+          "energy_MWh": 0.0,
+          "charge_MW": 0.0,
+          "shutdown": 0.0,
+          "startup": 0.0,
+          "installed": -0.0
+        },
+        "gen:7": {
+          "online": 9.0,
+          "dispatch_MW": 359.18175404569024,
+          "shutdown": 0.0,
+          "startup": 0.0,
+          "installed": 9.0
+        },
+        "storage:10": {
+          "online": -0.0,
+          "dispatch_MW": 0.0,
+          "energy_MWh": 0.0,
+          "charge_MW": 0.0,
+          "shutdown": 0.0,
+          "startup": 0.0,
+          "installed": -0.0
+        },
+        "storage:9": {
+          "online": -0.0,
+          "dispatch_MW": 0.0,
+          "energy_MWh": 0.0,
+          "charge_MW": 0.0,
+          "shutdown": 0.0,
+          "startup": 0.0,
+          "installed": -0.0
+        },
+        "gen:2": {
+          "online": -0.0,
+          "dispatch_MW": 0.0,
+          "shutdown": 0.0,
+          "startup": 0.0,
+          "installed": 21.0
+        },
+        "gen:17": {
+          "online": 124.0,
+          "dispatch_MW": 435.8984415347974,
+          "shutdown": 0.0,
+          "startup": 0.0,
+          "installed": 124.0
+        },
+        "gen:14": {
+          "online": 7.0,
+          "dispatch_MW": 23.356113569086432,
+          "shutdown": 0.0,
+          "startup": 0.0,
+          "installed": 7.0
+        },
+        "gen:9": {
+          "online": -0.0,
+          "dispatch_MW": 0.0,
+          "shutdown": 0.0,
+          "startup": 0.0,
+          "installed": 46.0
+        },
+        "gen:12": {
+          "online": 3.0,
+          "dispatch_MW": 2570.413,
+          "shutdown": -0.0,
+          "startup": 2.0,
+          "installed": 3.0
+        },
+        "storage:6": {
+          "online": 2.0,
+          "dispatch_MW": 0.0,
+          "energy_MWh": 278.01712677439923,
+          "charge_MW": 94.58334727110297,
+          "shutdown": 0.0,
+          "startup": 0.0,
+          "installed": 2.9999999999999973
+        },
+        "gen:6": {
+          "online": 23.0,
+          "dispatch_MW": 620.9833515133395,
+          "shutdown": 0.0,
+          "startup": 0.0,
+          "installed": 23.0
+        },
+        "gen:22": {
+          "online": 1.0,
+          "dispatch_MW": 281.3999999999998,
+          "shutdown": -0.0,
+          "startup": 0.0,
+          "installed": 5.0
+        },
+        "storage:2": {
+          "online": -0.0,
+          "dispatch_MW": 0.0,
+          "energy_MWh": 0.0,
+          "charge_MW": 0.0,
+          "shutdown": 0.0,
+          "startup": 0.0,
+          "installed": -0.0
+        },
+        "gen:11": {
+          "online": 1.0,
+          "dispatch_MW": 45.0,
+          "shutdown": 0.0,
+          "startup": -0.0,
+          "installed": 1.0
+        },
+        "gen:3": {
+          "online": 2.0,
+          "dispatch_MW": 513.0,
+          "shutdown": -0.0,
+          "startup": 1.0,
+          "installed": 2.0
+        },
+        "gen:18": {
+          "online": -0.0,
+          "dispatch_MW": 0.0,
+          "shutdown": 0.0,
+          "startup": 0.0,
+          "installed": 147.0
+        },
+        "gen:21": {
+          "online": -0.0,
+          "dispatch_MW": 0.0,
+          "shutdown": 0.0,
+          "startup": 0.0,
+          "installed": 21.0
+        },
+        "gen:19": {
+          "online": -0.0,
+          "dispatch_MW": -1.7763568394002505e-13,
+          "shutdown": 1.0,
+          "startup": -0.0,
+          "installed": 1.0
+        },
+        "gen:13": {
+          "online": -0.0,
+          "dispatch_MW": 0.0,
+          "shutdown": 1.0,
+          "startup": -0.0,
+          "installed": 4.0
+        },
+        "gen:5": {
+          "online": 3.0,
+          "dispatch_MW": 2656.063999999998,
+          "shutdown": -0.0,
+          "startup": 2.0,
+          "installed": 3.0
+        },
+        "storage:1": {
+          "online": -0.0,
+          "dispatch_MW": 0.0,
+          "energy_MWh": 0.0,
+          "charge_MW": 0.0,
+          "shutdown": 0.0,
+          "startup": 0.0,
+          "installed": -0.0
+        },
+        "storage:7": {
+          "online": -0.0,
+          "dispatch_MW": 0.0,
+          "energy_MWh": 0.0,
+          "charge_MW": 0.0,
+          "shutdown": 0.0,
+          "startup": 0.0,
+          "installed": -0.0
+        },
+        "storage:3": {
+          "online": -0.0,
+          "dispatch_MW": 0.0,
+          "energy_MWh": 0.0,
+          "charge_MW": 0.0,
+          "shutdown": 0.0,
+          "startup": 0.0,
+          "installed": -0.0
+        },
+        "gen:23": {
+          "online": -0.0,
+          "dispatch_MW": 0.0,
+          "shutdown": 1.0,
+          "startup": -0.0,
+          "installed": 2.0
+        },
+        "gen:15": {
+          "online": -0.0,
+          "dispatch_MW": 0.0,
+          "shutdown": 0.0,
+          "startup": 0.0,
+          "installed": 14.0
+        },
+        "gen:1": {
+          "online": 59.0,
+          "dispatch_MW": 241.4175108255439,
+          "shutdown": 0.0,
+          "startup": 0.0,
+          "installed": 59.0
+        },
+        "gen:20": {
+          "online": 49.0,
+          "dispatch_MW": 303.1684420942037,
+          "shutdown": 0.0,
+          "startup": 0.0,
+          "installed": 49.0
+        },
+        "gen:4": {
+          "online": 1.0,
+          "dispatch_MW": 30.0,
+          "shutdown": 0.0,
+          "startup": -0.0,
+          "installed": 1.0
+        },
+        "storage:4": {
+          "online": 43.0,
+          "dispatch_MW": 0.0,
+          "energy_MWh": 5821.949007833261,
+          "charge_MW": 1071.896064210448,
+          "shutdown": 0.0,
+          "startup": 0.0,
+          "installed": 43.0
+        }
+      }
+    },
+    "2": {
+      "affine": {
+        "B": [
+          [
+            886.5987837741752,
+            -116.9259116063088,
+            -419.22538897129584,
+            -164.48245635129533,
+            -0.0
+          ],
+          [
+            -116.9259116063088,
+            675.6435796117576,
+            -95.31168906141838,
+            -0.0,
+            -197.0805133423581
+          ],
+          [
+            -419.22538897129584,
+            -95.31168906141838,
+            760.1770392955484,
+            -0.0,
+            -234.90187336926073
+          ],
+          [
+            -164.48245635129533,
+            -0.0,
+            -0.0,
+            163.9055057127228,
+            -0.0
+          ],
+          [
+            -0.0,
+            -197.0805133423581,
+            -234.90187336926073,
+            -0.0,
+            445.3766417828063
+          ]
+        ],
+        "M": [
+          [
+            883.9397583413108,
+            -116.9259116063088,
+            -419.22538897129584,
+            -164.48245635129533,
+            -0.0
+          ],
+          [
+            -116.9259116063088,
+            670.3952200435413,
+            -95.31168906141838,
+            -0.0,
+            -197.0805133423581
+          ],
+          [
+            -419.22538897129584,
+            -95.31168906141838,
+            759.8498853569735,
+            -0.0,
+            -234.90187336926073
+          ],
+          [
+            -164.48245635129533,
+            -0.0,
+            -0.0,
+            156.89984212503634,
+            -0.0
+          ],
+          [
+            -0.0,
+            -197.0805133423581,
+            -234.90187336926073,
+            -0.0,
+            443.09215266944295
+          ]
+        ],
+        "p": [
+          26.590254328643336,
+          52.483595682162786,
+          3.2715393857499997,
+          70.05663587686448,
+          22.844891133633332
+        ]
+      },
+      "conic_dual": {
+        "status": "not_available_integer_or_no_dual_solution",
+        "dual_cone_violation": null,
+        "complementarity_residual": null
+      },
+      "branch_flows_MW": {
+        "4": [
+          96.1274693549182,
+          -96.1274693549182
+        ],
+        "1": [
+          234.44703243890146,
+          -234.44703243890146
+        ],
+        "5": [
+          802.3447689332486,
+          -802.3447689332486
+        ],
+        "2": [
+          1263.3984094298817,
+          -1263.3984094298817
+        ],
+        "6": [
+          719.408865575157,
+          -719.408865575157
+        ],
+        "3": [
+          390.6889210989547,
+          -390.6889210989547
+        ]
+      },
+      "assets": {
+        "gen:10": {
+          "online": 8.0,
+          "dispatch_MW": 2394.0444444444447,
+          "shutdown": -0.0,
+          "startup": -0.0,
+          "installed": 9.0
+        },
+        "storage:8": {
+          "online": -0.0,
+          "dispatch_MW": 0.0,
+          "energy_MWh": 0.0,
+          "charge_MW": 0.0,
+          "shutdown": 0.0,
+          "startup": 0.0,
+          "installed": -0.0
+        },
+        "gen:16": {
+          "online": 1.0,
+          "dispatch_MW": 232.49999999999903,
+          "shutdown": -0.0,
+          "startup": -0.0,
+          "installed": 2.0
+        },
+        "gen:8": {
+          "online": 42.0,
+          "dispatch_MW": 139.88596275795982,
+          "shutdown": 0.0,
+          "startup": 0.0,
+          "installed": 42.0
+        },
+        "storage:5": {
+          "online": -0.0,
+          "dispatch_MW": 0.0,
+          "energy_MWh": 0.0,
+          "charge_MW": 0.0,
+          "shutdown": 0.0,
+          "startup": 0.0,
+          "installed": -0.0
+        },
+        "gen:7": {
+          "online": 9.0,
+          "dispatch_MW": 145.87194915102614,
+          "shutdown": 0.0,
+          "startup": 0.0,
+          "installed": 9.0
+        },
+        "storage:10": {
+          "online": -0.0,
+          "dispatch_MW": 0.0,
+          "energy_MWh": 0.0,
+          "charge_MW": 0.0,
+          "shutdown": 0.0,
+          "startup": 0.0,
+          "installed": -0.0
+        },
+        "storage:9": {
+          "online": -0.0,
+          "dispatch_MW": 0.0,
+          "energy_MWh": 0.0,
+          "charge_MW": 0.0,
+          "shutdown": 0.0,
+          "startup": 0.0,
+          "installed": -0.0
+        },
+        "gen:2": {
+          "online": -0.0,
+          "dispatch_MW": 0.0,
+          "shutdown": 0.0,
+          "startup": 0.0,
+          "installed": 21.0
+        },
+        "gen:17": {
+          "online": 124.0,
+          "dispatch_MW": 492.1629443287598,
+          "shutdown": 0.0,
+          "startup": 0.0,
+          "installed": 124.0
+        },
+        "gen:14": {
+          "online": 7.0,
+          "dispatch_MW": 18.506237115878747,
+          "shutdown": 0.0,
+          "startup": 0.0,
+          "installed": 7.0
+        },
+        "gen:9": {
+          "online": -0.0,
+          "dispatch_MW": 0.0,
+          "shutdown": 0.0,
+          "startup": 0.0,
+          "installed": 46.0
+        },
+        "gen:12": {
+          "online": 3.0,
+          "dispatch_MW": 2570.413,
+          "shutdown": 0.0,
+          "startup": -0.0,
+          "installed": 3.0
+        },
+        "storage:6": {
+          "online": 2.0,
+          "dispatch_MW": 0.0,
+          "energy_MWh": 814.7356497514579,
+          "charge_MW": 182.59534955472816,
+          "shutdown": 0.0,
+          "startup": 0.0,
+          "installed": 2.9999999999999973
+        },
+        "gen:6": {
+          "online": 23.0,
+          "dispatch_MW": 201.8738855472665,
+          "shutdown": 0.0,
+          "startup": 0.0,
+          "installed": 23.0
+        },
+        "gen:22": {
+          "online": 1.0,
+          "dispatch_MW": 281.3999999999994,
+          "shutdown": -0.0,
+          "startup": -0.0,
+          "installed": 5.0
+        },
+        "storage:2": {
+          "online": -0.0,
+          "dispatch_MW": 0.0,
+          "energy_MWh": 0.0,
+          "charge_MW": 0.0,
+          "shutdown": 0.0,
+          "startup": 0.0,
+          "installed": -0.0
+        },
+        "gen:11": {
+          "online": 1.0,
+          "dispatch_MW": 45.0,
+          "shutdown": 0.0,
+          "startup": -0.0,
+          "installed": 1.0
+        },
+        "gen:3": {
+          "online": 2.0,
+          "dispatch_MW": 513.0,
+          "shutdown": -0.0,
+          "startup": -0.0,
+          "installed": 2.0
+        },
+        "gen:18": {
+          "online": -0.0,
+          "dispatch_MW": 0.0,
+          "shutdown": 0.0,
+          "startup": 0.0,
+          "installed": 147.0
+        },
+        "gen:21": {
+          "online": -0.0,
+          "dispatch_MW": 0.0,
+          "shutdown": 0.0,
+          "startup": 0.0,
+          "installed": 21.0
+        },
+        "gen:19": {
+          "online": -0.0,
+          "dispatch_MW": -3.497202527569243e-13,
+          "shutdown": 0.0,
+          "startup": -0.0,
+          "installed": 1.0
+        },
+        "gen:13": {
+          "online": -0.0,
+          "dispatch_MW": 3.275157922644212e-13,
+          "shutdown": 0.0,
+          "startup": -0.0,
+          "installed": 4.0
+        },
+        "gen:5": {
+          "online": 3.0,
+          "dispatch_MW": 2656.064,
+          "shutdown": 0.0,
+          "startup": -0.0,
+          "installed": 3.0
+        },
+        "storage:1": {
+          "online": -0.0,
+          "dispatch_MW": 0.0,
+          "energy_MWh": 0.0,
+          "charge_MW": 0.0,
+          "shutdown": 0.0,
+          "startup": 0.0,
+          "installed": -0.0
+        },
+        "storage:7": {
+          "online": -0.0,
+          "dispatch_MW": 0.0,
+          "energy_MWh": 0.0,
+          "charge_MW": 0.0,
+          "shutdown": 0.0,
+          "startup": 0.0,
+          "installed": -0.0
+        },
+        "storage:3": {
+          "online": -0.0,
+          "dispatch_MW": 0.0,
+          "energy_MWh": 0.0,
+          "charge_MW": 0.0,
+          "shutdown": 0.0,
+          "startup": 0.0,
+          "installed": -0.0
+        },
+        "gen:23": {
+          "online": -0.0,
+          "dispatch_MW": 0.0,
+          "shutdown": 0.0,
+          "startup": -0.0,
+          "installed": 2.0
+        },
+        "gen:15": {
+          "online": -0.0,
+          "dispatch_MW": 0.0,
+          "shutdown": 0.0,
+          "startup": 0.0,
+          "installed": 14.0
+        },
+        "gen:1": {
+          "online": 59.0,
+          "dispatch_MW": 241.27576755583243,
+          "shutdown": 0.0,
+          "startup": 0.0,
+          "installed": 59.0
+        },
+        "gen:20": {
+          "online": 49.0,
+          "dispatch_MW": 268.25950229172537,
+          "shutdown": 0.0,
+          "startup": 0.0,
+          "installed": 49.0
+        },
+        "gen:4": {
+          "online": 1.0,
+          "dispatch_MW": 30.0,
+          "shutdown": 0.0,
+          "startup": -0.0,
+          "installed": 1.0
+        },
+        "storage:4": {
+          "online": 43.0,
+          "dispatch_MW": 0.0,
+          "energy_MWh": 5953.228928563919,
+          "charge_MW": 44.66233600876866,
+          "shutdown": 0.0,
+          "startup": 0.0,
+          "installed": 43.0
+        }
+      }
+    },
+    "3": {
+      "affine": {
+        "B": [
+          [
+            891.5987837741752,
+            -116.9259116063088,
+            -419.22538897129584,
+            -164.48245635129533,
+            -0.0
+          ],
+          [
+            -116.9259116063088,
+            679.2435796117576,
+            -95.31168906141838,
+            -0.0,
+            -197.0805133423581
+          ],
+          [
+            -419.22538897129584,
+            -95.31168906141838,
+            760.1770392955484,
+            -0.0,
+            -234.90187336926073
+          ],
+          [
+            -164.48245635129533,
+            -0.0,
+            -0.0,
+            164.8055057127228,
+            -0.0
+          ],
+          [
+            -0.0,
+            -197.0805133423581,
+            -234.90187336926073,
+            -0.0,
+            447.2066417828063
+          ]
+        ],
+        "M": [
+          [
+            887.9333816686508,
+            -116.9259116063088,
+            -419.22538897129584,
+            -164.48245635129533,
+            -0.0
+          ],
+          [
+            -116.9259116063088,
+            671.7109803327413,
+            -95.31168906141838,
+            -0.0,
+            -197.0805133423581
+          ],
+          [
+            -419.22538897129584,
+            -95.31168906141838,
+            759.8498853569735,
+            -0.0,
+            -234.90187336926073
+          ],
+          [
+            -164.48245635129533,
+            -0.0,
+            -0.0,
+            150.45317398212836,
+            -0.0
+          ],
+          [
+            -0.0,
+            -197.0805133423581,
+            -234.90187336926073,
+            -0.0,
+            443.90378555869296
+          ]
+        ],
+        "p": [
+          36.654021055243334,
+          75.32599279016279,
+          3.2715393857499997,
+          143.52331730594435,
+          33.02856224113333
+        ]
+      },
+      "conic_dual": {
+        "status": "not_available_integer_or_no_dual_solution",
+        "dual_cone_violation": null,
+        "complementarity_residual": null
+      },
+      "branch_flows_MW": {
+        "4": [
+          -142.58373929739713,
+          142.58373929739713
+        ],
+        "1": [
+          769.2973201060817,
+          -769.2973201060817
+        ],
+        "5": [
+          699.1689033923137,
+          -699.1689033923137
+        ],
+        "2": [
+          2131.083539148171,
+          -2131.083539148171
+        ],
+        "6": [
+          1184.7520499093334,
+          -1184.7520499093334
+        ],
+        "3": [
+          -816.0026337426281,
+          816.0026337426281
+        ]
+      },
+      "assets": {
+        "gen:10": {
+          "online": 8.0,
+          "dispatch_MW": 2394.0444444444447,
+          "shutdown": -0.0,
+          "startup": -0.0,
+          "installed": 9.0
+        },
+        "storage:8": {
+          "online": -0.0,
+          "dispatch_MW": 0.0,
+          "energy_MWh": 0.0,
+          "charge_MW": 0.0,
+          "shutdown": 0.0,
+          "startup": 0.0,
+          "installed": -0.0
+        },
+        "gen:16": {
+          "online": 1.0,
+          "dispatch_MW": 232.5000000000005,
+          "shutdown": -0.0,
+          "startup": -0.0,
+          "installed": 2.0
+        },
+        "gen:8": {
+          "online": 42.0,
+          "dispatch_MW": 31.341051241628442,
+          "shutdown": 0.0,
+          "startup": 0.0,
+          "installed": 42.0
+        },
+        "storage:5": {
+          "online": -0.0,
+          "dispatch_MW": 0.0,
+          "energy_MWh": 0.0,
+          "charge_MW": 0.0,
+          "shutdown": 0.0,
+          "startup": 0.0,
+          "installed": -0.0
+        },
+        "gen:7": {
+          "online": 9.0,
+          "dispatch_MW": 207.1464099792861,
+          "shutdown": 0.0,
+          "startup": 0.0,
+          "installed": 9.0
+        },
+        "storage:10": {
+          "online": -0.0,
+          "dispatch_MW": 0.0,
+          "energy_MWh": 0.0,
+          "charge_MW": 0.0,
+          "shutdown": 0.0,
+          "startup": 0.0,
+          "installed": -0.0
+        },
+        "storage:9": {
+          "online": -0.0,
+          "dispatch_MW": 0.0,
+          "energy_MWh": 0.0,
+          "charge_MW": 0.0,
+          "shutdown": 0.0,
+          "startup": 0.0,
+          "installed": -0.0
+        },
+        "gen:2": {
+          "online": 21.0,
+          "dispatch_MW": 11.995503335464107,
+          "shutdown": 0.0,
+          "startup": 0.0,
+          "installed": 21.0
+        },
+        "gen:17": {
+          "online": 124.0,
+          "dispatch_MW": 528.4783142563065,
+          "shutdown": 0.0,
+          "startup": 0.0,
+          "installed": 124.0
+        },
+        "gen:14": {
+          "online": 7.0,
+          "dispatch_MW": 12.646099749314155,
+          "shutdown": 0.0,
+          "startup": 0.0,
+          "installed": 7.0
+        },
+        "gen:9": {
+          "online": 46.0,
+          "dispatch_MW": 23.986507338398518,
+          "shutdown": 0.0,
+          "startup": 0.0,
+          "installed": 46.0
+        },
+        "gen:12": {
+          "online": 3.0,
+          "dispatch_MW": 2570.4130000000005,
+          "shutdown": 0.0,
+          "startup": -0.0,
+          "installed": 3.0
+        },
+        "storage:6": {
+          "online": 2.9999999999999973,
+          "dispatch_MW": 266.0915489527979,
+          "energy_MWh": 0.0,
+          "charge_MW": 0.0,
+          "shutdown": 0.0,
+          "startup": 0.0,
+          "installed": 2.9999999999999973
+        },
+        "gen:6": {
+          "online": 23.0,
+          "dispatch_MW": 132.0994093989763,
+          "shutdown": 0.0,
+          "startup": 0.0,
+          "installed": 23.0
+        },
+        "gen:22": {
+          "online": 1.0,
+          "dispatch_MW": 281.3999999999992,
+          "shutdown": -0.0,
+          "startup": -0.0,
+          "installed": 5.0
+        },
+        "storage:2": {
+          "online": -0.0,
+          "dispatch_MW": 0.0,
+          "energy_MWh": 0.0,
+          "charge_MW": 0.0,
+          "shutdown": 0.0,
+          "startup": 0.0,
+          "installed": -0.0
+        },
+        "gen:11": {
+          "online": 1.0,
+          "dispatch_MW": 45.0,
+          "shutdown": 0.0,
+          "startup": -0.0,
+          "installed": 1.0
+        },
+        "gen:3": {
+          "online": 2.0,
+          "dispatch_MW": 513.0,
+          "shutdown": -0.0,
+          "startup": -0.0,
+          "installed": 2.0
+        },
+        "gen:18": {
+          "online": 147.0,
+          "dispatch_MW": 184.21663672525446,
+          "shutdown": 0.0,
+          "startup": 0.0,
+          "installed": 147.0
+        },
+        "gen:21": {
+          "online": 21.0,
+          "dispatch_MW": 12.243168773355892,
+          "shutdown": 0.0,
+          "startup": 0.0,
+          "installed": 21.0
+        },
+        "gen:19": {
+          "online": 1.0,
+          "dispatch_MW": 18.000000000000238,
+          "shutdown": -0.0,
+          "startup": 1.0,
+          "installed": 1.0
+        },
+        "gen:13": {
+          "online": 4.0,
+          "dispatch_MW": 72.0,
+          "shutdown": -0.0,
+          "startup": 4.0,
+          "installed": 4.0
+        },
+        "gen:5": {
+          "online": 3.0,
+          "dispatch_MW": 2656.0640000000008,
+          "shutdown": 0.0,
+          "startup": -0.0,
+          "installed": 3.0
+        },
+        "storage:1": {
+          "online": -0.0,
+          "dispatch_MW": 0.0,
+          "energy_MWh": 0.0,
+          "charge_MW": 0.0,
+          "shutdown": 0.0,
+          "startup": 0.0,
+          "installed": -0.0
+        },
+        "storage:7": {
+          "online": -0.0,
+          "dispatch_MW": 0.0,
+          "energy_MWh": 0.0,
+          "charge_MW": 0.0,
+          "shutdown": 0.0,
+          "startup": 0.0,
+          "installed": -0.0
+        },
+        "storage:3": {
+          "online": -0.0,
+          "dispatch_MW": 0.0,
+          "energy_MWh": 0.0,
+          "charge_MW": 0.0,
+          "shutdown": 0.0,
+          "startup": 0.0,
+          "installed": -0.0
+        },
+        "gen:23": {
+          "online": 2.0,
+          "dispatch_MW": 34.46304373977682,
+          "shutdown": -0.0,
+          "startup": 2.0,
+          "installed": 2.0
+        },
+        "gen:15": {
+          "online": -0.0,
+          "dispatch_MW": 0.0,
+          "shutdown": 0.0,
+          "startup": 0.0,
+          "installed": 14.0
+        },
+        "gen:1": {
+          "online": 59.0,
+          "dispatch_MW": 218.85159593250884,
+          "shutdown": 0.0,
+          "startup": 0.0,
+          "installed": 59.0
+        },
+        "gen:20": {
+          "online": 49.0,
+          "dispatch_MW": 226.12321463769493,
+          "shutdown": 0.0,
+          "startup": 0.0,
+          "installed": 49.0
+        },
+        "gen:4": {
+          "online": 1.0,
+          "dispatch_MW": 30.0,
+          "shutdown": 0.0,
+          "startup": -0.0,
+          "installed": 1.0
+        },
+        "storage:4": {
+          "online": 43.0,
+          "dispatch_MW": 1071.8960642104482,
+          "energy_MWh": 2671.230910297479,
+          "charge_MW": 0.0,
+          "shutdown": 0.0,
+          "startup": 0.0,
+          "installed": 43.0
+        }
+      }
+    }
+  }
+}

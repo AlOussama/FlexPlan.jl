@@ -1,0 +1,387 @@
+{
+  "runs": [
+    {
+      "source_AP3_SHA": "1673e698903768cac6cf80c9ac971d8489ce8e86",
+      "model": {
+        "variables": 450,
+        "constraints": {
+          "AffExpr in MathOptInterface.EqualTo{Float64}": 139,
+          "AffExpr in MathOptInterface.GreaterThan{Float64}": 69,
+          "AffExpr in MathOptInterface.Interval{Float64}": 18,
+          "Vector{AffExpr} in MathOptInterface.PositiveSemidefiniteConeTriangle": 3,
+          "VariableRef in MathOptInterface.GreaterThan{Float64}": 138,
+          "VariableRef in MathOptInterface.LessThan{Float64}": 48,
+          "VariableRef in MathOptInterface.EqualTo{Float64}": 198,
+          "AffExpr in MathOptInterface.LessThan{Float64}": 258
+        },
+        "integer": 0
+      },
+      "integer_optimum_certified": false,
+      "solution_file": "event_price_3snap/G0_integer.json",
+      "case_sha256": "cb9d2f37cfff5caaea42268941e531baf2d53f4e50a01dfe03bedbe235d4cf6b",
+      "relaxed": false,
+      "validation_scope": "parametric_study",
+      "solver": "Clarabel fixed assignment + Pajarito other-formulation global bound",
+      "formulation": "G0",
+      "solver_time_s": 1.8230043,
+      "termination": "OPTIMAL",
+      "reference_formulation": "G3",
+      "barrier_iterations": 15,
+      "schema": "paper_a_ap3/1.0",
+      "build_wall_s": 0.8730318,
+      "native_integer_status": "numerical_inconclusive",
+      "nodes": null,
+      "reference_lower_bound": 5.608444648861325e6,
+      "dual_status": "FEASIBLE_POINT",
+      "registry_sha256": "a249f7a96d202798c6ff5778c1fa1571eba59a3717bac5d25b150d2a6c41bce9",
+      "maximum_independent_PSD_violation": 0.0,
+      "native_integer_objective": null,
+      "objective": 5.608912217958661e6,
+      "bound": 5.608444648861325e6,
+      "native_integer_termination": "ITERATION_LIMIT",
+      "parameters": {
+        "provenance": "offline_v1:degree_plus_one;MIIF_from_B0_shifted_to_PSD_margin_1;M1_enforced_source_floor_for_PSD_margin_0.01",
+        "Bmin": [
+          [
+            700.0393139967313,
+            -116.9259116063088,
+            -419.22538897129584,
+            -164.48245635129535,
+            0.0
+          ],
+          [
+            -116.9259116063088,
+            409.13188761209125,
+            -95.31168906141838,
+            0.0,
+            -197.08051334235807
+          ],
+          [
+            -419.22538897129584,
+            -95.31168906141838,
+            749.5425695181043,
+            0.0,
+            -234.90187336926073
+          ],
+          [
+            -164.48245635129535,
+            0.0,
+            0.0,
+            164.89603593527872,
+            0.0
+          ],
+          [
+            0.0,
+            -197.08051334235807,
+            -234.90187336926073,
+            0.0,
+            432.29717200536214
+          ]
+        ],
+        "r_identity": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "W_full": [
+          [
+            1.0,
+            0.9922264653598742,
+            0.9945883234554402,
+            0.9915388924928497,
+            0.9905189659078144
+          ],
+          [
+            0.9882821517094926,
+            1.0,
+            0.9892272229765866,
+            0.9799201901764809,
+            0.9911482936820364
+          ],
+          [
+            0.9953621169834997,
+            0.9939480026794926,
+            1.0,
+            0.9869402511031575,
+            0.9942358874349858
+          ],
+          [
+            0.9787380142984873,
+            0.97112976044073,
+            0.9734414007432388,
+            1.0,
+            0.9694585658176051
+          ],
+          [
+            0.9878749995330863,
+            0.9924478411258107,
+            0.9908111447103013,
+            0.9795164829584108,
+            1.0
+          ]
+        ],
+        "M1_source_floor_pu": 0.9905302225558983,
+        "MIIF_reference_diagonal_pu": 1.9805302225558983,
+        "W_neighbor": [
+          [
+            1.0,
+            0.9922264653598742,
+            0.9945883234554402,
+            0.9915388924928497,
+            0.0
+          ],
+          [
+            0.9882821517094926,
+            1.0,
+            0.9892272229765866,
+            0.0,
+            0.9911482936820364
+          ],
+          [
+            0.9953621169834997,
+            0.9939480026794926,
+            1.0,
+            0.0,
+            0.9942358874349858
+          ],
+          [
+            0.9787380142984873,
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.9924478411258107,
+            0.9908111447103013,
+            0.0,
+            1.0
+          ]
+        ],
+        "r_degree": [
+          4.0,
+          4.0,
+          4.0,
+          2.0,
+          3.0
+        ],
+        "regions": [
+          "BE0 0",
+          "BE0 1",
+          "BE0 2",
+          "BE0 3",
+          "BE0 4"
+        ]
+      },
+      "status": "numerical_inconclusive",
+      "exposure": "S_on_v1",
+      "solve_wall_s": 6.9689764,
+      "scope": "conditional_parametric_symmetric_Z_complete_G3; numerical certificate within 1e-6 relative gap",
+      "source_producer_sha": "3b8fdb01d931225edc5f8fe1e2c200d0da288a09",
+      "simplex_iterations": null,
+      "optimizer_configuration": "Clarabel: tol_gap_abs=tol_gap_rel=tol_feas=1e-10,max_iter=300,objective_scaled_by_recorded_positive_factor",
+      "fixed_integer_decisions": 198,
+      "case_id": "event_price_3snap",
+      "scenario_config_sha256": "be9d9d9aa90e9790fc7c3554bc1107777a5ba743f4f95d8f675acd9bfeb1e75a",
+      "primal_status": "FEASIBLE_POINT",
+      "objective_solver_scaling": 7.55794306538003e8,
+      "integer_certificate_method": "fixed_all_integer_conic_recheck_plus_global_bound_of_other_exact_formulation_T020",
+      "relative_gap": 8.33618140498587e-5
+    },
+    {
+      "source_AP3_SHA": "1673e698903768cac6cf80c9ac971d8489ce8e86",
+      "model": {
+        "variables": 3657,
+        "constraints": {
+          "Vector{AffExpr} in MathOptInterface.RotatedSecondOrderCone": 144,
+          "AffExpr in MathOptInterface.EqualTo{Float64}": 1042,
+          "AffExpr in MathOptInterface.GreaterThan{Float64}": 672,
+          "AffExpr in MathOptInterface.Interval{Float64}": 144,
+          "VariableRef in MathOptInterface.GreaterThan{Float64}": 1392,
+          "VariableRef in MathOptInterface.LessThan{Float64}": 384,
+          "VariableRef in MathOptInterface.EqualTo{Float64}": 1353,
+          "AffExpr in MathOptInterface.LessThan{Float64}": 2064
+        },
+        "integer": 0
+      },
+      "integer_optimum_certified": false,
+      "solution_file": "reference_24snap/G3_integer.json",
+      "case_sha256": "d74a295602d3916147b47d08070ebc650a28c1fd392473219b87f140ee0d551f",
+      "relaxed": false,
+      "validation_scope": "parametric_study",
+      "solver": "Clarabel fixed assignment + Pajarito other-formulation global bound",
+      "formulation": "G3",
+      "solver_time_s": 0.1212677,
+      "termination": "OPTIMAL",
+      "reference_formulation": "G0",
+      "barrier_iterations": 24,
+      "schema": "paper_a_ap3/1.0",
+      "build_wall_s": 6.5651736,
+      "native_integer_status": "infeasible",
+      "nodes": null,
+      "reference_lower_bound": 1.4127810651615297e7,
+      "dual_status": "FEASIBLE_POINT",
+      "registry_sha256": "a249f7a96d202798c6ff5778c1fa1571eba59a3717bac5d25b150d2a6c41bce9",
+      "maximum_independent_PSD_violation": 0.0,
+      "native_integer_objective": null,
+      "objective": 1.412810045132054e7,
+      "bound": 1.4127810651615297e7,
+      "native_integer_termination": "INFEASIBLE",
+      "parameters": {
+        "provenance": "offline_v1:degree_plus_one;MIIF_from_B0_shifted_to_PSD_margin_1;M1_enforced_source_floor_for_PSD_margin_0.01",
+        "Bmin": [
+          [
+            700.0393139967313,
+            -116.9259116063088,
+            -419.22538897129584,
+            -164.48245635129535,
+            0.0
+          ],
+          [
+            -116.9259116063088,
+            409.13188761209125,
+            -95.31168906141838,
+            0.0,
+            -197.08051334235807
+          ],
+          [
+            -419.22538897129584,
+            -95.31168906141838,
+            749.5425695181043,
+            0.0,
+            -234.90187336926073
+          ],
+          [
+            -164.48245635129535,
+            0.0,
+            0.0,
+            164.89603593527872,
+            0.0
+          ],
+          [
+            0.0,
+            -197.08051334235807,
+            -234.90187336926073,
+            0.0,
+            432.29717200536214
+          ]
+        ],
+        "r_identity": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "W_full": [
+          [
+            1.0,
+            0.9922264653598742,
+            0.9945883234554402,
+            0.9915388924928497,
+            0.9905189659078144
+          ],
+          [
+            0.9882821517094926,
+            1.0,
+            0.9892272229765866,
+            0.9799201901764809,
+            0.9911482936820364
+          ],
+          [
+            0.9953621169834997,
+            0.9939480026794926,
+            1.0,
+            0.9869402511031575,
+            0.9942358874349858
+          ],
+          [
+            0.9787380142984873,
+            0.97112976044073,
+            0.9734414007432388,
+            1.0,
+            0.9694585658176051
+          ],
+          [
+            0.9878749995330863,
+            0.9924478411258107,
+            0.9908111447103013,
+            0.9795164829584108,
+            1.0
+          ]
+        ],
+        "M1_source_floor_pu": 0.9905302225558983,
+        "MIIF_reference_diagonal_pu": 1.9805302225558983,
+        "W_neighbor": [
+          [
+            1.0,
+            0.9922264653598742,
+            0.9945883234554402,
+            0.9915388924928497,
+            0.0
+          ],
+          [
+            0.9882821517094926,
+            1.0,
+            0.9892272229765866,
+            0.0,
+            0.9911482936820364
+          ],
+          [
+            0.9953621169834997,
+            0.9939480026794926,
+            1.0,
+            0.0,
+            0.9942358874349858
+          ],
+          [
+            0.9787380142984873,
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.9924478411258107,
+            0.9908111447103013,
+            0.0,
+            1.0
+          ]
+        ],
+        "r_degree": [
+          4.0,
+          4.0,
+          4.0,
+          2.0,
+          3.0
+        ],
+        "regions": [
+          "BE0 0",
+          "BE0 1",
+          "BE0 2",
+          "BE0 3",
+          "BE0 4"
+        ]
+      },
+      "status": "numerical_inconclusive",
+      "exposure": "S_on_v1",
+      "solve_wall_s": 2.8725087,
+      "scope": "conditional_parametric_symmetric_Z_complete_G3; numerical certificate within 1e-6 relative gap",
+      "source_producer_sha": "3b8fdb01d931225edc5f8fe1e2c200d0da288a09",
+      "simplex_iterations": null,
+      "optimizer_configuration": "Clarabel: tol_gap_abs=tol_gap_rel=tol_feas=1e-10,max_iter=300,objective_scaled_by_recorded_positive_factor",
+      "fixed_integer_decisions": 1353,
+      "case_id": "reference_24snap",
+      "scenario_config_sha256": "be9d9d9aa90e9790fc7c3554bc1107777a5ba743f4f95d8f675acd9bfeb1e75a",
+      "primal_status": "FEASIBLE_POINT",
+      "objective_solver_scaling": 7.55794306538003e8,
+      "integer_certificate_method": "fixed_all_integer_conic_recheck_plus_global_bound_of_other_exact_formulation_T020",
+      "relative_gap": 2.0512290823615345e-5
+    }
+  ],
+  "schema": "paper_a_ap3/1.0"
+}

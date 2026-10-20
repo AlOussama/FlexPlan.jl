@@ -1,0 +1,1 @@
+Stopped this exporter attempt after identifying a per-metric Git subprocess lookup. Source SHA lookup is now once per export. Existing matrices and replay hashes were retained. No numerical formulation, physical datum, exposure threshold or solver bound was changed.

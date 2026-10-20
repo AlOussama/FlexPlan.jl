@@ -1,0 +1,14 @@
+ERROR: LoadError: ParseError:
+# Error @ D:\Projekte\Code\FlexPlan_AP3\scripts\paper_a\AP3Pipeline.jl:67:28
+    spectral_floor=max(.01,.01-eigmin(Symmetric(B0)))
+    reference_shift=max(1.,1.-eigmin(Symmetric(B0)))
+#                          └┘ ── ambiguous `.` syntax; add whitespace to clarify (eg `1.+2` might be `1.0+2` or `1 .+ 2`)
+Stacktrace:
+ [1] top-level scope
+   @ D:\Projekte\Code\FlexPlan_AP3\scripts\paper_a\AP3Pipeline.jl:67
+ [2] include(fname::String)
+   @ Base.MainInclude .\client.jl:487
+ [3] top-level scope
+   @ D:\Projekte\Code\FlexPlan_AP3\scripts\paper_a\ap3.jl:1
+in expression starting at D:\Projekte\Code\FlexPlan_AP3\scripts\paper_a\AP3Pipeline.jl:67
+in expression starting at D:\Projekte\Code\FlexPlan_AP3\scripts\paper_a\ap3.jl:1

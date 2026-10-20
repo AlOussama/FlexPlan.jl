@@ -1,0 +1,1242 @@
+{
+  "A.symmetry": {
+    "shape": "scalar_or_status",
+    "scope": "snapshot_region_or_edge",
+    "independent_method": "independent_linear_algebra",
+    "formula": "norm(B-transpose(B),Inf)",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "pu",
+    "equation_reference": "T-C2A-001:028",
+    "tolerance": 1.0e-7
+  },
+  "C.rho_diag": {
+    "shape": "vector_or_matrix_or_ledger",
+    "scope": "snapshot_region_or_edge",
+    "independent_method": "independent_linear_algebra",
+    "formula": "1/(Zii*pi), positive denominator only",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "dimensionless",
+    "equation_reference": "T-C2A-001:028",
+    "tolerance": 1.0e-7
+  },
+  "D.E_norm_inf": {
+    "shape": "scalar_or_status",
+    "scope": "snapshot_region_or_edge",
+    "independent_method": "independent_linear_algebra",
+    "formula": "opnorm(A^-1*Delta,Inf)",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "dimensionless",
+    "equation_reference": "T-C2A-025:028",
+    "tolerance": 1.0e-7
+  },
+  "C.MIIF": {
+    "shape": "vector_or_matrix_or_ledger",
+    "scope": "snapshot_region_or_edge",
+    "independent_method": "independent_linear_algebra",
+    "formula": "Zij/Zii with model Thevenin normalization",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "dimensionless",
+    "equation_reference": "T-C2A-001:028",
+    "tolerance": 1.0e-7
+  },
+  "D.truncation": {
+    "shape": "vector_or_matrix_or_ledger",
+    "scope": "snapshot_region_or_edge",
+    "independent_method": "independent_linear_algebra",
+    "formula": "sum_{k=0}^m (-A^-1*Delta)^k * A^-1",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "pu_impedance",
+    "equation_reference": "T-C2A-025:028",
+    "tolerance": 1.0e-7
+  },
+  "A.source_ledger": {
+    "shape": "vector_or_matrix_or_ledger",
+    "scope": "snapshot_region_or_edge",
+    "independent_method": "independent_raw_stamp_and_solved_blocks",
+    "formula": "per-asset independent installed/online/source/exposure/MW/MVA/MWh quantities",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "explicit_field_ledger",
+    "equation_reference": "T-C2A-001:028",
+    "tolerance": 1.0e-7
+  },
+  "A.network_domain": {
+    "shape": "record",
+    "scope": "snapshot_region_or_edge",
+    "independent_method": "raw_island_reference_inventory",
+    "formula": "raw islands, references, retained/eliminated buses and fixed-shunt/source inventories",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "explicit_field_ledger",
+    "equation_reference": "T-C2A-001:028",
+    "tolerance": 1.0e-7
+  },
+  "A.L": {
+    "shape": "vector_or_matrix_or_ledger",
+    "scope": "snapshot_region_or_edge",
+    "independent_method": "independent_raw_stamp_and_solved_blocks",
+    "formula": "-Im(Y)",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "pu",
+    "equation_reference": "T-C2A-001:028",
+    "tolerance": 1.0e-7
+  },
+  "E.events": {
+    "shape": "scalar_or_status",
+    "scope": "case_or_horizon",
+    "independent_method": "independent_raw_prices_durations_and_solved_quantities",
+    "formula": "sum(event_repetitions*probability*P_block*(startup_price*SU+shutdown_price*SD)); no delta_t",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "declared_currency_per_represented_horizon",
+    "equation_reference": "T-C2A-001:028",
+    "tolerance": 1.0e-7
+  },
+  "B.G3_cone_product_slacks": {
+    "shape": "vector_or_matrix_or_ledger",
+    "scope": "snapshot_region_or_edge",
+    "independent_method": "independent_linear_algebra",
+    "formula": "qij*qji-mij^2",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "pu_admittance_squared",
+    "equation_reference": "T-C2A-001:028",
+    "tolerance": 1.0e-7
+  },
+  "B.G2": {
+    "shape": "scalar_or_status",
+    "scope": "snapshot_region_or_edge",
+    "independent_method": "independent_linear_algebra",
+    "formula": "min(M*r_offline)>=-scaled_tolerance",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "boolean",
+    "equation_reference": "T-C2A-001:028",
+    "tolerance": 1.0e-7
+  },
+  "A.B0": {
+    "shape": "vector_or_matrix_or_ledger",
+    "scope": "snapshot_region_or_edge",
+    "independent_method": "independent_raw_stamp_and_solved_blocks",
+    "formula": "Lrr-Lre*(Lee\\Ler)",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "pu",
+    "equation_reference": "T-C2A-001:028",
+    "tolerance": 1.0e-7
+  },
+  "C.Zp": {
+    "shape": "vector_or_matrix_or_ledger",
+    "scope": "snapshot_region_or_edge",
+    "independent_method": "independent_linear_algebra",
+    "formula": "B\\p",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "dimensionless",
+    "equation_reference": "T-C2A-001:028",
+    "tolerance": 1.0e-7
+  },
+  "E.S_nom_v1": {
+    "shape": "vector_or_matrix_or_ledger",
+    "scope": "snapshot_region_or_edge",
+    "independent_method": "independent_raw_stamp_and_solved_blocks",
+    "formula": "sum_GFL mu_fl*P_block*n_inst/base",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "MW_per_system_MVA",
+    "equation_reference": "T-C2A-001:028",
+    "tolerance": 1.0e-7
+  },
+  "E.generation": {
+    "shape": "scalar_or_status",
+    "scope": "case_or_horizon",
+    "independent_method": "independent_raw_prices_durations_and_solved_quantities",
+    "formula": "sum(delta_t*repetitions*probability*marginal_price*PG_MW)",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "declared_currency_per_represented_horizon",
+    "equation_reference": "T-C2A-001:028",
+    "tolerance": 1.0e-7
+  },
+  "A.nullity": {
+    "shape": "scalar_or_status",
+    "scope": "snapshot_region_or_edge",
+    "independent_method": "independent_linear_algebra",
+    "formula": "count(abs(lambda_B)<=scaled_tolerance)",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "count",
+    "equation_reference": "T-C2A-001:028",
+    "tolerance": 1.0e-7
+  },
+  "C.inverse_min": {
+    "shape": "scalar_or_status",
+    "scope": "snapshot_region_or_edge",
+    "independent_method": "independent_linear_algebra",
+    "formula": "minimum(B\\I)",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "pu_impedance",
+    "equation_reference": "T-C2A-001:028",
+    "tolerance": 1.0e-7
+  },
+  "B.G3_status": {
+    "shape": "scalar_or_status",
+    "scope": "snapshot_region_or_edge",
+    "independent_method": "independent_linear_algebra",
+    "formula": "edge/witness domain and verification status",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "status",
+    "equation_reference": "T-C2A-001:028",
+    "tolerance": 1.0e-7
+  },
+  "E.UC_transition_residual": {
+    "shape": "scalar_or_status",
+    "scope": "case_or_horizon",
+    "independent_method": "independent_raw_prices_durations_and_solved_quantities",
+    "formula": "max abs(n_on_t-n_on_prev-SU+SD)",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "count_or_index",
+    "equation_reference": "T-C2A-001:028",
+    "tolerance": 1.0e-7
+  },
+  "F.dual_status": {
+    "shape": "scalar_or_status",
+    "scope": "case_or_horizon",
+    "independent_method": "recorded_runtime_solver_attribute",
+    "formula": "actual runtime attribute dual_status; unsupported values explicitly null",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "status",
+    "equation_reference": "T-C2A-001:028",
+    "tolerance": 1.0e-7
+  },
+  "F.simplex_iterations": {
+    "shape": "scalar_or_status",
+    "scope": "case_or_horizon",
+    "independent_method": "recorded_runtime_solver_attribute",
+    "formula": "actual runtime attribute simplex_iterations; unsupported values explicitly null",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "count_or_index",
+    "equation_reference": "T-C2A-001:028",
+    "tolerance": 1.0e-7
+  },
+  "A.Z_class": {
+    "shape": "scalar_or_status",
+    "scope": "snapshot_region_or_edge",
+    "independent_method": "independent_linear_algebra",
+    "formula": "max_{i!=j} Bij<=tolerance",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "boolean",
+    "equation_reference": "T-C2A-001:028",
+    "tolerance": 1.0e-7
+  },
+  "E.thermal_violation_MW": {
+    "shape": "scalar_or_status",
+    "scope": "case_or_horizon",
+    "independent_method": "independent_raw_prices_durations_and_solved_quantities",
+    "formula": "max(0,abs(branch flow)-rating)",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "MW",
+    "equation_reference": "T-C2A-001:028",
+    "tolerance": 1.0e-7
+  },
+  "A.B_eigenvalues": {
+    "shape": "vector_or_matrix_or_ledger",
+    "scope": "snapshot_region_or_edge",
+    "independent_method": "independent_linear_algebra",
+    "formula": "eigvals(Symmetric(B))",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "pu",
+    "equation_reference": "T-C2A-001:028",
+    "tolerance": 1.0e-7
+  },
+  "F.relative_gap": {
+    "shape": "scalar_or_status",
+    "scope": "case_or_horizon",
+    "independent_method": "recorded_runtime_solver_attribute",
+    "formula": "actual runtime attribute relative_gap; unsupported values explicitly null",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "dimensionless",
+    "equation_reference": "T-C2A-001:028",
+    "tolerance": 1.0e-7
+  },
+  "F.solve_wall_s": {
+    "shape": "scalar_or_status",
+    "scope": "case_or_horizon",
+    "independent_method": "recorded_runtime_solver_attribute",
+    "formula": "actual runtime attribute solve_wall_s; unsupported values explicitly null",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "s",
+    "equation_reference": "T-C2A-001:028",
+    "tolerance": 1.0e-7
+  },
+  "C.ESCR_external": {
+    "shape": "scalar_or_status",
+    "scope": "snapshot_region_or_edge",
+    "independent_method": "independent_linear_algebra",
+    "formula": "not_comparable: source-specific fault/compensation/denominator convention is not supplied",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "pu",
+    "equation_reference": "T-C2A-001:028",
+    "tolerance": 1.0e-7
+  },
+  "E.FOM": {
+    "shape": "record",
+    "scope": "case_or_horizon",
+    "independent_method": "independent_raw_prices_durations_and_solved_quantities",
+    "formula": "separate amount not identifiable; declared annualized price attribution retained",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "explicit_field_ledger",
+    "equation_reference": "T-C2A-001:028",
+    "tolerance": 1.0e-7
+  },
+  "F.complementarity_residual": {
+    "shape": "scalar_or_status",
+    "scope": "snapshot_region_or_edge",
+    "independent_method": "solver_dual_cone_eigen_or_RSOC_product_and_primal_dual_inner_product",
+    "formula": "abs(<primal cone point,dual cone point>) in scaled objective units",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "scaled_objective",
+    "equation_reference": "T-C2A-001:028",
+    "tolerance": 1.0e-7
+  },
+  "A.B": {
+    "shape": "vector_or_matrix_or_ledger",
+    "scope": "snapshot_region_or_edge",
+    "independent_method": "independent_raw_stamp_and_solved_blocks",
+    "formula": "B0+Diagonal(b_fix+sum(mu_str*n_on*native_MVA/(base*x_native)))",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "pu",
+    "equation_reference": "T-C2A-001:028",
+    "tolerance": 1.0e-7
+  },
+  "C.M0_slack": {
+    "shape": "vector_or_matrix_or_ledger",
+    "scope": "snapshot_region_or_edge",
+    "independent_method": "independent_linear_algebra",
+    "formula": "1/alpha-B\\p, PD inverse-positive B, alpha>0",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "dimensionless",
+    "equation_reference": "T-C2A-001:028",
+    "tolerance": 1.0e-7
+  },
+  "E.portfolio": {
+    "shape": "vector_or_matrix_or_ledger",
+    "scope": "case_or_horizon",
+    "independent_method": "independent_raw_prices_durations_and_solved_quantities",
+    "formula": "per-asset n0,n_inst,n_new,MW,MVA,MWh,source class,carrier,region",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "explicit_field_ledger",
+    "equation_reference": "T-C2A-001:028",
+    "tolerance": 1.0e-7
+  },
+  "B.G3_edges": {
+    "shape": "vector_or_matrix_or_ledger",
+    "scope": "snapshot_region_or_edge",
+    "independent_method": "independent_linear_algebra",
+    "formula": "all exact nonzero undirected pairs (i,j), i<j",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "count_or_index",
+    "equation_reference": "T-C2A-001:028",
+    "tolerance": 1.0e-7
+  },
+  "F.model": {
+    "shape": "record",
+    "scope": "case_or_horizon",
+    "independent_method": "recorded_runtime_solver_attribute",
+    "formula": "actual JuMP variable/integer/typed-constraint counts",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "solver_metadata",
+    "equation_reference": "T-C2A-001:028",
+    "tolerance": 1.0e-7
+  },
+  "C.M0": {
+    "shape": "scalar_or_status",
+    "scope": "snapshot_region_or_edge",
+    "independent_method": "independent_linear_algebra",
+    "formula": "max(B\\p)<=1/alpha, requiring PD/inverse-positive B and alpha>0",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "boolean",
+    "equation_reference": "T-C2A-001:028",
+    "tolerance": 1.0e-7
+  },
+  "F.barrier_iterations": {
+    "shape": "scalar_or_status",
+    "scope": "case_or_horizon",
+    "independent_method": "recorded_runtime_solver_attribute",
+    "formula": "actual runtime attribute barrier_iterations; unsupported values explicitly null",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "count_or_index",
+    "equation_reference": "T-C2A-001:028",
+    "tolerance": 1.0e-7
+  },
+  "E.SOC_residual_MWh": {
+    "shape": "scalar_or_status",
+    "scope": "case_or_horizon",
+    "independent_method": "independent_raw_prices_durations_and_solved_quantities",
+    "formula": "max abs(E_t-E_prev-delta_t*(eta_charge*charge-discharge/eta_discharge))",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "MWh",
+    "equation_reference": "T-C2A-001:028",
+    "tolerance": 1.0e-7
+  },
+  "D.actual_error": {
+    "shape": "scalar_or_status",
+    "scope": "snapshot_region_or_edge",
+    "independent_method": "independent_linear_algebra",
+    "formula": "opnorm(truncation-inv(A+Delta),Inf)",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "pu_impedance",
+    "equation_reference": "T-C2A-025:028",
+    "tolerance": 1.0e-7
+  },
+  "E.objective_residual": {
+    "shape": "scalar_or_status",
+    "scope": "case_or_horizon",
+    "independent_method": "independent_raw_prices_durations_and_solved_quantities",
+    "formula": "abs(reported_objective-investment-generation-storage-events-no_load)",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "declared_currency_per_represented_horizon",
+    "equation_reference": "T-C2A-001:028",
+    "tolerance": 1.0e-7
+  },
+  "C.Z": {
+    "shape": "vector_or_matrix_or_ledger",
+    "scope": "snapshot_region_or_edge",
+    "independent_method": "independent_linear_algebra",
+    "formula": "B\\I, only on PD sufficiently conditioned B",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "pu_impedance",
+    "equation_reference": "T-C2A-001:028",
+    "tolerance": 1.0e-7
+  },
+  "E.terminal_residual_MWh": {
+    "shape": "scalar_or_status",
+    "scope": "case_or_horizon",
+    "independent_method": "independent_raw_prices_durations_and_solved_quantities",
+    "formula": "max abs(final energy-declared initial energy)",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "MWh",
+    "equation_reference": "T-C2A-001:028",
+    "tolerance": 1.0e-7
+  },
+  "C.LOCAL": {
+    "shape": "scalar_or_status",
+    "scope": "snapshot_region_or_edge",
+    "independent_method": "independent_linear_algebra",
+    "formula": "all local rank-one PSD tests pass",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "boolean",
+    "equation_reference": "T-C2A-001:028",
+    "tolerance": 1.0e-7
+  },
+  "B.G1_rows": {
+    "shape": "vector_or_matrix_or_ledger",
+    "scope": "snapshot_region_or_edge",
+    "independent_method": "independent_linear_algebra",
+    "formula": "(B-alpha*Diagonal(p))*ones(n)",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "pu",
+    "equation_reference": "T-C2A-001:028",
+    "tolerance": 1.0e-7
+  },
+  "B.G2_binding": {
+    "shape": "scalar_or_status",
+    "scope": "snapshot_region_or_edge",
+    "independent_method": "independent_linear_algebra",
+    "formula": "abs.(M*r_offline)<=scaled_tolerance",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "boolean",
+    "equation_reference": "T-C2A-001:028",
+    "tolerance": 1.0e-7
+  },
+  "B.G3_minimum_q": {
+    "shape": "scalar_or_status",
+    "scope": "snapshot_region_or_edge",
+    "independent_method": "independent_linear_algebra",
+    "formula": "minimum endpoint allocation, undefined for no edges",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "pu_admittance",
+    "equation_reference": "T-C2A-001:028",
+    "tolerance": 1.0e-7
+  },
+  "F.nodes": {
+    "shape": "scalar_or_status",
+    "scope": "case_or_horizon",
+    "independent_method": "recorded_runtime_solver_attribute",
+    "formula": "actual runtime attribute nodes; unsupported values explicitly null",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "count_or_index",
+    "equation_reference": "T-C2A-001:028",
+    "tolerance": 1.0e-7
+  },
+  "E.S_on_v1": {
+    "shape": "vector_or_matrix_or_ledger",
+    "scope": "snapshot_region_or_edge",
+    "independent_method": "independent_raw_stamp_and_solved_blocks",
+    "formula": "sum_GFL mu_fl*P_block*n_on/base",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "MW_per_system_MVA",
+    "equation_reference": "T-C2A-001:028",
+    "tolerance": 1.0e-7
+  },
+  "C.equivalent_strength_MVA": {
+    "shape": "vector_or_matrix_or_ledger",
+    "scope": "snapshot_region_or_edge",
+    "independent_method": "independent_linear_algebra",
+    "formula": "base_MVA/Zii (model equivalent, not fault-qualified)",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "MVA_model_Thevenin_equivalent_not_fault_qualification",
+    "equation_reference": "T-C2A-001:028",
+    "tolerance": 1.0e-7
+  },
+  "B.eigenspace": {
+    "shape": "vector_or_matrix_or_ledger",
+    "scope": "snapshot_region_or_edge",
+    "independent_method": "independent_linear_algebra",
+    "formula": "positive-support scaled eigenvectors lifted through exact zero-support Schur solve",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "pu",
+    "equation_reference": "T-C2A-001:028",
+    "tolerance": 1.0e-7
+  },
+  "E.bounds_violation_blocks": {
+    "shape": "scalar_or_status",
+    "scope": "case_or_horizon",
+    "independent_method": "independent_raw_prices_durations_and_solved_quantities",
+    "formula": "max(0,n0-n_inst,n_inst-nmax,n_on-a_conn*n_inst,-n_on)",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "count_or_index",
+    "equation_reference": "T-C2A-001:028",
+    "tolerance": 1.0e-7
+  },
+  "E.S_op_magnitude_v1": {
+    "shape": "vector_or_matrix_or_ledger",
+    "scope": "snapshot_region_or_edge",
+    "independent_method": "independent_raw_stamp_and_solved_blocks",
+    "formula": "sum_GFL mu_fl*abs(AC_discharge_or_generation-AC_charge)/base",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "MW_per_system_MVA",
+    "equation_reference": "T-C2A-001:028",
+    "tolerance": 1.0e-7
+  },
+  "D.order": {
+    "shape": "scalar_or_status",
+    "scope": "snapshot_region_or_edge",
+    "independent_method": "independent_linear_algebra",
+    "formula": "declared truncation order m",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "count_or_index",
+    "equation_reference": "T-C2A-025:028",
+    "tolerance": 1.0e-7
+  },
+  "F.solver": {
+    "shape": "scalar_or_status",
+    "scope": "case_or_horizon",
+    "independent_method": "recorded_runtime_solver_attribute",
+    "formula": "actual runtime attribute solver; unsupported values explicitly null",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "status",
+    "equation_reference": "T-C2A-001:028",
+    "tolerance": 1.0e-7
+  },
+  "F.solver_time_s": {
+    "shape": "scalar_or_status",
+    "scope": "case_or_horizon",
+    "independent_method": "recorded_runtime_solver_attribute",
+    "formula": "actual runtime attribute solver_time_s; unsupported values explicitly null",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "s",
+    "equation_reference": "T-C2A-001:028",
+    "tolerance": 1.0e-7
+  },
+  "E.curtailment_MWh": {
+    "shape": "scalar_or_status",
+    "scope": "case_or_horizon",
+    "independent_method": "independent_raw_prices_durations_and_solved_quantities",
+    "formula": "sum(dispatch_weight*max(0,P_block*n_on*a_res-PG_MW))",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "MWh",
+    "equation_reference": "T-C2A-001:028",
+    "tolerance": 1.0e-7
+  },
+  "B.participation": {
+    "shape": "vector_or_matrix_or_ledger",
+    "scope": "snapshot_region_or_edge",
+    "independent_method": "independent_linear_algebra",
+    "formula": "row sums of squared critical lifted modes divided by total squared mode magnitude",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "dimensionless",
+    "equation_reference": "T-C2A-001:028",
+    "tolerance": 1.0e-7
+  },
+  "B.gamma": {
+    "shape": "scalar_or_status",
+    "scope": "snapshot_region_or_edge",
+    "independent_method": "independent_linear_algebra",
+    "formula": "lambda_min(Sa^-1/2*(Baa-Baz*Bzz_dagger*Bza)*Sa^-1/2), with PSD and range tests",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "dimensionless",
+    "equation_reference": "T-C2A-004/006",
+    "tolerance": 1.0e-7
+  },
+  "D.spectral_radius": {
+    "shape": "scalar_or_status",
+    "scope": "snapshot_region_or_edge",
+    "independent_method": "independent_linear_algebra",
+    "formula": "max(abs(eigvals(A^-1*Delta)))",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "dimensionless",
+    "equation_reference": "T-C2A-025:028",
+    "tolerance": 1.0e-7
+  },
+  "C.Wp": {
+    "shape": "vector_or_matrix_or_ledger",
+    "scope": "snapshot_region_or_edge",
+    "independent_method": "independent_linear_algebra",
+    "formula": "W_offline*p",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "MW_per_system_MVA",
+    "equation_reference": "T-C2A-001:028",
+    "tolerance": 1.0e-7
+  },
+  "B.eigen_residual": {
+    "shape": "scalar_or_status",
+    "scope": "snapshot_region_or_edge",
+    "independent_method": "independent_linear_algebra",
+    "formula": "norm(B*V-Diagonal(p)*V*gamma,Inf)",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "pu",
+    "equation_reference": "T-C2A-001:028",
+    "tolerance": 1.0e-7
+  },
+  "D.exact_remainder_residual": {
+    "shape": "scalar_or_status",
+    "scope": "snapshot_region_or_edge",
+    "independent_method": "independent_linear_algebra",
+    "formula": "norm(inv(A+Delta)-truncation-(-E)^(m+1)*(I+E)^-1*A^-1,Inf)",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "pu_impedance",
+    "equation_reference": "T-C2A-025:028",
+    "tolerance": 1.0e-7
+  },
+  "A.exposure_roundoff_correction": {
+    "shape": "scalar_or_status",
+    "scope": "snapshot_region_or_edge",
+    "independent_method": "max(0,-minimum(raw_p)); negative solver roundoff <= tolerance projected to zero",
+    "formula": "max(0,-min(raw_p)); only negative solver roundoff <= tolerance projected to zero",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "MW_per_system_MVA",
+    "equation_reference": "T-C2A-001:028",
+    "tolerance": 1.0e-7
+  },
+  "B.multiplicity": {
+    "shape": "scalar_or_status",
+    "scope": "snapshot_region_or_edge",
+    "independent_method": "independent_linear_algebra",
+    "formula": "count(abs(finite_eigenvalue-gamma)<=scaled_tolerance)",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "count_or_index",
+    "equation_reference": "T-C2A-001:028",
+    "tolerance": 1.0e-7
+  },
+  "A.M": {
+    "shape": "vector_or_matrix_or_ledger",
+    "scope": "snapshot_region_or_edge",
+    "independent_method": "independent_raw_stamp_and_solved_blocks",
+    "formula": "B-alpha*Diagonal(p)",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "pu",
+    "equation_reference": "T-C2A-001:028",
+    "tolerance": 1.0e-7
+  },
+  "A.M_eigenvalues": {
+    "shape": "vector_or_matrix_or_ledger",
+    "scope": "snapshot_region_or_edge",
+    "independent_method": "independent_linear_algebra",
+    "formula": "eigvals(Symmetric(B-alpha*Diagonal(p)))",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "pu",
+    "equation_reference": "T-C2A-001:028",
+    "tolerance": 1.0e-7
+  },
+  "E.S_I_v1": {
+    "shape": "scalar_or_status",
+    "scope": "snapshot_region_or_edge",
+    "independent_method": "independent_linear_algebra",
+    "formula": "undefined without current capability and voltage normalization",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "pu",
+    "equation_reference": "T-C2A-001:028",
+    "tolerance": 1.0e-7
+  },
+  "D.series_converges": {
+    "shape": "scalar_or_status",
+    "scope": "snapshot_region_or_edge",
+    "independent_method": "independent_linear_algebra",
+    "formula": "spectral_radius(E)<1",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "boolean",
+    "equation_reference": "T-C2A-025:028",
+    "tolerance": 1.0e-7
+  },
+  "B.range_residual": {
+    "shape": "scalar_or_status",
+    "scope": "snapshot_region_or_edge",
+    "independent_method": "independent_linear_algebra",
+    "formula": "norm(Bzz*(Bzz_dagger*Bza)-Bza,Inf)",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "pu",
+    "equation_reference": "T-C2A-001:028",
+    "tolerance": 1.0e-7
+  },
+  "C.gSCR_external": {
+    "shape": "scalar_or_status",
+    "scope": "snapshot_region_or_edge",
+    "independent_method": "independent_linear_algebra",
+    "formula": "not_comparable: source-specific fault/compensation/denominator convention is not supplied",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "pu",
+    "equation_reference": "T-C2A-001:028",
+    "tolerance": 1.0e-7
+  },
+  "C.SCR_external": {
+    "shape": "scalar_or_status",
+    "scope": "snapshot_region_or_edge",
+    "independent_method": "independent_linear_algebra",
+    "formula": "not_comparable: source-specific fault/compensation/denominator convention is not supplied",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "pu",
+    "equation_reference": "T-C2A-001:028",
+    "tolerance": 1.0e-7
+  },
+  "C.M1": {
+    "shape": "scalar_or_status",
+    "scope": "snapshot_region_or_edge",
+    "independent_method": "independent_linear_algebra",
+    "formula": "B>=Bmin && inv(B)<=inv(Bmin) && inv(Bmin)*p<=1/alpha",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "boolean",
+    "equation_reference": "T-C2A-001:028",
+    "tolerance": 1.0e-7
+  },
+  "A.positive_offdiagonal": {
+    "shape": "scalar_or_status",
+    "scope": "snapshot_region_or_edge",
+    "independent_method": "independent_linear_algebra",
+    "formula": "max(0,max_{i!=j} Bij)",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "pu",
+    "equation_reference": "T-C2A-001:028",
+    "tolerance": 1.0e-7
+  },
+  "B.G3_edges_complete": {
+    "shape": "scalar_or_status",
+    "scope": "snapshot_region_or_edge",
+    "independent_method": "independent_linear_algebra",
+    "formula": "unique witness edge set equals all nonzero offdiagonal pairs",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "pu",
+    "equation_reference": "T-C2A-001:028",
+    "tolerance": 1.0e-7
+  },
+  "C.M1_upper_burden": {
+    "shape": "vector_or_matrix_or_ledger",
+    "scope": "snapshot_region_or_edge",
+    "independent_method": "independent_linear_algebra",
+    "formula": "(Bmin\\I)*p, enforced B>=Bmin",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "dimensionless",
+    "equation_reference": "T-C2A-001:028",
+    "tolerance": 1.0e-7
+  },
+  "C.M2": {
+    "shape": "scalar_or_status",
+    "scope": "snapshot_region_or_edge",
+    "independent_method": "independent_linear_algebra",
+    "formula": "min(B*ones(n)-alpha*W*p)>=-scaled_tolerance",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "boolean",
+    "equation_reference": "T-C2A-001:028",
+    "tolerance": 1.0e-7
+  },
+  "C.equivalent_strength": {
+    "shape": "vector_or_matrix_or_ledger",
+    "scope": "snapshot_region_or_edge",
+    "independent_method": "independent_linear_algebra",
+    "formula": "1/Zii",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "pu_admittance",
+    "equation_reference": "T-C2A-001:028",
+    "tolerance": 1.0e-7
+  },
+  "A.Y_imag": {
+    "shape": "vector_or_matrix_or_ledger",
+    "scope": "snapshot_region_or_edge",
+    "independent_method": "independent_raw_stamp_and_solved_blocks",
+    "formula": "Im(Y) from reciprocal physical series and terminal charging/shunt stamps",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "pu",
+    "equation_reference": "T-C2A-001:028",
+    "tolerance": 1.0e-7
+  },
+  "B.G3_node_budget": {
+    "shape": "vector_or_matrix_or_ledger",
+    "scope": "snapshot_region_or_edge",
+    "independent_method": "independent_linear_algebra",
+    "formula": "mii-sum_j(qij)",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "pu_admittance",
+    "equation_reference": "T-C2A-001:028",
+    "tolerance": 1.0e-7
+  },
+  "E.integrality_residual": {
+    "shape": "scalar_or_status",
+    "scope": "case_or_horizon",
+    "independent_method": "independent_raw_prices_durations_and_solved_quantities",
+    "formula": "max abs(block/event count-round(count)), undefined in continuous relaxation",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "count_or_index",
+    "equation_reference": "T-C2A-001:028",
+    "tolerance": 1.0e-7
+  },
+  "F.termination": {
+    "shape": "scalar_or_status",
+    "scope": "case_or_horizon",
+    "independent_method": "recorded_runtime_solver_attribute",
+    "formula": "actual runtime attribute termination; unsupported values explicitly null",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "status",
+    "equation_reference": "T-C2A-001:028",
+    "tolerance": 1.0e-7
+  },
+  "C.M2_rows": {
+    "shape": "vector_or_matrix_or_ledger",
+    "scope": "snapshot_region_or_edge",
+    "independent_method": "independent_linear_algebra",
+    "formula": "B*1-alpha*W*p",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "pu_admittance",
+    "equation_reference": "T-C2A-001:028",
+    "tolerance": 1.0e-7
+  },
+  "B.G1": {
+    "shape": "scalar_or_status",
+    "scope": "snapshot_region_or_edge",
+    "independent_method": "independent_linear_algebra",
+    "formula": "min(M*ones(n))>=-scaled_tolerance",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "boolean",
+    "equation_reference": "T-C2A-001:028",
+    "tolerance": 1.0e-7
+  },
+  "A.schur_residual": {
+    "shape": "scalar_or_status",
+    "scope": "snapshot_region_or_edge",
+    "independent_method": "independent_raw_stamp_and_solved_blocks",
+    "formula": "norm(Lee*(Lee\\Ler)-Ler,Inf)",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "pu",
+    "equation_reference": "T-C2A-001:028",
+    "tolerance": 1.0e-7
+  },
+  "C.Z_diag": {
+    "shape": "vector_or_matrix_or_ledger",
+    "scope": "snapshot_region_or_edge",
+    "independent_method": "independent_linear_algebra",
+    "formula": "diag(B\\I)",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "pu_impedance",
+    "equation_reference": "T-C2A-001:028",
+    "tolerance": 1.0e-7
+  },
+  "D.E2_conservative_rejection": {
+    "shape": "scalar_or_status",
+    "scope": "snapshot_region_or_edge",
+    "independent_method": "independent_linear_algebra",
+    "formula": "estimated row burden fails while exact M0 passes",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "boolean",
+    "equation_reference": "T-C2A-001:028",
+    "tolerance": 1.0e-7
+  },
+  "B.gamma_margin": {
+    "shape": "scalar_or_status",
+    "scope": "snapshot_region_or_edge",
+    "independent_method": "independent_linear_algebra",
+    "formula": "smallest finite generalized eigenvalue minus alpha",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "dimensionless",
+    "equation_reference": "T-C2A-001:028",
+    "tolerance": 1.0e-7
+  },
+  "D.woodbury_residual": {
+    "shape": "scalar_or_status",
+    "scope": "snapshot_region_or_edge",
+    "independent_method": "independent_linear_algebra",
+    "formula": "norm(inv(A)-inv(A)*Delta*(I+inv(A)*Delta)^-1*inv(A)-inv(A+Delta),Inf)",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "pu_impedance",
+    "equation_reference": "T-C2A-025:028",
+    "tolerance": 1.0e-7
+  },
+  "D.one_sided_safety_certified": {
+    "shape": "scalar_or_status",
+    "scope": "snapshot_region_or_edge",
+    "independent_method": "independent_linear_algebra",
+    "formula": "false: diagnostic does not enforce a one-sided planning margin",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "boolean",
+    "equation_reference": "T-C2A-025:028",
+    "tolerance": 1.0e-7
+  },
+  "E.no_load": {
+    "shape": "scalar_or_status",
+    "scope": "case_or_horizon",
+    "independent_method": "independent_raw_prices_durations_and_solved_quantities",
+    "formula": "sum(dispatch_weight*declared constant generation-cost term)",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "declared_currency_per_represented_horizon",
+    "equation_reference": "T-C2A-001:028",
+    "tolerance": 1.0e-7
+  },
+  "C.MSCR_external": {
+    "shape": "scalar_or_status",
+    "scope": "snapshot_region_or_edge",
+    "independent_method": "independent_linear_algebra",
+    "formula": "not_comparable: source-specific fault/compensation/denominator convention is not supplied",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "pu",
+    "equation_reference": "T-C2A-001:028",
+    "tolerance": 1.0e-7
+  },
+  "B.G3_q": {
+    "shape": "vector_or_matrix_or_ledger",
+    "scope": "snapshot_region_or_edge",
+    "independent_method": "independent_linear_algebra",
+    "formula": "both oriented endpoint allocations qij,qji for every signed edge",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "pu_admittance",
+    "equation_reference": "T-C2A-001:028",
+    "tolerance": 1.0e-7
+  },
+  "E.storage": {
+    "shape": "scalar_or_status",
+    "scope": "case_or_horizon",
+    "independent_method": "independent_raw_prices_durations_and_solved_quantities",
+    "formula": "sum(dispatch_weight*storage_price*AC_discharge_MW)",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "declared_currency_per_represented_horizon",
+    "equation_reference": "T-C2A-001:028",
+    "tolerance": 1.0e-7
+  },
+  "E.investment": {
+    "shape": "scalar_or_status",
+    "scope": "case_or_horizon",
+    "independent_method": "independent_raw_prices_durations_and_solved_quantities",
+    "formula": "sum(price_inv_per_MW*P_block*(n_inst-n0)*investment_fraction), once",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "declared_currency_per_represented_horizon",
+    "equation_reference": "T-C2A-001:028",
+    "tolerance": 1.0e-7
+  },
+  "B.G3_reconstruction_residual": {
+    "shape": "scalar_or_status",
+    "scope": "snapshot_region_or_edge",
+    "independent_method": "independent_linear_algebra",
+    "formula": "norm(M-sum(embedded edge Q)-Diagonal(node_residue),Inf)",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "pu",
+    "equation_reference": "T-C2A-001:028",
+    "tolerance": 1.0e-7
+  },
+  "B.G3": {
+    "shape": "scalar_or_status",
+    "scope": "snapshot_region_or_edge",
+    "independent_method": "independent_linear_algebra",
+    "formula": "complete signed edges && nonnegative q/cone products/node residues && exact reconstruction within tolerance",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "boolean",
+    "equation_reference": "T-C2A-001:028",
+    "tolerance": 1.0e-7
+  },
+  "D.remainder_bound": {
+    "shape": "scalar_or_status",
+    "scope": "snapshot_region_or_edge",
+    "independent_method": "independent_linear_algebra",
+    "formula": "norm(E)^(m+1)*norm(inv(A))/(1-norm(E)), norm(E)<1",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "pu_impedance",
+    "equation_reference": "T-C2A-025:028",
+    "tolerance": 1.0e-7
+  },
+  "F.build_wall_s": {
+    "shape": "scalar_or_status",
+    "scope": "case_or_horizon",
+    "independent_method": "recorded_runtime_solver_attribute",
+    "formula": "actual runtime attribute build_wall_s; unsupported values explicitly null",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "s",
+    "equation_reference": "T-C2A-001:028",
+    "tolerance": 1.0e-7
+  },
+  "A.affine_reconstruction_residual": {
+    "shape": "scalar_or_status",
+    "scope": "snapshot_region_or_edge",
+    "independent_method": "independent_raw_stamp_and_solved_blocks",
+    "formula": "max(norm(Braw-Baff),norm(Mraw-Maff),norm(praw-paff))",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "pu",
+    "equation_reference": "T-C2A-001:028",
+    "tolerance": 1.0e-7
+  },
+  "D.trust_region_norm_valid": {
+    "shape": "scalar_or_status",
+    "scope": "snapshot_region_or_edge",
+    "independent_method": "independent_linear_algebra",
+    "formula": "opnorm(E,Inf)<1",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "boolean",
+    "equation_reference": "T-C2A-025:028",
+    "tolerance": 1.0e-7
+  },
+  "A.Y_real": {
+    "shape": "vector_or_matrix_or_ledger",
+    "scope": "snapshot_region_or_edge",
+    "independent_method": "independent_raw_stamp_and_solved_blocks",
+    "formula": "Re(Y) from reciprocal physical series and terminal charging/shunt stamps",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "pu",
+    "equation_reference": "T-C2A-001:028",
+    "tolerance": 1.0e-7
+  },
+  "B.G0": {
+    "shape": "scalar_or_status",
+    "scope": "snapshot_region_or_edge",
+    "independent_method": "independent_linear_algebra",
+    "formula": "eigmin(M)>=-scaled_tolerance",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "boolean",
+    "equation_reference": "T-C2A-005",
+    "tolerance": 1.0e-7
+  },
+  "C.M1_order_violation": {
+    "shape": "scalar_or_status",
+    "scope": "snapshot_region_or_edge",
+    "independent_method": "independent_linear_algebra",
+    "formula": "max(0,max(inv(B)-inv(Bmin)))",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "pu_impedance",
+    "equation_reference": "T-C2A-001:028",
+    "tolerance": 1.0e-7
+  },
+  "A.condition": {
+    "shape": "scalar_or_status",
+    "scope": "snapshot_region_or_edge",
+    "independent_method": "independent_linear_algebra",
+    "formula": "cond(B,2)",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "dimensionless",
+    "equation_reference": "T-C2A-001:028",
+    "tolerance": 1.0e-7
+  },
+  "B.G1_false_rejection": {
+    "shape": "scalar_or_status",
+    "scope": "snapshot_region_or_edge",
+    "independent_method": "independent_linear_algebra",
+    "formula": "G0 && !G1",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "boolean",
+    "equation_reference": "T-C2A-001:028",
+    "tolerance": 1.0e-7
+  },
+  "D.status": {
+    "shape": "scalar_or_status",
+    "scope": "snapshot_region_or_edge",
+    "independent_method": "independent_linear_algebra",
+    "formula": "exploratory_noncertifying or explicit inverse-domain failure",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "status",
+    "equation_reference": "T-C2A-025:028",
+    "tolerance": 1.0e-7
+  },
+  "C.rho_Zp": {
+    "shape": "vector_or_matrix_or_ledger",
+    "scope": "snapshot_region_or_edge",
+    "independent_method": "independent_linear_algebra",
+    "formula": "1/(B\\p)i, positive denominator only",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "dimensionless",
+    "equation_reference": "T-C2A-001:028",
+    "tolerance": 1.0e-7
+  },
+  "E.power_balance_MW": {
+    "shape": "scalar_or_status",
+    "scope": "case_or_horizon",
+    "independent_method": "independent_raw_prices_durations_and_solved_quantities",
+    "formula": "max_bus_snapshot abs(outgoing flows-generation+storage net consumption+load)",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "MW",
+    "equation_reference": "T-C2A-001:028",
+    "tolerance": 1.0e-7
+  },
+  "A.producer_B0_residual": {
+    "shape": "scalar_or_status",
+    "scope": "snapshot_region_or_edge",
+    "independent_method": "independent_raw_stamp_and_solved_blocks",
+    "formula": "norm(B0_independent-B0_producer,Inf)",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "pu",
+    "equation_reference": "T-C2A-001:028",
+    "tolerance": 1.0e-7
+  },
+  "B.G0_eigmin": {
+    "shape": "scalar_or_status",
+    "scope": "snapshot_region_or_edge",
+    "independent_method": "independent_linear_algebra",
+    "formula": "eigmin(B-alpha*Diagonal(p))",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "pu",
+    "equation_reference": "T-C2A-001:028",
+    "tolerance": 1.0e-7
+  },
+  "C.solve_residual": {
+    "shape": "scalar_or_status",
+    "scope": "snapshot_region_or_edge",
+    "independent_method": "independent_linear_algebra",
+    "formula": "norm(B*(B\\p)-p,Inf)",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "pu",
+    "equation_reference": "T-C2A-001:028",
+    "tolerance": 1.0e-7
+  },
+  "F.primal_status": {
+    "shape": "scalar_or_status",
+    "scope": "case_or_horizon",
+    "independent_method": "recorded_runtime_solver_attribute",
+    "formula": "actual runtime attribute primal_status; unsupported values explicitly null",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "status",
+    "equation_reference": "T-C2A-001:028",
+    "tolerance": 1.0e-7
+  },
+  "F.bound": {
+    "shape": "scalar_or_status",
+    "scope": "case_or_horizon",
+    "independent_method": "recorded_runtime_solver_attribute",
+    "formula": "actual runtime attribute bound; unsupported values explicitly null",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "declared_currency_per_represented_horizon",
+    "equation_reference": "T-C2A-001:028",
+    "tolerance": 1.0e-7
+  },
+  "A.connection_violation": {
+    "shape": "scalar_or_status",
+    "scope": "snapshot_region_or_edge",
+    "independent_method": "independent_raw_stamp_and_solved_blocks",
+    "formula": "max(0,n_on-a_conn*n_inst,-n_on)",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "pu",
+    "equation_reference": "T-C2A-001:028",
+    "tolerance": 1.0e-7
+  },
+  "A.S_diag": {
+    "shape": "vector_or_matrix_or_ledger",
+    "scope": "snapshot_region_or_edge",
+    "independent_method": "independent_raw_stamp_and_solved_blocks",
+    "formula": "sum_GFL(mu_fl*P_block_MW*n_on/base_MVA) by region",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "MW_per_system_MVA",
+    "equation_reference": "T-C2A-001:028",
+    "tolerance": 1.0e-7
+  },
+  "D.E2_false_acceptance": {
+    "shape": "scalar_or_status",
+    "scope": "snapshot_region_or_edge",
+    "independent_method": "independent_linear_algebra",
+    "formula": "estimated row burden passes while exact M0 fails",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "boolean",
+    "equation_reference": "T-C2A-001:028",
+    "tolerance": 1.0e-7
+  },
+  "F.dual_cone_violation": {
+    "shape": "scalar_or_status",
+    "scope": "snapshot_region_or_edge",
+    "independent_method": "solver_dual_cone_eigen_or_RSOC_product_and_primal_dual_inner_product",
+    "formula": "max PSD-dual negative eigenvalue or rotated-dual cone product/sign violation",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "dual_cone_coordinates",
+    "equation_reference": "T-C2A-001:028",
+    "tolerance": 1.0e-7
+  },
+  "B.G3_valid": {
+    "shape": "scalar_or_status",
+    "scope": "snapshot_region_or_edge",
+    "independent_method": "independent_linear_algebra",
+    "formula": "complete signed edges && nonnegative q/cone products/node residues && reconstruction within tolerance",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "pu",
+    "equation_reference": "T-C2A-001:028",
+    "tolerance": 1.0e-7
+  },
+  "C.LOCAL_eigmin": {
+    "shape": "vector_or_matrix_or_ledger",
+    "scope": "snapshot_region_or_edge",
+    "independent_method": "independent_linear_algebra",
+    "formula": "[eigmin(B-alpha*pi*ei*ei') for each i]",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "pu_admittance",
+    "equation_reference": "T-C2A-001:028",
+    "tolerance": 1.0e-7
+  },
+  "C.M1_lower_violation": {
+    "shape": "scalar_or_status",
+    "scope": "snapshot_region_or_edge",
+    "independent_method": "independent_linear_algebra",
+    "formula": "max(0,max(Bmin-B))",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "pu_admittance",
+    "equation_reference": "T-C2A-001:028",
+    "tolerance": 1.0e-7
+  },
+  "B.G1_binding": {
+    "shape": "scalar_or_status",
+    "scope": "snapshot_region_or_edge",
+    "independent_method": "independent_linear_algebra",
+    "formula": "abs.(M*ones(n))<=scaled_tolerance",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "boolean",
+    "equation_reference": "T-C2A-001:028",
+    "tolerance": 1.0e-7
+  },
+  "B.G2_rows": {
+    "shape": "vector_or_matrix_or_ledger",
+    "scope": "snapshot_region_or_edge",
+    "independent_method": "independent_linear_algebra",
+    "formula": "(B-alpha*Diagonal(p))*r_offline",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "pu",
+    "equation_reference": "T-C2A-001:028",
+    "tolerance": 1.0e-7
+  },
+  "A.rank": {
+    "shape": "scalar_or_status",
+    "scope": "snapshot_region_or_edge",
+    "independent_method": "independent_linear_algebra",
+    "formula": "count(abs(lambda_B)>scaled_tolerance)",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "count",
+    "equation_reference": "T-C2A-001:028",
+    "tolerance": 1.0e-7
+  },
+  "A.source_base_residual": {
+    "shape": "scalar_or_status",
+    "scope": "snapshot_region_or_edge",
+    "independent_method": "independent_raw_stamp_and_solved_blocks",
+    "formula": "max(abs(b_block_declared-native_MVA/(base_MVA*x_native)))",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "pu",
+    "equation_reference": "T-C2A-001:028",
+    "tolerance": 1.0e-7
+  },
+  "A.inertia": {
+    "shape": "vector_or_matrix_or_ledger",
+    "scope": "snapshot_region_or_edge",
+    "independent_method": "independent_linear_algebra",
+    "formula": "counts(lambda_B<-tau,abs(lambda_B)<=tau,lambda_B>tau)",
+    "domain": "per_record_status_and_frozen_theorem_assumptions",
+    "unit": "count",
+    "equation_reference": "T-C2A-001:028",
+    "tolerance": 1.0e-7
+  }
+}

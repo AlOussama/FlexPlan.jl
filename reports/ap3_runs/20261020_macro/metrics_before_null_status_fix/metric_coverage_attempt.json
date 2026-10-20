@@ -1,0 +1,884 @@
+{
+  "metrics": {
+    "A.symmetry": {
+      "records": 687,
+      "statuses": [
+        "valid"
+      ],
+      "computed": 687
+    },
+    "C.rho_diag": {
+      "records": 687,
+      "statuses": [
+        "valid",
+        "valid_with_undefined_zero_denominators"
+      ],
+      "computed": 687
+    },
+    "D.E_norm_inf": {
+      "records": 687,
+      "statuses": [
+        "exploratory_noncertifying"
+      ],
+      "computed": 687
+    },
+    "C.MIIF": {
+      "records": 687,
+      "statuses": [
+        "valid"
+      ],
+      "computed": 687
+    },
+    "D.truncation": {
+      "records": 687,
+      "statuses": [
+        "exploratory_noncertifying"
+      ],
+      "computed": 687
+    },
+    "A.source_ledger": {
+      "records": 687,
+      "statuses": [
+        "valid"
+      ],
+      "computed": 687
+    },
+    "A.network_domain": {
+      "records": 687,
+      "statuses": [
+        "valid"
+      ],
+      "computed": 687
+    },
+    "A.L": {
+      "records": 687,
+      "statuses": [
+        "valid"
+      ],
+      "computed": 687
+    },
+    "E.events": {
+      "records": 124,
+      "statuses": [
+        "valid"
+      ],
+      "computed": 124
+    },
+    "B.G3_cone_product_slacks": {
+      "records": 687,
+      "statuses": [
+        "valid"
+      ],
+      "computed": 687
+    },
+    "B.G2": {
+      "records": 687,
+      "statuses": [
+        "valid"
+      ],
+      "computed": 687
+    },
+    "A.B0": {
+      "records": 687,
+      "statuses": [
+        "valid"
+      ],
+      "computed": 687
+    },
+    "C.Zp": {
+      "records": 687,
+      "statuses": [
+        "valid"
+      ],
+      "computed": 687
+    },
+    "E.S_nom_v1": {
+      "records": 687,
+      "statuses": [
+        "valid"
+      ],
+      "computed": 687
+    },
+    "E.generation": {
+      "records": 124,
+      "statuses": [
+        "valid"
+      ],
+      "computed": 124
+    },
+    "A.nullity": {
+      "records": 687,
+      "statuses": [
+        "valid"
+      ],
+      "computed": 687
+    },
+    "C.inverse_min": {
+      "records": 687,
+      "statuses": [
+        "valid"
+      ],
+      "computed": 687
+    },
+    "B.G3_status": {
+      "records": 687,
+      "statuses": [
+        "valid"
+      ],
+      "computed": 687
+    },
+    "E.UC_transition_residual": {
+      "records": 124,
+      "statuses": [
+        "valid"
+      ],
+      "computed": 124
+    },
+    "F.dual_status": {
+      "records": 124,
+      "statuses": [
+        "valid"
+      ],
+      "computed": 124
+    },
+    "F.simplex_iterations": {
+      "records": 124,
+      "statuses": [
+        "not_available_from_solver",
+        "valid"
+      ],
+      "computed": 90
+    },
+    "A.Z_class": {
+      "records": 687,
+      "statuses": [
+        "valid"
+      ],
+      "computed": 687
+    },
+    "E.thermal_violation_MW": {
+      "records": 124,
+      "statuses": [
+        "valid"
+      ],
+      "computed": 124
+    },
+    "A.B_eigenvalues": {
+      "records": 687,
+      "statuses": [
+        "valid"
+      ],
+      "computed": 687
+    },
+    "F.relative_gap": {
+      "records": 124,
+      "statuses": [
+        "not_available_from_solver",
+        "valid"
+      ],
+      "computed": 106
+    },
+    "F.solve_wall_s": {
+      "records": 124,
+      "statuses": [
+        "valid"
+      ],
+      "computed": 124
+    },
+    "C.ESCR_external": {
+      "records": 687,
+      "statuses": [
+        "not_comparable_missing_source_fault_convention"
+      ],
+      "computed": 0
+    },
+    "E.FOM": {
+      "records": 124,
+      "statuses": [
+        "valid"
+      ],
+      "computed": 124
+    },
+    "F.complementarity_residual": {
+      "records": 687,
+      "statuses": [
+        "not_recorded_in_earlier_attempt",
+        "valid"
+      ],
+      "computed": 102
+    },
+    "A.B": {
+      "records": 687,
+      "statuses": [
+        "valid"
+      ],
+      "computed": 687
+    },
+    "C.M0_slack": {
+      "records": 687,
+      "statuses": [
+        "valid"
+      ],
+      "computed": 687
+    },
+    "E.portfolio": {
+      "records": 124,
+      "statuses": [
+        "valid"
+      ],
+      "computed": 124
+    },
+    "B.G3_edges": {
+      "records": 687,
+      "statuses": [
+        "valid"
+      ],
+      "computed": 687
+    },
+    "F.model": {
+      "records": 124,
+      "statuses": [
+        "valid"
+      ],
+      "computed": 124
+    },
+    "C.M0": {
+      "records": 687,
+      "statuses": [
+        "valid"
+      ],
+      "computed": 687
+    },
+    "F.barrier_iterations": {
+      "records": 124,
+      "statuses": [
+        "not_available_from_solver",
+        "valid"
+      ],
+      "computed": 63
+    },
+    "E.SOC_residual_MWh": {
+      "records": 124,
+      "statuses": [
+        "valid"
+      ],
+      "computed": 124
+    },
+    "D.actual_error": {
+      "records": 687,
+      "statuses": [
+        "exploratory_noncertifying"
+      ],
+      "computed": 687
+    },
+    "E.objective_residual": {
+      "records": 124,
+      "statuses": [
+        "valid"
+      ],
+      "computed": 124
+    },
+    "C.Z": {
+      "records": 687,
+      "statuses": [
+        "valid"
+      ],
+      "computed": 687
+    },
+    "E.terminal_residual_MWh": {
+      "records": 124,
+      "statuses": [
+        "valid"
+      ],
+      "computed": 124
+    },
+    "C.LOCAL": {
+      "records": 687,
+      "statuses": [
+        "valid"
+      ],
+      "computed": 687
+    },
+    "B.G1_rows": {
+      "records": 687,
+      "statuses": [
+        "valid"
+      ],
+      "computed": 687
+    },
+    "B.G2_binding": {
+      "records": 687,
+      "statuses": [
+        "valid"
+      ],
+      "computed": 687
+    },
+    "B.G3_minimum_q": {
+      "records": 687,
+      "statuses": [
+        "valid"
+      ],
+      "computed": 687
+    },
+    "F.nodes": {
+      "records": 124,
+      "statuses": [
+        "not_available_from_solver",
+        "valid"
+      ],
+      "computed": 53
+    },
+    "E.S_on_v1": {
+      "records": 687,
+      "statuses": [
+        "valid"
+      ],
+      "computed": 687
+    },
+    "C.equivalent_strength_MVA": {
+      "records": 687,
+      "statuses": [
+        "valid"
+      ],
+      "computed": 687
+    },
+    "B.eigenspace": {
+      "records": 687,
+      "statuses": [
+        "valid"
+      ],
+      "computed": 687
+    },
+    "E.bounds_violation_blocks": {
+      "records": 124,
+      "statuses": [
+        "valid"
+      ],
+      "computed": 124
+    },
+    "E.S_op_magnitude_v1": {
+      "records": 687,
+      "statuses": [
+        "valid"
+      ],
+      "computed": 687
+    },
+    "D.order": {
+      "records": 687,
+      "statuses": [
+        "exploratory_noncertifying"
+      ],
+      "computed": 687
+    },
+    "F.solver": {
+      "records": 124,
+      "statuses": [
+        "valid"
+      ],
+      "computed": 124
+    },
+    "F.solver_time_s": {
+      "records": 124,
+      "statuses": [
+        "valid"
+      ],
+      "computed": 124
+    },
+    "E.curtailment_MWh": {
+      "records": 124,
+      "statuses": [
+        "valid"
+      ],
+      "computed": 124
+    },
+    "B.participation": {
+      "records": 687,
+      "statuses": [
+        "valid"
+      ],
+      "computed": 687
+    },
+    "B.gamma": {
+      "records": 687,
+      "statuses": [
+        "valid"
+      ],
+      "computed": 687
+    },
+    "D.spectral_radius": {
+      "records": 687,
+      "statuses": [
+        "exploratory_noncertifying"
+      ],
+      "computed": 687
+    },
+    "C.Wp": {
+      "records": 687,
+      "statuses": [
+        "valid"
+      ],
+      "computed": 687
+    },
+    "B.eigen_residual": {
+      "records": 687,
+      "statuses": [
+        "valid"
+      ],
+      "computed": 687
+    },
+    "D.exact_remainder_residual": {
+      "records": 687,
+      "statuses": [
+        "exploratory_noncertifying"
+      ],
+      "computed": 687
+    },
+    "A.exposure_roundoff_correction": {
+      "records": 687,
+      "statuses": [
+        "valid"
+      ],
+      "computed": 687
+    },
+    "B.multiplicity": {
+      "records": 687,
+      "statuses": [
+        "valid"
+      ],
+      "computed": 687
+    },
+    "A.M": {
+      "records": 687,
+      "statuses": [
+        "valid"
+      ],
+      "computed": 687
+    },
+    "A.M_eigenvalues": {
+      "records": 687,
+      "statuses": [
+        "valid"
+      ],
+      "computed": 687
+    },
+    "E.S_I_v1": {
+      "records": 687,
+      "statuses": [
+        "blocked_missing_current_capability_voltage_convention"
+      ],
+      "computed": 0
+    },
+    "D.series_converges": {
+      "records": 687,
+      "statuses": [
+        "exploratory_noncertifying"
+      ],
+      "computed": 687
+    },
+    "B.range_residual": {
+      "records": 687,
+      "statuses": [
+        "valid"
+      ],
+      "computed": 687
+    },
+    "C.gSCR_external": {
+      "records": 687,
+      "statuses": [
+        "not_comparable_missing_source_fault_convention"
+      ],
+      "computed": 0
+    },
+    "C.SCR_external": {
+      "records": 687,
+      "statuses": [
+        "not_comparable_missing_source_fault_convention"
+      ],
+      "computed": 0
+    },
+    "C.M1": {
+      "records": 687,
+      "statuses": [
+        "domain_invalid_unenforced_Bmin",
+        "valid"
+      ],
+      "computed": 687
+    },
+    "A.positive_offdiagonal": {
+      "records": 687,
+      "statuses": [
+        "valid"
+      ],
+      "computed": 687
+    },
+    "B.G3_edges_complete": {
+      "records": 687,
+      "statuses": [
+        "valid"
+      ],
+      "computed": 687
+    },
+    "C.M1_upper_burden": {
+      "records": 687,
+      "statuses": [
+        "domain_invalid_unenforced_Bmin",
+        "valid"
+      ],
+      "computed": 687
+    },
+    "C.M2": {
+      "records": 687,
+      "statuses": [
+        "valid"
+      ],
+      "computed": 687
+    },
+    "C.equivalent_strength": {
+      "records": 687,
+      "statuses": [
+        "valid"
+      ],
+      "computed": 687
+    },
+    "A.Y_imag": {
+      "records": 687,
+      "statuses": [
+        "valid"
+      ],
+      "computed": 687
+    },
+    "B.G3_node_budget": {
+      "records": 687,
+      "statuses": [
+        "valid"
+      ],
+      "computed": 687
+    },
+    "E.integrality_residual": {
+      "records": 124,
+      "statuses": [
+        "valid"
+      ],
+      "computed": 61
+    },
+    "F.termination": {
+      "records": 124,
+      "statuses": [
+        "valid"
+      ],
+      "computed": 124
+    },
+    "C.M2_rows": {
+      "records": 687,
+      "statuses": [
+        "valid"
+      ],
+      "computed": 687
+    },
+    "B.G1": {
+      "records": 687,
+      "statuses": [
+        "valid"
+      ],
+      "computed": 687
+    },
+    "A.schur_residual": {
+      "records": 687,
+      "statuses": [
+        "valid"
+      ],
+      "computed": 687
+    },
+    "C.Z_diag": {
+      "records": 687,
+      "statuses": [
+        "valid"
+      ],
+      "computed": 687
+    },
+    "D.E2_conservative_rejection": {
+      "records": 687,
+      "statuses": [
+        "exploratory_noncertifying"
+      ],
+      "computed": 687
+    },
+    "B.gamma_margin": {
+      "records": 687,
+      "statuses": [
+        "valid"
+      ],
+      "computed": 687
+    },
+    "D.woodbury_residual": {
+      "records": 687,
+      "statuses": [
+        "exploratory_noncertifying"
+      ],
+      "computed": 687
+    },
+    "D.one_sided_safety_certified": {
+      "records": 687,
+      "statuses": [
+        "exploratory_noncertifying"
+      ],
+      "computed": 687
+    },
+    "E.no_load": {
+      "records": 124,
+      "statuses": [
+        "valid"
+      ],
+      "computed": 124
+    },
+    "C.MSCR_external": {
+      "records": 687,
+      "statuses": [
+        "not_comparable_missing_source_fault_convention"
+      ],
+      "computed": 0
+    },
+    "B.G3_q": {
+      "records": 687,
+      "statuses": [
+        "valid"
+      ],
+      "computed": 687
+    },
+    "E.storage": {
+      "records": 124,
+      "statuses": [
+        "valid"
+      ],
+      "computed": 124
+    },
+    "E.investment": {
+      "records": 124,
+      "statuses": [
+        "valid"
+      ],
+      "computed": 124
+    },
+    "B.G3_reconstruction_residual": {
+      "records": 687,
+      "statuses": [
+        "valid"
+      ],
+      "computed": 687
+    },
+    "B.G3": {
+      "records": 687,
+      "statuses": [
+        "valid"
+      ],
+      "computed": 687
+    },
+    "D.remainder_bound": {
+      "records": 687,
+      "statuses": [
+        "exploratory_noncertifying"
+      ],
+      "computed": 0
+    },
+    "F.build_wall_s": {
+      "records": 124,
+      "statuses": [
+        "valid"
+      ],
+      "computed": 124
+    },
+    "A.affine_reconstruction_residual": {
+      "records": 687,
+      "statuses": [
+        "valid"
+      ],
+      "computed": 687
+    },
+    "D.trust_region_norm_valid": {
+      "records": 687,
+      "statuses": [
+        "exploratory_noncertifying"
+      ],
+      "computed": 687
+    },
+    "A.Y_real": {
+      "records": 687,
+      "statuses": [
+        "valid"
+      ],
+      "computed": 687
+    },
+    "B.G0": {
+      "records": 687,
+      "statuses": [
+        "valid"
+      ],
+      "computed": 687
+    },
+    "C.M1_order_violation": {
+      "records": 687,
+      "statuses": [
+        "valid"
+      ],
+      "computed": 687
+    },
+    "A.condition": {
+      "records": 687,
+      "statuses": [
+        "valid"
+      ],
+      "computed": 687
+    },
+    "B.G1_false_rejection": {
+      "records": 687,
+      "statuses": [
+        "valid"
+      ],
+      "computed": 687
+    },
+    "D.status": {
+      "records": 687,
+      "statuses": [
+        "exploratory_noncertifying"
+      ],
+      "computed": 687
+    },
+    "C.rho_Zp": {
+      "records": 687,
+      "statuses": [
+        "valid"
+      ],
+      "computed": 687
+    },
+    "E.power_balance_MW": {
+      "records": 124,
+      "statuses": [
+        "valid"
+      ],
+      "computed": 124
+    },
+    "A.producer_B0_residual": {
+      "records": 687,
+      "statuses": [
+        "valid"
+      ],
+      "computed": 687
+    },
+    "B.G0_eigmin": {
+      "records": 687,
+      "statuses": [
+        "valid"
+      ],
+      "computed": 687
+    },
+    "C.solve_residual": {
+      "records": 687,
+      "statuses": [
+        "valid"
+      ],
+      "computed": 687
+    },
+    "F.primal_status": {
+      "records": 124,
+      "statuses": [
+        "valid"
+      ],
+      "computed": 124
+    },
+    "F.bound": {
+      "records": 124,
+      "statuses": [
+        "not_available_from_solver",
+        "valid"
+      ],
+      "computed": 106
+    },
+    "A.connection_violation": {
+      "records": 687,
+      "statuses": [
+        "valid"
+      ],
+      "computed": 687
+    },
+    "A.S_diag": {
+      "records": 687,
+      "statuses": [
+        "valid"
+      ],
+      "computed": 687
+    },
+    "D.E2_false_acceptance": {
+      "records": 687,
+      "statuses": [
+        "exploratory_noncertifying"
+      ],
+      "computed": 687
+    },
+    "F.dual_cone_violation": {
+      "records": 687,
+      "statuses": [
+        "not_recorded_in_earlier_attempt",
+        "valid"
+      ],
+      "computed": 102
+    },
+    "B.G3_valid": {
+      "records": 687,
+      "statuses": [
+        "valid"
+      ],
+      "computed": 687
+    },
+    "C.LOCAL_eigmin": {
+      "records": 687,
+      "statuses": [
+        "valid"
+      ],
+      "computed": 687
+    },
+    "C.M1_lower_violation": {
+      "records": 687,
+      "statuses": [
+        "valid"
+      ],
+      "computed": 687
+    },
+    "B.G1_binding": {
+      "records": 687,
+      "statuses": [
+        "valid"
+      ],
+      "computed": 687
+    },
+    "B.G2_rows": {
+      "records": 687,
+      "statuses": [
+        "valid"
+      ],
+      "computed": 687
+    },
+    "A.rank": {
+      "records": 687,
+      "statuses": [
+        "valid"
+      ],
+      "computed": 687
+    },
+    "A.source_base_residual": {
+      "records": 687,
+      "statuses": [
+        "valid"
+      ],
+      "computed": 687
+    },
+    "A.inertia": {
+      "records": 687,
+      "statuses": [
+        "valid"
+      ],
+      "computed": 687
+    }
+  },
+  "M1_positive_and_negative_fixture_verified": true,
+  "schema": "paper_a_ap3/1.0"
+}

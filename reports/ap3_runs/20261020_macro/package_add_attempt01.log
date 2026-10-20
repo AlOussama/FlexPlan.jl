@@ -1,0 +1,19 @@
+   Resolving package versions...
+   Installed GenericLinearAlgebra ─ v0.3.19
+   Installed QDLDL ──────────────── v0.4.1
+   Installed SnoopPrecompile ────── v1.0.3
+   Installed StaticArrays ───────── v1.9.23
+   Installed Clarabel ───────────── v0.11.1
+    Updating `D:\Projekte\Code\FlexPlan_AP3\Project.toml`
+  [61c947e1] + Clarabel v0.11.1
+    Updating `D:\Projekte\Code\FlexPlan_AP3\Manifest-v1.10.toml`
+  [14f7f29c] + AMD v0.5.4
+  [61c947e1] + Clarabel v0.11.1
+  [e2ba6199] + ExprTools v0.1.11
+⌅ [14197337] + GenericLinearAlgebra v0.3.19
+  [bfc457fd] + QDLDL v0.4.1
+  [66db9d55] + SnoopPrecompile v1.0.3
+  [90137ffa] + StaticArrays v1.9.23
+⌅ [a759f4b9] + TimerOutputs v0.5.29
+  [4607b0f0] + SuiteSparse
+        Info Packages marked with ⌅ have new versions available but compatibility constraints restrict them from upgrading. To see why use `status --outdated -m`

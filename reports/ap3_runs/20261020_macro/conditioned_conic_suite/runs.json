@@ -1,0 +1,3264 @@
+{
+  "runs": [
+    {
+      "model": {
+        "variables": 450,
+        "constraints": {
+          "Vector{JuMP.AffExpr} in MathOptInterface.PositiveSemidefiniteConeTriangle": 3,
+          "JuMP.VariableRef in MathOptInterface.LessThan{Float64}": 81,
+          "JuMP.VariableRef in MathOptInterface.GreaterThan{Float64}": 336,
+          "JuMP.AffExpr in MathOptInterface.LessThan{Float64}": 258,
+          "JuMP.AffExpr in MathOptInterface.EqualTo{Float64}": 139,
+          "JuMP.VariableRef in MathOptInterface.Integer": 198,
+          "JuMP.AffExpr in MathOptInterface.GreaterThan{Float64}": 69,
+          "JuMP.AffExpr in MathOptInterface.Interval{Float64}": 18
+        },
+        "integer": 198
+      },
+      "objective": 2.524596121900354e6,
+      "bound": 2.524596121899206e6,
+      "parameters": {
+        "provenance": "offline_v1:degree_plus_one;MIIF_from_B0_shifted_to_PSD_margin_1;M1_enforced_source_floor_for_PSD_margin_0.01",
+        "Bmin": [
+          [
+            700.0393139967313,
+            -116.9259116063088,
+            -419.22538897129584,
+            -164.48245635129535,
+            0.0
+          ],
+          [
+            -116.9259116063088,
+            409.13188761209125,
+            -95.31168906141838,
+            0.0,
+            -197.08051334235807
+          ],
+          [
+            -419.22538897129584,
+            -95.31168906141838,
+            749.5425695181043,
+            0.0,
+            -234.90187336926073
+          ],
+          [
+            -164.48245635129535,
+            0.0,
+            0.0,
+            164.89603593527872,
+            0.0
+          ],
+          [
+            0.0,
+            -197.08051334235807,
+            -234.90187336926073,
+            0.0,
+            432.29717200536214
+          ]
+        ],
+        "r_identity": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "W_full": [
+          [
+            1.0,
+            0.9922264653598742,
+            0.9945883234554402,
+            0.9915388924928497,
+            0.9905189659078144
+          ],
+          [
+            0.9882821517094926,
+            1.0,
+            0.9892272229765866,
+            0.9799201901764809,
+            0.9911482936820364
+          ],
+          [
+            0.9953621169834997,
+            0.9939480026794926,
+            1.0,
+            0.9869402511031575,
+            0.9942358874349858
+          ],
+          [
+            0.9787380142984873,
+            0.97112976044073,
+            0.9734414007432388,
+            1.0,
+            0.9694585658176051
+          ],
+          [
+            0.9878749995330863,
+            0.9924478411258107,
+            0.9908111447103013,
+            0.9795164829584108,
+            1.0
+          ]
+        ],
+        "M1_source_floor_pu": 0.9905302225558983,
+        "MIIF_reference_diagonal_pu": 1.9805302225558983,
+        "W_neighbor": [
+          [
+            1.0,
+            0.9922264653598742,
+            0.9945883234554402,
+            0.9915388924928497,
+            0.0
+          ],
+          [
+            0.9882821517094926,
+            1.0,
+            0.9892272229765866,
+            0.0,
+            0.9911482936820364
+          ],
+          [
+            0.9953621169834997,
+            0.9939480026794926,
+            1.0,
+            0.0,
+            0.9942358874349858
+          ],
+          [
+            0.9787380142984873,
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.9924478411258107,
+            0.9908111447103013,
+            0.0,
+            1.0
+          ]
+        ],
+        "r_degree": [
+          4.0,
+          4.0,
+          4.0,
+          2.0,
+          3.0
+        ],
+        "regions": [
+          "BE0 0",
+          "BE0 1",
+          "BE0 2",
+          "BE0 3",
+          "BE0 4"
+        ]
+      },
+      "solution_file": "bess_premium_3snap/G0_integer.json",
+      "status": "optimal",
+      "case_sha256": "f2a931f452675dc9206bca4af62262c7c29e9d2daf05b13b16b8535ea197b243",
+      "relaxed": false,
+      "validation_scope": "parametric_study",
+      "solver": "Pajarito",
+      "exposure": "S_on_v1",
+      "formulation": "G0",
+      "solve_wall_s": 6.9426733,
+      "solver_time_s": 5.641999959945679,
+      "source_producer_sha": "3b8fdb01d931225edc5f8fe1e2c200d0da288a09",
+      "termination": "OPTIMAL",
+      "raw_solver_relative_gap": 0.0,
+      "optimizer_configuration": "Pajarito: iterative,HiGHS+Clarabel,tol_rel_gap=tol_feas=1e-7,tol_abs_gap=1e-8,time_limit=120s,iteration_limit=100",
+      "schema": "paper_a_ap3/1.0",
+      "barrier_iterations": null,
+      "simplex_iterations": null,
+      "nodes": 1,
+      "case_id": "bess_premium_3snap",
+      "build_wall_s": 1.1757178,
+      "scenario_config_sha256": "be9d9d9aa90e9790fc7c3554bc1107777a5ba743f4f95d8f675acd9bfeb1e75a",
+      "dual_status": "NO_SOLUTION",
+      "registry_sha256": "a249f7a96d202798c6ff5778c1fa1571eba59a3717bac5d25b150d2a6c41bce9",
+      "primal_status": "FEASIBLE_POINT",
+      "objective_solver_scaling": 2.524596121900354e6,
+      "relative_gap": 4.546687936562089e-13
+    },
+    {
+      "model": {
+        "variables": 486,
+        "constraints": {
+          "JuMP.VariableRef in MathOptInterface.LessThan{Float64}": 81,
+          "JuMP.VariableRef in MathOptInterface.GreaterThan{Float64}": 372,
+          "JuMP.AffExpr in MathOptInterface.LessThan{Float64}": 258,
+          "JuMP.AffExpr in MathOptInterface.EqualTo{Float64}": 139,
+          "JuMP.VariableRef in MathOptInterface.Integer": 198,
+          "Vector{JuMP.AffExpr} in MathOptInterface.RotatedSecondOrderCone": 18,
+          "JuMP.AffExpr in MathOptInterface.GreaterThan{Float64}": 84,
+          "JuMP.AffExpr in MathOptInterface.Interval{Float64}": 18
+        },
+        "integer": 198
+      },
+      "objective": null,
+      "bound": 2.5245960357653517e6,
+      "parameters": {
+        "provenance": "offline_v1:degree_plus_one;MIIF_from_B0_shifted_to_PSD_margin_1;M1_enforced_source_floor_for_PSD_margin_0.01",
+        "Bmin": [
+          [
+            700.0393139967313,
+            -116.9259116063088,
+            -419.22538897129584,
+            -164.48245635129535,
+            0.0
+          ],
+          [
+            -116.9259116063088,
+            409.13188761209125,
+            -95.31168906141838,
+            0.0,
+            -197.08051334235807
+          ],
+          [
+            -419.22538897129584,
+            -95.31168906141838,
+            749.5425695181043,
+            0.0,
+            -234.90187336926073
+          ],
+          [
+            -164.48245635129535,
+            0.0,
+            0.0,
+            164.89603593527872,
+            0.0
+          ],
+          [
+            0.0,
+            -197.08051334235807,
+            -234.90187336926073,
+            0.0,
+            432.29717200536214
+          ]
+        ],
+        "r_identity": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "W_full": [
+          [
+            1.0,
+            0.9922264653598742,
+            0.9945883234554402,
+            0.9915388924928497,
+            0.9905189659078144
+          ],
+          [
+            0.9882821517094926,
+            1.0,
+            0.9892272229765866,
+            0.9799201901764809,
+            0.9911482936820364
+          ],
+          [
+            0.9953621169834997,
+            0.9939480026794926,
+            1.0,
+            0.9869402511031575,
+            0.9942358874349858
+          ],
+          [
+            0.9787380142984873,
+            0.97112976044073,
+            0.9734414007432388,
+            1.0,
+            0.9694585658176051
+          ],
+          [
+            0.9878749995330863,
+            0.9924478411258107,
+            0.9908111447103013,
+            0.9795164829584108,
+            1.0
+          ]
+        ],
+        "M1_source_floor_pu": 0.9905302225558983,
+        "MIIF_reference_diagonal_pu": 1.9805302225558983,
+        "W_neighbor": [
+          [
+            1.0,
+            0.9922264653598742,
+            0.9945883234554402,
+            0.9915388924928497,
+            0.0
+          ],
+          [
+            0.9882821517094926,
+            1.0,
+            0.9892272229765866,
+            0.0,
+            0.9911482936820364
+          ],
+          [
+            0.9953621169834997,
+            0.9939480026794926,
+            1.0,
+            0.0,
+            0.9942358874349858
+          ],
+          [
+            0.9787380142984873,
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.9924478411258107,
+            0.9908111447103013,
+            0.0,
+            1.0
+          ]
+        ],
+        "r_degree": [
+          4.0,
+          4.0,
+          4.0,
+          2.0,
+          3.0
+        ],
+        "regions": [
+          "BE0 0",
+          "BE0 1",
+          "BE0 2",
+          "BE0 3",
+          "BE0 4"
+        ]
+      },
+      "solution_file": "bess_premium_3snap/G3_integer.json",
+      "status": "infeasible",
+      "case_sha256": "f2a931f452675dc9206bca4af62262c7c29e9d2daf05b13b16b8535ea197b243",
+      "relaxed": false,
+      "validation_scope": "parametric_study",
+      "solver": "Pajarito",
+      "exposure": "S_on_v1",
+      "formulation": "G3",
+      "solve_wall_s": 0.7020733,
+      "solver_time_s": 0.687000036239624,
+      "source_producer_sha": "3b8fdb01d931225edc5f8fe1e2c200d0da288a09",
+      "termination": "INFEASIBLE",
+      "raw_solver_relative_gap": null,
+      "optimizer_configuration": "Pajarito: iterative,HiGHS+Clarabel,tol_rel_gap=tol_feas=1e-7,tol_abs_gap=1e-8,time_limit=120s,iteration_limit=100",
+      "schema": "paper_a_ap3/1.0",
+      "barrier_iterations": null,
+      "simplex_iterations": null,
+      "nodes": null,
+      "case_id": "bess_premium_3snap",
+      "build_wall_s": 0.980499,
+      "scenario_config_sha256": "be9d9d9aa90e9790fc7c3554bc1107777a5ba743f4f95d8f675acd9bfeb1e75a",
+      "dual_status": "NO_SOLUTION",
+      "registry_sha256": "a249f7a96d202798c6ff5778c1fa1571eba59a3717bac5d25b150d2a6c41bce9",
+      "primal_status": "NO_SOLUTION",
+      "objective_solver_scaling": 2.524596121900354e6,
+      "relative_gap": null
+    },
+    {
+      "model": {
+        "variables": 450,
+        "constraints": {
+          "Vector{JuMP.AffExpr} in MathOptInterface.PositiveSemidefiniteConeTriangle": 3,
+          "JuMP.VariableRef in MathOptInterface.LessThan{Float64}": 81,
+          "JuMP.VariableRef in MathOptInterface.GreaterThan{Float64}": 336,
+          "JuMP.AffExpr in MathOptInterface.LessThan{Float64}": 258,
+          "JuMP.AffExpr in MathOptInterface.EqualTo{Float64}": 139,
+          "JuMP.VariableRef in MathOptInterface.Integer": 198,
+          "JuMP.AffExpr in MathOptInterface.GreaterThan{Float64}": 69,
+          "JuMP.AffExpr in MathOptInterface.Interval{Float64}": 18
+        },
+        "integer": 198
+      },
+      "objective": 2.594530970259493e6,
+      "bound": 2.5945309702579714e6,
+      "parameters": {
+        "provenance": "offline_v1:degree_plus_one;MIIF_from_B0_shifted_to_PSD_margin_1;M1_enforced_source_floor_for_PSD_margin_0.01",
+        "Bmin": [
+          [
+            700.0393139967313,
+            -116.9259116063088,
+            -419.22538897129584,
+            -164.48245635129535,
+            0.0
+          ],
+          [
+            -116.9259116063088,
+            409.13188761209125,
+            -95.31168906141838,
+            0.0,
+            -197.08051334235807
+          ],
+          [
+            -419.22538897129584,
+            -95.31168906141838,
+            749.5425695181043,
+            0.0,
+            -234.90187336926073
+          ],
+          [
+            -164.48245635129535,
+            0.0,
+            0.0,
+            164.89603593527872,
+            0.0
+          ],
+          [
+            0.0,
+            -197.08051334235807,
+            -234.90187336926073,
+            0.0,
+            432.29717200536214
+          ]
+        ],
+        "r_identity": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "W_full": [
+          [
+            1.0,
+            0.9922264653598742,
+            0.9945883234554402,
+            0.9915388924928497,
+            0.9905189659078144
+          ],
+          [
+            0.9882821517094926,
+            1.0,
+            0.9892272229765866,
+            0.9799201901764809,
+            0.9911482936820364
+          ],
+          [
+            0.9953621169834997,
+            0.9939480026794926,
+            1.0,
+            0.9869402511031575,
+            0.9942358874349858
+          ],
+          [
+            0.9787380142984873,
+            0.97112976044073,
+            0.9734414007432388,
+            1.0,
+            0.9694585658176051
+          ],
+          [
+            0.9878749995330863,
+            0.9924478411258107,
+            0.9908111447103013,
+            0.9795164829584108,
+            1.0
+          ]
+        ],
+        "M1_source_floor_pu": 0.9905302225558983,
+        "MIIF_reference_diagonal_pu": 1.9805302225558983,
+        "W_neighbor": [
+          [
+            1.0,
+            0.9922264653598742,
+            0.9945883234554402,
+            0.9915388924928497,
+            0.0
+          ],
+          [
+            0.9882821517094926,
+            1.0,
+            0.9892272229765866,
+            0.0,
+            0.9911482936820364
+          ],
+          [
+            0.9953621169834997,
+            0.9939480026794926,
+            1.0,
+            0.0,
+            0.9942358874349858
+          ],
+          [
+            0.9787380142984873,
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.9924478411258107,
+            0.9908111447103013,
+            0.0,
+            1.0
+          ]
+        ],
+        "r_degree": [
+          4.0,
+          4.0,
+          4.0,
+          2.0,
+          3.0
+        ],
+        "regions": [
+          "BE0 0",
+          "BE0 1",
+          "BE0 2",
+          "BE0 3",
+          "BE0 4"
+        ]
+      },
+      "solution_file": "connectivity_3snap/G0_integer.json",
+      "status": "optimal",
+      "case_sha256": "c52e648b1497fbd3b5facfcd272cf535a02f5bda3d86cff34d3f433e703e0bf3",
+      "relaxed": false,
+      "validation_scope": "parametric_study",
+      "solver": "Pajarito",
+      "exposure": "S_on_v1",
+      "formulation": "G0",
+      "solve_wall_s": 0.2041322,
+      "solver_time_s": 0.18900012969970703,
+      "source_producer_sha": "3b8fdb01d931225edc5f8fe1e2c200d0da288a09",
+      "termination": "OPTIMAL",
+      "raw_solver_relative_gap": 0.0,
+      "optimizer_configuration": "Pajarito: iterative,HiGHS+Clarabel,tol_rel_gap=tol_feas=1e-7,tol_abs_gap=1e-8,time_limit=120s,iteration_limit=100",
+      "schema": "paper_a_ap3/1.0",
+      "barrier_iterations": null,
+      "simplex_iterations": null,
+      "nodes": 1,
+      "case_id": "connectivity_3snap",
+      "build_wall_s": 0.6142679,
+      "scenario_config_sha256": "be9d9d9aa90e9790fc7c3554bc1107777a5ba743f4f95d8f675acd9bfeb1e75a",
+      "dual_status": "NO_SOLUTION",
+      "registry_sha256": "a249f7a96d202798c6ff5778c1fa1571eba59a3717bac5d25b150d2a6c41bce9",
+      "primal_status": "FEASIBLE_POINT",
+      "objective_solver_scaling": 2.585242788803728e6,
+      "relative_gap": 5.865341768379393e-13
+    },
+    {
+      "model": {
+        "variables": 486,
+        "constraints": {
+          "JuMP.VariableRef in MathOptInterface.LessThan{Float64}": 81,
+          "JuMP.VariableRef in MathOptInterface.GreaterThan{Float64}": 372,
+          "JuMP.AffExpr in MathOptInterface.LessThan{Float64}": 258,
+          "JuMP.AffExpr in MathOptInterface.EqualTo{Float64}": 139,
+          "JuMP.VariableRef in MathOptInterface.Integer": 198,
+          "Vector{JuMP.AffExpr} in MathOptInterface.RotatedSecondOrderCone": 18,
+          "JuMP.AffExpr in MathOptInterface.GreaterThan{Float64}": 84,
+          "JuMP.AffExpr in MathOptInterface.Interval{Float64}": 18
+        },
+        "integer": 198
+      },
+      "objective": 2.5945309702696684e6,
+      "bound": 2.5945309702579714e6,
+      "parameters": {
+        "provenance": "offline_v1:degree_plus_one;MIIF_from_B0_shifted_to_PSD_margin_1;M1_enforced_source_floor_for_PSD_margin_0.01",
+        "Bmin": [
+          [
+            700.0393139967313,
+            -116.9259116063088,
+            -419.22538897129584,
+            -164.48245635129535,
+            0.0
+          ],
+          [
+            -116.9259116063088,
+            409.13188761209125,
+            -95.31168906141838,
+            0.0,
+            -197.08051334235807
+          ],
+          [
+            -419.22538897129584,
+            -95.31168906141838,
+            749.5425695181043,
+            0.0,
+            -234.90187336926073
+          ],
+          [
+            -164.48245635129535,
+            0.0,
+            0.0,
+            164.89603593527872,
+            0.0
+          ],
+          [
+            0.0,
+            -197.08051334235807,
+            -234.90187336926073,
+            0.0,
+            432.29717200536214
+          ]
+        ],
+        "r_identity": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "W_full": [
+          [
+            1.0,
+            0.9922264653598742,
+            0.9945883234554402,
+            0.9915388924928497,
+            0.9905189659078144
+          ],
+          [
+            0.9882821517094926,
+            1.0,
+            0.9892272229765866,
+            0.9799201901764809,
+            0.9911482936820364
+          ],
+          [
+            0.9953621169834997,
+            0.9939480026794926,
+            1.0,
+            0.9869402511031575,
+            0.9942358874349858
+          ],
+          [
+            0.9787380142984873,
+            0.97112976044073,
+            0.9734414007432388,
+            1.0,
+            0.9694585658176051
+          ],
+          [
+            0.9878749995330863,
+            0.9924478411258107,
+            0.9908111447103013,
+            0.9795164829584108,
+            1.0
+          ]
+        ],
+        "M1_source_floor_pu": 0.9905302225558983,
+        "MIIF_reference_diagonal_pu": 1.9805302225558983,
+        "W_neighbor": [
+          [
+            1.0,
+            0.9922264653598742,
+            0.9945883234554402,
+            0.9915388924928497,
+            0.0
+          ],
+          [
+            0.9882821517094926,
+            1.0,
+            0.9892272229765866,
+            0.0,
+            0.9911482936820364
+          ],
+          [
+            0.9953621169834997,
+            0.9939480026794926,
+            1.0,
+            0.0,
+            0.9942358874349858
+          ],
+          [
+            0.9787380142984873,
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.9924478411258107,
+            0.9908111447103013,
+            0.0,
+            1.0
+          ]
+        ],
+        "r_degree": [
+          4.0,
+          4.0,
+          4.0,
+          2.0,
+          3.0
+        ],
+        "regions": [
+          "BE0 0",
+          "BE0 1",
+          "BE0 2",
+          "BE0 3",
+          "BE0 4"
+        ]
+      },
+      "solution_file": "connectivity_3snap/G3_integer.json",
+      "status": "optimal",
+      "case_sha256": "c52e648b1497fbd3b5facfcd272cf535a02f5bda3d86cff34d3f433e703e0bf3",
+      "relaxed": false,
+      "validation_scope": "parametric_study",
+      "solver": "Pajarito",
+      "exposure": "S_on_v1",
+      "formulation": "G3",
+      "solve_wall_s": 1.7718153,
+      "solver_time_s": 1.751000165939331,
+      "source_producer_sha": "3b8fdb01d931225edc5f8fe1e2c200d0da288a09",
+      "termination": "OPTIMAL",
+      "raw_solver_relative_gap": 1.933041925499868e-15,
+      "optimizer_configuration": "Pajarito: iterative,HiGHS+Clarabel,tol_rel_gap=tol_feas=1e-7,tol_abs_gap=1e-8,time_limit=120s,iteration_limit=100",
+      "schema": "paper_a_ap3/1.0",
+      "barrier_iterations": null,
+      "simplex_iterations": null,
+      "nodes": null,
+      "case_id": "connectivity_3snap",
+      "build_wall_s": 0.9179142,
+      "scenario_config_sha256": "be9d9d9aa90e9790fc7c3554bc1107777a5ba743f4f95d8f675acd9bfeb1e75a",
+      "dual_status": "NO_SOLUTION",
+      "registry_sha256": "a249f7a96d202798c6ff5778c1fa1571eba59a3717bac5d25b150d2a6c41bce9",
+      "primal_status": "FEASIBLE_POINT",
+      "objective_solver_scaling": 2.585242788803728e6,
+      "relative_gap": 4.508308441840397e-12
+    },
+    {
+      "model": {
+        "variables": 450,
+        "constraints": {
+          "Vector{JuMP.AffExpr} in MathOptInterface.PositiveSemidefiniteConeTriangle": 3,
+          "JuMP.VariableRef in MathOptInterface.LessThan{Float64}": 81,
+          "JuMP.VariableRef in MathOptInterface.GreaterThan{Float64}": 336,
+          "JuMP.AffExpr in MathOptInterface.LessThan{Float64}": 258,
+          "JuMP.AffExpr in MathOptInterface.EqualTo{Float64}": 139,
+          "JuMP.VariableRef in MathOptInterface.Integer": 198,
+          "JuMP.AffExpr in MathOptInterface.GreaterThan{Float64}": 69,
+          "JuMP.AffExpr in MathOptInterface.Interval{Float64}": 18
+        },
+        "integer": 198
+      },
+      "objective": 5.608912202456511e6,
+      "bound": 5.608912202454753e6,
+      "parameters": {
+        "provenance": "offline_v1:degree_plus_one;MIIF_from_B0_shifted_to_PSD_margin_1;M1_enforced_source_floor_for_PSD_margin_0.01",
+        "Bmin": [
+          [
+            700.0393139967313,
+            -116.9259116063088,
+            -419.22538897129584,
+            -164.48245635129535,
+            0.0
+          ],
+          [
+            -116.9259116063088,
+            409.13188761209125,
+            -95.31168906141838,
+            0.0,
+            -197.08051334235807
+          ],
+          [
+            -419.22538897129584,
+            -95.31168906141838,
+            749.5425695181043,
+            0.0,
+            -234.90187336926073
+          ],
+          [
+            -164.48245635129535,
+            0.0,
+            0.0,
+            164.89603593527872,
+            0.0
+          ],
+          [
+            0.0,
+            -197.08051334235807,
+            -234.90187336926073,
+            0.0,
+            432.29717200536214
+          ]
+        ],
+        "r_identity": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "W_full": [
+          [
+            1.0,
+            0.9922264653598742,
+            0.9945883234554402,
+            0.9915388924928497,
+            0.9905189659078144
+          ],
+          [
+            0.9882821517094926,
+            1.0,
+            0.9892272229765866,
+            0.9799201901764809,
+            0.9911482936820364
+          ],
+          [
+            0.9953621169834997,
+            0.9939480026794926,
+            1.0,
+            0.9869402511031575,
+            0.9942358874349858
+          ],
+          [
+            0.9787380142984873,
+            0.97112976044073,
+            0.9734414007432388,
+            1.0,
+            0.9694585658176051
+          ],
+          [
+            0.9878749995330863,
+            0.9924478411258107,
+            0.9908111447103013,
+            0.9795164829584108,
+            1.0
+          ]
+        ],
+        "M1_source_floor_pu": 0.9905302225558983,
+        "MIIF_reference_diagonal_pu": 1.9805302225558983,
+        "W_neighbor": [
+          [
+            1.0,
+            0.9922264653598742,
+            0.9945883234554402,
+            0.9915388924928497,
+            0.0
+          ],
+          [
+            0.9882821517094926,
+            1.0,
+            0.9892272229765866,
+            0.0,
+            0.9911482936820364
+          ],
+          [
+            0.9953621169834997,
+            0.9939480026794926,
+            1.0,
+            0.0,
+            0.9942358874349858
+          ],
+          [
+            0.9787380142984873,
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.9924478411258107,
+            0.9908111447103013,
+            0.0,
+            1.0
+          ]
+        ],
+        "r_degree": [
+          4.0,
+          4.0,
+          4.0,
+          2.0,
+          3.0
+        ],
+        "regions": [
+          "BE0 0",
+          "BE0 1",
+          "BE0 2",
+          "BE0 3",
+          "BE0 4"
+        ]
+      },
+      "solution_file": "event_price_3snap/G0_integer.json",
+      "status": "optimal",
+      "case_sha256": "cb9d2f37cfff5caaea42268941e531baf2d53f4e50a01dfe03bedbe235d4cf6b",
+      "relaxed": false,
+      "validation_scope": "parametric_study",
+      "solver": "Pajarito",
+      "exposure": "S_on_v1",
+      "formulation": "G0",
+      "solve_wall_s": 1.0288042,
+      "solver_time_s": 1.0139999389648438,
+      "source_producer_sha": "3b8fdb01d931225edc5f8fe1e2c200d0da288a09",
+      "termination": "OPTIMAL",
+      "raw_solver_relative_gap": 1.1639420405939922e-16,
+      "optimizer_configuration": "Pajarito: iterative,HiGHS+Clarabel,tol_rel_gap=tol_feas=1e-7,tol_abs_gap=1e-8,time_limit=120s,iteration_limit=100",
+      "schema": "paper_a_ap3/1.0",
+      "barrier_iterations": null,
+      "simplex_iterations": null,
+      "nodes": 75,
+      "case_id": "event_price_3snap",
+      "build_wall_s": 0.5118745,
+      "scenario_config_sha256": "be9d9d9aa90e9790fc7c3554bc1107777a5ba743f4f95d8f675acd9bfeb1e75a",
+      "dual_status": "NO_SOLUTION",
+      "registry_sha256": "a249f7a96d202798c6ff5778c1fa1571eba59a3717bac5d25b150d2a6c41bce9",
+      "primal_status": "FEASIBLE_POINT",
+      "objective_solver_scaling": 5.6070318844468035e6,
+      "relative_gap": 3.1332380234615275e-13
+    },
+    {
+      "model": {
+        "variables": 486,
+        "constraints": {
+          "JuMP.VariableRef in MathOptInterface.LessThan{Float64}": 81,
+          "JuMP.VariableRef in MathOptInterface.GreaterThan{Float64}": 372,
+          "JuMP.AffExpr in MathOptInterface.LessThan{Float64}": 258,
+          "JuMP.AffExpr in MathOptInterface.EqualTo{Float64}": 139,
+          "JuMP.VariableRef in MathOptInterface.Integer": 198,
+          "Vector{JuMP.AffExpr} in MathOptInterface.RotatedSecondOrderCone": 18,
+          "JuMP.AffExpr in MathOptInterface.GreaterThan{Float64}": 84,
+          "JuMP.AffExpr in MathOptInterface.Interval{Float64}": 18
+        },
+        "integer": 198
+      },
+      "objective": 5.608912202458991e6,
+      "bound": 5.608912202454753e6,
+      "parameters": {
+        "provenance": "offline_v1:degree_plus_one;MIIF_from_B0_shifted_to_PSD_margin_1;M1_enforced_source_floor_for_PSD_margin_0.01",
+        "Bmin": [
+          [
+            700.0393139967313,
+            -116.9259116063088,
+            -419.22538897129584,
+            -164.48245635129535,
+            0.0
+          ],
+          [
+            -116.9259116063088,
+            409.13188761209125,
+            -95.31168906141838,
+            0.0,
+            -197.08051334235807
+          ],
+          [
+            -419.22538897129584,
+            -95.31168906141838,
+            749.5425695181043,
+            0.0,
+            -234.90187336926073
+          ],
+          [
+            -164.48245635129535,
+            0.0,
+            0.0,
+            164.89603593527872,
+            0.0
+          ],
+          [
+            0.0,
+            -197.08051334235807,
+            -234.90187336926073,
+            0.0,
+            432.29717200536214
+          ]
+        ],
+        "r_identity": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "W_full": [
+          [
+            1.0,
+            0.9922264653598742,
+            0.9945883234554402,
+            0.9915388924928497,
+            0.9905189659078144
+          ],
+          [
+            0.9882821517094926,
+            1.0,
+            0.9892272229765866,
+            0.9799201901764809,
+            0.9911482936820364
+          ],
+          [
+            0.9953621169834997,
+            0.9939480026794926,
+            1.0,
+            0.9869402511031575,
+            0.9942358874349858
+          ],
+          [
+            0.9787380142984873,
+            0.97112976044073,
+            0.9734414007432388,
+            1.0,
+            0.9694585658176051
+          ],
+          [
+            0.9878749995330863,
+            0.9924478411258107,
+            0.9908111447103013,
+            0.9795164829584108,
+            1.0
+          ]
+        ],
+        "M1_source_floor_pu": 0.9905302225558983,
+        "MIIF_reference_diagonal_pu": 1.9805302225558983,
+        "W_neighbor": [
+          [
+            1.0,
+            0.9922264653598742,
+            0.9945883234554402,
+            0.9915388924928497,
+            0.0
+          ],
+          [
+            0.9882821517094926,
+            1.0,
+            0.9892272229765866,
+            0.0,
+            0.9911482936820364
+          ],
+          [
+            0.9953621169834997,
+            0.9939480026794926,
+            1.0,
+            0.0,
+            0.9942358874349858
+          ],
+          [
+            0.9787380142984873,
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.9924478411258107,
+            0.9908111447103013,
+            0.0,
+            1.0
+          ]
+        ],
+        "r_degree": [
+          4.0,
+          4.0,
+          4.0,
+          2.0,
+          3.0
+        ],
+        "regions": [
+          "BE0 0",
+          "BE0 1",
+          "BE0 2",
+          "BE0 3",
+          "BE0 4"
+        ]
+      },
+      "solution_file": "event_price_3snap/G3_integer.json",
+      "status": "optimal",
+      "case_sha256": "cb9d2f37cfff5caaea42268941e531baf2d53f4e50a01dfe03bedbe235d4cf6b",
+      "relaxed": false,
+      "validation_scope": "parametric_study",
+      "solver": "Pajarito",
+      "exposure": "S_on_v1",
+      "formulation": "G3",
+      "solve_wall_s": 1.2209137,
+      "solver_time_s": 1.196000099182129,
+      "source_producer_sha": "3b8fdb01d931225edc5f8fe1e2c200d0da288a09",
+      "termination": "OPTIMAL",
+      "raw_solver_relative_gap": 5.819710202969959e-16,
+      "optimizer_configuration": "Pajarito: iterative,HiGHS+Clarabel,tol_rel_gap=tol_feas=1e-7,tol_abs_gap=1e-8,time_limit=120s,iteration_limit=100",
+      "schema": "paper_a_ap3/1.0",
+      "barrier_iterations": null,
+      "simplex_iterations": null,
+      "nodes": null,
+      "case_id": "event_price_3snap",
+      "build_wall_s": 0.727709,
+      "scenario_config_sha256": "be9d9d9aa90e9790fc7c3554bc1107777a5ba743f4f95d8f675acd9bfeb1e75a",
+      "dual_status": "NO_SOLUTION",
+      "registry_sha256": "a249f7a96d202798c6ff5778c1fa1571eba59a3717bac5d25b150d2a6c41bce9",
+      "primal_status": "FEASIBLE_POINT",
+      "objective_solver_scaling": 5.6070318844468035e6,
+      "relative_gap": 7.554972446605006e-13
+    },
+    {
+      "model": {
+        "variables": 450,
+        "constraints": {
+          "Vector{JuMP.AffExpr} in MathOptInterface.PositiveSemidefiniteConeTriangle": 3,
+          "JuMP.VariableRef in MathOptInterface.LessThan{Float64}": 81,
+          "JuMP.VariableRef in MathOptInterface.GreaterThan{Float64}": 336,
+          "JuMP.AffExpr in MathOptInterface.LessThan{Float64}": 258,
+          "JuMP.AffExpr in MathOptInterface.EqualTo{Float64}": 139,
+          "JuMP.VariableRef in MathOptInterface.Integer": 198,
+          "JuMP.AffExpr in MathOptInterface.GreaterThan{Float64}": 69,
+          "JuMP.AffExpr in MathOptInterface.Interval{Float64}": 18
+        },
+        "integer": 198
+      },
+      "objective": 2.524596121900354e6,
+      "bound": 2.524596121899206e6,
+      "parameters": {
+        "provenance": "offline_v1:degree_plus_one;MIIF_from_B0_shifted_to_PSD_margin_1;M1_enforced_source_floor_for_PSD_margin_0.01",
+        "Bmin": [
+          [
+            700.0393139967313,
+            -116.9259116063088,
+            -419.22538897129584,
+            -164.48245635129535,
+            0.0
+          ],
+          [
+            -116.9259116063088,
+            409.13188761209125,
+            -95.31168906141838,
+            0.0,
+            -197.08051334235807
+          ],
+          [
+            -419.22538897129584,
+            -95.31168906141838,
+            749.5425695181043,
+            0.0,
+            -234.90187336926073
+          ],
+          [
+            -164.48245635129535,
+            0.0,
+            0.0,
+            164.89603593527872,
+            0.0
+          ],
+          [
+            0.0,
+            -197.08051334235807,
+            -234.90187336926073,
+            0.0,
+            432.29717200536214
+          ]
+        ],
+        "r_identity": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "W_full": [
+          [
+            1.0,
+            0.9922264653598742,
+            0.9945883234554402,
+            0.9915388924928497,
+            0.9905189659078144
+          ],
+          [
+            0.9882821517094926,
+            1.0,
+            0.9892272229765866,
+            0.9799201901764809,
+            0.9911482936820364
+          ],
+          [
+            0.9953621169834997,
+            0.9939480026794926,
+            1.0,
+            0.9869402511031575,
+            0.9942358874349858
+          ],
+          [
+            0.9787380142984873,
+            0.97112976044073,
+            0.9734414007432388,
+            1.0,
+            0.9694585658176051
+          ],
+          [
+            0.9878749995330863,
+            0.9924478411258107,
+            0.9908111447103013,
+            0.9795164829584108,
+            1.0
+          ]
+        ],
+        "M1_source_floor_pu": 0.9905302225558983,
+        "MIIF_reference_diagonal_pu": 1.9805302225558983,
+        "W_neighbor": [
+          [
+            1.0,
+            0.9922264653598742,
+            0.9945883234554402,
+            0.9915388924928497,
+            0.0
+          ],
+          [
+            0.9882821517094926,
+            1.0,
+            0.9892272229765866,
+            0.0,
+            0.9911482936820364
+          ],
+          [
+            0.9953621169834997,
+            0.9939480026794926,
+            1.0,
+            0.0,
+            0.9942358874349858
+          ],
+          [
+            0.9787380142984873,
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.9924478411258107,
+            0.9908111447103013,
+            0.0,
+            1.0
+          ]
+        ],
+        "r_degree": [
+          4.0,
+          4.0,
+          4.0,
+          2.0,
+          3.0
+        ],
+        "regions": [
+          "BE0 0",
+          "BE0 1",
+          "BE0 2",
+          "BE0 3",
+          "BE0 4"
+        ]
+      },
+      "solution_file": "exposure_multiplier_3snap/G0_integer.json",
+      "status": "optimal",
+      "case_sha256": "8d340cc4e63b575bde4ba3d3a605227ec0c7db4b909b77618f814a8a2647435d",
+      "relaxed": false,
+      "validation_scope": "parametric_study",
+      "solver": "Pajarito",
+      "exposure": "S_on_v1",
+      "formulation": "G0",
+      "solve_wall_s": 0.1272913,
+      "solver_time_s": 0.08999991416931152,
+      "source_producer_sha": "3b8fdb01d931225edc5f8fe1e2c200d0da288a09",
+      "termination": "OPTIMAL",
+      "raw_solver_relative_gap": 0.0,
+      "optimizer_configuration": "Pajarito: iterative,HiGHS+Clarabel,tol_rel_gap=tol_feas=1e-7,tol_abs_gap=1e-8,time_limit=120s,iteration_limit=100",
+      "schema": "paper_a_ap3/1.0",
+      "barrier_iterations": null,
+      "simplex_iterations": null,
+      "nodes": 1,
+      "case_id": "exposure_multiplier_3snap",
+      "build_wall_s": 0.8387991,
+      "scenario_config_sha256": "be9d9d9aa90e9790fc7c3554bc1107777a5ba743f4f95d8f675acd9bfeb1e75a",
+      "dual_status": "NO_SOLUTION",
+      "registry_sha256": "a249f7a96d202798c6ff5778c1fa1571eba59a3717bac5d25b150d2a6c41bce9",
+      "primal_status": "FEASIBLE_POINT",
+      "objective_solver_scaling": 2.524596121900354e6,
+      "relative_gap": 4.546687936562089e-13
+    },
+    {
+      "model": {
+        "variables": 486,
+        "constraints": {
+          "JuMP.VariableRef in MathOptInterface.LessThan{Float64}": 81,
+          "JuMP.VariableRef in MathOptInterface.GreaterThan{Float64}": 372,
+          "JuMP.AffExpr in MathOptInterface.LessThan{Float64}": 258,
+          "JuMP.AffExpr in MathOptInterface.EqualTo{Float64}": 139,
+          "JuMP.VariableRef in MathOptInterface.Integer": 198,
+          "Vector{JuMP.AffExpr} in MathOptInterface.RotatedSecondOrderCone": 18,
+          "JuMP.AffExpr in MathOptInterface.GreaterThan{Float64}": 84,
+          "JuMP.AffExpr in MathOptInterface.Interval{Float64}": 18
+        },
+        "integer": 198
+      },
+      "objective": null,
+      "bound": 2.524596029616378e6,
+      "parameters": {
+        "provenance": "offline_v1:degree_plus_one;MIIF_from_B0_shifted_to_PSD_margin_1;M1_enforced_source_floor_for_PSD_margin_0.01",
+        "Bmin": [
+          [
+            700.0393139967313,
+            -116.9259116063088,
+            -419.22538897129584,
+            -164.48245635129535,
+            0.0
+          ],
+          [
+            -116.9259116063088,
+            409.13188761209125,
+            -95.31168906141838,
+            0.0,
+            -197.08051334235807
+          ],
+          [
+            -419.22538897129584,
+            -95.31168906141838,
+            749.5425695181043,
+            0.0,
+            -234.90187336926073
+          ],
+          [
+            -164.48245635129535,
+            0.0,
+            0.0,
+            164.89603593527872,
+            0.0
+          ],
+          [
+            0.0,
+            -197.08051334235807,
+            -234.90187336926073,
+            0.0,
+            432.29717200536214
+          ]
+        ],
+        "r_identity": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "W_full": [
+          [
+            1.0,
+            0.9922264653598742,
+            0.9945883234554402,
+            0.9915388924928497,
+            0.9905189659078144
+          ],
+          [
+            0.9882821517094926,
+            1.0,
+            0.9892272229765866,
+            0.9799201901764809,
+            0.9911482936820364
+          ],
+          [
+            0.9953621169834997,
+            0.9939480026794926,
+            1.0,
+            0.9869402511031575,
+            0.9942358874349858
+          ],
+          [
+            0.9787380142984873,
+            0.97112976044073,
+            0.9734414007432388,
+            1.0,
+            0.9694585658176051
+          ],
+          [
+            0.9878749995330863,
+            0.9924478411258107,
+            0.9908111447103013,
+            0.9795164829584108,
+            1.0
+          ]
+        ],
+        "M1_source_floor_pu": 0.9905302225558983,
+        "MIIF_reference_diagonal_pu": 1.9805302225558983,
+        "W_neighbor": [
+          [
+            1.0,
+            0.9922264653598742,
+            0.9945883234554402,
+            0.9915388924928497,
+            0.0
+          ],
+          [
+            0.9882821517094926,
+            1.0,
+            0.9892272229765866,
+            0.0,
+            0.9911482936820364
+          ],
+          [
+            0.9953621169834997,
+            0.9939480026794926,
+            1.0,
+            0.0,
+            0.9942358874349858
+          ],
+          [
+            0.9787380142984873,
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.9924478411258107,
+            0.9908111447103013,
+            0.0,
+            1.0
+          ]
+        ],
+        "r_degree": [
+          4.0,
+          4.0,
+          4.0,
+          2.0,
+          3.0
+        ],
+        "regions": [
+          "BE0 0",
+          "BE0 1",
+          "BE0 2",
+          "BE0 3",
+          "BE0 4"
+        ]
+      },
+      "solution_file": "exposure_multiplier_3snap/G3_integer.json",
+      "status": "infeasible",
+      "case_sha256": "8d340cc4e63b575bde4ba3d3a605227ec0c7db4b909b77618f814a8a2647435d",
+      "relaxed": false,
+      "validation_scope": "parametric_study",
+      "solver": "Pajarito",
+      "exposure": "S_on_v1",
+      "formulation": "G3",
+      "solve_wall_s": 0.0628809,
+      "solver_time_s": 0.051000118255615234,
+      "source_producer_sha": "3b8fdb01d931225edc5f8fe1e2c200d0da288a09",
+      "termination": "INFEASIBLE",
+      "raw_solver_relative_gap": null,
+      "optimizer_configuration": "Pajarito: iterative,HiGHS+Clarabel,tol_rel_gap=tol_feas=1e-7,tol_abs_gap=1e-8,time_limit=120s,iteration_limit=100",
+      "schema": "paper_a_ap3/1.0",
+      "barrier_iterations": null,
+      "simplex_iterations": null,
+      "nodes": null,
+      "case_id": "exposure_multiplier_3snap",
+      "build_wall_s": 0.5968508,
+      "scenario_config_sha256": "be9d9d9aa90e9790fc7c3554bc1107777a5ba743f4f95d8f675acd9bfeb1e75a",
+      "dual_status": "NO_SOLUTION",
+      "registry_sha256": "a249f7a96d202798c6ff5778c1fa1571eba59a3717bac5d25b150d2a6c41bce9",
+      "primal_status": "NO_SOLUTION",
+      "objective_solver_scaling": 2.524596121900354e6,
+      "relative_gap": null
+    },
+    {
+      "model": {
+        "variables": 3369,
+        "constraints": {
+          "Vector{JuMP.AffExpr} in MathOptInterface.PositiveSemidefiniteConeTriangle": 24,
+          "JuMP.VariableRef in MathOptInterface.LessThan{Float64}": 417,
+          "JuMP.VariableRef in MathOptInterface.GreaterThan{Float64}": 2457,
+          "JuMP.AffExpr in MathOptInterface.LessThan{Float64}": 2064,
+          "JuMP.AffExpr in MathOptInterface.EqualTo{Float64}": 1042,
+          "JuMP.VariableRef in MathOptInterface.Integer": 1353,
+          "JuMP.AffExpr in MathOptInterface.GreaterThan{Float64}": 552,
+          "JuMP.AffExpr in MathOptInterface.Interval{Float64}": 144
+        },
+        "integer": 1353
+      },
+      "objective": 1.4128094086291196e7,
+      "bound": 1.4128047520621806e7,
+      "parameters": {
+        "provenance": "offline_v1:degree_plus_one;MIIF_from_B0_shifted_to_PSD_margin_1;M1_enforced_source_floor_for_PSD_margin_0.01",
+        "Bmin": [
+          [
+            700.0393139967313,
+            -116.9259116063088,
+            -419.22538897129584,
+            -164.48245635129535,
+            0.0
+          ],
+          [
+            -116.9259116063088,
+            409.13188761209125,
+            -95.31168906141838,
+            0.0,
+            -197.08051334235807
+          ],
+          [
+            -419.22538897129584,
+            -95.31168906141838,
+            749.5425695181043,
+            0.0,
+            -234.90187336926073
+          ],
+          [
+            -164.48245635129535,
+            0.0,
+            0.0,
+            164.89603593527872,
+            0.0
+          ],
+          [
+            0.0,
+            -197.08051334235807,
+            -234.90187336926073,
+            0.0,
+            432.29717200536214
+          ]
+        ],
+        "r_identity": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "W_full": [
+          [
+            1.0,
+            0.9922264653598742,
+            0.9945883234554402,
+            0.9915388924928497,
+            0.9905189659078144
+          ],
+          [
+            0.9882821517094926,
+            1.0,
+            0.9892272229765866,
+            0.9799201901764809,
+            0.9911482936820364
+          ],
+          [
+            0.9953621169834997,
+            0.9939480026794926,
+            1.0,
+            0.9869402511031575,
+            0.9942358874349858
+          ],
+          [
+            0.9787380142984873,
+            0.97112976044073,
+            0.9734414007432388,
+            1.0,
+            0.9694585658176051
+          ],
+          [
+            0.9878749995330863,
+            0.9924478411258107,
+            0.9908111447103013,
+            0.9795164829584108,
+            1.0
+          ]
+        ],
+        "M1_source_floor_pu": 0.9905302225558983,
+        "MIIF_reference_diagonal_pu": 1.9805302225558983,
+        "W_neighbor": [
+          [
+            1.0,
+            0.9922264653598742,
+            0.9945883234554402,
+            0.9915388924928497,
+            0.0
+          ],
+          [
+            0.9882821517094926,
+            1.0,
+            0.9892272229765866,
+            0.0,
+            0.9911482936820364
+          ],
+          [
+            0.9953621169834997,
+            0.9939480026794926,
+            1.0,
+            0.0,
+            0.9942358874349858
+          ],
+          [
+            0.9787380142984873,
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.9924478411258107,
+            0.9908111447103013,
+            0.0,
+            1.0
+          ]
+        ],
+        "r_degree": [
+          4.0,
+          4.0,
+          4.0,
+          2.0,
+          3.0
+        ],
+        "regions": [
+          "BE0 0",
+          "BE0 1",
+          "BE0 2",
+          "BE0 3",
+          "BE0 4"
+        ]
+      },
+      "solution_file": "reference_24snap/G0_integer.json",
+      "status": "numerical_inconclusive",
+      "case_sha256": "d74a295602d3916147b47d08070ebc650a28c1fd392473219b87f140ee0d551f",
+      "relaxed": false,
+      "validation_scope": "parametric_study",
+      "solver": "Pajarito",
+      "exposure": "S_on_v1",
+      "reason": "original_currency_primal_bound_gap_exceeds_1e-6",
+      "formulation": "G0",
+      "solve_wall_s": 0.9194012,
+      "solver_time_s": 0.8299999237060547,
+      "source_producer_sha": "3b8fdb01d931225edc5f8fe1e2c200d0da288a09",
+      "termination": "OPTIMAL",
+      "raw_solver_relative_gap": 8.481578817101502e-9,
+      "optimizer_configuration": "Pajarito: iterative,HiGHS+Clarabel,tol_rel_gap=tol_feas=1e-7,tol_abs_gap=1e-8,time_limit=120s,iteration_limit=100",
+      "schema": "paper_a_ap3/1.0",
+      "barrier_iterations": null,
+      "simplex_iterations": null,
+      "nodes": 1,
+      "case_id": "reference_24snap",
+      "build_wall_s": 5.8616262,
+      "scenario_config_sha256": "be9d9d9aa90e9790fc7c3554bc1107777a5ba743f4f95d8f675acd9bfeb1e75a",
+      "dual_status": "NO_SOLUTION",
+      "registry_sha256": "a249f7a96d202798c6ff5778c1fa1571eba59a3717bac5d25b150d2a6c41bce9",
+      "primal_status": "FEASIBLE_POINT",
+      "objective_solver_scaling": 1.4127976852377668e7,
+      "relative_gap": 3.295962576765773e-6
+    },
+    {
+      "model": {
+        "variables": 3657,
+        "constraints": {
+          "JuMP.VariableRef in MathOptInterface.LessThan{Float64}": 417,
+          "JuMP.VariableRef in MathOptInterface.GreaterThan{Float64}": 2745,
+          "JuMP.AffExpr in MathOptInterface.LessThan{Float64}": 2064,
+          "JuMP.AffExpr in MathOptInterface.EqualTo{Float64}": 1042,
+          "JuMP.VariableRef in MathOptInterface.Integer": 1353,
+          "Vector{JuMP.AffExpr} in MathOptInterface.RotatedSecondOrderCone": 144,
+          "JuMP.AffExpr in MathOptInterface.GreaterThan{Float64}": 672,
+          "JuMP.AffExpr in MathOptInterface.Interval{Float64}": 144
+        },
+        "integer": 1353
+      },
+      "objective": null,
+      "bound": 1.4127983112573646e7,
+      "parameters": {
+        "provenance": "offline_v1:degree_plus_one;MIIF_from_B0_shifted_to_PSD_margin_1;M1_enforced_source_floor_for_PSD_margin_0.01",
+        "Bmin": [
+          [
+            700.0393139967313,
+            -116.9259116063088,
+            -419.22538897129584,
+            -164.48245635129535,
+            0.0
+          ],
+          [
+            -116.9259116063088,
+            409.13188761209125,
+            -95.31168906141838,
+            0.0,
+            -197.08051334235807
+          ],
+          [
+            -419.22538897129584,
+            -95.31168906141838,
+            749.5425695181043,
+            0.0,
+            -234.90187336926073
+          ],
+          [
+            -164.48245635129535,
+            0.0,
+            0.0,
+            164.89603593527872,
+            0.0
+          ],
+          [
+            0.0,
+            -197.08051334235807,
+            -234.90187336926073,
+            0.0,
+            432.29717200536214
+          ]
+        ],
+        "r_identity": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "W_full": [
+          [
+            1.0,
+            0.9922264653598742,
+            0.9945883234554402,
+            0.9915388924928497,
+            0.9905189659078144
+          ],
+          [
+            0.9882821517094926,
+            1.0,
+            0.9892272229765866,
+            0.9799201901764809,
+            0.9911482936820364
+          ],
+          [
+            0.9953621169834997,
+            0.9939480026794926,
+            1.0,
+            0.9869402511031575,
+            0.9942358874349858
+          ],
+          [
+            0.9787380142984873,
+            0.97112976044073,
+            0.9734414007432388,
+            1.0,
+            0.9694585658176051
+          ],
+          [
+            0.9878749995330863,
+            0.9924478411258107,
+            0.9908111447103013,
+            0.9795164829584108,
+            1.0
+          ]
+        ],
+        "M1_source_floor_pu": 0.9905302225558983,
+        "MIIF_reference_diagonal_pu": 1.9805302225558983,
+        "W_neighbor": [
+          [
+            1.0,
+            0.9922264653598742,
+            0.9945883234554402,
+            0.9915388924928497,
+            0.0
+          ],
+          [
+            0.9882821517094926,
+            1.0,
+            0.9892272229765866,
+            0.0,
+            0.9911482936820364
+          ],
+          [
+            0.9953621169834997,
+            0.9939480026794926,
+            1.0,
+            0.0,
+            0.9942358874349858
+          ],
+          [
+            0.9787380142984873,
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.9924478411258107,
+            0.9908111447103013,
+            0.0,
+            1.0
+          ]
+        ],
+        "r_degree": [
+          4.0,
+          4.0,
+          4.0,
+          2.0,
+          3.0
+        ],
+        "regions": [
+          "BE0 0",
+          "BE0 1",
+          "BE0 2",
+          "BE0 3",
+          "BE0 4"
+        ]
+      },
+      "solution_file": "reference_24snap/G3_integer.json",
+      "status": "infeasible",
+      "case_sha256": "d74a295602d3916147b47d08070ebc650a28c1fd392473219b87f140ee0d551f",
+      "relaxed": false,
+      "validation_scope": "parametric_study",
+      "solver": "Pajarito",
+      "exposure": "S_on_v1",
+      "formulation": "G3",
+      "solve_wall_s": 1.4420024,
+      "solver_time_s": 1.375999927520752,
+      "source_producer_sha": "3b8fdb01d931225edc5f8fe1e2c200d0da288a09",
+      "termination": "INFEASIBLE",
+      "raw_solver_relative_gap": null,
+      "optimizer_configuration": "Pajarito: iterative,HiGHS+Clarabel,tol_rel_gap=tol_feas=1e-7,tol_abs_gap=1e-8,time_limit=120s,iteration_limit=100",
+      "schema": "paper_a_ap3/1.0",
+      "barrier_iterations": null,
+      "simplex_iterations": null,
+      "nodes": null,
+      "case_id": "reference_24snap",
+      "build_wall_s": 5.0488106,
+      "scenario_config_sha256": "be9d9d9aa90e9790fc7c3554bc1107777a5ba743f4f95d8f675acd9bfeb1e75a",
+      "dual_status": "NO_SOLUTION",
+      "registry_sha256": "a249f7a96d202798c6ff5778c1fa1571eba59a3717bac5d25b150d2a6c41bce9",
+      "primal_status": "NO_SOLUTION",
+      "objective_solver_scaling": 1.4127976852377668e7,
+      "relative_gap": null
+    },
+    {
+      "model": {
+        "variables": 450,
+        "constraints": {
+          "Vector{JuMP.AffExpr} in MathOptInterface.PositiveSemidefiniteConeTriangle": 3,
+          "JuMP.VariableRef in MathOptInterface.LessThan{Float64}": 81,
+          "JuMP.VariableRef in MathOptInterface.GreaterThan{Float64}": 336,
+          "JuMP.AffExpr in MathOptInterface.LessThan{Float64}": 258,
+          "JuMP.AffExpr in MathOptInterface.EqualTo{Float64}": 139,
+          "JuMP.VariableRef in MathOptInterface.Integer": 198,
+          "JuMP.AffExpr in MathOptInterface.GreaterThan{Float64}": 69,
+          "JuMP.AffExpr in MathOptInterface.Interval{Float64}": 18
+        },
+        "integer": 198
+      },
+      "objective": 2.524596121900354e6,
+      "bound": 2.524596121899206e6,
+      "parameters": {
+        "provenance": "offline_v1:degree_plus_one;MIIF_from_B0_shifted_to_PSD_margin_1;M1_enforced_source_floor_for_PSD_margin_0.01",
+        "Bmin": [
+          [
+            700.0393139967313,
+            -116.9259116063088,
+            -419.22538897129584,
+            -164.48245635129535,
+            0.0
+          ],
+          [
+            -116.9259116063088,
+            409.13188761209125,
+            -95.31168906141838,
+            0.0,
+            -197.08051334235807
+          ],
+          [
+            -419.22538897129584,
+            -95.31168906141838,
+            749.5425695181043,
+            0.0,
+            -234.90187336926073
+          ],
+          [
+            -164.48245635129535,
+            0.0,
+            0.0,
+            164.89603593527872,
+            0.0
+          ],
+          [
+            0.0,
+            -197.08051334235807,
+            -234.90187336926073,
+            0.0,
+            432.29717200536214
+          ]
+        ],
+        "r_identity": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "W_full": [
+          [
+            1.0,
+            0.9922264653598742,
+            0.9945883234554402,
+            0.9915388924928497,
+            0.9905189659078144
+          ],
+          [
+            0.9882821517094926,
+            1.0,
+            0.9892272229765866,
+            0.9799201901764809,
+            0.9911482936820364
+          ],
+          [
+            0.9953621169834997,
+            0.9939480026794926,
+            1.0,
+            0.9869402511031575,
+            0.9942358874349858
+          ],
+          [
+            0.9787380142984873,
+            0.97112976044073,
+            0.9734414007432388,
+            1.0,
+            0.9694585658176051
+          ],
+          [
+            0.9878749995330863,
+            0.9924478411258107,
+            0.9908111447103013,
+            0.9795164829584108,
+            1.0
+          ]
+        ],
+        "M1_source_floor_pu": 0.9905302225558983,
+        "MIIF_reference_diagonal_pu": 1.9805302225558983,
+        "W_neighbor": [
+          [
+            1.0,
+            0.9922264653598742,
+            0.9945883234554402,
+            0.9915388924928497,
+            0.0
+          ],
+          [
+            0.9882821517094926,
+            1.0,
+            0.9892272229765866,
+            0.0,
+            0.9911482936820364
+          ],
+          [
+            0.9953621169834997,
+            0.9939480026794926,
+            1.0,
+            0.0,
+            0.9942358874349858
+          ],
+          [
+            0.9787380142984873,
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.9924478411258107,
+            0.9908111447103013,
+            0.0,
+            1.0
+          ]
+        ],
+        "r_degree": [
+          4.0,
+          4.0,
+          4.0,
+          2.0,
+          3.0
+        ],
+        "regions": [
+          "BE0 0",
+          "BE0 1",
+          "BE0 2",
+          "BE0 3",
+          "BE0 4"
+        ]
+      },
+      "solution_file": "reference_3snap/G0_integer.json",
+      "status": "optimal",
+      "case_sha256": "b0d2363e84d28a266cb5e4313ff94177c41e3e19dbf3db7863c47303fdd83121",
+      "relaxed": false,
+      "validation_scope": "parametric_study",
+      "solver": "Pajarito",
+      "exposure": "S_on_v1",
+      "formulation": "G0",
+      "solve_wall_s": 0.0957149,
+      "solver_time_s": 0.07899999618530273,
+      "source_producer_sha": "3b8fdb01d931225edc5f8fe1e2c200d0da288a09",
+      "termination": "OPTIMAL",
+      "raw_solver_relative_gap": 0.0,
+      "optimizer_configuration": "Pajarito: iterative,HiGHS+Clarabel,tol_rel_gap=tol_feas=1e-7,tol_abs_gap=1e-8,time_limit=120s,iteration_limit=100",
+      "schema": "paper_a_ap3/1.0",
+      "barrier_iterations": null,
+      "simplex_iterations": null,
+      "nodes": 1,
+      "case_id": "reference_3snap",
+      "build_wall_s": 0.5921661,
+      "scenario_config_sha256": "be9d9d9aa90e9790fc7c3554bc1107777a5ba743f4f95d8f675acd9bfeb1e75a",
+      "dual_status": "NO_SOLUTION",
+      "registry_sha256": "a249f7a96d202798c6ff5778c1fa1571eba59a3717bac5d25b150d2a6c41bce9",
+      "primal_status": "FEASIBLE_POINT",
+      "objective_solver_scaling": 2.524596121900354e6,
+      "relative_gap": 4.546687936562089e-13
+    },
+    {
+      "model": {
+        "variables": 486,
+        "constraints": {
+          "JuMP.VariableRef in MathOptInterface.LessThan{Float64}": 81,
+          "JuMP.VariableRef in MathOptInterface.GreaterThan{Float64}": 372,
+          "JuMP.AffExpr in MathOptInterface.LessThan{Float64}": 258,
+          "JuMP.AffExpr in MathOptInterface.EqualTo{Float64}": 139,
+          "JuMP.VariableRef in MathOptInterface.Integer": 198,
+          "Vector{JuMP.AffExpr} in MathOptInterface.RotatedSecondOrderCone": 18,
+          "JuMP.AffExpr in MathOptInterface.GreaterThan{Float64}": 84,
+          "JuMP.AffExpr in MathOptInterface.Interval{Float64}": 18
+        },
+        "integer": 198
+      },
+      "objective": null,
+      "bound": 2.5245960285808337e6,
+      "parameters": {
+        "provenance": "offline_v1:degree_plus_one;MIIF_from_B0_shifted_to_PSD_margin_1;M1_enforced_source_floor_for_PSD_margin_0.01",
+        "Bmin": [
+          [
+            700.0393139967313,
+            -116.9259116063088,
+            -419.22538897129584,
+            -164.48245635129535,
+            0.0
+          ],
+          [
+            -116.9259116063088,
+            409.13188761209125,
+            -95.31168906141838,
+            0.0,
+            -197.08051334235807
+          ],
+          [
+            -419.22538897129584,
+            -95.31168906141838,
+            749.5425695181043,
+            0.0,
+            -234.90187336926073
+          ],
+          [
+            -164.48245635129535,
+            0.0,
+            0.0,
+            164.89603593527872,
+            0.0
+          ],
+          [
+            0.0,
+            -197.08051334235807,
+            -234.90187336926073,
+            0.0,
+            432.29717200536214
+          ]
+        ],
+        "r_identity": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "W_full": [
+          [
+            1.0,
+            0.9922264653598742,
+            0.9945883234554402,
+            0.9915388924928497,
+            0.9905189659078144
+          ],
+          [
+            0.9882821517094926,
+            1.0,
+            0.9892272229765866,
+            0.9799201901764809,
+            0.9911482936820364
+          ],
+          [
+            0.9953621169834997,
+            0.9939480026794926,
+            1.0,
+            0.9869402511031575,
+            0.9942358874349858
+          ],
+          [
+            0.9787380142984873,
+            0.97112976044073,
+            0.9734414007432388,
+            1.0,
+            0.9694585658176051
+          ],
+          [
+            0.9878749995330863,
+            0.9924478411258107,
+            0.9908111447103013,
+            0.9795164829584108,
+            1.0
+          ]
+        ],
+        "M1_source_floor_pu": 0.9905302225558983,
+        "MIIF_reference_diagonal_pu": 1.9805302225558983,
+        "W_neighbor": [
+          [
+            1.0,
+            0.9922264653598742,
+            0.9945883234554402,
+            0.9915388924928497,
+            0.0
+          ],
+          [
+            0.9882821517094926,
+            1.0,
+            0.9892272229765866,
+            0.0,
+            0.9911482936820364
+          ],
+          [
+            0.9953621169834997,
+            0.9939480026794926,
+            1.0,
+            0.0,
+            0.9942358874349858
+          ],
+          [
+            0.9787380142984873,
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.9924478411258107,
+            0.9908111447103013,
+            0.0,
+            1.0
+          ]
+        ],
+        "r_degree": [
+          4.0,
+          4.0,
+          4.0,
+          2.0,
+          3.0
+        ],
+        "regions": [
+          "BE0 0",
+          "BE0 1",
+          "BE0 2",
+          "BE0 3",
+          "BE0 4"
+        ]
+      },
+      "solution_file": "reference_3snap/G3_integer.json",
+      "status": "infeasible",
+      "case_sha256": "b0d2363e84d28a266cb5e4313ff94177c41e3e19dbf3db7863c47303fdd83121",
+      "relaxed": false,
+      "validation_scope": "parametric_study",
+      "solver": "Pajarito",
+      "exposure": "S_on_v1",
+      "formulation": "G3",
+      "solve_wall_s": 0.0866226,
+      "solver_time_s": 0.06699991226196289,
+      "source_producer_sha": "3b8fdb01d931225edc5f8fe1e2c200d0da288a09",
+      "termination": "INFEASIBLE",
+      "raw_solver_relative_gap": null,
+      "optimizer_configuration": "Pajarito: iterative,HiGHS+Clarabel,tol_rel_gap=tol_feas=1e-7,tol_abs_gap=1e-8,time_limit=120s,iteration_limit=100",
+      "schema": "paper_a_ap3/1.0",
+      "barrier_iterations": null,
+      "simplex_iterations": null,
+      "nodes": null,
+      "case_id": "reference_3snap",
+      "build_wall_s": 0.5228579,
+      "scenario_config_sha256": "be9d9d9aa90e9790fc7c3554bc1107777a5ba743f4f95d8f675acd9bfeb1e75a",
+      "dual_status": "NO_SOLUTION",
+      "registry_sha256": "a249f7a96d202798c6ff5778c1fa1571eba59a3717bac5d25b150d2a6c41bce9",
+      "primal_status": "NO_SOLUTION",
+      "objective_solver_scaling": 2.524596121900354e6,
+      "relative_gap": null
+    },
+    {
+      "model": {
+        "variables": 867,
+        "constraints": {
+          "Vector{JuMP.AffExpr} in MathOptInterface.PositiveSemidefiniteConeTriangle": 6,
+          "JuMP.VariableRef in MathOptInterface.LessThan{Float64}": 129,
+          "JuMP.VariableRef in MathOptInterface.GreaterThan{Float64}": 639,
+          "JuMP.AffExpr in MathOptInterface.LessThan{Float64}": 516,
+          "JuMP.AffExpr in MathOptInterface.EqualTo{Float64}": 268,
+          "JuMP.VariableRef in MathOptInterface.Integer": 363,
+          "JuMP.AffExpr in MathOptInterface.GreaterThan{Float64}": 138,
+          "JuMP.AffExpr in MathOptInterface.Interval{Float64}": 36
+        },
+        "integer": 363
+      },
+      "objective": 4.08528471990522e6,
+      "bound": 4.085284715587981e6,
+      "parameters": {
+        "provenance": "offline_v1:degree_plus_one;MIIF_from_B0_shifted_to_PSD_margin_1;M1_enforced_source_floor_for_PSD_margin_0.01",
+        "Bmin": [
+          [
+            700.0393139967313,
+            -116.9259116063088,
+            -419.22538897129584,
+            -164.48245635129535,
+            0.0
+          ],
+          [
+            -116.9259116063088,
+            409.13188761209125,
+            -95.31168906141838,
+            0.0,
+            -197.08051334235807
+          ],
+          [
+            -419.22538897129584,
+            -95.31168906141838,
+            749.5425695181043,
+            0.0,
+            -234.90187336926073
+          ],
+          [
+            -164.48245635129535,
+            0.0,
+            0.0,
+            164.89603593527872,
+            0.0
+          ],
+          [
+            0.0,
+            -197.08051334235807,
+            -234.90187336926073,
+            0.0,
+            432.29717200536214
+          ]
+        ],
+        "r_identity": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "W_full": [
+          [
+            1.0,
+            0.9922264653598742,
+            0.9945883234554402,
+            0.9915388924928497,
+            0.9905189659078144
+          ],
+          [
+            0.9882821517094926,
+            1.0,
+            0.9892272229765866,
+            0.9799201901764809,
+            0.9911482936820364
+          ],
+          [
+            0.9953621169834997,
+            0.9939480026794926,
+            1.0,
+            0.9869402511031575,
+            0.9942358874349858
+          ],
+          [
+            0.9787380142984873,
+            0.97112976044073,
+            0.9734414007432388,
+            1.0,
+            0.9694585658176051
+          ],
+          [
+            0.9878749995330863,
+            0.9924478411258107,
+            0.9908111447103013,
+            0.9795164829584108,
+            1.0
+          ]
+        ],
+        "M1_source_floor_pu": 0.9905302225558983,
+        "MIIF_reference_diagonal_pu": 1.9805302225558983,
+        "W_neighbor": [
+          [
+            1.0,
+            0.9922264653598742,
+            0.9945883234554402,
+            0.9915388924928497,
+            0.0
+          ],
+          [
+            0.9882821517094926,
+            1.0,
+            0.9892272229765866,
+            0.0,
+            0.9911482936820364
+          ],
+          [
+            0.9953621169834997,
+            0.9939480026794926,
+            1.0,
+            0.0,
+            0.9942358874349858
+          ],
+          [
+            0.9787380142984873,
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.9924478411258107,
+            0.9908111447103013,
+            0.0,
+            1.0
+          ]
+        ],
+        "r_degree": [
+          4.0,
+          4.0,
+          4.0,
+          2.0,
+          3.0
+        ],
+        "regions": [
+          "BE0 0",
+          "BE0 1",
+          "BE0 2",
+          "BE0 3",
+          "BE0 4"
+        ]
+      },
+      "solution_file": "reference_6snap/G0_integer.json",
+      "status": "optimal",
+      "case_sha256": "bc3f847fe10dce0ba08dce6443fea92334e93a1a4595141e34838bde49d711ad",
+      "relaxed": false,
+      "validation_scope": "parametric_study",
+      "solver": "Pajarito",
+      "exposure": "S_on_v1",
+      "formulation": "G0",
+      "solve_wall_s": 0.1950703,
+      "solver_time_s": 0.17299985885620117,
+      "source_producer_sha": "3b8fdb01d931225edc5f8fe1e2c200d0da288a09",
+      "termination": "OPTIMAL",
+      "raw_solver_relative_gap": 7.884606521638741e-13,
+      "optimizer_configuration": "Pajarito: iterative,HiGHS+Clarabel,tol_rel_gap=tol_feas=1e-7,tol_abs_gap=1e-8,time_limit=120s,iteration_limit=100",
+      "schema": "paper_a_ap3/1.0",
+      "barrier_iterations": null,
+      "simplex_iterations": null,
+      "nodes": 1,
+      "case_id": "reference_6snap",
+      "build_wall_s": 1.1364956,
+      "scenario_config_sha256": "be9d9d9aa90e9790fc7c3554bc1107777a5ba743f4f95d8f675acd9bfeb1e75a",
+      "dual_status": "NO_SOLUTION",
+      "registry_sha256": "a249f7a96d202798c6ff5778c1fa1571eba59a3717bac5d25b150d2a6c41bce9",
+      "primal_status": "FEASIBLE_POINT",
+      "objective_solver_scaling": 4.085284715587052e6,
+      "relative_gap": 1.0567779782525595e-9
+    },
+    {
+      "model": {
+        "variables": 939,
+        "constraints": {
+          "JuMP.VariableRef in MathOptInterface.LessThan{Float64}": 129,
+          "JuMP.VariableRef in MathOptInterface.GreaterThan{Float64}": 711,
+          "JuMP.AffExpr in MathOptInterface.LessThan{Float64}": 516,
+          "JuMP.AffExpr in MathOptInterface.EqualTo{Float64}": 268,
+          "JuMP.VariableRef in MathOptInterface.Integer": 363,
+          "Vector{JuMP.AffExpr} in MathOptInterface.RotatedSecondOrderCone": 36,
+          "JuMP.AffExpr in MathOptInterface.GreaterThan{Float64}": 168,
+          "JuMP.AffExpr in MathOptInterface.Interval{Float64}": 36
+        },
+        "integer": 363
+      },
+      "objective": 4.0852847200427772e6,
+      "bound": 4.085284715587981e6,
+      "parameters": {
+        "provenance": "offline_v1:degree_plus_one;MIIF_from_B0_shifted_to_PSD_margin_1;M1_enforced_source_floor_for_PSD_margin_0.01",
+        "Bmin": [
+          [
+            700.0393139967313,
+            -116.9259116063088,
+            -419.22538897129584,
+            -164.48245635129535,
+            0.0
+          ],
+          [
+            -116.9259116063088,
+            409.13188761209125,
+            -95.31168906141838,
+            0.0,
+            -197.08051334235807
+          ],
+          [
+            -419.22538897129584,
+            -95.31168906141838,
+            749.5425695181043,
+            0.0,
+            -234.90187336926073
+          ],
+          [
+            -164.48245635129535,
+            0.0,
+            0.0,
+            164.89603593527872,
+            0.0
+          ],
+          [
+            0.0,
+            -197.08051334235807,
+            -234.90187336926073,
+            0.0,
+            432.29717200536214
+          ]
+        ],
+        "r_identity": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "W_full": [
+          [
+            1.0,
+            0.9922264653598742,
+            0.9945883234554402,
+            0.9915388924928497,
+            0.9905189659078144
+          ],
+          [
+            0.9882821517094926,
+            1.0,
+            0.9892272229765866,
+            0.9799201901764809,
+            0.9911482936820364
+          ],
+          [
+            0.9953621169834997,
+            0.9939480026794926,
+            1.0,
+            0.9869402511031575,
+            0.9942358874349858
+          ],
+          [
+            0.9787380142984873,
+            0.97112976044073,
+            0.9734414007432388,
+            1.0,
+            0.9694585658176051
+          ],
+          [
+            0.9878749995330863,
+            0.9924478411258107,
+            0.9908111447103013,
+            0.9795164829584108,
+            1.0
+          ]
+        ],
+        "M1_source_floor_pu": 0.9905302225558983,
+        "MIIF_reference_diagonal_pu": 1.9805302225558983,
+        "W_neighbor": [
+          [
+            1.0,
+            0.9922264653598742,
+            0.9945883234554402,
+            0.9915388924928497,
+            0.0
+          ],
+          [
+            0.9882821517094926,
+            1.0,
+            0.9892272229765866,
+            0.0,
+            0.9911482936820364
+          ],
+          [
+            0.9953621169834997,
+            0.9939480026794926,
+            1.0,
+            0.0,
+            0.9942358874349858
+          ],
+          [
+            0.9787380142984873,
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.9924478411258107,
+            0.9908111447103013,
+            0.0,
+            1.0
+          ]
+        ],
+        "r_degree": [
+          4.0,
+          4.0,
+          4.0,
+          2.0,
+          3.0
+        ],
+        "regions": [
+          "BE0 0",
+          "BE0 1",
+          "BE0 2",
+          "BE0 3",
+          "BE0 4"
+        ]
+      },
+      "solution_file": "reference_6snap/G3_integer.json",
+      "status": "optimal",
+      "case_sha256": "bc3f847fe10dce0ba08dce6443fea92334e93a1a4595141e34838bde49d711ad",
+      "relaxed": false,
+      "validation_scope": "parametric_study",
+      "solver": "Pajarito",
+      "exposure": "S_on_v1",
+      "formulation": "G3",
+      "solve_wall_s": 0.1836791,
+      "solver_time_s": 0.16099977493286133,
+      "source_producer_sha": "3b8fdb01d931225edc5f8fe1e2c200d0da288a09",
+      "termination": "OPTIMAL",
+      "raw_solver_relative_gap": 8.133969077292776e-13,
+      "optimizer_configuration": "Pajarito: iterative,HiGHS+Clarabel,tol_rel_gap=tol_feas=1e-7,tol_abs_gap=1e-8,time_limit=120s,iteration_limit=100",
+      "schema": "paper_a_ap3/1.0",
+      "barrier_iterations": null,
+      "simplex_iterations": null,
+      "nodes": null,
+      "case_id": "reference_6snap",
+      "build_wall_s": 1.1046362,
+      "scenario_config_sha256": "be9d9d9aa90e9790fc7c3554bc1107777a5ba743f4f95d8f675acd9bfeb1e75a",
+      "dual_status": "NO_SOLUTION",
+      "registry_sha256": "a249f7a96d202798c6ff5778c1fa1571eba59a3717bac5d25b150d2a6c41bce9",
+      "primal_status": "FEASIBLE_POINT",
+      "objective_solver_scaling": 4.085284715587052e6,
+      "relative_gap": 1.0904493830320219e-9
+    },
+    {
+      "model": {
+        "variables": 450,
+        "constraints": {
+          "Vector{JuMP.AffExpr} in MathOptInterface.PositiveSemidefiniteConeTriangle": 3,
+          "JuMP.VariableRef in MathOptInterface.LessThan{Float64}": 81,
+          "JuMP.VariableRef in MathOptInterface.GreaterThan{Float64}": 336,
+          "JuMP.AffExpr in MathOptInterface.LessThan{Float64}": 258,
+          "JuMP.AffExpr in MathOptInterface.EqualTo{Float64}": 139,
+          "JuMP.VariableRef in MathOptInterface.Integer": 198,
+          "JuMP.AffExpr in MathOptInterface.GreaterThan{Float64}": 69,
+          "JuMP.AffExpr in MathOptInterface.Interval{Float64}": 18
+        },
+        "integer": 198
+      },
+      "objective": 2.524596121900354e6,
+      "bound": 2.524596121899206e6,
+      "parameters": {
+        "provenance": "offline_v1:degree_plus_one;MIIF_from_B0_shifted_to_PSD_margin_1;M1_enforced_source_floor_for_PSD_margin_0.01",
+        "Bmin": [
+          [
+            700.0393139967313,
+            -116.9259116063088,
+            -419.22538897129584,
+            -164.48245635129535,
+            0.0
+          ],
+          [
+            -116.9259116063088,
+            409.13188761209125,
+            -95.31168906141838,
+            0.0,
+            -197.08051334235807
+          ],
+          [
+            -419.22538897129584,
+            -95.31168906141838,
+            749.5425695181043,
+            0.0,
+            -234.90187336926073
+          ],
+          [
+            -164.48245635129535,
+            0.0,
+            0.0,
+            164.89603593527872,
+            0.0
+          ],
+          [
+            0.0,
+            -197.08051334235807,
+            -234.90187336926073,
+            0.0,
+            432.29717200536214
+          ]
+        ],
+        "r_identity": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "W_full": [
+          [
+            1.0,
+            0.9922264653598742,
+            0.9945883234554402,
+            0.9915388924928497,
+            0.9905189659078144
+          ],
+          [
+            0.9882821517094926,
+            1.0,
+            0.9892272229765866,
+            0.9799201901764809,
+            0.9911482936820364
+          ],
+          [
+            0.9953621169834997,
+            0.9939480026794926,
+            1.0,
+            0.9869402511031575,
+            0.9942358874349858
+          ],
+          [
+            0.9787380142984873,
+            0.97112976044073,
+            0.9734414007432388,
+            1.0,
+            0.9694585658176051
+          ],
+          [
+            0.9878749995330863,
+            0.9924478411258107,
+            0.9908111447103013,
+            0.9795164829584108,
+            1.0
+          ]
+        ],
+        "M1_source_floor_pu": 0.9905302225558983,
+        "MIIF_reference_diagonal_pu": 1.9805302225558983,
+        "W_neighbor": [
+          [
+            1.0,
+            0.9922264653598742,
+            0.9945883234554402,
+            0.9915388924928497,
+            0.0
+          ],
+          [
+            0.9882821517094926,
+            1.0,
+            0.9892272229765866,
+            0.0,
+            0.9911482936820364
+          ],
+          [
+            0.9953621169834997,
+            0.9939480026794926,
+            1.0,
+            0.0,
+            0.9942358874349858
+          ],
+          [
+            0.9787380142984873,
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.9924478411258107,
+            0.9908111447103013,
+            0.0,
+            1.0
+          ]
+        ],
+        "r_degree": [
+          4.0,
+          4.0,
+          4.0,
+          2.0,
+          3.0
+        ],
+        "regions": [
+          "BE0 0",
+          "BE0 1",
+          "BE0 2",
+          "BE0 3",
+          "BE0 4"
+        ]
+      },
+      "solution_file": "source_reactance_3snap/G0_integer.json",
+      "status": "optimal",
+      "case_sha256": "8cfe46680d6f0a8be1378d1b21d2bd3efc4c82985389f22ee6fc52d5d40b6d78",
+      "relaxed": false,
+      "validation_scope": "parametric_study",
+      "solver": "Pajarito",
+      "exposure": "S_on_v1",
+      "formulation": "G0",
+      "solve_wall_s": 0.1003529,
+      "solver_time_s": 0.08599996566772461,
+      "source_producer_sha": "3b8fdb01d931225edc5f8fe1e2c200d0da288a09",
+      "termination": "OPTIMAL",
+      "raw_solver_relative_gap": 0.0,
+      "optimizer_configuration": "Pajarito: iterative,HiGHS+Clarabel,tol_rel_gap=tol_feas=1e-7,tol_abs_gap=1e-8,time_limit=120s,iteration_limit=100",
+      "schema": "paper_a_ap3/1.0",
+      "barrier_iterations": null,
+      "simplex_iterations": null,
+      "nodes": 1,
+      "case_id": "source_reactance_3snap",
+      "build_wall_s": 0.4988425,
+      "scenario_config_sha256": "be9d9d9aa90e9790fc7c3554bc1107777a5ba743f4f95d8f675acd9bfeb1e75a",
+      "dual_status": "NO_SOLUTION",
+      "registry_sha256": "a249f7a96d202798c6ff5778c1fa1571eba59a3717bac5d25b150d2a6c41bce9",
+      "primal_status": "FEASIBLE_POINT",
+      "objective_solver_scaling": 2.524596121900354e6,
+      "relative_gap": 4.546687936562089e-13
+    },
+    {
+      "model": {
+        "variables": 486,
+        "constraints": {
+          "JuMP.VariableRef in MathOptInterface.LessThan{Float64}": 81,
+          "JuMP.VariableRef in MathOptInterface.GreaterThan{Float64}": 372,
+          "JuMP.AffExpr in MathOptInterface.LessThan{Float64}": 258,
+          "JuMP.AffExpr in MathOptInterface.EqualTo{Float64}": 139,
+          "JuMP.VariableRef in MathOptInterface.Integer": 198,
+          "Vector{JuMP.AffExpr} in MathOptInterface.RotatedSecondOrderCone": 18,
+          "JuMP.AffExpr in MathOptInterface.GreaterThan{Float64}": 84,
+          "JuMP.AffExpr in MathOptInterface.Interval{Float64}": 18
+        },
+        "integer": 198
+      },
+      "objective": null,
+      "bound": 2.5245960369225894e6,
+      "parameters": {
+        "provenance": "offline_v1:degree_plus_one;MIIF_from_B0_shifted_to_PSD_margin_1;M1_enforced_source_floor_for_PSD_margin_0.01",
+        "Bmin": [
+          [
+            700.0393139967313,
+            -116.9259116063088,
+            -419.22538897129584,
+            -164.48245635129535,
+            0.0
+          ],
+          [
+            -116.9259116063088,
+            409.13188761209125,
+            -95.31168906141838,
+            0.0,
+            -197.08051334235807
+          ],
+          [
+            -419.22538897129584,
+            -95.31168906141838,
+            749.5425695181043,
+            0.0,
+            -234.90187336926073
+          ],
+          [
+            -164.48245635129535,
+            0.0,
+            0.0,
+            164.89603593527872,
+            0.0
+          ],
+          [
+            0.0,
+            -197.08051334235807,
+            -234.90187336926073,
+            0.0,
+            432.29717200536214
+          ]
+        ],
+        "r_identity": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "W_full": [
+          [
+            1.0,
+            0.9922264653598742,
+            0.9945883234554402,
+            0.9915388924928497,
+            0.9905189659078144
+          ],
+          [
+            0.9882821517094926,
+            1.0,
+            0.9892272229765866,
+            0.9799201901764809,
+            0.9911482936820364
+          ],
+          [
+            0.9953621169834997,
+            0.9939480026794926,
+            1.0,
+            0.9869402511031575,
+            0.9942358874349858
+          ],
+          [
+            0.9787380142984873,
+            0.97112976044073,
+            0.9734414007432388,
+            1.0,
+            0.9694585658176051
+          ],
+          [
+            0.9878749995330863,
+            0.9924478411258107,
+            0.9908111447103013,
+            0.9795164829584108,
+            1.0
+          ]
+        ],
+        "M1_source_floor_pu": 0.9905302225558983,
+        "MIIF_reference_diagonal_pu": 1.9805302225558983,
+        "W_neighbor": [
+          [
+            1.0,
+            0.9922264653598742,
+            0.9945883234554402,
+            0.9915388924928497,
+            0.0
+          ],
+          [
+            0.9882821517094926,
+            1.0,
+            0.9892272229765866,
+            0.0,
+            0.9911482936820364
+          ],
+          [
+            0.9953621169834997,
+            0.9939480026794926,
+            1.0,
+            0.0,
+            0.9942358874349858
+          ],
+          [
+            0.9787380142984873,
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.9924478411258107,
+            0.9908111447103013,
+            0.0,
+            1.0
+          ]
+        ],
+        "r_degree": [
+          4.0,
+          4.0,
+          4.0,
+          2.0,
+          3.0
+        ],
+        "regions": [
+          "BE0 0",
+          "BE0 1",
+          "BE0 2",
+          "BE0 3",
+          "BE0 4"
+        ]
+      },
+      "solution_file": "source_reactance_3snap/G3_integer.json",
+      "status": "infeasible",
+      "case_sha256": "8cfe46680d6f0a8be1378d1b21d2bd3efc4c82985389f22ee6fc52d5d40b6d78",
+      "relaxed": false,
+      "validation_scope": "parametric_study",
+      "solver": "Pajarito",
+      "exposure": "S_on_v1",
+      "formulation": "G3",
+      "solve_wall_s": 0.0797232,
+      "solver_time_s": 0.059999942779541016,
+      "source_producer_sha": "3b8fdb01d931225edc5f8fe1e2c200d0da288a09",
+      "termination": "INFEASIBLE",
+      "raw_solver_relative_gap": null,
+      "optimizer_configuration": "Pajarito: iterative,HiGHS+Clarabel,tol_rel_gap=tol_feas=1e-7,tol_abs_gap=1e-8,time_limit=120s,iteration_limit=100",
+      "schema": "paper_a_ap3/1.0",
+      "barrier_iterations": null,
+      "simplex_iterations": null,
+      "nodes": null,
+      "case_id": "source_reactance_3snap",
+      "build_wall_s": 0.5733812,
+      "scenario_config_sha256": "be9d9d9aa90e9790fc7c3554bc1107777a5ba743f4f95d8f675acd9bfeb1e75a",
+      "dual_status": "NO_SOLUTION",
+      "registry_sha256": "a249f7a96d202798c6ff5778c1fa1571eba59a3717bac5d25b150d2a6c41bce9",
+      "primal_status": "NO_SOLUTION",
+      "objective_solver_scaling": 2.524596121900354e6,
+      "relative_gap": null
+    },
+    {
+      "model": {
+        "variables": 450,
+        "constraints": {
+          "Vector{JuMP.AffExpr} in MathOptInterface.PositiveSemidefiniteConeTriangle": 3,
+          "JuMP.VariableRef in MathOptInterface.LessThan{Float64}": 81,
+          "JuMP.VariableRef in MathOptInterface.GreaterThan{Float64}": 336,
+          "JuMP.AffExpr in MathOptInterface.LessThan{Float64}": 258,
+          "JuMP.AffExpr in MathOptInterface.EqualTo{Float64}": 139,
+          "JuMP.VariableRef in MathOptInterface.Integer": 198,
+          "JuMP.AffExpr in MathOptInterface.GreaterThan{Float64}": 69,
+          "JuMP.AffExpr in MathOptInterface.Interval{Float64}": 18
+        },
+        "integer": 198
+      },
+      "objective": 2.524596121900354e6,
+      "bound": 2.524596121899206e6,
+      "parameters": {
+        "provenance": "offline_v1:degree_plus_one;MIIF_from_B0_shifted_to_PSD_margin_1;M1_enforced_source_floor_for_PSD_margin_0.01",
+        "Bmin": [
+          [
+            700.0393139967313,
+            -116.9259116063088,
+            -419.22538897129584,
+            -164.48245635129535,
+            0.0
+          ],
+          [
+            -116.9259116063088,
+            409.13188761209125,
+            -95.31168906141838,
+            0.0,
+            -197.08051334235807
+          ],
+          [
+            -419.22538897129584,
+            -95.31168906141838,
+            749.5425695181043,
+            0.0,
+            -234.90187336926073
+          ],
+          [
+            -164.48245635129535,
+            0.0,
+            0.0,
+            164.89603593527872,
+            0.0
+          ],
+          [
+            0.0,
+            -197.08051334235807,
+            -234.90187336926073,
+            0.0,
+            432.29717200536214
+          ]
+        ],
+        "r_identity": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "W_full": [
+          [
+            1.0,
+            0.9922264653598742,
+            0.9945883234554402,
+            0.9915388924928497,
+            0.9905189659078144
+          ],
+          [
+            0.9882821517094926,
+            1.0,
+            0.9892272229765866,
+            0.9799201901764809,
+            0.9911482936820364
+          ],
+          [
+            0.9953621169834997,
+            0.9939480026794926,
+            1.0,
+            0.9869402511031575,
+            0.9942358874349858
+          ],
+          [
+            0.9787380142984873,
+            0.97112976044073,
+            0.9734414007432388,
+            1.0,
+            0.9694585658176051
+          ],
+          [
+            0.9878749995330863,
+            0.9924478411258107,
+            0.9908111447103013,
+            0.9795164829584108,
+            1.0
+          ]
+        ],
+        "M1_source_floor_pu": 0.9905302225558983,
+        "MIIF_reference_diagonal_pu": 1.9805302225558983,
+        "W_neighbor": [
+          [
+            1.0,
+            0.9922264653598742,
+            0.9945883234554402,
+            0.9915388924928497,
+            0.0
+          ],
+          [
+            0.9882821517094926,
+            1.0,
+            0.9892272229765866,
+            0.0,
+            0.9911482936820364
+          ],
+          [
+            0.9953621169834997,
+            0.9939480026794926,
+            1.0,
+            0.0,
+            0.9942358874349858
+          ],
+          [
+            0.9787380142984873,
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.9924478411258107,
+            0.9908111447103013,
+            0.0,
+            1.0
+          ]
+        ],
+        "r_degree": [
+          4.0,
+          4.0,
+          4.0,
+          2.0,
+          3.0
+        ],
+        "regions": [
+          "BE0 0",
+          "BE0 1",
+          "BE0 2",
+          "BE0 3",
+          "BE0 4"
+        ]
+      },
+      "solution_file": "threshold_3snap/G0_integer.json",
+      "status": "optimal",
+      "case_sha256": "907d1290f93b29dc796bfe0fedbc026458a6f84113f3c78fd0815af877bccdac",
+      "relaxed": false,
+      "validation_scope": "parametric_study",
+      "solver": "Pajarito",
+      "exposure": "S_on_v1",
+      "formulation": "G0",
+      "solve_wall_s": 0.1023221,
+      "solver_time_s": 0.08499979972839355,
+      "source_producer_sha": "3b8fdb01d931225edc5f8fe1e2c200d0da288a09",
+      "termination": "OPTIMAL",
+      "raw_solver_relative_gap": 0.0,
+      "optimizer_configuration": "Pajarito: iterative,HiGHS+Clarabel,tol_rel_gap=tol_feas=1e-7,tol_abs_gap=1e-8,time_limit=120s,iteration_limit=100",
+      "schema": "paper_a_ap3/1.0",
+      "barrier_iterations": null,
+      "simplex_iterations": null,
+      "nodes": 1,
+      "case_id": "threshold_3snap",
+      "build_wall_s": 0.6209399,
+      "scenario_config_sha256": "be9d9d9aa90e9790fc7c3554bc1107777a5ba743f4f95d8f675acd9bfeb1e75a",
+      "dual_status": "NO_SOLUTION",
+      "registry_sha256": "a249f7a96d202798c6ff5778c1fa1571eba59a3717bac5d25b150d2a6c41bce9",
+      "primal_status": "FEASIBLE_POINT",
+      "objective_solver_scaling": 2.524596121900354e6,
+      "relative_gap": 4.546687936562089e-13
+    },
+    {
+      "model": {
+        "variables": 486,
+        "constraints": {
+          "JuMP.VariableRef in MathOptInterface.LessThan{Float64}": 81,
+          "JuMP.VariableRef in MathOptInterface.GreaterThan{Float64}": 372,
+          "JuMP.AffExpr in MathOptInterface.LessThan{Float64}": 258,
+          "JuMP.AffExpr in MathOptInterface.EqualTo{Float64}": 139,
+          "JuMP.VariableRef in MathOptInterface.Integer": 198,
+          "Vector{JuMP.AffExpr} in MathOptInterface.RotatedSecondOrderCone": 18,
+          "JuMP.AffExpr in MathOptInterface.GreaterThan{Float64}": 84,
+          "JuMP.AffExpr in MathOptInterface.Interval{Float64}": 18
+        },
+        "integer": 198
+      },
+      "objective": null,
+      "bound": 2.524596025328398e6,
+      "parameters": {
+        "provenance": "offline_v1:degree_plus_one;MIIF_from_B0_shifted_to_PSD_margin_1;M1_enforced_source_floor_for_PSD_margin_0.01",
+        "Bmin": [
+          [
+            700.0393139967313,
+            -116.9259116063088,
+            -419.22538897129584,
+            -164.48245635129535,
+            0.0
+          ],
+          [
+            -116.9259116063088,
+            409.13188761209125,
+            -95.31168906141838,
+            0.0,
+            -197.08051334235807
+          ],
+          [
+            -419.22538897129584,
+            -95.31168906141838,
+            749.5425695181043,
+            0.0,
+            -234.90187336926073
+          ],
+          [
+            -164.48245635129535,
+            0.0,
+            0.0,
+            164.89603593527872,
+            0.0
+          ],
+          [
+            0.0,
+            -197.08051334235807,
+            -234.90187336926073,
+            0.0,
+            432.29717200536214
+          ]
+        ],
+        "r_identity": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "W_full": [
+          [
+            1.0,
+            0.9922264653598742,
+            0.9945883234554402,
+            0.9915388924928497,
+            0.9905189659078144
+          ],
+          [
+            0.9882821517094926,
+            1.0,
+            0.9892272229765866,
+            0.9799201901764809,
+            0.9911482936820364
+          ],
+          [
+            0.9953621169834997,
+            0.9939480026794926,
+            1.0,
+            0.9869402511031575,
+            0.9942358874349858
+          ],
+          [
+            0.9787380142984873,
+            0.97112976044073,
+            0.9734414007432388,
+            1.0,
+            0.9694585658176051
+          ],
+          [
+            0.9878749995330863,
+            0.9924478411258107,
+            0.9908111447103013,
+            0.9795164829584108,
+            1.0
+          ]
+        ],
+        "M1_source_floor_pu": 0.9905302225558983,
+        "MIIF_reference_diagonal_pu": 1.9805302225558983,
+        "W_neighbor": [
+          [
+            1.0,
+            0.9922264653598742,
+            0.9945883234554402,
+            0.9915388924928497,
+            0.0
+          ],
+          [
+            0.9882821517094926,
+            1.0,
+            0.9892272229765866,
+            0.0,
+            0.9911482936820364
+          ],
+          [
+            0.9953621169834997,
+            0.9939480026794926,
+            1.0,
+            0.0,
+            0.9942358874349858
+          ],
+          [
+            0.9787380142984873,
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.9924478411258107,
+            0.9908111447103013,
+            0.0,
+            1.0
+          ]
+        ],
+        "r_degree": [
+          4.0,
+          4.0,
+          4.0,
+          2.0,
+          3.0
+        ],
+        "regions": [
+          "BE0 0",
+          "BE0 1",
+          "BE0 2",
+          "BE0 3",
+          "BE0 4"
+        ]
+      },
+      "solution_file": "threshold_3snap/G3_integer.json",
+      "status": "infeasible",
+      "case_sha256": "907d1290f93b29dc796bfe0fedbc026458a6f84113f3c78fd0815af877bccdac",
+      "relaxed": false,
+      "validation_scope": "parametric_study",
+      "solver": "Pajarito",
+      "exposure": "S_on_v1",
+      "formulation": "G3",
+      "solve_wall_s": 0.0897142,
+      "solver_time_s": 0.0690000057220459,
+      "source_producer_sha": "3b8fdb01d931225edc5f8fe1e2c200d0da288a09",
+      "termination": "INFEASIBLE",
+      "raw_solver_relative_gap": null,
+      "optimizer_configuration": "Pajarito: iterative,HiGHS+Clarabel,tol_rel_gap=tol_feas=1e-7,tol_abs_gap=1e-8,time_limit=120s,iteration_limit=100",
+      "schema": "paper_a_ap3/1.0",
+      "barrier_iterations": null,
+      "simplex_iterations": null,
+      "nodes": null,
+      "case_id": "threshold_3snap",
+      "build_wall_s": 0.5752114,
+      "scenario_config_sha256": "be9d9d9aa90e9790fc7c3554bc1107777a5ba743f4f95d8f675acd9bfeb1e75a",
+      "dual_status": "NO_SOLUTION",
+      "registry_sha256": "a249f7a96d202798c6ff5778c1fa1571eba59a3717bac5d25b150d2a6c41bce9",
+      "primal_status": "NO_SOLUTION",
+      "objective_solver_scaling": 2.524596121900354e6,
+      "relative_gap": null
+    }
+  ],
+  "schema": "paper_a_ap3/1.0"
+}

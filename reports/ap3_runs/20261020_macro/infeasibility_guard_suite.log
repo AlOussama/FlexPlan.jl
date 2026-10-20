@@ -1,0 +1,5 @@
+Set parameter Username
+Set parameter LicenseID to value 2721113
+┌ Warning: warm start is only partial so will be ignored
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\models.jl:121
+reference_3snap G3_integer numerical_inconclusive nothing

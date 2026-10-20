@@ -1,0 +1,28 @@
+Set parameter Username
+Set parameter LicenseID to value 2721113
+reference_3snap BASE_continuous optimal 2.524596121900354e6
+reference_3snap G0_continuous optimal 2.5245965294914762e6
+reference_3snap G1_continuous optimal 2.5341196477331854e6
+reference_3snap G2_identity_continuous optimal 2.5341196477331854e6
+reference_3snap G2_degree_continuous infeasible nothing
+reference_3snap G3_continuous optimal 2.5245965252315435e6
+reference_3snap M1_continuous infeasible nothing
+reference_3snap M2_full_continuous optimal 2.5439619923524735e6
+reference_3snap M2_neighbor_continuous optimal 2.5355460726588806e6
+reference_3snap BASE_integer optimal 2.5245961219003536e6
+┌ Warning: warm start is only partial so will be ignored
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\models.jl:121
+┌ Warning: OA solver status OTHER_ERROR is not handled
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\algorithms.jl:84
+reference_3snap G0_integer numerical_inconclusive nothing
+reference_3snap G1_integer optimal 2.5351239494953626e6
+reference_3snap G2_identity_integer optimal 2.5351239494953626e6
+reference_3snap G2_degree_integer infeasible nothing
+┌ Warning: warm start is only partial so will be ignored
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\models.jl:121
+┌ Warning: OA solver status OTHER_ERROR is not handled
+└ @ Pajarito C:\Users\User\.julia\packages\Pajarito\mhMdw\src\algorithms.jl:84
+reference_3snap G3_integer numerical_inconclusive nothing
+reference_3snap M1_integer infeasible nothing
+reference_3snap M2_full_integer optimal 2.545612913322882e6
+reference_3snap M2_neighbor_integer optimal 2.5359306520831147e6

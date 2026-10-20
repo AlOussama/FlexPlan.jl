@@ -1,0 +1,4164 @@
+{
+  "scenario_config_sha256": "be9d9d9aa90e9790fc7c3554bc1107777a5ba743f4f95d8f675acd9bfeb1e75a",
+  "registry_sha256": "a249f7a96d202798c6ff5778c1fa1571eba59a3717bac5d25b150d2a6c41bce9",
+  "cases": [
+    {
+      "relative_gap": 6.638299236744586e-9,
+      "empirical_approved": false,
+      "primal": "FEASIBLE_POINT",
+      "objective": 2.535123949494112e6,
+      "cost_residual": 6.025657057762146e-7,
+      "exposure_expression_residual": 0.0,
+      "installed_assets": {
+        "BE0 1 nuclear": {
+          "new_MW": 0.0,
+          "nmax": 3,
+          "installed": 3.0,
+          "n0": 3
+        },
+        "BE0 1 0 onwind": {
+          "new_MW": 0.0,
+          "nmax": 71,
+          "installed": 42.0,
+          "n0": 42
+        },
+        "BE0 0 biomass": {
+          "new_MW": 0.0,
+          "nmax": 1,
+          "installed": 1.0,
+          "n0": 1
+        },
+        "BE0 1 0 solar": {
+          "new_MW": 0.0,
+          "nmax": 872,
+          "installed": 46.0,
+          "n0": 46
+        },
+        "BE0 0 CCGT": {
+          "new_MW": 0.0,
+          "nmax": 2,
+          "installed": 2.0,
+          "n0": 2
+        },
+        "candidate_bess_gfm_be0_1": {
+          "new_MW": 0.0,
+          "nmax": 20,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "BE0 1 oil": {
+          "new_MW": 0.0,
+          "nmax": 4,
+          "installed": 4.0,
+          "n0": 4
+        },
+        "BE0 2 CCGT": {
+          "new_MW": 0.0,
+          "nmax": 2,
+          "installed": 2.0,
+          "n0": 2
+        },
+        "candidate_bess_gfm_be0_3": {
+          "new_MW": 200.0,
+          "nmax": 20,
+          "installed": 2.0,
+          "n0": 0
+        },
+        "BE0 1 biomass": {
+          "new_MW": 0.0,
+          "nmax": 1,
+          "installed": 1.0,
+          "n0": 1
+        },
+        "BE0 1 CCGT": {
+          "new_MW": 0.0,
+          "nmax": 9,
+          "installed": 9.0,
+          "n0": 9
+        },
+        "BE0 1 0 offwind-ac": {
+          "new_MW": 0.0,
+          "nmax": 23,
+          "installed": 23.0,
+          "n0": 23
+        },
+        "BE0 0 battery": {
+          "new_MW": 0.0,
+          "nmax": 0,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "BE0 0 0 solar": {
+          "new_MW": 0.0,
+          "nmax": 401,
+          "installed": 21.0,
+          "n0": 21
+        },
+        "BE0 1 battery": {
+          "new_MW": 0.0,
+          "nmax": 0,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "candidate_bess_gfm_be0_2": {
+          "new_MW": 0.0,
+          "nmax": 20,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "BE0 3 0 onwind": {
+          "new_MW": 0.0,
+          "nmax": 124,
+          "installed": 9.0,
+          "n0": 9
+        },
+        "candidate_bess_gfm_be0_0": {
+          "new_MW": 0.0,
+          "nmax": 20,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "BE0 3 battery": {
+          "new_MW": 0.0,
+          "nmax": 43,
+          "installed": 43.0,
+          "n0": 43
+        },
+        "candidate_bess_gfm_be0_4": {
+          "new_MW": 0.0,
+          "nmax": 20,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "BE0 2 0 onwind": {
+          "new_MW": 0.0,
+          "nmax": 14,
+          "installed": 7.0,
+          "n0": 7
+        },
+        "BE0 4 battery": {
+          "new_MW": 0.0,
+          "nmax": 0,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "BE0 3 oil": {
+          "new_MW": 0.0,
+          "nmax": 1,
+          "installed": 1.0,
+          "n0": 1
+        },
+        "BE0 4 oil": {
+          "new_MW": 0.0,
+          "nmax": 2,
+          "installed": 2.0,
+          "n0": 2
+        },
+        "BE0 3 0 solar": {
+          "new_MW": 0.0,
+          "nmax": 227,
+          "installed": 147.0,
+          "n0": 147
+        },
+        "BE0 4 0 onwind": {
+          "new_MW": 0.0,
+          "nmax": 49,
+          "installed": 9.0,
+          "n0": 9
+        },
+        "BE0 0 0 onwind": {
+          "new_MW": 0.0,
+          "nmax": 59,
+          "installed": 9.0,
+          "n0": 9
+        },
+        "BE0 0 nuclear": {
+          "new_MW": 0.0,
+          "nmax": 3,
+          "installed": 3.0,
+          "n0": 3
+        },
+        "BE0 2 battery": {
+          "new_MW": 0.0,
+          "nmax": 0,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "BE0 2 0 solar": {
+          "new_MW": 0.0,
+          "nmax": 262,
+          "installed": 14.0,
+          "n0": 14
+        },
+        "BE0 1 0 offwind-dc": {
+          "new_MW": 0.0,
+          "nmax": 9,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "BE0 4 0 solar": {
+          "new_MW": 0.0,
+          "nmax": 415,
+          "installed": 21.0,
+          "n0": 21
+        },
+        "BE0 4 CCGT": {
+          "new_MW": 0.0,
+          "nmax": 5,
+          "installed": 5.0,
+          "n0": 5
+        }
+      },
+      "G1_violation": 0.0,
+      "events": 0.0,
+      "minimum_M_eigenvalue": 76.3941333870718,
+      "case_sha256": "b0d2363e84d28a266cb5e4313ff94177c41e3e19dbf3db7863c47303fdd83121",
+      "relaxed": false,
+      "validation_scope": "parametric_study",
+      "investment": 10527.81076483574,
+      "integrality_residual": 0.0,
+      "block_bound_violation": 0.0,
+      "source_expression_residual": 0.0,
+      "soc_MWh_residual": 4.547473508864641e-13,
+      "power_balance_MW_residual": 7.105427357601002e-13,
+      "termination": "OPTIMAL",
+      "theorem_domain_valid": false,
+      "physical_hours": 9,
+      "terminal_MWh_residual": 0.0,
+      "snapshots": 3,
+      "scenario_config_sha256": "be9d9d9aa90e9790fc7c3554bc1107777a5ba743f4f95d8f675acd9bfeb1e75a",
+      "connection_violation": 0.0,
+      "registry_sha256": "a249f7a96d202798c6ff5778c1fa1571eba59a3717bac5d25b150d2a6c41bce9",
+      "scenario_id": "reference_3snap",
+      "B0_residual": 0.0,
+      "dispatch": 2.5245961387298787e6
+    },
+    {
+      "dispatch": 2.524596400858083e6,
+      "empirical_approved": false,
+      "primal": "FEASIBLE_POINT",
+      "objective": 2.534119647734245e6,
+      "cost_residual": 1.7075799405574799e-6,
+      "exposure_expression_residual": 0.0,
+      "installed_assets": {
+        "BE0 1 nuclear": {
+          "new_MW": 0.0,
+          "nmax": 3,
+          "installed": 3.0,
+          "n0": 3
+        },
+        "BE0 1 0 onwind": {
+          "new_MW": 0.0,
+          "nmax": 71,
+          "installed": 42.0,
+          "n0": 42
+        },
+        "BE0 0 biomass": {
+          "new_MW": 0.0,
+          "nmax": 1,
+          "installed": 1.0,
+          "n0": 1
+        },
+        "BE0 1 0 solar": {
+          "new_MW": 0.0,
+          "nmax": 872,
+          "installed": 46.0,
+          "n0": 46
+        },
+        "BE0 0 CCGT": {
+          "new_MW": 0.0,
+          "nmax": 2,
+          "installed": 2.0,
+          "n0": 2
+        },
+        "candidate_bess_gfm_be0_1": {
+          "new_MW": -0.0,
+          "nmax": 20,
+          "installed": -0.0,
+          "n0": 0
+        },
+        "BE0 1 oil": {
+          "new_MW": 0.0,
+          "nmax": 4,
+          "installed": 4.0,
+          "n0": 4
+        },
+        "BE0 2 CCGT": {
+          "new_MW": 0.0,
+          "nmax": 2,
+          "installed": 2.0,
+          "n0": 2
+        },
+        "candidate_bess_gfm_be0_3": {
+          "new_MW": 180.9159964436916,
+          "nmax": 20,
+          "installed": 1.8091599644369158,
+          "n0": 0
+        },
+        "BE0 1 biomass": {
+          "new_MW": 0.0,
+          "nmax": 1,
+          "installed": 1.0,
+          "n0": 1
+        },
+        "BE0 1 CCGT": {
+          "new_MW": 0.0,
+          "nmax": 9,
+          "installed": 9.0,
+          "n0": 9
+        },
+        "BE0 1 0 offwind-ac": {
+          "new_MW": 0.0,
+          "nmax": 23,
+          "installed": 23.0,
+          "n0": 23
+        },
+        "BE0 0 battery": {
+          "new_MW": 0.0,
+          "nmax": 0,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "BE0 0 0 solar": {
+          "new_MW": 0.0,
+          "nmax": 401,
+          "installed": 21.0,
+          "n0": 21
+        },
+        "BE0 1 battery": {
+          "new_MW": 0.0,
+          "nmax": 0,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "candidate_bess_gfm_be0_2": {
+          "new_MW": 0.0,
+          "nmax": 20,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "BE0 3 0 onwind": {
+          "new_MW": 0.0,
+          "nmax": 124,
+          "installed": 9.0,
+          "n0": 9
+        },
+        "candidate_bess_gfm_be0_0": {
+          "new_MW": -0.0,
+          "nmax": 20,
+          "installed": -0.0,
+          "n0": 0
+        },
+        "BE0 3 battery": {
+          "new_MW": 0.0,
+          "nmax": 43,
+          "installed": 43.0,
+          "n0": 43
+        },
+        "candidate_bess_gfm_be0_4": {
+          "new_MW": -0.0,
+          "nmax": 20,
+          "installed": -0.0,
+          "n0": 0
+        },
+        "BE0 2 0 onwind": {
+          "new_MW": 0.0,
+          "nmax": 14,
+          "installed": 7.0,
+          "n0": 7
+        },
+        "BE0 4 battery": {
+          "new_MW": 0.0,
+          "nmax": 0,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "BE0 3 oil": {
+          "new_MW": 0.0,
+          "nmax": 1,
+          "installed": 1.0,
+          "n0": 1
+        },
+        "BE0 4 oil": {
+          "new_MW": 0.0,
+          "nmax": 2,
+          "installed": 2.0,
+          "n0": 2
+        },
+        "BE0 3 0 solar": {
+          "new_MW": 0.0,
+          "nmax": 227,
+          "installed": 147.0,
+          "n0": 147
+        },
+        "BE0 4 0 onwind": {
+          "new_MW": 0.0,
+          "nmax": 49,
+          "installed": 9.0,
+          "n0": 9
+        },
+        "BE0 0 0 onwind": {
+          "new_MW": 0.0,
+          "nmax": 59,
+          "installed": 9.0,
+          "n0": 9
+        },
+        "BE0 0 nuclear": {
+          "new_MW": 0.0,
+          "nmax": 3,
+          "installed": 3.0,
+          "n0": 3
+        },
+        "BE0 2 battery": {
+          "new_MW": 0.0,
+          "nmax": 0,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "BE0 2 0 solar": {
+          "new_MW": 0.0,
+          "nmax": 262,
+          "installed": 14.0,
+          "n0": 14
+        },
+        "BE0 1 0 offwind-dc": {
+          "new_MW": 0.0,
+          "nmax": 9,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "BE0 4 0 solar": {
+          "new_MW": 0.0,
+          "nmax": 415,
+          "installed": 21.0,
+          "n0": 21
+        },
+        "BE0 4 CCGT": {
+          "new_MW": 0.0,
+          "nmax": 5,
+          "installed": 5.0,
+          "n0": 5
+        }
+      },
+      "G1_violation": 0.0,
+      "events": 0.0,
+      "minimum_M_eigenvalue": 76.75924153329913,
+      "case_sha256": "b0d2363e84d28a266cb5e4313ff94177c41e3e19dbf3db7863c47303fdd83121",
+      "relaxed": true,
+      "validation_scope": "parametric_study",
+      "investment": 9523.246874454404,
+      "integrality_residual": 0.0,
+      "block_bound_violation": 0.0,
+      "source_expression_residual": 0.0,
+      "soc_MWh_residual": 4.547473508864641e-13,
+      "power_balance_MW_residual": 8.881784197001252e-13,
+      "termination": "OPTIMAL",
+      "theorem_domain_valid": false,
+      "physical_hours": 9,
+      "terminal_MWh_residual": 0.0,
+      "snapshots": 3,
+      "scenario_config_sha256": "be9d9d9aa90e9790fc7c3554bc1107777a5ba743f4f95d8f675acd9bfeb1e75a",
+      "connection_violation": 1.0658141036401502e-15,
+      "registry_sha256": "a249f7a96d202798c6ff5778c1fa1571eba59a3717bac5d25b150d2a6c41bce9",
+      "scenario_id": "reference_3snap",
+      "B0_residual": 0.0,
+      "relative_gap": null
+    },
+    {
+      "relative_gap": 1.054190468934192e-13,
+      "empirical_approved": false,
+      "primal": "FEASIBLE_POINT",
+      "objective": 4.1168681804682994e6,
+      "cost_residual": 6.780028343200684e-7,
+      "exposure_expression_residual": 0.0,
+      "installed_assets": {
+        "BE0 1 nuclear": {
+          "new_MW": 0.0,
+          "nmax": 3,
+          "installed": 3.0,
+          "n0": 3
+        },
+        "BE0 1 0 onwind": {
+          "new_MW": 0.0,
+          "nmax": 71,
+          "installed": 42.0,
+          "n0": 42
+        },
+        "BE0 0 biomass": {
+          "new_MW": 0.0,
+          "nmax": 1,
+          "installed": 1.0,
+          "n0": 1
+        },
+        "BE0 1 0 solar": {
+          "new_MW": 0.0,
+          "nmax": 872,
+          "installed": 46.0,
+          "n0": 46
+        },
+        "BE0 0 CCGT": {
+          "new_MW": 0.0,
+          "nmax": 2,
+          "installed": 2.0,
+          "n0": 2
+        },
+        "candidate_bess_gfm_be0_1": {
+          "new_MW": 0.0,
+          "nmax": 20,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "BE0 1 oil": {
+          "new_MW": 0.0,
+          "nmax": 4,
+          "installed": 4.0,
+          "n0": 4
+        },
+        "BE0 2 CCGT": {
+          "new_MW": 0.0,
+          "nmax": 2,
+          "installed": 2.0,
+          "n0": 2
+        },
+        "candidate_bess_gfm_be0_3": {
+          "new_MW": 300.0,
+          "nmax": 20,
+          "installed": 3.0,
+          "n0": 0
+        },
+        "BE0 1 biomass": {
+          "new_MW": 0.0,
+          "nmax": 1,
+          "installed": 1.0,
+          "n0": 1
+        },
+        "BE0 1 CCGT": {
+          "new_MW": 0.0,
+          "nmax": 9,
+          "installed": 9.0,
+          "n0": 9
+        },
+        "BE0 1 0 offwind-ac": {
+          "new_MW": 0.0,
+          "nmax": 23,
+          "installed": 23.0,
+          "n0": 23
+        },
+        "BE0 0 battery": {
+          "new_MW": 0.0,
+          "nmax": 0,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "BE0 0 0 solar": {
+          "new_MW": 0.0,
+          "nmax": 401,
+          "installed": 21.0,
+          "n0": 21
+        },
+        "BE0 1 battery": {
+          "new_MW": 0.0,
+          "nmax": 0,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "candidate_bess_gfm_be0_2": {
+          "new_MW": 0.0,
+          "nmax": 20,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "BE0 3 0 onwind": {
+          "new_MW": 0.0,
+          "nmax": 124,
+          "installed": 9.0,
+          "n0": 9
+        },
+        "candidate_bess_gfm_be0_0": {
+          "new_MW": 0.0,
+          "nmax": 20,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "BE0 3 battery": {
+          "new_MW": 0.0,
+          "nmax": 43,
+          "installed": 43.0,
+          "n0": 43
+        },
+        "candidate_bess_gfm_be0_4": {
+          "new_MW": 0.0,
+          "nmax": 20,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "BE0 2 0 onwind": {
+          "new_MW": 0.0,
+          "nmax": 14,
+          "installed": 7.0,
+          "n0": 7
+        },
+        "BE0 4 battery": {
+          "new_MW": 0.0,
+          "nmax": 0,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "BE0 3 oil": {
+          "new_MW": 0.0,
+          "nmax": 1,
+          "installed": 1.0,
+          "n0": 1
+        },
+        "BE0 4 oil": {
+          "new_MW": 0.0,
+          "nmax": 2,
+          "installed": 2.0,
+          "n0": 2
+        },
+        "BE0 3 0 solar": {
+          "new_MW": 3998.18674443972,
+          "nmax": 227,
+          "installed": 227.0,
+          "n0": 147
+        },
+        "BE0 4 0 onwind": {
+          "new_MW": 0.0,
+          "nmax": 49,
+          "installed": 9.0,
+          "n0": 9
+        },
+        "BE0 0 0 onwind": {
+          "new_MW": 0.0,
+          "nmax": 59,
+          "installed": 9.0,
+          "n0": 9
+        },
+        "BE0 0 nuclear": {
+          "new_MW": 0.0,
+          "nmax": 3,
+          "installed": 3.0,
+          "n0": 3
+        },
+        "BE0 2 battery": {
+          "new_MW": 0.0,
+          "nmax": 0,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "BE0 2 0 solar": {
+          "new_MW": 0.0,
+          "nmax": 262,
+          "installed": 14.0,
+          "n0": 14
+        },
+        "BE0 1 0 offwind-dc": {
+          "new_MW": 0.0,
+          "nmax": 9,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "BE0 4 0 solar": {
+          "new_MW": 0.0,
+          "nmax": 415,
+          "installed": 21.0,
+          "n0": 21
+        },
+        "BE0 4 CCGT": {
+          "new_MW": 0.0,
+          "nmax": 5,
+          "installed": 5.0,
+          "n0": 5
+        }
+      },
+      "G1_violation": 0.0,
+      "events": 0.0,
+      "minimum_M_eigenvalue": 58.91793665455335,
+      "case_sha256": "bc3f847fe10dce0ba08dce6443fea92334e93a1a4595141e34838bde49d711ad",
+      "relaxed": false,
+      "validation_scope": "parametric_study",
+      "investment": 272672.4193167732,
+      "integrality_residual": 0.0,
+      "block_bound_violation": 0.0,
+      "source_expression_residual": 0.0,
+      "soc_MWh_residual": 4.547473508864641e-13,
+      "power_balance_MW_residual": 7.105427357601002e-13,
+      "termination": "OPTIMAL",
+      "theorem_domain_valid": false,
+      "physical_hours": 18,
+      "terminal_MWh_residual": 0.0,
+      "snapshots": 6,
+      "scenario_config_sha256": "be9d9d9aa90e9790fc7c3554bc1107777a5ba743f4f95d8f675acd9bfeb1e75a",
+      "connection_violation": 0.0,
+      "registry_sha256": "a249f7a96d202798c6ff5778c1fa1571eba59a3717bac5d25b150d2a6c41bce9",
+      "scenario_id": "reference_6snap",
+      "B0_residual": 0.0,
+      "dispatch": 3.844195761150848e6
+    },
+    {
+      "dispatch": 3.844889733860019e6,
+      "empirical_approved": false,
+      "primal": "FEASIBLE_POINT",
+      "objective": 4.1119876399015724e6,
+      "cost_residual": 1.637730747461319e-6,
+      "exposure_expression_residual": 0.0,
+      "installed_assets": {
+        "BE0 1 nuclear": {
+          "new_MW": 0.0,
+          "nmax": 3,
+          "installed": 3.0,
+          "n0": 3
+        },
+        "BE0 1 0 onwind": {
+          "new_MW": 0.0,
+          "nmax": 71,
+          "installed": 42.0,
+          "n0": 42
+        },
+        "BE0 0 biomass": {
+          "new_MW": 0.0,
+          "nmax": 1,
+          "installed": 1.0,
+          "n0": 1
+        },
+        "BE0 1 0 solar": {
+          "new_MW": 0.0,
+          "nmax": 872,
+          "installed": 46.0,
+          "n0": 46
+        },
+        "BE0 0 CCGT": {
+          "new_MW": 0.0,
+          "nmax": 2,
+          "installed": 2.0,
+          "n0": 2
+        },
+        "candidate_bess_gfm_be0_1": {
+          "new_MW": -0.0,
+          "nmax": 20,
+          "installed": -0.0,
+          "n0": 0
+        },
+        "BE0 1 oil": {
+          "new_MW": 0.0,
+          "nmax": 4,
+          "installed": 4.0,
+          "n0": 4
+        },
+        "BE0 2 CCGT": {
+          "new_MW": 0.0,
+          "nmax": 2,
+          "installed": 2.0,
+          "n0": 2
+        },
+        "candidate_bess_gfm_be0_3": {
+          "new_MW": 247.04964402022463,
+          "nmax": 20,
+          "installed": 2.4704964402022465,
+          "n0": 0
+        },
+        "BE0 1 biomass": {
+          "new_MW": 0.0,
+          "nmax": 1,
+          "installed": 1.0,
+          "n0": 1
+        },
+        "BE0 1 CCGT": {
+          "new_MW": 0.0,
+          "nmax": 9,
+          "installed": 9.0,
+          "n0": 9
+        },
+        "BE0 1 0 offwind-ac": {
+          "new_MW": 0.0,
+          "nmax": 23,
+          "installed": 23.0,
+          "n0": 23
+        },
+        "BE0 0 battery": {
+          "new_MW": 0.0,
+          "nmax": 0,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "BE0 0 0 solar": {
+          "new_MW": 0.0,
+          "nmax": 401,
+          "installed": 21.0,
+          "n0": 21
+        },
+        "BE0 1 battery": {
+          "new_MW": 0.0,
+          "nmax": 0,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "candidate_bess_gfm_be0_2": {
+          "new_MW": -0.0,
+          "nmax": 20,
+          "installed": -0.0,
+          "n0": 0
+        },
+        "BE0 3 0 onwind": {
+          "new_MW": 0.0,
+          "nmax": 124,
+          "installed": 9.0,
+          "n0": 9
+        },
+        "candidate_bess_gfm_be0_0": {
+          "new_MW": -0.0,
+          "nmax": 20,
+          "installed": -0.0,
+          "n0": 0
+        },
+        "BE0 3 battery": {
+          "new_MW": 0.0,
+          "nmax": 43,
+          "installed": 43.0,
+          "n0": 43
+        },
+        "candidate_bess_gfm_be0_4": {
+          "new_MW": -0.0,
+          "nmax": 20,
+          "installed": -0.0,
+          "n0": 0
+        },
+        "BE0 2 0 onwind": {
+          "new_MW": 0.0,
+          "nmax": 14,
+          "installed": 7.0,
+          "n0": 7
+        },
+        "BE0 4 battery": {
+          "new_MW": 0.0,
+          "nmax": 0,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "BE0 3 oil": {
+          "new_MW": 0.0,
+          "nmax": 1,
+          "installed": 1.0,
+          "n0": 1
+        },
+        "BE0 4 oil": {
+          "new_MW": 0.0,
+          "nmax": 2,
+          "installed": 2.0,
+          "n0": 2
+        },
+        "BE0 3 0 solar": {
+          "new_MW": 3998.18674443972,
+          "nmax": 227,
+          "installed": 227.0,
+          "n0": 147
+        },
+        "BE0 4 0 onwind": {
+          "new_MW": 0.0,
+          "nmax": 49,
+          "installed": 9.0,
+          "n0": 9
+        },
+        "BE0 0 0 onwind": {
+          "new_MW": 0.0,
+          "nmax": 59,
+          "installed": 9.0,
+          "n0": 9
+        },
+        "BE0 0 nuclear": {
+          "new_MW": 0.0,
+          "nmax": 3,
+          "installed": 3.0,
+          "n0": 3
+        },
+        "BE0 2 battery": {
+          "new_MW": 0.0,
+          "nmax": 0,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "BE0 2 0 solar": {
+          "new_MW": 0.0,
+          "nmax": 262,
+          "installed": 14.0,
+          "n0": 14
+        },
+        "BE0 1 0 offwind-dc": {
+          "new_MW": 0.0,
+          "nmax": 9,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "BE0 4 0 solar": {
+          "new_MW": 0.0,
+          "nmax": 415,
+          "installed": 21.0,
+          "n0": 21
+        },
+        "BE0 4 CCGT": {
+          "new_MW": 0.0,
+          "nmax": 5,
+          "installed": 5.0,
+          "n0": 5
+        }
+      },
+      "G1_violation": 0.0,
+      "events": 0.0,
+      "minimum_M_eigenvalue": 50.89405235166519,
+      "case_sha256": "bc3f847fe10dce0ba08dce6443fea92334e93a1a4595141e34838bde49d711ad",
+      "relaxed": true,
+      "validation_scope": "parametric_study",
+      "investment": 267097.9060399155,
+      "integrality_residual": 0.0,
+      "block_bound_violation": 0.0,
+      "source_expression_residual": 0.0,
+      "soc_MWh_residual": 3.4775349362181516e-12,
+      "power_balance_MW_residual": 4.263256414560601e-12,
+      "termination": "OPTIMAL",
+      "theorem_domain_valid": false,
+      "physical_hours": 18,
+      "terminal_MWh_residual": 0.0,
+      "snapshots": 6,
+      "scenario_config_sha256": "be9d9d9aa90e9790fc7c3554bc1107777a5ba743f4f95d8f675acd9bfeb1e75a",
+      "connection_violation": 1.2878587085651816e-14,
+      "registry_sha256": "a249f7a96d202798c6ff5778c1fa1571eba59a3717bac5d25b150d2a6c41bce9",
+      "scenario_id": "reference_6snap",
+      "B0_residual": 0.0,
+      "relative_gap": null
+    },
+    {
+      "relative_gap": 0.0,
+      "empirical_approved": false,
+      "primal": "FEASIBLE_POINT",
+      "objective": 1.4187925092376044e7,
+      "cost_residual": 7.320195436477661e-7,
+      "exposure_expression_residual": 0.0,
+      "installed_assets": {
+        "BE0 1 nuclear": {
+          "new_MW": 0.0,
+          "nmax": 3,
+          "installed": 3.0,
+          "n0": 3
+        },
+        "BE0 1 0 onwind": {
+          "new_MW": 0.0,
+          "nmax": 71,
+          "installed": 42.0,
+          "n0": 42
+        },
+        "BE0 0 biomass": {
+          "new_MW": 0.0,
+          "nmax": 1,
+          "installed": 1.0,
+          "n0": 1
+        },
+        "BE0 1 0 solar": {
+          "new_MW": 0.0,
+          "nmax": 872,
+          "installed": 46.0,
+          "n0": 46
+        },
+        "BE0 0 CCGT": {
+          "new_MW": 0.0,
+          "nmax": 2,
+          "installed": 2.0,
+          "n0": 2
+        },
+        "candidate_bess_gfm_be0_1": {
+          "new_MW": 0.0,
+          "nmax": 20,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "BE0 1 oil": {
+          "new_MW": 0.0,
+          "nmax": 4,
+          "installed": 4.0,
+          "n0": 4
+        },
+        "BE0 2 CCGT": {
+          "new_MW": 0.0,
+          "nmax": 2,
+          "installed": 2.0,
+          "n0": 2
+        },
+        "candidate_bess_gfm_be0_3": {
+          "new_MW": 300.0,
+          "nmax": 20,
+          "installed": 3.0,
+          "n0": 0
+        },
+        "BE0 1 biomass": {
+          "new_MW": 0.0,
+          "nmax": 1,
+          "installed": 1.0,
+          "n0": 1
+        },
+        "BE0 1 CCGT": {
+          "new_MW": 0.0,
+          "nmax": 9,
+          "installed": 9.0,
+          "n0": 9
+        },
+        "BE0 1 0 offwind-ac": {
+          "new_MW": 0.0,
+          "nmax": 23,
+          "installed": 23.0,
+          "n0": 23
+        },
+        "BE0 0 battery": {
+          "new_MW": 0.0,
+          "nmax": 0,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "BE0 0 0 solar": {
+          "new_MW": 0.0,
+          "nmax": 401,
+          "installed": 21.0,
+          "n0": 21
+        },
+        "BE0 1 battery": {
+          "new_MW": 0.0,
+          "nmax": 0,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "candidate_bess_gfm_be0_2": {
+          "new_MW": 100.0,
+          "nmax": 20,
+          "installed": 1.0,
+          "n0": 0
+        },
+        "BE0 3 0 onwind": {
+          "new_MW": 0.0,
+          "nmax": 124,
+          "installed": 9.0,
+          "n0": 9
+        },
+        "candidate_bess_gfm_be0_0": {
+          "new_MW": 0.0,
+          "nmax": 20,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "BE0 3 battery": {
+          "new_MW": 0.0,
+          "nmax": 43,
+          "installed": 43.0,
+          "n0": 43
+        },
+        "candidate_bess_gfm_be0_4": {
+          "new_MW": 100.0,
+          "nmax": 20,
+          "installed": 1.0,
+          "n0": 0
+        },
+        "BE0 2 0 onwind": {
+          "new_MW": 0.0,
+          "nmax": 14,
+          "installed": 7.0,
+          "n0": 7
+        },
+        "BE0 4 battery": {
+          "new_MW": 0.0,
+          "nmax": 0,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "BE0 3 oil": {
+          "new_MW": 0.0,
+          "nmax": 1,
+          "installed": 1.0,
+          "n0": 1
+        },
+        "BE0 4 oil": {
+          "new_MW": 0.0,
+          "nmax": 2,
+          "installed": 2.0,
+          "n0": 2
+        },
+        "BE0 3 0 solar": {
+          "new_MW": 3848.254741523229,
+          "nmax": 227,
+          "installed": 223.99999999999997,
+          "n0": 147
+        },
+        "BE0 4 0 onwind": {
+          "new_MW": 0.0,
+          "nmax": 49,
+          "installed": 9.0,
+          "n0": 9
+        },
+        "BE0 0 0 onwind": {
+          "new_MW": 0.0,
+          "nmax": 59,
+          "installed": 9.0,
+          "n0": 9
+        },
+        "BE0 0 nuclear": {
+          "new_MW": 0.0,
+          "nmax": 3,
+          "installed": 3.0,
+          "n0": 3
+        },
+        "BE0 2 battery": {
+          "new_MW": 0.0,
+          "nmax": 0,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "BE0 2 0 solar": {
+          "new_MW": 0.0,
+          "nmax": 262,
+          "installed": 14.0,
+          "n0": 14
+        },
+        "BE0 1 0 offwind-dc": {
+          "new_MW": 0.0,
+          "nmax": 9,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "BE0 4 0 solar": {
+          "new_MW": 0.0,
+          "nmax": 415,
+          "installed": 21.0,
+          "n0": 21
+        },
+        "BE0 4 CCGT": {
+          "new_MW": 0.0,
+          "nmax": 5,
+          "installed": 5.0,
+          "n0": 5
+        }
+      },
+      "G1_violation": 0.0,
+      "events": 0.0,
+      "minimum_M_eigenvalue": 33.099341943823845,
+      "case_sha256": "d74a295602d3916147b47d08070ebc650a28c1fd392473219b87f140ee0d551f",
+      "relaxed": false,
+      "validation_scope": "parametric_study",
+      "investment": 1.1387488153324383e6,
+      "integrality_residual": 2.842170943040401e-14,
+      "block_bound_violation": 0.0,
+      "source_expression_residual": 0.0,
+      "soc_MWh_residual": 9.094947017729282e-13,
+      "power_balance_MW_residual": 7.105427357601002e-13,
+      "termination": "OPTIMAL",
+      "theorem_domain_valid": false,
+      "physical_hours": 72,
+      "terminal_MWh_residual": 0.0,
+      "snapshots": 24,
+      "scenario_config_sha256": "be9d9d9aa90e9790fc7c3554bc1107777a5ba743f4f95d8f675acd9bfeb1e75a",
+      "connection_violation": 2.842170943040401e-14,
+      "registry_sha256": "a249f7a96d202798c6ff5778c1fa1571eba59a3717bac5d25b150d2a6c41bce9",
+      "scenario_id": "reference_24snap",
+      "B0_residual": 0.0,
+      "dispatch": 1.3049176277042873e7
+    },
+    {
+      "dispatch": 1.3248928582624706e7,
+      "empirical_approved": false,
+      "primal": "FEASIBLE_POINT",
+      "objective": 1.4161318726906227e7,
+      "cost_residual": 2.427026629447937e-6,
+      "exposure_expression_residual": 0.0,
+      "installed_assets": {
+        "BE0 1 nuclear": {
+          "new_MW": 0.0,
+          "nmax": 3,
+          "installed": 3.0,
+          "n0": 3
+        },
+        "BE0 1 0 onwind": {
+          "new_MW": 0.0,
+          "nmax": 71,
+          "installed": 42.0,
+          "n0": 42
+        },
+        "BE0 0 biomass": {
+          "new_MW": 0.0,
+          "nmax": 1,
+          "installed": 1.0,
+          "n0": 1
+        },
+        "BE0 1 0 solar": {
+          "new_MW": 0.0,
+          "nmax": 872,
+          "installed": 46.0,
+          "n0": 46
+        },
+        "BE0 0 CCGT": {
+          "new_MW": 0.0,
+          "nmax": 2,
+          "installed": 2.0,
+          "n0": 2
+        },
+        "candidate_bess_gfm_be0_1": {
+          "new_MW": -0.0,
+          "nmax": 20,
+          "installed": -0.0,
+          "n0": 0
+        },
+        "BE0 1 oil": {
+          "new_MW": 0.0,
+          "nmax": 4,
+          "installed": 4.0,
+          "n0": 4
+        },
+        "BE0 2 CCGT": {
+          "new_MW": 0.0,
+          "nmax": 2,
+          "installed": 2.0,
+          "n0": 2
+        },
+        "candidate_bess_gfm_be0_3": {
+          "new_MW": 249.78855293539527,
+          "nmax": 20,
+          "installed": 2.497885529353953,
+          "n0": 0
+        },
+        "BE0 1 biomass": {
+          "new_MW": 0.0,
+          "nmax": 1,
+          "installed": 1.0,
+          "n0": 1
+        },
+        "BE0 1 CCGT": {
+          "new_MW": 0.0,
+          "nmax": 9,
+          "installed": 9.0,
+          "n0": 9
+        },
+        "BE0 1 0 offwind-ac": {
+          "new_MW": 0.0,
+          "nmax": 23,
+          "installed": 23.0,
+          "n0": 23
+        },
+        "BE0 0 battery": {
+          "new_MW": 0.0,
+          "nmax": 0,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "BE0 0 0 solar": {
+          "new_MW": 0.0,
+          "nmax": 401,
+          "installed": 21.0,
+          "n0": 21
+        },
+        "BE0 1 battery": {
+          "new_MW": 0.0,
+          "nmax": 0,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "candidate_bess_gfm_be0_2": {
+          "new_MW": -0.0,
+          "nmax": 20,
+          "installed": -0.0,
+          "n0": 0
+        },
+        "BE0 3 0 onwind": {
+          "new_MW": 0.0,
+          "nmax": 124,
+          "installed": 9.0,
+          "n0": 9
+        },
+        "candidate_bess_gfm_be0_0": {
+          "new_MW": -0.0,
+          "nmax": 20,
+          "installed": -0.0,
+          "n0": 0
+        },
+        "BE0 3 battery": {
+          "new_MW": 0.0,
+          "nmax": 43,
+          "installed": 43.0,
+          "n0": 43
+        },
+        "candidate_bess_gfm_be0_4": {
+          "new_MW": -0.0,
+          "nmax": 20,
+          "installed": -0.0,
+          "n0": 0
+        },
+        "BE0 2 0 onwind": {
+          "new_MW": 0.0,
+          "nmax": 14,
+          "installed": 7.0,
+          "n0": 7
+        },
+        "BE0 4 battery": {
+          "new_MW": 0.0,
+          "nmax": 0,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "BE0 3 oil": {
+          "new_MW": 0.0,
+          "nmax": 1,
+          "installed": 1.0,
+          "n0": 1
+        },
+        "BE0 4 oil": {
+          "new_MW": 0.0,
+          "nmax": 2,
+          "installed": 2.0,
+          "n0": 2
+        },
+        "BE0 3 0 solar": {
+          "new_MW": 3346.6280402184775,
+          "nmax": 227,
+          "installed": 213.96291602432296,
+          "n0": 147
+        },
+        "BE0 4 0 onwind": {
+          "new_MW": 0.0,
+          "nmax": 49,
+          "installed": 9.0,
+          "n0": 9
+        },
+        "BE0 0 0 onwind": {
+          "new_MW": 0.0,
+          "nmax": 59,
+          "installed": 9.0,
+          "n0": 9
+        },
+        "BE0 0 nuclear": {
+          "new_MW": 0.0,
+          "nmax": 3,
+          "installed": 3.0,
+          "n0": 3
+        },
+        "BE0 2 battery": {
+          "new_MW": 0.0,
+          "nmax": 0,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "BE0 2 0 solar": {
+          "new_MW": 0.0,
+          "nmax": 262,
+          "installed": 14.0,
+          "n0": 14
+        },
+        "BE0 1 0 offwind-dc": {
+          "new_MW": 0.0,
+          "nmax": 9,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "BE0 4 0 solar": {
+          "new_MW": 0.0,
+          "nmax": 415,
+          "installed": 21.0,
+          "n0": 21
+        },
+        "BE0 4 CCGT": {
+          "new_MW": 0.0,
+          "nmax": 5,
+          "installed": 5.0,
+          "n0": 5
+        }
+      },
+      "G1_violation": 4.4164671919588727e-13,
+      "events": 0.0,
+      "minimum_M_eigenvalue": 31.49638394295581,
+      "case_sha256": "d74a295602d3916147b47d08070ebc650a28c1fd392473219b87f140ee0d551f",
+      "relaxed": true,
+      "validation_scope": "parametric_study",
+      "investment": 912390.1442790941,
+      "integrality_residual": 0.0,
+      "block_bound_violation": 0.0,
+      "source_expression_residual": 0.0,
+      "soc_MWh_residual": 2.074576496059202e-12,
+      "power_balance_MW_residual": 1.4210854715202004e-12,
+      "termination": "OPTIMAL",
+      "theorem_domain_valid": false,
+      "physical_hours": 72,
+      "terminal_MWh_residual": 0.0,
+      "snapshots": 24,
+      "scenario_config_sha256": "be9d9d9aa90e9790fc7c3554bc1107777a5ba743f4f95d8f675acd9bfeb1e75a",
+      "connection_violation": 3.1086244689504383e-15,
+      "registry_sha256": "a249f7a96d202798c6ff5778c1fa1571eba59a3717bac5d25b150d2a6c41bce9",
+      "scenario_id": "reference_24snap",
+      "B0_residual": 0.0,
+      "relative_gap": null
+    },
+    {
+      "relative_gap": 6.624548317251827e-9,
+      "empirical_approved": false,
+      "primal": "FEASIBLE_POINT",
+      "objective": 2.5403878548765294e6,
+      "cost_residual": 6.030313670635223e-7,
+      "exposure_expression_residual": 0.0,
+      "installed_assets": {
+        "BE0 1 nuclear": {
+          "new_MW": 0.0,
+          "nmax": 3,
+          "installed": 3.0,
+          "n0": 3
+        },
+        "BE0 1 0 onwind": {
+          "new_MW": 0.0,
+          "nmax": 71,
+          "installed": 42.0,
+          "n0": 42
+        },
+        "BE0 0 biomass": {
+          "new_MW": 0.0,
+          "nmax": 1,
+          "installed": 1.0,
+          "n0": 1
+        },
+        "BE0 1 0 solar": {
+          "new_MW": 0.0,
+          "nmax": 872,
+          "installed": 46.0,
+          "n0": 46
+        },
+        "BE0 0 CCGT": {
+          "new_MW": 0.0,
+          "nmax": 2,
+          "installed": 2.0,
+          "n0": 2
+        },
+        "candidate_bess_gfm_be0_1": {
+          "new_MW": 0.0,
+          "nmax": 20,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "BE0 1 oil": {
+          "new_MW": 0.0,
+          "nmax": 4,
+          "installed": 4.0,
+          "n0": 4
+        },
+        "BE0 2 CCGT": {
+          "new_MW": 0.0,
+          "nmax": 2,
+          "installed": 2.0,
+          "n0": 2
+        },
+        "candidate_bess_gfm_be0_3": {
+          "new_MW": 300.0,
+          "nmax": 20,
+          "installed": 3.0,
+          "n0": 0
+        },
+        "BE0 1 biomass": {
+          "new_MW": 0.0,
+          "nmax": 1,
+          "installed": 1.0,
+          "n0": 1
+        },
+        "BE0 1 CCGT": {
+          "new_MW": 0.0,
+          "nmax": 9,
+          "installed": 9.0,
+          "n0": 9
+        },
+        "BE0 1 0 offwind-ac": {
+          "new_MW": 0.0,
+          "nmax": 23,
+          "installed": 23.0,
+          "n0": 23
+        },
+        "BE0 0 battery": {
+          "new_MW": 0.0,
+          "nmax": 0,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "BE0 0 0 solar": {
+          "new_MW": 0.0,
+          "nmax": 401,
+          "installed": 21.0,
+          "n0": 21
+        },
+        "BE0 1 battery": {
+          "new_MW": 0.0,
+          "nmax": 0,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "candidate_bess_gfm_be0_2": {
+          "new_MW": 0.0,
+          "nmax": 20,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "BE0 3 0 onwind": {
+          "new_MW": 0.0,
+          "nmax": 124,
+          "installed": 9.0,
+          "n0": 9
+        },
+        "candidate_bess_gfm_be0_0": {
+          "new_MW": 0.0,
+          "nmax": 20,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "BE0 3 battery": {
+          "new_MW": 0.0,
+          "nmax": 43,
+          "installed": 43.0,
+          "n0": 43
+        },
+        "candidate_bess_gfm_be0_4": {
+          "new_MW": 0.0,
+          "nmax": 20,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "BE0 2 0 onwind": {
+          "new_MW": 0.0,
+          "nmax": 14,
+          "installed": 7.0,
+          "n0": 7
+        },
+        "BE0 4 battery": {
+          "new_MW": 0.0,
+          "nmax": 0,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "BE0 3 oil": {
+          "new_MW": 0.0,
+          "nmax": 1,
+          "installed": 1.0,
+          "n0": 1
+        },
+        "BE0 4 oil": {
+          "new_MW": 0.0,
+          "nmax": 2,
+          "installed": 2.0,
+          "n0": 2
+        },
+        "BE0 3 0 solar": {
+          "new_MW": 0.0,
+          "nmax": 227,
+          "installed": 147.0,
+          "n0": 147
+        },
+        "BE0 4 0 onwind": {
+          "new_MW": 0.0,
+          "nmax": 49,
+          "installed": 9.0,
+          "n0": 9
+        },
+        "BE0 0 0 onwind": {
+          "new_MW": 0.0,
+          "nmax": 59,
+          "installed": 9.0,
+          "n0": 9
+        },
+        "BE0 0 nuclear": {
+          "new_MW": 0.0,
+          "nmax": 3,
+          "installed": 3.0,
+          "n0": 3
+        },
+        "BE0 2 battery": {
+          "new_MW": 0.0,
+          "nmax": 0,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "BE0 2 0 solar": {
+          "new_MW": 0.0,
+          "nmax": 262,
+          "installed": 14.0,
+          "n0": 14
+        },
+        "BE0 1 0 offwind-dc": {
+          "new_MW": 0.0,
+          "nmax": 9,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "BE0 4 0 solar": {
+          "new_MW": 0.0,
+          "nmax": 415,
+          "installed": 21.0,
+          "n0": 21
+        },
+        "BE0 4 CCGT": {
+          "new_MW": 0.0,
+          "nmax": 5,
+          "installed": 5.0,
+          "n0": 5
+        }
+      },
+      "G1_violation": 0.0,
+      "events": 0.0,
+      "minimum_M_eigenvalue": 54.60812712189735,
+      "case_sha256": "8cfe46680d6f0a8be1378d1b21d2bd3efc4c82985389f22ee6fc52d5d40b6d78",
+      "relaxed": false,
+      "validation_scope": "parametric_study",
+      "investment": 15791.71614725361,
+      "integrality_residual": 0.0,
+      "block_bound_violation": 0.0,
+      "source_expression_residual": 0.0,
+      "soc_MWh_residual": 4.547473508864641e-13,
+      "power_balance_MW_residual": 7.105427357601002e-13,
+      "termination": "OPTIMAL",
+      "theorem_domain_valid": false,
+      "physical_hours": 9,
+      "terminal_MWh_residual": 0.0,
+      "snapshots": 3,
+      "scenario_config_sha256": "be9d9d9aa90e9790fc7c3554bc1107777a5ba743f4f95d8f675acd9bfeb1e75a",
+      "connection_violation": 0.0,
+      "registry_sha256": "a249f7a96d202798c6ff5778c1fa1571eba59a3717bac5d25b150d2a6c41bce9",
+      "scenario_id": "source_reactance_3snap",
+      "B0_residual": 0.0,
+      "dispatch": 2.5245961387298787e6
+    },
+    {
+      "dispatch": 2.5245965362747707e6,
+      "empirical_approved": false,
+      "primal": "FEASIBLE_POINT",
+      "objective": 2.5387427185271573e6,
+      "cost_residual": 1.9832514226436615e-6,
+      "exposure_expression_residual": 0.0,
+      "installed_assets": {
+        "BE0 1 nuclear": {
+          "new_MW": 0.0,
+          "nmax": 3,
+          "installed": 3.0,
+          "n0": 3
+        },
+        "BE0 1 0 onwind": {
+          "new_MW": 0.0,
+          "nmax": 71,
+          "installed": 42.0,
+          "n0": 42
+        },
+        "BE0 0 biomass": {
+          "new_MW": 0.0,
+          "nmax": 1,
+          "installed": 1.0,
+          "n0": 1
+        },
+        "BE0 1 0 solar": {
+          "new_MW": 0.0,
+          "nmax": 872,
+          "installed": 46.0,
+          "n0": 46
+        },
+        "BE0 0 CCGT": {
+          "new_MW": 0.0,
+          "nmax": 2,
+          "installed": 2.0,
+          "n0": 2
+        },
+        "candidate_bess_gfm_be0_1": {
+          "new_MW": -0.0,
+          "nmax": 20,
+          "installed": -0.0,
+          "n0": 0
+        },
+        "BE0 1 oil": {
+          "new_MW": 0.0,
+          "nmax": 4,
+          "installed": 4.0,
+          "n0": 4
+        },
+        "BE0 2 CCGT": {
+          "new_MW": 0.0,
+          "nmax": 2,
+          "installed": 2.0,
+          "n0": 2
+        },
+        "candidate_bess_gfm_be0_3": {
+          "new_MW": 268.73929568820205,
+          "nmax": 20,
+          "installed": 2.6873929568820203,
+          "n0": 0
+        },
+        "BE0 1 biomass": {
+          "new_MW": 0.0,
+          "nmax": 1,
+          "installed": 1.0,
+          "n0": 1
+        },
+        "BE0 1 CCGT": {
+          "new_MW": 0.0,
+          "nmax": 9,
+          "installed": 9.0,
+          "n0": 9
+        },
+        "BE0 1 0 offwind-ac": {
+          "new_MW": 0.0,
+          "nmax": 23,
+          "installed": 23.0,
+          "n0": 23
+        },
+        "BE0 0 battery": {
+          "new_MW": 0.0,
+          "nmax": 0,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "BE0 0 0 solar": {
+          "new_MW": 0.0,
+          "nmax": 401,
+          "installed": 21.0,
+          "n0": 21
+        },
+        "BE0 1 battery": {
+          "new_MW": 0.0,
+          "nmax": 0,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "candidate_bess_gfm_be0_2": {
+          "new_MW": -0.0,
+          "nmax": 20,
+          "installed": -0.0,
+          "n0": 0
+        },
+        "BE0 3 0 onwind": {
+          "new_MW": 0.0,
+          "nmax": 124,
+          "installed": 9.0,
+          "n0": 9
+        },
+        "candidate_bess_gfm_be0_0": {
+          "new_MW": -0.0,
+          "nmax": 20,
+          "installed": -0.0,
+          "n0": 0
+        },
+        "BE0 3 battery": {
+          "new_MW": 0.0,
+          "nmax": 43,
+          "installed": 43.0,
+          "n0": 43
+        },
+        "candidate_bess_gfm_be0_4": {
+          "new_MW": -0.0,
+          "nmax": 20,
+          "installed": -0.0,
+          "n0": 0
+        },
+        "BE0 2 0 onwind": {
+          "new_MW": 0.0,
+          "nmax": 14,
+          "installed": 7.0,
+          "n0": 7
+        },
+        "BE0 4 battery": {
+          "new_MW": 0.0,
+          "nmax": 0,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "BE0 3 oil": {
+          "new_MW": 0.0,
+          "nmax": 1,
+          "installed": 1.0,
+          "n0": 1
+        },
+        "BE0 4 oil": {
+          "new_MW": 0.0,
+          "nmax": 2,
+          "installed": 2.0,
+          "n0": 2
+        },
+        "BE0 3 0 solar": {
+          "new_MW": 0.0,
+          "nmax": 227,
+          "installed": 147.0,
+          "n0": 147
+        },
+        "BE0 4 0 onwind": {
+          "new_MW": 0.0,
+          "nmax": 49,
+          "installed": 9.0,
+          "n0": 9
+        },
+        "BE0 0 0 onwind": {
+          "new_MW": 0.0,
+          "nmax": 59,
+          "installed": 9.0,
+          "n0": 9
+        },
+        "BE0 0 nuclear": {
+          "new_MW": 0.0,
+          "nmax": 3,
+          "installed": 3.0,
+          "n0": 3
+        },
+        "BE0 2 battery": {
+          "new_MW": 0.0,
+          "nmax": 0,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "BE0 2 0 solar": {
+          "new_MW": 0.0,
+          "nmax": 262,
+          "installed": 14.0,
+          "n0": 14
+        },
+        "BE0 1 0 offwind-dc": {
+          "new_MW": 0.0,
+          "nmax": 9,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "BE0 4 0 solar": {
+          "new_MW": 0.0,
+          "nmax": 415,
+          "installed": 21.0,
+          "n0": 21
+        },
+        "BE0 4 CCGT": {
+          "new_MW": 0.0,
+          "nmax": 5,
+          "installed": 5.0,
+          "n0": 5
+        }
+      },
+      "G1_violation": 0.0,
+      "events": 0.0,
+      "minimum_M_eigenvalue": 55.830086412489486,
+      "case_sha256": "8cfe46680d6f0a8be1378d1b21d2bd3efc4c82985389f22ee6fc52d5d40b6d78",
+      "relaxed": true,
+      "validation_scope": "parametric_study",
+      "investment": 14146.18225040314,
+      "integrality_residual": 0.0,
+      "block_bound_violation": 0.0,
+      "source_expression_residual": 0.0,
+      "soc_MWh_residual": 2.2737367544323206e-13,
+      "power_balance_MW_residual": 8.881784197001252e-13,
+      "termination": "OPTIMAL",
+      "theorem_domain_valid": false,
+      "physical_hours": 9,
+      "terminal_MWh_residual": 0.0,
+      "snapshots": 3,
+      "scenario_config_sha256": "be9d9d9aa90e9790fc7c3554bc1107777a5ba743f4f95d8f675acd9bfeb1e75a",
+      "connection_violation": 0.0,
+      "registry_sha256": "a249f7a96d202798c6ff5778c1fa1571eba59a3717bac5d25b150d2a6c41bce9",
+      "scenario_id": "source_reactance_3snap",
+      "B0_residual": 0.0,
+      "relative_gap": null
+    },
+    {
+      "relative_gap": 0.0,
+      "empirical_approved": false,
+      "primal": "FEASIBLE_POINT",
+      "objective": 2.537201700837598e6,
+      "cost_residual": 6.025657057762146e-7,
+      "exposure_expression_residual": 0.0,
+      "installed_assets": {
+        "BE0 1 nuclear": {
+          "new_MW": 0.0,
+          "nmax": 3,
+          "installed": 3.0,
+          "n0": 3
+        },
+        "BE0 1 0 onwind": {
+          "new_MW": 0.0,
+          "nmax": 71,
+          "installed": 42.0,
+          "n0": 42
+        },
+        "BE0 0 biomass": {
+          "new_MW": 0.0,
+          "nmax": 1,
+          "installed": 1.0,
+          "n0": 1
+        },
+        "BE0 1 0 solar": {
+          "new_MW": 0.0,
+          "nmax": 872,
+          "installed": 46.0,
+          "n0": 46
+        },
+        "BE0 0 CCGT": {
+          "new_MW": 0.0,
+          "nmax": 2,
+          "installed": 2.0,
+          "n0": 2
+        },
+        "candidate_bess_gfm_be0_1": {
+          "new_MW": 0.0,
+          "nmax": 20,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "BE0 1 oil": {
+          "new_MW": 0.0,
+          "nmax": 4,
+          "installed": 4.0,
+          "n0": 4
+        },
+        "BE0 2 CCGT": {
+          "new_MW": 0.0,
+          "nmax": 2,
+          "installed": 2.0,
+          "n0": 2
+        },
+        "candidate_bess_gfm_be0_3": {
+          "new_MW": 200.0,
+          "nmax": 20,
+          "installed": 2.0,
+          "n0": 0
+        },
+        "BE0 1 biomass": {
+          "new_MW": 0.0,
+          "nmax": 1,
+          "installed": 1.0,
+          "n0": 1
+        },
+        "BE0 1 CCGT": {
+          "new_MW": 0.0,
+          "nmax": 9,
+          "installed": 9.0,
+          "n0": 9
+        },
+        "BE0 1 0 offwind-ac": {
+          "new_MW": 0.0,
+          "nmax": 23,
+          "installed": 23.0,
+          "n0": 23
+        },
+        "BE0 0 battery": {
+          "new_MW": 0.0,
+          "nmax": 0,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "BE0 0 0 solar": {
+          "new_MW": 0.0,
+          "nmax": 401,
+          "installed": 21.0,
+          "n0": 21
+        },
+        "BE0 1 battery": {
+          "new_MW": 0.0,
+          "nmax": 0,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "candidate_bess_gfm_be0_2": {
+          "new_MW": 0.0,
+          "nmax": 20,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "BE0 3 0 onwind": {
+          "new_MW": 0.0,
+          "nmax": 124,
+          "installed": 9.0,
+          "n0": 9
+        },
+        "candidate_bess_gfm_be0_0": {
+          "new_MW": 0.0,
+          "nmax": 20,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "BE0 3 battery": {
+          "new_MW": 0.0,
+          "nmax": 43,
+          "installed": 43.0,
+          "n0": 43
+        },
+        "candidate_bess_gfm_be0_4": {
+          "new_MW": 0.0,
+          "nmax": 20,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "BE0 2 0 onwind": {
+          "new_MW": 0.0,
+          "nmax": 14,
+          "installed": 7.0,
+          "n0": 7
+        },
+        "BE0 4 battery": {
+          "new_MW": 0.0,
+          "nmax": 0,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "BE0 3 oil": {
+          "new_MW": 0.0,
+          "nmax": 1,
+          "installed": 1.0,
+          "n0": 1
+        },
+        "BE0 4 oil": {
+          "new_MW": 0.0,
+          "nmax": 2,
+          "installed": 2.0,
+          "n0": 2
+        },
+        "BE0 3 0 solar": {
+          "new_MW": 0.0,
+          "nmax": 227,
+          "installed": 147.0,
+          "n0": 147
+        },
+        "BE0 4 0 onwind": {
+          "new_MW": 0.0,
+          "nmax": 49,
+          "installed": 9.0,
+          "n0": 9
+        },
+        "BE0 0 0 onwind": {
+          "new_MW": 0.0,
+          "nmax": 59,
+          "installed": 9.0,
+          "n0": 9
+        },
+        "BE0 0 nuclear": {
+          "new_MW": 0.0,
+          "nmax": 3,
+          "installed": 3.0,
+          "n0": 3
+        },
+        "BE0 2 battery": {
+          "new_MW": 0.0,
+          "nmax": 0,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "BE0 2 0 solar": {
+          "new_MW": 0.0,
+          "nmax": 262,
+          "installed": 14.0,
+          "n0": 14
+        },
+        "BE0 1 0 offwind-dc": {
+          "new_MW": 0.0,
+          "nmax": 9,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "BE0 4 0 solar": {
+          "new_MW": 0.0,
+          "nmax": 415,
+          "installed": 21.0,
+          "n0": 21
+        },
+        "BE0 4 CCGT": {
+          "new_MW": 0.0,
+          "nmax": 5,
+          "installed": 5.0,
+          "n0": 5
+        }
+      },
+      "G1_violation": 0.0,
+      "events": 0.0,
+      "minimum_M_eigenvalue": 75.57876693850719,
+      "case_sha256": "8d340cc4e63b575bde4ba3d3a605227ec0c7db4b909b77618f814a8a2647435d",
+      "relaxed": false,
+      "validation_scope": "parametric_study",
+      "investment": 10527.81076483574,
+      "integrality_residual": 4.618527782440651e-13,
+      "block_bound_violation": 0.0,
+      "source_expression_residual": 0.0,
+      "soc_MWh_residual": 9.094947017729282e-13,
+      "power_balance_MW_residual": 8.881784197001252e-13,
+      "termination": "OPTIMAL",
+      "theorem_domain_valid": false,
+      "physical_hours": 9,
+      "terminal_MWh_residual": 0.0,
+      "snapshots": 3,
+      "scenario_config_sha256": "be9d9d9aa90e9790fc7c3554bc1107777a5ba743f4f95d8f675acd9bfeb1e75a",
+      "connection_violation": 0.0,
+      "registry_sha256": "a249f7a96d202798c6ff5778c1fa1571eba59a3717bac5d25b150d2a6c41bce9",
+      "scenario_id": "exposure_multiplier_3snap",
+      "B0_residual": 0.0,
+      "dispatch": 2.526673890073365e6
+    },
+    {
+      "dispatch": 2.524596464557136e6,
+      "empirical_approved": false,
+      "primal": "FEASIBLE_POINT",
+      "objective": 2.5362943075696877e6,
+      "cost_residual": 1.487787812948227e-6,
+      "exposure_expression_residual": 0.0,
+      "installed_assets": {
+        "BE0 1 nuclear": {
+          "new_MW": 0.0,
+          "nmax": 3,
+          "installed": 3.0,
+          "n0": 3
+        },
+        "BE0 1 0 onwind": {
+          "new_MW": 0.0,
+          "nmax": 71,
+          "installed": 42.0,
+          "n0": 42
+        },
+        "BE0 0 biomass": {
+          "new_MW": 0.0,
+          "nmax": 1,
+          "installed": 1.0,
+          "n0": 1
+        },
+        "BE0 1 0 solar": {
+          "new_MW": 0.0,
+          "nmax": 872,
+          "installed": 46.0,
+          "n0": 46
+        },
+        "BE0 0 CCGT": {
+          "new_MW": 0.0,
+          "nmax": 2,
+          "installed": 2.0,
+          "n0": 2
+        },
+        "candidate_bess_gfm_be0_1": {
+          "new_MW": -0.0,
+          "nmax": 20,
+          "installed": -0.0,
+          "n0": 0
+        },
+        "BE0 1 oil": {
+          "new_MW": 0.0,
+          "nmax": 4,
+          "installed": 4.0,
+          "n0": 4
+        },
+        "BE0 2 CCGT": {
+          "new_MW": 0.0,
+          "nmax": 2,
+          "installed": 2.0,
+          "n0": 2
+        },
+        "candidate_bess_gfm_be0_3": {
+          "new_MW": 222.22745587594542,
+          "nmax": 20,
+          "installed": 2.2222745587594543,
+          "n0": 0
+        },
+        "BE0 1 biomass": {
+          "new_MW": 0.0,
+          "nmax": 1,
+          "installed": 1.0,
+          "n0": 1
+        },
+        "BE0 1 CCGT": {
+          "new_MW": 0.0,
+          "nmax": 9,
+          "installed": 9.0,
+          "n0": 9
+        },
+        "BE0 1 0 offwind-ac": {
+          "new_MW": 0.0,
+          "nmax": 23,
+          "installed": 23.0,
+          "n0": 23
+        },
+        "BE0 0 battery": {
+          "new_MW": 0.0,
+          "nmax": 0,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "BE0 0 0 solar": {
+          "new_MW": 0.0,
+          "nmax": 401,
+          "installed": 21.0,
+          "n0": 21
+        },
+        "BE0 1 battery": {
+          "new_MW": 0.0,
+          "nmax": 0,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "candidate_bess_gfm_be0_2": {
+          "new_MW": -0.0,
+          "nmax": 20,
+          "installed": -0.0,
+          "n0": 0
+        },
+        "BE0 3 0 onwind": {
+          "new_MW": 0.0,
+          "nmax": 124,
+          "installed": 9.0,
+          "n0": 9
+        },
+        "candidate_bess_gfm_be0_0": {
+          "new_MW": -0.0,
+          "nmax": 20,
+          "installed": -0.0,
+          "n0": 0
+        },
+        "BE0 3 battery": {
+          "new_MW": 0.0,
+          "nmax": 43,
+          "installed": 43.0,
+          "n0": 43
+        },
+        "candidate_bess_gfm_be0_4": {
+          "new_MW": -0.0,
+          "nmax": 20,
+          "installed": -0.0,
+          "n0": 0
+        },
+        "BE0 2 0 onwind": {
+          "new_MW": 0.0,
+          "nmax": 14,
+          "installed": 7.0,
+          "n0": 7
+        },
+        "BE0 4 battery": {
+          "new_MW": 0.0,
+          "nmax": 0,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "BE0 3 oil": {
+          "new_MW": 0.0,
+          "nmax": 1,
+          "installed": 1.0,
+          "n0": 1
+        },
+        "BE0 4 oil": {
+          "new_MW": 0.0,
+          "nmax": 2,
+          "installed": 2.0,
+          "n0": 2
+        },
+        "BE0 3 0 solar": {
+          "new_MW": 0.0,
+          "nmax": 227,
+          "installed": 147.0,
+          "n0": 147
+        },
+        "BE0 4 0 onwind": {
+          "new_MW": 0.0,
+          "nmax": 49,
+          "installed": 9.0,
+          "n0": 9
+        },
+        "BE0 0 0 onwind": {
+          "new_MW": 0.0,
+          "nmax": 59,
+          "installed": 9.0,
+          "n0": 9
+        },
+        "BE0 0 nuclear": {
+          "new_MW": 0.0,
+          "nmax": 3,
+          "installed": 3.0,
+          "n0": 3
+        },
+        "BE0 2 battery": {
+          "new_MW": 0.0,
+          "nmax": 0,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "BE0 2 0 solar": {
+          "new_MW": 0.0,
+          "nmax": 262,
+          "installed": 14.0,
+          "n0": 14
+        },
+        "BE0 1 0 offwind-dc": {
+          "new_MW": 0.0,
+          "nmax": 9,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "BE0 4 0 solar": {
+          "new_MW": 0.0,
+          "nmax": 415,
+          "installed": 21.0,
+          "n0": 21
+        },
+        "BE0 4 CCGT": {
+          "new_MW": 0.0,
+          "nmax": 5,
+          "installed": 5.0,
+          "n0": 5
+        }
+      },
+      "G1_violation": 2.220446049250313e-16,
+      "events": 0.0,
+      "minimum_M_eigenvalue": 76.51716686090242,
+      "case_sha256": "8d340cc4e63b575bde4ba3d3a605227ec0c7db4b909b77618f814a8a2647435d",
+      "relaxed": true,
+      "validation_scope": "parametric_study",
+      "investment": 11697.84301106419,
+      "integrality_residual": 0.0,
+      "block_bound_violation": 0.0,
+      "source_expression_residual": 0.0,
+      "soc_MWh_residual": 9.094947017729282e-13,
+      "power_balance_MW_residual": 7.105427357601002e-13,
+      "termination": "OPTIMAL",
+      "theorem_domain_valid": false,
+      "physical_hours": 9,
+      "terminal_MWh_residual": 0.0,
+      "snapshots": 3,
+      "scenario_config_sha256": "be9d9d9aa90e9790fc7c3554bc1107777a5ba743f4f95d8f675acd9bfeb1e75a",
+      "connection_violation": 1.3322676295501878e-15,
+      "registry_sha256": "a249f7a96d202798c6ff5778c1fa1571eba59a3717bac5d25b150d2a6c41bce9",
+      "scenario_id": "exposure_multiplier_3snap",
+      "B0_residual": 0.0,
+      "relative_gap": null
+    },
+    {
+      "relative_gap": 0.0,
+      "empirical_approved": false,
+      "primal": "FEASIBLE_POINT",
+      "objective": 2.536981781622439e6,
+      "cost_residual": 6.030313670635223e-7,
+      "exposure_expression_residual": 0.0,
+      "installed_assets": {
+        "BE0 1 nuclear": {
+          "new_MW": 0.0,
+          "nmax": 3,
+          "installed": 3.0,
+          "n0": 3
+        },
+        "BE0 1 0 onwind": {
+          "new_MW": 0.0,
+          "nmax": 71,
+          "installed": 42.0,
+          "n0": 42
+        },
+        "BE0 0 biomass": {
+          "new_MW": 0.0,
+          "nmax": 1,
+          "installed": 1.0,
+          "n0": 1
+        },
+        "BE0 1 0 solar": {
+          "new_MW": 0.0,
+          "nmax": 872,
+          "installed": 46.0,
+          "n0": 46
+        },
+        "BE0 0 CCGT": {
+          "new_MW": 0.0,
+          "nmax": 2,
+          "installed": 2.0,
+          "n0": 2
+        },
+        "candidate_bess_gfm_be0_1": {
+          "new_MW": 0.0,
+          "nmax": 20,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "BE0 1 oil": {
+          "new_MW": 0.0,
+          "nmax": 4,
+          "installed": 4.0,
+          "n0": 4
+        },
+        "BE0 2 CCGT": {
+          "new_MW": 0.0,
+          "nmax": 2,
+          "installed": 2.0,
+          "n0": 2
+        },
+        "candidate_bess_gfm_be0_3": {
+          "new_MW": 200.0,
+          "nmax": 20,
+          "installed": 2.0,
+          "n0": 0
+        },
+        "BE0 1 biomass": {
+          "new_MW": 0.0,
+          "nmax": 1,
+          "installed": 1.0,
+          "n0": 1
+        },
+        "BE0 1 CCGT": {
+          "new_MW": 0.0,
+          "nmax": 9,
+          "installed": 9.0,
+          "n0": 9
+        },
+        "BE0 1 0 offwind-ac": {
+          "new_MW": 0.0,
+          "nmax": 23,
+          "installed": 23.0,
+          "n0": 23
+        },
+        "BE0 0 battery": {
+          "new_MW": 0.0,
+          "nmax": 0,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "BE0 0 0 solar": {
+          "new_MW": 0.0,
+          "nmax": 401,
+          "installed": 21.0,
+          "n0": 21
+        },
+        "BE0 1 battery": {
+          "new_MW": 0.0,
+          "nmax": 0,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "candidate_bess_gfm_be0_2": {
+          "new_MW": 0.0,
+          "nmax": 20,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "BE0 3 0 onwind": {
+          "new_MW": 0.0,
+          "nmax": 124,
+          "installed": 9.0,
+          "n0": 9
+        },
+        "candidate_bess_gfm_be0_0": {
+          "new_MW": 0.0,
+          "nmax": 20,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "BE0 3 battery": {
+          "new_MW": 0.0,
+          "nmax": 43,
+          "installed": 43.0,
+          "n0": 43
+        },
+        "candidate_bess_gfm_be0_4": {
+          "new_MW": 0.0,
+          "nmax": 20,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "BE0 2 0 onwind": {
+          "new_MW": 0.0,
+          "nmax": 14,
+          "installed": 7.0,
+          "n0": 7
+        },
+        "BE0 4 battery": {
+          "new_MW": 0.0,
+          "nmax": 0,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "BE0 3 oil": {
+          "new_MW": 0.0,
+          "nmax": 1,
+          "installed": 1.0,
+          "n0": 1
+        },
+        "BE0 4 oil": {
+          "new_MW": 0.0,
+          "nmax": 2,
+          "installed": 2.0,
+          "n0": 2
+        },
+        "BE0 3 0 solar": {
+          "new_MW": 0.0,
+          "nmax": 227,
+          "installed": 147.0,
+          "n0": 147
+        },
+        "BE0 4 0 onwind": {
+          "new_MW": 0.0,
+          "nmax": 49,
+          "installed": 9.0,
+          "n0": 9
+        },
+        "BE0 0 0 onwind": {
+          "new_MW": 0.0,
+          "nmax": 59,
+          "installed": 9.0,
+          "n0": 9
+        },
+        "BE0 0 nuclear": {
+          "new_MW": 0.0,
+          "nmax": 3,
+          "installed": 3.0,
+          "n0": 3
+        },
+        "BE0 2 battery": {
+          "new_MW": 0.0,
+          "nmax": 0,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "BE0 2 0 solar": {
+          "new_MW": 0.0,
+          "nmax": 262,
+          "installed": 14.0,
+          "n0": 14
+        },
+        "BE0 1 0 offwind-dc": {
+          "new_MW": 0.0,
+          "nmax": 9,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "BE0 4 0 solar": {
+          "new_MW": 0.0,
+          "nmax": 415,
+          "installed": 21.0,
+          "n0": 21
+        },
+        "BE0 4 CCGT": {
+          "new_MW": 0.0,
+          "nmax": 5,
+          "installed": 5.0,
+          "n0": 5
+        }
+      },
+      "G1_violation": 0.0,
+      "events": 0.0,
+      "minimum_M_eigenvalue": 76.3819290334244,
+      "case_sha256": "f2a931f452675dc9206bca4af62262c7c29e9d2daf05b13b16b8535ea197b243",
+      "relaxed": false,
+      "validation_scope": "parametric_study",
+      "investment": 12385.659723336166,
+      "integrality_residual": 7.105427357601002e-15,
+      "block_bound_violation": 0.0,
+      "source_expression_residual": 0.0,
+      "soc_MWh_residual": 2.8421709430404007e-13,
+      "power_balance_MW_residual": 3.552713678800501e-13,
+      "termination": "OPTIMAL",
+      "theorem_domain_valid": false,
+      "physical_hours": 9,
+      "terminal_MWh_residual": 0.0,
+      "snapshots": 3,
+      "scenario_config_sha256": "be9d9d9aa90e9790fc7c3554bc1107777a5ba743f4f95d8f675acd9bfeb1e75a",
+      "connection_violation": 0.0,
+      "registry_sha256": "a249f7a96d202798c6ff5778c1fa1571eba59a3717bac5d25b150d2a6c41bce9",
+      "scenario_id": "bess_premium_3snap",
+      "B0_residual": 0.0,
+      "dispatch": 2.524596121899706e6
+    },
+    {
+      "dispatch": 2.524596400858083e6,
+      "empirical_approved": false,
+      "primal": "FEASIBLE_POINT",
+      "objective": 2.5358002207120894e6,
+      "cost_residual": 1.7071142792701721e-6,
+      "exposure_expression_residual": 0.0,
+      "installed_assets": {
+        "BE0 1 nuclear": {
+          "new_MW": 0.0,
+          "nmax": 3,
+          "installed": 3.0,
+          "n0": 3
+        },
+        "BE0 1 0 onwind": {
+          "new_MW": 0.0,
+          "nmax": 71,
+          "installed": 42.0,
+          "n0": 42
+        },
+        "BE0 0 biomass": {
+          "new_MW": 0.0,
+          "nmax": 1,
+          "installed": 1.0,
+          "n0": 1
+        },
+        "BE0 1 0 solar": {
+          "new_MW": 0.0,
+          "nmax": 872,
+          "installed": 46.0,
+          "n0": 46
+        },
+        "BE0 0 CCGT": {
+          "new_MW": 0.0,
+          "nmax": 2,
+          "installed": 2.0,
+          "n0": 2
+        },
+        "candidate_bess_gfm_be0_1": {
+          "new_MW": -0.0,
+          "nmax": 20,
+          "installed": -0.0,
+          "n0": 0
+        },
+        "BE0 1 oil": {
+          "new_MW": 0.0,
+          "nmax": 4,
+          "installed": 4.0,
+          "n0": 4
+        },
+        "BE0 2 CCGT": {
+          "new_MW": 0.0,
+          "nmax": 2,
+          "installed": 2.0,
+          "n0": 2
+        },
+        "candidate_bess_gfm_be0_3": {
+          "new_MW": 180.9159964436916,
+          "nmax": 20,
+          "installed": 1.809159964436916,
+          "n0": 0
+        },
+        "BE0 1 biomass": {
+          "new_MW": 0.0,
+          "nmax": 1,
+          "installed": 1.0,
+          "n0": 1
+        },
+        "BE0 1 CCGT": {
+          "new_MW": 0.0,
+          "nmax": 9,
+          "installed": 9.0,
+          "n0": 9
+        },
+        "BE0 1 0 offwind-ac": {
+          "new_MW": 0.0,
+          "nmax": 23,
+          "installed": 23.0,
+          "n0": 23
+        },
+        "BE0 0 battery": {
+          "new_MW": 0.0,
+          "nmax": 0,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "BE0 0 0 solar": {
+          "new_MW": 0.0,
+          "nmax": 401,
+          "installed": 21.0,
+          "n0": 21
+        },
+        "BE0 1 battery": {
+          "new_MW": 0.0,
+          "nmax": 0,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "candidate_bess_gfm_be0_2": {
+          "new_MW": 0.0,
+          "nmax": 20,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "BE0 3 0 onwind": {
+          "new_MW": 0.0,
+          "nmax": 124,
+          "installed": 9.0,
+          "n0": 9
+        },
+        "candidate_bess_gfm_be0_0": {
+          "new_MW": -0.0,
+          "nmax": 20,
+          "installed": -0.0,
+          "n0": 0
+        },
+        "BE0 3 battery": {
+          "new_MW": 0.0,
+          "nmax": 43,
+          "installed": 43.0,
+          "n0": 43
+        },
+        "candidate_bess_gfm_be0_4": {
+          "new_MW": -0.0,
+          "nmax": 20,
+          "installed": -0.0,
+          "n0": 0
+        },
+        "BE0 2 0 onwind": {
+          "new_MW": 0.0,
+          "nmax": 14,
+          "installed": 7.0,
+          "n0": 7
+        },
+        "BE0 4 battery": {
+          "new_MW": 0.0,
+          "nmax": 0,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "BE0 3 oil": {
+          "new_MW": 0.0,
+          "nmax": 1,
+          "installed": 1.0,
+          "n0": 1
+        },
+        "BE0 4 oil": {
+          "new_MW": 0.0,
+          "nmax": 2,
+          "installed": 2.0,
+          "n0": 2
+        },
+        "BE0 3 0 solar": {
+          "new_MW": 0.0,
+          "nmax": 227,
+          "installed": 147.0,
+          "n0": 147
+        },
+        "BE0 4 0 onwind": {
+          "new_MW": 0.0,
+          "nmax": 49,
+          "installed": 9.0,
+          "n0": 9
+        },
+        "BE0 0 0 onwind": {
+          "new_MW": 0.0,
+          "nmax": 59,
+          "installed": 9.0,
+          "n0": 9
+        },
+        "BE0 0 nuclear": {
+          "new_MW": 0.0,
+          "nmax": 3,
+          "installed": 3.0,
+          "n0": 3
+        },
+        "BE0 2 battery": {
+          "new_MW": 0.0,
+          "nmax": 0,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "BE0 2 0 solar": {
+          "new_MW": 0.0,
+          "nmax": 262,
+          "installed": 14.0,
+          "n0": 14
+        },
+        "BE0 1 0 offwind-dc": {
+          "new_MW": 0.0,
+          "nmax": 9,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "BE0 4 0 solar": {
+          "new_MW": 0.0,
+          "nmax": 415,
+          "installed": 21.0,
+          "n0": 21
+        },
+        "BE0 4 CCGT": {
+          "new_MW": 0.0,
+          "nmax": 5,
+          "installed": 5.0,
+          "n0": 5
+        }
+      },
+      "G1_violation": 0.0,
+      "events": 0.0,
+      "minimum_M_eigenvalue": 76.7592415332992,
+      "case_sha256": "f2a931f452675dc9206bca4af62262c7c29e9d2daf05b13b16b8535ea197b243",
+      "relaxed": true,
+      "validation_scope": "parametric_study",
+      "investment": 11203.8198522993,
+      "integrality_residual": 0.0,
+      "block_bound_violation": 0.0,
+      "source_expression_residual": 0.0,
+      "soc_MWh_residual": 7.958078640513122e-12,
+      "power_balance_MW_residual": 1.7763568394002505e-12,
+      "termination": "OPTIMAL",
+      "theorem_domain_valid": false,
+      "physical_hours": 9,
+      "terminal_MWh_residual": 0.0,
+      "snapshots": 3,
+      "scenario_config_sha256": "be9d9d9aa90e9790fc7c3554bc1107777a5ba743f4f95d8f675acd9bfeb1e75a",
+      "connection_violation": 5.773159728050814e-15,
+      "registry_sha256": "a249f7a96d202798c6ff5778c1fa1571eba59a3717bac5d25b150d2a6c41bce9",
+      "scenario_id": "bess_premium_3snap",
+      "B0_residual": 0.0,
+      "relative_gap": null
+    },
+    {
+      "relative_gap": 8.947240625917069e-9,
+      "empirical_approved": false,
+      "primal": "FEASIBLE_POINT",
+      "objective": 2.55109331466544e6,
+      "cost_residual": 6.030313670635223e-7,
+      "exposure_expression_residual": 0.0,
+      "installed_assets": {
+        "BE0 1 nuclear": {
+          "new_MW": 0.0,
+          "nmax": 3,
+          "installed": 3.0,
+          "n0": 3
+        },
+        "BE0 1 0 onwind": {
+          "new_MW": 0.0,
+          "nmax": 71,
+          "installed": 42.0,
+          "n0": 42
+        },
+        "BE0 0 biomass": {
+          "new_MW": 0.0,
+          "nmax": 1,
+          "installed": 1.0,
+          "n0": 1
+        },
+        "BE0 1 0 solar": {
+          "new_MW": 0.0,
+          "nmax": 872,
+          "installed": 46.0,
+          "n0": 46
+        },
+        "BE0 0 CCGT": {
+          "new_MW": 0.0,
+          "nmax": 2,
+          "installed": 2.0,
+          "n0": 2
+        },
+        "candidate_bess_gfm_be0_1": {
+          "new_MW": 0.0,
+          "nmax": 20,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "BE0 1 oil": {
+          "new_MW": 0.0,
+          "nmax": 4,
+          "installed": 4.0,
+          "n0": 4
+        },
+        "BE0 2 CCGT": {
+          "new_MW": 0.0,
+          "nmax": 2,
+          "installed": 2.0,
+          "n0": 2
+        },
+        "candidate_bess_gfm_be0_3": {
+          "new_MW": 500.0,
+          "nmax": 20,
+          "installed": 5.0,
+          "n0": 0
+        },
+        "BE0 1 biomass": {
+          "new_MW": 0.0,
+          "nmax": 1,
+          "installed": 1.0,
+          "n0": 1
+        },
+        "BE0 1 CCGT": {
+          "new_MW": 0.0,
+          "nmax": 9,
+          "installed": 9.0,
+          "n0": 9
+        },
+        "BE0 1 0 offwind-ac": {
+          "new_MW": 0.0,
+          "nmax": 23,
+          "installed": 23.0,
+          "n0": 23
+        },
+        "BE0 0 battery": {
+          "new_MW": 0.0,
+          "nmax": 0,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "BE0 0 0 solar": {
+          "new_MW": 0.0,
+          "nmax": 401,
+          "installed": 21.0,
+          "n0": 21
+        },
+        "BE0 1 battery": {
+          "new_MW": 0.0,
+          "nmax": 0,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "candidate_bess_gfm_be0_2": {
+          "new_MW": 0.0,
+          "nmax": 20,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "BE0 3 0 onwind": {
+          "new_MW": 0.0,
+          "nmax": 124,
+          "installed": 9.0,
+          "n0": 9
+        },
+        "candidate_bess_gfm_be0_0": {
+          "new_MW": 0.0,
+          "nmax": 20,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "BE0 3 battery": {
+          "new_MW": 0.0,
+          "nmax": 43,
+          "installed": 43.0,
+          "n0": 43
+        },
+        "candidate_bess_gfm_be0_4": {
+          "new_MW": 0.0,
+          "nmax": 20,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "BE0 2 0 onwind": {
+          "new_MW": 0.0,
+          "nmax": 14,
+          "installed": 7.0,
+          "n0": 7
+        },
+        "BE0 4 battery": {
+          "new_MW": 0.0,
+          "nmax": 0,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "BE0 3 oil": {
+          "new_MW": 0.0,
+          "nmax": 1,
+          "installed": 1.0,
+          "n0": 1
+        },
+        "BE0 4 oil": {
+          "new_MW": 0.0,
+          "nmax": 2,
+          "installed": 2.0,
+          "n0": 2
+        },
+        "BE0 3 0 solar": {
+          "new_MW": 0.0,
+          "nmax": 227,
+          "installed": 147.0,
+          "n0": 147
+        },
+        "BE0 4 0 onwind": {
+          "new_MW": 0.0,
+          "nmax": 49,
+          "installed": 9.0,
+          "n0": 9
+        },
+        "BE0 0 0 onwind": {
+          "new_MW": 0.0,
+          "nmax": 59,
+          "installed": 9.0,
+          "n0": 9
+        },
+        "BE0 0 nuclear": {
+          "new_MW": 0.0,
+          "nmax": 3,
+          "installed": 3.0,
+          "n0": 3
+        },
+        "BE0 2 battery": {
+          "new_MW": 0.0,
+          "nmax": 0,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "BE0 2 0 solar": {
+          "new_MW": 0.0,
+          "nmax": 262,
+          "installed": 14.0,
+          "n0": 14
+        },
+        "BE0 1 0 offwind-dc": {
+          "new_MW": 0.0,
+          "nmax": 9,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "BE0 4 0 solar": {
+          "new_MW": 0.0,
+          "nmax": 415,
+          "installed": 21.0,
+          "n0": 21
+        },
+        "BE0 4 CCGT": {
+          "new_MW": 0.0,
+          "nmax": 5,
+          "installed": 5.0,
+          "n0": 5
+        }
+      },
+      "G1_violation": 0.0,
+      "events": 0.0,
+      "minimum_M_eigenvalue": 77.42194009038752,
+      "case_sha256": "907d1290f93b29dc796bfe0fedbc026458a6f84113f3c78fd0815af877bccdac",
+      "relaxed": false,
+      "validation_scope": "parametric_study",
+      "investment": 26319.52691208935,
+      "integrality_residual": 0.0,
+      "block_bound_violation": 0.0,
+      "source_expression_residual": 0.0,
+      "soc_MWh_residual": 2.5579538487363607e-13,
+      "power_balance_MW_residual": 7.105427357601002e-13,
+      "termination": "OPTIMAL",
+      "theorem_domain_valid": false,
+      "physical_hours": 9,
+      "terminal_MWh_residual": 0.0,
+      "snapshots": 3,
+      "scenario_config_sha256": "be9d9d9aa90e9790fc7c3554bc1107777a5ba743f4f95d8f675acd9bfeb1e75a",
+      "connection_violation": 0.0,
+      "registry_sha256": "a249f7a96d202798c6ff5778c1fa1571eba59a3717bac5d25b150d2a6c41bce9",
+      "scenario_id": "threshold_3snap",
+      "B0_residual": 0.0,
+      "dispatch": 2.5247737877539536e6
+    },
+    {
+      "dispatch": 2.5245968936243425e6,
+      "empirical_approved": false,
+      "primal": "FEASIBLE_POINT",
+      "objective": 2.5509424879722977e6,
+      "cost_residual": 1.6135163605213165e-6,
+      "exposure_expression_residual": 0.0,
+      "installed_assets": {
+        "BE0 1 nuclear": {
+          "new_MW": 0.0,
+          "nmax": 3,
+          "installed": 3.0,
+          "n0": 3
+        },
+        "BE0 1 0 onwind": {
+          "new_MW": 0.0,
+          "nmax": 71,
+          "installed": 42.0,
+          "n0": 42
+        },
+        "BE0 0 biomass": {
+          "new_MW": 0.0,
+          "nmax": 1,
+          "installed": 1.0,
+          "n0": 1
+        },
+        "BE0 1 0 solar": {
+          "new_MW": 0.0,
+          "nmax": 872,
+          "installed": 46.0,
+          "n0": 46
+        },
+        "BE0 0 CCGT": {
+          "new_MW": 0.0,
+          "nmax": 2,
+          "installed": 2.0,
+          "n0": 2
+        },
+        "candidate_bess_gfm_be0_1": {
+          "new_MW": -0.0,
+          "nmax": 20,
+          "installed": -0.0,
+          "n0": 0
+        },
+        "BE0 1 oil": {
+          "new_MW": 0.0,
+          "nmax": 4,
+          "installed": 4.0,
+          "n0": 4
+        },
+        "BE0 2 CCGT": {
+          "new_MW": 0.0,
+          "nmax": 2,
+          "installed": 2.0,
+          "n0": 2
+        },
+        "candidate_bess_gfm_be0_3": {
+          "new_MW": 500.49521091961805,
+          "nmax": 20,
+          "installed": 5.00495210919618,
+          "n0": 0
+        },
+        "BE0 1 biomass": {
+          "new_MW": 0.0,
+          "nmax": 1,
+          "installed": 1.0,
+          "n0": 1
+        },
+        "BE0 1 CCGT": {
+          "new_MW": 0.0,
+          "nmax": 9,
+          "installed": 9.0,
+          "n0": 9
+        },
+        "BE0 1 0 offwind-ac": {
+          "new_MW": 0.0,
+          "nmax": 23,
+          "installed": 23.0,
+          "n0": 23
+        },
+        "BE0 0 battery": {
+          "new_MW": 0.0,
+          "nmax": 0,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "BE0 0 0 solar": {
+          "new_MW": 0.0,
+          "nmax": 401,
+          "installed": 21.0,
+          "n0": 21
+        },
+        "BE0 1 battery": {
+          "new_MW": 0.0,
+          "nmax": 0,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "candidate_bess_gfm_be0_2": {
+          "new_MW": -0.0,
+          "nmax": 20,
+          "installed": -0.0,
+          "n0": 0
+        },
+        "BE0 3 0 onwind": {
+          "new_MW": 0.0,
+          "nmax": 124,
+          "installed": 9.0,
+          "n0": 9
+        },
+        "candidate_bess_gfm_be0_0": {
+          "new_MW": -0.0,
+          "nmax": 20,
+          "installed": -0.0,
+          "n0": 0
+        },
+        "BE0 3 battery": {
+          "new_MW": 0.0,
+          "nmax": 43,
+          "installed": 43.0,
+          "n0": 43
+        },
+        "candidate_bess_gfm_be0_4": {
+          "new_MW": -0.0,
+          "nmax": 20,
+          "installed": -0.0,
+          "n0": 0
+        },
+        "BE0 2 0 onwind": {
+          "new_MW": 0.0,
+          "nmax": 14,
+          "installed": 7.0,
+          "n0": 7
+        },
+        "BE0 4 battery": {
+          "new_MW": 0.0,
+          "nmax": 0,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "BE0 3 oil": {
+          "new_MW": 0.0,
+          "nmax": 1,
+          "installed": 1.0,
+          "n0": 1
+        },
+        "BE0 4 oil": {
+          "new_MW": 0.0,
+          "nmax": 2,
+          "installed": 2.0,
+          "n0": 2
+        },
+        "BE0 3 0 solar": {
+          "new_MW": 0.0,
+          "nmax": 227,
+          "installed": 147.0,
+          "n0": 147
+        },
+        "BE0 4 0 onwind": {
+          "new_MW": 0.0,
+          "nmax": 49,
+          "installed": 9.0,
+          "n0": 9
+        },
+        "BE0 0 0 onwind": {
+          "new_MW": 0.0,
+          "nmax": 59,
+          "installed": 9.0,
+          "n0": 9
+        },
+        "BE0 0 nuclear": {
+          "new_MW": 0.0,
+          "nmax": 3,
+          "installed": 3.0,
+          "n0": 3
+        },
+        "BE0 2 battery": {
+          "new_MW": 0.0,
+          "nmax": 0,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "BE0 2 0 solar": {
+          "new_MW": 0.0,
+          "nmax": 262,
+          "installed": 14.0,
+          "n0": 14
+        },
+        "BE0 1 0 offwind-dc": {
+          "new_MW": 0.0,
+          "nmax": 9,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "BE0 4 0 solar": {
+          "new_MW": 0.0,
+          "nmax": 415,
+          "installed": 21.0,
+          "n0": 21
+        },
+        "BE0 4 CCGT": {
+          "new_MW": 0.0,
+          "nmax": 5,
+          "installed": 5.0,
+          "n0": 5
+        }
+      },
+      "G1_violation": 2.0872192862952943e-14,
+      "events": 0.0,
+      "minimum_M_eigenvalue": 73.16857427274641,
+      "case_sha256": "907d1290f93b29dc796bfe0fedbc026458a6f84113f3c78fd0815af877bccdac",
+      "relaxed": true,
+      "validation_scope": "parametric_study",
+      "investment": 26345.594346341444,
+      "integrality_residual": 0.0,
+      "block_bound_violation": 0.0,
+      "source_expression_residual": 0.0,
+      "soc_MWh_residual": 3.183231456205249e-12,
+      "power_balance_MW_residual": 1.4210854715202004e-12,
+      "termination": "OPTIMAL",
+      "theorem_domain_valid": false,
+      "physical_hours": 9,
+      "terminal_MWh_residual": 0.0,
+      "snapshots": 3,
+      "scenario_config_sha256": "be9d9d9aa90e9790fc7c3554bc1107777a5ba743f4f95d8f675acd9bfeb1e75a",
+      "connection_violation": 1.865174681370263e-14,
+      "registry_sha256": "a249f7a96d202798c6ff5778c1fa1571eba59a3717bac5d25b150d2a6c41bce9",
+      "scenario_id": "threshold_3snap",
+      "B0_residual": 0.0,
+      "relative_gap": null
+    },
+    {
+      "relative_gap": 0.0,
+      "empirical_approved": false,
+      "primal": "FEASIBLE_POINT",
+      "objective": 2.594530970258242e6,
+      "cost_residual": 6.030313670635223e-7,
+      "exposure_expression_residual": 0.0,
+      "installed_assets": {
+        "BE0 1 nuclear": {
+          "new_MW": 0.0,
+          "nmax": 3,
+          "installed": 3.0,
+          "n0": 3
+        },
+        "BE0 1 0 onwind": {
+          "new_MW": 0.0,
+          "nmax": 71,
+          "installed": 42.0,
+          "n0": 42
+        },
+        "BE0 0 biomass": {
+          "new_MW": 0.0,
+          "nmax": 1,
+          "installed": 1.0,
+          "n0": 1
+        },
+        "BE0 1 0 solar": {
+          "new_MW": 0.0,
+          "nmax": 872,
+          "installed": 46.0,
+          "n0": 46
+        },
+        "BE0 0 CCGT": {
+          "new_MW": 0.0,
+          "nmax": 2,
+          "installed": 2.0,
+          "n0": 2
+        },
+        "candidate_bess_gfm_be0_1": {
+          "new_MW": -0.0,
+          "nmax": 20,
+          "installed": -0.0,
+          "n0": 0
+        },
+        "BE0 1 oil": {
+          "new_MW": 0.0,
+          "nmax": 4,
+          "installed": 4.0,
+          "n0": 4
+        },
+        "BE0 2 CCGT": {
+          "new_MW": 0.0,
+          "nmax": 2,
+          "installed": 2.0,
+          "n0": 2
+        },
+        "candidate_bess_gfm_be0_3": {
+          "new_MW": 200.00000000000006,
+          "nmax": 20,
+          "installed": 2.0000000000000004,
+          "n0": 0
+        },
+        "BE0 1 biomass": {
+          "new_MW": 0.0,
+          "nmax": 1,
+          "installed": 1.0,
+          "n0": 1
+        },
+        "BE0 1 CCGT": {
+          "new_MW": 0.0,
+          "nmax": 9,
+          "installed": 9.0,
+          "n0": 9
+        },
+        "BE0 1 0 offwind-ac": {
+          "new_MW": 0.0,
+          "nmax": 23,
+          "installed": 23.0,
+          "n0": 23
+        },
+        "BE0 0 battery": {
+          "new_MW": 0.0,
+          "nmax": 0,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "BE0 0 0 solar": {
+          "new_MW": 0.0,
+          "nmax": 401,
+          "installed": 21.0,
+          "n0": 21
+        },
+        "BE0 1 battery": {
+          "new_MW": 0.0,
+          "nmax": 0,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "candidate_bess_gfm_be0_2": {
+          "new_MW": 0.0,
+          "nmax": 20,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "BE0 3 0 onwind": {
+          "new_MW": 0.0,
+          "nmax": 124,
+          "installed": 9.0,
+          "n0": 9
+        },
+        "candidate_bess_gfm_be0_0": {
+          "new_MW": -0.0,
+          "nmax": 20,
+          "installed": -0.0,
+          "n0": 0
+        },
+        "BE0 3 battery": {
+          "new_MW": 0.0,
+          "nmax": 43,
+          "installed": 43.0,
+          "n0": 43
+        },
+        "candidate_bess_gfm_be0_4": {
+          "new_MW": 0.0,
+          "nmax": 20,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "BE0 2 0 onwind": {
+          "new_MW": 0.0,
+          "nmax": 14,
+          "installed": 7.0,
+          "n0": 7
+        },
+        "BE0 4 battery": {
+          "new_MW": 0.0,
+          "nmax": 0,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "BE0 3 oil": {
+          "new_MW": 0.0,
+          "nmax": 1,
+          "installed": 1.0,
+          "n0": 1
+        },
+        "BE0 4 oil": {
+          "new_MW": 0.0,
+          "nmax": 2,
+          "installed": 2.0,
+          "n0": 2
+        },
+        "BE0 3 0 solar": {
+          "new_MW": 0.0,
+          "nmax": 227,
+          "installed": 147.0,
+          "n0": 147
+        },
+        "BE0 4 0 onwind": {
+          "new_MW": 0.0,
+          "nmax": 49,
+          "installed": 9.0,
+          "n0": 9
+        },
+        "BE0 0 0 onwind": {
+          "new_MW": 0.0,
+          "nmax": 59,
+          "installed": 9.0,
+          "n0": 9
+        },
+        "BE0 0 nuclear": {
+          "new_MW": 0.0,
+          "nmax": 3,
+          "installed": 3.0,
+          "n0": 3
+        },
+        "BE0 2 battery": {
+          "new_MW": 0.0,
+          "nmax": 0,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "BE0 2 0 solar": {
+          "new_MW": 0.0,
+          "nmax": 262,
+          "installed": 14.0,
+          "n0": 14
+        },
+        "BE0 1 0 offwind-dc": {
+          "new_MW": 0.0,
+          "nmax": 9,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "BE0 4 0 solar": {
+          "new_MW": 0.0,
+          "nmax": 415,
+          "installed": 21.0,
+          "n0": 21
+        },
+        "BE0 4 CCGT": {
+          "new_MW": 0.0,
+          "nmax": 5,
+          "installed": 5.0,
+          "n0": 5
+        }
+      },
+      "G1_violation": 0.0,
+      "events": 0.0,
+      "minimum_M_eigenvalue": 80.48444445899852,
+      "case_sha256": "c52e648b1497fbd3b5facfcd272cf535a02f5bda3d86cff34d3f433e703e0bf3",
+      "relaxed": false,
+      "validation_scope": "parametric_study",
+      "investment": 10527.810764835742,
+      "integrality_residual": 3.197442310920451e-14,
+      "block_bound_violation": 0.0,
+      "source_expression_residual": 0.0,
+      "soc_MWh_residual": 4.547473508864641e-13,
+      "power_balance_MW_residual": 7.105427357601002e-13,
+      "termination": "OPTIMAL",
+      "theorem_domain_valid": false,
+      "physical_hours": 9,
+      "terminal_MWh_residual": 0.0,
+      "snapshots": 3,
+      "scenario_config_sha256": "be9d9d9aa90e9790fc7c3554bc1107777a5ba743f4f95d8f675acd9bfeb1e75a",
+      "connection_violation": 1.3322676295501878e-15,
+      "registry_sha256": "a249f7a96d202798c6ff5778c1fa1571eba59a3717bac5d25b150d2a6c41bce9",
+      "scenario_id": "connectivity_3snap",
+      "B0_residual": 0.0,
+      "dispatch": 2.5840031594940093e6
+    },
+    {
+      "dispatch": 2.5789648937290986e6,
+      "empirical_approved": false,
+      "primal": "FEASIBLE_POINT",
+      "objective": 2.58699039599889e6,
+      "cost_residual": 1.8868595361709595e-6,
+      "exposure_expression_residual": 0.0,
+      "installed_assets": {
+        "BE0 1 nuclear": {
+          "new_MW": 0.0,
+          "nmax": 3,
+          "installed": 3.0,
+          "n0": 3
+        },
+        "BE0 1 0 onwind": {
+          "new_MW": 0.0,
+          "nmax": 71,
+          "installed": 42.0,
+          "n0": 42
+        },
+        "BE0 0 biomass": {
+          "new_MW": 0.0,
+          "nmax": 1,
+          "installed": 1.0,
+          "n0": 1
+        },
+        "BE0 1 0 solar": {
+          "new_MW": 0.0,
+          "nmax": 872,
+          "installed": 46.0,
+          "n0": 46
+        },
+        "BE0 0 CCGT": {
+          "new_MW": 0.0,
+          "nmax": 2,
+          "installed": 2.0,
+          "n0": 2
+        },
+        "candidate_bess_gfm_be0_1": {
+          "new_MW": -0.0,
+          "nmax": 20,
+          "installed": -0.0,
+          "n0": 0
+        },
+        "BE0 1 oil": {
+          "new_MW": 0.0,
+          "nmax": 4,
+          "installed": 4.0,
+          "n0": 4
+        },
+        "BE0 2 CCGT": {
+          "new_MW": 0.0,
+          "nmax": 2,
+          "installed": 2.0,
+          "n0": 2
+        },
+        "candidate_bess_gfm_be0_3": {
+          "new_MW": 152.462889905103,
+          "nmax": 20,
+          "installed": 1.52462889905103,
+          "n0": 0
+        },
+        "BE0 1 biomass": {
+          "new_MW": 0.0,
+          "nmax": 1,
+          "installed": 1.0,
+          "n0": 1
+        },
+        "BE0 1 CCGT": {
+          "new_MW": 0.0,
+          "nmax": 9,
+          "installed": 9.0,
+          "n0": 9
+        },
+        "BE0 1 0 offwind-ac": {
+          "new_MW": 0.0,
+          "nmax": 23,
+          "installed": 23.0,
+          "n0": 23
+        },
+        "BE0 0 battery": {
+          "new_MW": 0.0,
+          "nmax": 0,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "BE0 0 0 solar": {
+          "new_MW": 0.0,
+          "nmax": 401,
+          "installed": 21.0,
+          "n0": 21
+        },
+        "BE0 1 battery": {
+          "new_MW": 0.0,
+          "nmax": 0,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "candidate_bess_gfm_be0_2": {
+          "new_MW": -0.0,
+          "nmax": 20,
+          "installed": -0.0,
+          "n0": 0
+        },
+        "BE0 3 0 onwind": {
+          "new_MW": 0.0,
+          "nmax": 124,
+          "installed": 9.0,
+          "n0": 9
+        },
+        "candidate_bess_gfm_be0_0": {
+          "new_MW": -0.0,
+          "nmax": 20,
+          "installed": -0.0,
+          "n0": 0
+        },
+        "BE0 3 battery": {
+          "new_MW": 0.0,
+          "nmax": 43,
+          "installed": 43.0,
+          "n0": 43
+        },
+        "candidate_bess_gfm_be0_4": {
+          "new_MW": -0.0,
+          "nmax": 20,
+          "installed": -0.0,
+          "n0": 0
+        },
+        "BE0 2 0 onwind": {
+          "new_MW": 0.0,
+          "nmax": 14,
+          "installed": 7.0,
+          "n0": 7
+        },
+        "BE0 4 battery": {
+          "new_MW": 0.0,
+          "nmax": 0,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "BE0 3 oil": {
+          "new_MW": 0.0,
+          "nmax": 1,
+          "installed": 1.0,
+          "n0": 1
+        },
+        "BE0 4 oil": {
+          "new_MW": 0.0,
+          "nmax": 2,
+          "installed": 2.0,
+          "n0": 2
+        },
+        "BE0 3 0 solar": {
+          "new_MW": 0.0,
+          "nmax": 227,
+          "installed": 147.0,
+          "n0": 147
+        },
+        "BE0 4 0 onwind": {
+          "new_MW": 0.0,
+          "nmax": 49,
+          "installed": 9.0,
+          "n0": 9
+        },
+        "BE0 0 0 onwind": {
+          "new_MW": 0.0,
+          "nmax": 59,
+          "installed": 9.0,
+          "n0": 9
+        },
+        "BE0 0 nuclear": {
+          "new_MW": 0.0,
+          "nmax": 3,
+          "installed": 3.0,
+          "n0": 3
+        },
+        "BE0 2 battery": {
+          "new_MW": 0.0,
+          "nmax": 0,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "BE0 2 0 solar": {
+          "new_MW": 0.0,
+          "nmax": 262,
+          "installed": 14.0,
+          "n0": 14
+        },
+        "BE0 1 0 offwind-dc": {
+          "new_MW": 0.0,
+          "nmax": 9,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "BE0 4 0 solar": {
+          "new_MW": 0.0,
+          "nmax": 415,
+          "installed": 21.0,
+          "n0": 21
+        },
+        "BE0 4 CCGT": {
+          "new_MW": 0.0,
+          "nmax": 5,
+          "installed": 5.0,
+          "n0": 5
+        }
+      },
+      "G1_violation": 8.881784197001252e-16,
+      "events": 0.0,
+      "minimum_M_eigenvalue": 77.74097552615859,
+      "case_sha256": "c52e648b1497fbd3b5facfcd272cf535a02f5bda3d86cff34d3f433e703e0bf3",
+      "relaxed": true,
+      "validation_scope": "parametric_study",
+      "investment": 8025.502267904548,
+      "integrality_residual": 0.0,
+      "block_bound_violation": 0.0,
+      "source_expression_residual": 0.0,
+      "soc_MWh_residual": 2.012415134155567e-11,
+      "power_balance_MW_residual": 7.638334409421077e-12,
+      "termination": "OPTIMAL",
+      "theorem_domain_valid": false,
+      "physical_hours": 9,
+      "terminal_MWh_residual": 0.0,
+      "snapshots": 3,
+      "scenario_config_sha256": "be9d9d9aa90e9790fc7c3554bc1107777a5ba743f4f95d8f675acd9bfeb1e75a",
+      "connection_violation": 3.860150651477082e-14,
+      "registry_sha256": "a249f7a96d202798c6ff5778c1fa1571eba59a3717bac5d25b150d2a6c41bce9",
+      "scenario_id": "connectivity_3snap",
+      "B0_residual": 0.0,
+      "relative_gap": null
+    },
+    {
+      "relative_gap": 0.0,
+      "empirical_approved": false,
+      "primal": "FEASIBLE_POINT",
+      "objective": 5.60891220245558e6,
+      "cost_residual": 6.025657057762146e-7,
+      "exposure_expression_residual": 0.0,
+      "installed_assets": {
+        "BE0 1 nuclear": {
+          "new_MW": 0.0,
+          "nmax": 3,
+          "installed": 3.0,
+          "n0": 3
+        },
+        "BE0 1 0 onwind": {
+          "new_MW": 0.0,
+          "nmax": 71,
+          "installed": 42.0,
+          "n0": 42
+        },
+        "BE0 0 biomass": {
+          "new_MW": 0.0,
+          "nmax": 1,
+          "installed": 1.0,
+          "n0": 1
+        },
+        "BE0 1 0 solar": {
+          "new_MW": 0.0,
+          "nmax": 872,
+          "installed": 46.0,
+          "n0": 46
+        },
+        "BE0 0 CCGT": {
+          "new_MW": 0.0,
+          "nmax": 2,
+          "installed": 2.0,
+          "n0": 2
+        },
+        "candidate_bess_gfm_be0_1": {
+          "new_MW": 0.0,
+          "nmax": 20,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "BE0 1 oil": {
+          "new_MW": 0.0,
+          "nmax": 4,
+          "installed": 4.0,
+          "n0": 4
+        },
+        "BE0 2 CCGT": {
+          "new_MW": 0.0,
+          "nmax": 2,
+          "installed": 2.0,
+          "n0": 2
+        },
+        "candidate_bess_gfm_be0_3": {
+          "new_MW": 300.0,
+          "nmax": 20,
+          "installed": 3.0,
+          "n0": 0
+        },
+        "BE0 1 biomass": {
+          "new_MW": 0.0,
+          "nmax": 1,
+          "installed": 1.0,
+          "n0": 1
+        },
+        "BE0 1 CCGT": {
+          "new_MW": 0.0,
+          "nmax": 9,
+          "installed": 9.0,
+          "n0": 9
+        },
+        "BE0 1 0 offwind-ac": {
+          "new_MW": 0.0,
+          "nmax": 23,
+          "installed": 23.0,
+          "n0": 23
+        },
+        "BE0 0 battery": {
+          "new_MW": 0.0,
+          "nmax": 0,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "BE0 0 0 solar": {
+          "new_MW": 0.0,
+          "nmax": 401,
+          "installed": 21.0,
+          "n0": 21
+        },
+        "BE0 1 battery": {
+          "new_MW": 0.0,
+          "nmax": 0,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "candidate_bess_gfm_be0_2": {
+          "new_MW": 0.0,
+          "nmax": 20,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "BE0 3 0 onwind": {
+          "new_MW": 5503.090848385,
+          "nmax": 124,
+          "installed": 124.0,
+          "n0": 9
+        },
+        "candidate_bess_gfm_be0_0": {
+          "new_MW": 0.0,
+          "nmax": 20,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "BE0 3 battery": {
+          "new_MW": 0.0,
+          "nmax": 43,
+          "installed": 43.0,
+          "n0": 43
+        },
+        "candidate_bess_gfm_be0_4": {
+          "new_MW": 0.0,
+          "nmax": 20,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "BE0 2 0 onwind": {
+          "new_MW": 0.0,
+          "nmax": 14,
+          "installed": 7.0,
+          "n0": 7
+        },
+        "BE0 4 battery": {
+          "new_MW": 0.0,
+          "nmax": 0,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "BE0 3 oil": {
+          "new_MW": 0.0,
+          "nmax": 1,
+          "installed": 1.0,
+          "n0": 1
+        },
+        "BE0 4 oil": {
+          "new_MW": 0.0,
+          "nmax": 2,
+          "installed": 2.0,
+          "n0": 2
+        },
+        "BE0 3 0 solar": {
+          "new_MW": 0.0,
+          "nmax": 227,
+          "installed": 147.0,
+          "n0": 147
+        },
+        "BE0 4 0 onwind": {
+          "new_MW": 1864.8890721333332,
+          "nmax": 49,
+          "installed": 49.0,
+          "n0": 9
+        },
+        "BE0 0 0 onwind": {
+          "new_MW": 2253.4113837833333,
+          "nmax": 59,
+          "installed": 59.0,
+          "n0": 9
+        },
+        "BE0 0 nuclear": {
+          "new_MW": 0.0,
+          "nmax": 3,
+          "installed": 3.0,
+          "n0": 3
+        },
+        "BE0 2 battery": {
+          "new_MW": 0.0,
+          "nmax": 0,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "BE0 2 0 solar": {
+          "new_MW": 0.0,
+          "nmax": 262,
+          "installed": 14.0,
+          "n0": 14
+        },
+        "BE0 1 0 offwind-dc": {
+          "new_MW": 900.0,
+          "nmax": 9,
+          "installed": 9.0,
+          "n0": 0
+        },
+        "BE0 4 0 solar": {
+          "new_MW": 0.0,
+          "nmax": 415,
+          "installed": 21.0,
+          "n0": 21
+        },
+        "BE0 4 CCGT": {
+          "new_MW": 0.0,
+          "nmax": 5,
+          "installed": 5.0,
+          "n0": 5
+        }
+      },
+      "G1_violation": 0.0,
+      "events": 2.351288888888889e6,
+      "minimum_M_eigenvalue": 69.25686134362243,
+      "case_sha256": "cb9d2f37cfff5caaea42268941e531baf2d53f4e50a01dfe03bedbe235d4cf6b",
+      "relaxed": false,
+      "validation_scope": "parametric_study",
+      "investment": 1.1367263494461663e6,
+      "integrality_residual": 2.6645352591003757e-15,
+      "block_bound_violation": 0.0,
+      "source_expression_residual": 0.0,
+      "soc_MWh_residual": 4.547473508864641e-13,
+      "power_balance_MW_residual": 7.105427357601002e-13,
+      "termination": "OPTIMAL",
+      "theorem_domain_valid": false,
+      "physical_hours": 9,
+      "terminal_MWh_residual": 0.0,
+      "snapshots": 3,
+      "scenario_config_sha256": "be9d9d9aa90e9790fc7c3554bc1107777a5ba743f4f95d8f675acd9bfeb1e75a",
+      "connection_violation": 0.0,
+      "registry_sha256": "a249f7a96d202798c6ff5778c1fa1571eba59a3717bac5d25b150d2a6c41bce9",
+      "scenario_id": "event_price_3snap",
+      "B0_residual": 0.0,
+      "dispatch": 2.1208969641211275e6
+    },
+    {
+      "dispatch": 2.1216073775501642e6,
+      "empirical_approved": false,
+      "primal": "FEASIBLE_POINT",
+      "objective": 5.607852418204419e6,
+      "cost_residual": 1.6749836504459381e-6,
+      "exposure_expression_residual": 0.0,
+      "installed_assets": {
+        "BE0 1 nuclear": {
+          "new_MW": 0.0,
+          "nmax": 3,
+          "installed": 3.0,
+          "n0": 3
+        },
+        "BE0 1 0 onwind": {
+          "new_MW": 0.0,
+          "nmax": 71,
+          "installed": 42.0,
+          "n0": 42
+        },
+        "BE0 0 biomass": {
+          "new_MW": 0.0,
+          "nmax": 1,
+          "installed": 1.0,
+          "n0": 1
+        },
+        "BE0 1 0 solar": {
+          "new_MW": 0.0,
+          "nmax": 872,
+          "installed": 46.0,
+          "n0": 46
+        },
+        "BE0 0 CCGT": {
+          "new_MW": 0.0,
+          "nmax": 2,
+          "installed": 2.0,
+          "n0": 2
+        },
+        "candidate_bess_gfm_be0_1": {
+          "new_MW": -0.0,
+          "nmax": 20,
+          "installed": -0.0,
+          "n0": 0
+        },
+        "BE0 1 oil": {
+          "new_MW": 0.0,
+          "nmax": 4,
+          "installed": 4.0,
+          "n0": 4
+        },
+        "BE0 2 CCGT": {
+          "new_MW": 0.0,
+          "nmax": 2,
+          "installed": 2.0,
+          "n0": 2
+        },
+        "candidate_bess_gfm_be0_3": {
+          "new_MW": 280.2738979646124,
+          "nmax": 20,
+          "installed": 2.802738979646124,
+          "n0": 0
+        },
+        "BE0 1 biomass": {
+          "new_MW": 0.0,
+          "nmax": 1,
+          "installed": 1.0,
+          "n0": 1
+        },
+        "BE0 1 CCGT": {
+          "new_MW": 0.0,
+          "nmax": 9,
+          "installed": 9.0,
+          "n0": 9
+        },
+        "BE0 1 0 offwind-ac": {
+          "new_MW": 0.0,
+          "nmax": 23,
+          "installed": 23.0,
+          "n0": 23
+        },
+        "BE0 0 battery": {
+          "new_MW": 0.0,
+          "nmax": 0,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "BE0 0 0 solar": {
+          "new_MW": 0.0,
+          "nmax": 401,
+          "installed": 21.0,
+          "n0": 21
+        },
+        "BE0 1 battery": {
+          "new_MW": 0.0,
+          "nmax": 0,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "candidate_bess_gfm_be0_2": {
+          "new_MW": -0.0,
+          "nmax": 20,
+          "installed": -0.0,
+          "n0": 0
+        },
+        "BE0 3 0 onwind": {
+          "new_MW": 5503.090848385,
+          "nmax": 124,
+          "installed": 124.0,
+          "n0": 9
+        },
+        "candidate_bess_gfm_be0_0": {
+          "new_MW": -0.0,
+          "nmax": 20,
+          "installed": -0.0,
+          "n0": 0
+        },
+        "BE0 3 battery": {
+          "new_MW": 0.0,
+          "nmax": 43,
+          "installed": 43.0,
+          "n0": 43
+        },
+        "candidate_bess_gfm_be0_4": {
+          "new_MW": -0.0,
+          "nmax": 20,
+          "installed": -0.0,
+          "n0": 0
+        },
+        "BE0 2 0 onwind": {
+          "new_MW": 0.0,
+          "nmax": 14,
+          "installed": 7.0,
+          "n0": 7
+        },
+        "BE0 4 battery": {
+          "new_MW": 0.0,
+          "nmax": 0,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "BE0 3 oil": {
+          "new_MW": 0.0,
+          "nmax": 1,
+          "installed": 1.0,
+          "n0": 1
+        },
+        "BE0 4 oil": {
+          "new_MW": 0.0,
+          "nmax": 2,
+          "installed": 2.0,
+          "n0": 2
+        },
+        "BE0 3 0 solar": {
+          "new_MW": 0.0,
+          "nmax": 227,
+          "installed": 147.0,
+          "n0": 147
+        },
+        "BE0 4 0 onwind": {
+          "new_MW": 1864.8890721333332,
+          "nmax": 49,
+          "installed": 49.0,
+          "n0": 9
+        },
+        "BE0 0 0 onwind": {
+          "new_MW": 2253.4113837833333,
+          "nmax": 59,
+          "installed": 59.0,
+          "n0": 9
+        },
+        "BE0 0 nuclear": {
+          "new_MW": 0.0,
+          "nmax": 3,
+          "installed": 3.0,
+          "n0": 3
+        },
+        "BE0 2 battery": {
+          "new_MW": 0.0,
+          "nmax": 0,
+          "installed": 0.0,
+          "n0": 0
+        },
+        "BE0 2 0 solar": {
+          "new_MW": 0.0,
+          "nmax": 262,
+          "installed": 14.0,
+          "n0": 14
+        },
+        "BE0 1 0 offwind-dc": {
+          "new_MW": 900.0,
+          "nmax": 9,
+          "installed": 9.0,
+          "n0": 0
+        },
+        "BE0 4 0 solar": {
+          "new_MW": 0.0,
+          "nmax": 415,
+          "installed": 21.0,
+          "n0": 21
+        },
+        "BE0 4 CCGT": {
+          "new_MW": 0.0,
+          "nmax": 5,
+          "installed": 5.0,
+          "n0": 5
+        }
+      },
+      "G1_violation": 0.0,
+      "events": 2.3505570545531954e6,
+      "minimum_M_eigenvalue": 73.15589868740844,
+      "case_sha256": "cb9d2f37cfff5caaea42268941e531baf2d53f4e50a01dfe03bedbe235d4cf6b",
+      "relaxed": true,
+      "validation_scope": "parametric_study",
+      "investment": 1.1356879860993843e6,
+      "integrality_residual": 0.0,
+      "block_bound_violation": 0.0,
+      "source_expression_residual": 0.0,
+      "soc_MWh_residual": 4.547473508864641e-13,
+      "power_balance_MW_residual": 8.881784197001252e-13,
+      "termination": "OPTIMAL",
+      "theorem_domain_valid": false,
+      "physical_hours": 9,
+      "terminal_MWh_residual": 0.0,
+      "snapshots": 3,
+      "scenario_config_sha256": "be9d9d9aa90e9790fc7c3554bc1107777a5ba743f4f95d8f675acd9bfeb1e75a",
+      "connection_violation": 0.0,
+      "registry_sha256": "a249f7a96d202798c6ff5778c1fa1571eba59a3717bac5d25b150d2a6c41bce9",
+      "scenario_id": "event_price_3snap",
+      "B0_residual": 0.0,
+      "relative_gap": null
+    }
+  ]
+}

@@ -1,0 +1,95 @@
+[
+  {
+    "kind": "LP",
+    "backend": "MathOptInterface.Utilities.CachingOptimizer{MathOptInterface.Bridges.LazyBridgeOptimizer{HiGHS.Optimizer}, MathOptInterface.Utilities.UniversalFallback{MathOptInterface.Utilities.Model{Float64}}}",
+    "bridge_policy": "JuMP_default_bridges",
+    "status": "supported_runtime_verified",
+    "objective": 1.0,
+    "solver": "HiGHS",
+    "termination": "OPTIMAL"
+  },
+  {
+    "kind": "MILP",
+    "backend": "MathOptInterface.Utilities.CachingOptimizer{MathOptInterface.Bridges.LazyBridgeOptimizer{HiGHS.Optimizer}, MathOptInterface.Utilities.UniversalFallback{MathOptInterface.Utilities.Model{Float64}}}",
+    "bridge_policy": "JuMP_default_bridges",
+    "status": "supported_runtime_verified",
+    "objective": 1.0,
+    "solver": "HiGHS",
+    "termination": "OPTIMAL"
+  },
+  {
+    "kind": "SDP",
+    "status": "solver_unsupported",
+    "error": "Constraints of type MathOptInterface.VectorAffineFunction{Float64}-in-MathOptInterface.PositiveSemidefiniteConeSquare are not supported by the solver.\n\nIf you expected the solver to support your problem, you may have an error in your formulation. Otherwise, consider using a different solver.\n\nThe list of available solvers, along with the problem types they support, is available at https://jump.dev/JuMP.jl/stable/installation/#Supported-solvers.\n",
+    "solver": "HiGHS"
+  },
+  {
+    "kind": "SOCP",
+    "status": "solver_unsupported",
+    "error": "Constraints of type MathOptInterface.VectorAffineFunction{Float64}-in-MathOptInterface.RotatedSecondOrderCone are not supported by the solver.\n\nIf you expected the solver to support your problem, you may have an error in your formulation. Otherwise, consider using a different solver.\n\nThe list of available solvers, along with the problem types they support, is available at https://jump.dev/JuMP.jl/stable/installation/#Supported-solvers.\n",
+    "solver": "HiGHS"
+  },
+  {
+    "kind": "MISOCP",
+    "status": "solver_unsupported",
+    "error": "Constraints of type MathOptInterface.VectorAffineFunction{Float64}-in-MathOptInterface.RotatedSecondOrderCone are not supported by the solver.\n\nIf you expected the solver to support your problem, you may have an error in your formulation. Otherwise, consider using a different solver.\n\nThe list of available solvers, along with the problem types they support, is available at https://jump.dev/JuMP.jl/stable/installation/#Supported-solvers.\n",
+    "solver": "HiGHS"
+  },
+  {
+    "kind": "MISDP",
+    "status": "solver_unsupported",
+    "error": "Constraints of type MathOptInterface.VectorAffineFunction{Float64}-in-MathOptInterface.PositiveSemidefiniteConeSquare are not supported by the solver.\n\nIf you expected the solver to support your problem, you may have an error in your formulation. Otherwise, consider using a different solver.\n\nThe list of available solvers, along with the problem types they support, is available at https://jump.dev/JuMP.jl/stable/installation/#Supported-solvers.\n",
+    "solver": "HiGHS"
+  },
+  {
+    "kind": "LP",
+    "backend": "MathOptInterface.Utilities.CachingOptimizer{MathOptInterface.Bridges.LazyBridgeOptimizer{MathOptInterface.Utilities.CachingOptimizer{Clarabel.MOIwrapper.Optimizer{Float64}, MathOptInterface.Utilities.UniversalFallback{MathOptInterface.Utilities.Model{Float64}}}}, MathOptInterface.Utilities.UniversalFallback{MathOptInterface.Utilities.Model{Float64}}}",
+    "bridge_policy": "JuMP_default_bridges",
+    "status": "supported_runtime_verified",
+    "objective": 0.9999999984291175,
+    "solver": "Clarabel",
+    "termination": "OPTIMAL"
+  },
+  {
+    "kind": "MILP",
+    "status": "solver_unsupported",
+    "error": "Constraints of type MathOptInterface.VariableIndex-in-MathOptInterface.Integer are not supported by the solver.\n\nIf you expected the solver to support your problem, you may have an error in your formulation. Otherwise, consider using a different solver.\n\nThe list of available solvers, along with the problem types they support, is available at https://jump.dev/JuMP.jl/stable/installation/#Supported-solvers.\n",
+    "solver": "Clarabel"
+  },
+  {
+    "kind": "SDP",
+    "backend": "MathOptInterface.Utilities.CachingOptimizer{MathOptInterface.Bridges.LazyBridgeOptimizer{MathOptInterface.Utilities.CachingOptimizer{Clarabel.MOIwrapper.Optimizer{Float64}, MathOptInterface.Utilities.UniversalFallback{MathOptInterface.Utilities.Model{Float64}}}}, MathOptInterface.Utilities.UniversalFallback{MathOptInterface.Utilities.Model{Float64}}}",
+    "bridge_policy": "JuMP_default_bridges",
+    "status": "supported_runtime_verified",
+    "objective": 0.9999999974527439,
+    "solver": "Clarabel",
+    "termination": "OPTIMAL"
+  },
+  {
+    "kind": "SOCP",
+    "backend": "MathOptInterface.Utilities.CachingOptimizer{MathOptInterface.Bridges.LazyBridgeOptimizer{MathOptInterface.Utilities.CachingOptimizer{Clarabel.MOIwrapper.Optimizer{Float64}, MathOptInterface.Utilities.UniversalFallback{MathOptInterface.Utilities.Model{Float64}}}}, MathOptInterface.Utilities.UniversalFallback{MathOptInterface.Utilities.Model{Float64}}}",
+    "bridge_policy": "JuMP_default_bridges",
+    "status": "supported_runtime_verified",
+    "objective": 0.9999999946570559,
+    "solver": "Clarabel",
+    "termination": "OPTIMAL"
+  },
+  {
+    "kind": "MISOCP",
+    "status": "solver_unsupported",
+    "error": "Constraints of type MathOptInterface.VariableIndex-in-MathOptInterface.Integer are not supported by the solver.\n\nIf you expected the solver to support your problem, you may have an error in your formulation. Otherwise, consider using a different solver.\n\nThe list of available solvers, along with the problem types they support, is available at https://jump.dev/JuMP.jl/stable/installation/#Supported-solvers.\n",
+    "solver": "Clarabel"
+  },
+  {
+    "kind": "MISDP",
+    "status": "solver_unsupported",
+    "error": "Constraints of type MathOptInterface.VariableIndex-in-MathOptInterface.Integer are not supported by the solver.\n\nIf you expected the solver to support your problem, you may have an error in your formulation. Otherwise, consider using a different solver.\n\nThe list of available solvers, along with the problem types they support, is available at https://jump.dev/JuMP.jl/stable/installation/#Supported-solvers.\n",
+    "solver": "Clarabel"
+  },
+  {
+    "kind": "MISOCP",
+    "status": "solver_unavailable",
+    "error": "The provided `optimizer_constructor` is invalid. It must be callable with zero arguments. For example, \"Ipopt.Optimizer\" or \"() -> ECOS.Optimizer()\". It should not be an instantiated optimizer like \"Ipopt.Optimizer()\" or \"ECOS.Optimizer()\". (Note the difference in parentheses!)",
+    "solver": "Gurobi"
+  }
+]

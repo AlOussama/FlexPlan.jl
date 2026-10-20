@@ -1,0 +1,33 @@
+{
+  "BASE_LP": {
+    "solve_wall_s": 0.0072191,
+    "solver_time_s": 0.00429081916809082,
+    "model": {
+      "variables": 450,
+      "constraints": {
+        "JuMP.VariableRef in MathOptInterface.LessThan{Float64}": 81,
+        "JuMP.VariableRef in MathOptInterface.GreaterThan{Float64}": 336,
+        "JuMP.AffExpr in MathOptInterface.LessThan{Float64}": 258,
+        "JuMP.AffExpr in MathOptInterface.EqualTo{Float64}": 139,
+        "JuMP.AffExpr in MathOptInterface.GreaterThan{Float64}": 69,
+        "JuMP.AffExpr in MathOptInterface.Interval{Float64}": 18
+      },
+      "integer": 0
+    },
+    "objective": 2.524596121900354e6,
+    "termination": "OPTIMAL",
+    "raw_solver_relative_gap": 1.080507015511989e-12,
+    "bound": 2.5245961218985915e6,
+    "optimizer_configuration": "HiGHS: threads=1,seed=20261020,mip_rel_gap=1e-8,time_limit=120s",
+    "barrier_iterations": 0,
+    "simplex_iterations": 331,
+    "nodes": null,
+    "dual_status": "FEASIBLE_POINT",
+    "primal_status": "FEASIBLE_POINT",
+    "solver": "HiGHS",
+    "objective_solver_scaling": 1.0,
+    "relative_gap": 6.981425492854972e-13
+  },
+  "purpose": "positive numerical objective scaling only; same physical objective and feasible set",
+  "factor": 2.524596121900354e6
+}

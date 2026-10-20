@@ -76,12 +76,14 @@ postprocessing:
   immutable_index: ap3_runs/20261020_macro/export_final/evidence_index.json
   lossless_metric_archives: SHA256_verified_against_raw_bytes
 validation:
-  full_repository_tests: {passed: 6086, total: 6086, process_exit: 0}
+  full_repository_tests: {passed: 6087, total: 6087, process_exit: 0}
+  full_repository_test_evidence: ap3_runs/20261020_macro/full_regression_terminal.log
   AP2_tests: {passed: 153, total: 153, process_exit: 0}
   qualified_parametric_acceptance: {passed: 291, total: 291, process_exit: 0}
   physical_network_audit: {passed: 54, total: 54, process_exit: 0}
   historical_producer_acceptance: {passed: 51, total: 51, process_exit: 0}
   saved_evidence_tests: {passed: 4108, total: 4108, process_exit: 0}
+  saved_evidence_test_evidence: ap3_runs/20261020_macro/evidence_acceptance_terminal.log
   historical_three_integer_infeasible_preserved: true
   matrix_replay: byte_identical_SHA256_and_semantic_equality
   maximum_BSM_reconstruction_residual: 3.410605131648481e-13

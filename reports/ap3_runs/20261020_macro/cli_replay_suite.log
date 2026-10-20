@@ -1,0 +1,5 @@
+Set parameter Username
+Set parameter LicenseID to value 2721113
+reference_3snap BASE_continuous optimal 2.524596121900354e6
+reference_3snap G0_continuous optimal 2.5245965294914762e6
+reference_3snap G3_continuous optimal 2.5245965252315435e6

@@ -1,0 +1,14 @@
+{
+  "separate_replay_formulations": [
+    "BASE",
+    "G0",
+    "G3"
+  ],
+  "replay_status": "three_OPTIMAL",
+  "separate_replay_case": "reference_3snap",
+  "replay_all_bounds_available": true,
+  "benchmark_CLI_optimal": 8,
+  "selected_suite_count_unchanged": 162,
+  "schema": "paper_a_ap3/1.0",
+  "copied_relative_input_paths": true
+}

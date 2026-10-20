@@ -1,0 +1,67 @@
+{
+  "cases": [
+    {
+      "id": "bess_premium_3snap",
+      "case": "D:\\Projekte\\Code\\FlexPlan_UC_GSCR\\.git\\ap3-producer-3b8\\data\\paper_a_study\\cases\\bess_premium_3snap\\study_3snap\\case.json",
+      "scenarios": "D:/Projekte/Code/FlexPlan_UC_GSCR/.git/ap3-producer-3b8/data/paper_a_study/study_scenarios.toml",
+      "registry": "D:/Projekte/Code/FlexPlan_UC_GSCR/.git/ap3-producer-3b8/data/paper_a_study/parameter_registry.csv"
+    },
+    {
+      "id": "connectivity_3snap",
+      "case": "D:\\Projekte\\Code\\FlexPlan_UC_GSCR\\.git\\ap3-producer-3b8\\data\\paper_a_study\\cases\\connectivity_3snap\\study_3snap\\case.json",
+      "scenarios": "D:/Projekte/Code/FlexPlan_UC_GSCR/.git/ap3-producer-3b8/data/paper_a_study/study_scenarios.toml",
+      "registry": "D:/Projekte/Code/FlexPlan_UC_GSCR/.git/ap3-producer-3b8/data/paper_a_study/parameter_registry.csv"
+    },
+    {
+      "id": "event_price_3snap",
+      "case": "D:\\Projekte\\Code\\FlexPlan_UC_GSCR\\.git\\ap3-producer-3b8\\data\\paper_a_study\\cases\\event_price_3snap\\study_3snap\\case.json",
+      "scenarios": "D:/Projekte/Code/FlexPlan_UC_GSCR/.git/ap3-producer-3b8/data/paper_a_study/study_scenarios.toml",
+      "registry": "D:/Projekte/Code/FlexPlan_UC_GSCR/.git/ap3-producer-3b8/data/paper_a_study/parameter_registry.csv"
+    },
+    {
+      "id": "exposure_multiplier_3snap",
+      "case": "D:\\Projekte\\Code\\FlexPlan_UC_GSCR\\.git\\ap3-producer-3b8\\data\\paper_a_study\\cases\\exposure_multiplier_3snap\\study_3snap\\case.json",
+      "scenarios": "D:/Projekte/Code/FlexPlan_UC_GSCR/.git/ap3-producer-3b8/data/paper_a_study/study_scenarios.toml",
+      "registry": "D:/Projekte/Code/FlexPlan_UC_GSCR/.git/ap3-producer-3b8/data/paper_a_study/parameter_registry.csv"
+    },
+    {
+      "id": "reference_24snap",
+      "case": "D:\\Projekte\\Code\\FlexPlan_UC_GSCR\\.git\\ap3-producer-3b8\\data\\paper_a_study\\cases\\reference_24snap\\study_24snap\\case.json",
+      "scenarios": "D:/Projekte/Code/FlexPlan_UC_GSCR/.git/ap3-producer-3b8/data/paper_a_study/study_scenarios.toml",
+      "registry": "D:/Projekte/Code/FlexPlan_UC_GSCR/.git/ap3-producer-3b8/data/paper_a_study/parameter_registry.csv"
+    },
+    {
+      "id": "reference_3snap",
+      "case": "D:\\Projekte\\Code\\FlexPlan_UC_GSCR\\.git\\ap3-producer-3b8\\data\\paper_a_study\\cases\\reference_3snap\\study_3snap\\case.json",
+      "scenarios": "D:/Projekte/Code/FlexPlan_UC_GSCR/.git/ap3-producer-3b8/data/paper_a_study/study_scenarios.toml",
+      "registry": "D:/Projekte/Code/FlexPlan_UC_GSCR/.git/ap3-producer-3b8/data/paper_a_study/parameter_registry.csv"
+    },
+    {
+      "id": "reference_6snap",
+      "case": "D:\\Projekte\\Code\\FlexPlan_UC_GSCR\\.git\\ap3-producer-3b8\\data\\paper_a_study\\cases\\reference_6snap\\study_6snap\\case.json",
+      "scenarios": "D:/Projekte/Code/FlexPlan_UC_GSCR/.git/ap3-producer-3b8/data/paper_a_study/study_scenarios.toml",
+      "registry": "D:/Projekte/Code/FlexPlan_UC_GSCR/.git/ap3-producer-3b8/data/paper_a_study/parameter_registry.csv"
+    },
+    {
+      "id": "source_reactance_3snap",
+      "case": "D:\\Projekte\\Code\\FlexPlan_UC_GSCR\\.git\\ap3-producer-3b8\\data\\paper_a_study\\cases\\source_reactance_3snap\\study_3snap\\case.json",
+      "scenarios": "D:/Projekte/Code/FlexPlan_UC_GSCR/.git/ap3-producer-3b8/data/paper_a_study/study_scenarios.toml",
+      "registry": "D:/Projekte/Code/FlexPlan_UC_GSCR/.git/ap3-producer-3b8/data/paper_a_study/parameter_registry.csv"
+    },
+    {
+      "id": "threshold_3snap",
+      "case": "D:\\Projekte\\Code\\FlexPlan_UC_GSCR\\.git\\ap3-producer-3b8\\data\\paper_a_study\\cases\\threshold_3snap\\study_3snap\\case.json",
+      "scenarios": "D:/Projekte/Code/FlexPlan_UC_GSCR/.git/ap3-producer-3b8/data/paper_a_study/study_scenarios.toml",
+      "registry": "D:/Projekte/Code/FlexPlan_UC_GSCR/.git/ap3-producer-3b8/data/paper_a_study/parameter_registry.csv"
+    }
+  ],
+  "AP1_SHA": "3b8fdb01d931225edc5f8fe1e2c200d0da288a09",
+  "relaxations": [
+    false
+  ],
+  "formulations": [
+    "G0",
+    "G3"
+  ],
+  "condition_on_baseline_LP": true
+}

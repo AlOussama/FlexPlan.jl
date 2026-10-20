@@ -1,0 +1,171 @@
+[
+  {
+    "kind": "LP",
+    "backend": "MathOptInterface.Utilities.CachingOptimizer{MathOptInterface.Bridges.LazyBridgeOptimizer{HiGHS.Optimizer}, MathOptInterface.Utilities.UniversalFallback{MathOptInterface.Utilities.Model{Float64}}}",
+    "bridge_policy": "JuMP_default_bridges",
+    "status": "supported_runtime_verified",
+    "MOI_affine_PSD_support": false,
+    "objective": 1.0,
+    "solver": "HiGHS",
+    "termination": "OPTIMAL",
+    "MOI_affine_RSOC_support": false
+  },
+  {
+    "kind": "MILP",
+    "backend": "MathOptInterface.Utilities.CachingOptimizer{MathOptInterface.Bridges.LazyBridgeOptimizer{HiGHS.Optimizer}, MathOptInterface.Utilities.UniversalFallback{MathOptInterface.Utilities.Model{Float64}}}",
+    "bridge_policy": "JuMP_default_bridges",
+    "status": "supported_runtime_verified",
+    "MOI_affine_PSD_support": false,
+    "objective": 1.0,
+    "solver": "HiGHS",
+    "termination": "OPTIMAL",
+    "MOI_affine_RSOC_support": false
+  },
+  {
+    "kind": "SDP",
+    "status": "solver_unsupported",
+    "error": "Constraints of type MathOptInterface.VectorAffineFunction{Float64}-in-MathOptInterface.PositiveSemidefiniteConeSquare are not supported by the solver.\n\nIf you expected the solver to support your problem, you may have an error in your formulation. Otherwise, consider using a different solver.\n\nThe list of available solvers, along with the problem types they support, is available at https://jump.dev/JuMP.jl/stable/installation/#Supported-solvers.\n",
+    "solver": "HiGHS"
+  },
+  {
+    "kind": "SOCP",
+    "status": "solver_unsupported",
+    "error": "Constraints of type MathOptInterface.VectorAffineFunction{Float64}-in-MathOptInterface.RotatedSecondOrderCone are not supported by the solver.\n\nIf you expected the solver to support your problem, you may have an error in your formulation. Otherwise, consider using a different solver.\n\nThe list of available solvers, along with the problem types they support, is available at https://jump.dev/JuMP.jl/stable/installation/#Supported-solvers.\n",
+    "solver": "HiGHS"
+  },
+  {
+    "kind": "MISOCP",
+    "status": "solver_unsupported",
+    "error": "Constraints of type MathOptInterface.VectorAffineFunction{Float64}-in-MathOptInterface.RotatedSecondOrderCone are not supported by the solver.\n\nIf you expected the solver to support your problem, you may have an error in your formulation. Otherwise, consider using a different solver.\n\nThe list of available solvers, along with the problem types they support, is available at https://jump.dev/JuMP.jl/stable/installation/#Supported-solvers.\n",
+    "solver": "HiGHS"
+  },
+  {
+    "kind": "MISDP",
+    "status": "solver_unsupported",
+    "error": "Constraints of type MathOptInterface.VectorAffineFunction{Float64}-in-MathOptInterface.PositiveSemidefiniteConeSquare are not supported by the solver.\n\nIf you expected the solver to support your problem, you may have an error in your formulation. Otherwise, consider using a different solver.\n\nThe list of available solvers, along with the problem types they support, is available at https://jump.dev/JuMP.jl/stable/installation/#Supported-solvers.\n",
+    "solver": "HiGHS"
+  },
+  {
+    "kind": "LP",
+    "backend": "MathOptInterface.Utilities.CachingOptimizer{MathOptInterface.Bridges.LazyBridgeOptimizer{MathOptInterface.Utilities.CachingOptimizer{Clarabel.MOIwrapper.Optimizer{Float64}, MathOptInterface.Utilities.UniversalFallback{MathOptInterface.Utilities.Model{Float64}}}}, MathOptInterface.Utilities.UniversalFallback{MathOptInterface.Utilities.Model{Float64}}}",
+    "bridge_policy": "JuMP_default_bridges",
+    "status": "supported_runtime_verified",
+    "MOI_affine_PSD_support": true,
+    "objective": 0.9999999984291175,
+    "solver": "Clarabel",
+    "termination": "OPTIMAL",
+    "MOI_affine_RSOC_support": true
+  },
+  {
+    "kind": "MILP",
+    "status": "solver_unsupported",
+    "error": "Constraints of type MathOptInterface.VariableIndex-in-MathOptInterface.Integer are not supported by the solver.\n\nIf you expected the solver to support your problem, you may have an error in your formulation. Otherwise, consider using a different solver.\n\nThe list of available solvers, along with the problem types they support, is available at https://jump.dev/JuMP.jl/stable/installation/#Supported-solvers.\n",
+    "solver": "Clarabel"
+  },
+  {
+    "kind": "SDP",
+    "backend": "MathOptInterface.Utilities.CachingOptimizer{MathOptInterface.Bridges.LazyBridgeOptimizer{MathOptInterface.Utilities.CachingOptimizer{Clarabel.MOIwrapper.Optimizer{Float64}, MathOptInterface.Utilities.UniversalFallback{MathOptInterface.Utilities.Model{Float64}}}}, MathOptInterface.Utilities.UniversalFallback{MathOptInterface.Utilities.Model{Float64}}}",
+    "bridge_policy": "JuMP_default_bridges",
+    "status": "supported_runtime_verified",
+    "MOI_affine_PSD_support": true,
+    "objective": 0.9999999974527439,
+    "solver": "Clarabel",
+    "termination": "OPTIMAL",
+    "MOI_affine_RSOC_support": true
+  },
+  {
+    "kind": "SOCP",
+    "backend": "MathOptInterface.Utilities.CachingOptimizer{MathOptInterface.Bridges.LazyBridgeOptimizer{MathOptInterface.Utilities.CachingOptimizer{Clarabel.MOIwrapper.Optimizer{Float64}, MathOptInterface.Utilities.UniversalFallback{MathOptInterface.Utilities.Model{Float64}}}}, MathOptInterface.Utilities.UniversalFallback{MathOptInterface.Utilities.Model{Float64}}}",
+    "bridge_policy": "JuMP_default_bridges",
+    "status": "supported_runtime_verified",
+    "MOI_affine_PSD_support": true,
+    "objective": 0.9999999946570559,
+    "solver": "Clarabel",
+    "termination": "OPTIMAL",
+    "MOI_affine_RSOC_support": true
+  },
+  {
+    "kind": "MISOCP",
+    "status": "solver_unsupported",
+    "error": "Constraints of type MathOptInterface.VariableIndex-in-MathOptInterface.Integer are not supported by the solver.\n\nIf you expected the solver to support your problem, you may have an error in your formulation. Otherwise, consider using a different solver.\n\nThe list of available solvers, along with the problem types they support, is available at https://jump.dev/JuMP.jl/stable/installation/#Supported-solvers.\n",
+    "solver": "Clarabel"
+  },
+  {
+    "kind": "MISDP",
+    "status": "solver_unsupported",
+    "error": "Constraints of type MathOptInterface.VariableIndex-in-MathOptInterface.Integer are not supported by the solver.\n\nIf you expected the solver to support your problem, you may have an error in your formulation. Otherwise, consider using a different solver.\n\nThe list of available solvers, along with the problem types they support, is available at https://jump.dev/JuMP.jl/stable/installation/#Supported-solvers.\n",
+    "solver": "Clarabel"
+  },
+  {
+    "kind": "LP",
+    "backend": "MathOptInterface.Utilities.CachingOptimizer{MathOptInterface.Bridges.LazyBridgeOptimizer{MathOptInterface.Utilities.CachingOptimizer{Pajarito.Optimizer, MathOptInterface.Utilities.UniversalFallback{MathOptInterface.Utilities.Model{Float64}}}}, MathOptInterface.Utilities.UniversalFallback{MathOptInterface.Utilities.Model{Float64}}}",
+    "bridge_policy": "JuMP_default_bridges",
+    "status": "supported_runtime_verified",
+    "MOI_affine_PSD_support": true,
+    "objective": 1.0,
+    "solver": "Pajarito",
+    "termination": "OPTIMAL",
+    "MOI_affine_RSOC_support": true
+  },
+  {
+    "kind": "MILP",
+    "backend": "MathOptInterface.Utilities.CachingOptimizer{MathOptInterface.Bridges.LazyBridgeOptimizer{MathOptInterface.Utilities.CachingOptimizer{Pajarito.Optimizer, MathOptInterface.Utilities.UniversalFallback{MathOptInterface.Utilities.Model{Float64}}}}, MathOptInterface.Utilities.UniversalFallback{MathOptInterface.Utilities.Model{Float64}}}",
+    "bridge_policy": "JuMP_default_bridges",
+    "status": "supported_runtime_verified",
+    "MOI_affine_PSD_support": true,
+    "objective": 1.0,
+    "solver": "Pajarito",
+    "termination": "OPTIMAL",
+    "MOI_affine_RSOC_support": true
+  },
+  {
+    "kind": "SDP",
+    "backend": "MathOptInterface.Utilities.CachingOptimizer{MathOptInterface.Bridges.LazyBridgeOptimizer{MathOptInterface.Utilities.CachingOptimizer{Pajarito.Optimizer, MathOptInterface.Utilities.UniversalFallback{MathOptInterface.Utilities.Model{Float64}}}}, MathOptInterface.Utilities.UniversalFallback{MathOptInterface.Utilities.Model{Float64}}}",
+    "bridge_policy": "JuMP_default_bridges",
+    "status": "supported_runtime_verified",
+    "MOI_affine_PSD_support": true,
+    "objective": 0.9999999999745276,
+    "solver": "Pajarito",
+    "termination": "OPTIMAL",
+    "MOI_affine_RSOC_support": true
+  },
+  {
+    "kind": "SOCP",
+    "backend": "MathOptInterface.Utilities.CachingOptimizer{MathOptInterface.Bridges.LazyBridgeOptimizer{MathOptInterface.Utilities.CachingOptimizer{Pajarito.Optimizer, MathOptInterface.Utilities.UniversalFallback{MathOptInterface.Utilities.Model{Float64}}}}, MathOptInterface.Utilities.UniversalFallback{MathOptInterface.Utilities.Model{Float64}}}",
+    "bridge_policy": "JuMP_default_bridges",
+    "status": "supported_runtime_verified",
+    "MOI_affine_PSD_support": true,
+    "objective": 0.9999999999465704,
+    "solver": "Pajarito",
+    "termination": "OPTIMAL",
+    "MOI_affine_RSOC_support": true
+  },
+  {
+    "kind": "MISOCP",
+    "backend": "MathOptInterface.Utilities.CachingOptimizer{MathOptInterface.Bridges.LazyBridgeOptimizer{MathOptInterface.Utilities.CachingOptimizer{Pajarito.Optimizer, MathOptInterface.Utilities.UniversalFallback{MathOptInterface.Utilities.Model{Float64}}}}, MathOptInterface.Utilities.UniversalFallback{MathOptInterface.Utilities.Model{Float64}}}",
+    "bridge_policy": "JuMP_default_bridges",
+    "status": "supported_runtime_verified",
+    "MOI_affine_PSD_support": true,
+    "objective": 0.9999999999465704,
+    "solver": "Pajarito",
+    "termination": "OPTIMAL",
+    "MOI_affine_RSOC_support": true
+  },
+  {
+    "kind": "MISDP",
+    "backend": "MathOptInterface.Utilities.CachingOptimizer{MathOptInterface.Bridges.LazyBridgeOptimizer{MathOptInterface.Utilities.CachingOptimizer{Pajarito.Optimizer, MathOptInterface.Utilities.UniversalFallback{MathOptInterface.Utilities.Model{Float64}}}}, MathOptInterface.Utilities.UniversalFallback{MathOptInterface.Utilities.Model{Float64}}}",
+    "bridge_policy": "JuMP_default_bridges",
+    "status": "supported_runtime_verified",
+    "MOI_affine_PSD_support": true,
+    "objective": 0.9999999999745276,
+    "solver": "Pajarito",
+    "termination": "OPTIMAL",
+    "MOI_affine_RSOC_support": true
+  },
+  {
+    "kind": "MISOCP",
+    "status": "solver_unavailable",
+    "error": "Gurobi Error 10009: License expired 2026-10-12",
+    "solver": "Gurobi"
+  }
+]

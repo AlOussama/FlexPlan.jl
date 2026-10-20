@@ -1,0 +1,38 @@
+[
+  {
+    "log": "D:\\Projekte\\Code\\FlexPlan_AP3\\reports\\ap3_runs\\20261020_macro\\matrices_final.log",
+    "arguments": [
+      "--startup-file=no",
+      "--project=.",
+      "scripts/paper_a/ap3.jl",
+      "reconstruct_strength_matrices",
+      "D:\\Projekte\\Code\\FlexPlan_AP3\\reports\\ap3_runs\\20261020_macro\\accepted_suite",
+      "D:\\Projekte\\Code\\FlexPlan_AP3\\reports\\ap3_runs\\20261020_macro\\matrices_final"
+    ],
+    "action": "reconstruct_strength_matrices"
+  },
+  {
+    "log": "D:\\Projekte\\Code\\FlexPlan_AP3\\reports\\ap3_runs\\20261020_macro\\matrices_replay.log",
+    "arguments": [
+      "--startup-file=no",
+      "--project=.",
+      "scripts/paper_a/ap3.jl",
+      "reconstruct_strength_matrices",
+      "D:\\Projekte\\Code\\FlexPlan_AP3\\reports\\ap3_runs\\20261020_macro\\accepted_suite",
+      "D:\\Projekte\\Code\\FlexPlan_AP3\\reports\\ap3_runs\\20261020_macro\\matrices_replay"
+    ],
+    "action": "reconstruct_strength_matrices"
+  },
+  {
+    "log": "D:\\Projekte\\Code\\FlexPlan_AP3\\reports\\ap3_runs\\20261020_macro\\metrics_final.log",
+    "arguments": [
+      "--startup-file=no",
+      "--project=.",
+      "scripts/paper_a/ap3.jl",
+      "evaluate_strength_metrics",
+      "D:\\Projekte\\Code\\FlexPlan_AP3\\reports\\ap3_runs\\20261020_macro\\matrices_final",
+      "D:\\Projekte\\Code\\FlexPlan_AP3\\reports\\ap3_runs\\20261020_macro\\metrics_final"
+    ],
+    "action": "evaluate_strength_metrics"
+  }
+]

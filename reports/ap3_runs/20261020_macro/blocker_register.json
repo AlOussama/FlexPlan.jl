@@ -1,0 +1,20 @@
+{
+  "schema": "paper_a_ap3/1.0",
+  "worker_verdict": "AP3_partial",
+  "technical_blockers": [{
+    "id": "B1",
+    "status": "open_scope_restricted",
+    "issue": "Native Pajarito/HiGHS/Clarabel integer G3 returns false INFEASIBLE on feasible frozen models",
+    "evidence": ["conditioned_conic_suite", "rebased_conic_suite", "infeasibility_guard_suite", "integer_rechecks_roundoff", "integer_bound_audit.json"],
+    "tried": ["actual MOI and tiny runtime probes", "positive common BASE objective conditioning", "exact increment cost coordinates including constants", "independently checked integer-fixed continuous conic problems", "compatible G0/G3 projected global lower and feasible upper bounds", "complete bounded integer enumeration"],
+    "mitigation": "Native termination retained; current runner classifies integer-conic INFEASIBLE as numerical_inconclusive; nine independent numerical reference intervals and complete tiny enumeration provided",
+    "remaining": "Qualify a reliable native MISOCP backend or reproduce and repair numerical failure without changing frozen mathematical/physical inputs",
+    "licensed_alternative": "Gurobi actual runtime probe failed Error 10009: license expired 2026-10-12",
+    "reference_intervals_verified": 9,
+    "A3_5_independent_acceptance": false
+  }],
+  "external_gates_not_implementation_omissions": ["empirical network/source/economic qualification", "conditional owner review and representative study design", "source-specific fault/voltage/current conventions for external indices and S_I", "independent A3.5 acceptance"],
+  "scientific_limits": ["E2 has no frozen one-sided global planning safety certificate; computation is exploratory_noncertifying", "M0 direct enforcement bounded to complete tiny discrete reference", "no universal PD or inverse assumption promoted"],
+  "A3_closed": false,
+  "AP4_ready": false
+}
