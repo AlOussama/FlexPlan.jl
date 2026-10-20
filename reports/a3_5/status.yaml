@@ -1,0 +1,17 @@
+review_target_sha: 485b637cc1998a327206c5929434bd26c6f0be16
+review_branch: review/paper-a-a3-5-independent-acceptance-v1
+review_verdict: corrections_required
+science_theorems_T001_T028: partially_checked_not_accepted
+project_predicates_P001_P010: unverified
+G0_G3_exactness_on_Z_domain: analytic_single_rational_case_passed_general_unverified
+M0_M1_M2_G1_G2_implications: partially_checked
+native_G3_MISOCP_solver: unresolved
+integer_global_bounds: unverified
+metrics_124_coverage_and_correctness: unverified
+postprocessing_eight_cli_functions: unverified
+ap1_ap2_strang_b_regression: unverified
+empirical_study_ready: false
+independent_A3_5_accepted: false
+A3_closed: false
+AP4_ready: false
+technical_source_corrections: none
