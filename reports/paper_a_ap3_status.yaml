@@ -1,0 +1,114 @@
+work_package: AP3
+schema: paper_a_ap3/1.0
+verdict: AP3_partial
+specification_status: SPECIFICATION_READY
+branch: implementation/paper-a-ap3-all-formulations-v1
+run_id: 20261020_macro
+input_contract:
+  ap1_sha: 3b8fdb01d931225edc5f8fe1e2c200d0da288a09
+  ap1_original_sha: 32ff4525dc576af52c16298cb35ebd98f02cf8b2
+  ap1_documentation_head: b9e4efec8c2939bff1a65ae4ccb66cfbcf9cb62c
+  ap2_sha: 725de2e6c1cea21f63902474f72ec614b2358356
+  strang_b_consumer_sha: e992edc88d39fa0eb2d72e2490e157441223f568
+  imported_ap3_documentation_head: adf1a974741eb5393a91bef46e8274a68aac1c66
+  producer_registry_sha256: a249f7a96d202798c6ff5778c1fa1571eba59a3717bac5d25b150d2a6c41bce9
+  scenario_sha256: be9d9d9aa90e9790fc7c3554bc1107777a5ba743f4f95d8f675acd9bfeb1e75a
+  science_sha: e8118425adc335a99e85120d943763305f211315
+  theorem_freeze_sha: 2c2fce769b2ed6ffd4f1ced60c0798776acccc93
+  paper_scope_sha: 672a61c95525bf1d7a03cf745a754a15a23ce78b
+  qualification_decision_sha: a6c19790bb009b5956475a6368a23e339a82dab7
+  qualification: conditional_owner_review_pending
+candidate_status:
+  BASE: {implemented: true, build_executed: true, LP_optimal: 9, MILP_optimal: 9}
+  G0:
+    implemented: true
+    method: affine_PSD_LMI_Clarabel_continuous_Pajarito_OA_integer
+    continuous_optimal: 9
+    selected_native_integer_optimal: 8
+    selected_native_integer_inconclusive: 1
+    complete_tiny_integer_enumeration: true
+    numeric_reference_intervals_verified: 9
+    mathematically_certified: frozen_statement_only_numerical_validation_is_scoped
+  G1: {implemented: true, reused_AP2: true, build_executed: true, LP_optimal: 9, MILP_optimal: 9}
+  G2:
+    implemented: true
+    fixed_positive_offline_scaling: true
+    identity_LP_MILP_optimal_each: 9
+    degree_LP_MILP_infeasible_each: 9
+    general_dominance_claimed: false
+  G3:
+    implemented: true
+    method: complete_signed_edge_RSOC_and_all_node_budgets
+    continuous_optimal: 9
+    selected_native_integer_optimal: 8
+    selected_native_integer_inconclusive: 1
+    complete_tiny_integer_enumeration: true
+    numeric_reference_intervals_verified: 9
+    native_MISOCP_qualification: scope_restricted_false_infeasibility_observed
+    all_native_failures_preserved: true
+  M0: {postsolve: exact_domain_gated, optional_enforcement: complete_tiny_discrete_enumeration, general_NLP: not_executed_not_claimed}
+  M1:
+    implemented: true
+    lower_matrix_enforced: true
+    passive_stamp_canonicalization: tolerance_recorded_inverse_recomputed
+    positive_and_rejected_domain_fixtures: passed
+    registered_LP_MILP_infeasible_each: 9
+    post_optimum_bound_tuning: false
+  M2: {implemented: true, full_and_neighbor_weights: preregistered_nonnegative_unit_diagonal, LP_optimal_each: 9, MILP_optimal_each: 9}
+  LOCAL: {implemented: true, exact_matrix_test: includes_singular_B, inverse_ratios: PD_domain_gated}
+  E2: {exact_Woodbury_updates: true, finite_remainder_and_norm_bound: implemented_tested, one_sided_planning_safety_certified: false, status: exploratory_noncertifying}
+metrics:
+  registry_ids: 124
+  exported_records: 68861
+  reconstructed_snapshot_records: 687
+  independently_assessed_solutions: 124
+  registry_complete: true
+  CSV_JSON_roundtrip: passed
+  horizon_costs_exported_once: true
+  external_SCR_ESCR_MSCR_gSCR: not_comparable_missing_source_fault_convention
+  S_I: blocked_missing_current_capability_voltage_convention
+  FOM: bundled_separate_decomposition_not_identifiable
+  peak_memory: not_available_allocated_bytes_are_separate
+postprocessing:
+  all_eight_commands_executable: true
+  all_eight_commands_executed: true
+  command_evidence: paper_a_ap3_cli_execution_manifest.json
+  immutable_index: ap3_runs/20261020_macro/export_final/evidence_index.json
+  lossless_metric_archives: SHA256_verified_against_raw_bytes
+validation:
+  full_repository_tests: {passed: 6086, total: 6086, process_exit: 0}
+  AP2_tests: {passed: 153, total: 153, process_exit: 0}
+  qualified_parametric_acceptance: {passed: 291, total: 291, process_exit: 0}
+  physical_network_audit: {passed: 54, total: 54, process_exit: 0}
+  historical_producer_acceptance: {passed: 51, total: 51, process_exit: 0}
+  saved_evidence_tests: {passed: 4108, total: 4108, process_exit: 0}
+  historical_three_integer_infeasible_preserved: true
+  matrix_replay: byte_identical_SHA256_and_semantic_equality
+  maximum_BSM_reconstruction_residual: 3.410605131648481e-13
+  maximum_G0_G3_continuous_relative_cost_difference: 2.9145552914810813e-7
+  integer_reference_interval_count: 9
+  worst_integer_reference_relative_gap: 1.056684966470984e-9
+  integer_reference_gap_tolerance: 1.0e-6
+  original_currency_gap_recomputed: true
+project_predicates_P001_P010:
+  P001: {worker_check: PASS, scope: observed_symmetry}
+  P002: {worker_check: PASS, scope: observed_Z_offdiagonal_sign}
+  P003: {worker_check: PASS, scope: PSD_PD_nullity_classifier, universal_PD: NOT_EVALUATED}
+  P004: {worker_check: PASS, scope: eligible_inverse_sign_condition_checks, universal_inverse_assumption: NOT_EVALUATED}
+  P005: {worker_check: PASS, scope: exact_rows_and_false_rejections_not_all_BASE_rows_feasible}
+  P006: {worker_check: PASS, scope: source_diagonal_and_independent_reconstruction, empirical_source_truth: NOT_EVALUATED}
+  P007: {worker_check: PASS, scope: nonnegative_common_base_and_versioned_exposure}
+  P008: {worker_check: PASS, scope: complete_edge_witness_and_negative_tests, native_integer_solver_qualification: RESTRICTED}
+  P009: {worker_check: PASS, scope: singular_support_range_and_allzero_cases}
+  P010: {worker_check: PASS, scope: independent_state_and_economic_replay}
+independent_reconstruction_passed: true
+G0_G3_domain_exactness_verified: scoped_numerical_fixtures_and_nine_parametric_inputs
+parametric_study_input_ready: true
+empirical_data_approved: false
+empirical_study_ready: false
+inherited_theorem_domain_valid: false
+universal_AP3_math_ready: false
+independent_A3_5_accepted: false
+blocker_register: ap3_runs/20261020_macro/blocker_register.json
+A3_closed: false
+AP4_ready: false
