@@ -3,7 +3,7 @@ const P=AP3Pipeline
 length(ARGS)==1 || error("usage: audit_ap3_integer_bounds.jl RUN_ROOT")
 root=abspath(ARGS[1]);output=joinpath(root,"integer_bound_audit.json")
 isfile(output) && error("audit exists")
-folders=["suite_final","conditioned_conic_suite","integer_rechecks","integer_rechecks_roundoff"]
+folders=["suite_final","conditioned_conic_suite","rebased_conic_suite","integer_rechecks","integer_rechecks_roundoff"]
 allruns=Any[]
 for folder in folders
     path=joinpath(root,folder,"runs.json");isfile(path) || continue
