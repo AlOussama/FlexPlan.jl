@@ -1,0 +1,287 @@
+[
+  {
+    "repo": "D:\\Projekte\\Code\\FlexPlan_A35_EXEC_BASELINE",
+    "args": [
+      "status",
+      "--porcelain=v1"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "repo": "D:\\Projekte\\Code\\FlexPlan_A35_EXEC_BASELINE",
+    "args": [
+      "worktree",
+      "list",
+      "--porcelain"
+    ],
+    "exit": 0,
+    "stdout": "worktree D:/Projekte/Code/FlexPlan_UC_GSCR\nHEAD 725de2e6c1cea21f63902474f72ec614b2358356\nbranch refs/heads/implementation/paper-a-ap2-regional-optimization-v1\n\nworktree D:/Projekte/Code/FlexPlan_A35_EXEC_BASELINE\nHEAD 485b637cc1998a327206c5929434bd26c6f0be16\ndetached\n\nworktree D:/Projekte/Code/FlexPlan_A35_EXEC_REVIEW\nHEAD e49b64216f82eefda77d6997ed68ed2d12c8ae78\nbranch refs/heads/fix/paper-a-a3-5-executable-closure-v1\n\nworktree D:/Projekte/Code/FlexPlan_AP3\nHEAD 485b637cc1998a327206c5929434bd26c6f0be16\nbranch refs/heads/implementation/paper-a-ap3-all-formulations-v1\n\nworktree D:/Projekte/Code/FlexPlan_StrangB\nHEAD e992edc88d39fa0eb2d72e2490e157441223f568\nbranch refs/heads/integration/paper-a-parameter-qualification-v1\n\n",
+    "stderr": ""
+  },
+  {
+    "repo": "D:\\Projekte\\Code\\FlexPlan_A35_EXEC_BASELINE",
+    "args": [
+      "rev-parse",
+      "HEAD"
+    ],
+    "exit": 0,
+    "stdout": "485b637cc1998a327206c5929434bd26c6f0be16\n",
+    "stderr": ""
+  },
+  {
+    "repo": "D:\\Projekte\\Code\\FlexPlan_A35_EXEC_BASELINE",
+    "args": [
+      "remote",
+      "-v"
+    ],
+    "exit": 0,
+    "stdout": "origin\thttps://github.com/AlOussama/FlexPlan.jl.git (fetch)\norigin\thttps://github.com/AlOussama/FlexPlan.jl.git (push)\nupstream\thttps://github.com/Electa-Git/FlexPlan.jl.git (fetch)\nupstream\thttps://github.com/Electa-Git/FlexPlan.jl.git (push)\n",
+    "stderr": ""
+  },
+  {
+    "repo": "D:\\Projekte\\Code\\FlexPlan_A35_EXEC_REVIEW",
+    "args": [
+      "status",
+      "--porcelain=v1"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "repo": "D:\\Projekte\\Code\\FlexPlan_A35_EXEC_REVIEW",
+    "args": [
+      "worktree",
+      "list",
+      "--porcelain"
+    ],
+    "exit": 0,
+    "stdout": "worktree D:/Projekte/Code/FlexPlan_UC_GSCR\nHEAD 725de2e6c1cea21f63902474f72ec614b2358356\nbranch refs/heads/implementation/paper-a-ap2-regional-optimization-v1\n\nworktree D:/Projekte/Code/FlexPlan_A35_EXEC_BASELINE\nHEAD 485b637cc1998a327206c5929434bd26c6f0be16\ndetached\n\nworktree D:/Projekte/Code/FlexPlan_A35_EXEC_REVIEW\nHEAD e49b64216f82eefda77d6997ed68ed2d12c8ae78\nbranch refs/heads/fix/paper-a-a3-5-executable-closure-v1\n\nworktree D:/Projekte/Code/FlexPlan_AP3\nHEAD 485b637cc1998a327206c5929434bd26c6f0be16\nbranch refs/heads/implementation/paper-a-ap3-all-formulations-v1\n\nworktree D:/Projekte/Code/FlexPlan_StrangB\nHEAD e992edc88d39fa0eb2d72e2490e157441223f568\nbranch refs/heads/integration/paper-a-parameter-qualification-v1\n\n",
+    "stderr": ""
+  },
+  {
+    "repo": "D:\\Projekte\\Code\\FlexPlan_A35_EXEC_REVIEW",
+    "args": [
+      "rev-parse",
+      "HEAD"
+    ],
+    "exit": 0,
+    "stdout": "e49b64216f82eefda77d6997ed68ed2d12c8ae78\n",
+    "stderr": ""
+  },
+  {
+    "repo": "D:\\Projekte\\Code\\FlexPlan_A35_EXEC_REVIEW",
+    "args": [
+      "remote",
+      "-v"
+    ],
+    "exit": 0,
+    "stdout": "origin\thttps://github.com/AlOussama/FlexPlan.jl.git (fetch)\norigin\thttps://github.com/AlOussama/FlexPlan.jl.git (push)\nupstream\thttps://github.com/Electa-Git/FlexPlan.jl.git (fetch)\nupstream\thttps://github.com/Electa-Git/FlexPlan.jl.git (push)\n",
+    "stderr": ""
+  },
+  {
+    "repo": "D:\\Projekte\\research-map",
+    "args": [
+      "status",
+      "--porcelain=v1"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "repo": "D:\\Projekte\\research-map",
+    "args": [
+      "worktree",
+      "list",
+      "--porcelain"
+    ],
+    "exit": 0,
+    "stdout": "worktree D:/Projekte/research-map\nHEAD 2564c49bdc32c7508d2acfc9fe543d4887561484\nbranch refs/heads/main\n\nworktree D:/Projekte/research-map-strang-b\nHEAD a6c19790bb009b5956475a6368a23e339a82dab7\nbranch refs/heads/codex/paper-a-strang-b-parameter-qualification\n\n",
+    "stderr": ""
+  },
+  {
+    "repo": "D:\\Projekte\\research-map",
+    "args": [
+      "rev-parse",
+      "HEAD"
+    ],
+    "exit": 0,
+    "stdout": "2564c49bdc32c7508d2acfc9fe543d4887561484\n",
+    "stderr": ""
+  },
+  {
+    "repo": "D:\\Projekte\\research-map",
+    "args": [
+      "remote",
+      "-v"
+    ],
+    "exit": 0,
+    "stdout": "origin\thttps://github.com/AlOussama/research-map.git (fetch)\norigin\thttps://github.com/AlOussama/research-map.git (push)\n",
+    "stderr": ""
+  },
+  {
+    "repo": "D:\\Projekte\\Code\\FlexPlan_A35_EXEC_BASELINE",
+    "args": [
+      "show",
+      "-s",
+      "--format=%H %P %s",
+      "485b637cc1998a327206c5929434bd26c6f0be16"
+    ],
+    "exit": 0,
+    "stdout": "485b637cc1998a327206c5929434bd26c6f0be16 897aa6f407f69a68b58d5f0bbdf922438eb8db46 Record verified remote AP3 publication and complete final file hashes\n",
+    "stderr": ""
+  },
+  {
+    "repo": "D:\\Projekte\\Code\\FlexPlan_A35_EXEC_BASELINE",
+    "args": [
+      "merge-base",
+      "485b637cc1998a327206c5929434bd26c6f0be16",
+      "485b637cc1998a327206c5929434bd26c6f0be16"
+    ],
+    "exit": 0,
+    "stdout": "485b637cc1998a327206c5929434bd26c6f0be16\n",
+    "stderr": ""
+  },
+  {
+    "repo": "D:\\Projekte\\Code\\FlexPlan_A35_EXEC_BASELINE",
+    "args": [
+      "show",
+      "-s",
+      "--format=%H %P %s",
+      "4d9f346c5fca80e00fd01d96c39a2bac91776ac0"
+    ],
+    "exit": 0,
+    "stdout": "4d9f346c5fca80e00fd01d96c39a2bac91776ac0 e1e075626b38b478faf57efe62e557fc94753f00 audit(paper-a): publish independent executable A3.5 evidence and blockers\n",
+    "stderr": ""
+  },
+  {
+    "repo": "D:\\Projekte\\Code\\FlexPlan_A35_EXEC_BASELINE",
+    "args": [
+      "merge-base",
+      "485b637cc1998a327206c5929434bd26c6f0be16",
+      "4d9f346c5fca80e00fd01d96c39a2bac91776ac0"
+    ],
+    "exit": 0,
+    "stdout": "485b637cc1998a327206c5929434bd26c6f0be16\n",
+    "stderr": ""
+  },
+  {
+    "repo": "D:\\Projekte\\Code\\FlexPlan_A35_EXEC_BASELINE",
+    "args": [
+      "show",
+      "-s",
+      "--format=%H %P %s",
+      "e1e075626b38b478faf57efe62e557fc94753f00"
+    ],
+    "exit": 0,
+    "stdout": "e1e075626b38b478faf57efe62e557fc94753f00 50f88d5d30194afbbd188c96e3eab795b7a7de49 fix(paper-a): correct three audit metric export units\n",
+    "stderr": ""
+  },
+  {
+    "repo": "D:\\Projekte\\Code\\FlexPlan_A35_EXEC_BASELINE",
+    "args": [
+      "merge-base",
+      "485b637cc1998a327206c5929434bd26c6f0be16",
+      "e1e075626b38b478faf57efe62e557fc94753f00"
+    ],
+    "exit": 0,
+    "stdout": "485b637cc1998a327206c5929434bd26c6f0be16\n",
+    "stderr": ""
+  },
+  {
+    "repo": "D:\\Projekte\\Code\\FlexPlan_A35_EXEC_BASELINE",
+    "args": [
+      "show",
+      "-s",
+      "--format=%H %P %s",
+      "e49b64216f82eefda77d6997ed68ed2d12c8ae78"
+    ],
+    "exit": 0,
+    "stdout": "e49b64216f82eefda77d6997ed68ed2d12c8ae78 4d9f346c5fca80e00fd01d96c39a2bac91776ac0 docs(paper-a): add independent A3.6 B1 MISOCP and integer optimality macroauftrag\n",
+    "stderr": ""
+  },
+  {
+    "repo": "D:\\Projekte\\Code\\FlexPlan_A35_EXEC_BASELINE",
+    "args": [
+      "merge-base",
+      "485b637cc1998a327206c5929434bd26c6f0be16",
+      "e49b64216f82eefda77d6997ed68ed2d12c8ae78"
+    ],
+    "exit": 0,
+    "stdout": "485b637cc1998a327206c5929434bd26c6f0be16\n",
+    "stderr": ""
+  },
+  {
+    "repo": "D:\\Projekte\\Code\\FlexPlan_A35_EXEC_BASELINE",
+    "args": [
+      "show",
+      "-s",
+      "--format=%H %P %s",
+      "50f88d5d30194afbbd188c96e3eab795b7a7de49"
+    ],
+    "exit": 0,
+    "stdout": "50f88d5d30194afbbd188c96e3eab795b7a7de49 29192398bc7819a533b1e436c7f176b8dadb56e4 docs(paper-a): freeze runnable independent A3.5-EXEC closure macro prompt\n",
+    "stderr": ""
+  },
+  {
+    "repo": "D:\\Projekte\\Code\\FlexPlan_A35_EXEC_BASELINE",
+    "args": [
+      "merge-base",
+      "485b637cc1998a327206c5929434bd26c6f0be16",
+      "50f88d5d30194afbbd188c96e3eab795b7a7de49"
+    ],
+    "exit": 0,
+    "stdout": "485b637cc1998a327206c5929434bd26c6f0be16\n",
+    "stderr": ""
+  },
+  {
+    "repo": "D:\\Projekte\\Code\\FlexPlan_A35_EXEC_BASELINE",
+    "args": [
+      "ls-remote",
+      "origin",
+      "refs/heads/implementation/paper-a-ap3-all-formulations-v1",
+      "refs/heads/fix/paper-a-a3-5-executable-closure-v1",
+      "refs/heads/review/paper-a-a3-5-independent-acceptance-v1"
+    ],
+    "exit": 0,
+    "stdout": "e49b64216f82eefda77d6997ed68ed2d12c8ae78\trefs/heads/fix/paper-a-a3-5-executable-closure-v1\n485b637cc1998a327206c5929434bd26c6f0be16\trefs/heads/implementation/paper-a-ap3-all-formulations-v1\n50f88d5d30194afbbd188c96e3eab795b7a7de49\trefs/heads/review/paper-a-a3-5-independent-acceptance-v1\n",
+    "stderr": ""
+  },
+  {
+    "repo": "D:\\Projekte\\Code\\FlexPlan_A35_EXEC_BASELINE",
+    "args": [
+      "ls-remote",
+      "https://github.com/AlOussama/PyPSA2MatpowerX.git",
+      "refs/heads/implementation/paper-a-ap1-data-contract-v1"
+    ],
+    "exit": 0,
+    "stdout": "b9e4efec8c2939bff1a65ae4ccb66cfbcf9cb62c\trefs/heads/implementation/paper-a-ap1-data-contract-v1\n",
+    "stderr": ""
+  },
+  {
+    "repo": "D:\\Projekte\\research-map",
+    "args": [
+      "ls-remote",
+      "origin",
+      "refs/heads/main",
+      "refs/heads/review/paper-a-a3-5-science-release-v1"
+    ],
+    "exit": 0,
+    "stdout": "e8118425adc335a99e85120d943763305f211315\trefs/heads/main\n2badb9a90a8d3c1d4a33accee640b295de1e33a1\trefs/heads/review/paper-a-a3-5-science-release-v1\n",
+    "stderr": ""
+  },
+  {
+    "repo": "D:\\Projekte\\research-map",
+    "args": [
+      "cat-file",
+      "-t",
+      "fba4802ecabade61a752833a71106a5bda4ce78f"
+    ],
+    "exit": 0,
+    "stdout": "blob\n",
+    "stderr": ""
+  }
+]

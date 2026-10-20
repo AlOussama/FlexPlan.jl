@@ -1,0 +1,66 @@
+[
+  {
+    "id": "fix_full_regression",
+    "command": [
+      "julia",
+      "+1.10.11",
+      "--startup-file=no",
+      "--project=D:\\Projekte\\Code\\FlexPlan_A36_B1_OPT_FIX",
+      "D:\\Projekte\\Code\\FlexPlan_A36_B1_OPT_RUN\\validation\\test\\runtests.jl"
+    ],
+    "cwd": "D:\\Projekte\\Code\\FlexPlan_A36_B1_OPT_FIX",
+    "started_utc": "2026-10-20T15:29:51.517767+00:00",
+    "ended_utc": "2026-10-20T15:38:47.260302+00:00",
+    "exit_code": 0,
+    "code_sha": "910d44122a37d9ed2cca06940740b46706c73d40"
+  },
+  {
+    "id": "fix_saved_evidence",
+    "command": [
+      "julia",
+      "+1.10.11",
+      "--startup-file=no",
+      "--project=D:\\Projekte\\Code\\FlexPlan_A36_B1_OPT_FIX",
+      "D:\\Projekte\\Code\\FlexPlan_A36_B1_OPT_FIX\\test\\run_paper_a_ap3_evidence.jl",
+      "D:/Projekte/Code/FlexPlan_A35_EXEC_RUN/historical_evidence"
+    ],
+    "cwd": "D:\\Projekte\\Code\\FlexPlan_A36_B1_OPT_FIX",
+    "started_utc": "2026-10-20T15:38:47.262325+00:00",
+    "ended_utc": "2026-10-20T15:39:42.604453+00:00",
+    "exit_code": 0,
+    "code_sha": "910d44122a37d9ed2cca06940740b46706c73d40"
+  },
+  {
+    "id": "fix_jump_moi_regression",
+    "command": [
+      "julia",
+      "+1.10.11",
+      "--startup-file=no",
+      "--project=D:\\Projekte\\Code\\FlexPlan_A36_B1_OPT_FIX",
+      "D:\\Projekte\\Code\\FlexPlan_A36_B1_OPT_RUN\\tools\\independent_jump_moi_audit.jl",
+      "D:\\Projekte\\Code\\FlexPlan_A36_B1_OPT_RUN\\tests_fix"
+    ],
+    "cwd": "D:\\Projekte\\Code\\FlexPlan_A36_B1_OPT_FIX",
+    "started_utc": "2026-10-20T15:39:42.607883+00:00",
+    "ended_utc": "2026-10-20T15:40:56.537137+00:00",
+    "exit_code": 0,
+    "code_sha": "910d44122a37d9ed2cca06940740b46706c73d40"
+  },
+  {
+    "id": "fix_domain_regression",
+    "command": [
+      "julia",
+      "+1.10.11",
+      "--startup-file=no",
+      "--project=D:\\Projekte\\Code\\FlexPlan_A36_B1_OPT_FIX",
+      "D:\\Projekte\\Code\\FlexPlan_A36_B1_OPT_RUN\\tools\\independent_domain_mutations.jl",
+      "D:\\Projekte\\Code\\FlexPlan_A36_B1_OPT_RUN",
+      "D:\\Projekte\\Code\\FlexPlan_A36_B1_OPT_FIX"
+    ],
+    "cwd": "D:\\Projekte\\Code\\FlexPlan_A36_B1_OPT_FIX",
+    "started_utc": "2026-10-20T15:40:56.539145+00:00",
+    "ended_utc": "2026-10-20T15:41:12.604294+00:00",
+    "exit_code": 0,
+    "code_sha": "910d44122a37d9ed2cca06940740b46706c73d40"
+  }
+]

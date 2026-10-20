@@ -1,0 +1,10 @@
+{
+  "native_model_sha256": "fcd52695238591d6c6019385d64e4407e1ea480849ca4125e1191b992581ab07",
+  "all_constraints_exactly_passed": true,
+  "variables": 3680,
+  "original_physical_variables": 3657,
+  "exactly_extended_objective_increments": 23,
+  "integer_constraints": 1353,
+  "point_sha256": "9e12ebc7841f2cc128a73675d401394f7d8a85545eda72f33ff7cd26c718601a",
+  "scope": "original serialized binary rational integer MISOCP including rebase equalities; no numerical feasibility tolerance"
+}

@@ -1,0 +1,21 @@
+bess_premium_3snap verified gaps 2.473321634520181e-06 2.4736258432633834e-06
+connectivity_3snap verified gaps 9288.181465397534 9288.181465397769
+event_price_3snap verified gaps 1880.318032700437 1880.3180327004407
+exposure_multiplier_3snap verified gaps 2.5493038719879615e-06 2.5495803147814714e-06
+reference_24snap verified gaps 117.23392807735456 117.23392807841894
+reference_3snap verified gaps 2.473321631156249e-06 2.473598073946149e-06
+reference_6snap verified gaps 0.004321915804473886 0.004321916149275253
+source_reactance_3snap verified gaps 8.37472729305188e-06 8.375003736115204e-06
+threshold_3snap verified gaps 2.481969269062375e-06 2.4822457118523676e-06
+Exact certificate verification 171 passed
+{
+  "native_model_sha256": "fcd52695238591d6c6019385d64e4407e1ea480849ca4125e1191b992581ab07",
+  "all_constraints_exactly_passed": true,
+  "variables": 3680,
+  "original_physical_variables": 3657,
+  "exactly_extended_objective_increments": 23,
+  "integer_constraints": 1353,
+  "point_sha256": "9e12ebc7841f2cc128a73675d401394f7d8a85545eda72f33ff7cd26c718601a",
+  "scope": "original serialized binary rational integer MISOCP including rebase equalities; no numerical feasibility tolerance"
+}
+ZIP roundtrip verified 406 entries

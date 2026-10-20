@@ -1,0 +1,242 @@
+[
+  {
+    "repo": "D:\\Projekte\\Code\\FlexPlan_A35_EXEC_BASELINE",
+    "status": {
+      "command": [
+        "git",
+        "-C",
+        "D:\\Projekte\\Code\\FlexPlan_A35_EXEC_BASELINE",
+        "status",
+        "--porcelain=v1"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "head": {
+      "command": [
+        "git",
+        "-C",
+        "D:\\Projekte\\Code\\FlexPlan_A35_EXEC_BASELINE",
+        "rev-parse",
+        "HEAD"
+      ],
+      "exit_code": 0,
+      "stdout": "485b637cc1998a327206c5929434bd26c6f0be16\n",
+      "stderr": ""
+    },
+    "worktrees": {
+      "command": [
+        "git",
+        "-C",
+        "D:\\Projekte\\Code\\FlexPlan_A35_EXEC_BASELINE",
+        "worktree",
+        "list",
+        "--porcelain"
+      ],
+      "exit_code": 0,
+      "stdout": "worktree D:/Projekte/Code/FlexPlan_UC_GSCR\nHEAD 725de2e6c1cea21f63902474f72ec614b2358356\nbranch refs/heads/implementation/paper-a-ap2-regional-optimization-v1\n\nworktree D:/Projekte/Code/FlexPlan_A35_EXEC_BASELINE\nHEAD 485b637cc1998a327206c5929434bd26c6f0be16\ndetached\n\nworktree D:/Projekte/Code/FlexPlan_A35_EXEC_REVIEW\nHEAD e49b64216f82eefda77d6997ed68ed2d12c8ae78\nbranch refs/heads/fix/paper-a-a3-5-executable-closure-v1\n\nworktree D:/Projekte/Code/FlexPlan_A36_B1_OPT_FIX\nHEAD 910d44122a37d9ed2cca06940740b46706c73d40\nbranch refs/heads/fix/paper-a-a3-6-b1-opt-v1\n\nworktree D:/Projekte/Code/FlexPlan_AP3\nHEAD 485b637cc1998a327206c5929434bd26c6f0be16\nbranch refs/heads/implementation/paper-a-ap3-all-formulations-v1\n\nworktree D:/Projekte/Code/FlexPlan_StrangB\nHEAD e992edc88d39fa0eb2d72e2490e157441223f568\nbranch refs/heads/integration/paper-a-parameter-qualification-v1\n\n",
+      "stderr": ""
+    }
+  },
+  {
+    "repo": "D:\\Projekte\\Code\\FlexPlan_A36_B1_OPT_FIX",
+    "status": {
+      "command": [
+        "git",
+        "-C",
+        "D:\\Projekte\\Code\\FlexPlan_A36_B1_OPT_FIX",
+        "status",
+        "--porcelain=v1"
+      ],
+      "exit_code": 0,
+      "stdout": "?? reports/a3_6/b1_opt_20261020/.gitattributes\n?? reports/a3_6/b1_opt_20261020/audit_objective_transform.py\n?? reports/a3_6/b1_opt_20261020/authority_preflight.json\n?? reports/a3_6/b1_opt_20261020/b1_original_vs_bridged_vs_oa_stage_evidence.json\n?? reports/a3_6/b1_opt_20261020/b1_root_cause_or_limitation.md\n?? reports/a3_6/b1_opt_20261020/b1_solver_reliability_matrix.csv\n?? reports/a3_6/b1_opt_20261020/bootstrap.py\n?? reports/a3_6/b1_opt_20261020/build_package.py\n?? reports/a3_6/b1_opt_20261020/code_changes_and_regression_manifest.json\n?? reports/a3_6/b1_opt_20261020/cost_and_cut_forensics.py\n?? reports/a3_6/b1_opt_20261020/exact_certificate_verification.json\n?? reports/a3_6/b1_opt_20261020/execution_additional.json\n?? reports/a3_6/b1_opt_20261020/execution_fix_validation.json\n?? reports/a3_6/b1_opt_20261020/execution_initial.json\n?? reports/a3_6/b1_opt_20261020/finalize_archive.py\n?? reports/a3_6/b1_opt_20261020/fix_stress_matrix.jl\n?? reports/a3_6/b1_opt_20261020/frozen_oa_variants.jl\n?? reports/a3_6/b1_opt_20261020/independent_b1_opt_closure_report.md\n?? reports/a3_6/b1_opt_20261020/independent_b1_opt_tests.jl\n?? reports/a3_6/b1_opt_20261020/input_sha256_manifest.json\n?? reports/a3_6/b1_opt_20261020/input_source_and_historical_verification.json\n?? reports/a3_6/b1_opt_20261020/integer_9cases_bounds.json\n?? reports/a3_6/b1_opt_20261020/integer_9cases_proof_ledger.csv\n?? reports/a3_6/b1_opt_20261020/lp_bound_inputs.jl\n?? reports/a3_6/b1_opt_20261020/model_inclusion.jl\n?? reports/a3_6/b1_opt_20261020/native_exact_extension_verification.json\n?? reports/a3_6/b1_opt_20261020/objective_rebase_derivation.md\n?? reports/a3_6/b1_opt_20261020/objective_snapshots.jl\n?? reports/a3_6/b1_opt_20261020/objective_transform_audit.json\n?? reports/a3_6/b1_opt_20261020/preflight_attempts.md\n?? reports/a3_6/b1_opt_20261020/raw_cost_objective.py\n?? reports/a3_6/b1_opt_20261020/reaudit_prompt.md\n?? reports/a3_6/b1_opt_20261020/recover_exact_primal.py\n?? reports/a3_6/b1_opt_20261020/reduce_oa_conflict.jl\n?? reports/a3_6/b1_opt_20261020/reference_certifier.py\n?? reports/a3_6/b1_opt_20261020/registered_solver_matrix.jl\n?? reports/a3_6/b1_opt_20261020/release_gates.yaml\n?? reports/a3_6/b1_opt_20261020/remaining_gates_handoff.md\n?? reports/a3_6/b1_opt_20261020/reproduce.md\n?? reports/a3_6/b1_opt_20261020/run_fix_validation.py\n?? reports/a3_6/b1_opt_20261020/run_initial.py\n?? reports/a3_6/b1_opt_20261020/stage_diagnosis.jl\n?? reports/a3_6/b1_opt_20261020/verify_exact_certificates.py\n?? reports/a3_6/b1_opt_20261020/verify_input_sources.py\n?? reports/a3_6/b1_opt_20261020/verify_native_exact_extension.py\n",
+      "stderr": ""
+    },
+    "head": {
+      "command": [
+        "git",
+        "-C",
+        "D:\\Projekte\\Code\\FlexPlan_A36_B1_OPT_FIX",
+        "rev-parse",
+        "HEAD"
+      ],
+      "exit_code": 0,
+      "stdout": "910d44122a37d9ed2cca06940740b46706c73d40\n",
+      "stderr": ""
+    },
+    "worktrees": {
+      "command": [
+        "git",
+        "-C",
+        "D:\\Projekte\\Code\\FlexPlan_A36_B1_OPT_FIX",
+        "worktree",
+        "list",
+        "--porcelain"
+      ],
+      "exit_code": 0,
+      "stdout": "worktree D:/Projekte/Code/FlexPlan_UC_GSCR\nHEAD 725de2e6c1cea21f63902474f72ec614b2358356\nbranch refs/heads/implementation/paper-a-ap2-regional-optimization-v1\n\nworktree D:/Projekte/Code/FlexPlan_A35_EXEC_BASELINE\nHEAD 485b637cc1998a327206c5929434bd26c6f0be16\ndetached\n\nworktree D:/Projekte/Code/FlexPlan_A35_EXEC_REVIEW\nHEAD e49b64216f82eefda77d6997ed68ed2d12c8ae78\nbranch refs/heads/fix/paper-a-a3-5-executable-closure-v1\n\nworktree D:/Projekte/Code/FlexPlan_A36_B1_OPT_FIX\nHEAD 910d44122a37d9ed2cca06940740b46706c73d40\nbranch refs/heads/fix/paper-a-a3-6-b1-opt-v1\n\nworktree D:/Projekte/Code/FlexPlan_AP3\nHEAD 485b637cc1998a327206c5929434bd26c6f0be16\nbranch refs/heads/implementation/paper-a-ap3-all-formulations-v1\n\nworktree D:/Projekte/Code/FlexPlan_StrangB\nHEAD e992edc88d39fa0eb2d72e2490e157441223f568\nbranch refs/heads/integration/paper-a-parameter-qualification-v1\n\n",
+      "stderr": ""
+    }
+  },
+  {
+    "repo": "D:\\Projekte\\Code\\FlexPlan_A35_EXEC_REVIEW",
+    "status": {
+      "command": [
+        "git",
+        "-C",
+        "D:\\Projekte\\Code\\FlexPlan_A35_EXEC_REVIEW",
+        "status",
+        "--porcelain=v1"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "head": {
+      "command": [
+        "git",
+        "-C",
+        "D:\\Projekte\\Code\\FlexPlan_A35_EXEC_REVIEW",
+        "rev-parse",
+        "HEAD"
+      ],
+      "exit_code": 0,
+      "stdout": "e49b64216f82eefda77d6997ed68ed2d12c8ae78\n",
+      "stderr": ""
+    },
+    "worktrees": {
+      "command": [
+        "git",
+        "-C",
+        "D:\\Projekte\\Code\\FlexPlan_A35_EXEC_REVIEW",
+        "worktree",
+        "list",
+        "--porcelain"
+      ],
+      "exit_code": 0,
+      "stdout": "worktree D:/Projekte/Code/FlexPlan_UC_GSCR\nHEAD 725de2e6c1cea21f63902474f72ec614b2358356\nbranch refs/heads/implementation/paper-a-ap2-regional-optimization-v1\n\nworktree D:/Projekte/Code/FlexPlan_A35_EXEC_BASELINE\nHEAD 485b637cc1998a327206c5929434bd26c6f0be16\ndetached\n\nworktree D:/Projekte/Code/FlexPlan_A35_EXEC_REVIEW\nHEAD e49b64216f82eefda77d6997ed68ed2d12c8ae78\nbranch refs/heads/fix/paper-a-a3-5-executable-closure-v1\n\nworktree D:/Projekte/Code/FlexPlan_A36_B1_OPT_FIX\nHEAD 910d44122a37d9ed2cca06940740b46706c73d40\nbranch refs/heads/fix/paper-a-a3-6-b1-opt-v1\n\nworktree D:/Projekte/Code/FlexPlan_AP3\nHEAD 485b637cc1998a327206c5929434bd26c6f0be16\nbranch refs/heads/implementation/paper-a-ap3-all-formulations-v1\n\nworktree D:/Projekte/Code/FlexPlan_StrangB\nHEAD e992edc88d39fa0eb2d72e2490e157441223f568\nbranch refs/heads/integration/paper-a-parameter-qualification-v1\n\n",
+      "stderr": ""
+    }
+  },
+  {
+    "repo": "D:\\Projekte\\Code\\FlexPlan_UC_GSCR",
+    "status": {
+      "command": [
+        "git",
+        "-C",
+        "D:\\Projekte\\Code\\FlexPlan_UC_GSCR",
+        "status",
+        "--porcelain=v1"
+      ],
+      "exit_code": 0,
+      "stdout": "?? audit/\n",
+      "stderr": ""
+    },
+    "head": {
+      "command": [
+        "git",
+        "-C",
+        "D:\\Projekte\\Code\\FlexPlan_UC_GSCR",
+        "rev-parse",
+        "HEAD"
+      ],
+      "exit_code": 0,
+      "stdout": "725de2e6c1cea21f63902474f72ec614b2358356\n",
+      "stderr": ""
+    },
+    "worktrees": {
+      "command": [
+        "git",
+        "-C",
+        "D:\\Projekte\\Code\\FlexPlan_UC_GSCR",
+        "worktree",
+        "list",
+        "--porcelain"
+      ],
+      "exit_code": 0,
+      "stdout": "worktree D:/Projekte/Code/FlexPlan_UC_GSCR\nHEAD 725de2e6c1cea21f63902474f72ec614b2358356\nbranch refs/heads/implementation/paper-a-ap2-regional-optimization-v1\n\nworktree D:/Projekte/Code/FlexPlan_A35_EXEC_BASELINE\nHEAD 485b637cc1998a327206c5929434bd26c6f0be16\ndetached\n\nworktree D:/Projekte/Code/FlexPlan_A35_EXEC_REVIEW\nHEAD e49b64216f82eefda77d6997ed68ed2d12c8ae78\nbranch refs/heads/fix/paper-a-a3-5-executable-closure-v1\n\nworktree D:/Projekte/Code/FlexPlan_A36_B1_OPT_FIX\nHEAD 910d44122a37d9ed2cca06940740b46706c73d40\nbranch refs/heads/fix/paper-a-a3-6-b1-opt-v1\n\nworktree D:/Projekte/Code/FlexPlan_AP3\nHEAD 485b637cc1998a327206c5929434bd26c6f0be16\nbranch refs/heads/implementation/paper-a-ap3-all-formulations-v1\n\nworktree D:/Projekte/Code/FlexPlan_StrangB\nHEAD e992edc88d39fa0eb2d72e2490e157441223f568\nbranch refs/heads/integration/paper-a-parameter-qualification-v1\n\n",
+      "stderr": ""
+    }
+  },
+  {
+    "repo": "D:\\Projekte\\research-map",
+    "status": {
+      "command": [
+        "git",
+        "-C",
+        "D:\\Projekte\\research-map",
+        "status",
+        "--porcelain=v1"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "head": {
+      "command": [
+        "git",
+        "-C",
+        "D:\\Projekte\\research-map",
+        "rev-parse",
+        "HEAD"
+      ],
+      "exit_code": 0,
+      "stdout": "2564c49bdc32c7508d2acfc9fe543d4887561484\n",
+      "stderr": ""
+    },
+    "worktrees": {
+      "command": [
+        "git",
+        "-C",
+        "D:\\Projekte\\research-map",
+        "worktree",
+        "list",
+        "--porcelain"
+      ],
+      "exit_code": 0,
+      "stdout": "worktree D:/Projekte/research-map\nHEAD 2564c49bdc32c7508d2acfc9fe543d4887561484\nbranch refs/heads/main\n\nworktree D:/Projekte/research-map-strang-b\nHEAD a6c19790bb009b5956475a6368a23e339a82dab7\nbranch refs/heads/codex/paper-a-strang-b-parameter-qualification\n\n",
+      "stderr": ""
+    }
+  },
+  {
+    "repo": "D:\\Projekte\\Code\\pypsatomatpowerx",
+    "status": {
+      "command": [
+        "git",
+        "-C",
+        "D:\\Projekte\\Code\\pypsatomatpowerx",
+        "status",
+        "--porcelain=v1"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "head": {
+      "command": [
+        "git",
+        "-C",
+        "D:\\Projekte\\Code\\pypsatomatpowerx",
+        "rev-parse",
+        "HEAD"
+      ],
+      "exit_code": 0,
+      "stdout": "b9e4efec8c2939bff1a65ae4ccb66cfbcf9cb62c\n",
+      "stderr": ""
+    },
+    "worktrees": {
+      "command": [
+        "git",
+        "-C",
+        "D:\\Projekte\\Code\\pypsatomatpowerx",
+        "worktree",
+        "list",
+        "--porcelain"
+      ],
+      "exit_code": 0,
+      "stdout": "worktree D:/Projekte/Code/pypsatomatpowerx\nHEAD b9e4efec8c2939bff1a65ae4ccb66cfbcf9cb62c\nbranch refs/heads/implementation/paper-a-ap1-data-contract-v1\n\nworktree D:/Projekte/Code/pypsatomatpowerx_clean_battery_policy\nHEAD fbcd4e1aa3fc2b41098b24196067e509b42ceb27\nbranch refs/heads/chore/elec37-battery-policy\n\n",
+      "stderr": ""
+    }
+  }
+]

@@ -1,0 +1,377 @@
+[
+  {
+    "id": "stage_diagnosis",
+    "command": [
+      "julia",
+      "+1.10.11",
+      "--startup-file=no",
+      "--project=D:\\Projekte\\Code\\FlexPlan_A35_EXEC_BASELINE",
+      "D:\\Projekte\\Code\\FlexPlan_A36_B1_OPT_RUN\\stage_diagnosis.jl",
+      "D:\\Projekte\\Code\\FlexPlan_A35_EXEC_BASELINE",
+      "D:\\Projekte\\Code\\FlexPlan_A36_B1_OPT_RUN\\experiments\\stages",
+      "D:\\Projekte\\Code\\FlexPlan_A36_B1_OPT_RUN\\input"
+    ],
+    "actual_process_exit": 0,
+    "exit_evidence": "observed process completion from this audit; nested caught errors are separately retained",
+    "log": "stage_diagnosis.log",
+    "log_sha256": "6d05b4c1ca6dd4657787d43fc0c348d9595e3808a0000b3e1da0dd74c2c4f4f8",
+    "file_created_utc": "2026-10-20T15:11:20.887893+00:00",
+    "file_modified_utc": "2026-10-20T15:13:53.716691+00:00",
+    "timestamps_are": "filesystem provenance only; not claimed exact process times"
+  },
+  {
+    "id": "frozen_oa_variants",
+    "command": [
+      "julia",
+      "+1.10.11",
+      "--startup-file=no",
+      "--project=D:\\Projekte\\Code\\FlexPlan_A35_EXEC_BASELINE",
+      "D:\\Projekte\\Code\\FlexPlan_A36_B1_OPT_RUN\\frozen_oa_variants.jl",
+      "D:\\Projekte\\Code\\FlexPlan_A36_B1_OPT_RUN"
+    ],
+    "actual_process_exit": 0,
+    "exit_evidence": "observed process completion from this audit; nested caught errors are separately retained",
+    "log": "frozen_oa_variants.log",
+    "log_sha256": "cdc1fd16d08fe101c598a547785883defffdfece739bd7632717ce80e11cfb4d",
+    "file_created_utc": "2026-10-20T15:14:59.829342+00:00",
+    "file_modified_utc": "2026-10-20T15:16:33.466061+00:00",
+    "timestamps_are": "filesystem provenance only; not claimed exact process times"
+  },
+  {
+    "id": "lp_bound_inputs",
+    "command": [
+      "julia",
+      "+1.10.11",
+      "--startup-file=no",
+      "--project=D:\\Projekte\\Code\\FlexPlan_A35_EXEC_BASELINE",
+      "D:\\Projekte\\Code\\FlexPlan_A36_B1_OPT_RUN\\lp_bound_inputs.jl",
+      "D:\\Projekte\\Code\\FlexPlan_A35_EXEC_BASELINE",
+      "D:\\Projekte\\Code\\FlexPlan_A36_B1_OPT_RUN\\lp_bounds"
+    ],
+    "actual_process_exit": 0,
+    "exit_evidence": "observed process completion from this audit; nested caught errors are separately retained",
+    "log": "lp_bound_inputs.log",
+    "log_sha256": "a4835c5bc13c224d6b4ba270341ecd3e168e85cbde45178e0bbec7b034d7c35d",
+    "file_created_utc": "2026-10-20T15:12:55.747330+00:00",
+    "file_modified_utc": "2026-10-20T15:16:00.017510+00:00",
+    "timestamps_are": "filesystem provenance only; not claimed exact process times"
+  },
+  {
+    "id": "registered_solver_matrix",
+    "command": [
+      "julia",
+      "+1.10.11",
+      "--startup-file=no",
+      "--project=D:\\Projekte\\Code\\FlexPlan_A35_EXEC_BASELINE",
+      "D:\\Projekte\\Code\\FlexPlan_A36_B1_OPT_RUN\\registered_solver_matrix.jl",
+      "D:\\Projekte\\Code\\FlexPlan_A35_EXEC_BASELINE",
+      "D:\\Projekte\\Code\\FlexPlan_A36_B1_OPT_RUN\\solver_matrix"
+    ],
+    "actual_process_exit": 0,
+    "exit_evidence": "observed process completion from this audit; nested caught errors are separately retained",
+    "log": "registered_solver_matrix.log",
+    "log_sha256": "ac771a851b46a26f9993f4f1379f923b9a810576d030489834a71744d3854906",
+    "file_created_utc": "2026-10-20T15:16:48.255283+00:00",
+    "file_modified_utc": "2026-10-20T15:26:48.294687+00:00",
+    "timestamps_are": "filesystem provenance only; not claimed exact process times"
+  },
+  {
+    "id": "reduce_oa_conflict",
+    "command": [
+      "julia",
+      "+1.10.11",
+      "--startup-file=no",
+      "--project=D:\\Projekte\\Code\\FlexPlan_A35_EXEC_BASELINE",
+      "D:\\Projekte\\Code\\FlexPlan_A36_B1_OPT_RUN\\reduce_oa_conflict.jl",
+      "D:\\Projekte\\Code\\FlexPlan_A36_B1_OPT_RUN"
+    ],
+    "actual_process_exit": 0,
+    "exit_evidence": "observed process completion from this audit; nested caught errors are separately retained",
+    "log": "reduce_oa_conflict.log",
+    "log_sha256": "edc22e25dfc165a8624b584bcb68c093ce66ef815ed6e3c1c430e0063ab8ed39",
+    "file_created_utc": "2026-10-20T15:19:22.380307+00:00",
+    "file_modified_utc": "2026-10-20T15:20:27.399729+00:00",
+    "timestamps_are": "filesystem provenance only; not claimed exact process times"
+  },
+  {
+    "id": "model_inclusion",
+    "command": [
+      "julia",
+      "+1.10.11",
+      "--startup-file=no",
+      "--project=D:\\Projekte\\Code\\FlexPlan_A35_EXEC_BASELINE",
+      "D:\\Projekte\\Code\\FlexPlan_A36_B1_OPT_RUN\\model_inclusion.jl",
+      "D:\\Projekte\\Code\\FlexPlan_A35_EXEC_BASELINE",
+      "D:\\Projekte\\Code\\FlexPlan_A36_B1_OPT_RUN\\model_inclusion"
+    ],
+    "actual_process_exit": 0,
+    "exit_evidence": "observed process completion from this audit; nested caught errors are separately retained",
+    "log": "model_inclusion.log",
+    "log_sha256": "3acbf77f95773aa762c7008dd2dbd3d5b7273f48c8d194105a91e8e61ad8bae8",
+    "file_created_utc": "2026-10-20T15:19:56.197886+00:00",
+    "file_modified_utc": "2026-10-20T15:23:44.270411+00:00",
+    "timestamps_are": "filesystem provenance only; not claimed exact process times"
+  },
+  {
+    "id": "fix_stress_matrix",
+    "command": [
+      "julia",
+      "+1.10.11",
+      "--startup-file=no",
+      "--project=D:\\Projekte\\Code\\FlexPlan_A36_B1_OPT_FIX",
+      "D:\\Projekte\\Code\\FlexPlan_A36_B1_OPT_RUN\\fix_stress_matrix.jl",
+      "D:\\Projekte\\Code\\FlexPlan_A36_B1_OPT_FIX",
+      "D:\\Projekte\\Code\\FlexPlan_A36_B1_OPT_RUN\\fix_stress_matrix"
+    ],
+    "actual_process_exit": 0,
+    "exit_evidence": "observed process completion from this audit; nested caught errors are separately retained",
+    "log": "fix_stress_matrix.log",
+    "log_sha256": "552207f8e8741b5f23c6510ce8469f1c5e1a98568272ccca8ba88d2163ea3324",
+    "file_created_utc": "2026-10-20T15:29:50.959696+00:00",
+    "file_modified_utc": "2026-10-20T15:37:54.770576+00:00",
+    "timestamps_are": "filesystem provenance only; not claimed exact process times"
+  },
+  {
+    "id": "independent_b1_opt_tests",
+    "command": [
+      "julia",
+      "+1.10.11",
+      "--startup-file=no",
+      "--project=D:\\Projekte\\Code\\FlexPlan_A36_B1_OPT_FIX",
+      "D:\\Projekte\\Code\\FlexPlan_A36_B1_OPT_RUN\\independent_b1_opt_tests.jl",
+      "D:\\Projekte\\Code\\FlexPlan_A36_B1_OPT_RUN"
+    ],
+    "actual_process_exit": 0,
+    "exit_evidence": "observed process completion from this audit; nested caught errors are separately retained",
+    "log": "independent_b1_opt_tests.log",
+    "log_sha256": "7709b7b2298c47f9fc6c330026abee5ebb4a1c44c200cb437583a73452765e92",
+    "file_created_utc": "2026-10-20T15:33:10.987729+00:00",
+    "file_modified_utc": "2026-10-20T15:33:32.754773+00:00",
+    "timestamps_are": "filesystem provenance only; not claimed exact process times"
+  },
+  {
+    "id": "objective_snapshots",
+    "command": [
+      "julia",
+      "+1.10.11",
+      "--startup-file=no",
+      "--project=D:\\Projekte\\Code\\FlexPlan_A36_B1_OPT_FIX",
+      "D:\\Projekte\\Code\\FlexPlan_A36_B1_OPT_RUN\\objective_snapshots.jl",
+      "D:\\Projekte\\Code\\FlexPlan_A36_B1_OPT_FIX",
+      "D:\\Projekte\\Code\\FlexPlan_A36_B1_OPT_RUN\\objective_snapshots",
+      "D:\\Projekte\\Code\\FlexPlan_A36_B1_OPT_RUN"
+    ],
+    "actual_process_exit": 0,
+    "exit_evidence": "observed process completion from this audit; nested caught errors are separately retained",
+    "log": "objective_snapshots.log",
+    "log_sha256": "a9b0d1371f0bf6202bc337714b837c80a54b5165ce41278ceec59064a7ba23c8",
+    "file_created_utc": "2026-10-20T15:36:06.234966+00:00",
+    "file_modified_utc": "2026-10-20T15:39:14.945453+00:00",
+    "timestamps_are": "filesystem provenance only; not claimed exact process times"
+  },
+  {
+    "id": "exact_primal_recovery_attempt01",
+    "command": [
+      "C:/Users/User/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe",
+      "D:\\Projekte\\Code\\FlexPlan_A36_B1_OPT_RUN\\recover_exact_primal.py",
+      "D:\\Projekte\\Code\\FlexPlan_A36_B1_OPT_RUN"
+    ],
+    "actual_process_exit": 1,
+    "exit_evidence": "observed process completion from this audit; nested caught errors are separately retained",
+    "log": "exact_primal_recovery_attempt01.log",
+    "log_sha256": "b994f9c91a09c2e06d7f263f7df3dff87c0b6b5ad0f82801a01720199b63e882",
+    "file_created_utc": "2026-10-20T15:23:15.888660+00:00",
+    "file_modified_utc": "2026-10-20T15:23:16.222030+00:00",
+    "timestamps_are": "filesystem provenance only; not claimed exact process times"
+  },
+  {
+    "id": "exact_primal_recovery_attempt02",
+    "command": [
+      "C:/Users/User/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe",
+      "D:\\Projekte\\Code\\FlexPlan_A36_B1_OPT_RUN\\recover_exact_primal.py",
+      "D:\\Projekte\\Code\\FlexPlan_A36_B1_OPT_RUN"
+    ],
+    "actual_process_exit": 0,
+    "exit_evidence": "observed process completion from this audit; nested caught errors are separately retained",
+    "log": "exact_primal_recovery_attempt02.log",
+    "log_sha256": "5b78309efebe15b87a451dbf846ff8a5cda57e2b38c0041e044fbcaaddafed3d",
+    "file_created_utc": "2026-10-20T15:23:33.802831+00:00",
+    "file_modified_utc": "2026-10-20T15:23:36.384220+00:00",
+    "timestamps_are": "filesystem provenance only; not claimed exact process times"
+  },
+  {
+    "id": "exact_primal_recovery_final",
+    "command": [
+      "C:/Users/User/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe",
+      "D:\\Projekte\\Code\\FlexPlan_A36_B1_OPT_RUN\\recover_exact_primal.py",
+      "D:\\Projekte\\Code\\FlexPlan_A36_B1_OPT_RUN"
+    ],
+    "actual_process_exit": 0,
+    "exit_evidence": "observed process completion from this audit; nested caught errors are separately retained",
+    "log": "exact_primal_recovery_final.log",
+    "log_sha256": "e04e25d2b97393db579f9e111a8ec087dc3bed22a1069a73be0eaeb9abc2fea1",
+    "file_created_utc": "2026-10-20T15:24:33.328282+00:00",
+    "file_modified_utc": "2026-10-20T15:24:35.927853+00:00",
+    "timestamps_are": "filesystem provenance only; not claimed exact process times"
+  },
+  {
+    "id": "exact_lower_bounds",
+    "command": [
+      "C:/Users/User/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe",
+      "D:\\Projekte\\Code\\FlexPlan_A36_B1_OPT_RUN\\reference_certifier.py",
+      "D:\\Projekte\\Code\\FlexPlan_A36_B1_OPT_RUN\\lp_bounds"
+    ],
+    "actual_process_exit": 0,
+    "exit_evidence": "observed process completion from this audit; nested caught errors are separately retained",
+    "log": "exact_lower_bounds.log",
+    "log_sha256": "ad1bea3c626489d2132b94ef9fa291cfa91b589b1f539e035031c449f87b836e",
+    "file_created_utc": "2026-10-20T15:17:33.731140+00:00",
+    "file_modified_utc": "2026-10-20T15:17:35.954117+00:00",
+    "timestamps_are": "filesystem provenance only; not claimed exact process times"
+  },
+  {
+    "id": "exact_lower_bounds_refined",
+    "command": [
+      "C:/Users/User/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe",
+      "D:\\Projekte\\Code\\FlexPlan_A36_B1_OPT_RUN\\reference_certifier.py",
+      "D:\\Projekte\\Code\\FlexPlan_A36_B1_OPT_RUN\\lp_bounds"
+    ],
+    "actual_process_exit": 0,
+    "exit_evidence": "observed process completion from this audit; nested caught errors are separately retained",
+    "log": "exact_lower_bounds_refined.log",
+    "log_sha256": "41adb65ca06213c5d94ceac14fad6691215317b7574cf9839578db64bcc2ca8d",
+    "file_created_utc": "2026-10-20T15:18:18.926832+00:00",
+    "file_modified_utc": "2026-10-20T15:18:46.821869+00:00",
+    "timestamps_are": "filesystem provenance only; not claimed exact process times"
+  },
+  {
+    "id": "raw_cost_objective",
+    "command": [
+      "C:/Users/User/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe",
+      "D:\\Projekte\\Code\\FlexPlan_A36_B1_OPT_RUN\\raw_cost_objective.py",
+      "D:\\Projekte\\Code\\FlexPlan_A36_B1_OPT_RUN",
+      "D:\\Projekte\\Code\\FlexPlan_A35_EXEC_BASELINE"
+    ],
+    "actual_process_exit": 0,
+    "exit_evidence": "observed process completion from this audit; nested caught errors are separately retained",
+    "log": "raw_cost_objective.log",
+    "log_sha256": "a9551806f8bd35ae645b9d3620d94c83c1ed2933c828ac9f6e906ae412fc01e7",
+    "file_created_utc": "2026-10-20T15:25:52.062559+00:00",
+    "file_modified_utc": "2026-10-20T15:25:53.636615+00:00",
+    "timestamps_are": "filesystem provenance only; not claimed exact process times"
+  },
+  {
+    "id": "exact_raw_lower_bounds",
+    "command": [
+      "C:/Users/User/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe",
+      "D:\\Projekte\\Code\\FlexPlan_A36_B1_OPT_RUN\\reference_certifier.py",
+      "D:\\Projekte\\Code\\FlexPlan_A36_B1_OPT_RUN\\lp_bounds_raw_currency"
+    ],
+    "actual_process_exit": 0,
+    "exit_evidence": "observed process completion from this audit; nested caught errors are separately retained",
+    "log": "exact_raw_lower_bounds.log",
+    "log_sha256": "d7c843ac61e5acab5038c46bd70a5d9f46a2b50799fcd97d4a9a0aee52593a7c",
+    "file_created_utc": "2026-10-20T15:26:57.826050+00:00",
+    "file_modified_utc": "2026-10-20T15:27:23.771966+00:00",
+    "timestamps_are": "filesystem provenance only; not claimed exact process times"
+  },
+  {
+    "id": "verify_exact_certificates_attempt01",
+    "command": [
+      "C:/Users/User/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe",
+      "D:\\Projekte\\Code\\FlexPlan_A36_B1_OPT_RUN\\verify_exact_certificates.py",
+      "D:\\Projekte\\Code\\FlexPlan_A36_B1_OPT_RUN"
+    ],
+    "actual_process_exit": 0,
+    "exit_evidence": "observed process completion from this audit; nested caught errors are separately retained",
+    "log": "verify_exact_certificates_attempt01.log",
+    "log_sha256": "5bb7699eb017aad237317bfe953da51337bb993c5a69dc340a28ff5a6e2a4f30",
+    "file_created_utc": "2026-10-20T15:31:17.272562+00:00",
+    "file_modified_utc": "2026-10-20T15:31:29.629301+00:00",
+    "timestamps_are": "filesystem provenance only; not claimed exact process times"
+  },
+  {
+    "id": "verify_native_exact_extension",
+    "command": [
+      "C:/Users/User/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe",
+      "D:\\Projekte\\Code\\FlexPlan_A36_B1_OPT_RUN\\verify_native_exact_extension.py",
+      "D:\\Projekte\\Code\\FlexPlan_A36_B1_OPT_RUN"
+    ],
+    "actual_process_exit": 0,
+    "exit_evidence": "observed process completion from this audit; nested caught errors are separately retained",
+    "log": "verify_native_exact_extension.log",
+    "log_sha256": "c8326d999ff42d08c8ceb9554444970816800f966355a77b22d99efbc39afa20",
+    "file_created_utc": "2026-10-20T15:43:32.271677+00:00",
+    "file_modified_utc": "2026-10-20T15:43:33.055244+00:00",
+    "timestamps_are": "filesystem provenance only; not claimed exact process times"
+  },
+  {
+    "id": "audit_objective_transform",
+    "command": [
+      "C:/Users/User/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe",
+      "D:\\Projekte\\Code\\FlexPlan_A36_B1_OPT_RUN\\audit_objective_transform.py",
+      "D:\\Projekte\\Code\\FlexPlan_A36_B1_OPT_RUN"
+    ],
+    "actual_process_exit": 0,
+    "exit_evidence": "observed process completion from this audit; nested caught errors are separately retained",
+    "log": "audit_objective_transform.log",
+    "log_sha256": "5667524959d0b10d8584ebfe6ba7a1d298a20f142069916bf802970642f96de6",
+    "file_created_utc": "2026-10-20T15:42:29.413485+00:00",
+    "file_modified_utc": "2026-10-20T15:42:31.633640+00:00",
+    "timestamps_are": "filesystem provenance only; not claimed exact process times"
+  },
+  {
+    "id": "cost_and_cut_forensics",
+    "command": [
+      "C:/Users/User/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe",
+      "D:\\Projekte\\Code\\FlexPlan_A36_B1_OPT_RUN\\cost_and_cut_forensics.py",
+      "D:\\Projekte\\Code\\FlexPlan_A36_B1_OPT_RUN",
+      "D:\\Projekte\\Code\\FlexPlan_A35_EXEC_BASELINE",
+      "D:\\Projekte\\Code\\FlexPlan_A35_EXEC_REVIEW\\reports\\a3_5\\executable_closure_20261020"
+    ],
+    "actual_process_exit": 0,
+    "exit_evidence": "observed process completion from this audit; nested caught errors are separately retained",
+    "log": "cost_and_cut_forensics.log",
+    "log_sha256": "9ee4718b557041de915af54d0946a11fda32e1e02a534c95a586b8193b26e402",
+    "file_created_utc": "2026-10-20T15:21:14.379838+00:00",
+    "file_modified_utc": "2026-10-20T15:21:15.549940+00:00",
+    "timestamps_are": "filesystem provenance only; not claimed exact process times"
+  },
+  {
+    "id": "verify_input_sources",
+    "command": [
+      "C:/Users/User/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe",
+      "D:\\Projekte\\Code\\FlexPlan_A36_B1_OPT_RUN\\verify_input_sources.py"
+    ],
+    "actual_process_exit": 0,
+    "exit_evidence": "observed process completion from this audit; nested caught errors are separately retained",
+    "log": "verify_input_sources.log",
+    "log_sha256": "8ab15b622f29f7064f47f6c6b4bfacc26df73435c43b3cf655387df2ec8236fc",
+    "file_created_utc": "2026-10-20T15:44:57.617772+00:00",
+    "file_modified_utc": "2026-10-20T15:45:32.794569+00:00",
+    "timestamps_are": "filesystem provenance only; not claimed exact process times"
+  },
+  {
+    "id": "mosek_new_license",
+    "command": [
+      "C:/Program Files/Mosek/11.0/tools/platform/win64x86/bin/mosek.exe",
+      "-r",
+      "-d",
+      "MSK_IPAR_NUM_THREADS",
+      "1",
+      "-d",
+      "MSK_DPAR_MIO_MAX_TIME",
+      "120",
+      "-jsolo",
+      "D:\\Projekte\\Code\\FlexPlan_A36_B1_OPT_RUN\\mosek_new_solution.json",
+      "D:\\Projekte\\Code\\FlexPlan_A36_B1_OPT_RUN\\input\\native24.cbf"
+    ],
+    "actual_process_exit": -1,
+    "exit_evidence": "observed process completion from this audit; nested caught errors are separately retained",
+    "log": "mosek_new_license.log",
+    "log_sha256": "1698486f038df4396e8e67fb7a2066d47643e946a70738c466ae489ff0661168",
+    "file_created_utc": "2026-10-20T15:33:42.444106+00:00",
+    "file_modified_utc": "2026-10-20T15:33:42.779126+00:00",
+    "timestamps_are": "filesystem provenance only; not claimed exact process times"
+  }
+]

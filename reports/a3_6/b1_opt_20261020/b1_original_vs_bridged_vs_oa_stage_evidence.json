@@ -1,0 +1,767 @@
+{
+  "original_native_repetitions": [
+    {
+      "run": "original_01",
+      "phase": "before",
+      "model_sha256": "fcd52695238591d6c6019385d64e4407e1ea480849ca4125e1191b992581ab07",
+      "stats": {
+        "solve_wall_s": 95.1158154,
+        "solver_time_s": 37.28399991989136,
+        "model": {
+          "variables": 3680,
+          "constraints": {
+            "Vector{AffExpr} in MathOptInterface.RotatedSecondOrderCone": 144,
+            "AffExpr in MathOptInterface.EqualTo{Float64}": 1065,
+            "AffExpr in MathOptInterface.GreaterThan{Float64}": 672,
+            "AffExpr in MathOptInterface.Interval{Float64}": 144,
+            "VariableRef in MathOptInterface.GreaterThan{Float64}": 2768,
+            "VariableRef in MathOptInterface.LessThan{Float64}": 417,
+            "VariableRef in MathOptInterface.Integer": 1353,
+            "AffExpr in MathOptInterface.LessThan{Float64}": 2064
+          },
+          "integer": 1353
+        },
+        "objective": null,
+        "termination": "INFEASIBLE",
+        "raw_solver_relative_gap": null,
+        "bound": 14127985.371367423,
+        "optimizer_configuration": "Pajarito: iterative,HiGHS+Clarabel,tol_rel_gap=tol_feas=1e-7,tol_abs_gap=1e-8,time_limit=120s,iteration_limit=100",
+        "barrier_iterations": null,
+        "simplex_iterations": null,
+        "nodes": null,
+        "dual_status": "NO_SOLUTION",
+        "primal_status": "NO_SOLUTION",
+        "solver": "Pajarito",
+        "objective_solver_scaling": 755794306.538003,
+        "relative_gap": null
+      }
+    },
+    {
+      "run": "original_01",
+      "phase": "after",
+      "model_sha256": "fcd52695238591d6c6019385d64e4407e1ea480849ca4125e1191b992581ab07",
+      "stats": {
+        "solve_wall_s": 88.7158562,
+        "solver_time_s": 34.79699993133545,
+        "model": {
+          "variables": 3680,
+          "constraints": {
+            "Vector{AffExpr} in MathOptInterface.RotatedSecondOrderCone": 144,
+            "AffExpr in MathOptInterface.EqualTo{Float64}": 1065,
+            "AffExpr in MathOptInterface.GreaterThan{Float64}": 672,
+            "AffExpr in MathOptInterface.Interval{Float64}": 144,
+            "VariableRef in MathOptInterface.GreaterThan{Float64}": 2768,
+            "VariableRef in MathOptInterface.LessThan{Float64}": 417,
+            "VariableRef in MathOptInterface.Integer": 1353,
+            "AffExpr in MathOptInterface.LessThan{Float64}": 2064
+          },
+          "integer": 1353
+        },
+        "objective": null,
+        "termination": "INFEASIBLE",
+        "raw_solver_relative_gap": null,
+        "bound": 14127985.371367423,
+        "optimizer_configuration": "Pajarito: iterative,HiGHS+Clarabel,tol_rel_gap=tol_feas=1e-7,tol_abs_gap=1e-8,time_limit=120s,iteration_limit=100",
+        "barrier_iterations": null,
+        "simplex_iterations": null,
+        "nodes": null,
+        "dual_status": "NO_SOLUTION",
+        "primal_status": "NO_SOLUTION",
+        "solver": "Pajarito",
+        "objective_solver_scaling": 755794306.538003,
+        "relative_gap": null
+      }
+    },
+    {
+      "run": "original_02",
+      "phase": "before",
+      "model_sha256": "fcd52695238591d6c6019385d64e4407e1ea480849ca4125e1191b992581ab07",
+      "stats": {
+        "solve_wall_s": 92.5869857,
+        "solver_time_s": 35.228999853134155,
+        "model": {
+          "variables": 3680,
+          "constraints": {
+            "Vector{AffExpr} in MathOptInterface.RotatedSecondOrderCone": 144,
+            "AffExpr in MathOptInterface.EqualTo{Float64}": 1065,
+            "AffExpr in MathOptInterface.GreaterThan{Float64}": 672,
+            "AffExpr in MathOptInterface.Interval{Float64}": 144,
+            "VariableRef in MathOptInterface.GreaterThan{Float64}": 2768,
+            "VariableRef in MathOptInterface.LessThan{Float64}": 417,
+            "VariableRef in MathOptInterface.Integer": 1353,
+            "AffExpr in MathOptInterface.LessThan{Float64}": 2064
+          },
+          "integer": 1353
+        },
+        "objective": null,
+        "termination": "INFEASIBLE",
+        "raw_solver_relative_gap": null,
+        "bound": 14127985.371367423,
+        "optimizer_configuration": "Pajarito: iterative,HiGHS+Clarabel,tol_rel_gap=tol_feas=1e-7,tol_abs_gap=1e-8,time_limit=120s,iteration_limit=100",
+        "barrier_iterations": null,
+        "simplex_iterations": null,
+        "nodes": null,
+        "dual_status": "NO_SOLUTION",
+        "primal_status": "NO_SOLUTION",
+        "solver": "Pajarito",
+        "objective_solver_scaling": 755794306.538003,
+        "relative_gap": null
+      }
+    },
+    {
+      "run": "original_02",
+      "phase": "after",
+      "model_sha256": "fcd52695238591d6c6019385d64e4407e1ea480849ca4125e1191b992581ab07",
+      "stats": {
+        "solve_wall_s": 84.5421875,
+        "solver_time_s": 32.44200015068054,
+        "model": {
+          "variables": 3680,
+          "constraints": {
+            "Vector{AffExpr} in MathOptInterface.RotatedSecondOrderCone": 144,
+            "AffExpr in MathOptInterface.EqualTo{Float64}": 1065,
+            "AffExpr in MathOptInterface.GreaterThan{Float64}": 672,
+            "AffExpr in MathOptInterface.Interval{Float64}": 144,
+            "VariableRef in MathOptInterface.GreaterThan{Float64}": 2768,
+            "VariableRef in MathOptInterface.LessThan{Float64}": 417,
+            "VariableRef in MathOptInterface.Integer": 1353,
+            "AffExpr in MathOptInterface.LessThan{Float64}": 2064
+          },
+          "integer": 1353
+        },
+        "objective": null,
+        "termination": "INFEASIBLE",
+        "raw_solver_relative_gap": null,
+        "bound": 14127985.371367423,
+        "optimizer_configuration": "Pajarito: iterative,HiGHS+Clarabel,tol_rel_gap=tol_feas=1e-7,tol_abs_gap=1e-8,time_limit=120s,iteration_limit=100",
+        "barrier_iterations": null,
+        "simplex_iterations": null,
+        "nodes": null,
+        "dual_status": "NO_SOLUTION",
+        "primal_status": "NO_SOLUTION",
+        "solver": "Pajarito",
+        "objective_solver_scaling": 755794306.538003,
+        "relative_gap": null
+      }
+    },
+    {
+      "run": "metadata_01",
+      "phase": "before",
+      "model_sha256": "fcd52695238591d6c6019385d64e4407e1ea480849ca4125e1191b992581ab07",
+      "stats": {
+        "solve_wall_s": 84.3605993,
+        "solver_time_s": 34.949000120162964,
+        "model": {
+          "variables": 3680,
+          "constraints": {
+            "Vector{AffExpr} in MathOptInterface.RotatedSecondOrderCone": 144,
+            "AffExpr in MathOptInterface.EqualTo{Float64}": 1065,
+            "AffExpr in MathOptInterface.GreaterThan{Float64}": 672,
+            "AffExpr in MathOptInterface.Interval{Float64}": 144,
+            "VariableRef in MathOptInterface.GreaterThan{Float64}": 2768,
+            "VariableRef in MathOptInterface.LessThan{Float64}": 417,
+            "VariableRef in MathOptInterface.Integer": 1353,
+            "AffExpr in MathOptInterface.LessThan{Float64}": 2064
+          },
+          "integer": 1353
+        },
+        "objective": null,
+        "termination": "INFEASIBLE",
+        "raw_solver_relative_gap": null,
+        "bound": 14127985.371367423,
+        "optimizer_configuration": "Pajarito: iterative,HiGHS+Clarabel,tol_rel_gap=tol_feas=1e-7,tol_abs_gap=1e-8,time_limit=120s,iteration_limit=100",
+        "barrier_iterations": null,
+        "simplex_iterations": null,
+        "nodes": null,
+        "dual_status": "NO_SOLUTION",
+        "primal_status": "NO_SOLUTION",
+        "solver": "Pajarito",
+        "objective_solver_scaling": 755794306.538003,
+        "relative_gap": null
+      }
+    },
+    {
+      "run": "metadata_01",
+      "phase": "after",
+      "model_sha256": "fcd52695238591d6c6019385d64e4407e1ea480849ca4125e1191b992581ab07",
+      "stats": {
+        "solve_wall_s": 85.9030995,
+        "solver_time_s": 32.80299997329712,
+        "model": {
+          "variables": 3680,
+          "constraints": {
+            "Vector{AffExpr} in MathOptInterface.RotatedSecondOrderCone": 144,
+            "AffExpr in MathOptInterface.EqualTo{Float64}": 1065,
+            "AffExpr in MathOptInterface.GreaterThan{Float64}": 672,
+            "AffExpr in MathOptInterface.Interval{Float64}": 144,
+            "VariableRef in MathOptInterface.GreaterThan{Float64}": 2768,
+            "VariableRef in MathOptInterface.LessThan{Float64}": 417,
+            "VariableRef in MathOptInterface.Integer": 1353,
+            "AffExpr in MathOptInterface.LessThan{Float64}": 2064
+          },
+          "integer": 1353
+        },
+        "objective": null,
+        "termination": "INFEASIBLE",
+        "raw_solver_relative_gap": null,
+        "bound": 14127985.371367423,
+        "optimizer_configuration": "Pajarito: iterative,HiGHS+Clarabel,tol_rel_gap=tol_feas=1e-7,tol_abs_gap=1e-8,time_limit=120s,iteration_limit=100",
+        "barrier_iterations": null,
+        "simplex_iterations": null,
+        "nodes": null,
+        "dual_status": "NO_SOLUTION",
+        "primal_status": "NO_SOLUTION",
+        "solver": "Pajarito",
+        "objective_solver_scaling": 755794306.538003,
+        "relative_gap": null
+      }
+    }
+  ],
+  "original_full_witness": {
+    "violations_by_set": {
+      "MathOptInterface.LessThan{Float64}": 7.515349001601957e-12,
+      "MathOptInterface.GreaterThan{Float64}": 5.7911265540564366e-12,
+      "MathOptInterface.Integer": 2.1760371282653068e-14,
+      "MathOptInterface.EqualTo{Float64}": 4.263256414560601e-14
+    },
+    "native_model_variables": 3680,
+    "max_violation_including_integer_and_rebase_constraints": 7.515349001601957e-12,
+    "objective_auxiliary_values_reconstructed": 23,
+    "scaled_objective_value": 0.018693042325375935,
+    "original_full_witness_variables": 3657
+  },
+  "bridge_check": {
+    "linear_equality_residual": 4.263256414560601e-14,
+    "original_objective_offset_scaled": 2.178606398164727e-15,
+    "variables": 3680,
+    "cone_types": [
+      "MathOptInterface.Nonnegatives(6209)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)",
+      "MathOptInterface.SecondOrderCone(3)"
+    ],
+    "bridged_scaled_objective": 0.01869304232537592,
+    "OA_status": "INFEASIBLE",
+    "integer_variables": 1353,
+    "maximum_bridged_cone_distance": 8.835133427034015e-11,
+    "relaxation_status": "OPTIMAL"
+  },
+  "oa_stage": {
+    "oa_status": "INFEASIBLE",
+    "top_violations": [
+      {
+        "constraint": "[_[1359], _[1360], _[1361], _[1362], _[1363], _[1364], _[1398], _[1399], _[1400], _[1401], _[1402], _[1403], _[1404], _[1405], _[1406], [[...6179 terms omitted...]], _[3203] - _[3206] + 1.5707963267948966, -_[3204] + _[3206] + 1.5707963267948966, _[3204] - _[3206] + 1.5707963267948966, -_[3286] + _[3288] + 1.5707963267948966, _[3286] - _[3288] + 1.5707963267948966, _[3288] - _[3289] + 1.5707963267948966, -_[3288] + _[3289] + 1.5707963267948966, -_[3286] + _[3289] + 1.5707963267948966, _[3286] - _[3289] + 1.5707963267948966, -_[3289] + _[3290] + 1.5707963267948966, _[3289] - _[3290] + 1.5707963267948966, -_[3287] + _[3290] + 1.5707963267948966, _[3287] - _[3290] + 1.5707963267948966, -_[3288] + _[3290] + 1.5707963267948966, _[3288] - _[3290] + 1.5707963267948966] in MathOptInterface.Nonnegatives(6209)",
+        "violation": 8.835133427034015e-11
+      },
+      {
+        "constraint": "_[1611] + _[1613] + _[1619] + _[1625] + _[1626] + _[1637] - _[1640] - _[1645] == 92.98551824726927",
+        "violation": 4.263256414560601e-14
+      },
+      {
+        "constraint": "_[2955] + _[2957] + _[2963] + _[2969] + _[2970] + _[2981] - _[2984] - _[2989] == 88.3255462471472",
+        "violation": 4.263256414560601e-14
+      },
+      {
+        "constraint": "_[1527] + _[1529] + _[1535] + _[1541] + _[1542] + _[1553] - _[1556] - _[1561] == 92.30560827412474",
+        "violation": 4.263256414560601e-14
+      },
+      {
+        "constraint": "_[1443] + _[1445] + _[1451] + _[1457] + _[1458] + _[1469] - _[1472] - _[1477] == 88.6382358376013",
+        "violation": 4.263256414560601e-14
+      },
+      {
+        "constraint": "-_[2454] - _[2455] - _[2456] + _[2457] + _[2463] + _[2471] + _[2473] + _[2476] - _[2482] - _[2489] == -109.59609748564641",
+        "violation": 4.263256414560601e-14
+      },
+      {
+        "constraint": "-_[1614] - _[1615] - _[1616] + _[1617] + _[1623] + _[1631] + _[1633] + _[1636] - _[1642] - _[1649] == -107.21712412240585",
+        "violation": 4.263256414560601e-14
+      },
+      {
+        "constraint": "-_[2202] - _[2203] - _[2204] + _[2205] + _[2211] + _[2219] + _[2221] + _[2224] - _[2230] - _[2237] == -110.45250971200547",
+        "violation": 4.263256414560601e-14
+      },
+      {
+        "constraint": "-_[2622] - _[2623] - _[2624] + _[2625] + _[2631] + _[2639] + _[2641] + _[2644] - _[2650] - _[2657] == -109.90225229623398",
+        "violation": 2.842170943040401e-14
+      },
+      {
+        "constraint": "-_[1782] - _[1783] - _[1784] + _[1785] + _[1791] + _[1799] + _[1801] + _[1804] - _[1810] - _[1817] == -107.9403064445901",
+        "violation": 2.842170943040401e-14
+      },
+      {
+        "constraint": "-_[2790] - _[2791] - _[2792] + _[2793] + _[2799] + _[2807] + _[2809] + _[2812] - _[2818] - _[2825] == -112.14982093535345",
+        "violation": 2.842170943040401e-14
+      },
+      {
+        "constraint": "-_[2706] - _[2707] - _[2708] + _[2709] + _[2715] + _[2723] + _[2725] + _[2728] - _[2734] - _[2741] == -111.50466018401067",
+        "violation": 2.842170943040401e-14
+      },
+      {
+        "constraint": "_[2031] + _[2033] + _[2039] + _[2045] + _[2046] + _[2057] - _[2060] - _[2065] == 87.49791977721719",
+        "violation": 2.842170943040401e-14
+      },
+      {
+        "constraint": "_[3123] + _[3125] + _[3131] + _[3137] + _[3138] + _[3149] - _[3152] - _[3157] == 88.03770617960163",
+        "violation": 2.842170943040401e-14
+      },
+      {
+        "constraint": "_[2619] + _[2621] + _[2627] + _[2633] + _[2634] + _[2645] - _[2648] - _[2653] == 88.92331485269733",
+        "violation": 2.842170943040401e-14
+      },
+      {
+        "constraint": "-_[2370] - _[2371] - _[2372] + _[2373] + _[2379] + _[2387] + _[2389] + _[2392] - _[2398] - _[2405] == -109.57693425220728",
+        "violation": 2.842170943040401e-14
+      },
+      {
+        "constraint": "_[1947] + _[1949] + _[1955] + _[1961] + _[1962] + _[1973] - _[1976] - _[1981] == 90.1913297096716",
+        "violation": 2.842170943040401e-14
+      },
+      {
+        "constraint": "-_[1362] - _[1363] - _[1364] + _[1365] + _[1371] + _[1379] + _[1381] + _[1384] - _[1390] - _[1397] == -110.43425897958359",
+        "violation": 2.842170943040401e-14
+      },
+      {
+        "constraint": "-_[2286] - _[2287] - _[2288] + _[2289] + _[2295] + _[2303] + _[2305] + _[2308] - _[2314] - _[2321] == -109.13253074370306",
+        "violation": 2.842170943040401e-14
+      },
+      {
+        "constraint": "-_[1866] - _[1867] - _[1868] + _[1869] + _[1875] + _[1883] + _[1885] + _[1888] - _[1894] - _[1901] == -108.53710296355169",
+        "violation": 2.842170943040401e-14
+      }
+    ],
+    "relax_status": "OPTIMAL",
+    "native_status": "INFEASIBLE",
+    "original_variables": 3680,
+    "integer_variables": 1353,
+    "oa_variables": 3968,
+    "oa_max_violation": 8.835133427034015e-11
+  },
+  "frozen_oa_runs": [
+    {
+      "objective_bound": 0.0,
+      "mode": "mip_presolve_on",
+      "dual_status": "NO_SOLUTION",
+      "primal_status": "NO_SOLUTION",
+      "termination": "INFEASIBLE",
+      "objective": null
+    },
+    {
+      "objective_bound": 0.0,
+      "mode": "mip_presolve_off",
+      "dual_status": "NO_SOLUTION",
+      "primal_status": "NO_SOLUTION",
+      "termination": "INFEASIBLE",
+      "objective": null
+    },
+    {
+      "objective_bound": 0.01869289252812702,
+      "mode": "lp_presolve_on",
+      "dual_status": "FEASIBLE_POINT",
+      "primal_status": "FEASIBLE_POINT",
+      "termination": "OPTIMAL",
+      "objective": 0.018692892528127038,
+      "max_violation": 6.627648670386267e-11
+    },
+    {
+      "objective_bound": 0.01869289575919657,
+      "mode": "lp_presolve_off",
+      "dual_status": "FEASIBLE_POINT",
+      "primal_status": "FEASIBLE_POINT",
+      "termination": "OPTIMAL",
+      "objective": 0.018692895759196495,
+      "max_violation": 6.627648670386226e-11
+    },
+    {
+      "objective_bound": 0.0,
+      "mode": "integer_fixed_presolve_on",
+      "dual_status": "NO_SOLUTION",
+      "primal_status": "NO_SOLUTION",
+      "termination": "INFEASIBLE",
+      "objective": null
+    }
+  ],
+  "frozen_variants": [
+    {
+      "options": {},
+      "conflict_error": "type Tuple has no field model",
+      "mode": "original",
+      "primal_status": "NO_SOLUTION",
+      "termination": "INFEASIBLE",
+      "conflict_status": "CONFLICT_FOUND",
+      "input_witness_max_violation": 8.835133427034015e-11
+    },
+    {
+      "options": {
+        "small_matrix_value": 1e-12
+      },
+      "mode": "small_matrix_1e-12",
+      "objective": 0.018693041670992283,
+      "primal_status": "FEASIBLE_POINT",
+      "termination": "OPTIMAL",
+      "bound": 0.018692886237155468,
+      "input_witness_max_violation": 8.835133427034015e-11,
+      "max_violation": 1.2697672522205494e-09
+    },
+    {
+      "options": {
+        "mip_feasibility_tolerance": 1e-07
+      },
+      "mode": "mip_feas_1e-7",
+      "objective": 0.018693526493925163,
+      "primal_status": "FEASIBLE_POINT",
+      "termination": "OPTIMAL",
+      "bound": 0.01869282906325545,
+      "input_witness_max_violation": 8.835133427034015e-11,
+      "max_violation": 6.664268805818139e-11
+    },
+    {
+      "options": {
+        "mip_feasibility_tolerance": 1e-06
+      },
+      "mode": "mip_feas_1e-6",
+      "objective": 0.018693046440796366,
+      "primal_status": "FEASIBLE_POINT",
+      "termination": "OPTIMAL",
+      "bound": 0.01869283491483416,
+      "input_witness_max_violation": 8.835133427034015e-11,
+      "max_violation": 6.664268805818139e-11
+    },
+    {
+      "options": {},
+      "mode": "fixed_integers_by_index",
+      "objective": 0.018693045082359815,
+      "primal_status": "FEASIBLE_POINT",
+      "termination": "OPTIMAL",
+      "bound": 0.018693045082361314,
+      "input_witness_max_violation": 8.835133427034015e-11,
+      "max_violation": 7.300022010985145e-11
+    },
+    {
+      "options": {},
+      "mode": "fixed_witness_by_index",
+      "objective": 0.01869304232543977,
+      "primal_status": "FEASIBLE_POINT",
+      "termination": "OPTIMAL",
+      "bound": 0.01869304232541535,
+      "input_witness_max_violation": 8.835133427034015e-11,
+      "max_violation": 3.2504576807923513e-10
+    },
+    {
+      "options": {},
+      "mode": "zero_objective",
+      "primal_status": "NO_SOLUTION",
+      "termination": "INFEASIBLE",
+      "input_witness_max_violation": 8.835133427034015e-11
+    },
+    {
+      "options": {},
+      "mode": "cost_scaled_1e6",
+      "primal_status": "NO_SOLUTION",
+      "termination": "INFEASIBLE",
+      "input_witness_max_violation": 8.835133427034015e-11
+    },
+    {
+      "options": {
+        "presolve": "off",
+        "small_matrix_value": 1e-12
+      },
+      "mode": "mip_presolve_off_small_matrix",
+      "objective": 0.01869304340011657,
+      "primal_status": "FEASIBLE_POINT",
+      "termination": "OPTIMAL",
+      "bound": 0.01869304340011657,
+      "input_witness_max_violation": 8.835133427034015e-11,
+      "max_violation": 3.0692989924418515e-13
+    }
+  ],
+  "coefficient_ingestion_counterexample": {
+    "affected_rows": [
+      {
+        "row": "1209",
+        "terms": [
+          {
+            "coefficient": -7.0855978917835334e-12,
+            "variable": "x3612"
+          },
+          {
+            "coefficient": 7.676130382280375e-12,
+            "variable": "x3618"
+          },
+          {
+            "coefficient": 1.3046247794859574e-10,
+            "variable": "x3925"
+          }
+        ],
+        "constant": 0.0,
+        "lower": 0.0,
+        "upper": null,
+        "dropped_terms_at_1e-9": [
+          {
+            "coefficient": -7.0855978917835334e-12,
+            "variable": "x3612"
+          },
+          {
+            "coefficient": 7.676130382280375e-12,
+            "variable": "x3618"
+          },
+          {
+            "coefficient": 1.3046247794859574e-10,
+            "variable": "x3925"
+          }
+        ],
+        "value_original": 1.1877016643939322e-10,
+        "value_after_filter": 0.0,
+        "violation_original": 0.0,
+        "violation_after_filter": 0.0,
+        "removed_contribution": 1.1877016643939322e-10
+      },
+      {
+        "row": "1210",
+        "terms": [
+          {
+            "coefficient": 4.5830185178677806e-11,
+            "variable": "x3612"
+          },
+          {
+            "coefficient": 4.5830185178677806e-11,
+            "variable": "x3618"
+          },
+          {
+            "coefficient": 1.3046247794859574e-10,
+            "variable": "x3926"
+          }
+        ],
+        "constant": 0.0,
+        "lower": 3.025002202302713e-08,
+        "upper": null,
+        "dropped_terms_at_1e-9": [
+          {
+            "coefficient": 4.5830185178677806e-11,
+            "variable": "x3612"
+          },
+          {
+            "coefficient": 4.5830185178677806e-11,
+            "variable": "x3618"
+          },
+          {
+            "coefficient": 1.3046247794859574e-10,
+            "variable": "x3926"
+          }
+        ],
+        "value_original": 3.02627753631434e-08,
+        "value_after_filter": 0.0,
+        "violation_original": 0.0,
+        "violation_after_filter": 3.025002202302713e-08,
+        "removed_contribution": 3.02627753631434e-08
+      }
+    ],
+    "count": 2,
+    "max_original_violation": 0.0,
+    "max_filtered_violation": 3.025002202302713e-08
+  },
+  "minimal_counterexample": [
+    {
+      "threshold": 1e-09,
+      "status": "INFEASIBLE",
+      "mode": "default_filter",
+      "power_two_exponent": 0,
+      "primal_status": "NO_SOLUTION"
+    },
+    {
+      "threshold": 1e-12,
+      "status": "OPTIMAL",
+      "mode": "preserved_coefficients",
+      "power_two_exponent": 0,
+      "primal_status": "FEASIBLE_POINT"
+    },
+    {
+      "threshold": 1e-09,
+      "status": "OPTIMAL",
+      "mode": "exact_power_two_scaling",
+      "power_two_exponent": 33,
+      "primal_status": "FEASIBLE_POINT"
+    }
+  ],
+  "exact_feasibility_scope": "exact binary rational serialized coefficients; independent rational primal and G0/G3 checks in exact_certificate_verification.json",
+  "invalid_trial": "stage_diagnosis integer_fixed_presolve_on used duplicate anonymous names, hence not evidence; index-based fixed_integers_by_index is the valid replacement",
+  "IIS_limitation": "MathOptIIS conflict copy is one row and loses the integer trigger; reduced LP alone was feasible to its LP tolerance. The explicit integer-dummy counterexample reproduces the MIP failure.",
+  "stage_model_hashes": [
+    {
+      "path": "original_01/b1_exact_native.mof.json",
+      "sha256": "fcd52695238591d6c6019385d64e4407e1ea480849ca4125e1191b992581ab07",
+      "bytes": 1734884
+    },
+    {
+      "path": "original_01/b1_bridged_conic_relaxation.mof.json",
+      "sha256": "a1259e68b443cd352d54b2ae094a4804bc81b5023e971ef06ab742e3639990c4",
+      "bytes": 1290481
+    },
+    {
+      "path": "original_01/b1_generated_OA_model.mof.json",
+      "sha256": "671474ec0085b1d4ba68f307492e1487db5f44f1501b00fbc80171c2a51171f8",
+      "bytes": 1561906
+    },
+    {
+      "path": "experiments/stages/oa_frozen.mof.json",
+      "sha256": "671474ec0085b1d4ba68f307492e1487db5f44f1501b00fbc80171c2a51171f8",
+      "bytes": 1561906
+    },
+    {
+      "path": "experiments/stages/relax_frozen.mof.json",
+      "sha256": "a1259e68b443cd352d54b2ae094a4804bc81b5023e971ef06ab742e3639990c4",
+      "bytes": 1290481
+    }
+  ],
+  "exact_original_native_verification": {
+    "native_model_sha256": "fcd52695238591d6c6019385d64e4407e1ea480849ca4125e1191b992581ab07",
+    "all_constraints_exactly_passed": true,
+    "variables": 3680,
+    "original_physical_variables": 3657,
+    "exactly_extended_objective_increments": 23,
+    "integer_constraints": 1353,
+    "point_sha256": "9e12ebc7841f2cc128a73675d401394f7d8a85545eda72f33ff7cd26c718601a",
+    "scope": "original serialized binary rational integer MISOCP including rebase equalities; no numerical feasibility tolerance"
+  }
+}

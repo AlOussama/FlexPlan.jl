@@ -1,0 +1,206 @@
+[
+  {
+    "id": "environment",
+    "command": [
+      "julia",
+      "+1.10.11",
+      "--startup-file=no",
+      "--project=D:\\Projekte\\Code\\FlexPlan_A35_EXEC_BASELINE",
+      "-e",
+      "using Pkg,LinearAlgebra,JuMP,HiGHS,Clarabel,Pajarito; Pkg.instantiate(); Pkg.status(); println(VERSION); println(Sys.CPU_NAME); println(Threads.nthreads()); println(BLAS.get_config()); println(BLAS.get_num_threads()); println(pathof(Pajarito));"
+    ],
+    "cwd": "D:\\Projekte\\Code\\FlexPlan_A35_EXEC_BASELINE",
+    "started_utc": "2026-10-20T15:10:21.507147+00:00",
+    "exit_code": 0,
+    "ended_utc": "2026-10-20T15:11:11.490409+00:00"
+  },
+  {
+    "id": "original_01_native_before",
+    "command": [
+      "julia",
+      "+1.10.11",
+      "--startup-file=no",
+      "--project=D:\\Projekte\\Code\\FlexPlan_A35_EXEC_BASELINE",
+      "D:\\Projekte\\Code\\FlexPlan_A36_B1_OPT_RUN\\tools\\b1_exact_native_repro.jl",
+      "D:\\Projekte\\Code\\FlexPlan_A35_EXEC_BASELINE",
+      "D:\\Projekte\\Code\\FlexPlan_A36_B1_OPT_RUN\\original_01"
+    ],
+    "cwd": "D:\\Projekte\\Code\\FlexPlan_A35_EXEC_BASELINE",
+    "started_utc": "2026-10-20T15:11:11.525759+00:00",
+    "exit_code": 0,
+    "ended_utc": "2026-10-20T15:14:56.887291+00:00"
+  },
+  {
+    "id": "original_01_transfer",
+    "command": [
+      "julia",
+      "+1.10.11",
+      "--startup-file=no",
+      "--project=D:\\Projekte\\Code\\FlexPlan_A35_EXEC_BASELINE",
+      "D:\\Projekte\\Code\\FlexPlan_A36_B1_OPT_RUN\\tools\\b1_transfer_full_witness.jl",
+      "D:\\Projekte\\Code\\FlexPlan_A36_B1_OPT_RUN\\original_01"
+    ],
+    "cwd": "D:\\Projekte\\Code\\FlexPlan_A35_EXEC_BASELINE",
+    "started_utc": "2026-10-20T15:14:56.889580+00:00",
+    "exit_code": 0,
+    "ended_utc": "2026-10-20T15:15:38.284778+00:00"
+  },
+  {
+    "id": "original_01_native_after",
+    "command": [
+      "julia",
+      "+1.10.11",
+      "--startup-file=no",
+      "--project=D:\\Projekte\\Code\\FlexPlan_A35_EXEC_BASELINE",
+      "D:\\Projekte\\Code\\FlexPlan_A36_B1_OPT_RUN\\tools\\b1_exact_native_repro.jl",
+      "D:\\Projekte\\Code\\FlexPlan_A35_EXEC_BASELINE",
+      "D:\\Projekte\\Code\\FlexPlan_A36_B1_OPT_RUN\\original_01"
+    ],
+    "cwd": "D:\\Projekte\\Code\\FlexPlan_A35_EXEC_BASELINE",
+    "started_utc": "2026-10-20T15:15:38.330198+00:00",
+    "exit_code": 0,
+    "ended_utc": "2026-10-20T15:19:16.321085+00:00"
+  },
+  {
+    "id": "original_02_native_before",
+    "command": [
+      "julia",
+      "+1.10.11",
+      "--startup-file=no",
+      "--project=D:\\Projekte\\Code\\FlexPlan_A35_EXEC_BASELINE",
+      "D:\\Projekte\\Code\\FlexPlan_A36_B1_OPT_RUN\\tools\\b1_exact_native_repro.jl",
+      "D:\\Projekte\\Code\\FlexPlan_A35_EXEC_BASELINE",
+      "D:\\Projekte\\Code\\FlexPlan_A36_B1_OPT_RUN\\original_02"
+    ],
+    "cwd": "D:\\Projekte\\Code\\FlexPlan_A35_EXEC_BASELINE",
+    "started_utc": "2026-10-20T15:19:16.354399+00:00",
+    "exit_code": 0,
+    "ended_utc": "2026-10-20T15:22:57.988644+00:00"
+  },
+  {
+    "id": "original_02_transfer",
+    "command": [
+      "julia",
+      "+1.10.11",
+      "--startup-file=no",
+      "--project=D:\\Projekte\\Code\\FlexPlan_A35_EXEC_BASELINE",
+      "D:\\Projekte\\Code\\FlexPlan_A36_B1_OPT_RUN\\tools\\b1_transfer_full_witness.jl",
+      "D:\\Projekte\\Code\\FlexPlan_A36_B1_OPT_RUN\\original_02"
+    ],
+    "cwd": "D:\\Projekte\\Code\\FlexPlan_A35_EXEC_BASELINE",
+    "started_utc": "2026-10-20T15:22:57.990653+00:00",
+    "exit_code": 0,
+    "ended_utc": "2026-10-20T15:23:39.970533+00:00"
+  },
+  {
+    "id": "original_02_native_after",
+    "command": [
+      "julia",
+      "+1.10.11",
+      "--startup-file=no",
+      "--project=D:\\Projekte\\Code\\FlexPlan_A35_EXEC_BASELINE",
+      "D:\\Projekte\\Code\\FlexPlan_A36_B1_OPT_RUN\\tools\\b1_exact_native_repro.jl",
+      "D:\\Projekte\\Code\\FlexPlan_A35_EXEC_BASELINE",
+      "D:\\Projekte\\Code\\FlexPlan_A36_B1_OPT_RUN\\original_02"
+    ],
+    "cwd": "D:\\Projekte\\Code\\FlexPlan_A35_EXEC_BASELINE",
+    "started_utc": "2026-10-20T15:23:40.015115+00:00",
+    "exit_code": 0,
+    "ended_utc": "2026-10-20T15:27:09.838965+00:00"
+  },
+  {
+    "id": "metadata_01_native_before",
+    "command": [
+      "julia",
+      "+1.10.11",
+      "--startup-file=no",
+      "--project=D:\\Projekte\\Code\\FlexPlan_A35_EXEC_REVIEW",
+      "D:\\Projekte\\Code\\FlexPlan_A36_B1_OPT_RUN\\tools\\b1_exact_native_repro.jl",
+      "D:\\Projekte\\Code\\FlexPlan_A35_EXEC_REVIEW",
+      "D:\\Projekte\\Code\\FlexPlan_A36_B1_OPT_RUN\\metadata_01"
+    ],
+    "cwd": "D:\\Projekte\\Code\\FlexPlan_A35_EXEC_REVIEW",
+    "started_utc": "2026-10-20T15:27:09.874180+00:00",
+    "exit_code": 0,
+    "ended_utc": "2026-10-20T15:30:30.383828+00:00"
+  },
+  {
+    "id": "metadata_01_transfer",
+    "command": [
+      "julia",
+      "+1.10.11",
+      "--startup-file=no",
+      "--project=D:\\Projekte\\Code\\FlexPlan_A35_EXEC_REVIEW",
+      "D:\\Projekte\\Code\\FlexPlan_A36_B1_OPT_RUN\\tools\\b1_transfer_full_witness.jl",
+      "D:\\Projekte\\Code\\FlexPlan_A36_B1_OPT_RUN\\metadata_01"
+    ],
+    "cwd": "D:\\Projekte\\Code\\FlexPlan_A35_EXEC_REVIEW",
+    "started_utc": "2026-10-20T15:30:30.386134+00:00",
+    "exit_code": 0,
+    "ended_utc": "2026-10-20T15:31:10.985923+00:00"
+  },
+  {
+    "id": "metadata_01_native_after",
+    "command": [
+      "julia",
+      "+1.10.11",
+      "--startup-file=no",
+      "--project=D:\\Projekte\\Code\\FlexPlan_A35_EXEC_REVIEW",
+      "D:\\Projekte\\Code\\FlexPlan_A36_B1_OPT_RUN\\tools\\b1_exact_native_repro.jl",
+      "D:\\Projekte\\Code\\FlexPlan_A35_EXEC_REVIEW",
+      "D:\\Projekte\\Code\\FlexPlan_A36_B1_OPT_RUN\\metadata_01"
+    ],
+    "cwd": "D:\\Projekte\\Code\\FlexPlan_A35_EXEC_REVIEW",
+    "started_utc": "2026-10-20T15:31:11.033422+00:00",
+    "exit_code": 0,
+    "ended_utc": "2026-10-20T15:34:33.567206+00:00"
+  },
+  {
+    "id": "fixed_nine_fresh",
+    "command": [
+      "julia",
+      "+1.10.11",
+      "--startup-file=no",
+      "--project=D:\\Projekte\\Code\\FlexPlan_A35_EXEC_BASELINE",
+      "D:\\Projekte\\Code\\FlexPlan_A36_B1_OPT_RUN\\tools\\independent_integer_b1_audit.jl",
+      "D:\\Projekte\\Code\\FlexPlan_A35_EXEC_BASELINE",
+      "D:\\Projekte\\Code\\FlexPlan_A36_B1_OPT_RUN\\integer_fresh",
+      "fixed_only_best_historical_seed"
+    ],
+    "cwd": "D:\\Projekte\\Code\\FlexPlan_A35_EXEC_BASELINE",
+    "started_utc": "2026-10-20T15:34:33.571220+00:00",
+    "exit_code": 0,
+    "ended_utc": "2026-10-20T15:38:42.913481+00:00"
+  },
+  {
+    "id": "jump_moi_regression",
+    "command": [
+      "julia",
+      "+1.10.11",
+      "--startup-file=no",
+      "--project=D:\\Projekte\\Code\\FlexPlan_A35_EXEC_BASELINE",
+      "D:\\Projekte\\Code\\FlexPlan_A36_B1_OPT_RUN\\tools\\independent_jump_moi_audit.jl",
+      "D:\\Projekte\\Code\\FlexPlan_A36_B1_OPT_RUN\\tests"
+    ],
+    "cwd": "D:\\Projekte\\Code\\FlexPlan_A35_EXEC_BASELINE",
+    "started_utc": "2026-10-20T15:38:42.916264+00:00",
+    "exit_code": 0,
+    "ended_utc": "2026-10-20T15:40:01.000509+00:00"
+  },
+  {
+    "id": "domain_regression",
+    "command": [
+      "julia",
+      "+1.10.11",
+      "--startup-file=no",
+      "--project=D:\\Projekte\\Code\\FlexPlan_A35_EXEC_BASELINE",
+      "D:\\Projekte\\Code\\FlexPlan_A36_B1_OPT_RUN\\tools\\independent_domain_mutations.jl",
+      "D:\\Projekte\\Code\\FlexPlan_A36_B1_OPT_RUN",
+      "D:\\Projekte\\Code\\FlexPlan_A35_EXEC_BASELINE"
+    ],
+    "cwd": "D:\\Projekte\\Code\\FlexPlan_A35_EXEC_BASELINE",
+    "started_utc": "2026-10-20T15:40:01.002513+00:00",
+    "exit_code": 0,
+    "ended_utc": "2026-10-20T15:40:19.800334+00:00"
+  }
+]

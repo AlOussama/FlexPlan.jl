@@ -1,0 +1,102 @@
+{
+  "specification_status": "SPECIFICATION_READY",
+  "reuse": [
+    "AP3Pipeline.prepare/build/solve!/extract",
+    "serialized EXEC MOI models and seed witnesses",
+    "pinned independent JuMP/MOI and raw-domain regression tools",
+    "existing BASE-LP objective conditioning"
+  ],
+  "new_components": [
+    "exact rational primal recovery",
+    "exact LP residual-bound certificates",
+    "separate principal-minor/dual/inclusion verifier",
+    "coefficient-ingestion forensics and minimal counterexample",
+    "stress and objective-transformation diagnostics"
+  ],
+  "production_code_sha": "910d44122a37d9ed2cca06940740b46706c73d40",
+  "parent_sha": "e49b64216f82eefda77d6997ed68ed2d12c8ae78",
+  "production_diff": "diff --git a/scripts/paper_a/AP3Pipeline.jl b/scripts/paper_a/AP3Pipeline.jl\nindex 8d529d3..ad6e588 100644\n--- a/scripts/paper_a/AP3Pipeline.jl\n+++ b/scripts/paper_a/AP3Pipeline.jl\n@@ -9,7 +9,9 @@ const BASE=\"e992edc88d39fa0eb2d72e2490e157441223f568\"\n const CANDIDATES=[\"BASE\",\"G0\",\"G1\",\"G2_identity\",\"G2_degree\",\"G3\",\"M1\",\"M2_full\",\"M2_neighbor\"]\n function pajarito_optimizer()\n     return JuMP.optimizer_with_attributes(Pajarito.Optimizer,\n-        \"oa_solver\"=>JuMP.optimizer_with_attributes(HiGHS.Optimizer,\"output_flag\"=>false,\"threads\"=>1,\"mip_feasibility_tolerance\"=>1e-8,\"mip_rel_gap\"=>1e-8),\n+        # Retain the tiny OA coefficients: the default 1e-9 filter can turn a\n+        # valid cut into 0 >= positive RHS in the registered 24-snapshot model.\n+        \"oa_solver\"=>JuMP.optimizer_with_attributes(HiGHS.Optimizer,\"output_flag\"=>false,\"threads\"=>1,\"small_matrix_value\"=>1e-12,\"mip_feasibility_tolerance\"=>1e-8,\"mip_rel_gap\"=>1e-8),\n         \"conic_solver\"=>JuMP.optimizer_with_attributes(Clarabel.Optimizer,\"verbose\"=>false,\"tol_gap_abs\"=>1e-10,\"tol_gap_rel\"=>1e-10,\"tol_feas\"=>1e-10,\"max_iter\"=>300),\n         \"verbose\"=>false,\"use_iterative_method\"=>true,\"tol_rel_gap\"=>1e-7,\"tol_abs_gap\"=>1e-8,\"tol_feas\"=>1e-7,\"time_limit\"=>120.,\"iteration_limit\"=>100)\n end",
+  "source_math_changed": false,
+  "solver_configuration_changed": true,
+  "additional_independent_reaudit_required": true,
+  "self_signed_independent_closure": false,
+  "validation": [
+    {
+      "id": "fix_full_regression",
+      "command": [
+        "julia",
+        "+1.10.11",
+        "--startup-file=no",
+        "--project=D:\\Projekte\\Code\\FlexPlan_A36_B1_OPT_FIX",
+        "D:\\Projekte\\Code\\FlexPlan_A36_B1_OPT_RUN\\validation\\test\\runtests.jl"
+      ],
+      "cwd": "D:\\Projekte\\Code\\FlexPlan_A36_B1_OPT_FIX",
+      "started_utc": "2026-10-20T15:29:51.517767+00:00",
+      "ended_utc": "2026-10-20T15:38:47.260302+00:00",
+      "exit_code": 0,
+      "code_sha": "910d44122a37d9ed2cca06940740b46706c73d40"
+    },
+    {
+      "id": "fix_saved_evidence",
+      "command": [
+        "julia",
+        "+1.10.11",
+        "--startup-file=no",
+        "--project=D:\\Projekte\\Code\\FlexPlan_A36_B1_OPT_FIX",
+        "D:\\Projekte\\Code\\FlexPlan_A36_B1_OPT_FIX\\test\\run_paper_a_ap3_evidence.jl",
+        "D:/Projekte/Code/FlexPlan_A35_EXEC_RUN/historical_evidence"
+      ],
+      "cwd": "D:\\Projekte\\Code\\FlexPlan_A36_B1_OPT_FIX",
+      "started_utc": "2026-10-20T15:38:47.262325+00:00",
+      "ended_utc": "2026-10-20T15:39:42.604453+00:00",
+      "exit_code": 0,
+      "code_sha": "910d44122a37d9ed2cca06940740b46706c73d40"
+    },
+    {
+      "id": "fix_jump_moi_regression",
+      "command": [
+        "julia",
+        "+1.10.11",
+        "--startup-file=no",
+        "--project=D:\\Projekte\\Code\\FlexPlan_A36_B1_OPT_FIX",
+        "D:\\Projekte\\Code\\FlexPlan_A36_B1_OPT_RUN\\tools\\independent_jump_moi_audit.jl",
+        "D:\\Projekte\\Code\\FlexPlan_A36_B1_OPT_RUN\\tests_fix"
+      ],
+      "cwd": "D:\\Projekte\\Code\\FlexPlan_A36_B1_OPT_FIX",
+      "started_utc": "2026-10-20T15:39:42.607883+00:00",
+      "ended_utc": "2026-10-20T15:40:56.537137+00:00",
+      "exit_code": 0,
+      "code_sha": "910d44122a37d9ed2cca06940740b46706c73d40"
+    },
+    {
+      "id": "fix_domain_regression",
+      "command": [
+        "julia",
+        "+1.10.11",
+        "--startup-file=no",
+        "--project=D:\\Projekte\\Code\\FlexPlan_A36_B1_OPT_FIX",
+        "D:\\Projekte\\Code\\FlexPlan_A36_B1_OPT_RUN\\tools\\independent_domain_mutations.jl",
+        "D:\\Projekte\\Code\\FlexPlan_A36_B1_OPT_RUN",
+        "D:\\Projekte\\Code\\FlexPlan_A36_B1_OPT_FIX"
+      ],
+      "cwd": "D:\\Projekte\\Code\\FlexPlan_A36_B1_OPT_FIX",
+      "started_utc": "2026-10-20T15:40:56.539145+00:00",
+      "ended_utc": "2026-10-20T15:41:12.604294+00:00",
+      "exit_code": 0,
+      "code_sha": "910d44122a37d9ed2cca06940740b46706c73d40"
+    }
+  ],
+  "new_exact_verifier_tests": 171,
+  "new_julia_tests": 18,
+  "registered_pre_fix_runs": 54,
+  "post_fix_stress_runs": 45,
+  "metrics_124_and_cli_8": "pinned A3.5 evidence reused; output/export/metric/bound code unchanged; new solver results are separately reported",
+  "not_generalized": [
+    "unrounded physical data certification",
+    "all-MISOCP reliability",
+    "exact validity of every generated floating OA cut",
+    "complete MIP tree proof",
+    "owner ratification",
+    "real-data qualification"
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "all_required_outputs_present": true,
+  "archive_bytes": 7308953,
+  "archive_sha256": "ca15ee8a3cd73eefe9c75b00896ec4f4cdb71f12e23d6fc55a0916e35417482c",
+  "all_archive_entries_verified": 406,
+  "roundtrip_exact_certificate_verification_tests": 171,
+  "roundtrip_original_native_exact_constraint_verification": true,
+  "new_native_exact_variables": 3680,
+  "new_native_exact_integer_constraints": 1353,
+  "full_regression_passed": 6087,
+  "saved_evidence_passed": 4108,
+  "new_julia_tests_passed": 18,
+  "MOI_before_after": {
+    "before": 42,
+    "after": 42
+  },
+  "domain_before_after": {
+    "before": 16,
+    "after": 16
+  },
+  "solver_runs_pre_fix": 54,
+  "solver_runs_post_fix_stress": 45,
+  "scope": "data and owner gates remain false; solver reauditing and tight global integer certification remain open"
+}
