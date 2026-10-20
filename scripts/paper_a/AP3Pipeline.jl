@@ -553,7 +553,21 @@ function compare(input,out)
         end
         push!(a,row)
     end
-    writejson(joinpath(out,"comparisons.json"),Dict("schema"=>SCHEMA,"records"=>a));return a
+    writejson(joinpath(out,"comparisons.json"),Dict("schema"=>SCHEMA,"records"=>a))
+    auditpath=joinpath(dirname(input),"integer_bound_audit.json")
+    if isfile(auditpath)
+        certificate_rows=Any[]
+        for cert in readjson(auditpath)["records"],run in runs
+            run["case_id"]==cert["case_id"] && !run["relaxed"] || continue
+            get(cert,"case_sha256",nothing)==run["case_sha256"] || throw(ArgumentError("integer reference case hash mismatch"))
+            obj=get(run,"objective",nothing)
+            available=get(run,"primal_status",nothing)=="FEASIBLE_POINT" && obj isa Real && cert["integer_optimum_certified"]
+            lo=cert["shared_lower_bound"];hi=cert["shared_G0_G3_upper_bound"]
+            push!(certificate_rows,Dict("case_id"=>run["case_id"],"formulation"=>run["formulation"],"native_status"=>run["status"],"native_termination"=>get(run,"termination",nothing),"candidate_objective"=>obj,"reference_lower"=>lo,"reference_upper"=>hi,"reference_gap"=>cert["original_currency_relative_gap"],"reference_certified"=>cert["integer_optimum_certified"],"additional_cost_interval"=>available ? [obj-hi,obj-lo] : nothing,"relative_to_reference_upper"=>available && hi!=0 ? (obj-hi)/abs(hi) : nothing,"unit"=>"declared_currency_per_represented_horizon","reference_method"=>cert["method"]))
+        end
+        writejson(joinpath(out,"integer_reference_comparisons.json"),Dict("schema"=>SCHEMA,"records"=>certificate_rows))
+    end
+    return a
 end
 
 """Complete finite integer reference. Every bounded strengthening assignment

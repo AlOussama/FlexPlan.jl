@@ -16,7 +16,9 @@ result=Any[]
 for id in sort(unique(r["case_id"] for (_,r) in allruns))
     lower=Any[];points=Any[];attempts=Any[]
     raw=P.readjson(joinpath(root,"suite_final",id,"case.json"))
+    casehash=P.D.hashfile(joinpath(root,"suite_final",id,"case.json"))
     for (folder,r) in filter(x->x[2]["case_id"]==id,allruns)
+        r["case_sha256"]==casehash || error("cross-formulation bound input hash mismatch")
         push!(attempts,Dict("folder"=>folder,"formulation"=>r["formulation"],"termination"=>r["termination"],"status"=>r["status"],"objective"=>get(r,"objective",nothing),"bound"=>get(r,"bound",nothing),"reported_gap"=>get(r,"raw_solver_relative_gap",get(r,"relative_gap",nothing))))
         bound=get(r,"bound",nothing)
         if bound isa Real && isfinite(bound) && r["termination"] in ("OPTIMAL","ITERATION_LIMIT","TIME_LIMIT")
@@ -42,6 +44,6 @@ for id in sort(unique(r["case_id"] for (_,r) in allruns))
     bound=isempty(lower) ? nothing : maximum(b["value"] for b in lower)
     gap=upper===nothing || bound===nothing ? nothing : abs(upper-bound)/max(1.,abs(upper))
     certified=gap!==nothing && gap<=1e-6
-    push!(result,Dict("case_id"=>id,"status"=>certified ? "numerically_verified_reference" : "numerical_inconclusive","shared_G0_G3_upper_bound"=>upper,"shared_lower_bound"=>bound,"original_currency_relative_gap"=>gap,"tolerance"=>1e-6,"integer_optimum_certified"=>certified,"method"=>"independent feasible point and global solver bounds on identical fixed symmetric Z projection; frozen T018-T020; not interval arithmetic or independent A3.5 acceptance","bounds"=>lower,"points"=>points,"native_attempts"=>attempts))
+    push!(result,Dict("case_id"=>id,"case_sha256"=>casehash,"status"=>certified ? "numerically_verified_reference" : "numerical_inconclusive","shared_G0_G3_upper_bound"=>upper,"shared_lower_bound"=>bound,"original_currency_relative_gap"=>gap,"tolerance"=>1e-6,"integer_optimum_certified"=>certified,"method"=>"independent feasible point and global solver bounds on identical fixed symmetric Z projection; frozen T018-T020; not interval arithmetic or independent A3.5 acceptance","bounds"=>lower,"points"=>points,"native_attempts"=>attempts))
 end
 P.writejson(output,Dict("schema"=>P.SCHEMA,"records"=>result,"provenance"=>P.provenance()))
