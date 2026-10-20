@@ -1,0 +1,9 @@
+# Unveränderte Originalbaseline vor Korrektur
+
+Prüfziel: `485b637cc1998a327206c5929434bd26c6f0be16`. Autorität: Makroauftrag `50f88d5d30194afbbd188c96e3eab795b7a7de49`. Diese Feststellung wird vor dem ersten Produktionspatch geschrieben.
+
+Die originale Vollregression lief mit Julia 1.10.11: 6087/6087, Exit 0. Die originale gespeicherte Evidenzprüfung lief frisch: 4108/4108, Exit 0. Eigenständige SymPy-Rationalprüfungen und 42 eigenständige Julia/JuMP/MOI-Prüfungen sind ausgeführt. Die unabhängige historische Rekonstruktion umfasst 687 Zustände und 124 Lösungen; maximale Matrixabweichung 3.410605131648481e-13, maximale Objektivabweichung 0.015338363591581583. Laufende zusätzliche Integer-, native Solver- und CLI-Prüfungen werden erst im Abschlussbericht adjudiziert.
+
+Bestätigter nichtmathematischer Defekt EXEC-UNIT-001: `scripts/paper_a/AP3Pipeline.jl`, Funktion `metric_unit`, weist `A.connection_violation`, `B.G3_edges_complete`, `B.G3_valid` keine fachlich passende Einheit zu. Der exportierte Originalkatalog weist allen drei IDs `pu` zu. Erwartet sind `count_or_index` für die Verletzung in Blockzahlen sowie `boolean` für beide logischen Felder. Messwerte, zulässige Mengen, Ziele, Solver und wissenschaftliche Gleichungen sind davon nicht betroffen. Minimaler Fix: ausschließlich diese drei Einheiten zuordnen, Exportregression ergänzen.
+
+Das Pre-fix-Urteil für die vollständige uneingeschränkte Exportabnahme lautet `corrections_required`. Damit wird keine mathematische Ablehnung der geprüften Matrixgleichungen behauptet. Gurobi ist trotz vorhandener Installation nicht nutzbar: Error 10009, Lizenzablauf 2026-10-12. Wissenschaftsowner-Ratifizierung, native G3-Zuverlässigkeit, globale Integerzertifizierung sowie reale Physik-/Daten-/Kostenfreigaben sind zu diesem Zeitpunkt nicht erteilt. `independent_A3_5_accepted=false`, `science_amendment_approved=false`, `A3_closed=false`, `AP4_ready=false`.

@@ -347,6 +347,8 @@ function evaluate_record(rec)
     return m
 end
 function metric_unit(id,default)
+    id=="A.connection_violation" && return "count_or_index"
+    id in ("B.G3_edges_complete","B.G3_valid") && return "boolean"
     id in ("B.gamma","B.gamma_margin","B.participation","C.rho_diag","C.rho_Zp","C.MIIF","C.M0_slack","C.Zp","C.M1_upper_burden","D.E_norm_inf","D.spectral_radius") && return "dimensionless"
     id in ("C.M0","D.series_converges","D.trust_region_norm_valid","D.one_sided_safety_certified") && return "boolean"
     id in ("C.Z","C.Z_diag","C.inverse_min","C.M1_order_violation","D.truncation","D.actual_error","D.remainder_bound","D.woodbury_residual","D.exact_remainder_residual") && return "pu_impedance"
