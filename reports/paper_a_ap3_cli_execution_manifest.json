@@ -1,0 +1,119 @@
+{
+  "export_action": "completed_and_all_hashes_verified",
+  "note": "This manifest is outside the indexed run root to avoid index self-modification",
+  "schema": "paper_a_ap3/1.0",
+  "executions": [
+    {
+      "receipt": "observed worker process completion; outputs also validated by saved-evidence tests",
+      "action": "run_formulation_suite",
+      "log": "reports/ap3_runs/20261020_macro/cli_replay_suite.log",
+      "arguments": [
+        "--startup-file=no",
+        "--project=.",
+        "scripts/paper_a/ap3.jl",
+        "run_formulation_suite",
+        "reports/ap3_runs/20261020_macro/cli_replay_config.json",
+        "reports/ap3_runs/20261020_macro/cli_replay_suite"
+      ],
+      "process_exit": 0
+    },
+    {
+      "receipt": "observed worker process completion; outputs also validated by saved-evidence tests",
+      "action": "reconstruct_strength_matrices",
+      "log": "reports/ap3_runs/20261020_macro/matrices_final.log",
+      "arguments": [
+        "--startup-file=no",
+        "--project=.",
+        "scripts/paper_a/ap3.jl",
+        "reconstruct_strength_matrices",
+        "reports/ap3_runs/20261020_macro/accepted_suite",
+        "reports/ap3_runs/20261020_macro/matrices_final"
+      ],
+      "process_exit": 0
+    },
+    {
+      "receipt": "observed worker process completion; outputs also validated by saved-evidence tests",
+      "action": "evaluate_strength_metrics",
+      "log": "reports/ap3_runs/20261020_macro/metrics_null_status_fixed.log",
+      "arguments": [
+        "--startup-file=no",
+        "--project=.",
+        "scripts/paper_a/ap3.jl",
+        "evaluate_strength_metrics",
+        "reports/ap3_runs/20261020_macro/matrices_final",
+        "reports/ap3_runs/20261020_macro/metrics_final"
+      ],
+      "process_exit": 0
+    },
+    {
+      "receipt": "observed worker process completion; outputs also validated by saved-evidence tests",
+      "action": "verify_certificates",
+      "log": "reports/ap3_runs/20261020_macro/certificates_final.log",
+      "arguments": [
+        "--startup-file=no",
+        "--project=.",
+        "scripts/paper_a/ap3.jl",
+        "verify_certificates",
+        "reports/ap3_runs/20261020_macro/matrices_final",
+        "reports/ap3_runs/20261020_macro/certificates_final"
+      ],
+      "process_exit": 0
+    },
+    {
+      "receipt": "observed worker process completion; outputs also validated by saved-evidence tests",
+      "action": "compare_formulations",
+      "log": "reports/ap3_runs/20261020_macro/comparisons_final.log",
+      "arguments": [
+        "--startup-file=no",
+        "--project=.",
+        "scripts/paper_a/ap3.jl",
+        "compare_formulations",
+        "reports/ap3_runs/20261020_macro/accepted_suite",
+        "reports/ap3_runs/20261020_macro/comparisons_final"
+      ],
+      "process_exit": 0
+    },
+    {
+      "receipt": "observed worker process completion; outputs also validated by saved-evidence tests",
+      "action": "assess_planning_results",
+      "log": "reports/ap3_runs/20261020_macro/planning_final.log",
+      "arguments": [
+        "--startup-file=no",
+        "--project=.",
+        "scripts/paper_a/ap3.jl",
+        "assess_planning_results",
+        "reports/ap3_runs/20261020_macro/accepted_suite",
+        "reports/ap3_runs/20261020_macro/planning_final"
+      ],
+      "process_exit": 0
+    },
+    {
+      "receipt": "observed worker process completion; outputs also validated by saved-evidence tests",
+      "action": "benchmark_conic_scaling",
+      "log": "reports/ap3_runs/20261020_macro/benchmarks_cli_final.log",
+      "arguments": [
+        "--startup-file=no",
+        "--project=.",
+        "scripts/paper_a/ap3.jl",
+        "benchmark_conic_scaling",
+        "reports/ap3_runs/20261020_macro/cli_replay_config.json",
+        "reports/ap3_runs/20261020_macro/benchmarks_final"
+      ],
+      "process_exit": 0
+    },
+    {
+      "log": "reports/paper_a_ap3_export.log",
+      "action": "export_paper_a_evidence",
+      "receipt": "observed worker process completion; all indexed hashes verified",
+      "arguments": [
+        "--startup-file=no",
+        "--project=.",
+        "scripts/paper_a/ap3.jl",
+        "export_paper_a_evidence",
+        "reports/ap3_runs/20261020_macro",
+        "reports/ap3_runs/20261020_macro/export_final"
+      ],
+      "process_exit": 0
+    }
+  ]
+}

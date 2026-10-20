@@ -1,0 +1,15 @@
+{
+  "source_frozen_until_completion": true,
+  "source_sha256": {
+    "src/core/paper_a_diagnostics.jl": "d8d7f2f2227e465623443f80e4611a1cc5a5dbaeae725da386a4cfb1dab8c1ba",
+    "scripts/paper_a/AP3Pipeline.jl": "07e65c07024eb5cd5ad9bf904439e42d9a48fb263b14889c9cefd8a7388b8a2e",
+    "test/paper_a_ap3.jl": "3627c3c55a7972cc55e53023fb2101ea5e5deb7edc9ce1e05d79da4b2eb4e491",
+    "test/run_paper_a_ap3_evidence.jl": "21b0584682fb8c1ac17e4ec4bcddfe5e6471a11e553da56a8f8f73598bd65894",
+    "Manifest-v1.10.toml": "b9eedeeafffcb54fffea110f84d137b7115171020c80566c57abd1107220ab40",
+    "src/core/paper_a_formulations.jl": "80ec3b9f458f982ce687a9c93be4b28eed435fc933edb65f697fa1b00e5c237e",
+    "Project.toml": "23f90a015f17a094d017f3ea691bce44d0eb4f1d4db700ce6dead43d11a8a2c4"
+  },
+  "source_commit": "3a8ec7a9f5575e64a586b73cf0cfd97c63bc6f5f",
+  "started_at": "2026-10-20T03:19:32.4580944+02:00",
+  "command": "julia --startup-file=no --project=. test/runtests.jl"
+}

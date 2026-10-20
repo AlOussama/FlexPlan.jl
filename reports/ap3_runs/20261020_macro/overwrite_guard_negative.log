@@ -1,0 +1,11 @@
+ERROR: LoadError: ArgumentError: output exists; use a new run directory: D:\Projekte\Code\FlexPlan_AP3\reports\ap3_runs\20261020_macro\matrices_final
+Stacktrace:
+ [1] newoutput(path::String)
+   @ Main.AP3Pipeline D:\Projekte\Code\FlexPlan_AP3\scripts\paper_a\AP3Pipeline.jl:19
+ [2] reconstruct_runs(input::String, out::String)
+   @ Main.AP3Pipeline D:\Projekte\Code\FlexPlan_AP3\scripts\paper_a\AP3Pipeline.jl:292
+ [3] main(args::Vector{String})
+   @ Main.AP3Pipeline D:\Projekte\Code\FlexPlan_AP3\scripts\paper_a\AP3Pipeline.jl:637
+ [4] top-level scope
+   @ D:\Projekte\Code\FlexPlan_AP3\scripts\paper_a\ap3.jl:2
+in expression starting at D:\Projekte\Code\FlexPlan_AP3\scripts\paper_a\ap3.jl:2

@@ -1,0 +1,13 @@
+{
+  "human_report_sha256": "f730e7e304ab3acc751778fcff81956a08039d1ed78e024c0ec9ba012c4d859f",
+  "index_excludes_own_export_files": true,
+  "CSV_records": 1060,
+  "raw_metric_bytes_retained_and_archived": true,
+  "index_sha256": "813ab23e7cdb49642b070155ae4414a9941d0c16ee074f2901e46512254c188a",
+  "all_eight_CLI_actions_exit_zero": true,
+  "all_file_sizes_and_SHA256_match": true,
+  "indexed_files": 1060,
+  "schema": "paper_a_ap3/1.0",
+  "human_report_metrics": 68861,
+  "verified_at": "2026-10-20T03:26:25.9152414+02:00"
+}

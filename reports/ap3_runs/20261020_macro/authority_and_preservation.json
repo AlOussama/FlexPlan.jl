@@ -30,5 +30,10 @@
     "branch refs/heads/integration/paper-a-parameter-qualification-v1",
     ""
   ],
-  "source_before_release": "86036fe697ba453603aa3cfbdc86b3be9fa62394"
+  "source_before_release": "86036fe697ba453603aa3cfbdc86b3be9fa62394",
+  "terminal_verified_core_commit": "3a8ec7a9f5575e64a586b73cf0cfd97c63bc6f5f",
+  "evidence_export_code_commit": "aad5cd41b6a94b76ac9fe82d68aea25df74502b3",
+  "final_ap2_status": "?? audit/",
+  "final_strang_b_status": null,
+  "final_preservation_check_at": "2026-10-20T03:25:09.3108992+02:00"
 }
