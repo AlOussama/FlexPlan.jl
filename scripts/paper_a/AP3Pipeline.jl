@@ -385,7 +385,7 @@ function write_metrics(input,out)
         JSON.print(io,Dict("schema"=>SCHEMA,"metrics"=>m))
     end
     flat=[(schema=SCHEMA,run_id=x["run_id"],case_id=x["case_id"],dataset_kind=x["dataset_kind"],parameter_registry_sha256=x["parameter_registry_sha256"],AP1_SHA=x["AP1_SHA"],AP2_SHA=x["AP2_SHA"],AP3_SHA=x["AP3_SHA"],science_SHA=x["science_SHA"],formulation_id=x["formulation_id"],exposure_variant=x["exposure_variant"],snapshot_id=x["snapshot_id"],scenario_id=x["scenario_id"],scope=x["scope"],region_or_edge_json=JSON.json(x["region_or_edge"]),metric_id=x["metric_id"],value_or_null_json=JSON.json(x["value_or_null"]),unit=x["unit"],base=x["base"],validity_status=x["validity_status"],domain_predicates_json=JSON.json(x["domain_predicates"]),equation_reference=x["equation_reference"],independent_method=x["independent_method"],tolerance=x["tolerance"],residual=x["residual"],solver_status=x["solver_status"]) for x in m]
-    CSV.write(joinpath(out,"metrics.csv"),flat)
+    CSV.write(joinpath(out,"metrics.csv"),flat;transform=(col,value)->value===nothing ? missing : value)
     registry=Dict{String,Any}();typed=Set{String}()
     for x in m
         x["metric_id"] in typed && continue
