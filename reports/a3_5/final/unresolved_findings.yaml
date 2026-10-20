@@ -1,0 +1,15 @@
+date: 2026-10-20
+original_ap3: 485b637cc1998a327206c5929434bd26c6f0be16
+independent_implementation_adjudication: unresolved
+predicate_status: {P001: unverified, P002: unverified, P003: unverified, P004: unverified, P005: unverified, P006: unverified, P007: unverified, P008: unverified, P009: unverified, P010: unverified}
+findings:
+  A35-NEW-001: mathematically_confirmed_scoped
+  A35-MATH-002: source_boundary_confirmed_physics_unverified
+  A35-MATH-003: singular_S_range_confirmed
+  A35-MATH-004: external_fault_claims_excluded
+  A35-MATH-005: unresolved
+  A35-MATH-006: schur_domain_warning_confirmed_production_error_unproven
+  A35-MATH-007: theoretical_G3_static_review_only
+  A35-MATH-008: nine_M1_cases_not_independently_replayed
+  A35-MATH-009: real_physics_unverified
+blockers: [Julia_frozen_replay, native_G3, P001_P010_domain_tests, independent_rawdata_diagnostics, qualified_physical_sources]
