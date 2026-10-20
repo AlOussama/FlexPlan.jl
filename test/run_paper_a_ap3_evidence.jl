@@ -30,10 +30,10 @@ root=abspath(ARGS[1]);load(path)=JSON.parsefile(joinpath(root,path))
     metrics=load("metrics_final/metrics.json")["metrics"]
     csv=collect(CSV.File(joinpath(root,"metrics_final","metrics.csv")))
     @test length(metrics)==length(csv)
-    @test all(JSON.parse(String(c.value_json))==m["value"] for (c,m) in zip(csv,metrics))
+    @test all(JSON.parse(String(c.value_or_null_json))==m["value_or_null"] for (c,m) in zip(csv,metrics))
     registry=load("metrics_final/metric_registry.json")
     @test Set(keys(registry))==Set(m["metric_id"] for m in metrics)
-    @test all(m->haskey(m,"status")&&haskey(m,"unit")&&haskey(m,"base")&&haskey(m,"tolerance"),metrics)
+    @test all(m->all(haskey(m,k) for k in ("validity_status","unit","base","tolerance","equation_reference","independent_method","domain_predicates","AP1_SHA","AP2_SHA","AP3_SHA","parameter_registry_sha256")),metrics)
     for group in ('A','B','C','D','E','F')
         @test any(startswith(id,string(group)*".") for id in keys(registry))
     end

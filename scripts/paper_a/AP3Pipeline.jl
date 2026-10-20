@@ -368,7 +368,12 @@ function metric_rows(records)
         domain=Dict("empirical"=>false,"passive_issues"=>rec["passive_domain_issues"],"symmetry_residual"=>measured["A.symmetry"]["value"],"positive_offdiagonal"=>measured["A.positive_offdiagonal"]["value"],"B_minimum_eigenvalue"=>minimum(measured["A.B_eigenvalues"]["value"]),"minimum_inverse_entry"=>measured["C.inverse_min"]["value"],"G3_witness_valid"=>measured["B.G3"]["value"],"range_residual"=>measured["B.range_residual"]["value"],"affine_reconstruction_residual"=>rec["affine_reconstruction_residual"])
         for (id,v) in sort(collect(measured);by=first)
             scope=metric_scope(id);scope=="case_or_horizon" && !first_of_run && continue
-            push!(output,merge(Dict("schema"=>SCHEMA,"run_id"=>run["solution_file"],"case_id"=>run["case_id"],"dataset_kind"=>run["validation_scope"],"AP1_SHA"=>run["source_producer_sha"],"AP2_SHA"=>BASE,"AP3_SHA"=>ap3_sha,"science_SHA"=>SCIENCE,"parameter_registry_sha256"=>run["registry_sha256"],"scenario_id"=>run["case_id"],"snapshot_id"=>scope=="case_or_horizon" ? "all" : rec["snapshot_id"],"scope"=>scope,"formulation_id"=>run["formulation"],"exposure_variant"=>run["exposure"],"region_or_edge"=>rec["regions"],"metric_id"=>id,"base"=>rec["base_MVA"],"tolerance"=>D.DEFAULT_TOL,"domain_predicates"=>domain,"solver_status"=>get(run,"termination",nothing)),v))
+            residual=v["residual"]
+            if residual===nothing && (occursin("residual",id)||occursin("violation",id)||id=="A.symmetry") && v["value"] isa Real && !(v["value"] isa Bool)
+                residual=v["value"]
+            end
+            public=Dict("value_or_null"=>v["value"],"validity_status"=>v["status"],"unit"=>v["unit"],"independent_method"=>v["method"],"equation_reference"=>v["theorem"],"residual"=>residual)
+            push!(output,merge(Dict("schema"=>SCHEMA,"run_id"=>run["solution_file"],"case_id"=>run["case_id"],"dataset_kind"=>run["validation_scope"],"AP1_SHA"=>run["source_producer_sha"],"AP2_SHA"=>BASE,"AP3_SHA"=>ap3_sha,"science_SHA"=>SCIENCE,"parameter_registry_sha256"=>run["registry_sha256"],"scenario_id"=>run["case_id"],"snapshot_id"=>scope=="case_or_horizon" ? "all" : rec["snapshot_id"],"scope"=>scope,"formulation_id"=>run["formulation"],"exposure_variant"=>run["exposure"],"region_or_edge"=>rec["regions"],"metric_id"=>id,"base"=>rec["base_MVA"],"tolerance"=>D.DEFAULT_TOL,"domain_predicates"=>domain,"solver_status"=>get(run,"termination",nothing)),public))
         end
     end
     return output
@@ -379,14 +384,14 @@ function write_metrics(input,out)
     open(joinpath(out,"metrics.json"),"w") do io
         JSON.print(io,Dict("schema"=>SCHEMA,"metrics"=>m))
     end
-    flat=[(run_id=x["run_id"],case_id=x["case_id"],formulation=x["formulation_id"],snapshot_id=x["snapshot_id"],metric_id=x["metric_id"],value_json=JSON.json(x["value"]),unit=x["unit"],status=x["status"],base=x["base"],tolerance=x["tolerance"]) for x in m]
+    flat=[(schema=SCHEMA,run_id=x["run_id"],case_id=x["case_id"],dataset_kind=x["dataset_kind"],parameter_registry_sha256=x["parameter_registry_sha256"],AP1_SHA=x["AP1_SHA"],AP2_SHA=x["AP2_SHA"],AP3_SHA=x["AP3_SHA"],science_SHA=x["science_SHA"],formulation_id=x["formulation_id"],exposure_variant=x["exposure_variant"],snapshot_id=x["snapshot_id"],scenario_id=x["scenario_id"],scope=x["scope"],region_or_edge_json=JSON.json(x["region_or_edge"]),metric_id=x["metric_id"],value_or_null_json=JSON.json(x["value_or_null"]),unit=x["unit"],base=x["base"],validity_status=x["validity_status"],domain_predicates_json=JSON.json(x["domain_predicates"]),equation_reference=x["equation_reference"],independent_method=x["independent_method"],tolerance=x["tolerance"],residual=x["residual"],solver_status=x["solver_status"]) for x in m]
     CSV.write(joinpath(out,"metrics.csv"),flat)
     registry=Dict{String,Any}();typed=Set{String}()
     for x in m
         x["metric_id"] in typed && continue
-        haskey(registry,x["metric_id"]) && x["value"]===nothing && continue
-        x["value"]===nothing || push!(typed,x["metric_id"])
-        registry[x["metric_id"]]=merge(Dict(k=>x[k] for k in ("unit","method","theorem","tolerance")),Dict("shape"=>x["value"] isa Vector ? "vector_or_matrix_or_ledger" : x["value"] isa AbstractDict ? "record" : "scalar_or_status","scope"=>metric_scope(x["metric_id"]),"formula"=>metric_formula(x["metric_id"]),"domain"=>"per_record_status_and_frozen_theorem_assumptions"))
+        haskey(registry,x["metric_id"]) && x["value_or_null"]===nothing && continue
+        x["value_or_null"]===nothing || push!(typed,x["metric_id"])
+        registry[x["metric_id"]]=merge(Dict(k=>x[k] for k in ("unit","independent_method","equation_reference","tolerance")),Dict("shape"=>x["value_or_null"] isa Vector ? "vector_or_matrix_or_ledger" : x["value_or_null"] isa AbstractDict ? "record" : "scalar_or_status","scope"=>metric_scope(x["metric_id"]),"formula"=>metric_formula(x["metric_id"]),"domain"=>"per_record_status_and_frozen_theorem_assumptions"))
     end
     writejson(joinpath(out,"metric_registry.json"),registry);return m
 end
