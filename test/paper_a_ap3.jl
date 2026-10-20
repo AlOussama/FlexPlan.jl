@@ -119,6 +119,10 @@ end
         push!(objs,JuMP.objective_value(m))
     end
     @test isapprox(objs[1],objs[2];atol=1e-7)
+    d=_ap2_fixture(;hours=1);d["nw"]["1"]["storage"]["1"]["source_class"]="GFL"
+    assets=Dict("$table:$id"=>Dict("online"=>1.,"installed"=>1.,"dispatch_MW"=>0.,"charge_MW"=>table=="storage" ? 5. : 0.) for table in ("gen","storage","ne_storage") for (id,dev) in get(d["nw"]["1"],table,Dict()) if haskey(dev,"source_class"))
+    rec=AP3D.reconstruct(d,Dict("snapshots"=>Dict("1"=>Dict("assets"=>assets))),1)
+    @test rec["S_op_magnitude_v1"][1]≈.8*5/250
     A=[.5 -.5;-.5 .5]
     m,c=_ap3_conic(A,[.1,.1],1.,_FP.InverseBoundGSCR([.6 -.5;-.5 .6];provenance="offline_fixture");cost=[1.,3.])
     @test JuMP.termination_status(m)==JuMP.MOI.OPTIMAL

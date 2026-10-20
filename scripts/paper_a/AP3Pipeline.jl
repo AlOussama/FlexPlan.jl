@@ -386,6 +386,60 @@ end
 function metric_formula(id)
     explicit=Dict("B.gamma"=>"lambda_min(Sa^-1/2*(Baa-Baz*Bzz_dagger*Bza)*Sa^-1/2), with PSD and range tests", "B.G0_eigmin"=>"eigmin(B-alpha*Diagonal(p))","B.G1_rows"=>"(B-alpha*Diagonal(p))*ones(n)","B.G2_rows"=>"(B-alpha*Diagonal(p))*r_offline","C.Zp"=>"B\\p","C.rho_diag"=>"1/(Zii*pi), positive denominator only","C.rho_Zp"=>"1/(B\\p)i, positive denominator only","C.M0_slack"=>"1/alpha-B\\p, PD inverse-positive B, alpha>0","C.M2_rows"=>"B*1-alpha*W*p","C.M1_upper_burden"=>"(Bmin\\I)*p, enforced B>=Bmin","A.symmetry"=>"norm(B-transpose(B),Inf)","A.affine_reconstruction_residual"=>"max(norm(Braw-Baff),norm(Mraw-Maff),norm(praw-paff))","B.G3_cone_product_slacks"=>"qij*qji-mij^2","B.G3_node_budget"=>"mii-sum_j(qij)","D.remainder_bound"=>"norm(E)^(m+1)*norm(inv(A))/(1-norm(E)), norm(E)<1")
     haskey(explicit,id) && return explicit[id]
+    exact=Dict(
+        "A.Y_real"=>"Re(Y) from reciprocal physical series and terminal charging/shunt stamps",
+        "A.Y_imag"=>"Im(Y) from reciprocal physical series and terminal charging/shunt stamps",
+        "A.L"=>"-Im(Y)","A.B0"=>"Lrr-Lre*(Lee\\Ler)","A.B"=>"B0+Diagonal(b_fix+sum(mu_str*n_on*native_MVA/(base*x_native)))",
+        "A.S_diag"=>"sum_GFL(mu_fl*P_block_MW*n_on/base_MVA) by region","A.M"=>"B-alpha*Diagonal(p)",
+        "A.B_eigenvalues"=>"eigvals(Symmetric(B))","A.M_eigenvalues"=>"eigvals(Symmetric(B-alpha*Diagonal(p)))",
+        "A.condition"=>"cond(B,2)","A.rank"=>"count(abs(lambda_B)>scaled_tolerance)","A.nullity"=>"count(abs(lambda_B)<=scaled_tolerance)",
+        "A.inertia"=>"counts(lambda_B<-tau,abs(lambda_B)<=tau,lambda_B>tau)","A.positive_offdiagonal"=>"max(0,max_{i!=j} Bij)","A.Z_class"=>"max_{i!=j} Bij<=tolerance",
+        "A.connection_violation"=>"max(0,n_on-a_conn*n_inst,-n_on)","A.exposure_roundoff_correction"=>"max(0,-min(raw_p)); only negative solver roundoff <= tolerance projected to zero",
+        "A.producer_B0_residual"=>"norm(B0_independent-B0_producer,Inf)","A.schur_residual"=>"norm(Lee*(Lee\\Ler)-Ler,Inf)",
+        "A.source_base_residual"=>"max(abs(b_block_declared-native_MVA/(base_MVA*x_native)))",
+        "A.source_ledger"=>"per-asset independent installed/online/source/exposure/MW/MVA/MWh quantities","A.network_domain"=>"raw islands, references, retained/eliminated buses and fixed-shunt/source inventories",
+        "B.eigen_residual"=>"norm(B*V-Diagonal(p)*V*gamma,Inf)","B.eigenspace"=>"positive-support scaled eigenvectors lifted through exact zero-support Schur solve",
+        "B.G0"=>"eigmin(M)>=-scaled_tolerance","B.G1"=>"min(M*ones(n))>=-scaled_tolerance","B.G2"=>"min(M*r_offline)>=-scaled_tolerance",
+        "B.G1_binding"=>"abs.(M*ones(n))<=scaled_tolerance","B.G2_binding"=>"abs.(M*r_offline)<=scaled_tolerance","B.G1_false_rejection"=>"G0 && !G1",
+        "B.G3"=>"complete signed edges && nonnegative q/cone products/node residues && exact reconstruction within tolerance",
+        "B.G3_valid"=>"complete signed edges && nonnegative q/cone products/node residues && reconstruction within tolerance",
+        "B.G3_edges"=>"all exact nonzero undirected pairs (i,j), i<j","B.G3_edges_complete"=>"unique witness edge set equals all nonzero offdiagonal pairs",
+        "B.G3_q"=>"both oriented endpoint allocations qij,qji for every signed edge","B.G3_minimum_q"=>"minimum endpoint allocation, undefined for no edges",
+        "B.G3_reconstruction_residual"=>"norm(M-sum(embedded edge Q)-Diagonal(node_residue),Inf)","B.G3_status"=>"edge/witness domain and verification status",
+        "B.gamma_margin"=>"smallest finite generalized eigenvalue minus alpha","B.multiplicity"=>"count(abs(finite_eigenvalue-gamma)<=scaled_tolerance)",
+        "B.participation"=>"row sums of squared critical lifted modes divided by total squared mode magnitude","B.range_residual"=>"norm(Bzz*(Bzz_dagger*Bza)-Bza,Inf)",
+        "C.Z"=>"B\\I, only on PD sufficiently conditioned B","C.Z_diag"=>"diag(B\\I)","C.inverse_min"=>"minimum(B\\I)","C.solve_residual"=>"norm(B*(B\\p)-p,Inf)",
+        "C.equivalent_strength"=>"1/Zii","C.equivalent_strength_MVA"=>"base_MVA/Zii (model equivalent, not fault-qualified)",
+        "C.M0"=>"max(B\\p)<=1/alpha, requiring PD/inverse-positive B and alpha>0","C.MIIF"=>"Zij/Zii with model Thevenin normalization",
+        "C.M1"=>"B>=Bmin && inv(B)<=inv(Bmin) && inv(Bmin)*p<=1/alpha",
+        "C.M1_lower_violation"=>"max(0,max(Bmin-B))","C.M1_order_violation"=>"max(0,max(inv(B)-inv(Bmin)))",
+        "C.M2"=>"min(B*ones(n)-alpha*W*p)>=-scaled_tolerance","C.Wp"=>"W_offline*p",
+        "C.LOCAL_eigmin"=>"[eigmin(B-alpha*pi*ei*ei') for each i]","C.LOCAL"=>"all local rank-one PSD tests pass",
+        "D.woodbury_residual"=>"norm(inv(A)-inv(A)*Delta*(I+inv(A)*Delta)^-1*inv(A)-inv(A+Delta),Inf)",
+        "D.E_norm_inf"=>"opnorm(A^-1*Delta,Inf)","D.spectral_radius"=>"max(abs(eigvals(A^-1*Delta)))","D.series_converges"=>"spectral_radius(E)<1",
+        "D.order"=>"declared truncation order m","D.truncation"=>"sum_{k=0}^m (-A^-1*Delta)^k * A^-1",
+        "D.actual_error"=>"opnorm(truncation-inv(A+Delta),Inf)","D.exact_remainder_residual"=>"norm(inv(A+Delta)-truncation-(-E)^(m+1)*(I+E)^-1*A^-1,Inf)",
+        "D.trust_region_norm_valid"=>"opnorm(E,Inf)<1","D.one_sided_safety_certified"=>"false: diagnostic does not enforce a one-sided planning margin",
+        "D.E2_false_acceptance"=>"estimated row burden passes while exact M0 fails","D.E2_conservative_rejection"=>"estimated row burden fails while exact M0 passes","D.status"=>"exploratory_noncertifying or explicit inverse-domain failure",
+        "E.investment"=>"sum(price_inv_per_MW*P_block*(n_inst-n0)*investment_fraction), once",
+        "E.generation"=>"sum(delta_t*repetitions*probability*marginal_price*PG_MW)","E.storage"=>"sum(dispatch_weight*storage_price*AC_discharge_MW)",
+        "E.events"=>"sum(event_repetitions*probability*P_block*(startup_price*SU+shutdown_price*SD)); no delta_t",
+        "E.no_load"=>"sum(dispatch_weight*declared constant generation-cost term)","E.FOM"=>"separate amount not identifiable; declared annualized price attribution retained",
+        "E.objective_residual"=>"abs(reported_objective-investment-generation-storage-events-no_load)",
+        "E.portfolio"=>"per-asset n0,n_inst,n_new,MW,MVA,MWh,source class,carrier,region",
+        "E.curtailment_MWh"=>"sum(dispatch_weight*max(0,P_block*n_on*a_res-PG_MW))",
+        "E.power_balance_MW"=>"max_bus_snapshot abs(outgoing flows-generation+storage net consumption+load)",
+        "E.SOC_residual_MWh"=>"max abs(E_t-E_prev-delta_t*(eta_charge*charge-discharge/eta_discharge))",
+        "E.terminal_residual_MWh"=>"max abs(final energy-declared initial energy)","E.thermal_violation_MW"=>"max(0,abs(branch flow)-rating)",
+        "E.UC_transition_residual"=>"max abs(n_on_t-n_on_prev-SU+SD)","E.bounds_violation_blocks"=>"max(0,n0-n_inst,n_inst-nmax,n_on-a_conn*n_inst,-n_on)",
+        "E.integrality_residual"=>"max abs(block/event count-round(count)), undefined in continuous relaxation",
+        "E.S_nom_v1"=>"sum_GFL mu_fl*P_block*n_inst/base","E.S_on_v1"=>"sum_GFL mu_fl*P_block*n_on/base",
+        "E.S_op_magnitude_v1"=>"sum_GFL mu_fl*abs(AC_discharge_or_generation-AC_charge)/base","E.S_I_v1"=>"undefined without current capability and voltage normalization",
+        "F.model"=>"actual JuMP variable/integer/typed-constraint counts","F.dual_cone_violation"=>"max PSD-dual negative eigenvalue or rotated-dual cone product/sign violation",
+        "F.complementarity_residual"=>"abs(<primal cone point,dual cone point>) in scaled objective units")
+    haskey(exact,id) && return exact[id]
+    endswith(id,"_external") && return "not_comparable: source-specific fault/compensation/denominator convention is not supplied"
+    startswith(id,"F.") && return "actual runtime attribute "*id[3:end]*"; unsupported values explicitly null"
     startswith(id,"E.") && return "raw quantity/price/duration/event ledger; planning() is executable definition; event weight excludes delta_t"
     startswith(id,"F.") && return "runtime solver/model attribute; missing values are not replaced"
     startswith(id,"A.") && return "independent raw physical stamp/reduction or matrix-class diagnostic in reconstruct()/evaluate()"

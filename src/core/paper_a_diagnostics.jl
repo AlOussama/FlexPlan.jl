@@ -49,7 +49,7 @@ function reconstruct(raw,solution,t;tol=DEFAULT_TOL)
             exposure=d["mu_fl"]*d["p_block_max_MW"]*on/base
             p[r]+=exposure;pnom[r]+=d["mu_fl"]*d["p_block_max_MW"]*inst/base
             # AC-side operating magnitude is explicitly distinct from nameplate.
-            pop[r]+=d["mu_fl"]*abs(v["dispatch_MW"])/base
+            pop[r]+=d["mu_fl"]*abs(v["dispatch_MW"]-get(v,"charge_MW",0.))/base
         elseif !get(d,"fixed_strength_already_in_network",false)
             strength=d["mu_str"]*d["native_source_MVA"]/(base*d["x_src"])*on
             bs[r]+=strength
