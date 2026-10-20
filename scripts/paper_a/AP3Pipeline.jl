@@ -9,7 +9,9 @@ const BASE="e992edc88d39fa0eb2d72e2490e157441223f568"
 const CANDIDATES=["BASE","G0","G1","G2_identity","G2_degree","G3","M1","M2_full","M2_neighbor"]
 function pajarito_optimizer()
     return JuMP.optimizer_with_attributes(Pajarito.Optimizer,
-        "oa_solver"=>JuMP.optimizer_with_attributes(HiGHS.Optimizer,"output_flag"=>false,"threads"=>1,"mip_feasibility_tolerance"=>1e-8,"mip_rel_gap"=>1e-8),
+        # Retain the tiny OA coefficients: the default 1e-9 filter can turn a
+        # valid cut into 0 >= positive RHS in the registered 24-snapshot model.
+        "oa_solver"=>JuMP.optimizer_with_attributes(HiGHS.Optimizer,"output_flag"=>false,"threads"=>1,"small_matrix_value"=>1e-12,"mip_feasibility_tolerance"=>1e-8,"mip_rel_gap"=>1e-8),
         "conic_solver"=>JuMP.optimizer_with_attributes(Clarabel.Optimizer,"verbose"=>false,"tol_gap_abs"=>1e-10,"tol_gap_rel"=>1e-10,"tol_feas"=>1e-10,"max_iter"=>300),
         "verbose"=>false,"use_iterative_method"=>true,"tol_rel_gap"=>1e-7,"tol_abs_gap"=>1e-8,"tol_feas"=>1e-7,"time_limit"=>120.,"iteration_limit"=>100)
 end
