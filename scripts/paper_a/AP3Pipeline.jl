@@ -246,6 +246,10 @@ function run_suite(configpath,out)
                     opt=fid in ("G0","G3") ? (relaxed ? Clarabel.Optimizer : fid=="G3" && gurobi ? Gurobi.Optimizer : pajarito_optimizer()) : HiGHS.Optimizer
                     result=solve!(pm,opt;objective_scale=fid in ("G0","G3") ? baseline_scale : nothing);merge!(row,result);row["build_wall_s"]=compile
                     row["status"]=result["termination"]=="OPTIMAL" ? "optimal" : result["termination"]=="INFEASIBLE" ? "infeasible" : "numerical_inconclusive"
+                    if !relaxed && fid in ("G0","G3") && opt!==Gurobi.Optimizer && result["termination"]=="INFEASIBLE"
+                        row["status"]="numerical_inconclusive"
+                        row["reason"]="Pajarito_infeasibility_requires_independent_crosscheck_after_observed_false_infeasibility"
+                    end
                     if row["status"]=="optimal" && row["relative_gap"] isa Real && row["relative_gap"]>1e-6
                         row["status"]="numerical_inconclusive";row["reason"]="original_currency_primal_bound_gap_exceeds_1e-6"
                     end
