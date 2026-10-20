@@ -1,0 +1,48 @@
+schema: paper_a_a3_5_mathematical_review/1.0
+date: "2026-10-20"
+review_target_sha: 485b637cc1998a327206c5929434bd26c6f0be16
+mathematical_authority_sha: e8118425adc335a99e85120d943763305f211315
+frozen_science_sha: 2c2fce769b2ed6ffd4f1ced60c0798776acccc93
+scope: theorem_derivations_and_applicability_only
+sympy_exact_rational_checks: {passed: 20, total: 20, runtime: "SymPy 1.14", ap3_import: false}
+scientific_freeze_modified: false
+ap3_source_modified: false
+native_solver_runs_performed: false
+mathematical_review_findings:
+  - id: A35-MATH-001
+    severity: major
+    classification: new_valid_conditional_implication_not_explicitly_in_frozen_graph
+    statement: "If B is symmetric positive definite and inverse-positive, p>=0 and alpha>0, then M0 implies G0"
+    derivation: "K=alpha B^-1 diag(p)>=0; K*ones<=ones; rho(K)<=norm_inf(K)<=1; congruence yields B-alpha*diag(p) PSD"
+    independently_checked: true
+    direct_proof: true
+    amendment_needed: controlled_theorem_freeze_addition_pending_separate_adjudication
+  - id: A35-MATH-002
+    severity: major
+    classification: conditional_physical_source_boundary
+    statement: "Source-behind-reactance diagonal strength requires fixed internal source voltage or explicitly qualified proxy"
+    counterexample: "Schur elimination of freely varying source-internal node cancels source diagonal exactly"
+    independently_checked: true
+    confirmed_source_code_defect: false
+    required_action: explicitly_freeze_source_boundary_assumption
+  - id: A35-MATH-003
+    severity: major
+    classification: domain_and_project_predicate_dependency
+    statement: "G0 singular-exposure interpretation, M0 inverse positivity and G3 exactness are conditional"
+    independently_checked: true
+    required_action: later_verify_P001_P010_for_each_state
+  - id: A35-MATH-004
+    severity: minor
+    classification: physical_metric_nonidentity
+    statement: "Same alpha across normalized internal constraints is not externally calibrated converter/fault SCR equivalence"
+    required_action: preserve_metric_names_and_exposure_contract
+  - id: A35-MATH-005
+    severity: informational
+    classification: historical_source_mapping_unresolved
+    statement: "T003 source-symbol relation is not independently established"
+    required_action: do_not_claim_historical_symbol_identity
+frozen_theorem_contradictions_confirmed: 0
+unverified_project_predicates: true
+independent_A3_5_accepted: false
+A3_closed: false
+AP4_ready: false
