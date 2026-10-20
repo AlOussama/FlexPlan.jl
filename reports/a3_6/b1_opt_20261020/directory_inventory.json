@@ -175,6 +175,11 @@
     "sha256": "df874369e551b3f26515e3ad3074c342d0030da986cece6372896d7acc451f34"
   },
   {
+    "path": "publication_verification.json",
+    "bytes": 15568,
+    "sha256": "465caa447124e0ecac7078eaea6f8734b8b9640e85bbef1e84771299e3ae5d80"
+  },
+  {
     "path": "raw_cost_objective.py",
     "bytes": 3566,
     "sha256": "e9719bea2d3c0720fa77bb5f91b361ba5a0fc1a0ce6dba0264e666723aad6fae"
