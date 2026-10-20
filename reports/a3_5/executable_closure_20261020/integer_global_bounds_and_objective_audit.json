@@ -1,0 +1,803 @@
+[
+  {
+    "case_id": "bess_premium_3snap",
+    "case_sha256": "f2a931f452675dc9206bca4af62262c7c29e9d2daf05b13b16b8535ea197b243",
+    "points": [
+      {
+        "formulation": "G0",
+        "cost": 2524596.12190073,
+        "cost_components": {
+          "investment": 3.1326830089821803e-10,
+          "generation": 2524569.68068157,
+          "storage": 26.441219159525836,
+          "startup": 0.0,
+          "shutdown": 0.0,
+          "no_load": 0.0
+        },
+        "cost_residual": 1.2177042663097382e-06,
+        "operating_violations": {
+          "balance_MW": 1.1631497410405218e-12,
+          "soc_MWh": 9.094947017729282e-13,
+          "terminal_MWh": 9.922355796430917e-13,
+          "connection_blocks": 2.7872660375549095e-14,
+          "integrality_blocks": 2.7872660375549095e-14,
+          "UC_transition": 1.4172161128535654e-15
+        },
+        "all_constraints": {
+          "dual": "FEASIBLE_POINT",
+          "primal": "FEASIBLE_POINT",
+          "max_violation": 2.7872660375549095e-14,
+          "violations_by_set": {
+            "MathOptInterface.LessThan{Float64}": 8.676315650150865e-15,
+            "MathOptInterface.GreaterThan{Float64}": 6.369302873151412e-15,
+            "MathOptInterface.EqualTo{Float64}": 2.7872660375549095e-14
+          }
+        },
+        "min_eigen_M": 73.6439976541879,
+        "min_G3_product": null,
+        "matrix_difference": 2.2737367544323206e-13,
+        "fixed_integer_decisions": 198,
+        "hours": 9.0
+      },
+      {
+        "formulation": "G3",
+        "cost": 2524596.1218786356,
+        "cost_components": {
+          "investment": -3.297727584745597e-08,
+          "generation": 2524569.6806594925,
+          "storage": 26.441219176079464,
+          "startup": 0.0,
+          "shutdown": 0.0,
+          "no_load": 0.0
+        },
+        "cost_residual": 3.1266361474990845e-05,
+        "operating_violations": {
+          "balance_MW": 2.9121278327571406e-12,
+          "soc_MWh": 1.3642420526593924e-12,
+          "terminal_MWh": 4.547473508864641e-13,
+          "connection_blocks": 2.1760371282653068e-14,
+          "integrality_blocks": 2.1760371282653068e-14,
+          "UC_transition": 4.8330376167270204e-17
+        },
+        "all_constraints": {
+          "dual": "FEASIBLE_POINT",
+          "primal": "FEASIBLE_POINT",
+          "max_violation": 4.5034992317419546e-11,
+          "violations_by_set": {
+            "MathOptInterface.LessThan{Float64}": 3.246125011092306e-11,
+            "MathOptInterface.GreaterThan{Float64}": 4.5034992317419546e-11,
+            "MathOptInterface.EqualTo{Float64}": 3.197442310920451e-14
+          }
+        },
+        "min_eigen_M": 73.64399765418828,
+        "min_G3_product": 2135.2022318420204,
+        "matrix_difference": 1.1368683772161603e-13,
+        "fixed_integer_decisions": 198,
+        "hours": 9.0
+      }
+    ],
+    "feasible_cost_upper": 2524596.1218786356,
+    "BASE_LP_numerical_lower_bound": 2524596.1218985915,
+    "LP_signed_gap": -1.9955914467573166e-05,
+    "historical_native_max_claimed_bound": 2524578.4405520177,
+    "historical_bound_signed_distance": 17.681326617952436,
+    "original_reference_lower_claim": 2524596.121899206,
+    "original_reference_upper_claim": 2524596.1218997063,
+    "signed_reference_gap": -2.0570587366819382e-05,
+    "globality": "numerically_supported_bounds_only_not_rigorous_certificate",
+    "full_enumeration": false,
+    "G0_G3_fixed_cost_difference": 2.2094231098890305e-05
+  },
+  {
+    "case_id": "connectivity_3snap",
+    "case_sha256": "c52e648b1497fbd3b5facfcd272cf535a02f5bda3d86cff34d3f433e703e0bf3",
+    "points": [
+      {
+        "formulation": "G0",
+        "cost": 2594530.970259665,
+        "cost_components": {
+          "investment": 10527.810764838185,
+          "generation": 2583973.087286543,
+          "storage": 30.072208283972007,
+          "startup": 0.0,
+          "shutdown": 0.0,
+          "no_load": 0.0
+        },
+        "cost_residual": 2.2281892597675323e-06,
+        "operating_violations": {
+          "balance_MW": 2.0053096067789162e-12,
+          "soc_MWh": 1.315899601873782e-12,
+          "terminal_MWh": 1.459263129163846e-12,
+          "connection_blocks": 3.341606520050776e-14,
+          "integrality_blocks": 3.341606520050776e-14,
+          "UC_transition": 1.5335573933203543e-15
+        },
+        "all_constraints": {
+          "dual": "FEASIBLE_POINT",
+          "primal": "FEASIBLE_POINT",
+          "max_violation": 3.341606520050776e-14,
+          "violations_by_set": {
+            "MathOptInterface.LessThan{Float64}": 7.166592221475862e-15,
+            "MathOptInterface.GreaterThan{Float64}": 4.854495132754882e-15,
+            "MathOptInterface.EqualTo{Float64}": 3.341606520050776e-14
+          }
+        },
+        "min_eigen_M": 75.76986573656126,
+        "min_G3_product": null,
+        "matrix_difference": 2.2737367544323206e-13,
+        "fixed_integer_decisions": 198,
+        "hours": 9.0
+      },
+      {
+        "formulation": "G3",
+        "cost": 2594530.9702025056,
+        "cost_components": {
+          "investment": 10527.810764837095,
+          "generation": 2583973.087227903,
+          "storage": 30.072209765451195,
+          "startup": 0.0,
+          "shutdown": 0.0,
+          "no_load": 0.0
+        },
+        "cost_residual": 1.5981495380401611e-06,
+        "operating_violations": {
+          "balance_MW": 1.7343404692866788e-12,
+          "soc_MWh": 9.094947017729282e-13,
+          "terminal_MWh": 1.5773449554717286e-16,
+          "connection_blocks": 8.881784197001252e-16,
+          "integrality_blocks": 8.881784197001252e-16,
+          "UC_transition": 3.05822824660864e-18
+        },
+        "all_constraints": {
+          "dual": "FEASIBLE_POINT",
+          "primal": "FEASIBLE_POINT",
+          "max_violation": 1.1565648136558456e-10,
+          "violations_by_set": {
+            "MathOptInterface.LessThan{Float64}": 8.645820209424314e-11,
+            "MathOptInterface.GreaterThan{Float64}": 1.1565648136558456e-10,
+            "MathOptInterface.EqualTo{Float64}": 2.1316282072803006e-14
+          }
+        },
+        "min_eigen_M": 75.76986573656137,
+        "min_G3_product": 1988.58112355891,
+        "matrix_difference": 1.1368683772161603e-13,
+        "fixed_integer_decisions": 198,
+        "hours": 9.0
+      }
+    ],
+    "feasible_cost_upper": 2594530.9702025056,
+    "BASE_LP_numerical_lower_bound": 2585242.7888028766,
+    "LP_signed_gap": 9288.181399628986,
+    "historical_native_max_claimed_bound": 2594513.4862139053,
+    "historical_bound_signed_distance": 17.48398860031739,
+    "original_reference_lower_claim": 2594530.9702579714,
+    "original_reference_upper_claim": 2594530.970258845,
+    "signed_reference_gap": -5.546584725379944e-05,
+    "globality": "numerically_supported_bounds_only_not_rigorous_certificate",
+    "full_enumeration": false,
+    "G0_G3_fixed_cost_difference": 5.7159457355737686e-05
+  },
+  {
+    "case_id": "event_price_3snap",
+    "case_sha256": "cb9d2f37cfff5caaea42268941e531baf2d53f4e50a01dfe03bedbe235d4cf6b",
+    "points": [
+      {
+        "formulation": "G0",
+        "cost": 5608912.202457605,
+        "cost_components": {
+          "investment": 1136726.3494462543,
+          "generation": 2120856.0022504455,
+          "storage": 40.96187201623731,
+          "startup": 2351288.8888888885,
+          "shutdown": 1.513875922959459e-10,
+          "no_load": 0.0
+        },
+        "cost_residual": 8.209235966205597e-05,
+        "operating_violations": {
+          "balance_MW": 2.2101859664603057e-12,
+          "soc_MWh": 3.0676679858606076e-12,
+          "terminal_MWh": 3.758030778675428e-12,
+          "connection_blocks": 8.130053709318175e-14,
+          "integrality_blocks": 8.130053709318175e-14,
+          "UC_transition": 7.144914561808226e-15
+        },
+        "all_constraints": {
+          "dual": "FEASIBLE_POINT",
+          "primal": "FEASIBLE_POINT",
+          "max_violation": 8.130053709318175e-14,
+          "violations_by_set": {
+            "MathOptInterface.LessThan{Float64}": 5.6555566381087436e-14,
+            "MathOptInterface.GreaterThan{Float64}": 1.6340307308802294e-14,
+            "MathOptInterface.EqualTo{Float64}": 8.130053709318175e-14
+          }
+        },
+        "min_eigen_M": 63.073035901551506,
+        "min_G3_product": null,
+        "matrix_difference": 1.1368683772161603e-13,
+        "fixed_integer_decisions": 198,
+        "hours": 9.0
+      },
+      {
+        "formulation": "G3",
+        "cost": 5608912.202201794,
+        "cost_components": {
+          "investment": 1136726.349446266,
+          "generation": 2120856.0019876533,
+          "storage": 40.96187898779658,
+          "startup": 2351288.8888888853,
+          "shutdown": 1.959426666964207e-09,
+          "no_load": 0.0
+        },
+        "cost_residual": 5.4663047194480896e-05,
+        "operating_violations": {
+          "balance_MW": 1.6183353924907562e-12,
+          "soc_MWh": 3.72616022757323e-11,
+          "terminal_MWh": 4.179534552088509e-11,
+          "connection_blocks": 1.0975722869694449e-12,
+          "integrality_blocks": 1.0975722869694449e-12,
+          "UC_transition": 1.1072064536073664e-13
+        },
+        "all_constraints": {
+          "dual": "FEASIBLE_POINT",
+          "primal": "FEASIBLE_POINT",
+          "max_violation": 1.5574386225125636e-10,
+          "violations_by_set": {
+            "MathOptInterface.LessThan{Float64}": 1.5574386225125636e-10,
+            "MathOptInterface.GreaterThan{Float64}": 3.904725200413063e-11,
+            "MathOptInterface.EqualTo{Float64}": 1.0975722869694449e-12
+          }
+        },
+        "min_eigen_M": 63.07303590155234,
+        "min_G3_product": 2507.1329655522495,
+        "matrix_difference": 2.2737367544323206e-13,
+        "fixed_integer_decisions": 198,
+        "hours": 9.0
+      }
+    ],
+    "feasible_cost_upper": 5608912.202201794,
+    "BASE_LP_numerical_lower_bound": 5607031.884444596,
+    "LP_signed_gap": 1880.3177571976557,
+    "historical_native_max_claimed_bound": 5608444.648861325,
+    "historical_bound_signed_distance": 467.5533404685557,
+    "original_reference_lower_claim": 5608912.20245683,
+    "original_reference_upper_claim": 5608912.20245618,
+    "signed_reference_gap": -0.0002550361678004265,
+    "globality": "numerically_supported_bounds_only_not_rigorous_certificate",
+    "full_enumeration": false,
+    "G0_G3_fixed_cost_difference": 0.00025581102818250656
+  },
+  {
+    "case_id": "exposure_multiplier_3snap",
+    "case_sha256": "8d340cc4e63b575bde4ba3d3a605227ec0c7db4b909b77618f814a8a2647435d",
+    "points": [
+      {
+        "formulation": "G0",
+        "cost": 2524596.121900731,
+        "cost_components": {
+          "investment": 2.473175955154304e-10,
+          "generation": 2524569.6806815714,
+          "storage": 26.44121915952919,
+          "startup": 0.0,
+          "shutdown": 0.0,
+          "no_load": 0.0
+        },
+        "cost_residual": 1.218169927597046e-06,
+        "operating_violations": {
+          "balance_MW": 2.817719828182601e-12,
+          "soc_MWh": 1.2505552149377763e-12,
+          "terminal_MWh": 9.909728652561807e-13,
+          "connection_blocks": 2.7864374911025955e-14,
+          "integrality_blocks": 2.7864374911025955e-14,
+          "UC_transition": 1.4175743590203845e-15
+        },
+        "all_constraints": {
+          "dual": "FEASIBLE_POINT",
+          "primal": "FEASIBLE_POINT",
+          "max_violation": 2.7864374911025955e-14,
+          "violations_by_set": {
+            "MathOptInterface.LessThan{Float64}": 8.688779542870489e-15,
+            "MathOptInterface.GreaterThan{Float64}": 6.379069170993315e-15,
+            "MathOptInterface.EqualTo{Float64}": 2.7864374911025955e-14
+          }
+        },
+        "min_eigen_M": 72.16738153334725,
+        "min_G3_product": null,
+        "matrix_difference": 3.410605131648481e-13,
+        "fixed_integer_decisions": 198,
+        "hours": 9.0
+      },
+      {
+        "formulation": "G3",
+        "cost": 2524596.1218778696,
+        "cost_components": {
+          "investment": -3.400079044868406e-08,
+          "generation": 2524569.680658727,
+          "storage": 26.44121917666363,
+          "startup": 0.0,
+          "shutdown": 0.0,
+          "no_load": 0.0
+        },
+        "cost_residual": 3.269640728831291e-05,
+        "operating_violations": {
+          "balance_MW": 2.086828186146625e-12,
+          "soc_MWh": 4.547473508864641e-13,
+          "terminal_MWh": 1.6709919411411133e-15,
+          "connection_blocks": 2.2648549702353193e-14,
+          "integrality_blocks": 2.2648549702353193e-14,
+          "UC_transition": 5.0008169497145295e-17
+        },
+        "all_constraints": {
+          "dual": "FEASIBLE_POINT",
+          "primal": "FEASIBLE_POINT",
+          "max_violation": 4.6605946999788966e-11,
+          "violations_by_set": {
+            "MathOptInterface.LessThan{Float64}": 3.3598208249931684e-11,
+            "MathOptInterface.GreaterThan{Float64}": 4.6605946999788966e-11,
+            "MathOptInterface.EqualTo{Float64}": 2.4868995751603507e-14
+          }
+        },
+        "min_eigen_M": 72.16738153334724,
+        "min_G3_product": 2091.5167152364083,
+        "matrix_difference": 2.2737367544323206e-13,
+        "fixed_integer_decisions": 198,
+        "hours": 9.0
+      }
+    ],
+    "feasible_cost_upper": 2524596.1218778696,
+    "BASE_LP_numerical_lower_bound": 2524596.1218985915,
+    "LP_signed_gap": -2.0721927285194397e-05,
+    "historical_native_max_claimed_bound": 2524578.4405520177,
+    "historical_bound_signed_distance": 17.68132585193962,
+    "original_reference_lower_claim": 2524596.121899206,
+    "original_reference_upper_claim": 2524596.1218997063,
+    "signed_reference_gap": -2.1336600184440613e-05,
+    "globality": "numerically_supported_bounds_only_not_rigorous_certificate",
+    "full_enumeration": false,
+    "G0_G3_fixed_cost_difference": 2.286164090037346e-05
+  },
+  {
+    "case_id": "reference_24snap",
+    "case_sha256": "d74a295602d3916147b47d08070ebc650a28c1fd392473219b87f140ee0d551f",
+    "points": [
+      {
+        "formulation": "G0",
+        "cost": 14128094.086298052,
+        "cost_components": {
+          "investment": 783539.2078222269,
+          "generation": 13344460.102088658,
+          "storage": 94.77638716672577,
+          "startup": 0.0,
+          "shutdown": 0.0,
+          "no_load": 0.0
+        },
+        "cost_residual": 1.7171725630760193e-05,
+        "operating_violations": {
+          "balance_MW": 4.163468358690139e-12,
+          "soc_MWh": 9.81426308005498e-13,
+          "terminal_MWh": 1.1076896964472913e-12,
+          "connection_blocks": 3.741660643805727e-14,
+          "integrality_blocks": 3.741660643805727e-14,
+          "UC_transition": 1.7763568394002505e-15
+        },
+        "all_constraints": {
+          "dual": "FEASIBLE_POINT",
+          "primal": "FEASIBLE_POINT",
+          "max_violation": 2.1591404140895696e-13,
+          "violations_by_set": {
+            "MathOptInterface.LessThan{Float64}": 2.1591404140895696e-13,
+            "MathOptInterface.GreaterThan{Float64}": 1.0185576027164307e-13,
+            "MathOptInterface.EqualTo{Float64}": 4.796163466380676e-14
+          }
+        },
+        "min_eigen_M": 26.850404370986602,
+        "min_G3_product": null,
+        "matrix_difference": 2.2737367544323206e-13,
+        "fixed_integer_decisions": 1353,
+        "hours": 72.0
+      },
+      {
+        "formulation": "G3",
+        "cost": 14128094.086192291,
+        "cost_components": {
+          "investment": 783539.2078225263,
+          "generation": 13344460.101982579,
+          "storage": 94.77638718657659,
+          "startup": 0.0,
+          "shutdown": 0.0,
+          "no_load": 0.0
+        },
+        "cost_residual": 1.9758939743041992e-05,
+        "operating_violations": {
+          "balance_MW": 4.231119379190867e-12,
+          "soc_MWh": 2.6005864128819667e-12,
+          "terminal_MWh": 3.0033150043125e-14,
+          "connection_blocks": 1.4452442791828773e-14,
+          "integrality_blocks": 1.4452442791828773e-14,
+          "UC_transition": 1.8453217684705329e-16
+        },
+        "all_constraints": {
+          "dual": "FEASIBLE_POINT",
+          "primal": "FEASIBLE_POINT",
+          "max_violation": 3.530511767739503e-11,
+          "violations_by_set": {
+            "MathOptInterface.LessThan{Float64}": 3.530511767739503e-11,
+            "MathOptInterface.GreaterThan{Float64}": 2.719938817513791e-11,
+            "MathOptInterface.EqualTo{Float64}": 3.730349362740526e-14
+          }
+        },
+        "min_eigen_M": 26.850404370986915,
+        "min_G3_product": 889.0489627746683,
+        "matrix_difference": 1.1368683772161603e-13,
+        "fixed_integer_decisions": 1353,
+        "hours": 72.0
+      }
+    ],
+    "feasible_cost_upper": 14128094.086192291,
+    "BASE_LP_numerical_lower_bound": 14127976.852376133,
+    "LP_signed_gap": 117.23381615802646,
+    "historical_native_max_claimed_bound": 14127810.651615297,
+    "historical_bound_signed_distance": 283.43457699380815,
+    "original_reference_lower_claim": 14128094.086291246,
+    "original_reference_upper_claim": 14128094.086289586,
+    "signed_reference_gap": -9.895488619804382e-05,
+    "globality": "numerically_supported_bounds_only_not_rigorous_certificate",
+    "full_enumeration": false,
+    "G0_G3_fixed_cost_difference": 0.00010576099157333374
+  },
+  {
+    "case_id": "reference_3snap",
+    "case_sha256": "b0d2363e84d28a266cb5e4313ff94177c41e3e19dbf3db7863c47303fdd83121",
+    "points": [
+      {
+        "formulation": "G0",
+        "cost": 2524596.1219007303,
+        "cost_components": {
+          "investment": 2.475890777686918e-10,
+          "generation": 2524569.6806815704,
+          "storage": 26.441219159525804,
+          "startup": 0.0,
+          "shutdown": 0.0,
+          "no_load": 0.0
+        },
+        "cost_residual": 1.218169927597046e-06,
+        "operating_violations": {
+          "balance_MW": 4.218433759088732e-12,
+          "soc_MWh": 1.2505552149377763e-12,
+          "terminal_MWh": 9.922506434002784e-13,
+          "connection_blocks": 2.7873081814442156e-14,
+          "integrality_blocks": 2.7873081814442156e-14,
+          "UC_transition": 1.417175223465577e-15
+        },
+        "all_constraints": {
+          "dual": "FEASIBLE_POINT",
+          "primal": "FEASIBLE_POINT",
+          "max_violation": 4.263256414560601e-14,
+          "violations_by_set": {
+            "MathOptInterface.LessThan{Float64}": 8.676448309936824e-15,
+            "MathOptInterface.GreaterThan{Float64}": 6.3694003421779255e-15,
+            "MathOptInterface.EqualTo{Float64}": 4.263256414560601e-14
+          }
+        },
+        "min_eigen_M": 73.6439976541879,
+        "min_G3_product": null,
+        "matrix_difference": 2.2737367544323206e-13,
+        "fixed_integer_decisions": 198,
+        "hours": 9.0
+      },
+      {
+        "formulation": "G3",
+        "cost": 2524596.1218786356,
+        "cost_components": {
+          "investment": -3.29773737244474e-08,
+          "generation": 2524569.6806594925,
+          "storage": 26.441219176079322,
+          "startup": 0.0,
+          "shutdown": 0.0,
+          "no_load": 0.0
+        },
+        "cost_residual": 3.126682713627815e-05,
+        "operating_violations": {
+          "balance_MW": 3.2263418787356515e-12,
+          "soc_MWh": 4.547473508864641e-13,
+          "terminal_MWh": 1.7271099082853678e-15,
+          "connection_blocks": 2.1760371282653068e-14,
+          "integrality_blocks": 2.1760371282653068e-14,
+          "UC_transition": 4.832971367303518e-17
+        },
+        "all_constraints": {
+          "dual": "FEASIBLE_POINT",
+          "primal": "FEASIBLE_POINT",
+          "max_violation": 4.503499227612197e-11,
+          "violations_by_set": {
+            "MathOptInterface.LessThan{Float64}": 3.246125008183075e-11,
+            "MathOptInterface.GreaterThan{Float64}": 4.503499227612197e-11,
+            "MathOptInterface.EqualTo{Float64}": 3.197442310920451e-14
+          }
+        },
+        "min_eigen_M": 73.64399765418828,
+        "min_G3_product": 2135.202230841831,
+        "matrix_difference": 1.1368683772161603e-13,
+        "fixed_integer_decisions": 198,
+        "hours": 9.0
+      }
+    ],
+    "feasible_cost_upper": 2524596.1218786356,
+    "BASE_LP_numerical_lower_bound": 2524596.1218985915,
+    "LP_signed_gap": -1.9955914467573166e-05,
+    "historical_native_max_claimed_bound": 2524578.4405520177,
+    "historical_bound_signed_distance": 17.681326617952436,
+    "original_reference_lower_claim": 2524596.121899206,
+    "original_reference_upper_claim": 2524596.1218997063,
+    "signed_reference_gap": -2.0570587366819382e-05,
+    "globality": "numerically_supported_bounds_only_not_rigorous_certificate",
+    "full_enumeration": false,
+    "G0_G3_fixed_cost_difference": 2.2094696760177612e-05
+  },
+  {
+    "case_id": "reference_6snap",
+    "case_sha256": "bc3f847fe10dce0ba08dce6443fea92334e93a1a4595141e34838bde49d711ad",
+    "points": [
+      {
+        "formulation": "G0",
+        "cost": 4085284.719940615,
+        "cost_components": {
+          "investment": 241088.98702258186,
+          "generation": 3844172.3301844657,
+          "storage": 23.40273356726702,
+          "startup": 0.0,
+          "shutdown": 0.0,
+          "no_load": 0.0
+        },
+        "cost_residual": 0.00010988116264343262,
+        "operating_violations": {
+          "balance_MW": 2.524446239001174e-12,
+          "soc_MWh": 2.695615449517918e-11,
+          "terminal_MWh": 2.7352000054645066e-11,
+          "connection_blocks": 9.195268610399027e-13,
+          "integrality_blocks": 9.195268610399027e-13,
+          "UC_transition": 2.531308496145357e-14
+        },
+        "all_constraints": {
+          "dual": "FEASIBLE_POINT",
+          "primal": "FEASIBLE_POINT",
+          "max_violation": 9.44517813625775e-13,
+          "violations_by_set": {
+            "MathOptInterface.LessThan{Float64}": 9.44517813625775e-13,
+            "MathOptInterface.GreaterThan{Float64}": 5.278572658170941e-13,
+            "MathOptInterface.EqualTo{Float64}": 9.195268610399027e-13
+          }
+        },
+        "min_eigen_M": 52.79179986217406,
+        "min_G3_product": null,
+        "matrix_difference": 2.2737367544323206e-13,
+        "fixed_integer_decisions": 363,
+        "hours": 18.0
+      },
+      {
+        "formulation": "G3",
+        "cost": 4085284.7198763695,
+        "cost_components": {
+          "investment": 241088.98702214984,
+          "generation": 3844172.330120658,
+          "storage": 23.402733561498074,
+          "startup": 0.0,
+          "shutdown": 0.0,
+          "no_load": 0.0
+        },
+        "cost_residual": 5.62458299100399e-05,
+        "operating_violations": {
+          "balance_MW": 2.2415748510019933e-12,
+          "soc_MWh": 4.547473508864641e-13,
+          "terminal_MWh": 2.4831506144649073e-14,
+          "connection_blocks": 3.863576125695545e-14,
+          "integrality_blocks": 3.863576125695545e-14,
+          "UC_transition": 7.981188058839016e-17
+        },
+        "all_constraints": {
+          "dual": "FEASIBLE_POINT",
+          "primal": "FEASIBLE_POINT",
+          "max_violation": 2.9208435798178345e-11,
+          "violations_by_set": {
+            "MathOptInterface.LessThan{Float64}": 2.6136072197469284e-11,
+            "MathOptInterface.GreaterThan{Float64}": 2.9208435798178345e-11,
+            "MathOptInterface.EqualTo{Float64}": 3.863576125695545e-14
+          }
+        },
+        "min_eigen_M": 52.79179986217281,
+        "min_G3_product": 1549.631742685182,
+        "matrix_difference": 1.1368683772161603e-13,
+        "fixed_integer_decisions": 363,
+        "hours": 18.0
+      }
+    ],
+    "feasible_cost_upper": 4085284.7198763695,
+    "BASE_LP_numerical_lower_bound": 4085284.7155874576,
+    "LP_signed_gap": 0.004288911819458008,
+    "historical_native_max_claimed_bound": 4085252.225455423,
+    "historical_bound_signed_distance": 32.4944209465757,
+    "original_reference_lower_claim": 4085284.715587981,
+    "original_reference_upper_claim": 4085284.71990484,
+    "signed_reference_gap": 0.004288388416171074,
+    "globality": "numerically_supported_bounds_only_not_rigorous_certificate",
+    "full_enumeration": false,
+    "G0_G3_fixed_cost_difference": 6.424542516469955e-05
+  },
+  {
+    "case_id": "source_reactance_3snap",
+    "case_sha256": "8cfe46680d6f0a8be1378d1b21d2bd3efc4c82985389f22ee6fc52d5d40b6d78",
+    "points": [
+      {
+        "formulation": "G0",
+        "cost": 2524596.121901025,
+        "cost_components": {
+          "investment": 2.7526121018482287e-09,
+          "generation": 2524569.6806818624,
+          "storage": 26.441219159699223,
+          "startup": 0.0,
+          "shutdown": 0.0,
+          "no_load": 0.0
+        },
+        "cost_residual": 3.725290298461914e-07,
+        "operating_violations": {
+          "balance_MW": 2.048246464016674e-12,
+          "soc_MWh": 1.0231815394945443e-12,
+          "terminal_MWh": 1.0596243626602713e-12,
+          "connection_blocks": 3.9667583237041004e-14,
+          "integrality_blocks": 3.9667583237041004e-14,
+          "UC_transition": 2.360328515635235e-15
+        },
+        "all_constraints": {
+          "dual": "FEASIBLE_POINT",
+          "primal": "FEASIBLE_POINT",
+          "max_violation": 3.9667583237041004e-14,
+          "violations_by_set": {
+            "MathOptInterface.LessThan{Float64}": 2.5462402735895676e-14,
+            "MathOptInterface.GreaterThan{Float64}": 2.5681168650715806e-14,
+            "MathOptInterface.EqualTo{Float64}": 3.9667583237041004e-14
+          }
+        },
+        "min_eigen_M": 54.27048367372499,
+        "min_G3_product": null,
+        "matrix_difference": 1.1368683772161603e-13,
+        "fixed_integer_decisions": 198,
+        "hours": 9.0
+      },
+      {
+        "formulation": "G3",
+        "cost": 2524596.12181627,
+        "cost_components": {
+          "investment": 3.495037492351403e-08,
+          "generation": 2524569.6805970143,
+          "storage": 26.441219220924726,
+          "startup": 0.0,
+          "shutdown": 0.0,
+          "no_load": 0.0
+        },
+        "cost_residual": 3.500841557979584e-05,
+        "operating_violations": {
+          "balance_MW": 2.2787656211274876e-12,
+          "soc_MWh": 9.094947017729282e-13,
+          "terminal_MWh": 3.861695476463009e-14,
+          "connection_blocks": 2.3092638912203256e-14,
+          "integrality_blocks": 2.3092638912203256e-14,
+          "UC_transition": 3.6807165949673492e-16
+        },
+        "all_constraints": {
+          "dual": "FEASIBLE_POINT",
+          "primal": "FEASIBLE_POINT",
+          "max_violation": 1.6521315639370073e-10,
+          "violations_by_set": {
+            "MathOptInterface.LessThan{Float64}": 1.3768897133559221e-10,
+            "MathOptInterface.GreaterThan{Float64}": 1.6521315639370073e-10,
+            "MathOptInterface.EqualTo{Float64}": 2.4868995751603507e-14
+          }
+        },
+        "min_eigen_M": 54.27048367372459,
+        "min_G3_product": 1689.7862024139777,
+        "matrix_difference": 1.1368683772161603e-13,
+        "fixed_integer_decisions": 198,
+        "hours": 9.0
+      }
+    ],
+    "feasible_cost_upper": 2524596.12181627,
+    "BASE_LP_numerical_lower_bound": 2524596.1218985915,
+    "LP_signed_gap": -8.232146501541138e-05,
+    "historical_native_max_claimed_bound": 2524578.4405520177,
+    "historical_bound_signed_distance": 17.68126425240189,
+    "original_reference_lower_claim": 2524596.121899206,
+    "original_reference_upper_claim": 2524596.1218997063,
+    "signed_reference_gap": -8.293613791465759e-05,
+    "globality": "numerically_supported_bounds_only_not_rigorous_certificate",
+    "full_enumeration": false,
+    "G0_G3_fixed_cost_difference": 8.475501090288162e-05
+  },
+  {
+    "case_id": "threshold_3snap",
+    "case_sha256": "907d1290f93b29dc796bfe0fedbc026458a6f84113f3c78fd0815af877bccdac",
+    "points": [
+      {
+        "formulation": "G0",
+        "cost": 2524596.121900738,
+        "cost_components": {
+          "investment": 2.467770961738909e-10,
+          "generation": 2524569.6806815783,
+          "storage": 26.441219159549473,
+          "startup": 0.0,
+          "shutdown": 0.0,
+          "no_load": 0.0
+        },
+        "cost_residual": 1.2172386050224304e-06,
+        "operating_violations": {
+          "balance_MW": 2.9516070357076564e-12,
+          "soc_MWh": 1.3642420526593924e-12,
+          "terminal_MWh": 9.836198364675674e-13,
+          "connection_blocks": 2.7845014261207327e-14,
+          "integrality_blocks": 2.7845014261207327e-14,
+          "UC_transition": 1.4162978724989782e-15
+        },
+        "all_constraints": {
+          "dual": "FEASIBLE_POINT",
+          "primal": "FEASIBLE_POINT",
+          "max_violation": 2.842170943040401e-14,
+          "violations_by_set": {
+            "MathOptInterface.LessThan{Float64}": 8.77569414477464e-15,
+            "MathOptInterface.GreaterThan{Float64}": 6.448648087151622e-15,
+            "MathOptInterface.EqualTo{Float64}": 2.842170943040401e-14
+          }
+        },
+        "min_eigen_M": 61.54070918294546,
+        "min_G3_product": null,
+        "matrix_difference": 2.2737367544323206e-13,
+        "fixed_integer_decisions": 198,
+        "hours": 9.0
+      },
+      {
+        "formulation": "G3",
+        "cost": 2524596.1218784368,
+        "cost_components": {
+          "investment": -3.264355700031051e-08,
+          "generation": 2524569.680659293,
+          "storage": 26.441219176284466,
+          "startup": 0.0,
+          "shutdown": 0.0,
+          "no_load": 0.0
+        },
+        "cost_residual": 3.126775845885277e-05,
+        "operating_violations": {
+          "balance_MW": 1.4469791834623265e-12,
+          "soc_MWh": 1.3642420526593924e-12,
+          "terminal_MWh": 1.8432854561340728e-15,
+          "connection_blocks": 2.1760371282653068e-14,
+          "integrality_blocks": 2.1760371282653068e-14,
+          "UC_transition": 4.772862689275326e-17
+        },
+        "all_constraints": {
+          "dual": "FEASIBLE_POINT",
+          "primal": "FEASIBLE_POINT",
+          "max_violation": 4.551031325946998e-11,
+          "violations_by_set": {
+            "MathOptInterface.LessThan{Float64}": 3.269175787049644e-11,
+            "MathOptInterface.GreaterThan{Float64}": 4.551031325946998e-11,
+            "MathOptInterface.EqualTo{Float64}": 2.1760371282653068e-14
+          }
+        },
+        "min_eigen_M": 61.54070918294511,
+        "min_G3_product": 1775.8364844806965,
+        "matrix_difference": 1.7053025658242404e-13,
+        "fixed_integer_decisions": 198,
+        "hours": 9.0
+      }
+    ],
+    "feasible_cost_upper": 2524596.1218784368,
+    "BASE_LP_numerical_lower_bound": 2524596.1218985915,
+    "LP_signed_gap": -2.015475183725357e-05,
+    "historical_native_max_claimed_bound": 2524578.4405520177,
+    "historical_bound_signed_distance": 17.681326419115067,
+    "original_reference_lower_claim": 2524596.121899206,
+    "original_reference_upper_claim": 2524596.1218997063,
+    "signed_reference_gap": -2.0769424736499786e-05,
+    "globality": "numerically_supported_bounds_only_not_rigorous_certificate",
+    "full_enumeration": false,
+    "G0_G3_fixed_cost_difference": 2.230145037174225e-05
+  }
+]

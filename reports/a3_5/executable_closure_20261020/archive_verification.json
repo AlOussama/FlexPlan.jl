@@ -1,0 +1,128 @@
+[
+  {
+    "path": "reports\\ap3_runs\\20261020_macro\\metrics_before_null_status_fix\\metrics-csv.zip",
+    "sha256": "865f79606f94ef14ce251e4023812aaf793af67927734f97c74fa33d7ed9f80c",
+    "bytes": 4580864,
+    "crc_bad": null,
+    "entries": [
+      "metrics.csv"
+    ]
+  },
+  {
+    "path": "reports\\ap3_runs\\20261020_macro\\metrics_before_null_status_fix\\metrics-json.zip",
+    "sha256": "6b1e61195a587a26e7571267af5cc93a2be7a383fafe689e92a188f285ff9a19",
+    "bytes": 4844795,
+    "crc_bad": null,
+    "entries": [
+      "metrics.json"
+    ]
+  },
+  {
+    "path": "reports\\ap3_runs\\20261020_macro\\metrics_before_unit_map\\metrics-csv.zip",
+    "sha256": "398a7581946b7bb372fd26d209d628252b390602303cc61faa7ee3bc22bd6c16",
+    "bytes": 3845285,
+    "crc_bad": null,
+    "entries": [
+      "metrics.csv"
+    ]
+  },
+  {
+    "path": "reports\\ap3_runs\\20261020_macro\\metrics_before_unit_map\\metrics-json.zip",
+    "sha256": "cf711dc16fe15928c291759b785779e4bd682677f87318357130f9def15846eb",
+    "bytes": 5383665,
+    "crc_bad": null,
+    "entries": [
+      "metrics.json"
+    ]
+  },
+  {
+    "path": "reports\\ap3_runs\\20261020_macro\\metrics_canonical_attempt01\\metrics-csv.zip",
+    "sha256": "631770b7555ae518947b286a3a9fa88774f1f0dd6306a8dc6b9a9e0c341af9a5",
+    "bytes": 120,
+    "crc_bad": null,
+    "entries": [
+      "metrics.csv"
+    ]
+  },
+  {
+    "path": "reports\\ap3_runs\\20261020_macro\\metrics_canonical_attempt01\\metrics-json.zip",
+    "sha256": "7afe3df8850526e29acfcff8e27bd8a4ed13e7a8e471bfe3d6c7173a1f6df9bf",
+    "bytes": 4844619,
+    "crc_bad": null,
+    "entries": [
+      "metrics.json"
+    ]
+  },
+  {
+    "path": "reports\\ap3_runs\\20261020_macro\\metrics_final\\metrics-csv.zip",
+    "sha256": "6409ea906d22f14150c465cdd6b4a86eebffaf7a25f97e82ad7a113dd3b7c011",
+    "bytes": 4581591,
+    "crc_bad": null,
+    "entries": [
+      "metrics.csv"
+    ]
+  },
+  {
+    "path": "reports\\ap3_runs\\20261020_macro\\metrics_final\\metrics-json.zip",
+    "sha256": "162d50dd1d85fabe6be06e8178dbeb974649721b995f29305cb0f81760e0de52",
+    "bytes": 4845913,
+    "crc_bad": null,
+    "entries": [
+      "metrics.json"
+    ]
+  },
+  {
+    "path": "reports\\ap3_runs\\20261020_macro\\metrics_smoke01\\metrics-csv.zip",
+    "sha256": "4a43ec55f6e15ef7c8dffc0926959831e9b2f125273d6f3813b55bc54045bf00",
+    "bytes": 197672,
+    "crc_bad": null,
+    "entries": [
+      "metrics.csv"
+    ]
+  },
+  {
+    "path": "reports\\ap3_runs\\20261020_macro\\metrics_smoke01\\metrics-json.zip",
+    "sha256": "fc533431714adbf0e208c20c6e4752d68f209eb02e4f85365e9a4eeafab833c7",
+    "bytes": 335003,
+    "crc_bad": null,
+    "entries": [
+      "metrics.json"
+    ]
+  },
+  {
+    "path": "reports\\ap3_runs\\20261020_macro\\postprocessing_before_final_scope\\metrics_final\\metrics-csv.zip",
+    "sha256": "8ee894ad50a18d49953498ea6cd64b586d524ed9cd9e7077284dbb4fd3aac845",
+    "bytes": 4026037,
+    "crc_bad": null,
+    "entries": [
+      "metrics.csv"
+    ]
+  },
+  {
+    "path": "reports\\ap3_runs\\20261020_macro\\postprocessing_before_final_scope\\metrics_final\\metrics-json.zip",
+    "sha256": "ad62b85765d7ea93069b3bfa53b441a509ab01d5324ed03d4390d1fae368f382",
+    "bytes": 5645818,
+    "crc_bad": null,
+    "entries": [
+      "metrics.json"
+    ]
+  },
+  {
+    "path": "reports\\ap3_runs\\20261020_macro\\pre_canonical_metric_contract\\metrics_final\\metrics-csv.zip",
+    "sha256": "25a794b31b9c8a09b25cb677d79c90183a62172dea00aa3ceab34a86f1fd1463",
+    "bytes": 2208692,
+    "crc_bad": null,
+    "entries": [
+      "metrics.csv"
+    ]
+  },
+  {
+    "path": "reports\\ap3_runs\\20261020_macro\\pre_canonical_metric_contract\\metrics_final\\metrics-json.zip",
+    "sha256": "0f41688291248b5b31446cb5ffc7fa52af8669f28e71c304212e9b6146edc853",
+    "bytes": 4975542,
+    "crc_bad": null,
+    "entries": [
+      "metrics.json"
+    ]
+  }
+]

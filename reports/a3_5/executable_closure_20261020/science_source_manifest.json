@@ -1,0 +1,66 @@
+[
+  {
+    "path": "docs/reports/C2_constraints/C2A_voltage_stability/scientific_report/2026-08-09__c2a-integrated-scientific-dissertation-chapter__restructured-v3.md",
+    "commit": "e8118425adc335a99e85120d943763305f211315",
+    "blob": "11ab4ba5a0005336756d252b4877967a3d90668b",
+    "sha256": "888ee8a9692b09edd54a96e2165918b1a46a9b40e7adb2749596703c6d58bcc7",
+    "bytes": 69081,
+    "local": "D:\\Projekte\\Code\\FlexPlan_A35_EXEC_RUN\\science_source_snapshots\\2026-08-09__c2a-integrated-scientific-dissertation-chapter__restructured-v3.md"
+  },
+  {
+    "path": "docs/reports/C2_constraints/C2A_voltage_stability/external_review/freeze/2026-08-02__c2a-scientific-formulation-freeze.md",
+    "commit": "e8118425adc335a99e85120d943763305f211315",
+    "blob": "5ae4d319ac6e204368a7f4b9cbd00ff621138f06",
+    "sha256": "2629ef143225bc653a6c03a687948f1b54e3a9ac5f95edf12f5a479d998a72e6",
+    "bytes": 15679,
+    "local": "D:\\Projekte\\Code\\FlexPlan_A35_EXEC_RUN\\science_source_snapshots\\2026-08-02__c2a-scientific-formulation-freeze.md"
+  },
+  {
+    "path": "docs/reports/C2_constraints/C2A_voltage_stability/synthesis/2026-07-30__synthesis__c2a-track-a-adjudicated-proofs-and-counterexamples.md",
+    "commit": "e8118425adc335a99e85120d943763305f211315",
+    "blob": "518e78a479b3336f55d0ecca253b256abfcf6225",
+    "sha256": "254a3cc4fd544caca28f3a89acd2470fa2b52fc373228e448b2053ac93f81863",
+    "bytes": 8798,
+    "local": "D:\\Projekte\\Code\\FlexPlan_A35_EXEC_RUN\\science_source_snapshots\\2026-07-30__synthesis__c2a-track-a-adjudicated-proofs-and-counterexamples.md"
+  },
+  {
+    "path": "docs/reports/C2_constraints/C2A_voltage_stability/implementation_audit/2026-07-30__c2a-project-predicate-audit.md",
+    "commit": "e8118425adc335a99e85120d943763305f211315",
+    "blob": "4866f5f5dab7cd416c7fb203db0106d98c45897f",
+    "sha256": "4b9a48812ec574765da3f7f0b7b6b7b54ded3c93164058521e53a091ae6201a9",
+    "bytes": 13561,
+    "local": "D:\\Projekte\\Code\\FlexPlan_A35_EXEC_RUN\\science_source_snapshots\\2026-07-30__c2a-project-predicate-audit.md"
+  },
+  {
+    "path": "docs/reports/C2_constraints/C2A_voltage_stability/publication_planning/2026-08-09__paper-a-development-plan-freeze.md",
+    "commit": "e8118425adc335a99e85120d943763305f211315",
+    "blob": "c43ee68a7afc7c2c5f4110e304e90f189fe60a65",
+    "sha256": "3dc5bd5e9ee343ca577bdb918c5ba55c4688675268e31ae906f20b1b1380a26a",
+    "bytes": 30871,
+    "local": "D:\\Projekte\\Code\\FlexPlan_A35_EXEC_RUN\\science_source_snapshots\\2026-08-09__paper-a-development-plan-freeze.md"
+  },
+  {
+    "path": "docs/reports/C2_constraints/C2A_voltage_stability/publication_planning/2026-10-15__paper-a-multirepo-execution-freeze-v2.md",
+    "commit": "e8118425adc335a99e85120d943763305f211315",
+    "blob": "f9f64539e69bf46386d0d597e0a6a85cbfb88a37",
+    "sha256": "4fb175c7a08d8999b9f1e0bb255b643bb16453f10e10a043297d5a880434c685",
+    "bytes": 10093,
+    "local": "D:\\Projekte\\Code\\FlexPlan_A35_EXEC_RUN\\science_source_snapshots\\2026-10-15__paper-a-multirepo-execution-freeze-v2.md"
+  },
+  {
+    "path": "docs/reports/C2_constraints/C2A_voltage_stability/paper_a/science_release/2026-10-20__a3-5-final-gates.yaml",
+    "commit": "2badb9a90a8d3c1d4a33accee640b295de1e33a1",
+    "blob": "6eb52ac89ab82d121fbfdda147fb66b15c477358",
+    "sha256": "1a657933fb06070bed32a56a71871cbec25150d983ac0068587d6795e7478ff2",
+    "bytes": 733,
+    "local": "D:\\Projekte\\Code\\FlexPlan_A35_EXEC_RUN\\science_source_snapshots\\2026-10-20__a3-5-final-gates.yaml"
+  },
+  {
+    "path": "docs/reports/C2_constraints/C2A_voltage_stability/paper_a/science_release/2026-10-20__a3-5-amendment-final-proposed-text.md",
+    "commit": "5ceb19a6faf4e7c7e797a737ed5b449f9e2db609",
+    "blob": "fba4802ecabade61a752833a71106a5bda4ce78f",
+    "sha256": "e716e4ab067c1fd40567a8b020b5537bf9b3cac24afa0952222457e99361375e",
+    "bytes": 7988,
+    "local": "D:\\Projekte\\Code\\FlexPlan_A35_EXEC_RUN\\science_source_snapshots\\2026-10-20__a3-5-amendment-final-proposed-text.md"
+  }
+]

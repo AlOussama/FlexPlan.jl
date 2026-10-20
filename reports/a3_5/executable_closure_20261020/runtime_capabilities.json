@@ -1,0 +1,8 @@
+{
+  "julia_threads": 1,
+  "BLAS": "LBTConfig([ILP64] libopenblas64_.dll, [LP64] libopenblas.dll)",
+  "CPU": "znver2",
+  "Julia": "1.10.11",
+  "Gurobi": "Gurobi Error 10009: License expired 2026-10-12",
+  "logical_threads": 12
+}

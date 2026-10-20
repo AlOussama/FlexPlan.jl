@@ -1,0 +1,31 @@
+{
+  "solve_wall_s": 83.4868805,
+  "solver_time_s": 29.674000024795532,
+  "model": {
+    "variables": 3680,
+    "constraints": {
+      "Vector{AffExpr} in MathOptInterface.RotatedSecondOrderCone": 144,
+      "AffExpr in MathOptInterface.EqualTo{Float64}": 1065,
+      "AffExpr in MathOptInterface.GreaterThan{Float64}": 672,
+      "AffExpr in MathOptInterface.Interval{Float64}": 144,
+      "VariableRef in MathOptInterface.GreaterThan{Float64}": 2768,
+      "VariableRef in MathOptInterface.LessThan{Float64}": 417,
+      "VariableRef in MathOptInterface.Integer": 1353,
+      "AffExpr in MathOptInterface.LessThan{Float64}": 2064
+    },
+    "integer": 1353
+  },
+  "objective": null,
+  "termination": "INFEASIBLE",
+  "raw_solver_relative_gap": null,
+  "bound": 1.4127985371367423e7,
+  "optimizer_configuration": "Pajarito: iterative,HiGHS+Clarabel,tol_rel_gap=tol_feas=1e-7,tol_abs_gap=1e-8,time_limit=120s,iteration_limit=100",
+  "barrier_iterations": null,
+  "simplex_iterations": null,
+  "nodes": null,
+  "dual_status": "NO_SOLUTION",
+  "primal_status": "NO_SOLUTION",
+  "solver": "Pajarito",
+  "objective_solver_scaling": 7.55794306538003e8,
+  "relative_gap": null
+}

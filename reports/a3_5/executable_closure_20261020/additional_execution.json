@@ -1,0 +1,491 @@
+[
+  {
+    "id": "environment",
+    "log": "environment.log",
+    "actual_process_exit": 0,
+    "command": [
+      "julia",
+      "+1.10.11",
+      "--startup-file=no",
+      "--project=.",
+      "-e",
+      "using Pkg; Pkg.status(); Pkg.instantiate(); using JuMP, HiGHS, Clarabel, Pajarito"
+    ],
+    "cwd": "D:/Projekte/Code/FlexPlan_A35_EXEC_BASELINE",
+    "semantic_result": "instantiated_pinned_environment_no_tracked_changes",
+    "log_present": true
+  },
+  {
+    "id": "independent_moi_01",
+    "log": "independent_moi_attempt01.log",
+    "actual_process_exit": 1,
+    "command": [
+      "julia",
+      "+1.10.11",
+      "--startup-file=no",
+      "--project=.",
+      "D:/Projekte/Code/FlexPlan_A35_EXEC_REVIEW/reports/a3_5/executable_closure_20261020/independent_jump_moi_audit.jl",
+      "D:\\Projekte\\Code\\FlexPlan_A35_EXEC_RUN"
+    ],
+    "cwd": "D:/Projekte/Code/FlexPlan_A35_EXEC_BASELINE",
+    "semantic_result": "Clarabel_constant_singular_PSD_chordal_index_error",
+    "log_present": true
+  },
+  {
+    "id": "independent_moi_02",
+    "log": "independent_moi_attempt02.log",
+    "actual_process_exit": 1,
+    "command": [
+      "julia",
+      "+1.10.11",
+      "--startup-file=no",
+      "--project=.",
+      "D:/Projekte/Code/FlexPlan_A35_EXEC_REVIEW/reports/a3_5/executable_closure_20261020/independent_jump_moi_audit.jl",
+      "D:\\Projekte\\Code\\FlexPlan_A35_EXEC_RUN\\moi_final"
+    ],
+    "cwd": "D:/Projekte/Code/FlexPlan_A35_EXEC_BASELINE",
+    "semantic_result": "audit_has_values_incorrectly_accepted_infeasibility_certificate",
+    "log_present": true
+  },
+  {
+    "id": "independent_moi_03",
+    "log": "independent_moi_attempt03.log",
+    "actual_process_exit": 0,
+    "command": [
+      "julia",
+      "+1.10.11",
+      "--startup-file=no",
+      "--project=.",
+      "D:/Projekte/Code/FlexPlan_A35_EXEC_REVIEW/reports/a3_5/executable_closure_20261020/independent_jump_moi_audit.jl",
+      "D:\\Projekte\\Code\\FlexPlan_A35_EXEC_RUN\\moi_final03"
+    ],
+    "cwd": "D:/Projekte/Code/FlexPlan_A35_EXEC_BASELINE",
+    "semantic_result": "42_passed_actual_MOI_and_boundaries",
+    "log_present": true
+  },
+  {
+    "id": "integer_b1_01",
+    "log": "integer_b1_attempt01.log",
+    "actual_process_exit": 1,
+    "command": [
+      "julia",
+      "+1.10.11",
+      "--startup-file=no",
+      "--project=.",
+      "D:/Projekte/Code/FlexPlan_A35_EXEC_REVIEW/reports/a3_5/executable_closure_20261020/independent_integer_b1_audit.jl",
+      "D:/Projekte/Code/FlexPlan_A35_EXEC_BASELINE",
+      "D:\\Projekte\\Code\\FlexPlan_A35_EXEC_RUN"
+    ],
+    "cwd": "D:/Projekte/Code/FlexPlan_A35_EXEC_BASELINE",
+    "semantic_result": "audit_docstring_before_using_error",
+    "log_present": true
+  },
+  {
+    "id": "integer_b1_02",
+    "log": "integer_b1_attempt02.log",
+    "actual_process_exit": 1,
+    "command": [
+      "julia",
+      "+1.10.11",
+      "--startup-file=no",
+      "--project=.",
+      "D:/Projekte/Code/FlexPlan_A35_EXEC_REVIEW/reports/a3_5/executable_closure_20261020/independent_integer_b1_audit.jl",
+      "D:/Projekte/Code/FlexPlan_A35_EXEC_BASELINE",
+      "D:\\Projekte\\Code\\FlexPlan_A35_EXEC_RUN"
+    ],
+    "cwd": "D:/Projekte/Code/FlexPlan_A35_EXEC_BASELINE",
+    "semantic_result": "audit_optimal_G0_seed_missing_for_event_case",
+    "log_present": true
+  },
+  {
+    "id": "integer_b1_03",
+    "log": "integer_b1_attempt03.log",
+    "actual_process_exit": 0,
+    "command": [
+      "julia",
+      "+1.10.11",
+      "--startup-file=no",
+      "--project=.",
+      "D:/Projekte/Code/FlexPlan_A35_EXEC_REVIEW/reports/a3_5/executable_closure_20261020/independent_integer_b1_audit.jl",
+      "D:/Projekte/Code/FlexPlan_A35_EXEC_BASELINE",
+      "D:\\Projekte\\Code\\FlexPlan_A35_EXEC_RUN\\integer_final"
+    ],
+    "cwd": "D:/Projekte/Code/FlexPlan_A35_EXEC_BASELINE",
+    "semantic_result": "nine_fixed_pairs_and_two_diagnostic_native_scaling_variants",
+    "log_present": true
+  },
+  {
+    "id": "integer_best",
+    "log": "integer_best.log",
+    "actual_process_exit": 0,
+    "command": [
+      "julia",
+      "+1.10.11",
+      "--startup-file=no",
+      "--project=.",
+      "D:/Projekte/Code/FlexPlan_A35_EXEC_REVIEW/reports/a3_5/executable_closure_20261020/independent_integer_b1_audit.jl",
+      "D:/Projekte/Code/FlexPlan_A35_EXEC_BASELINE",
+      "D:\\Projekte\\Code\\FlexPlan_A35_EXEC_RUN\\integer_best",
+      "fixed_only_best_historical_seed"
+    ],
+    "cwd": "D:/Projekte/Code/FlexPlan_A35_EXEC_BASELINE",
+    "semantic_result": "nine_best_seed_case_pairs_freshly_solved_not_global_certification",
+    "log_present": true
+  },
+  {
+    "id": "exact_native",
+    "log": "b1_exact_native.log",
+    "actual_process_exit": 0,
+    "command": [
+      "julia",
+      "+1.10.11",
+      "--startup-file=no",
+      "--project=.",
+      "D:/Projekte/Code/FlexPlan_A35_EXEC_REVIEW/reports/a3_5/executable_closure_20261020/b1_exact_native_repro.jl",
+      "D:/Projekte/Code/FlexPlan_A35_EXEC_BASELINE",
+      "D:\\Projekte\\Code\\FlexPlan_A35_EXEC_RUN"
+    ],
+    "cwd": "D:/Projekte/Code/FlexPlan_A35_EXEC_BASELINE",
+    "semantic_result": "native_INFEASIBLE_is_observed_failure_not_PASS",
+    "log_present": true
+  },
+  {
+    "id": "exact_full_transfer",
+    "log": "b1_transfer.log",
+    "actual_process_exit": 0,
+    "command": [
+      "julia",
+      "+1.10.11",
+      "--startup-file=no",
+      "--project=.",
+      "D:/Projekte/Code/FlexPlan_A35_EXEC_REVIEW/reports/a3_5/executable_closure_20261020/b1_transfer_full_witness.jl",
+      "D:\\Projekte\\Code\\FlexPlan_A35_EXEC_RUN"
+    ],
+    "cwd": "D:/Projekte/Code/FlexPlan_A35_EXEC_BASELINE",
+    "semantic_result": "native_full_original_integer_model_feasible_at_7.515349e-12",
+    "log_present": true
+  },
+  {
+    "id": "bridged_attempt01",
+    "log": "b1_exact_bridged.log",
+    "actual_process_exit": 1,
+    "command": [
+      "julia",
+      "+1.10.11",
+      "--startup-file=no",
+      "--project=.",
+      "D:/Projekte/Code/FlexPlan_A35_EXEC_REVIEW/reports/a3_5/executable_closure_20261020/b1_exact_native_repro.jl",
+      "D:/Projekte/Code/FlexPlan_A35_EXEC_BASELINE",
+      "D:\\Projekte\\Code\\FlexPlan_A35_EXEC_RUN"
+    ],
+    "cwd": "D:/Projekte/Code/FlexPlan_A35_EXEC_BASELINE",
+    "semantic_result": "audit_direct_optimizer_index_failed_for_negative_bridged_variable_index",
+    "log_present": true
+  },
+  {
+    "id": "bridged_attempt02",
+    "log": "b1_exact_bridged_attempt02.log",
+    "actual_process_exit": 0,
+    "command": [
+      "julia",
+      "+1.10.11",
+      "--startup-file=no",
+      "--project=.",
+      "D:/Projekte/Code/FlexPlan_A35_EXEC_REVIEW/reports/a3_5/executable_closure_20261020/b1_exact_native_repro.jl",
+      "D:/Projekte/Code/FlexPlan_A35_EXEC_BASELINE",
+      "D:\\Projekte\\Code\\FlexPlan_A35_EXEC_RUN"
+    ],
+    "cwd": "D:/Projekte/Code/FlexPlan_A35_EXEC_BASELINE",
+    "semantic_result": "actual_affine_variable_bridge_transfer_verified_cone_distance_8.835e-11",
+    "log_present": true
+  },
+  {
+    "id": "MOSEK",
+    "log": "mosek_native24.log",
+    "actual_process_exit": -1,
+    "command": [
+      "C:/Program Files/Mosek/11.0/tools/platform/win64x86/bin/mosek.exe",
+      "-r",
+      "-d",
+      "MSK_IPAR_NUM_THREADS",
+      "1",
+      "-d",
+      "MSK_DPAR_MIO_MAX_TIME",
+      "120",
+      "-jsolo",
+      "D:\\Projekte\\Code\\FlexPlan_A35_EXEC_RUN\\mosek_native24_solution.json",
+      "D:\\Projekte\\Code\\FlexPlan_A35_EXEC_RUN\\native24.cbf"
+    ],
+    "cwd": "D:/Projekte/Code/FlexPlan_A35_EXEC_BASELINE",
+    "semantic_result": "actual_native_model_read_license_error_1001_no_solve",
+    "log_present": true
+  },
+  {
+    "id": "domain_mutations.log",
+    "log": "domain_mutations.log",
+    "actual_process_exit": 1,
+    "command": [
+      "julia",
+      "+1.10.11",
+      "--startup-file=no",
+      "--project=.",
+      "D:/Projekte/Code/FlexPlan_A35_EXEC_REVIEW/reports/a3_5/executable_closure_20261020/independent_domain_mutations.jl",
+      "D:\\Projekte\\Code\\FlexPlan_A35_EXEC_RUN",
+      "D:/Projekte/Code/FlexPlan_A35_EXEC_BASELINE"
+    ],
+    "cwd": "D:/Projekte/Code/FlexPlan_A35_EXEC_BASELINE",
+    "semantic_result": "strict_gate_correctly_rejected_parametric_unqualified_input_initial_probe",
+    "log_present": true
+  },
+  {
+    "id": "domain_mutations_attempt02.log",
+    "log": "domain_mutations_attempt02.log",
+    "actual_process_exit": 0,
+    "command": [
+      "julia",
+      "+1.10.11",
+      "--startup-file=no",
+      "--project=.",
+      "D:/Projekte/Code/FlexPlan_A35_EXEC_REVIEW/reports/a3_5/executable_closure_20261020/independent_domain_mutations.jl",
+      "D:\\Projekte\\Code\\FlexPlan_A35_EXEC_RUN",
+      "D:/Projekte/Code/FlexPlan_A35_EXEC_BASELINE"
+    ],
+    "cwd": "D:/Projekte/Code/FlexPlan_A35_EXEC_BASELINE",
+    "semantic_result": "16_passed_strict_rejection_plus_diagnostic_domain_mutations",
+    "log_present": true
+  },
+  {
+    "id": "linear_certificates.log",
+    "log": "linear_certificates.log",
+    "actual_process_exit": 1,
+    "command": [
+      "julia",
+      "+1.10.11",
+      "--startup-file=no",
+      "--project=.",
+      "D:/Projekte/Code/FlexPlan_A35_EXEC_REVIEW/reports/a3_5/executable_closure_20261020/independent_linear_certificates.jl",
+      "D:/Projekte/Code/FlexPlan_A35_EXEC_BASELINE",
+      "D:\\Projekte\\Code\\FlexPlan_A35_EXEC_RUN"
+    ],
+    "cwd": "D:/Projekte/Code/FlexPlan_A35_EXEC_BASELINE",
+    "semantic_result": "AffExpr_object_isapprox_comparison_failure_order_roundoff",
+    "log_present": true
+  },
+  {
+    "id": "linear_certificates_attempt02.log",
+    "log": "linear_certificates_attempt02.log",
+    "actual_process_exit": 0,
+    "command": [
+      "julia",
+      "+1.10.11",
+      "--startup-file=no",
+      "--project=.",
+      "D:/Projekte/Code/FlexPlan_A35_EXEC_REVIEW/reports/a3_5/executable_closure_20261020/independent_linear_certificates.jl",
+      "D:/Projekte/Code/FlexPlan_A35_EXEC_BASELINE",
+      "D:\\Projekte\\Code\\FlexPlan_A35_EXEC_RUN"
+    ],
+    "cwd": "D:/Projekte/Code/FlexPlan_A35_EXEC_BASELINE",
+    "semantic_result": "34_passed_explicit_coefficient_and_constant_comparison",
+    "log_present": true
+  },
+  {
+    "id": "independent_metrics_attempt01.log",
+    "log": "independent_metrics_attempt01.log",
+    "actual_process_exit": 1,
+    "command": [
+      "C:/Users/User/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe",
+      "D:/Projekte/Code/FlexPlan_A35_EXEC_REVIEW/reports/a3_5/executable_closure_20261020/independent_metric_audit.py",
+      "D:\\Projekte\\Code\\FlexPlan_A35_EXEC_RUN",
+      "D:/Projekte/Code/FlexPlan_A35_EXEC_BASELINE"
+    ],
+    "cwd": "D:/Projekte/Code/FlexPlan_A35_EXEC_BASELINE",
+    "semantic_result": "audit_python_parenthesis_syntax",
+    "log_present": true
+  },
+  {
+    "id": "independent_metrics_attempt02.log",
+    "log": "independent_metrics_attempt02.log",
+    "actual_process_exit": 0,
+    "command": [
+      "C:/Users/User/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe",
+      "D:/Projekte/Code/FlexPlan_A35_EXEC_REVIEW/reports/a3_5/executable_closure_20261020/independent_metric_audit.py",
+      "D:\\Projekte\\Code\\FlexPlan_A35_EXEC_RUN",
+      "D:/Projekte/Code/FlexPlan_A35_EXEC_BASELINE"
+    ],
+    "cwd": "D:/Projekte/Code/FlexPlan_A35_EXEC_BASELINE",
+    "semantic_result": "semantic_comparison_failure_source_ledger_order_687_rows",
+    "log_present": true
+  },
+  {
+    "id": "independent_metrics_attempt03.log",
+    "log": "independent_metrics_attempt03.log",
+    "actual_process_exit": 0,
+    "command": [
+      "C:/Users/User/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe",
+      "D:/Projekte/Code/FlexPlan_A35_EXEC_REVIEW/reports/a3_5/executable_closure_20261020/independent_metric_audit.py",
+      "D:\\Projekte\\Code\\FlexPlan_A35_EXEC_RUN",
+      "D:/Projekte/Code/FlexPlan_A35_EXEC_BASELINE"
+    ],
+    "cwd": "D:/Projekte/Code/FlexPlan_A35_EXEC_BASELINE",
+    "semantic_result": "all_124_historical_metrics_compared_no_differences",
+    "log_present": true
+  },
+  {
+    "id": "independent_metrics_final.log",
+    "log": "independent_metrics_final.log",
+    "actual_process_exit": 0,
+    "command": [
+      "C:/Users/User/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe",
+      "D:/Projekte/Code/FlexPlan_A35_EXEC_REVIEW/reports/a3_5/executable_closure_20261020/independent_metric_audit.py",
+      "D:\\Projekte\\Code\\FlexPlan_A35_EXEC_RUN",
+      "D:/Projekte/Code/FlexPlan_A35_EXEC_BASELINE"
+    ],
+    "cwd": "D:/Projekte/Code/FlexPlan_A35_EXEC_BASELINE",
+    "semantic_result": "all_124_historical_and_fresh_metrics_compared_no_differences",
+    "log_present": true
+  },
+  {
+    "id": "oracle_final",
+    "log": "oracle_final.log",
+    "actual_process_exit": 0,
+    "command": [
+      "C:/Users/User/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe",
+      "D:/Projekte/Code/FlexPlan_A35_EXEC_REVIEW/reports/a3_5/executable_closure_20261020/independent_reference_oracle.py",
+      "D:\\Projekte\\Code\\FlexPlan_A35_EXEC_RUN",
+      "D:/Projekte/Code/FlexPlan_A35_EXEC_BASELINE"
+    ],
+    "cwd": "D:/Projekte/Code/FlexPlan_A35_EXEC_BASELINE",
+    "semantic_result": "exact_rational_and_1299_raw_states_232_solutions",
+    "log_present": true
+  },
+  {
+    "id": "integer_summary_final",
+    "log": "integer_summary_final.log",
+    "actual_process_exit": 0,
+    "command": [
+      "C:/Users/User/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe",
+      "D:/Projekte/Code/FlexPlan_A35_EXEC_REVIEW/reports/a3_5/executable_closure_20261020/independent_integer_summary.py",
+      "D:\\Projekte\\Code\\FlexPlan_A35_EXEC_RUN",
+      "D:/Projekte/Code/FlexPlan_A35_EXEC_BASELINE"
+    ],
+    "cwd": "D:/Projekte/Code/FlexPlan_A35_EXEC_BASELINE",
+    "semantic_result": "nine_case_cost_matrix_and_signed_bound_audit",
+    "log_present": true
+  },
+  {
+    "id": "unit_tests",
+    "log": "fixed_units.log",
+    "actual_process_exit": 0,
+    "command": [
+      "julia",
+      "+1.10.11",
+      "--startup-file=no",
+      "--project=.",
+      "D:/Projekte/Code/FlexPlan_A35_EXEC_REVIEW/reports/a3_5/executable_closure_20261020/test_metric_units.jl",
+      "D:/Projekte/Code/FlexPlan_A35_EXEC_REVIEW"
+    ],
+    "cwd": "D:/Projekte/Code/FlexPlan_A35_EXEC_BASELINE",
+    "semantic_result": "4_passed",
+    "log_present": true
+  },
+  {
+    "id": "fixed_export",
+    "log": "fixed_metric_reexport.log",
+    "actual_process_exit": 0,
+    "command": [
+      "julia",
+      "+1.10.11",
+      "--startup-file=no",
+      "--project=.",
+      "scripts/paper_a/ap3.jl",
+      "evaluate_strength_metrics",
+      "D:\\Projekte\\Code\\FlexPlan_A35_EXEC_RUN\\matrices",
+      "D:\\Projekte\\Code\\FlexPlan_A35_EXEC_RUN\\metrics_unit_fix"
+    ],
+    "cwd": "D:/Projekte/Code/FlexPlan_A35_EXEC_REVIEW",
+    "semantic_result": "cwd_is_fix_checkout_e1e0756_exported_61272_records",
+    "log_present": true
+  },
+  {
+    "id": "negative_unknown",
+    "log": "negative_cli_unknown.log",
+    "actual_process_exit": 1,
+    "command": [
+      "julia",
+      "+1.10.11",
+      "--startup-file=no",
+      "--project=.",
+      "scripts/paper_a/ap3.jl",
+      "unknown_action",
+      "D:\\Projekte\\Code\\FlexPlan_A35_EXEC_RUN\\suite",
+      "D:\\Projekte\\Code\\FlexPlan_A35_EXEC_RUN\\negative_output"
+    ],
+    "cwd": "D:/Projekte/Code/FlexPlan_A35_EXEC_BASELINE",
+    "semantic_result": "expected_rejection",
+    "log_present": true
+  },
+  {
+    "id": "negative_missing",
+    "log": "negative_cli_missing.log",
+    "actual_process_exit": 1,
+    "command": [
+      "julia",
+      "+1.10.11",
+      "--startup-file=no",
+      "--project=.",
+      "scripts/paper_a/ap3.jl",
+      "reconstruct_strength_matrices",
+      "D:\\Projekte\\Code\\FlexPlan_A35_EXEC_RUN\\missing_input",
+      "D:\\Projekte\\Code\\FlexPlan_A35_EXEC_RUN\\negative_missing_output"
+    ],
+    "cwd": "D:/Projekte/Code/FlexPlan_A35_EXEC_BASELINE",
+    "semantic_result": "expected_rejection",
+    "log_present": true
+  },
+  {
+    "id": "negative_overwrite",
+    "log": "negative_cli_overwrite.log",
+    "actual_process_exit": 1,
+    "command": [
+      "julia",
+      "+1.10.11",
+      "--startup-file=no",
+      "--project=.",
+      "scripts/paper_a/ap3.jl",
+      "reconstruct_strength_matrices",
+      "D:\\Projekte\\Code\\FlexPlan_A35_EXEC_RUN\\suite",
+      "D:\\Projekte\\Code\\FlexPlan_A35_EXEC_RUN\\matrices"
+    ],
+    "cwd": "D:/Projekte/Code/FlexPlan_A35_EXEC_BASELINE",
+    "semantic_result": "expected_rejection",
+    "log_present": true
+  },
+  {
+    "id": "first_finalizer_wrapper",
+    "log": "finalize_replay.log",
+    "actual_process_exit": 1,
+    "command": [
+      "&",
+      "D:\\Projekte\\Code\\FlexPlan_A35_EXEC_RUN\\finalize_replay.ps1"
+    ],
+    "cwd": "D:/Projekte/Code/FlexPlan_A35_EXEC_BASELINE",
+    "semantic_result": "PowerShell_script_invocation_in_existing_shell; all_individual_checks_completed_last_expected_negative_exit_leaked_wrapper_code; fixed_explicit_final_exit_0_in_published_script",
+    "log_present": true
+  },
+  {
+    "id": "final_artifact_verification",
+    "log": "final_artifact_verification.log",
+    "actual_process_exit": 0,
+    "command": [
+      "C:/Users/User/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe",
+      "D:\\Projekte\\Code\\FlexPlan_A35_EXEC_RUN\\verify_and_package.py",
+      "D:\\Projekte\\Code\\FlexPlan_A35_EXEC_RUN",
+      "D:/Projekte/Code/FlexPlan_A35_EXEC_REVIEW/reports/a3_5/executable_closure_20261020",
+      "D:/Projekte/Code/FlexPlan_A35_EXEC_BASELINE",
+      "verify"
+    ],
+    "cwd": "D:/Projekte/Code/FlexPlan_A35_EXEC_BASELINE",
+    "semantic_result": "all_61272_rows_equal_except_3_units_and_version;171_export_hashes_equal",
+    "log_present": true
+  }
+]

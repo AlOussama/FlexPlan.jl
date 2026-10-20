@@ -1,0 +1,231 @@
+[
+  {
+    "id": "full_regression",
+    "command": [
+      "julia",
+      "+1.10.11",
+      "--startup-file=no",
+      "--project=.",
+      "D:/Projekte/Code/FlexPlan_A35_EXEC_RUN/validation/test/runtests.jl"
+    ],
+    "cwd": "D:/Projekte/Code/FlexPlan_A35_EXEC_BASELINE",
+    "exit_code": 0,
+    "started_utc": "2026-10-20T13:21:13.0078169Z",
+    "ended_utc": "2026-10-20T13:29:25.5624536Z"
+  },
+  {
+    "id": "saved_evidence",
+    "command": [
+      "julia",
+      "+1.10.11",
+      "--startup-file=no",
+      "--project=.",
+      "test/run_paper_a_ap3_evidence.jl",
+      "D:/Projekte/Code/FlexPlan_A35_EXEC_RUN/historical_evidence"
+    ],
+    "cwd": "D:/Projekte/Code/FlexPlan_A35_EXEC_BASELINE",
+    "exit_code": 0,
+    "started_utc": "2026-10-20T13:29:25.6304683Z",
+    "ended_utc": "2026-10-20T13:30:23.461549Z"
+  },
+  {
+    "id": "make_config",
+    "command": [
+      "julia",
+      "+1.10.11",
+      "--startup-file=no",
+      "--project=.",
+      "scripts/paper_a/make_suite_config.jl",
+      "D:/Projekte/Code/FlexPlan_A35_EXEC_RUN/producer_3b8",
+      "D:/Projekte/Code/FlexPlan_A35_EXEC_RUN/suite_config.json"
+    ],
+    "cwd": "D:/Projekte/Code/FlexPlan_A35_EXEC_BASELINE",
+    "exit_code": 0,
+    "started_utc": "2026-10-20T13:30:23.4681834Z",
+    "ended_utc": "2026-10-20T13:30:26.1883604Z"
+  },
+  {
+    "id": "cli_suite",
+    "command": [
+      "julia",
+      "+1.10.11",
+      "--startup-file=no",
+      "--project=.",
+      "scripts/paper_a/ap3.jl",
+      "run_formulation_suite",
+      "D:/Projekte/Code/FlexPlan_A35_EXEC_RUN/suite_config.json",
+      "D:/Projekte/Code/FlexPlan_A35_EXEC_RUN/suite"
+    ],
+    "cwd": "D:/Projekte/Code/FlexPlan_A35_EXEC_BASELINE",
+    "exit_code": 0,
+    "started_utc": "2026-10-20T13:30:26.1923605Z",
+    "ended_utc": "2026-10-20T13:48:54.389936Z"
+  },
+  {
+    "id": "cli_matrices",
+    "command": [
+      "julia",
+      "+1.10.11",
+      "--startup-file=no",
+      "--project=.",
+      "scripts/paper_a/ap3.jl",
+      "reconstruct_strength_matrices",
+      "D:/Projekte/Code/FlexPlan_A35_EXEC_RUN/suite",
+      "D:/Projekte/Code/FlexPlan_A35_EXEC_RUN/matrices"
+    ],
+    "cwd": "D:/Projekte/Code/FlexPlan_A35_EXEC_BASELINE",
+    "exit_code": 0,
+    "started_utc": "2026-10-20T13:48:54.393717Z",
+    "ended_utc": "2026-10-20T13:49:34.111827Z"
+  },
+  {
+    "id": "cli_metrics",
+    "command": [
+      "julia",
+      "+1.10.11",
+      "--startup-file=no",
+      "--project=.",
+      "scripts/paper_a/ap3.jl",
+      "evaluate_strength_metrics",
+      "D:/Projekte/Code/FlexPlan_A35_EXEC_RUN/matrices",
+      "D:/Projekte/Code/FlexPlan_A35_EXEC_RUN/metrics"
+    ],
+    "cwd": "D:/Projekte/Code/FlexPlan_A35_EXEC_BASELINE",
+    "exit_code": 0,
+    "started_utc": "2026-10-20T13:49:34.1156636Z",
+    "ended_utc": "2026-10-20T13:50:48.0088397Z"
+  },
+  {
+    "id": "cli_certificates",
+    "command": [
+      "julia",
+      "+1.10.11",
+      "--startup-file=no",
+      "--project=.",
+      "scripts/paper_a/ap3.jl",
+      "verify_certificates",
+      "D:/Projekte/Code/FlexPlan_A35_EXEC_RUN/matrices",
+      "D:/Projekte/Code/FlexPlan_A35_EXEC_RUN/certificates"
+    ],
+    "cwd": "D:/Projekte/Code/FlexPlan_A35_EXEC_BASELINE",
+    "exit_code": 0,
+    "started_utc": "2026-10-20T13:50:48.0129121Z",
+    "ended_utc": "2026-10-20T13:51:33.8329633Z"
+  },
+  {
+    "id": "cli_comparisons",
+    "command": [
+      "julia",
+      "+1.10.11",
+      "--startup-file=no",
+      "--project=.",
+      "scripts/paper_a/ap3.jl",
+      "compare_formulations",
+      "D:/Projekte/Code/FlexPlan_A35_EXEC_RUN/suite",
+      "D:/Projekte/Code/FlexPlan_A35_EXEC_RUN/comparisons"
+    ],
+    "cwd": "D:/Projekte/Code/FlexPlan_A35_EXEC_BASELINE",
+    "exit_code": 0,
+    "started_utc": "2026-10-20T13:51:33.8355966Z",
+    "ended_utc": "2026-10-20T13:52:36.3277173Z"
+  },
+  {
+    "id": "cli_planning",
+    "command": [
+      "julia",
+      "+1.10.11",
+      "--startup-file=no",
+      "--project=.",
+      "scripts/paper_a/ap3.jl",
+      "assess_planning_results",
+      "D:/Projekte/Code/FlexPlan_A35_EXEC_RUN/suite",
+      "D:/Projekte/Code/FlexPlan_A35_EXEC_RUN/planning"
+    ],
+    "cwd": "D:/Projekte/Code/FlexPlan_A35_EXEC_BASELINE",
+    "exit_code": 0,
+    "started_utc": "2026-10-20T13:52:36.3325029Z",
+    "ended_utc": "2026-10-20T13:53:00.8246229Z"
+  },
+  {
+    "id": "cli_benchmarks",
+    "command": [
+      "julia",
+      "+1.10.11",
+      "--startup-file=no",
+      "--project=.",
+      "scripts/paper_a/ap3.jl",
+      "benchmark_conic_scaling",
+      "D:/Projekte/Code/FlexPlan_A35_EXEC_RUN/suite_config.json",
+      "D:/Projekte/Code/FlexPlan_A35_EXEC_RUN/benchmarks"
+    ],
+    "cwd": "D:/Projekte/Code/FlexPlan_A35_EXEC_BASELINE",
+    "exit_code": 0,
+    "started_utc": "2026-10-20T13:53:00.828555Z",
+    "ended_utc": "2026-10-20T13:53:48.246209Z"
+  },
+  {
+    "id": "ap1_acceptance",
+    "command": [
+      "julia",
+      "+1.10.11",
+      "--startup-file=no",
+      "--project=.",
+      "test/run_paper_a_ap1_acceptance.jl",
+      "D:/Projekte/Code/FlexPlan_A35_EXEC_RUN/producer_3b8/data",
+      "D:/Projekte/Code/FlexPlan_A35_EXEC_RUN/ap1_acceptance.json"
+    ],
+    "cwd": "D:/Projekte/Code/FlexPlan_A35_EXEC_BASELINE",
+    "exit_code": 0,
+    "started_utc": "2026-10-20T13:53:48.2542751Z",
+    "ended_utc": "2026-10-20T13:55:00.2092548Z"
+  },
+  {
+    "id": "parameter_acceptance",
+    "command": [
+      "julia",
+      "+1.10.11",
+      "--startup-file=no",
+      "--project=.",
+      "test/run_paper_a_parameter_acceptance.jl",
+      "D:/Projekte/Code/FlexPlan_A35_EXEC_RUN/producer_3b8",
+      "D:/Projekte/Code/FlexPlan_A35_EXEC_RUN/parameter_acceptance.json"
+    ],
+    "cwd": "D:/Projekte/Code/FlexPlan_A35_EXEC_BASELINE",
+    "exit_code": 0,
+    "started_utc": "2026-10-20T13:55:00.2134709Z",
+    "ended_utc": "2026-10-20T13:57:59.4899861Z"
+  },
+  {
+    "id": "network_audit",
+    "command": [
+      "julia",
+      "+1.10.11",
+      "--startup-file=no",
+      "--project=.",
+      "test/run_paper_a_parameter_network_audit.jl",
+      "D:/Projekte/Code/FlexPlan_A35_EXEC_RUN/producer_3b8",
+      "D:/Projekte/Code/FlexPlan_A35_EXEC_RUN/network_audit.json"
+    ],
+    "cwd": "D:/Projekte/Code/FlexPlan_A35_EXEC_BASELINE",
+    "exit_code": 0,
+    "started_utc": "2026-10-20T13:57:59.4932729Z",
+    "ended_utc": "2026-10-20T13:58:37.6930346Z"
+  },
+  {
+    "started_utc": "2026-10-20T13:57:14.8536715Z",
+    "ended_utc": "2026-10-20T13:57:49.8162345Z",
+    "cwd": "D:\\Projekte\\Code\\FlexPlan_A35_EXEC_BASELINE",
+    "command": [
+      "julia",
+      "+1.10.11",
+      "--startup-file=no",
+      "--project=.",
+      "scripts/paper_a/ap3.jl",
+      "export_paper_a_evidence",
+      "D:/Projekte/Code/FlexPlan_A35_EXEC_RUN/cli_payload",
+      "D:/Projekte/Code/FlexPlan_A35_EXEC_RUN/export"
+    ],
+    "id": "cli_export",
+    "exit_code": 0
+  }
+]

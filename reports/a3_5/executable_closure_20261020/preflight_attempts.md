@@ -1,0 +1,13 @@
+# Erhaltene Preflight-Grenzen
+
+Zusätzlich zu den archivierten Prozesslogs sind folgende frühe Toolbefunde im Chatprotokoll erhalten:
+
+* Der zuerst vermutete Producerpfad `D:/Projekte/Code/PyPSA2MatpowerX` existiert nicht (Windows-Prozessfehler 267). Das Verzeichnisinventar identifizierte `D:/Projekte/Code/pypsatomatpowerx`; anschließend wurden Remote, Objekte, Worktrees und Daten dort verifiziert.
+* Im gepinnten Reviewcommit existiert keine Repositorydatei `AGENTS.md`. Die ausdrücklich im Benutzerauftrag gelieferten AGENTS-Anweisungen gelten weiterhin. Die gezielte Suche fand auch in den geprüften Checkoutpfaden keine zusätzliche AGENTS-Datei.
+* Der SCIENCE/FINAL-Commit war zunächst im lokalen research-map-Objektspeicher nicht verfügbar. Der ausdrücklich autorisierte Fetch des exakten Reviewbranches stellte ihn bereit; danach wurden der gepinnte Commit und das vorgeschlagene Amendmentblob gelesen und gehasht. Ein früher fehlgeschlagener `git show` wurde nicht als Quellenprüfung gezählt.
+* Die gebündelte Python-Runtime enthielt zunächst kein SymPy. Eine isolierte Scratchinstallation stellte SymPy 1.14.0, NumPy 2.5.4 und mpmath 1.3.0 bereit; die FlexPlan-Dependencies wurden nicht aktualisiert.
+* Eigene Prüfskriptfehler und ihre Korrekturen sind durch getrennte Attempt-Logs erhalten: Julia-Docstring vor `using`; fehlender optimal markierter G0-Seed im Eventpreisfall; zunächst ungeeigneter `has_values`-Check bei Infeasibilitätszertifikaten; eine Python-Klammersyntax; strukturierte Ledgerreihenfolge; strikter Physikgate-Aufruf auf bewusst nur parametrisch qualifizierten Daten; MOI-`optimizer_index` für eine gebrückte Variable mit Index −1. Der letzte Fall wurde durch Auslesen der tatsächlichen affinen Variablenbrücken statt durch eine vermutete Indexidentität gelöst.
+
+Keiner dieser Fehlversuche wird als bestandene Prüfung ausgegeben. Erfolgreiche Wiederholungen und verbliebene externe Runtimegrenzen sind im Hauptbericht getrennt bezeichnet.
+
+Der erste zusätzliche AffExpr-Objektvergleich meldete neun Unterschiede trotz identischer Variablenkoeffizienten und Konstantenabweichungen nur um 1e-14. Die endgültige Prüfung vergleicht deshalb jeden tatsächlichen Koeffizienten und die Konstante explizit; 34/34 bestanden. Der erste Finalizer-Wrapper propagierte nach drei erwarteten negativen CLI-Exits den letzten Exitcode 1, obwohl alle drei Negativprüfungen erfüllt waren. Die einzelnen Ergebnisse (jeweils Exit 1) und der erste Wrapper-Exit bleiben erhalten; das Skript setzt nach erfolgreicher Auswertung nun explizit Exit 0. Die separate abschließende Artefaktprüfung lief mit Exit 0.

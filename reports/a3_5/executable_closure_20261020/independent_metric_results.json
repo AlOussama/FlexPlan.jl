@@ -1,0 +1,2997 @@
+{
+  "roundtrips": [
+    {
+      "label": "historical",
+      "metric_ids": 124,
+      "records": 68861,
+      "csv_roundtrip": 68861,
+      "registry_coverage": true
+    },
+    {
+      "label": "fresh",
+      "metric_ids": 124,
+      "records": 61272,
+      "csv_roundtrip": 61272,
+      "registry_coverage": true
+    }
+  ],
+  "metrics": [
+    {
+      "label": "fresh",
+      "id": "A.B",
+      "records": 612,
+      "compared": 612,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "pu"
+    },
+    {
+      "label": "fresh",
+      "id": "A.B0",
+      "records": 612,
+      "compared": 612,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "pu"
+    },
+    {
+      "label": "fresh",
+      "id": "A.B_eigenvalues",
+      "records": 612,
+      "compared": 612,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "pu"
+    },
+    {
+      "label": "fresh",
+      "id": "A.L",
+      "records": 612,
+      "compared": 612,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "pu"
+    },
+    {
+      "label": "fresh",
+      "id": "A.M",
+      "records": 612,
+      "compared": 612,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "pu"
+    },
+    {
+      "label": "fresh",
+      "id": "A.M_eigenvalues",
+      "records": 612,
+      "compared": 612,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "pu"
+    },
+    {
+      "label": "fresh",
+      "id": "A.S_diag",
+      "records": 612,
+      "compared": 612,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "MW_per_system_MVA"
+    },
+    {
+      "label": "fresh",
+      "id": "A.Y_imag",
+      "records": 612,
+      "compared": 612,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "pu"
+    },
+    {
+      "label": "fresh",
+      "id": "A.Y_real",
+      "records": 612,
+      "compared": 612,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "pu"
+    },
+    {
+      "label": "fresh",
+      "id": "A.Z_class",
+      "records": 612,
+      "compared": 612,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "boolean"
+    },
+    {
+      "label": "fresh",
+      "id": "A.affine_reconstruction_residual",
+      "records": 612,
+      "compared": 612,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "pu"
+    },
+    {
+      "label": "fresh",
+      "id": "A.condition",
+      "records": 612,
+      "compared": 612,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "dimensionless"
+    },
+    {
+      "label": "fresh",
+      "id": "A.connection_violation",
+      "records": 612,
+      "compared": 612,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "pu"
+    },
+    {
+      "label": "fresh",
+      "id": "A.exposure_roundoff_correction",
+      "records": 612,
+      "compared": 612,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "MW_per_system_MVA"
+    },
+    {
+      "label": "fresh",
+      "id": "A.inertia",
+      "records": 612,
+      "compared": 612,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "count"
+    },
+    {
+      "label": "fresh",
+      "id": "A.network_domain",
+      "records": 612,
+      "compared": 612,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "explicit_field_ledger"
+    },
+    {
+      "label": "fresh",
+      "id": "A.nullity",
+      "records": 612,
+      "compared": 612,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "count"
+    },
+    {
+      "label": "fresh",
+      "id": "A.positive_offdiagonal",
+      "records": 612,
+      "compared": 612,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "pu"
+    },
+    {
+      "label": "fresh",
+      "id": "A.producer_B0_residual",
+      "records": 612,
+      "compared": 612,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "pu"
+    },
+    {
+      "label": "fresh",
+      "id": "A.rank",
+      "records": 612,
+      "compared": 612,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "count"
+    },
+    {
+      "label": "fresh",
+      "id": "A.schur_residual",
+      "records": 612,
+      "compared": 612,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "pu"
+    },
+    {
+      "label": "fresh",
+      "id": "A.source_base_residual",
+      "records": 612,
+      "compared": 612,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "pu"
+    },
+    {
+      "label": "fresh",
+      "id": "A.source_ledger",
+      "records": 612,
+      "compared": 612,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "explicit_field_ledger"
+    },
+    {
+      "label": "fresh",
+      "id": "A.symmetry",
+      "records": 612,
+      "compared": 612,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "pu"
+    },
+    {
+      "label": "fresh",
+      "id": "B.G0",
+      "records": 612,
+      "compared": 612,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "boolean"
+    },
+    {
+      "label": "fresh",
+      "id": "B.G0_eigmin",
+      "records": 612,
+      "compared": 612,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "pu"
+    },
+    {
+      "label": "fresh",
+      "id": "B.G1",
+      "records": 612,
+      "compared": 612,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "boolean"
+    },
+    {
+      "label": "fresh",
+      "id": "B.G1_binding",
+      "records": 612,
+      "compared": 612,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "boolean"
+    },
+    {
+      "label": "fresh",
+      "id": "B.G1_false_rejection",
+      "records": 612,
+      "compared": 612,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "boolean"
+    },
+    {
+      "label": "fresh",
+      "id": "B.G1_rows",
+      "records": 612,
+      "compared": 612,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "pu"
+    },
+    {
+      "label": "fresh",
+      "id": "B.G2",
+      "records": 612,
+      "compared": 612,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "boolean"
+    },
+    {
+      "label": "fresh",
+      "id": "B.G2_binding",
+      "records": 612,
+      "compared": 612,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "boolean"
+    },
+    {
+      "label": "fresh",
+      "id": "B.G2_rows",
+      "records": 612,
+      "compared": 612,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "pu"
+    },
+    {
+      "label": "fresh",
+      "id": "B.G3",
+      "records": 612,
+      "compared": 612,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "boolean"
+    },
+    {
+      "label": "fresh",
+      "id": "B.G3_cone_product_slacks",
+      "records": 612,
+      "compared": 612,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "pu_admittance_squared"
+    },
+    {
+      "label": "fresh",
+      "id": "B.G3_edges",
+      "records": 612,
+      "compared": 612,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "count_or_index"
+    },
+    {
+      "label": "fresh",
+      "id": "B.G3_edges_complete",
+      "records": 612,
+      "compared": 612,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "pu"
+    },
+    {
+      "label": "fresh",
+      "id": "B.G3_minimum_q",
+      "records": 612,
+      "compared": 612,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "pu_admittance"
+    },
+    {
+      "label": "fresh",
+      "id": "B.G3_node_budget",
+      "records": 612,
+      "compared": 612,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "pu_admittance"
+    },
+    {
+      "label": "fresh",
+      "id": "B.G3_q",
+      "records": 612,
+      "compared": 612,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "pu_admittance"
+    },
+    {
+      "label": "fresh",
+      "id": "B.G3_reconstruction_residual",
+      "records": 612,
+      "compared": 612,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "pu"
+    },
+    {
+      "label": "fresh",
+      "id": "B.G3_status",
+      "records": 612,
+      "compared": 612,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "status"
+    },
+    {
+      "label": "fresh",
+      "id": "B.G3_valid",
+      "records": 612,
+      "compared": 612,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "pu"
+    },
+    {
+      "label": "fresh",
+      "id": "B.eigen_residual",
+      "records": 612,
+      "compared": 612,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "pu"
+    },
+    {
+      "label": "fresh",
+      "id": "B.eigenspace",
+      "records": 612,
+      "compared": 612,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "pu"
+    },
+    {
+      "label": "fresh",
+      "id": "B.gamma",
+      "records": 612,
+      "compared": 612,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "dimensionless"
+    },
+    {
+      "label": "fresh",
+      "id": "B.gamma_margin",
+      "records": 612,
+      "compared": 612,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "dimensionless"
+    },
+    {
+      "label": "fresh",
+      "id": "B.multiplicity",
+      "records": 612,
+      "compared": 612,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "count_or_index"
+    },
+    {
+      "label": "fresh",
+      "id": "B.participation",
+      "records": 612,
+      "compared": 612,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "dimensionless"
+    },
+    {
+      "label": "fresh",
+      "id": "B.range_residual",
+      "records": 612,
+      "compared": 612,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "pu"
+    },
+    {
+      "label": "fresh",
+      "id": "C.ESCR_external",
+      "records": 612,
+      "compared": 612,
+      "failures": 0,
+      "nulls": 612,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "pu"
+    },
+    {
+      "label": "fresh",
+      "id": "C.LOCAL",
+      "records": 612,
+      "compared": 612,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "boolean"
+    },
+    {
+      "label": "fresh",
+      "id": "C.LOCAL_eigmin",
+      "records": 612,
+      "compared": 612,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "pu_admittance"
+    },
+    {
+      "label": "fresh",
+      "id": "C.M0",
+      "records": 612,
+      "compared": 612,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "boolean"
+    },
+    {
+      "label": "fresh",
+      "id": "C.M0_slack",
+      "records": 612,
+      "compared": 612,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "dimensionless"
+    },
+    {
+      "label": "fresh",
+      "id": "C.M1",
+      "records": 612,
+      "compared": 612,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "boolean"
+    },
+    {
+      "label": "fresh",
+      "id": "C.M1_lower_violation",
+      "records": 612,
+      "compared": 612,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "pu_admittance"
+    },
+    {
+      "label": "fresh",
+      "id": "C.M1_order_violation",
+      "records": 612,
+      "compared": 612,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "pu_impedance"
+    },
+    {
+      "label": "fresh",
+      "id": "C.M1_upper_burden",
+      "records": 612,
+      "compared": 612,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "dimensionless"
+    },
+    {
+      "label": "fresh",
+      "id": "C.M2",
+      "records": 612,
+      "compared": 612,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "boolean"
+    },
+    {
+      "label": "fresh",
+      "id": "C.M2_rows",
+      "records": 612,
+      "compared": 612,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "pu_admittance"
+    },
+    {
+      "label": "fresh",
+      "id": "C.MIIF",
+      "records": 612,
+      "compared": 612,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "dimensionless"
+    },
+    {
+      "label": "fresh",
+      "id": "C.MSCR_external",
+      "records": 612,
+      "compared": 612,
+      "failures": 0,
+      "nulls": 612,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "pu"
+    },
+    {
+      "label": "fresh",
+      "id": "C.SCR_external",
+      "records": 612,
+      "compared": 612,
+      "failures": 0,
+      "nulls": 612,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "pu"
+    },
+    {
+      "label": "fresh",
+      "id": "C.Wp",
+      "records": 612,
+      "compared": 612,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "MW_per_system_MVA"
+    },
+    {
+      "label": "fresh",
+      "id": "C.Z",
+      "records": 612,
+      "compared": 612,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "pu_impedance"
+    },
+    {
+      "label": "fresh",
+      "id": "C.Z_diag",
+      "records": 612,
+      "compared": 612,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "pu_impedance"
+    },
+    {
+      "label": "fresh",
+      "id": "C.Zp",
+      "records": 612,
+      "compared": 612,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "dimensionless"
+    },
+    {
+      "label": "fresh",
+      "id": "C.equivalent_strength",
+      "records": 612,
+      "compared": 612,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "pu_admittance"
+    },
+    {
+      "label": "fresh",
+      "id": "C.equivalent_strength_MVA",
+      "records": 612,
+      "compared": 612,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "MVA_model_Thevenin_equivalent_not_fault_qualification"
+    },
+    {
+      "label": "fresh",
+      "id": "C.gSCR_external",
+      "records": 612,
+      "compared": 612,
+      "failures": 0,
+      "nulls": 612,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "pu"
+    },
+    {
+      "label": "fresh",
+      "id": "C.inverse_min",
+      "records": 612,
+      "compared": 612,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "pu_impedance"
+    },
+    {
+      "label": "fresh",
+      "id": "C.rho_Zp",
+      "records": 612,
+      "compared": 612,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "dimensionless"
+    },
+    {
+      "label": "fresh",
+      "id": "C.rho_diag",
+      "records": 612,
+      "compared": 612,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "dimensionless"
+    },
+    {
+      "label": "fresh",
+      "id": "C.solve_residual",
+      "records": 612,
+      "compared": 612,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "pu"
+    },
+    {
+      "label": "fresh",
+      "id": "D.E2_conservative_rejection",
+      "records": 612,
+      "compared": 612,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "boolean"
+    },
+    {
+      "label": "fresh",
+      "id": "D.E2_false_acceptance",
+      "records": 612,
+      "compared": 612,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "boolean"
+    },
+    {
+      "label": "fresh",
+      "id": "D.E_norm_inf",
+      "records": 612,
+      "compared": 612,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "dimensionless"
+    },
+    {
+      "label": "fresh",
+      "id": "D.actual_error",
+      "records": 612,
+      "compared": 612,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "pu_impedance"
+    },
+    {
+      "label": "fresh",
+      "id": "D.exact_remainder_residual",
+      "records": 612,
+      "compared": 612,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "pu_impedance"
+    },
+    {
+      "label": "fresh",
+      "id": "D.one_sided_safety_certified",
+      "records": 612,
+      "compared": 612,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "boolean"
+    },
+    {
+      "label": "fresh",
+      "id": "D.order",
+      "records": 612,
+      "compared": 612,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "count_or_index"
+    },
+    {
+      "label": "fresh",
+      "id": "D.remainder_bound",
+      "records": 612,
+      "compared": 612,
+      "failures": 0,
+      "nulls": 612,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "pu_impedance"
+    },
+    {
+      "label": "fresh",
+      "id": "D.series_converges",
+      "records": 612,
+      "compared": 612,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "boolean"
+    },
+    {
+      "label": "fresh",
+      "id": "D.spectral_radius",
+      "records": 612,
+      "compared": 612,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "dimensionless"
+    },
+    {
+      "label": "fresh",
+      "id": "D.status",
+      "records": 612,
+      "compared": 612,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "status"
+    },
+    {
+      "label": "fresh",
+      "id": "D.truncation",
+      "records": 612,
+      "compared": 612,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "pu_impedance"
+    },
+    {
+      "label": "fresh",
+      "id": "D.trust_region_norm_valid",
+      "records": 612,
+      "compared": 612,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "boolean"
+    },
+    {
+      "label": "fresh",
+      "id": "D.woodbury_residual",
+      "records": 612,
+      "compared": 612,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "pu_impedance"
+    },
+    {
+      "label": "fresh",
+      "id": "E.FOM",
+      "records": 108,
+      "compared": 108,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "explicit_field_ledger"
+    },
+    {
+      "label": "fresh",
+      "id": "E.SOC_residual_MWh",
+      "records": 108,
+      "compared": 108,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "MWh"
+    },
+    {
+      "label": "fresh",
+      "id": "E.S_I_v1",
+      "records": 612,
+      "compared": 612,
+      "failures": 0,
+      "nulls": 612,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "pu"
+    },
+    {
+      "label": "fresh",
+      "id": "E.S_nom_v1",
+      "records": 612,
+      "compared": 612,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "MW_per_system_MVA"
+    },
+    {
+      "label": "fresh",
+      "id": "E.S_on_v1",
+      "records": 612,
+      "compared": 612,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "MW_per_system_MVA"
+    },
+    {
+      "label": "fresh",
+      "id": "E.S_op_magnitude_v1",
+      "records": 612,
+      "compared": 612,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "MW_per_system_MVA"
+    },
+    {
+      "label": "fresh",
+      "id": "E.UC_transition_residual",
+      "records": 108,
+      "compared": 108,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "count_or_index"
+    },
+    {
+      "label": "fresh",
+      "id": "E.bounds_violation_blocks",
+      "records": 108,
+      "compared": 108,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "count_or_index"
+    },
+    {
+      "label": "fresh",
+      "id": "E.curtailment_MWh",
+      "records": 108,
+      "compared": 108,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "MWh"
+    },
+    {
+      "label": "fresh",
+      "id": "E.events",
+      "records": 108,
+      "compared": 108,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "declared_currency_per_represented_horizon"
+    },
+    {
+      "label": "fresh",
+      "id": "E.generation",
+      "records": 108,
+      "compared": 108,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "declared_currency_per_represented_horizon"
+    },
+    {
+      "label": "fresh",
+      "id": "E.integrality_residual",
+      "records": 108,
+      "compared": 108,
+      "failures": 0,
+      "nulls": 63,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "count_or_index"
+    },
+    {
+      "label": "fresh",
+      "id": "E.investment",
+      "records": 108,
+      "compared": 108,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "declared_currency_per_represented_horizon"
+    },
+    {
+      "label": "fresh",
+      "id": "E.no_load",
+      "records": 108,
+      "compared": 108,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "declared_currency_per_represented_horizon"
+    },
+    {
+      "label": "fresh",
+      "id": "E.objective_residual",
+      "records": 108,
+      "compared": 108,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "declared_currency_per_represented_horizon"
+    },
+    {
+      "label": "fresh",
+      "id": "E.portfolio",
+      "records": 108,
+      "compared": 108,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "explicit_field_ledger"
+    },
+    {
+      "label": "fresh",
+      "id": "E.power_balance_MW",
+      "records": 108,
+      "compared": 108,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "MW"
+    },
+    {
+      "label": "fresh",
+      "id": "E.storage",
+      "records": 108,
+      "compared": 108,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "declared_currency_per_represented_horizon"
+    },
+    {
+      "label": "fresh",
+      "id": "E.terminal_residual_MWh",
+      "records": 108,
+      "compared": 108,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "MWh"
+    },
+    {
+      "label": "fresh",
+      "id": "E.thermal_violation_MW",
+      "records": 108,
+      "compared": 108,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "MW"
+    },
+    {
+      "label": "fresh",
+      "id": "F.barrier_iterations",
+      "records": 108,
+      "compared": 108,
+      "failures": 0,
+      "nulls": 45,
+      "methods": [
+        "runtime_export_consistency"
+      ],
+      "unit": "count_or_index"
+    },
+    {
+      "label": "fresh",
+      "id": "F.bound",
+      "records": 108,
+      "compared": 108,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "runtime_export_consistency"
+      ],
+      "unit": "declared_currency_per_represented_horizon"
+    },
+    {
+      "label": "fresh",
+      "id": "F.build_wall_s",
+      "records": 108,
+      "compared": 108,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "runtime_export_consistency"
+      ],
+      "unit": "s"
+    },
+    {
+      "label": "fresh",
+      "id": "F.complementarity_residual",
+      "records": 612,
+      "compared": 612,
+      "failures": 0,
+      "nulls": 510,
+      "methods": [
+        "runtime_export_consistency"
+      ],
+      "unit": "scaled_objective"
+    },
+    {
+      "label": "fresh",
+      "id": "F.dual_cone_violation",
+      "records": 612,
+      "compared": 612,
+      "failures": 0,
+      "nulls": 510,
+      "methods": [
+        "runtime_export_consistency"
+      ],
+      "unit": "dual_cone_coordinates"
+    },
+    {
+      "label": "fresh",
+      "id": "F.dual_status",
+      "records": 108,
+      "compared": 108,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "runtime_export_consistency"
+      ],
+      "unit": "status"
+    },
+    {
+      "label": "fresh",
+      "id": "F.model",
+      "records": 108,
+      "compared": 108,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "runtime_export_consistency"
+      ],
+      "unit": "solver_metadata"
+    },
+    {
+      "label": "fresh",
+      "id": "F.nodes",
+      "records": 108,
+      "compared": 108,
+      "failures": 0,
+      "nulls": 63,
+      "methods": [
+        "runtime_export_consistency"
+      ],
+      "unit": "count_or_index"
+    },
+    {
+      "label": "fresh",
+      "id": "F.primal_status",
+      "records": 108,
+      "compared": 108,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "runtime_export_consistency"
+      ],
+      "unit": "status"
+    },
+    {
+      "label": "fresh",
+      "id": "F.relative_gap",
+      "records": 108,
+      "compared": 108,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "runtime_export_consistency"
+      ],
+      "unit": "dimensionless"
+    },
+    {
+      "label": "fresh",
+      "id": "F.simplex_iterations",
+      "records": 108,
+      "compared": 108,
+      "failures": 0,
+      "nulls": 18,
+      "methods": [
+        "runtime_export_consistency"
+      ],
+      "unit": "count_or_index"
+    },
+    {
+      "label": "fresh",
+      "id": "F.solve_wall_s",
+      "records": 108,
+      "compared": 108,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "runtime_export_consistency"
+      ],
+      "unit": "s"
+    },
+    {
+      "label": "fresh",
+      "id": "F.solver",
+      "records": 108,
+      "compared": 108,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "runtime_export_consistency"
+      ],
+      "unit": "status"
+    },
+    {
+      "label": "fresh",
+      "id": "F.solver_time_s",
+      "records": 108,
+      "compared": 108,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "runtime_export_consistency"
+      ],
+      "unit": "s"
+    },
+    {
+      "label": "fresh",
+      "id": "F.termination",
+      "records": 108,
+      "compared": 108,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "runtime_export_consistency"
+      ],
+      "unit": "status"
+    },
+    {
+      "label": "historical",
+      "id": "A.B",
+      "records": 687,
+      "compared": 687,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "pu"
+    },
+    {
+      "label": "historical",
+      "id": "A.B0",
+      "records": 687,
+      "compared": 687,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "pu"
+    },
+    {
+      "label": "historical",
+      "id": "A.B_eigenvalues",
+      "records": 687,
+      "compared": 687,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "pu"
+    },
+    {
+      "label": "historical",
+      "id": "A.L",
+      "records": 687,
+      "compared": 687,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "pu"
+    },
+    {
+      "label": "historical",
+      "id": "A.M",
+      "records": 687,
+      "compared": 687,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "pu"
+    },
+    {
+      "label": "historical",
+      "id": "A.M_eigenvalues",
+      "records": 687,
+      "compared": 687,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "pu"
+    },
+    {
+      "label": "historical",
+      "id": "A.S_diag",
+      "records": 687,
+      "compared": 687,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "MW_per_system_MVA"
+    },
+    {
+      "label": "historical",
+      "id": "A.Y_imag",
+      "records": 687,
+      "compared": 687,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "pu"
+    },
+    {
+      "label": "historical",
+      "id": "A.Y_real",
+      "records": 687,
+      "compared": 687,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "pu"
+    },
+    {
+      "label": "historical",
+      "id": "A.Z_class",
+      "records": 687,
+      "compared": 687,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "boolean"
+    },
+    {
+      "label": "historical",
+      "id": "A.affine_reconstruction_residual",
+      "records": 687,
+      "compared": 687,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "pu"
+    },
+    {
+      "label": "historical",
+      "id": "A.condition",
+      "records": 687,
+      "compared": 687,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "dimensionless"
+    },
+    {
+      "label": "historical",
+      "id": "A.connection_violation",
+      "records": 687,
+      "compared": 687,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "pu"
+    },
+    {
+      "label": "historical",
+      "id": "A.exposure_roundoff_correction",
+      "records": 687,
+      "compared": 687,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "MW_per_system_MVA"
+    },
+    {
+      "label": "historical",
+      "id": "A.inertia",
+      "records": 687,
+      "compared": 687,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "count"
+    },
+    {
+      "label": "historical",
+      "id": "A.network_domain",
+      "records": 687,
+      "compared": 687,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "explicit_field_ledger"
+    },
+    {
+      "label": "historical",
+      "id": "A.nullity",
+      "records": 687,
+      "compared": 687,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "count"
+    },
+    {
+      "label": "historical",
+      "id": "A.positive_offdiagonal",
+      "records": 687,
+      "compared": 687,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "pu"
+    },
+    {
+      "label": "historical",
+      "id": "A.producer_B0_residual",
+      "records": 687,
+      "compared": 687,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "pu"
+    },
+    {
+      "label": "historical",
+      "id": "A.rank",
+      "records": 687,
+      "compared": 687,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "count"
+    },
+    {
+      "label": "historical",
+      "id": "A.schur_residual",
+      "records": 687,
+      "compared": 687,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "pu"
+    },
+    {
+      "label": "historical",
+      "id": "A.source_base_residual",
+      "records": 687,
+      "compared": 687,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "pu"
+    },
+    {
+      "label": "historical",
+      "id": "A.source_ledger",
+      "records": 687,
+      "compared": 687,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "explicit_field_ledger"
+    },
+    {
+      "label": "historical",
+      "id": "A.symmetry",
+      "records": 687,
+      "compared": 687,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "pu"
+    },
+    {
+      "label": "historical",
+      "id": "B.G0",
+      "records": 687,
+      "compared": 687,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "boolean"
+    },
+    {
+      "label": "historical",
+      "id": "B.G0_eigmin",
+      "records": 687,
+      "compared": 687,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "pu"
+    },
+    {
+      "label": "historical",
+      "id": "B.G1",
+      "records": 687,
+      "compared": 687,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "boolean"
+    },
+    {
+      "label": "historical",
+      "id": "B.G1_binding",
+      "records": 687,
+      "compared": 687,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "boolean"
+    },
+    {
+      "label": "historical",
+      "id": "B.G1_false_rejection",
+      "records": 687,
+      "compared": 687,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "boolean"
+    },
+    {
+      "label": "historical",
+      "id": "B.G1_rows",
+      "records": 687,
+      "compared": 687,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "pu"
+    },
+    {
+      "label": "historical",
+      "id": "B.G2",
+      "records": 687,
+      "compared": 687,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "boolean"
+    },
+    {
+      "label": "historical",
+      "id": "B.G2_binding",
+      "records": 687,
+      "compared": 687,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "boolean"
+    },
+    {
+      "label": "historical",
+      "id": "B.G2_rows",
+      "records": 687,
+      "compared": 687,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "pu"
+    },
+    {
+      "label": "historical",
+      "id": "B.G3",
+      "records": 687,
+      "compared": 687,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "boolean"
+    },
+    {
+      "label": "historical",
+      "id": "B.G3_cone_product_slacks",
+      "records": 687,
+      "compared": 687,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "pu_admittance_squared"
+    },
+    {
+      "label": "historical",
+      "id": "B.G3_edges",
+      "records": 687,
+      "compared": 687,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "count_or_index"
+    },
+    {
+      "label": "historical",
+      "id": "B.G3_edges_complete",
+      "records": 687,
+      "compared": 687,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "pu"
+    },
+    {
+      "label": "historical",
+      "id": "B.G3_minimum_q",
+      "records": 687,
+      "compared": 687,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "pu_admittance"
+    },
+    {
+      "label": "historical",
+      "id": "B.G3_node_budget",
+      "records": 687,
+      "compared": 687,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "pu_admittance"
+    },
+    {
+      "label": "historical",
+      "id": "B.G3_q",
+      "records": 687,
+      "compared": 687,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "pu_admittance"
+    },
+    {
+      "label": "historical",
+      "id": "B.G3_reconstruction_residual",
+      "records": 687,
+      "compared": 687,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "pu"
+    },
+    {
+      "label": "historical",
+      "id": "B.G3_status",
+      "records": 687,
+      "compared": 687,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "status"
+    },
+    {
+      "label": "historical",
+      "id": "B.G3_valid",
+      "records": 687,
+      "compared": 687,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "pu"
+    },
+    {
+      "label": "historical",
+      "id": "B.eigen_residual",
+      "records": 687,
+      "compared": 687,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "pu"
+    },
+    {
+      "label": "historical",
+      "id": "B.eigenspace",
+      "records": 687,
+      "compared": 687,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "pu"
+    },
+    {
+      "label": "historical",
+      "id": "B.gamma",
+      "records": 687,
+      "compared": 687,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "dimensionless"
+    },
+    {
+      "label": "historical",
+      "id": "B.gamma_margin",
+      "records": 687,
+      "compared": 687,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "dimensionless"
+    },
+    {
+      "label": "historical",
+      "id": "B.multiplicity",
+      "records": 687,
+      "compared": 687,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "count_or_index"
+    },
+    {
+      "label": "historical",
+      "id": "B.participation",
+      "records": 687,
+      "compared": 687,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "dimensionless"
+    },
+    {
+      "label": "historical",
+      "id": "B.range_residual",
+      "records": 687,
+      "compared": 687,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "pu"
+    },
+    {
+      "label": "historical",
+      "id": "C.ESCR_external",
+      "records": 687,
+      "compared": 687,
+      "failures": 0,
+      "nulls": 687,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "pu"
+    },
+    {
+      "label": "historical",
+      "id": "C.LOCAL",
+      "records": 687,
+      "compared": 687,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "boolean"
+    },
+    {
+      "label": "historical",
+      "id": "C.LOCAL_eigmin",
+      "records": 687,
+      "compared": 687,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "pu_admittance"
+    },
+    {
+      "label": "historical",
+      "id": "C.M0",
+      "records": 687,
+      "compared": 687,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "boolean"
+    },
+    {
+      "label": "historical",
+      "id": "C.M0_slack",
+      "records": 687,
+      "compared": 687,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "dimensionless"
+    },
+    {
+      "label": "historical",
+      "id": "C.M1",
+      "records": 687,
+      "compared": 687,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "boolean"
+    },
+    {
+      "label": "historical",
+      "id": "C.M1_lower_violation",
+      "records": 687,
+      "compared": 687,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "pu_admittance"
+    },
+    {
+      "label": "historical",
+      "id": "C.M1_order_violation",
+      "records": 687,
+      "compared": 687,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "pu_impedance"
+    },
+    {
+      "label": "historical",
+      "id": "C.M1_upper_burden",
+      "records": 687,
+      "compared": 687,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "dimensionless"
+    },
+    {
+      "label": "historical",
+      "id": "C.M2",
+      "records": 687,
+      "compared": 687,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "boolean"
+    },
+    {
+      "label": "historical",
+      "id": "C.M2_rows",
+      "records": 687,
+      "compared": 687,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "pu_admittance"
+    },
+    {
+      "label": "historical",
+      "id": "C.MIIF",
+      "records": 687,
+      "compared": 687,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "dimensionless"
+    },
+    {
+      "label": "historical",
+      "id": "C.MSCR_external",
+      "records": 687,
+      "compared": 687,
+      "failures": 0,
+      "nulls": 687,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "pu"
+    },
+    {
+      "label": "historical",
+      "id": "C.SCR_external",
+      "records": 687,
+      "compared": 687,
+      "failures": 0,
+      "nulls": 687,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "pu"
+    },
+    {
+      "label": "historical",
+      "id": "C.Wp",
+      "records": 687,
+      "compared": 687,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "MW_per_system_MVA"
+    },
+    {
+      "label": "historical",
+      "id": "C.Z",
+      "records": 687,
+      "compared": 687,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "pu_impedance"
+    },
+    {
+      "label": "historical",
+      "id": "C.Z_diag",
+      "records": 687,
+      "compared": 687,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "pu_impedance"
+    },
+    {
+      "label": "historical",
+      "id": "C.Zp",
+      "records": 687,
+      "compared": 687,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "dimensionless"
+    },
+    {
+      "label": "historical",
+      "id": "C.equivalent_strength",
+      "records": 687,
+      "compared": 687,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "pu_admittance"
+    },
+    {
+      "label": "historical",
+      "id": "C.equivalent_strength_MVA",
+      "records": 687,
+      "compared": 687,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "MVA_model_Thevenin_equivalent_not_fault_qualification"
+    },
+    {
+      "label": "historical",
+      "id": "C.gSCR_external",
+      "records": 687,
+      "compared": 687,
+      "failures": 0,
+      "nulls": 687,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "pu"
+    },
+    {
+      "label": "historical",
+      "id": "C.inverse_min",
+      "records": 687,
+      "compared": 687,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "pu_impedance"
+    },
+    {
+      "label": "historical",
+      "id": "C.rho_Zp",
+      "records": 687,
+      "compared": 687,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "dimensionless"
+    },
+    {
+      "label": "historical",
+      "id": "C.rho_diag",
+      "records": 687,
+      "compared": 687,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "dimensionless"
+    },
+    {
+      "label": "historical",
+      "id": "C.solve_residual",
+      "records": 687,
+      "compared": 687,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "pu"
+    },
+    {
+      "label": "historical",
+      "id": "D.E2_conservative_rejection",
+      "records": 687,
+      "compared": 687,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "boolean"
+    },
+    {
+      "label": "historical",
+      "id": "D.E2_false_acceptance",
+      "records": 687,
+      "compared": 687,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "boolean"
+    },
+    {
+      "label": "historical",
+      "id": "D.E_norm_inf",
+      "records": 687,
+      "compared": 687,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "dimensionless"
+    },
+    {
+      "label": "historical",
+      "id": "D.actual_error",
+      "records": 687,
+      "compared": 687,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "pu_impedance"
+    },
+    {
+      "label": "historical",
+      "id": "D.exact_remainder_residual",
+      "records": 687,
+      "compared": 687,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "pu_impedance"
+    },
+    {
+      "label": "historical",
+      "id": "D.one_sided_safety_certified",
+      "records": 687,
+      "compared": 687,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "boolean"
+    },
+    {
+      "label": "historical",
+      "id": "D.order",
+      "records": 687,
+      "compared": 687,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "count_or_index"
+    },
+    {
+      "label": "historical",
+      "id": "D.remainder_bound",
+      "records": 687,
+      "compared": 687,
+      "failures": 0,
+      "nulls": 687,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "pu_impedance"
+    },
+    {
+      "label": "historical",
+      "id": "D.series_converges",
+      "records": 687,
+      "compared": 687,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "boolean"
+    },
+    {
+      "label": "historical",
+      "id": "D.spectral_radius",
+      "records": 687,
+      "compared": 687,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "dimensionless"
+    },
+    {
+      "label": "historical",
+      "id": "D.status",
+      "records": 687,
+      "compared": 687,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "status"
+    },
+    {
+      "label": "historical",
+      "id": "D.truncation",
+      "records": 687,
+      "compared": 687,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "pu_impedance"
+    },
+    {
+      "label": "historical",
+      "id": "D.trust_region_norm_valid",
+      "records": 687,
+      "compared": 687,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "boolean"
+    },
+    {
+      "label": "historical",
+      "id": "D.woodbury_residual",
+      "records": 687,
+      "compared": 687,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "pu_impedance"
+    },
+    {
+      "label": "historical",
+      "id": "E.FOM",
+      "records": 124,
+      "compared": 124,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "explicit_field_ledger"
+    },
+    {
+      "label": "historical",
+      "id": "E.SOC_residual_MWh",
+      "records": 124,
+      "compared": 124,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "MWh"
+    },
+    {
+      "label": "historical",
+      "id": "E.S_I_v1",
+      "records": 687,
+      "compared": 687,
+      "failures": 0,
+      "nulls": 687,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "pu"
+    },
+    {
+      "label": "historical",
+      "id": "E.S_nom_v1",
+      "records": 687,
+      "compared": 687,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "MW_per_system_MVA"
+    },
+    {
+      "label": "historical",
+      "id": "E.S_on_v1",
+      "records": 687,
+      "compared": 687,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "MW_per_system_MVA"
+    },
+    {
+      "label": "historical",
+      "id": "E.S_op_magnitude_v1",
+      "records": 687,
+      "compared": 687,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "MW_per_system_MVA"
+    },
+    {
+      "label": "historical",
+      "id": "E.UC_transition_residual",
+      "records": 124,
+      "compared": 124,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "count_or_index"
+    },
+    {
+      "label": "historical",
+      "id": "E.bounds_violation_blocks",
+      "records": 124,
+      "compared": 124,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "count_or_index"
+    },
+    {
+      "label": "historical",
+      "id": "E.curtailment_MWh",
+      "records": 124,
+      "compared": 124,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "MWh"
+    },
+    {
+      "label": "historical",
+      "id": "E.events",
+      "records": 124,
+      "compared": 124,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "declared_currency_per_represented_horizon"
+    },
+    {
+      "label": "historical",
+      "id": "E.generation",
+      "records": 124,
+      "compared": 124,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "declared_currency_per_represented_horizon"
+    },
+    {
+      "label": "historical",
+      "id": "E.integrality_residual",
+      "records": 124,
+      "compared": 124,
+      "failures": 0,
+      "nulls": 63,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "count_or_index"
+    },
+    {
+      "label": "historical",
+      "id": "E.investment",
+      "records": 124,
+      "compared": 124,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "declared_currency_per_represented_horizon"
+    },
+    {
+      "label": "historical",
+      "id": "E.no_load",
+      "records": 124,
+      "compared": 124,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "declared_currency_per_represented_horizon"
+    },
+    {
+      "label": "historical",
+      "id": "E.objective_residual",
+      "records": 124,
+      "compared": 124,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "declared_currency_per_represented_horizon"
+    },
+    {
+      "label": "historical",
+      "id": "E.portfolio",
+      "records": 124,
+      "compared": 124,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "explicit_field_ledger"
+    },
+    {
+      "label": "historical",
+      "id": "E.power_balance_MW",
+      "records": 124,
+      "compared": 124,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "MW"
+    },
+    {
+      "label": "historical",
+      "id": "E.storage",
+      "records": 124,
+      "compared": 124,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "declared_currency_per_represented_horizon"
+    },
+    {
+      "label": "historical",
+      "id": "E.terminal_residual_MWh",
+      "records": 124,
+      "compared": 124,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "MWh"
+    },
+    {
+      "label": "historical",
+      "id": "E.thermal_violation_MW",
+      "records": 124,
+      "compared": 124,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "raw_input_numpy_or_price_decision_reconstruction"
+      ],
+      "unit": "MW"
+    },
+    {
+      "label": "historical",
+      "id": "F.barrier_iterations",
+      "records": 124,
+      "compared": 124,
+      "failures": 0,
+      "nulls": 61,
+      "methods": [
+        "runtime_export_consistency"
+      ],
+      "unit": "count_or_index"
+    },
+    {
+      "label": "historical",
+      "id": "F.bound",
+      "records": 124,
+      "compared": 124,
+      "failures": 0,
+      "nulls": 18,
+      "methods": [
+        "runtime_export_consistency"
+      ],
+      "unit": "declared_currency_per_represented_horizon"
+    },
+    {
+      "label": "historical",
+      "id": "F.build_wall_s",
+      "records": 124,
+      "compared": 124,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "runtime_export_consistency"
+      ],
+      "unit": "s"
+    },
+    {
+      "label": "historical",
+      "id": "F.complementarity_residual",
+      "records": 687,
+      "compared": 687,
+      "failures": 0,
+      "nulls": 585,
+      "methods": [
+        "runtime_export_consistency"
+      ],
+      "unit": "scaled_objective"
+    },
+    {
+      "label": "historical",
+      "id": "F.dual_cone_violation",
+      "records": 687,
+      "compared": 687,
+      "failures": 0,
+      "nulls": 585,
+      "methods": [
+        "runtime_export_consistency"
+      ],
+      "unit": "dual_cone_coordinates"
+    },
+    {
+      "label": "historical",
+      "id": "F.dual_status",
+      "records": 124,
+      "compared": 124,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "runtime_export_consistency"
+      ],
+      "unit": "status"
+    },
+    {
+      "label": "historical",
+      "id": "F.model",
+      "records": 124,
+      "compared": 124,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "runtime_export_consistency"
+      ],
+      "unit": "solver_metadata"
+    },
+    {
+      "label": "historical",
+      "id": "F.nodes",
+      "records": 124,
+      "compared": 124,
+      "failures": 0,
+      "nulls": 71,
+      "methods": [
+        "runtime_export_consistency"
+      ],
+      "unit": "count_or_index"
+    },
+    {
+      "label": "historical",
+      "id": "F.primal_status",
+      "records": 124,
+      "compared": 124,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "runtime_export_consistency"
+      ],
+      "unit": "status"
+    },
+    {
+      "label": "historical",
+      "id": "F.relative_gap",
+      "records": 124,
+      "compared": 124,
+      "failures": 0,
+      "nulls": 18,
+      "methods": [
+        "runtime_export_consistency"
+      ],
+      "unit": "dimensionless"
+    },
+    {
+      "label": "historical",
+      "id": "F.simplex_iterations",
+      "records": 124,
+      "compared": 124,
+      "failures": 0,
+      "nulls": 34,
+      "methods": [
+        "runtime_export_consistency"
+      ],
+      "unit": "count_or_index"
+    },
+    {
+      "label": "historical",
+      "id": "F.solve_wall_s",
+      "records": 124,
+      "compared": 124,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "runtime_export_consistency"
+      ],
+      "unit": "s"
+    },
+    {
+      "label": "historical",
+      "id": "F.solver",
+      "records": 124,
+      "compared": 124,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "runtime_export_consistency"
+      ],
+      "unit": "status"
+    },
+    {
+      "label": "historical",
+      "id": "F.solver_time_s",
+      "records": 124,
+      "compared": 124,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "runtime_export_consistency"
+      ],
+      "unit": "s"
+    },
+    {
+      "label": "historical",
+      "id": "F.termination",
+      "records": 124,
+      "compared": 124,
+      "failures": 0,
+      "nulls": 0,
+      "methods": [
+        "runtime_export_consistency"
+      ],
+      "unit": "status"
+    }
+  ],
+  "failures": []
+}

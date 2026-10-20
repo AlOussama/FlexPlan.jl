@@ -1,0 +1,299 @@
+[
+  {
+    "repo": "FlexPlan",
+    "path": "D:\\Projekte\\Code\\FlexPlan_A35_EXEC_BASELINE",
+    "status": {
+      "code": 0,
+      "output": "## HEAD (no branch)",
+      "error": ""
+    },
+    "worktrees": {
+      "code": 0,
+      "output": "worktree D:/Projekte/Code/FlexPlan_UC_GSCR\nHEAD 725de2e6c1cea21f63902474f72ec614b2358356\nbranch refs/heads/implementation/paper-a-ap2-regional-optimization-v1\n\nworktree D:/Projekte/Code/FlexPlan_A35_EXEC_BASELINE\nHEAD 485b637cc1998a327206c5929434bd26c6f0be16\ndetached\n\nworktree D:/Projekte/Code/FlexPlan_A35_EXEC_REVIEW\nHEAD 50f88d5d30194afbbd188c96e3eab795b7a7de49\nbranch refs/heads/review/paper-a-a3-5-independent-acceptance-v1\n\nworktree D:/Projekte/Code/FlexPlan_AP3\nHEAD 485b637cc1998a327206c5929434bd26c6f0be16\nbranch refs/heads/implementation/paper-a-ap3-all-formulations-v1\n\nworktree D:/Projekte/Code/FlexPlan_StrangB\nHEAD e992edc88d39fa0eb2d72e2490e157441223f568\nbranch refs/heads/integration/paper-a-parameter-qualification-v1",
+      "error": ""
+    },
+    "remote_heads": {
+      "code": 0,
+      "output": "485b637cc1998a327206c5929434bd26c6f0be16\trefs/heads/implementation/paper-a-ap3-all-formulations-v1\n50f88d5d30194afbbd188c96e3eab795b7a7de49\trefs/heads/review/paper-a-a3-5-independent-acceptance-v1",
+      "error": ""
+    },
+    "objects": [
+      {
+        "sha": "485b637cc1998a327206c5929434bd26c6f0be16",
+        "type": {
+          "code": 0,
+          "output": "commit",
+          "error": ""
+        },
+        "parents": {
+          "code": 0,
+          "output": "485b637cc1998a327206c5929434bd26c6f0be16 897aa6f407f69a68b58d5f0bbdf922438eb8db46",
+          "error": ""
+        },
+        "merge_base": {
+          "code": 0,
+          "output": "485b637cc1998a327206c5929434bd26c6f0be16",
+          "error": ""
+        }
+      },
+      {
+        "sha": "50f88d5d30194afbbd188c96e3eab795b7a7de49",
+        "type": {
+          "code": 0,
+          "output": "commit",
+          "error": ""
+        },
+        "parents": {
+          "code": 0,
+          "output": "50f88d5d30194afbbd188c96e3eab795b7a7de49 29192398bc7819a533b1e436c7f176b8dadb56e4",
+          "error": ""
+        },
+        "merge_base": {
+          "code": 0,
+          "output": "485b637cc1998a327206c5929434bd26c6f0be16",
+          "error": ""
+        }
+      },
+      {
+        "sha": "29192398bc7819a533b1e436c7f176b8dadb56e4",
+        "type": {
+          "code": 0,
+          "output": "commit",
+          "error": ""
+        },
+        "parents": {
+          "code": 0,
+          "output": "29192398bc7819a533b1e436c7f176b8dadb56e4 2e369f78acc2abf181e42bd8fbc3b62ac4b4a5fc",
+          "error": ""
+        },
+        "merge_base": {
+          "code": 0,
+          "output": "485b637cc1998a327206c5929434bd26c6f0be16",
+          "error": ""
+        }
+      },
+      {
+        "sha": "0574d491111677a7ac2cabff2877735171486c46",
+        "type": {
+          "code": 0,
+          "output": "commit",
+          "error": ""
+        },
+        "parents": {
+          "code": 0,
+          "output": "0574d491111677a7ac2cabff2877735171486c46 67b08bdd007a84865e8dc64c4c34d737d33aa0af",
+          "error": ""
+        },
+        "merge_base": {
+          "code": 0,
+          "output": "485b637cc1998a327206c5929434bd26c6f0be16",
+          "error": ""
+        }
+      },
+      {
+        "sha": "725de2e6c1cea21f63902474f72ec614b2358356",
+        "type": {
+          "code": 0,
+          "output": "commit",
+          "error": ""
+        },
+        "parents": {
+          "code": 0,
+          "output": "725de2e6c1cea21f63902474f72ec614b2358356 574779ea8a542ca5c7f6dd73aa6c4567d8cc8bae",
+          "error": ""
+        },
+        "merge_base": {
+          "code": 0,
+          "output": "725de2e6c1cea21f63902474f72ec614b2358356",
+          "error": ""
+        }
+      },
+      {
+        "sha": "e992edc88d39fa0eb2d72e2490e157441223f568",
+        "type": {
+          "code": 0,
+          "output": "commit",
+          "error": ""
+        },
+        "parents": {
+          "code": 0,
+          "output": "e992edc88d39fa0eb2d72e2490e157441223f568 725de2e6c1cea21f63902474f72ec614b2358356",
+          "error": ""
+        },
+        "merge_base": {
+          "code": 0,
+          "output": "e992edc88d39fa0eb2d72e2490e157441223f568",
+          "error": ""
+        }
+      }
+    ]
+  },
+  {
+    "repo": "research-map",
+    "path": "D:\\Projekte\\research-map",
+    "status": {
+      "code": 0,
+      "output": "## main...origin/main [behind 50]",
+      "error": ""
+    },
+    "worktrees": {
+      "code": 0,
+      "output": "worktree D:/Projekte/research-map\nHEAD 2564c49bdc32c7508d2acfc9fe543d4887561484\nbranch refs/heads/main\n\nworktree D:/Projekte/research-map-strang-b\nHEAD a6c19790bb009b5956475a6368a23e339a82dab7\nbranch refs/heads/codex/paper-a-strang-b-parameter-qualification",
+      "error": ""
+    },
+    "remote_heads": {
+      "code": 0,
+      "output": "e8118425adc335a99e85120d943763305f211315\trefs/heads/main\n2badb9a90a8d3c1d4a33accee640b295de1e33a1\trefs/heads/review/paper-a-a3-5-science-release-v1",
+      "error": ""
+    },
+    "objects": [
+      {
+        "sha": "e8118425adc335a99e85120d943763305f211315",
+        "type": {
+          "code": 0,
+          "output": "commit",
+          "error": ""
+        },
+        "parents": {
+          "code": 0,
+          "output": "e8118425adc335a99e85120d943763305f211315 a375a133ac4ab9476a1ba27b5b8bf480e4b989c7",
+          "error": ""
+        },
+        "merge_base": {
+          "code": 0,
+          "output": "e8118425adc335a99e85120d943763305f211315",
+          "error": ""
+        }
+      },
+      {
+        "sha": "2c2fce769b2ed6ffd4f1ced60c0798776acccc93",
+        "type": {
+          "code": 0,
+          "output": "commit",
+          "error": ""
+        },
+        "parents": {
+          "code": 0,
+          "output": "2c2fce769b2ed6ffd4f1ced60c0798776acccc93 2eee79a4c2a8ae70238f633bc993a1c23e4b144a",
+          "error": ""
+        },
+        "merge_base": {
+          "code": 0,
+          "output": "2c2fce769b2ed6ffd4f1ced60c0798776acccc93",
+          "error": ""
+        }
+      },
+      {
+        "sha": "672a61c95525bf1d7a03cf745a754a15a23ce78b",
+        "type": {
+          "code": 0,
+          "output": "commit",
+          "error": ""
+        },
+        "parents": {
+          "code": 0,
+          "output": "672a61c95525bf1d7a03cf745a754a15a23ce78b 842e0eb09fd283f2d351c94b5f257f183e7ebac1",
+          "error": ""
+        },
+        "merge_base": {
+          "code": 0,
+          "output": "a375a133ac4ab9476a1ba27b5b8bf480e4b989c7",
+          "error": ""
+        }
+      },
+      {
+        "sha": "2badb9a90a8d3c1d4a33accee640b295de1e33a1",
+        "type": {
+          "code": 0,
+          "output": "commit",
+          "error": ""
+        },
+        "parents": {
+          "code": 0,
+          "output": "2badb9a90a8d3c1d4a33accee640b295de1e33a1 71f68e1233fd854a3799d8dbce879e0e7ab20a18",
+          "error": ""
+        },
+        "merge_base": {
+          "code": 0,
+          "output": "e8118425adc335a99e85120d943763305f211315",
+          "error": ""
+        }
+      },
+      {
+        "sha": "5ceb19a6faf4e7c7e797a737ed5b449f9e2db609",
+        "type": {
+          "code": 0,
+          "output": "commit",
+          "error": ""
+        },
+        "parents": {
+          "code": 0,
+          "output": "5ceb19a6faf4e7c7e797a737ed5b449f9e2db609 0be2c8ad1cb7e35fa823771cd80ebac0d499a23e",
+          "error": ""
+        },
+        "merge_base": {
+          "code": 0,
+          "output": "e8118425adc335a99e85120d943763305f211315",
+          "error": ""
+        }
+      }
+    ]
+  },
+  {
+    "repo": "producer",
+    "path": "D:\\Projekte\\Code\\pypsatomatpowerx",
+    "status": {
+      "code": 0,
+      "output": "## implementation/paper-a-ap1-data-contract-v1...origin/implementation/paper-a-ap1-data-contract-v1",
+      "error": ""
+    },
+    "worktrees": {
+      "code": 0,
+      "output": "worktree D:/Projekte/Code/pypsatomatpowerx\nHEAD b9e4efec8c2939bff1a65ae4ccb66cfbcf9cb62c\nbranch refs/heads/implementation/paper-a-ap1-data-contract-v1\n\nworktree D:/Projekte/Code/pypsatomatpowerx_clean_battery_policy\nHEAD fbcd4e1aa3fc2b41098b24196067e509b42ceb27\nbranch refs/heads/chore/elec37-battery-policy",
+      "error": ""
+    },
+    "remote_heads": {
+      "code": 0,
+      "output": "b9e4efec8c2939bff1a65ae4ccb66cfbcf9cb62c\trefs/heads/implementation/paper-a-ap1-data-contract-v1",
+      "error": ""
+    },
+    "objects": [
+      {
+        "sha": "b9e4efec8c2939bff1a65ae4ccb66cfbcf9cb62c",
+        "type": {
+          "code": 0,
+          "output": "commit",
+          "error": ""
+        },
+        "parents": {
+          "code": 0,
+          "output": "b9e4efec8c2939bff1a65ae4ccb66cfbcf9cb62c 3b8fdb01d931225edc5f8fe1e2c200d0da288a09",
+          "error": ""
+        },
+        "merge_base": {
+          "code": 0,
+          "output": "b9e4efec8c2939bff1a65ae4ccb66cfbcf9cb62c",
+          "error": ""
+        }
+      },
+      {
+        "sha": "3b8fdb01d931225edc5f8fe1e2c200d0da288a09",
+        "type": {
+          "code": 0,
+          "output": "commit",
+          "error": ""
+        },
+        "parents": {
+          "code": 0,
+          "output": "3b8fdb01d931225edc5f8fe1e2c200d0da288a09 b30faaa7fa1708028ff83e08e926476f47170b1e",
+          "error": ""
+        },
+        "merge_base": {
+          "code": 0,
+          "output": "3b8fdb01d931225edc5f8fe1e2c200d0da288a09",
+          "error": ""
+        }
+      }
+    ]
+  }
+]

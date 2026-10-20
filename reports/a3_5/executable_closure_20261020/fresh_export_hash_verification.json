@@ -1,0 +1,690 @@
+{
+  "count": 171,
+  "matched": 171,
+  "entries": [
+    {
+      "path": "benchmarks\\benchmark.json",
+      "match": true
+    },
+    {
+      "path": "benchmarks\\provenance.json",
+      "match": true
+    },
+    {
+      "path": "certificates\\certificates.json",
+      "match": true
+    },
+    {
+      "path": "certificates\\provenance.json",
+      "match": true
+    },
+    {
+      "path": "comparisons\\comparisons.json",
+      "match": true
+    },
+    {
+      "path": "comparisons\\provenance.json",
+      "match": true
+    },
+    {
+      "path": "matrices\\matrices.json",
+      "match": true
+    },
+    {
+      "path": "matrices\\provenance.json",
+      "match": true
+    },
+    {
+      "path": "metrics\\metric_registry.json",
+      "match": true
+    },
+    {
+      "path": "metrics\\metrics.csv",
+      "match": true
+    },
+    {
+      "path": "metrics\\metrics.json",
+      "match": true
+    },
+    {
+      "path": "metrics\\provenance.json",
+      "match": true
+    },
+    {
+      "path": "planning\\planning.json",
+      "match": true
+    },
+    {
+      "path": "planning\\provenance.json",
+      "match": true
+    },
+    {
+      "path": "suite\\capabilities.json",
+      "match": true
+    },
+    {
+      "path": "suite\\provenance.json",
+      "match": true
+    },
+    {
+      "path": "suite\\runs.json",
+      "match": true
+    },
+    {
+      "path": "suite\\suite_config.json",
+      "match": true
+    },
+    {
+      "path": "suite\\bess_premium_3snap\\BASE_continuous.json",
+      "match": true
+    },
+    {
+      "path": "suite\\bess_premium_3snap\\BASE_integer.json",
+      "match": true
+    },
+    {
+      "path": "suite\\bess_premium_3snap\\G0_continuous.json",
+      "match": true
+    },
+    {
+      "path": "suite\\bess_premium_3snap\\G1_continuous.json",
+      "match": true
+    },
+    {
+      "path": "suite\\bess_premium_3snap\\G1_integer.json",
+      "match": true
+    },
+    {
+      "path": "suite\\bess_premium_3snap\\G2_identity_continuous.json",
+      "match": true
+    },
+    {
+      "path": "suite\\bess_premium_3snap\\G2_identity_integer.json",
+      "match": true
+    },
+    {
+      "path": "suite\\bess_premium_3snap\\G3_continuous.json",
+      "match": true
+    },
+    {
+      "path": "suite\\bess_premium_3snap\\M2_full_continuous.json",
+      "match": true
+    },
+    {
+      "path": "suite\\bess_premium_3snap\\M2_full_integer.json",
+      "match": true
+    },
+    {
+      "path": "suite\\bess_premium_3snap\\M2_neighbor_continuous.json",
+      "match": true
+    },
+    {
+      "path": "suite\\bess_premium_3snap\\M2_neighbor_integer.json",
+      "match": true
+    },
+    {
+      "path": "suite\\bess_premium_3snap\\case.json",
+      "match": true
+    },
+    {
+      "path": "suite\\bess_premium_3snap\\case_manifest.json",
+      "match": true
+    },
+    {
+      "path": "suite\\bess_premium_3snap\\parameter_registry.csv",
+      "match": true
+    },
+    {
+      "path": "suite\\bess_premium_3snap\\parameters.json",
+      "match": true
+    },
+    {
+      "path": "suite\\bess_premium_3snap\\study_scenarios.toml",
+      "match": true
+    },
+    {
+      "path": "suite\\connectivity_3snap\\BASE_continuous.json",
+      "match": true
+    },
+    {
+      "path": "suite\\connectivity_3snap\\BASE_integer.json",
+      "match": true
+    },
+    {
+      "path": "suite\\connectivity_3snap\\G0_continuous.json",
+      "match": true
+    },
+    {
+      "path": "suite\\connectivity_3snap\\G1_continuous.json",
+      "match": true
+    },
+    {
+      "path": "suite\\connectivity_3snap\\G1_integer.json",
+      "match": true
+    },
+    {
+      "path": "suite\\connectivity_3snap\\G2_identity_continuous.json",
+      "match": true
+    },
+    {
+      "path": "suite\\connectivity_3snap\\G2_identity_integer.json",
+      "match": true
+    },
+    {
+      "path": "suite\\connectivity_3snap\\G3_continuous.json",
+      "match": true
+    },
+    {
+      "path": "suite\\connectivity_3snap\\M2_full_continuous.json",
+      "match": true
+    },
+    {
+      "path": "suite\\connectivity_3snap\\M2_full_integer.json",
+      "match": true
+    },
+    {
+      "path": "suite\\connectivity_3snap\\M2_neighbor_continuous.json",
+      "match": true
+    },
+    {
+      "path": "suite\\connectivity_3snap\\M2_neighbor_integer.json",
+      "match": true
+    },
+    {
+      "path": "suite\\connectivity_3snap\\case.json",
+      "match": true
+    },
+    {
+      "path": "suite\\connectivity_3snap\\case_manifest.json",
+      "match": true
+    },
+    {
+      "path": "suite\\connectivity_3snap\\parameter_registry.csv",
+      "match": true
+    },
+    {
+      "path": "suite\\connectivity_3snap\\parameters.json",
+      "match": true
+    },
+    {
+      "path": "suite\\connectivity_3snap\\study_scenarios.toml",
+      "match": true
+    },
+    {
+      "path": "suite\\event_price_3snap\\BASE_continuous.json",
+      "match": true
+    },
+    {
+      "path": "suite\\event_price_3snap\\BASE_integer.json",
+      "match": true
+    },
+    {
+      "path": "suite\\event_price_3snap\\G0_continuous.json",
+      "match": true
+    },
+    {
+      "path": "suite\\event_price_3snap\\G1_continuous.json",
+      "match": true
+    },
+    {
+      "path": "suite\\event_price_3snap\\G1_integer.json",
+      "match": true
+    },
+    {
+      "path": "suite\\event_price_3snap\\G2_identity_continuous.json",
+      "match": true
+    },
+    {
+      "path": "suite\\event_price_3snap\\G2_identity_integer.json",
+      "match": true
+    },
+    {
+      "path": "suite\\event_price_3snap\\G3_continuous.json",
+      "match": true
+    },
+    {
+      "path": "suite\\event_price_3snap\\M2_full_continuous.json",
+      "match": true
+    },
+    {
+      "path": "suite\\event_price_3snap\\M2_full_integer.json",
+      "match": true
+    },
+    {
+      "path": "suite\\event_price_3snap\\M2_neighbor_continuous.json",
+      "match": true
+    },
+    {
+      "path": "suite\\event_price_3snap\\M2_neighbor_integer.json",
+      "match": true
+    },
+    {
+      "path": "suite\\event_price_3snap\\case.json",
+      "match": true
+    },
+    {
+      "path": "suite\\event_price_3snap\\case_manifest.json",
+      "match": true
+    },
+    {
+      "path": "suite\\event_price_3snap\\parameter_registry.csv",
+      "match": true
+    },
+    {
+      "path": "suite\\event_price_3snap\\parameters.json",
+      "match": true
+    },
+    {
+      "path": "suite\\event_price_3snap\\study_scenarios.toml",
+      "match": true
+    },
+    {
+      "path": "suite\\exposure_multiplier_3snap\\BASE_continuous.json",
+      "match": true
+    },
+    {
+      "path": "suite\\exposure_multiplier_3snap\\BASE_integer.json",
+      "match": true
+    },
+    {
+      "path": "suite\\exposure_multiplier_3snap\\G0_continuous.json",
+      "match": true
+    },
+    {
+      "path": "suite\\exposure_multiplier_3snap\\G1_continuous.json",
+      "match": true
+    },
+    {
+      "path": "suite\\exposure_multiplier_3snap\\G1_integer.json",
+      "match": true
+    },
+    {
+      "path": "suite\\exposure_multiplier_3snap\\G2_identity_continuous.json",
+      "match": true
+    },
+    {
+      "path": "suite\\exposure_multiplier_3snap\\G2_identity_integer.json",
+      "match": true
+    },
+    {
+      "path": "suite\\exposure_multiplier_3snap\\G3_continuous.json",
+      "match": true
+    },
+    {
+      "path": "suite\\exposure_multiplier_3snap\\M2_full_continuous.json",
+      "match": true
+    },
+    {
+      "path": "suite\\exposure_multiplier_3snap\\M2_full_integer.json",
+      "match": true
+    },
+    {
+      "path": "suite\\exposure_multiplier_3snap\\M2_neighbor_continuous.json",
+      "match": true
+    },
+    {
+      "path": "suite\\exposure_multiplier_3snap\\M2_neighbor_integer.json",
+      "match": true
+    },
+    {
+      "path": "suite\\exposure_multiplier_3snap\\case.json",
+      "match": true
+    },
+    {
+      "path": "suite\\exposure_multiplier_3snap\\case_manifest.json",
+      "match": true
+    },
+    {
+      "path": "suite\\exposure_multiplier_3snap\\parameter_registry.csv",
+      "match": true
+    },
+    {
+      "path": "suite\\exposure_multiplier_3snap\\parameters.json",
+      "match": true
+    },
+    {
+      "path": "suite\\exposure_multiplier_3snap\\study_scenarios.toml",
+      "match": true
+    },
+    {
+      "path": "suite\\reference_24snap\\BASE_continuous.json",
+      "match": true
+    },
+    {
+      "path": "suite\\reference_24snap\\BASE_integer.json",
+      "match": true
+    },
+    {
+      "path": "suite\\reference_24snap\\G0_continuous.json",
+      "match": true
+    },
+    {
+      "path": "suite\\reference_24snap\\G1_continuous.json",
+      "match": true
+    },
+    {
+      "path": "suite\\reference_24snap\\G1_integer.json",
+      "match": true
+    },
+    {
+      "path": "suite\\reference_24snap\\G2_identity_continuous.json",
+      "match": true
+    },
+    {
+      "path": "suite\\reference_24snap\\G2_identity_integer.json",
+      "match": true
+    },
+    {
+      "path": "suite\\reference_24snap\\G3_continuous.json",
+      "match": true
+    },
+    {
+      "path": "suite\\reference_24snap\\M2_full_continuous.json",
+      "match": true
+    },
+    {
+      "path": "suite\\reference_24snap\\M2_full_integer.json",
+      "match": true
+    },
+    {
+      "path": "suite\\reference_24snap\\M2_neighbor_continuous.json",
+      "match": true
+    },
+    {
+      "path": "suite\\reference_24snap\\M2_neighbor_integer.json",
+      "match": true
+    },
+    {
+      "path": "suite\\reference_24snap\\case.json",
+      "match": true
+    },
+    {
+      "path": "suite\\reference_24snap\\case_manifest.json",
+      "match": true
+    },
+    {
+      "path": "suite\\reference_24snap\\parameter_registry.csv",
+      "match": true
+    },
+    {
+      "path": "suite\\reference_24snap\\parameters.json",
+      "match": true
+    },
+    {
+      "path": "suite\\reference_24snap\\study_scenarios.toml",
+      "match": true
+    },
+    {
+      "path": "suite\\reference_3snap\\BASE_continuous.json",
+      "match": true
+    },
+    {
+      "path": "suite\\reference_3snap\\BASE_integer.json",
+      "match": true
+    },
+    {
+      "path": "suite\\reference_3snap\\G0_continuous.json",
+      "match": true
+    },
+    {
+      "path": "suite\\reference_3snap\\G1_continuous.json",
+      "match": true
+    },
+    {
+      "path": "suite\\reference_3snap\\G1_integer.json",
+      "match": true
+    },
+    {
+      "path": "suite\\reference_3snap\\G2_identity_continuous.json",
+      "match": true
+    },
+    {
+      "path": "suite\\reference_3snap\\G2_identity_integer.json",
+      "match": true
+    },
+    {
+      "path": "suite\\reference_3snap\\G3_continuous.json",
+      "match": true
+    },
+    {
+      "path": "suite\\reference_3snap\\M2_full_continuous.json",
+      "match": true
+    },
+    {
+      "path": "suite\\reference_3snap\\M2_full_integer.json",
+      "match": true
+    },
+    {
+      "path": "suite\\reference_3snap\\M2_neighbor_continuous.json",
+      "match": true
+    },
+    {
+      "path": "suite\\reference_3snap\\M2_neighbor_integer.json",
+      "match": true
+    },
+    {
+      "path": "suite\\reference_3snap\\case.json",
+      "match": true
+    },
+    {
+      "path": "suite\\reference_3snap\\case_manifest.json",
+      "match": true
+    },
+    {
+      "path": "suite\\reference_3snap\\parameter_registry.csv",
+      "match": true
+    },
+    {
+      "path": "suite\\reference_3snap\\parameters.json",
+      "match": true
+    },
+    {
+      "path": "suite\\reference_3snap\\study_scenarios.toml",
+      "match": true
+    },
+    {
+      "path": "suite\\reference_6snap\\BASE_continuous.json",
+      "match": true
+    },
+    {
+      "path": "suite\\reference_6snap\\BASE_integer.json",
+      "match": true
+    },
+    {
+      "path": "suite\\reference_6snap\\G0_continuous.json",
+      "match": true
+    },
+    {
+      "path": "suite\\reference_6snap\\G1_continuous.json",
+      "match": true
+    },
+    {
+      "path": "suite\\reference_6snap\\G1_integer.json",
+      "match": true
+    },
+    {
+      "path": "suite\\reference_6snap\\G2_identity_continuous.json",
+      "match": true
+    },
+    {
+      "path": "suite\\reference_6snap\\G2_identity_integer.json",
+      "match": true
+    },
+    {
+      "path": "suite\\reference_6snap\\G3_continuous.json",
+      "match": true
+    },
+    {
+      "path": "suite\\reference_6snap\\M2_full_continuous.json",
+      "match": true
+    },
+    {
+      "path": "suite\\reference_6snap\\M2_full_integer.json",
+      "match": true
+    },
+    {
+      "path": "suite\\reference_6snap\\M2_neighbor_continuous.json",
+      "match": true
+    },
+    {
+      "path": "suite\\reference_6snap\\M2_neighbor_integer.json",
+      "match": true
+    },
+    {
+      "path": "suite\\reference_6snap\\case.json",
+      "match": true
+    },
+    {
+      "path": "suite\\reference_6snap\\case_manifest.json",
+      "match": true
+    },
+    {
+      "path": "suite\\reference_6snap\\parameter_registry.csv",
+      "match": true
+    },
+    {
+      "path": "suite\\reference_6snap\\parameters.json",
+      "match": true
+    },
+    {
+      "path": "suite\\reference_6snap\\study_scenarios.toml",
+      "match": true
+    },
+    {
+      "path": "suite\\source_reactance_3snap\\BASE_continuous.json",
+      "match": true
+    },
+    {
+      "path": "suite\\source_reactance_3snap\\BASE_integer.json",
+      "match": true
+    },
+    {
+      "path": "suite\\source_reactance_3snap\\G0_continuous.json",
+      "match": true
+    },
+    {
+      "path": "suite\\source_reactance_3snap\\G1_continuous.json",
+      "match": true
+    },
+    {
+      "path": "suite\\source_reactance_3snap\\G1_integer.json",
+      "match": true
+    },
+    {
+      "path": "suite\\source_reactance_3snap\\G2_identity_continuous.json",
+      "match": true
+    },
+    {
+      "path": "suite\\source_reactance_3snap\\G2_identity_integer.json",
+      "match": true
+    },
+    {
+      "path": "suite\\source_reactance_3snap\\G3_continuous.json",
+      "match": true
+    },
+    {
+      "path": "suite\\source_reactance_3snap\\M2_full_continuous.json",
+      "match": true
+    },
+    {
+      "path": "suite\\source_reactance_3snap\\M2_full_integer.json",
+      "match": true
+    },
+    {
+      "path": "suite\\source_reactance_3snap\\M2_neighbor_continuous.json",
+      "match": true
+    },
+    {
+      "path": "suite\\source_reactance_3snap\\M2_neighbor_integer.json",
+      "match": true
+    },
+    {
+      "path": "suite\\source_reactance_3snap\\case.json",
+      "match": true
+    },
+    {
+      "path": "suite\\source_reactance_3snap\\case_manifest.json",
+      "match": true
+    },
+    {
+      "path": "suite\\source_reactance_3snap\\parameter_registry.csv",
+      "match": true
+    },
+    {
+      "path": "suite\\source_reactance_3snap\\parameters.json",
+      "match": true
+    },
+    {
+      "path": "suite\\source_reactance_3snap\\study_scenarios.toml",
+      "match": true
+    },
+    {
+      "path": "suite\\threshold_3snap\\BASE_continuous.json",
+      "match": true
+    },
+    {
+      "path": "suite\\threshold_3snap\\BASE_integer.json",
+      "match": true
+    },
+    {
+      "path": "suite\\threshold_3snap\\G0_continuous.json",
+      "match": true
+    },
+    {
+      "path": "suite\\threshold_3snap\\G1_continuous.json",
+      "match": true
+    },
+    {
+      "path": "suite\\threshold_3snap\\G1_integer.json",
+      "match": true
+    },
+    {
+      "path": "suite\\threshold_3snap\\G2_identity_continuous.json",
+      "match": true
+    },
+    {
+      "path": "suite\\threshold_3snap\\G2_identity_integer.json",
+      "match": true
+    },
+    {
+      "path": "suite\\threshold_3snap\\G3_continuous.json",
+      "match": true
+    },
+    {
+      "path": "suite\\threshold_3snap\\M2_full_continuous.json",
+      "match": true
+    },
+    {
+      "path": "suite\\threshold_3snap\\M2_full_integer.json",
+      "match": true
+    },
+    {
+      "path": "suite\\threshold_3snap\\M2_neighbor_continuous.json",
+      "match": true
+    },
+    {
+      "path": "suite\\threshold_3snap\\M2_neighbor_integer.json",
+      "match": true
+    },
+    {
+      "path": "suite\\threshold_3snap\\case.json",
+      "match": true
+    },
+    {
+      "path": "suite\\threshold_3snap\\case_manifest.json",
+      "match": true
+    },
+    {
+      "path": "suite\\threshold_3snap\\parameter_registry.csv",
+      "match": true
+    },
+    {
+      "path": "suite\\threshold_3snap\\parameters.json",
+      "match": true
+    },
+    {
+      "path": "suite\\threshold_3snap\\study_scenarios.toml",
+      "match": true
+    }
+  ]
+}

@@ -1,0 +1,426 @@
+[
+  {
+    "kind": "G0",
+    "B": [
+      [
+        1.0,
+        -0.5
+      ],
+      [
+        -0.5,
+        1.0
+      ]
+    ],
+    "constraints": [
+      {
+        "Vector{AffExpr} in MathOptInterface.PositiveSemidefiniteConeTriangle": 1
+      }
+    ],
+    "full_primal_violation": 0.0,
+    "dual_objective": -1.2568615958105754e-11,
+    "id": "G0_not_M0",
+    "dual_status": "FEASIBLE_POINT",
+    "termination": "OPTIMAL",
+    "eigmin": 2.938825653419678e-17,
+    "p": [
+      0.25,
+      0.6666666666666666
+    ]
+  },
+  {
+    "full_primal_violation": 5.162759109111903e-12,
+    "eigmin": 2.938825653419678e-17,
+    "product_slacks": [
+      -1.7208734437446083e-12
+    ],
+    "B": [
+      [
+        1.0,
+        -0.5
+      ],
+      [
+        -0.5,
+        1.0
+      ]
+    ],
+    "constraints": [
+      {
+        "AffExpr in MathOptInterface.GreaterThan{Float64}": 2
+      },
+      {
+        "Vector{AffExpr} in MathOptInterface.RotatedSecondOrderCone": 1
+      },
+      {
+        "VariableRef in MathOptInterface.GreaterThan{Float64}": 2
+      }
+    ],
+    "dual_objective": -2.88377229668157e-12,
+    "id": "G0_not_M0",
+    "complementarity": 1.687538997430238e-14,
+    "node_residue": [
+      9.694467451026867e-13,
+      1.863675880287019e-12
+    ],
+    "termination": "OPTIMAL",
+    "cones": [
+      {
+        "dual": [
+          0.31145369602352585,
+          0.70077108992349,
+          0.6606931905531148
+        ],
+        "function": "AffExpr[g3_q[1,1], g3_q[1,2], -0.7071067811865476]",
+        "edge": [
+          1,
+          2
+        ],
+        "primal": [
+          0.7499999999990306,
+          0.3333333333314697,
+          -0.7071067811865476
+        ],
+        "MOI_set": "MathOptInterface.RotatedSecondOrderCone(3)"
+      }
+    ],
+    "kind": "G3",
+    "dual_cone_violation": 0.0,
+    "dual_status": "FEASIBLE_POINT",
+    "reconstruction_residual": 0.0,
+    "p": [
+      0.25,
+      0.6666666666666666
+    ]
+  },
+  {
+    "kind": "G0",
+    "B": [
+      [
+        3.4,
+        -0.4
+      ],
+      [
+        -0.4,
+        2.2
+      ]
+    ],
+    "constraints": [
+      {
+        "Vector{AffExpr} in MathOptInterface.PositiveSemidefiniteConeTriangle": 1
+      }
+    ],
+    "full_primal_violation": 0.0,
+    "dual_objective": -4.950000000000719e-10,
+    "id": "new_positive",
+    "dual_status": "FEASIBLE_POINT",
+    "termination": "OPTIMAL",
+    "eigmin": 1.7329588960172086,
+    "p": [
+      0.3,
+      0.35
+    ]
+  },
+  {
+    "full_primal_violation": 0.0,
+    "eigmin": 1.7329588960172086,
+    "product_slacks": [
+      0.4986184417571927
+    ],
+    "B": [
+      [
+        3.4,
+        -0.4
+      ],
+      [
+        -0.4,
+        2.2
+      ]
+    ],
+    "constraints": [
+      {
+        "AffExpr in MathOptInterface.GreaterThan{Float64}": 2
+      },
+      {
+        "Vector{AffExpr} in MathOptInterface.RotatedSecondOrderCone": 1
+      },
+      {
+        "VariableRef in MathOptInterface.GreaterThan{Float64}": 2
+      }
+    ],
+    "dual_objective": -2.053974421225891e-11,
+    "id": "new_positive",
+    "complementarity": 2.4428543247830354e-12,
+    "node_residue": [
+      2.107852884499173,
+      1.186168566669946
+    ],
+    "termination": "OPTIMAL",
+    "cones": [
+      {
+        "dual": [
+          1.750293702082383e-12,
+          2.9243256716063476e-12,
+          2.1831105604928716e-12
+        ],
+        "function": "AffExpr[g3_q[1,1], g3_q[1,2], -0.5656854249492381]",
+        "edge": [
+          1,
+          2
+        ],
+        "primal": [
+          0.9921471155008271,
+          0.663831433330054,
+          -0.5656854249492381
+        ],
+        "MOI_set": "MathOptInterface.RotatedSecondOrderCone(3)"
+      }
+    ],
+    "kind": "G3",
+    "dual_cone_violation": 0.0,
+    "dual_status": "FEASIBLE_POINT",
+    "reconstruction_residual": 0.0,
+    "p": [
+      0.3,
+      0.35
+    ]
+  },
+  {
+    "kind": "G0",
+    "B": [
+      [
+        1.0,
+        -1.0,
+        0.0
+      ],
+      [
+        -1.0,
+        1.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ]
+    ],
+    "constraints": [
+      {
+        "Vector{AffExpr} in MathOptInterface.PositiveSemidefiniteConeTriangle": 1
+      }
+    ],
+    "full_primal_violation": 0.0,
+    "dual_objective": -8.045703528568853e-12,
+    "id": "laplacian_zero_row",
+    "dual_status": "FEASIBLE_POINT",
+    "termination": "OPTIMAL",
+    "eigmin": 0.0,
+    "p": [
+      0.0,
+      0.0,
+      0.0
+    ]
+  },
+  {
+    "full_primal_violation": 5.15856246607882e-11,
+    "eigmin": 0.0,
+    "product_slacks": [
+      -5.1585402616183273e-11
+    ],
+    "B": [
+      [
+        1.0,
+        -1.0,
+        0.0
+      ],
+      [
+        -1.0,
+        1.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ]
+    ],
+    "constraints": [
+      {
+        "AffExpr in MathOptInterface.GreaterThan{Float64}": 3
+      },
+      {
+        "Vector{AffExpr} in MathOptInterface.RotatedSecondOrderCone": 1
+      },
+      {
+        "VariableRef in MathOptInterface.GreaterThan{Float64}": 2
+      }
+    ],
+    "dual_objective": -5.80066862077025e-11,
+    "id": "laplacian_zero_row",
+    "complementarity": 1.506283986429935e-11,
+    "node_residue": [
+      2.5792701308091637e-11,
+      2.5792701308091637e-11,
+      0.0
+    ],
+    "termination": "OPTIMAL",
+    "cones": [
+      {
+        "dual": [
+          0.5240309101736292,
+          0.5240309101736292,
+          0.7410916202404978
+        ],
+        "function": "AffExpr[g3_q[1,1], g3_q[1,2], -1.4142135623730951]",
+        "edge": [
+          1,
+          2
+        ],
+        "primal": [
+          0.9999999999742073,
+          0.9999999999742073,
+          -1.4142135623730951
+        ],
+        "MOI_set": "MathOptInterface.RotatedSecondOrderCone(3)"
+      }
+    ],
+    "kind": "G3",
+    "dual_cone_violation": 0.0,
+    "dual_status": "FEASIBLE_POINT",
+    "reconstruction_residual": 0.0,
+    "p": [
+      0.0,
+      0.0,
+      0.0
+    ]
+  },
+  {
+    "kind": "G0",
+    "B": [
+      [
+        1.0,
+        1.0,
+        1.0
+      ],
+      [
+        1.0,
+        1.0,
+        1.0
+      ],
+      [
+        1.0,
+        1.0,
+        1.0
+      ]
+    ],
+    "constraints": [
+      {
+        "Vector{AffExpr} in MathOptInterface.PositiveSemidefiniteConeTriangle": 1
+      }
+    ],
+    "full_primal_violation": 5.624168597199657e-16,
+    "dual_objective": -5.375381818301878e-10,
+    "id": "non_Z_PSD",
+    "dual_status": "FEASIBLE_POINT",
+    "termination": "OPTIMAL",
+    "eigmin": -5.291804492050459e-16,
+    "p": [
+      0.0,
+      0.0,
+      0.0
+    ]
+  },
+  {
+    "kind": "G3",
+    "B": [
+      [
+        1.0,
+        1.0,
+        1.0
+      ],
+      [
+        1.0,
+        1.0,
+        1.0
+      ],
+      [
+        1.0,
+        1.0,
+        1.0
+      ]
+    ],
+    "constraints": [
+      {
+        "AffExpr in MathOptInterface.GreaterThan{Float64}": 3
+      },
+      {
+        "Vector{AffExpr} in MathOptInterface.RotatedSecondOrderCone": 3
+      },
+      {
+        "VariableRef in MathOptInterface.GreaterThan{Float64}": 6
+      }
+    ],
+    "id": "non_Z_PSD",
+    "termination": "INFEASIBLE",
+    "eigmin": -5.291804492050459e-16,
+    "p": [
+      0.0,
+      0.0,
+      0.0
+    ]
+  },
+  {
+    "kind": "G0",
+    "B": [
+      [
+        1.0,
+        -0.5
+      ],
+      [
+        -0.5,
+        1.0
+      ]
+    ],
+    "constraints": [
+      {
+        "Vector{AffExpr} in MathOptInterface.PositiveSemidefiniteConeTriangle": 1
+      }
+    ],
+    "id": "indefinite",
+    "termination": "INFEASIBLE",
+    "eigmin": -0.25,
+    "p": [
+      0.75,
+      0.75
+    ]
+  },
+  {
+    "kind": "G3",
+    "B": [
+      [
+        1.0,
+        -0.5
+      ],
+      [
+        -0.5,
+        1.0
+      ]
+    ],
+    "constraints": [
+      {
+        "AffExpr in MathOptInterface.GreaterThan{Float64}": 2
+      },
+      {
+        "Vector{AffExpr} in MathOptInterface.RotatedSecondOrderCone": 1
+      },
+      {
+        "VariableRef in MathOptInterface.GreaterThan{Float64}": 2
+      }
+    ],
+    "id": "indefinite",
+    "termination": "INFEASIBLE",
+    "eigmin": -0.25,
+    "p": [
+      0.75,
+      0.75
+    ]
+  }
+]

@@ -1,0 +1,29 @@
+original_ap3_sha: 485b637cc1998a327206c5929434bd26c6f0be16
+blockers:
+  - id: B1
+    severity: blocking
+    status: reproduced_solver_path_false_infeasibility
+    evidence: b1_exact_native_result.json; b1_exact_full_witness_verification.json; b1_bridged_full_witness_check.json
+    owner: numerical_solver_qualification
+  - id: INTEGER_GLOBALITY
+    severity: blocking
+    status: nine_feasible_case_pairs_verified_but_no_independent_rigorous_global_dual_certificate; eight_historical_LB_claims_exceed_new_feasible_UB_by_small_numerical_amount
+  - id: PHYSICAL_SOURCE_AND_PASSIVE_INVENTORY
+    severity: blocking
+    status: real_physics_unverified; strict_network_gate_rejects_registered_parametric_inputs
+    missing: fixed_shunt_inventory; baseline_source_accounting; grounding_reference; OEM_source_filter_current_limit_validation
+  - id: EMPIRICAL_COST_TIME_DATA
+    severity: blocking
+    status: conditional_parametric_illustration_only_not_annual_representative
+  - id: OWNER_RATIFICATION
+    severity: blocking
+    status: exact_amendment_owner_ratification_pending
+resolved:
+  - id: EXEC-UNIT-001
+    severity: minor
+    status: corrected_and_reexport_validated
+    code_sha: e1e075626b38b478faf57efe62e557fc94753f00
+nonproduction_runtime_limits:
+  - Clarabel_constant_singular_PSD_chordal_index_error_attempt01; independent_boundary_replay_disables_chordal_decomposition
+  - Gurobi_license_expired_2026-10-12
+  - MOSEK_license_expired_1001

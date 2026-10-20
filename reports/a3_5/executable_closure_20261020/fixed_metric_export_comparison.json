@@ -1,0 +1,12 @@
+{
+  "original_records": 61272,
+  "fixed_records": 61272,
+  "changed_unit_records": 1836,
+  "changed_ids": {
+    "A.connection_violation": "count_or_index",
+    "B.G3_edges_complete": "boolean",
+    "B.G3_valid": "boolean"
+  },
+  "all_other_values_statuses_bases_and_units_identical": true,
+  "provenance_AP3_SHA_changed": true
+}
