@@ -8,6 +8,13 @@ readj(p)=JSON.parsefile(p)
 runs=readj(joinpath(old,"runs.json"))["runs"];repeats=readj(joinpath(new,"runs.json"))["runs"]
 length(runs)==162 && length(repeats)==18 || error("incomplete source suite")
 all(r->r["status"]=="optimal",repeats) || error("dual audit has inconclusive runs")
+for repeat in repeats;repeat["source_run_directory"]="dual_audit_suite";end
+m1=joinpath(root,"m1_audit_suite")
+if isdir(m1)
+    rr=readj(joinpath(m1,"runs.json"))["runs"];length(rr)==18 || error("incomplete M1 audit")
+    for r in rr;r["source_run_directory"]="m1_audit_suite";end
+    append!(repeats,rr)
+end
 cp(old,out)
 for r in runs
     r["source_run_directory"]="suite_final";r["source_AP3_SHA"]=readj(joinpath(old,"provenance.json"))["AP3_SHA"]
@@ -17,9 +24,10 @@ for repeat in repeats
     length(index)==1 || error("ambiguous repetition")
     prior=runs[only(index)]
     all(prior[k]==repeat[k] for k in ("case_sha256","parameters","registry_sha256","scenario_config_sha256","exposure")) || error("repetition changed comparison scope")
-    repeat["source_run_directory"]="dual_audit_suite";repeat["source_AP3_SHA"]=readj(joinpath(new,"provenance.json"))["AP3_SHA"]
+    repeatroot=joinpath(root,repeat["source_run_directory"])
+    repeat["source_AP3_SHA"]=readj(joinpath(repeatroot,"provenance.json"))["AP3_SHA"]
     runs[only(index)]=repeat
-    cp(joinpath(new,repeat["solution_file"]),joinpath(out,repeat["solution_file"]);force=true)
+    repeat["status"]=="optimal" && cp(joinpath(repeatroot,repeat["solution_file"]),joinpath(out,repeat["solution_file"]);force=true)
 end
 recheck=joinpath(root,isdir(joinpath(root,"integer_rechecks_conditioned")) ? "integer_rechecks_conditioned" : "integer_rechecks")
 if isdir(recheck)
