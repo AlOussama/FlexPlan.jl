@@ -1,0 +1,110 @@
+{
+  "schema": "a3_5_mathematical_rational_oracle/1.0",
+  "target": "theorem_derivations_not_AP3_solver",
+  "backend": "sympy_exact_rational",
+  "sympy": "1.14.0",
+  "passed": 20,
+  "failed": 0,
+  "checks": [
+    {
+      "id": "T001_ordinary_schur",
+      "status": "passed_exact",
+      "details": "Schur=3/4"
+    },
+    {
+      "id": "T004_T006_support_kron",
+      "status": "passed_exact",
+      "details": "Naive bus deletion falsely passes at alpha=7/4"
+    },
+    {
+      "id": "T004_T006_range_failure",
+      "status": "passed_exact",
+      "details": "Pseudoinverse-only test fails range condition; Rayleigh unbounded below"
+    },
+    {
+      "id": "T004_T006_generalized_schur_success",
+      "status": "passed_exact",
+      "details": "Zero support block singular but range condition holds"
+    },
+    {
+      "id": "T007_T008_rank_one",
+      "status": "passed_exact",
+      "details": "Rank-one threshold alpha p_i Z_ii<=1"
+    },
+    {
+      "id": "T010_G0_not_M0",
+      "status": "passed_exact",
+      "details": "G0 true, M0 false"
+    },
+    {
+      "id": "T017_G3_witness",
+      "status": "passed_exact",
+      "details": "Exactly zero node residuals and cone slack"
+    },
+    {
+      "id": "T007_T008_local_not_G0",
+      "status": "passed_exact",
+      "details": "Both local rank-one tests pass but G0 fails"
+    },
+    {
+      "id": "T015_G1_not_fixed_G2",
+      "status": "passed_exact",
+      "details": "r=(2,1)"
+    },
+    {
+      "id": "T015_fixed_G2_not_G1",
+      "status": "passed_exact",
+      "details": "r=(2,1)"
+    },
+    {
+      "id": "T018_closed_SDD_singular",
+      "status": "passed_exact",
+      "details": "reducible Laplacian and isolated zero row"
+    },
+    {
+      "id": "T020_non_Z_PSD_not_SDD",
+      "status": "passed_exact",
+      "details": "No positive scaling: summing 3 inequalities gives sum(r)>=1.4sum(r)"
+    },
+    {
+      "id": "T021_T022_inverse_order",
+      "status": "passed_exact",
+      "details": "Exact entrywise inverse bound"
+    },
+    {
+      "id": "T023_M2_exposure",
+      "status": "passed_exact",
+      "details": "Wp>=p"
+    },
+    {
+      "id": "T025_T028_Neumann_exact_remainder",
+      "status": "passed_exact",
+      "details": "Exact finite first-order remainder identity"
+    },
+    {
+      "id": "T026_uncontrolled_inverse_false_accept",
+      "status": "passed_exact",
+      "details": "zero-order inverse I accepts, actual Z rejects"
+    },
+    {
+      "id": "A35_NEW_M0_implies_G0_strict_G1",
+      "status": "passed_exact",
+      "details": "M0 true, G1 false, G0 positive definite"
+    },
+    {
+      "id": "A35_NEW_inverse_positive_is_necessary",
+      "status": "passed_exact",
+      "details": "Without Z>=0, M0 does not imply G0"
+    },
+    {
+      "id": "A35_physical_voltage_source_boundary",
+      "status": "passed_exact",
+      "details": "Eliminating free internal node cancels bsrc; pinning source voltage retains +bsrc"
+    },
+    {
+      "id": "A35_decision_dependent_kron_nonaffine",
+      "status": "passed_exact",
+      "details": "Schur eliminating a decision-dependent block is generally nonaffine"
+    }
+  ]
+}
