@@ -1,0 +1,28 @@
+schema: paper_a_a3_5_math_closure/1.0
+review_date: '2026-10-20'
+original_ap3_target: 485b637cc1998a327206c5929434bd26c6f0be16
+review_branch_entry_head: 0c58af3147881e951e34bcdb556cb47681b08e46
+science_authority: e8118425adc335a99e85120d943763305f211315
+science_freeze: 2c2fce769b2ed6ffd4f1ced60c0798776acccc93
+oracle_checks: {passed: 30, total: 30, independently_authored: true}
+mathematical_adjudication: accepted_with_scoped_amendment_proposal
+findings:
+  - {id: A35-NEW-001, severity: major, classification: confirmed, domain: 'B SPD symmetric; Z>=0; p>=0; alpha>0', scientific_originality: already_known_special_case, proposal: add_conditional_M0_implies_G0}
+  - {id: A35-MATH-002, severity: major, classification: conditional, proposal: explicitly_freeze_internal_source_potential_boundary}
+  - {id: A35-MATH-003, severity: major, classification: confirmed, proposal: qualify_finite_generalized_eigenvalue_with_zero_block_and_range}
+  - {id: A35-MATH-004, severity: minor, classification: confirmed, proposal: prohibit_external_fault_metric_equivalence}
+  - {id: A35-MATH-005, severity: informational, classification: unresolved, proposal: preserve_T003_historical_mapping_uncertainty}
+  - {id: A35-MATH-006, severity: major, classification: conditional, proposal: verify_L_PSD_or_C_PD_before_Schur_PSD_claim, source_code_defect_confirmed: false}
+  - {id: A35-MATH-007, severity: major, classification: conditional, proposal: independent_project_G3_edge_residual_validation}
+  - {id: A35-MATH-008, severity: major, classification: confirmed, proposal: no_M1_infeasible_to_M0_infeasible_inference}
+  - {id: A35-MATH-009, severity: informational, classification: unresolved, proposal: qualify_real_source_current_limit_MVA_and_fault_data}
+all_theorems_T001_to_T028_mathematical_scope_reviewed: true
+external_physical_equivalence_verified: false
+scientific_freeze_modified: false
+ap3_source_modified: false
+source_code_defect_confirmed: false
+science_amendment_approved: false
+independent_A3_5_accepted: false
+A3_closed: false
+AP4_ready: false
+empirical_study_ready: false

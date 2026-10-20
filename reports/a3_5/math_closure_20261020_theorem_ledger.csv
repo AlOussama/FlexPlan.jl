@@ -1,0 +1,29 @@
+theorem_id,exact_statement,mandatory_domain,independent_proof_summary,adversarial_case_ids,decision,primary_source_lines,required_revision_or_scope
+T-C2A-001,ordinary Schur; positive-definite eliminated block,C positive definite; H symmetric,congruence block-diagonalizes H into Schur and C,C16; C17,accepted_conditional,chapter:285-300,PD eliminated block is not merely invertible
+T-C2A-002,parallel sum without matrix commutation,"Bn,Bd symmetric positive definite",multiply X=Bd(Bn+Bd)^(-1)Bn and invert X,none needed,accepted_conditional,chapter:311-319,no commutativity claim
+T-C2A-003,historical sign duality/source identification,original historical symbol definitions verified,cannot infer historical source symbols from modern notation,missing original source symbols,unresolved,chapter:319-320,preserve unresolved historical identity
+T-C2A-004,zero support generalized Schur,Bzz positive definite or PSD with range condition,"full space congruence, range projector and Bzz dagger",C18; C19; C29,accepted_with_domain_clarification,chapter:321-338,zero exposure bus not deleted
+T-C2A-005,G0 finite generalized eigenvalue equivalent to PSD,S positive definite and B symmetric,S^(-1/2) congruence plus Rayleigh-Ritz,C09,accepted_conditional,chapter:350-363,internal eigenvalue only
+T-C2A-006,singular S generalized finite spectrum,Saa positive definite; Bzz PD or PSD+range; S nonzero,Schur reduce zero-support part before eigenanalysis,C29,requires_scoped_clarification,chapter:364-365,formal finite eigenvalues inadequate if Bzz negative or range fails
+T-C2A-007,LOCAL rank-one impedance equivalence,B SPD; pi>0; alpha>0,rank-one eigenvalue of I-alpha*pi B^-1/2 ei eiT B^-1/2,C01; C02,accepted_conditional,chapter:366-379,p_i=0 ratio undefined but matrix test well-defined
+T-C2A-008,G0 implies each LOCAL,B SPD; S diagonal nonnegative,PSD difference alpha(S-pi eieiT),C02,accepted_conditional,chapter:380-387,LOCAL converse is false
+T-C2A-009,M0 implies each LOCAL,B SPD; Z nonnegative; p nonnegative,Zp_i >= Z_ii*pi componentwise,C05,accepted_conditional,chapter:388-389,negative inverse entries invalidate inequality
+T-C2A-010,G0 does not imply M0,rational SPD symmetric Z matrix,"det(B-diag(p))=0, eig 0 13/12, Zp_2=19/18",C01,confirmed_counterexample,chapter:390-410,keep nonimplication
+T-C2A-011,G1 implies G0,"symmetric Z matrix M, nonnegative row residual",sum weighted (xi-xj)^2 plus diagonal remainder,C13,accepted_conditional,chapter:411-422,raw row sums not PSD certificate for arbitrary nonZ
+T-C2A-012,G1 implies M0,B invertible with Z>=0 and p>=0,Z(B*1>=alpha*p) yields 1>=alpha*Zp,C04; C05,accepted_conditional,chapter:423-434,componentwise not Loewner order
+T-C2A-013,fixed G2 implies G0,symmetric Z matrix M; offline fixed r>0,D M D diagonally dominant via r_i (Mr)_i,C14,accepted_conditional,chapter:434-435,decision-dependent r destroys affine MILP classification
+T-C2A-014,G2 identity equals G1,r=1 same matrices and thresholds,direct substitution Mr=M1,C13,accepted,chapter:434-435,no changes
+T-C2A-015,arbitrary fixed G1/G2 incomparable,"selected r=(2,1), symmetric Z matrices",explicit opposing Mr and M1 rational vectors,C13; C14,confirmed_two_counterexamples,chapter:436-449,no unconditional ranking of fixed scalings
+T-C2A-016,fixed G2 gives edge budget witness,"symmetric Z M, r>0, Mr>=0",qij=abs(mij) rj/ri and qji reciprocal,C23,accepted_conditional,chapter:450-463,one undirected edge pair
+T-C2A-017,complete G3 implies G0,full signed edges and nonnegative residuals,sum embedded 2x2 PSD blocks plus diagonal residual,C22; C23,accepted_conditional,chapter:464-465,sqrt2 RSOC convention
+T-C2A-018,symmetric PSD Z equals closed SDD,M symmetric PSD Z including singular reduced blocks,inverse-positive PD blocks + PF nullvector in singular blocks,C23,accepted_conditional,chapter:466-473,include isolated zero rows
+T-C2A-019,project G3 needs complete edges,"all nonzero unordered signed edge pairs, residuals",only then full reconstructs M exactly,C22,accepted_project_predicate_pending,chapter:474-475,P008 not automatically passed
+T-C2A-020,G3 equivalent to G0 on complete symmetric Z,T018 domain plus T019 coverage,SDD construction one direction; G3 PSD other,C22; C23,accepted_conditional,chapter:476-477,counterexample for nonZ G0⇒G3
+T-C2A-021,M matrix inverse bound,"ordered nonsingular M-matrices, B>=Bmin enforced",Zub-Z=Zub*(B-Bmin)*Z>=0 entrywise,C24,accepted_conditional,chapter:480-489,not generic Loewner-to-elementwise proof
+T-C2A-022,M1 implies exact M0,T021 and p>=0,Zp<=Zub p<=alpha^-1 one,C25; C26,accepted_conditional,chapter:489-492,M1 infeasible not imply M0 infeasible
+T-C2A-023,M2 implies G1,"fixed W>=0 unit diagonal, p>=0",Wp=p+other nonnegative terms,none needed,accepted_conditional,chapter:493-498,interaction screen not exact MSCR
+T-C2A-024,M2 implies M0 through G1,T023 and T012 inverse positivity,chain M2=>G1=>M0,C05,accepted_conditional,chapter:499-506,new M0=>G0 consequence requires same p
+T-C2A-025,exact Woodbury identity,"A,C,C^-1+VA^-1U invertible",direct product checking inverse,C24,accepted_conditional,chapter:509-516,inverse update not linearization
+T-C2A-026,first order approximation not globally safe,no certified one-sided bound,first order underestimates exact burden,C27,confirmed_counterexample,chapter:517-518,do not infer global feasible from approximation
+T-C2A-027,Neumann series and convergence,rho(E)<1 where E=A^-1 Delta,geometric series; Jordan convergence,C28,accepted_conditional,chapter:519-526,norm<1 sufficient not necessary
+T-C2A-028,finite Neumann remainder and norm,I+E invertible; norm(E)<1 for bound,R=(-E)^(m+1)(I+E)^-1 A^-1,C27; C28,accepted_conditional,chapter:527-540,two-sided norm bound needs one-sided feasibility margin

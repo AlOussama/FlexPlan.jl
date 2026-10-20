@@ -1,0 +1,22 @@
+schema: paper_a_a3_5_math_closure_status/1.1
+review_date: "2026-10-20"
+original_ap3_target: 485b637cc1998a327206c5929434bd26c6f0be16
+science_authority: e8118425adc335a99e85120d943763305f211315
+freeze: 2c2fce769b2ed6ffd4f1ced60c0798776acccc93
+branch: review/paper-a-a3-5-independent-acceptance-v1
+entry_head: 0c58af3147881e951e34bcdb556cb47681b08e46
+mathematical_adjudication: accepted_with_scoped_amendment_proposal
+theorem_ledger: "28/28 independently scoped"
+oracle_exact_rational: "30/30 PASS in independent sandbox run"
+oracle_script_sha256: 2301c90617bf7d6e931af7b0da55be7ca20664d3c46003a3ed80064c6dc279ba
+oracle_full_json_sha256: f26874523782347e8e4ee4a42282e10bcc081e9d6b7840d02a1b167c25a466bb
+remote_pub_type: additive_independent_review_artifacts
+historical_T003_source_mapping: unresolved
+external_source_validation: conditional_owner_review_pending
+originality_mathematical_result: already_known_special_case
+independent_julia_solver_replay: not_performed_by_math_worker
+science_amendment_approved: false
+independent_A3_5_accepted: false
+A3_closed: false
+AP4_ready: false
+empirical_study_ready: false
