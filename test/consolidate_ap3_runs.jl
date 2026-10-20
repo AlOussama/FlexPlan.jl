@@ -29,7 +29,8 @@ for repeat in repeats
     runs[only(index)]=repeat
     repeat["status"]=="optimal" && cp(joinpath(repeatroot,repeat["solution_file"]),joinpath(out,repeat["solution_file"]);force=true)
 end
-recheck=joinpath(root,isdir(joinpath(root,"integer_rechecks_conditioned")) ? "integer_rechecks_conditioned" : "integer_rechecks")
+available=filter(name->isfile(joinpath(root,name,"runs.json")),["integer_rechecks_roundoff","integer_rechecks_conditioned","integer_rechecks"])
+recheck=joinpath(root,isempty(available) ? "integer_rechecks" : first(available))
 if isdir(recheck)
     for row in readj(joinpath(recheck,"runs.json"))["runs"]
         index=only(findall(r->r["case_id"]==row["case_id"]&&r["formulation"]==row["formulation"]&&!r["relaxed"],runs))
