@@ -1,0 +1,176 @@
+{
+  "verified_at_utc": "2026-10-21T12:07:24.469820+00:00",
+  "branch": "codex/a3-6-independent-reaudit-20261021",
+  "verified_evidence_commit": "5ad3a0bbed9a1d93fc710ce657b5263a2ccf8fc6",
+  "verified_evidence_tree": "5974286e6848ea4f33ee28f86692f30fc437b9cc",
+  "verified_remote_ref": "5ad3a0bbed9a1d93fc710ce657b5263a2ccf8fc6\trefs/heads/codex/a3-6-independent-reaudit-20261021",
+  "evidence_files_verified": [
+    {
+      "path": "reports/a3_6/reaudit_20261021/.gitattributes",
+      "git_blob": "fa1385d99a319b43c06f5309d1aae9fdd3adea46",
+      "bytes": 8,
+      "sha256": "705fd4d6451a31d36b3df7de96f83f30ac976c9b4a6d1e51671d8e2f33e2d0da"
+    },
+    {
+      "path": "reports/a3_6/reaudit_20261021/attempts.md",
+      "git_blob": "65e4c09f255c1e172462c0457dfa88993f65548d",
+      "bytes": 2842,
+      "sha256": "2151cd88cf7e9e9bd273dc1b4fc2f81b238199a5e946ad582321fd68ea4a3dfe"
+    },
+    {
+      "path": "reports/a3_6/reaudit_20261021/auxiliary_refs.json",
+      "git_blob": "c38e94dbea67fe98121db9edb5ecaca4b554a882",
+      "bytes": 1274,
+      "sha256": "e7fdf5f4a10295f58e969a9b8b62e5c37ce89790b7954225808a586866e012dc"
+    },
+    {
+      "path": "reports/a3_6/reaudit_20261021/b1_solver_reliability_matrix.csv",
+      "git_blob": "c1c2ac77278e9bbe934012eca1b4e579251b8fbe",
+      "bytes": 7887,
+      "sha256": "6ada7120b20253d7537d8b410626bcb4a658e50e572b91877ee19b75d361e814"
+    },
+    {
+      "path": "reports/a3_6/reaudit_20261021/b1_stage_evidence.json",
+      "git_blob": "325e52a7befa247b8c5fa5159406161aecdd4b29",
+      "bytes": 4175,
+      "sha256": "65dbb2c7bced792bb31601fe152a35598a75ffaa46b95cf1bf07e3205283f1bb"
+    },
+    {
+      "path": "reports/a3_6/reaudit_20261021/compare_fresh.py",
+      "git_blob": "e1e96042aeff1f7ff1fc85e98511cc0c3829737c",
+      "bytes": 2814,
+      "sha256": "2dd1c2912a3f6aabf34e6901ff08c82ad9278131716f820fd06e579672eaf150"
+    },
+    {
+      "path": "reports/a3_6/reaudit_20261021/execution_manifest.json",
+      "git_blob": "fa8afe0e7404b784cb3035965499aa0b0ecde575",
+      "bytes": 10515,
+      "sha256": "e4b502fdbeac380d7bd664fe38020f03644ead10799676e28650eb5171ad1e5e"
+    },
+    {
+      "path": "reports/a3_6/reaudit_20261021/final_preservation.json",
+      "git_blob": "c36eab03a83593d70ab5e7d1dd80e603349250f2",
+      "bytes": 861,
+      "sha256": "83f5c895de5da81c287fd447c2f1bbcf7c453b0f681827dfe8c9c06ea959d0cc"
+    },
+    {
+      "path": "reports/a3_6/reaudit_20261021/finalize.py",
+      "git_blob": "04b662b466d21e751d9cbd3cbe08425a33292a9f",
+      "bytes": 25422,
+      "sha256": "217ed8f10dd4c6746ffea0fa06c4f96040d043557f01ef695df16c1495a077f8"
+    },
+    {
+      "path": "reports/a3_6/reaudit_20261021/fresh_export_comparison.json",
+      "git_blob": "2ad8993616e75074c9282c978b04afadf022b7a1",
+      "bytes": 53383,
+      "sha256": "fc606347672c5958e195147223f76ae8a713e7767de2cedb8b68eac4055ea02a"
+    },
+    {
+      "path": "reports/a3_6/reaudit_20261021/independent_certificate_results.json",
+      "git_blob": "497f01c4dd3507cdab726bb9a9946389147469ce",
+      "bytes": 24713,
+      "sha256": "06611b6770a9a7315fcb3c0300b66f686cb60644c690044f076262d8695ef4ae"
+    },
+    {
+      "path": "reports/a3_6/reaudit_20261021/independent_check.py",
+      "git_blob": "0140ac0c3b712495501d453307733771ab904cdf",
+      "bytes": 12614,
+      "sha256": "253de259d6ca125e6464a65257b3522194714a025e60cd42b4fc0bc3363485c3"
+    },
+    {
+      "path": "reports/a3_6/reaudit_20261021/independent_reaudit_report.md",
+      "git_blob": "43a8223d3b7f19a8ee4d041ea5790bd759d747cf",
+      "bytes": 17613,
+      "sha256": "f4376c79cffeed34bf04794c44a83729028317c50f8c267be149ab1cfc003f1e"
+    },
+    {
+      "path": "reports/a3_6/reaudit_20261021/integer_9cases_bounds.json",
+      "git_blob": "9bee286c99620b1d7aab3d40e02bc44a1d870543",
+      "bytes": 11429,
+      "sha256": "f6ee3874d80a053360b643855ff9af43ae3e192e4cb54e359207b01d002612a4"
+    },
+    {
+      "path": "reports/a3_6/reaudit_20261021/integer_9cases_proof_ledger.csv",
+      "git_blob": "b1fdffd1cd650e84bba1f8f20406c6c655324287",
+      "bytes": 5200,
+      "sha256": "3e0a451d06ebec6a62e9a9551384278d96b854ee9ed47b0f7d3652030d5af4b0"
+    },
+    {
+      "path": "reports/a3_6/reaudit_20261021/integrity.py",
+      "git_blob": "32cef2d4bf3118aedb7f3c2bd8b741354899869c",
+      "bytes": 4313,
+      "sha256": "e19aaf43f8423b33d4ebaa804f27a1f9c9a6666991acdc92f034077e2ecdaeeb"
+    },
+    {
+      "path": "reports/a3_6/reaudit_20261021/integrity_results.json",
+      "git_blob": "3cbb63e87cb670763fdca5efce505eb571801ca7",
+      "bytes": 33097,
+      "sha256": "a974ac6fc8355831cf835004e67a834506a215d81b48f6f90ce4c27bd565e433"
+    },
+    {
+      "path": "reports/a3_6/reaudit_20261021/reaudit_evidence.zip",
+      "git_blob": "c0135e0f7352cb56fbce5dbb72298fac0ca7eb2a",
+      "bytes": 1621449,
+      "sha256": "9a22d037f61c1dbc6f60a2e91a27bb04aa273d110b7567241c4527cc27efa41f"
+    },
+    {
+      "path": "reports/a3_6/reaudit_20261021/release_gates.yaml",
+      "git_blob": "807d34947aa39cd3761b1ba7525756274cab300f",
+      "bytes": 1372,
+      "sha256": "8c215e5148f5635fcb52c25906e6ff9d8f2b7e62310a3e8e3d559cae74e2a7b2"
+    },
+    {
+      "path": "reports/a3_6/reaudit_20261021/remaining_filter.jl",
+      "git_blob": "7bd14b3d30c33cd5686fba3172f49fac342e1323",
+      "bytes": 851,
+      "sha256": "c8229676a7b06f0b261442fce55bad732d6f8c34e8faac408fe108e39f71a5b3"
+    },
+    {
+      "path": "reports/a3_6/reaudit_20261021/remaining_gates_handoff.md",
+      "git_blob": "c85272ee2b856496c879246e1d941a0e93eb7375",
+      "bytes": 2764,
+      "sha256": "550978c346b83ecc4705cef0006967085d2cc145afb50896eb0ccf31446cfa60"
+    },
+    {
+      "path": "reports/a3_6/reaudit_20261021/reproduce.md",
+      "git_blob": "841f856fc5dcfcd76548741137a187a86f6fd938",
+      "bytes": 4356,
+      "sha256": "a6d65c57ec4717c56657d79cf2acc8ba4b5547338239b34e578f580cef16eab8"
+    },
+    {
+      "path": "reports/a3_6/reaudit_20261021/reproduction_manifest.json",
+      "git_blob": "2bef1acb73cabd24f4ec3040190f5fde0da3ddfd",
+      "bytes": 28785,
+      "sha256": "3f54d4b57304b52e0604c89e917688067850a8ebd3a14d283efaa8b1e8f02ef0"
+    },
+    {
+      "path": "reports/a3_6/reaudit_20261021/run_suite.py",
+      "git_blob": "ad560bdcd42654ffc039a72c2232fdab8c7db778",
+      "bytes": 2745,
+      "sha256": "901ccfa6d920ba57a81a51071c9b244748af282b51fa349b737e7728bfc57a18"
+    },
+    {
+      "path": "reports/a3_6/reaudit_20261021/solver_review.jl",
+      "git_blob": "f0c27a3fedac73b7e411865e730f82a9d06467dc",
+      "bytes": 3347,
+      "sha256": "8092c876934876e7b22c7cc0d3a880b180a21f2d236356f4363d5b92dd767b0b"
+    },
+    {
+      "path": "reports/a3_6/reaudit_20261021/verify_final_state.py",
+      "git_blob": "8c05b8caed0ce910d197069d913d052cfd87d39b",
+      "bytes": 2166,
+      "sha256": "e6371ddcd5b43b6d8612449432dd9cae5cd157efaf81f562110bac205ad64227"
+    }
+  ],
+  "new_archive": {
+    "path": "reaudit_evidence.zip",
+    "bytes": 1621449,
+    "sha256": "9a22d037f61c1dbc6f60a2e91a27bb04aa273d110b7567241c4527cc27efa41f",
+    "entries": 130
+  },
+  "frozen_remote_refs_unchanged": "1147873bf553667aec5cd7eb0e9c6f7e471b370c\trefs/heads/fix/paper-a-a3-6-b1-opt-v1\n485b637cc1998a327206c5929434bd26c6f0be16\trefs/heads/implementation/paper-a-ap3-all-formulations-v1",
+  "source_and_frozen_evidence_unchanged": true,
+  "worktree_clean_after_evidence_push": true,
+  "remote_parity_at_verification": "0\t0",
+  "receipt_note": "This additive receipt describes the evidence commit above. Its carrying commit is separate and cannot contain its own SHA. The final branch HEAD is checked again after pushing the receipt. No PR or merge was created."
+}
