@@ -1,0 +1,19 @@
+{
+  "research_map_remote_main": "e8118425adc335a99e85120d943763305f211315",
+  "research_map_remote_science_release": "2badb9a90a8d3c1d4a33accee640b295de1e33a1",
+  "research_map_local_HEAD": "2564c49bdc32c7508d2acfc9fe543d4887561484",
+  "research_map_local_status_porcelain": "",
+  "producer_remote_ap1": "b9e4efec8c2939bff1a65ae4ccb66cfbcf9cb62c",
+  "producer_local_HEAD": "b9e4efec8c2939bff1a65ae4ccb66cfbcf9cb62c",
+  "producer_local_status_porcelain": "",
+  "commands": [
+    "git ls-remote https://github.com/AlOussama/research-map.git refs/heads/main refs/heads/review/paper-a-a3-5-science-release-v1",
+    "git -C D:/Projekte/research-map rev-parse HEAD",
+    "git -C D:/Projekte/research-map status --porcelain=v1",
+    "git ls-remote https://github.com/AlOussama/PyPSA2MatpowerX.git refs/heads/implementation/paper-a-ap1-data-contract-v1",
+    "git -C D:/Projekte/Code/pypsatomatpowerx rev-parse HEAD",
+    "git -C D:/Projekte/Code/pypsatomatpowerx status --porcelain=v1"
+  ],
+  "all_commands_exit_code": 0,
+  "interpretation": "Local research-map HEAD is a separate checkout state and was not substituted for any pinned science snapshot. All eight referenced science blobs were verified individually. No files or refs were changed in either auxiliary repository."
+}

@@ -1,0 +1,154 @@
+{
+  "fresh_actual_factory_and_OA_runs": [
+    {
+      "power_two": 0,
+      "kind": "minimal",
+      "row_rhs": 3.025002202302713e-08,
+      "coefficient_filter": 1e-09,
+      "status": "INFEASIBLE",
+      "primal": "NO_SOLUTION",
+      "mode": "default"
+    },
+    {
+      "power_two": 0,
+      "kind": "minimal",
+      "row_rhs": 3.025002202302713e-08,
+      "coefficient_filter": 1e-12,
+      "status": "OPTIMAL",
+      "primal": "FEASIBLE_POINT",
+      "mode": "fix"
+    },
+    {
+      "power_two": 33,
+      "kind": "minimal",
+      "row_rhs": 259.84571058436256,
+      "coefficient_filter": 1e-09,
+      "status": "OPTIMAL",
+      "primal": "FEASIBLE_POINT",
+      "mode": "power_two"
+    },
+    {
+      "power_two": -10,
+      "kind": "minimal",
+      "row_rhs": 2.954103713186243e-11,
+      "coefficient_filter": 1e-12,
+      "status": "OPTIMAL",
+      "primal": "FEASIBLE_POINT",
+      "mode": "below_fix_threshold"
+    },
+    {
+      "kind": "frozen_oa",
+      "status": "INFEASIBLE",
+      "primal": "NO_SOLUTION",
+      "mode": "original",
+      "bound": 0.0
+    },
+    {
+      "kind": "frozen_oa",
+      "status": "OPTIMAL",
+      "primal": "FEASIBLE_POINT",
+      "mode": "corrected",
+      "bound": 0.018692886237155468
+    },
+    {
+      "kind": "original_native_serialization",
+      "status": "INFEASIBLE",
+      "primal": "NO_SOLUTION",
+      "mode": "original_factory"
+    },
+    {
+      "kind": "original_native_serialization",
+      "status": "ITERATION_LIMIT",
+      "primal": "NO_SOLUTION",
+      "mode": "corrected_factory"
+    }
+  ],
+  "constructed_below_threshold_counterexample": {
+    "status": "INFEASIBLE",
+    "threshold": 1e-12,
+    "scope": "constructed threshold limitation; not a registered-case failure",
+    "rhs": 3.025002202302713e-08,
+    "exact_feasible_x": "1198326830450234359808//5047022658654771",
+    "coefficient": 1.2740476362167553e-13
+  },
+  "frozen_original_OA_coefficient_filter": {
+    "1e-09": {
+      "affected_rows": [
+        [
+          1209,
+          0,
+          3
+        ],
+        [
+          1210,
+          0,
+          3
+        ]
+      ],
+      "emptied_rows": [
+        [
+          1209,
+          0,
+          "0"
+        ],
+        [
+          1210,
+          0,
+          "0"
+        ]
+      ],
+      "dropped_terms": 6
+    },
+    "1e-12": {
+      "affected_rows": [],
+      "emptied_rows": [],
+      "dropped_terms": 0
+    }
+  },
+  "stress_statuses": {
+    "OPTIMAL": 44,
+    "ITERATION_LIMIT": 1
+  },
+  "stress_status_identity_with_input": true,
+  "nonoptimal_stress_rows": [
+    {
+      "case_id": "reference_24snap",
+      "mode": "double_costscale",
+      "factor": 2.0,
+      "stats": {
+        "solve_wall_s": 64.0403332,
+        "solver_time_s": 63.848000049591064,
+        "model": {
+          "variables": 3680,
+          "constraints": {
+            "Vector{AffExpr} in MathOptInterface.RotatedSecondOrderCone": 144,
+            "AffExpr in MathOptInterface.EqualTo{Float64}": 1065,
+            "AffExpr in MathOptInterface.GreaterThan{Float64}": 672,
+            "AffExpr in MathOptInterface.Interval{Float64}": 144,
+            "VariableRef in MathOptInterface.GreaterThan{Float64}": 2768,
+            "VariableRef in MathOptInterface.LessThan{Float64}": 417,
+            "VariableRef in MathOptInterface.Integer": 1353,
+            "AffExpr in MathOptInterface.LessThan{Float64}": 2064
+          },
+          "integer": 1353
+        },
+        "objective": null,
+        "termination": "ITERATION_LIMIT",
+        "raw_solver_relative_gap": 1.0931130440101166e-06,
+        "bound": 14128080.874756986,
+        "optimizer_configuration": "Pajarito: iterative,HiGHS+Clarabel,tol_rel_gap=tol_feas=1e-7,tol_abs_gap=1e-8,time_limit=120s,iteration_limit=100",
+        "barrier_iterations": null,
+        "simplex_iterations": null,
+        "nodes": 1,
+        "dual_status": "NO_SOLUTION",
+        "primal_status": "NO_SOLUTION",
+        "solver": "Pajarito",
+        "objective_solver_scaling": 28255953.704755336,
+        "relative_gap": null
+      },
+      "formulation": "G3"
+    }
+  ],
+  "native_global_cut_certificate": "NOT_CERTIFIED",
+  "complete_MIP_node_dual_proof": "NOT_AVAILABLE"
+}

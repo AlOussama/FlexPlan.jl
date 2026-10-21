@@ -1,0 +1,21 @@
+{
+  "branch": "codex/a3-6-independent-reaudit-20261021",
+  "basis": "1147873bf553667aec5cd7eb0e9c6f7e471b370c",
+  "protected_refs_unchanged": true,
+  "unchanged_protected_ref_count": 101,
+  "original_and_fix_worktrees": [
+    {
+      "path": "D:/Projekte/Code/FlexPlan_A35_EXEC_BASELINE",
+      "HEAD": "485b637cc1998a327206c5929434bd26c6f0be16",
+      "clean": true
+    },
+    {
+      "path": "D:/Projekte/Code/FlexPlan_A36_B1_OPT_FIX",
+      "HEAD": "1147873bf553667aec5cd7eb0e9c6f7e471b370c",
+      "clean": true
+    }
+  ],
+  "frozen_remote_refs": "1147873bf553667aec5cd7eb0e9c6f7e471b370c\trefs/heads/fix/paper-a-a3-6-b1-opt-v1\n485b637cc1998a327206c5929434bd26c6f0be16\trefs/heads/implementation/paper-a-ap3-all-formulations-v1",
+  "frozen_source_and_evidence_diff_empty": true,
+  "scope": "only new reports/a3_6/reaudit_20261021 files may be committed"
+}

@@ -1,0 +1,218 @@
+[
+  {
+    "id": "existing_exact_verifier",
+    "args": [
+      "C:\\Users\\User\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+      "C:\\Users\\User\\.codex\\worktrees\\a36-independent-reaudit\\FlexPlan_UC_GSCR\\reports\\a3_6\\b1_opt_20261020\\verify_exact_certificates.py",
+      "C:\\Users\\User\\.codex\\worktrees\\a36-independent-reaudit\\reaudit_run02\\prior"
+    ],
+    "cwd": "C:\\Users\\User\\.codex\\worktrees\\a36-independent-reaudit\\FlexPlan_UC_GSCR",
+    "started_utc": "2026-10-21T11:46:04.190095+00:00",
+    "ended_utc": "2026-10-21T11:46:19.110103+00:00",
+    "exit_code": 0
+  },
+  {
+    "id": "native_extension",
+    "args": [
+      "C:\\Users\\User\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+      "C:\\Users\\User\\.codex\\worktrees\\a36-independent-reaudit\\FlexPlan_UC_GSCR\\reports\\a3_6\\b1_opt_20261020\\verify_native_exact_extension.py",
+      "C:\\Users\\User\\.codex\\worktrees\\a36-independent-reaudit\\reaudit_run02\\prior"
+    ],
+    "cwd": "C:\\Users\\User\\.codex\\worktrees\\a36-independent-reaudit\\FlexPlan_UC_GSCR",
+    "started_utc": "2026-10-21T11:46:19.112153+00:00",
+    "ended_utc": "2026-10-21T11:46:19.872331+00:00",
+    "exit_code": 0
+  },
+  {
+    "id": "raw_objective_reconstruction",
+    "args": [
+      "C:\\Users\\User\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+      "C:\\Users\\User\\.codex\\worktrees\\a36-independent-reaudit\\FlexPlan_UC_GSCR\\reports\\a3_6\\b1_opt_20261020\\raw_cost_objective.py",
+      "C:\\Users\\User\\.codex\\worktrees\\a36-independent-reaudit\\reaudit_run02\\cost_reconstruction",
+      "C:\\Users\\User\\.codex\\worktrees\\a36-independent-reaudit\\FlexPlan_UC_GSCR"
+    ],
+    "cwd": "C:\\Users\\User\\.codex\\worktrees\\a36-independent-reaudit\\FlexPlan_UC_GSCR",
+    "started_utc": "2026-10-21T11:46:20.043879+00:00",
+    "ended_utc": "2026-10-21T11:46:22.148880+00:00",
+    "exit_code": 0
+  },
+  {
+    "id": "independent_certificates",
+    "args": [
+      "C:\\Users\\User\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+      "C:\\Users\\User\\.codex\\worktrees\\a36-independent-reaudit\\FlexPlan_UC_GSCR\\reports\\a3_6\\reaudit_20261021\\independent_check.py",
+      "C:\\Users\\User\\.codex\\worktrees\\a36-independent-reaudit\\FlexPlan_UC_GSCR",
+      "C:\\Users\\User\\.codex\\worktrees\\a36-independent-reaudit\\reaudit_run02"
+    ],
+    "cwd": "C:\\Users\\User\\.codex\\worktrees\\a36-independent-reaudit\\FlexPlan_UC_GSCR",
+    "started_utc": "2026-10-21T11:46:22.150394+00:00",
+    "ended_utc": "2026-10-21T11:46:37.896730+00:00",
+    "exit_code": 0
+  },
+  {
+    "id": "full_regression",
+    "args": [
+      "julia",
+      "+1.10.11",
+      "--startup-file=no",
+      "--project=C:\\Users\\User\\.codex\\worktrees\\a36-independent-reaudit\\FlexPlan_UC_GSCR",
+      "C:\\Users\\User\\.codex\\worktrees\\a36-independent-reaudit\\reaudit_run02\\validation\\test\\runtests.jl"
+    ],
+    "cwd": "C:\\Users\\User\\.codex\\worktrees\\a36-independent-reaudit\\FlexPlan_UC_GSCR",
+    "started_utc": "2026-10-21T11:44:12.669813+00:00",
+    "ended_utc": "2026-10-21T11:53:13.941915+00:00",
+    "exit_code": 0
+  },
+  {
+    "id": "saved_evidence",
+    "args": [
+      "julia",
+      "+1.10.11",
+      "--startup-file=no",
+      "--project=C:\\Users\\User\\.codex\\worktrees\\a36-independent-reaudit\\FlexPlan_UC_GSCR",
+      "C:\\Users\\User\\.codex\\worktrees\\a36-independent-reaudit\\FlexPlan_UC_GSCR\\test\\run_paper_a_ap3_evidence.jl",
+      "C:\\Users\\User\\.codex\\worktrees\\a36-independent-reaudit\\reaudit_run02\\historical"
+    ],
+    "cwd": "C:\\Users\\User\\.codex\\worktrees\\a36-independent-reaudit\\FlexPlan_UC_GSCR",
+    "started_utc": "2026-10-21T11:53:22.705190+00:00",
+    "ended_utc": "2026-10-21T11:54:23.073595+00:00",
+    "exit_code": 0
+  },
+  {
+    "id": "moi_guards",
+    "args": [
+      "julia",
+      "+1.10.11",
+      "--startup-file=no",
+      "--project=C:\\Users\\User\\.codex\\worktrees\\a36-independent-reaudit\\FlexPlan_UC_GSCR",
+      "C:\\Users\\User\\.codex\\worktrees\\a36-independent-reaudit\\reaudit_run02\\prior\\tools\\independent_jump_moi_audit.jl",
+      "C:\\Users\\User\\.codex\\worktrees\\a36-independent-reaudit\\reaudit_run02\\moi_guards"
+    ],
+    "cwd": "C:\\Users\\User\\.codex\\worktrees\\a36-independent-reaudit\\FlexPlan_UC_GSCR",
+    "started_utc": "2026-10-21T11:54:23.074997+00:00",
+    "ended_utc": "2026-10-21T11:55:46.841966+00:00",
+    "exit_code": 0
+  },
+  {
+    "id": "domain_mutations",
+    "args": [
+      "julia",
+      "+1.10.11",
+      "--startup-file=no",
+      "--project=C:\\Users\\User\\.codex\\worktrees\\a36-independent-reaudit\\FlexPlan_UC_GSCR",
+      "C:\\Users\\User\\.codex\\worktrees\\a36-independent-reaudit\\reaudit_run02\\prior\\tools\\independent_domain_mutations.jl",
+      "C:\\Users\\User\\.codex\\worktrees\\a36-independent-reaudit\\reaudit_run02",
+      "C:\\Users\\User\\.codex\\worktrees\\a36-independent-reaudit\\FlexPlan_UC_GSCR"
+    ],
+    "cwd": "C:\\Users\\User\\.codex\\worktrees\\a36-independent-reaudit\\FlexPlan_UC_GSCR",
+    "started_utc": "2026-10-21T11:55:46.849071+00:00",
+    "ended_utc": "2026-10-21T11:56:04.427882+00:00",
+    "exit_code": 0
+  },
+  {
+    "id": "minimal_filter",
+    "args": [
+      "julia",
+      "+1.10.11",
+      "--startup-file=no",
+      "--project=C:\\Users\\User\\.codex\\worktrees\\a36-independent-reaudit\\FlexPlan_UC_GSCR",
+      "C:\\Users\\User\\.codex\\worktrees\\a36-independent-reaudit\\FlexPlan_UC_GSCR\\reports\\a3_6\\reaudit_20261021\\solver_review.jl",
+      "C:\\Users\\User\\.codex\\worktrees\\a36-independent-reaudit\\FlexPlan_UC_GSCR",
+      "C:\\Users\\User\\.codex\\worktrees\\a36-independent-reaudit\\reaudit_run02"
+    ],
+    "cwd": "C:\\Users\\User\\.codex\\worktrees\\a36-independent-reaudit\\FlexPlan_UC_GSCR",
+    "started_utc": "2026-10-21T11:44:22.016310+00:00",
+    "ended_utc": "2026-10-21T11:47:15.902062+00:00",
+    "exit_code": 0
+  },
+  {
+    "id": "stress_matrix",
+    "args": [
+      "julia",
+      "+1.10.11",
+      "--startup-file=no",
+      "--project=C:\\Users\\User\\.codex\\worktrees\\a36-independent-reaudit\\FlexPlan_UC_GSCR",
+      "C:\\Users\\User\\.codex\\worktrees\\a36-independent-reaudit\\FlexPlan_UC_GSCR\\reports\\a3_6\\b1_opt_20261020\\fix_stress_matrix.jl",
+      "C:\\Users\\User\\.codex\\worktrees\\a36-independent-reaudit\\FlexPlan_UC_GSCR",
+      "C:\\Users\\User\\.codex\\worktrees\\a36-independent-reaudit\\reaudit_run02\\fresh_stress"
+    ],
+    "cwd": "C:\\Users\\User\\.codex\\worktrees\\a36-independent-reaudit\\FlexPlan_UC_GSCR",
+    "started_utc": "2026-10-21T11:47:15.903122+00:00",
+    "ended_utc": "2026-10-21T11:55:27.097492+00:00",
+    "exit_code": 0
+  },
+  {
+    "id": "fresh_model_exports",
+    "args": [
+      "julia",
+      "+1.10.11",
+      "--startup-file=no",
+      "--project=C:\\Users\\User\\.codex\\worktrees\\a36-independent-reaudit\\FlexPlan_UC_GSCR",
+      "C:\\Users\\User\\.codex\\worktrees\\a36-independent-reaudit\\FlexPlan_UC_GSCR\\reports\\a3_6\\b1_opt_20261020\\model_inclusion.jl",
+      "C:\\Users\\User\\.codex\\worktrees\\a36-independent-reaudit\\FlexPlan_UC_GSCR",
+      "C:\\Users\\User\\.codex\\worktrees\\a36-independent-reaudit\\reaudit_run02\\fresh_models"
+    ],
+    "cwd": "C:\\Users\\User\\.codex\\worktrees\\a36-independent-reaudit\\FlexPlan_UC_GSCR",
+    "started_utc": "2026-10-21T11:55:27.099623+00:00",
+    "ended_utc": "2026-10-21T11:58:44.775495+00:00",
+    "exit_code": 0
+  },
+  {
+    "id": "fresh_objective_snapshots",
+    "args": [
+      "julia",
+      "+1.10.11",
+      "--startup-file=no",
+      "--project=C:\\Users\\User\\.codex\\worktrees\\a36-independent-reaudit\\FlexPlan_UC_GSCR",
+      "C:\\Users\\User\\.codex\\worktrees\\a36-independent-reaudit\\FlexPlan_UC_GSCR\\reports\\a3_6\\b1_opt_20261020\\objective_snapshots.jl",
+      "C:\\Users\\User\\.codex\\worktrees\\a36-independent-reaudit\\FlexPlan_UC_GSCR",
+      "C:\\Users\\User\\.codex\\worktrees\\a36-independent-reaudit\\reaudit_run02\\fresh_objective_snapshots",
+      "C:\\Users\\User\\.codex\\worktrees\\a36-independent-reaudit\\reaudit_run02\\prior"
+    ],
+    "cwd": "C:\\Users\\User\\.codex\\worktrees\\a36-independent-reaudit\\FlexPlan_UC_GSCR",
+    "started_utc": "2026-10-21T11:58:44.777718+00:00",
+    "ended_utc": "2026-10-21T12:01:39.155315+00:00",
+    "exit_code": 0
+  },
+  {
+    "id": "fresh_export_comparison",
+    "args": [
+      "C:\\Users\\User\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+      "C:\\Users\\User\\.codex\\worktrees\\a36-independent-reaudit\\FlexPlan_UC_GSCR\\reports\\a3_6\\reaudit_20261021\\compare_fresh.py",
+      "C:\\Users\\User\\.codex\\worktrees\\a36-independent-reaudit\\FlexPlan_UC_GSCR",
+      "C:\\Users\\User\\.codex\\worktrees\\a36-independent-reaudit\\reaudit_run02"
+    ],
+    "cwd": "C:\\Users\\User\\.codex\\worktrees\\a36-independent-reaudit\\FlexPlan_UC_GSCR",
+    "started_utc": "2026-10-21T12:01:39.158068+00:00",
+    "ended_utc": "2026-10-21T12:01:45.036563+00:00",
+    "exit_code": 1
+  },
+  {
+    "id": "fresh_export_comparison_retry",
+    "args": [
+      "C:\\Users\\User\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+      "C:\\Users\\User\\.codex\\worktrees\\a36-independent-reaudit\\FlexPlan_UC_GSCR\\reports\\a3_6\\reaudit_20261021\\compare_fresh.py",
+      "C:\\Users\\User\\.codex\\worktrees\\a36-independent-reaudit\\FlexPlan_UC_GSCR",
+      "C:\\Users\\User\\.codex\\worktrees\\a36-independent-reaudit\\reaudit_run02"
+    ],
+    "cwd": "C:\\Users\\User\\.codex\\worktrees\\a36-independent-reaudit\\FlexPlan_UC_GSCR",
+    "started_utc": "2026-10-21T12:03:18.561106+00:00",
+    "ended_utc": "2026-10-21T12:03:37.215893+00:00",
+    "exit_code": 0
+  },
+  {
+    "id": "remaining_filter",
+    "args": [
+      "julia",
+      "+1.10.11",
+      "--startup-file=no",
+      "--project=C:\\Users\\User\\.codex\\worktrees\\a36-independent-reaudit\\FlexPlan_UC_GSCR",
+      "C:\\Users\\User\\.codex\\worktrees\\a36-independent-reaudit\\FlexPlan_UC_GSCR\\reports\\a3_6\\reaudit_20261021\\remaining_filter.jl",
+      "C:\\Users\\User\\.codex\\worktrees\\a36-independent-reaudit\\reaudit_run02\\remaining_filter.json"
+    ],
+    "cwd": "C:\\Users\\User\\.codex\\worktrees\\a36-independent-reaudit\\FlexPlan_UC_GSCR",
+    "started_utc": "2026-10-21T11:48:11.935769+00:00",
+    "ended_utc": "2026-10-21T11:48:22.219595+00:00",
+    "exit_code": 0
+  }
+]
