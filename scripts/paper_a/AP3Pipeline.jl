@@ -563,6 +563,7 @@ end
 function compare(input,out)
     newoutput(out);runs=readjson(joinpath(input,"runs.json"))["runs"];a=Any[]
     function effective_bound(r)
+        get(r,"bound_certification",nothing)=="numerical_only_not_rigorous_currency_bound" && return nothing
         b=get(r,"bound",nothing);b isa Real && isfinite(b) && return b
         base=filter(x->x["case_id"]==r["case_id"]&&x["relaxed"]==r["relaxed"]&&x["formulation"]=="BASE"&&x["status"]=="optimal",runs)
         isempty(base) && return nothing
@@ -576,6 +577,10 @@ function compare(input,out)
         row["original_currency_bound_gap_pass"]=gapok(run)
         row["effective_global_lower_bound"]=effective_bound(run)
         row["bound_source"]=get(run,"bound",nothing) isa Real ? "native_solver" : "BASE_same_scope_relaxation"
+        if haskey(run,"bound_certification")
+            row["bound_certification"]=run["bound_certification"]
+            row["bound_source"]="unaccepted_native_numerical_bound"
+        end
         if run["status"]=="optimal" && !gapok(run)
             row["status"]="numerical_inconclusive";row["reason"]="original_currency_gap_not_certified";row["absolute_delta"]=nothing;row["relative_delta"]=nothing
         end

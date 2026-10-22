@@ -37,4 +37,14 @@ const N = P.NativeG3Solver
     @test result["objective"] ≈ 5*3.7524903900502144e-9+2.178606398164727e-15 atol=1e-20 rtol=1e-12
     @test result["objective_conditioning"]["exact_binary_scaling_verified"]
     @test result["bound_certification"] == "numerical_only_not_rigorous_currency_bound"
+    mktempdir() do root
+        input=joinpath(root,"input");mkdir(input)
+        P.writejson(joinpath(input,"runs.json"),Dict("runs"=>[Dict("case_id"=>"guard",
+            "formulation"=>"G3","relaxed"=>false,"status"=>"numerical_inconclusive",
+            "objective"=>5.,"bound"=>5.,"bound_certification"=>result["bound_certification"])]))
+        comparison=only(P.compare(input,joinpath(root,"comparison")))
+        @test comparison["effective_global_lower_bound"] === nothing
+        @test !comparison["original_currency_bound_gap_pass"]
+        @test comparison["bound_source"] == "unaccepted_native_numerical_bound"
+    end
 end
