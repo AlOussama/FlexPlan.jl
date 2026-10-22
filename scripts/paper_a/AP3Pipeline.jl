@@ -1,6 +1,8 @@
 module AP3Pipeline
 using LinearAlgebra, JuMP
 import FlexPlan as FP, PowerModels as PM, HiGHS, Clarabel, Gurobi, Pajarito, JSON, SHA, TOML, CSV, Pkg
+include("NativeG3Solver.jl")
+mosek_optimizer() = NativeG3Solver.optimizer()
 const D=FP.PaperADiagnostics
 const SCHEMA=D.SCHEMA
 const SEED=20261020
@@ -105,7 +107,8 @@ function modelstats(m)
     return Dict("variables"=>JuMP.num_variables(m),"integer"=>count(v->JuMP.is_integer(v)||JuMP.is_binary(v),JuMP.all_variables(m)),"constraints"=>counts)
 end
 function solve!(pm,optimizer;objective_scale=nothing)
-    m=pm.model;original=JuMP.objective_function(m)
+    m=pm.model;original=JuMP.AffExpr(0.)+JuMP.objective_function(m)
+    native_g3=NativeG3Solver.is_native(optimizer)
     solver_objective=original;rebased=0
     if optimizer!==HiGHS.Optimizer && optimizer!==Clarabel.Optimizer && optimizer!==Gurobi.Optimizer
         # Pajarito's relative gap excludes its affine objective offset. Express
@@ -127,7 +130,22 @@ function solve!(pm,optimizer;objective_scale=nothing)
     scale=optimizer!==HiGHS.Optimizer && optimizer!==Gurobi.Optimizer ? max(1.,maximum((abs(c) for (c,v) in JuMP.linear_terms(original) if !JuMP.is_fixed(v));init=1.)) : 1.
     objective_scale===nothing || (scale=Float64(objective_scale))
     isfinite(scale) && scale>0 || throw(ArgumentError("positive objective conditioning factor required"))
-    JuMP.set_objective_function(m,solver_objective/scale)
+    emitted_objective=solver_objective/scale
+    native_range=nothing;conditioning=nothing;multiplier=1.
+    if native_g3
+        try
+            native_range=NativeG3Solver.input_range(m)
+            emitted_objective,conditioning=NativeG3Solver.condition_objective(emitted_objective)
+            multiplier=conditioning["multiplier"]
+        catch e
+            e isa NativeG3Solver.NumericalInputError || rethrow()
+            return Dict{String,Any}("termination"=>"OPTIMIZE_NOT_CALLED","primal_status"=>"NO_SOLUTION",
+                "dual_status"=>"NO_SOLUTION","objective"=>nothing,"bound"=>nothing,"relative_gap"=>nothing,
+                "numerical_validation"=>"rejected_input","numerical_reason"=>sprint(showerror,e),
+                "solver"=>"MOSEK","solve_wall_s"=>0.,"model"=>modelstats(m))
+        end
+    end
+    JuMP.set_objective_function(m,emitted_objective)
     JuMP.set_optimizer(m,optimizer);JuMP.set_silent(m)
     if optimizer===HiGHS.Optimizer
         JuMP.set_optimizer_attribute(m,"threads",1)
@@ -138,12 +156,24 @@ function solve!(pm,optimizer;objective_scale=nothing)
     end
     wall=@elapsed JuMP.optimize!(m)
     feasible=JuMP.primal_status(m)==JuMP.MOI.FEASIBLE_POINT
-    obj=feasible ? JuMP.value(original) : nothing;bound=safe(()->JuMP.objective_bound(m)*scale)
+    effective_scale=scale/multiplier
+    obj=feasible ? JuMP.value(original) : nothing;bound=safe(()->JuMP.objective_bound(m)*effective_scale)
     if !(bound isa Real && isfinite(bound)) && JuMP.has_duals(m)
-        bound=safe(()->JuMP.dual_objective_value(m)*scale)
+        bound=safe(()->JuMP.dual_objective_value(m)*effective_scale)
     end
     gap=obj isa Real && bound isa Real && isfinite(bound) ? abs(obj-bound)/max(1.,abs(obj)) : nothing
-    return Dict{String,Any}("termination"=>string(JuMP.termination_status(m)),"primal_status"=>string(JuMP.primal_status(m)),"dual_status"=>string(JuMP.dual_status(m)),"objective"=>obj,"objective_solver_scaling"=>scale,"bound"=>bound,"relative_gap"=>gap,"raw_solver_relative_gap"=>nonnegative(()->JuMP.relative_gap(m)),"solve_wall_s"=>wall,"solver_time_s"=>nonnegative(()->JuMP.solve_time(m)),"solver"=>JuMP.solver_name(m),"optimizer_configuration"=>optimizer===HiGHS.Optimizer ? "HiGHS: threads=1,seed=20261020,mip_rel_gap=1e-8,time_limit=120s" : optimizer===Clarabel.Optimizer ? "Clarabel: tol_gap_abs=tol_gap_rel=tol_feas=1e-10,max_iter=300,objective_scaled_by_recorded_positive_factor" : "Pajarito: iterative,HiGHS+Clarabel,tol_rel_gap=tol_feas=1e-7,tol_abs_gap=1e-8,time_limit=120s,iteration_limit=100","barrier_iterations"=>nonnegative(()->JuMP.barrier_iterations(m)),"simplex_iterations"=>nonnegative(()->JuMP.simplex_iterations(m)),"nodes"=>nonnegative(()->JuMP.node_count(m)),"model"=>modelstats(m))
+    result=Dict{String,Any}("termination"=>string(JuMP.termination_status(m)),"primal_status"=>string(JuMP.primal_status(m)),"dual_status"=>string(JuMP.dual_status(m)),"objective"=>obj,"objective_solver_scaling"=>effective_scale,"bound"=>bound,"relative_gap"=>gap,"raw_solver_relative_gap"=>nonnegative(()->JuMP.relative_gap(m)),"solve_wall_s"=>wall,"solver_time_s"=>nonnegative(()->JuMP.solve_time(m)),"solver"=>JuMP.solver_name(m),"optimizer_configuration"=>native_g3 ? "MOSEK: native G3, exact power-of-two objective conditioning; recorded options" : optimizer===HiGHS.Optimizer ? "HiGHS: threads=1,seed=20261020,mip_rel_gap=1e-8,time_limit=120s" : optimizer===Clarabel.Optimizer ? "Clarabel: tol_gap_abs=tol_gap_rel=tol_feas=1e-10,max_iter=300,objective_scaled_by_recorded_positive_factor" : "Pajarito: iterative,HiGHS+Clarabel,tol_rel_gap=tol_feas=1e-7,tol_abs_gap=1e-8,time_limit=120s,iteration_limit=100","barrier_iterations"=>nonnegative(()->JuMP.barrier_iterations(m)),"simplex_iterations"=>nonnegative(()->JuMP.simplex_iterations(m)),"nodes"=>nonnegative(()->JuMP.node_count(m)),"model"=>modelstats(m))
+    if native_g3
+        check=NativeG3Solver.primal_check(m)
+        merge!(result,Dict("objective_requested_divisor"=>scale,"objective_conditioning"=>conditioning,
+            "native_input_range"=>native_range,"optimizer_options"=>NativeG3Solver.recorded_options(optimizer),
+            "numerical_validation"=>check["status"],"original_primal_check"=>check,
+            "objective_backend"=>safe(()->JuMP.objective_value(m)),
+            "bound_backend_numerical"=>safe(()->JuMP.objective_bound(m)),
+            "bound_certification"=>"numerical_only_not_rigorous_currency_bound",
+            "bound_coordinate"=>"nominal_original_objective; affine_rounding_delta_not_globally_bounded"))
+    end
+    return result
 end
 function extract(pm)
     snaps=Dict{String,Any}()
@@ -215,14 +245,16 @@ function capability_probe()
         end
     end
     # A locally usable license is established by a real cone/integer solve.
-    try
-        m=JuMP.Model(Gurobi.Optimizer);JuMP.set_silent(m)
+    for (solver_name,optimizer) in (("Gurobi",Gurobi.Optimizer),("MOSEK",mosek_optimizer()))
+      try
+        m=JuMP.Model(optimizer);JuMP.set_silent(m)
         x=JuMP.@variable(m,lower_bound=0,integer=true)
         JuMP.@constraint(m,[x,x,sqrt(2.)] in JuMP.RotatedSecondOrderCone())
         JuMP.@objective(m,Min,x);JuMP.optimize!(m)
-        push!(result,Dict("solver"=>"Gurobi","kind"=>"MISOCP","status"=>JuMP.termination_status(m)==JuMP.MOI.OPTIMAL ? "supported_runtime_verified" : "numerical_inconclusive","termination"=>string(JuMP.termination_status(m)),"objective"=>JuMP.has_values(m) ? JuMP.objective_value(m) : nothing))
-    catch e
-        push!(result,Dict("solver"=>"Gurobi","kind"=>"MISOCP","status"=>"solver_unavailable","error"=>sprint(showerror,e)))
+        push!(result,Dict("solver"=>solver_name,"kind"=>"MISOCP","status"=>JuMP.termination_status(m)==JuMP.MOI.OPTIMAL ? "supported_runtime_verified" : "numerical_inconclusive","termination"=>string(JuMP.termination_status(m)),"objective"=>JuMP.has_values(m) ? JuMP.objective_value(m) : nothing))
+      catch e
+        push!(result,Dict("solver"=>solver_name,"kind"=>"MISOCP","status"=>"solver_unavailable","error"=>sprint(showerror,e)))
+      end
     end
     return result
 end
@@ -231,9 +263,8 @@ function run_suite(configpath,out)
     cfg=readjson(configpath);out=newoutput(out);writejson(joinpath(out,"provenance.json"),provenance())
     cp(configpath,joinpath(out,"suite_config.json"))
     caps=capability_probe();writejson(joinpath(out,"capabilities.json"),caps)
-    gurobi=any(r->r["solver"]=="Gurobi" && r["status"]=="supported_runtime_verified",caps)
+    mosek=any(r->r["solver"]=="MOSEK" && r["status"]=="supported_runtime_verified",caps)
     pajsdp=any(r->r["solver"]=="Pajarito" && r["kind"]=="MISDP" && r["status"]=="supported_runtime_verified",caps)
-    pajsoc=any(r->r["solver"]=="Pajarito" && r["kind"]=="MISOCP" && r["status"]=="supported_runtime_verified",caps)
     runs=Any[]
     for item in cfg["cases"]
         item=copy(item)
@@ -261,22 +292,25 @@ function run_suite(configpath,out)
             name=fid*(relaxed ? "_continuous" : "_integer");row["solution_file"]="$id/$name.json"
             if !relaxed && fid=="G0" && !pajsdp
                 row["status"]="solver_unsupported";row["reason"]="no_native_MISDP; complete finite enumeration separately verified on tiny bounded fixture"
-            elseif !relaxed && fid=="G3" && !gurobi && !pajsoc
-                row["status"]="solver_unavailable";row["reason"]="native_MISOCP_unavailable; use complete tiny enumeration reference"
+            elseif !relaxed && fid=="G3" && !mosek
+                row["status"]="numerical_inconclusive";row["reason"]="selected_native_MOSEK_G3_backend_unavailable"
             else
                 try
                     compile=@elapsed pm=build(data,formulation(fid,p),scope;relaxed)
-                    opt=fid in ("G0","G3") ? (relaxed ? Clarabel.Optimizer : fid=="G3" && gurobi ? Gurobi.Optimizer : pajarito_optimizer()) : HiGHS.Optimizer
+                    opt=fid in ("G0","G3") ? (relaxed ? Clarabel.Optimizer : fid=="G3" ? mosek_optimizer() : pajarito_optimizer()) : HiGHS.Optimizer
                     result=solve!(pm,opt;objective_scale=fid in ("G0","G3") ? baseline_scale : nothing);merge!(row,result);row["build_wall_s"]=compile
                     row["status"]=result["termination"]=="OPTIMAL" ? "optimal" : result["termination"]=="INFEASIBLE" ? "infeasible" : "numerical_inconclusive"
-                    if !relaxed && fid in ("G0","G3") && opt!==Gurobi.Optimizer && result["termination"]=="INFEASIBLE"
+                    if NativeG3Solver.is_native(opt) && get(result,"numerical_validation",nothing)!="passed"
+                        row["status"]="numerical_inconclusive";row["reason"]="native_G3_original_model_validation_failed_or_unavailable"
+                    end
+                    if !relaxed && fid in ("G0","G3") && result["termination"]=="INFEASIBLE"
                         row["status"]="numerical_inconclusive"
-                        row["reason"]="Pajarito_infeasibility_requires_independent_crosscheck_after_observed_false_infeasibility"
+                        row["reason"]="native_conic_infeasibility_requires_independent_crosscheck"
                     end
                     if row["status"]=="optimal" && row["relative_gap"] isa Real && row["relative_gap"]>1e-6
                         row["status"]="numerical_inconclusive";row["reason"]="original_currency_primal_bound_gap_exceeds_1e-6"
                     end
-                    if JuMP.primal_status(pm.model)==JuMP.MOI.FEASIBLE_POINT
+                    if result["primal_status"]=="FEASIBLE_POINT"
                         solution=extract(pm);writejson(joinpath(casedir,name*".json"),solution)
                     end
                 catch e

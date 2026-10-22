@@ -2,7 +2,7 @@
 
 julia_version = "1.10.11"
 manifest_format = "2.0"
-project_hash = "df2fc00fc4ef10671ae6df6cea5e55aa8606b2f8"
+project_hash = "6fe3eabb02304078010858d95076b9efa989033e"
 
 [[deps.ADTypes]]
 git-tree-sha1 = "0a81a018463de6c3f4f2c9360121c562e5add9e4"
@@ -873,6 +873,18 @@ version = "1.2.0"
 
 [[deps.Mmap]]
 uuid = "a63ad114-7e13-5084-954f-fe012c677804"
+
+[[deps.Mosek]]
+deps = ["Libdl", "Pkg", "Printf", "SparseArrays"]
+git-tree-sha1 = "ea661427c5951c3de663550b637165ecd38febb2"
+uuid = "6405355b-0ac2-5fba-af84-adbd65488c0e"
+version = "11.0.1"
+
+[[deps.MosekTools]]
+deps = ["MathOptInterface", "Mosek"]
+git-tree-sha1 = "5ea97a807fad13a0a2760dbf9a01809709eba099"
+uuid = "1ec41992-ff65-5c91-ac43-2df89e9693a4"
+version = "0.15.10"
 
 [[deps.MozillaCACerts_jll]]
 uuid = "14a3606d-f60d-562e-9121-12d972cd8159"
