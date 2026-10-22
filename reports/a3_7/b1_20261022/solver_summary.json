@@ -1,0 +1,147 @@
+{
+  "matrix_summaries": {
+    "native_matrix_repair": {
+      "count": 46,
+      "terminations": {
+        "OPTIMAL": 44,
+        "TIME_LIMIT": 2
+      },
+      "nonoptimal": [
+        {
+          "case_id": "reference_24snap",
+          "mode": "double_costscale",
+          "termination": "TIME_LIMIT"
+        },
+        {
+          "case_id": "reference_24snap",
+          "mode": "tighter_feasibility",
+          "termination": "TIME_LIMIT"
+        }
+      ]
+    },
+    "final_native_matrix": {
+      "count": 46,
+      "terminations": {
+        "OPTIMAL": 43,
+        "TIME_LIMIT": 3
+      },
+      "nonoptimal": [
+        {
+          "case_id": "reference_24snap",
+          "mode": "half_costscale",
+          "termination": "TIME_LIMIT"
+        },
+        {
+          "case_id": "reference_24snap",
+          "mode": "double_costscale",
+          "termination": "TIME_LIMIT"
+        },
+        {
+          "case_id": "reference_24snap",
+          "mode": "tighter_feasibility",
+          "termination": "TIME_LIMIT"
+        }
+      ]
+    },
+    "selected_native_matrix": {
+      "count": 46,
+      "terminations": {
+        "OPTIMAL": 46
+      },
+      "nonoptimal": []
+    },
+    "final_exact_route_matrix": {
+      "count": 46,
+      "terminations": {
+        "OPTIMAL": 46
+      },
+      "nonoptimal": []
+    }
+  },
+  "original_residual_maxima": {
+    "EqualTo": 1.0913033449133636e-08,
+    "GreaterThan": 4.9649173661237e-13,
+    "LessThan": 7.638334409421077e-13,
+    "Interval": 0.0,
+    "RotatedSecondOrderCone": 0.0,
+    "Integer": 5.266898028821743e-13,
+    "PositiveSemidefiniteConeTriangle": 0.0
+  },
+  "actual_backend_residual_maxima": {
+    "EqualTo": 1.0913033449133636e-08,
+    "GreaterThan": 6.661338147750939e-16,
+    "LessThan": 2.2343238370581275e-15,
+    "Interval": 0.0,
+    "Integer": 0.0
+  },
+  "actual_backend_identity_count": 37,
+  "exact_backend_cones": 1368,
+  "original_default": {
+    "termination": "OPTIMAL",
+    "primal_status": "FEASIBLE_POINT",
+    "dual_status": "NO_SOLUTION",
+    "objective": 0.01869304118645646,
+    "bound": 0.018693041155797716,
+    "bound_backend_numerical": 19601.074322981745,
+    "objective_backend": 19601.074355129764,
+    "solve_wall_s": 0.1204901,
+    "relative_gap": 3.065874290553161e-11,
+    "nodes": 1,
+    "barrier_iterations": 0,
+    "simplex_iterations": 1734,
+    "objective_solver_scaling": 9.5367431640625e-07,
+    "objective_requested_divisor": 1.0,
+    "objective_conditioning": {
+      "maximum_coefficient": 1048576.0,
+      "minimum_nonzero_coefficient": 0.003934771363237294,
+      "exact_binary_scaling_verified": true,
+      "power_two_exponent": 20,
+      "multiplier": 1048576.0
+    },
+    "native_input_range": {
+      "maximum_coefficient": 419.22538897129584,
+      "minimum_nonzero_coefficient": 0.005095103715298807,
+      "coefficient_floor": 1e-09
+    },
+    "bound_certification": "numerical_only_not_rigorous_currency_bound",
+    "case_id": "reference_24snap",
+    "mode": "original_serialized_default",
+    "original_model_sha256": "fcd52695238591d6c6019385d64e4407e1ea480849ca4125e1191b992581ab07",
+    "seed_wall_s": 0.6201218
+  },
+  "reference24_double": {
+    "termination": "OPTIMAL",
+    "primal_status": "FEASIBLE_POINT",
+    "dual_status": "NO_SOLUTION",
+    "objective": 14128094.100606883,
+    "bound": 14128094.077432465,
+    "bound_backend_numerical": 32768.27188822828,
+    "objective_backend": 32768.27194197839,
+    "solve_wall_s": 0.1177927,
+    "relative_gap": 1.6403074591272715e-09,
+    "nodes": 1,
+    "barrier_iterations": 0,
+    "simplex_iterations": 1799,
+    "objective_solver_scaling": 431.1516373406271,
+    "objective_requested_divisor": 28255953.704755336,
+    "objective_conditioning": {
+      "maximum_coefficient": 1752966.3373188009,
+      "minimum_nonzero_coefficient": 0.006577989334870323,
+      "exact_binary_scaling_verified": true,
+      "power_two_exponent": 16,
+      "multiplier": 65536.0
+    },
+    "native_input_range": {
+      "maximum_coefficient": 419.22538897129584,
+      "minimum_nonzero_coefficient": 0.005095103715298807,
+      "coefficient_floor": 1e-09
+    },
+    "bound_certification": "numerical_only_not_rigorous_currency_bound",
+    "case_id": "reference_24snap",
+    "mode": "double_costscale",
+    "original_model_sha256": "5add5a4f7500d34f701b26c9c6cd105a90bbb8f44a94a5c18c40432848e8130a",
+    "seed_wall_s": 0.498931
+  },
+  "original_witness_objective_exact": "22454572203146263911616174998561445803883171993578702189/1201226274627825100588289993483927156656454446845028990976",
+  "original_witness_objective_display": 0.01869304116753802
+}

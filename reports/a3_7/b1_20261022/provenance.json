@@ -1,0 +1,19 @@
+{
+  "created_utc": "2026-10-22T22:07:50.896024+00:00",
+  "branch": "fix/paper-a-a3-7-b1-native-solver-v1",
+  "base": "15ba10c193a562a48cb0e1dcc6fa12d922ac0613",
+  "production": "f302b7b63e917678fb14b7cbc3cfdbc0d8c624a1",
+  "verification": "6b6bcd8b0f00caa3a7ee7d7e89fe1085596bd7fc",
+  "original_AP3": "485b637cc1998a327206c5929434bd26c6f0be16",
+  "accepted_A36_fix": "910d44122a37d9ed2cca06940740b46706c73d40",
+  "A36_evidence": "1147873bf553667aec5cd7eb0e9c6f7e471b370c",
+  "history": [
+    "6b6bcd8b0f00caa3a7ee7d7e89fe1085596bd7fc f302b7b63e917678fb14b7cbc3cfdbc0d8c624a1 test(paper-a): verify exact native interval slack projections",
+    "f302b7b63e917678fb14b7cbc3cfdbc0d8c624a1 4b6b064d1db151de8bb5fd227684923985557d56 fix(paper-a): preserve exact RSOC backend sets with checked primal starts",
+    "4b6b064d1db151de8bb5fd227684923985557d56 2e88789244ec237231ee20528160eabc4b4abce0 fix(paper-a): select conditioned Gurobi after native MOSEK stress limits",
+    "2e88789244ec237231ee20528160eabc4b4abce0 a695b0a514f9fa8083335320e60bcbfe0930b82e fix(paper-a): keep uncertified native bounds out of global comparisons",
+    "a695b0a514f9fa8083335320e60bcbfe0930b82e 15ba10c193a562a48cb0e1dcc6fa12d922ac0613 fix(paper-a): qualify native G3 route with guarded MOSEK objective scaling"
+  ],
+  "authority_macro_sha256": "31eb7acf40044257448041be1d0d2ed959c7238bec99cbbe0037c1c6cc45d4ad",
+  "publication_remote_verification": "see additive publication_receipt.json and final remote HEAD; no self-referential SHA"
+}

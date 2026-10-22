@@ -1,0 +1,781 @@
+diff --git a/Manifest-v1.10.toml b/Manifest-v1.10.toml
+index cfd05c1..4fa15b8 100644
+--- a/Manifest-v1.10.toml
++++ b/Manifest-v1.10.toml
+@@ -5 +5 @@ manifest_format = "2.0"
+-project_hash = "df2fc00fc4ef10671ae6df6cea5e55aa8606b2f8"
++project_hash = "6fe3eabb02304078010858d95076b9efa989033e"
+@@ -876,0 +877,12 @@ uuid = "a63ad114-7e13-5084-954f-fe012c677804"
++[[deps.Mosek]]
++deps = ["Libdl", "Pkg", "Printf", "SparseArrays"]
++git-tree-sha1 = "ea661427c5951c3de663550b637165ecd38febb2"
++uuid = "6405355b-0ac2-5fba-af84-adbd65488c0e"
++version = "11.0.1"
++
++[[deps.MosekTools]]
++deps = ["MathOptInterface", "Mosek"]
++git-tree-sha1 = "5ea97a807fad13a0a2760dbf9a01809709eba099"
++uuid = "1ec41992-ff65-5c91-ac43-2df89e9693a4"
++version = "0.15.10"
++
+diff --git a/Project.toml b/Project.toml
+index fbc57a4..af3e395 100644
+--- a/Project.toml
++++ b/Project.toml
+@@ -18,0 +19,2 @@ Memento = "f28f55f0-a522-5efc-85c2-fe41dfb9b2d9"
++Mosek = "6405355b-0ac2-5fba-af84-adbd65488c0e"
++MosekTools = "1ec41992-ff65-5c91-ac43-2df89e9693a4"
+@@ -36,0 +39,2 @@ Memento = "1"
++Mosek = "=11.0.1"
++MosekTools = "=0.15.10"
+diff --git a/scripts/paper_a/AP3Pipeline.jl b/scripts/paper_a/AP3Pipeline.jl
+index ad6e588..5dfb961 100644
+--- a/scripts/paper_a/AP3Pipeline.jl
++++ b/scripts/paper_a/AP3Pipeline.jl
+@@ -3,0 +4,3 @@ import FlexPlan as FP, PowerModels as PM, HiGHS, Clarabel, Gurobi, Pajarito, JSO
++include("NativeG3Solver.jl")
++mosek_optimizer() = NativeG3Solver.optimizer(;backend=:mosek)
++native_g3_optimizer() = NativeG3Solver.optimizer()
+@@ -108 +111,2 @@ function solve!(pm,optimizer;objective_scale=nothing)
+-    m=pm.model;original=JuMP.objective_function(m)
++    m=pm.model;original=JuMP.AffExpr(0.)+JuMP.objective_function(m)
++    native_g3=NativeG3Solver.is_native(optimizer)
+@@ -130,2 +134,19 @@ function solve!(pm,optimizer;objective_scale=nothing)
+-    JuMP.set_objective_function(m,solver_objective/scale)
+-    JuMP.set_optimizer(m,optimizer);JuMP.set_silent(m)
++    emitted_objective=solver_objective/scale
++    native_range=nothing;conditioning=nothing;multiplier=1.
++    if native_g3
++        try
++            native_range=NativeG3Solver.input_range(m)
++            emitted_objective,conditioning=NativeG3Solver.condition_objective(emitted_objective)
++            multiplier=conditioning["multiplier"]
++        catch e
++            e isa NativeG3Solver.NumericalInputError || rethrow()
++            return Dict{String,Any}("termination"=>"OPTIMIZE_NOT_CALLED","primal_status"=>"NO_SOLUTION",
++                "dual_status"=>"NO_SOLUTION","objective"=>nothing,"bound"=>nothing,"relative_gap"=>nothing,
++                "numerical_validation"=>"rejected_input","numerical_reason"=>sprint(showerror,e),
++                "solver"=>NativeG3Solver.backend_name(optimizer),"solve_wall_s"=>0.,"model"=>modelstats(m))
++        end
++    end
++    JuMP.set_objective_function(m,emitted_objective)
++    JuMP.set_optimizer(m,optimizer)
++    native_g3 && NativeG3Solver.configure_bridges!(m,optimizer)
++    JuMP.set_silent(m)
+@@ -138,0 +160,3 @@ function solve!(pm,optimizer;objective_scale=nothing)
++    native_bridge=nothing
++    native_seed=native_g3 ? NativeG3Solver.seed_primal_start!(m,optimizer) : nothing
++    preparation_wall=native_g3 ? @elapsed(native_bridge=NativeG3Solver.prepare_backend!(m,optimizer)) : 0.
+@@ -141 +165,2 @@ function solve!(pm,optimizer;objective_scale=nothing)
+-    obj=feasible ? JuMP.value(original) : nothing;bound=safe(()->JuMP.objective_bound(m)*scale)
++    effective_scale=scale/multiplier
++    obj=feasible ? JuMP.value(original) : nothing;bound=safe(()->JuMP.objective_bound(m)*effective_scale)
+@@ -143 +168 @@ function solve!(pm,optimizer;objective_scale=nothing)
+-        bound=safe(()->JuMP.dual_objective_value(m)*scale)
++        bound=safe(()->JuMP.dual_objective_value(m)*effective_scale)
+@@ -146 +171,14 @@ function solve!(pm,optimizer;objective_scale=nothing)
+-    return Dict{String,Any}("termination"=>string(JuMP.termination_status(m)),"primal_status"=>string(JuMP.primal_status(m)),"dual_status"=>string(JuMP.dual_status(m)),"objective"=>obj,"objective_solver_scaling"=>scale,"bound"=>bound,"relative_gap"=>gap,"raw_solver_relative_gap"=>nonnegative(()->JuMP.relative_gap(m)),"solve_wall_s"=>wall,"solver_time_s"=>nonnegative(()->JuMP.solve_time(m)),"solver"=>JuMP.solver_name(m),"optimizer_configuration"=>optimizer===HiGHS.Optimizer ? "HiGHS: threads=1,seed=20261020,mip_rel_gap=1e-8,time_limit=120s" : optimizer===Clarabel.Optimizer ? "Clarabel: tol_gap_abs=tol_gap_rel=tol_feas=1e-10,max_iter=300,objective_scaled_by_recorded_positive_factor" : "Pajarito: iterative,HiGHS+Clarabel,tol_rel_gap=tol_feas=1e-7,tol_abs_gap=1e-8,time_limit=120s,iteration_limit=100","barrier_iterations"=>nonnegative(()->JuMP.barrier_iterations(m)),"simplex_iterations"=>nonnegative(()->JuMP.simplex_iterations(m)),"nodes"=>nonnegative(()->JuMP.node_count(m)),"model"=>modelstats(m))
++    result=Dict{String,Any}("termination"=>string(JuMP.termination_status(m)),"primal_status"=>string(JuMP.primal_status(m)),"dual_status"=>string(JuMP.dual_status(m)),"objective"=>obj,"objective_solver_scaling"=>effective_scale,"bound"=>bound,"relative_gap"=>gap,"raw_solver_relative_gap"=>nonnegative(()->JuMP.relative_gap(m)),"solve_wall_s"=>wall,"solver_time_s"=>nonnegative(()->JuMP.solve_time(m)),"solver"=>JuMP.solver_name(m),"optimizer_configuration"=>native_g3 ? NativeG3Solver.backend_name(optimizer)*": native G3, exact power-of-two objective conditioning; recorded options" : optimizer===HiGHS.Optimizer ? "HiGHS: threads=1,seed=20261020,mip_rel_gap=1e-8,time_limit=120s" : optimizer===Clarabel.Optimizer ? "Clarabel: tol_gap_abs=tol_gap_rel=tol_feas=1e-10,max_iter=300,objective_scaled_by_recorded_positive_factor" : "Pajarito: iterative,HiGHS+Clarabel,tol_rel_gap=tol_feas=1e-7,tol_abs_gap=1e-8,time_limit=120s,iteration_limit=100","barrier_iterations"=>nonnegative(()->JuMP.barrier_iterations(m)),"simplex_iterations"=>nonnegative(()->JuMP.simplex_iterations(m)),"nodes"=>nonnegative(()->JuMP.node_count(m)),"model"=>modelstats(m))
++    if native_g3
++        check=NativeG3Solver.primal_check(m)
++        merge!(result,Dict("objective_requested_divisor"=>scale,"objective_conditioning"=>conditioning,
++            "native_input_range"=>native_range,"optimizer_options"=>NativeG3Solver.recorded_options(optimizer),
++            "native_bridge_validation"=>native_bridge,"native_preparation_wall_s"=>preparation_wall,
++            "primal_start_strategy"=>native_seed,
++            "numerical_validation"=>check["status"],"original_primal_check"=>check,
++            "objective_backend"=>safe(()->JuMP.objective_value(m)),
++            "bound_backend_numerical"=>safe(()->JuMP.objective_bound(m)),
++            "bound_certification"=>"numerical_only_not_rigorous_currency_bound",
++            "bound_coordinate"=>"nominal_original_objective; affine_rounding_delta_not_globally_bounded"))
++    end
++    return result
+@@ -218,2 +256,3 @@ function capability_probe()
+-    try
+-        m=JuMP.Model(Gurobi.Optimizer);JuMP.set_silent(m)
++    for (solver_name,optimizer) in (("Gurobi",Gurobi.Optimizer),("MOSEK",mosek_optimizer()))
++      try
++        m=JuMP.Model(optimizer);JuMP.set_silent(m)
+@@ -223,3 +262,4 @@ function capability_probe()
+-        push!(result,Dict("solver"=>"Gurobi","kind"=>"MISOCP","status"=>JuMP.termination_status(m)==JuMP.MOI.OPTIMAL ? "supported_runtime_verified" : "numerical_inconclusive","termination"=>string(JuMP.termination_status(m)),"objective"=>JuMP.has_values(m) ? JuMP.objective_value(m) : nothing))
+-    catch e
+-        push!(result,Dict("solver"=>"Gurobi","kind"=>"MISOCP","status"=>"solver_unavailable","error"=>sprint(showerror,e)))
++        push!(result,Dict("solver"=>solver_name,"kind"=>"MISOCP","status"=>JuMP.termination_status(m)==JuMP.MOI.OPTIMAL ? "supported_runtime_verified" : "numerical_inconclusive","termination"=>string(JuMP.termination_status(m)),"objective"=>JuMP.has_values(m) ? JuMP.objective_value(m) : nothing))
++      catch e
++        push!(result,Dict("solver"=>solver_name,"kind"=>"MISOCP","status"=>"solver_unavailable","error"=>sprint(showerror,e)))
++      end
+@@ -236 +275,0 @@ function run_suite(configpath,out)
+-    pajsoc=any(r->r["solver"]=="Pajarito" && r["kind"]=="MISOCP" && r["status"]=="supported_runtime_verified",caps)
+@@ -264,2 +303,2 @@ function run_suite(configpath,out)
+-            elseif !relaxed && fid=="G3" && !gurobi && !pajsoc
+-                row["status"]="solver_unavailable";row["reason"]="native_MISOCP_unavailable; use complete tiny enumeration reference"
++            elseif !relaxed && fid=="G3" && !gurobi
++                row["status"]="numerical_inconclusive";row["reason"]="selected_native_Gurobi_G3_backend_unavailable"
+@@ -269 +308 @@ function run_suite(configpath,out)
+-                    opt=fid in ("G0","G3") ? (relaxed ? Clarabel.Optimizer : fid=="G3" && gurobi ? Gurobi.Optimizer : pajarito_optimizer()) : HiGHS.Optimizer
++                    opt=fid in ("G0","G3") ? (relaxed ? Clarabel.Optimizer : fid=="G3" ? native_g3_optimizer() : pajarito_optimizer()) : HiGHS.Optimizer
+@@ -272 +311,4 @@ function run_suite(configpath,out)
+-                    if !relaxed && fid in ("G0","G3") && opt!==Gurobi.Optimizer && result["termination"]=="INFEASIBLE"
++                    if NativeG3Solver.is_native(opt) && get(result,"numerical_validation",nothing)!="passed"
++                        row["status"]="numerical_inconclusive";row["reason"]="native_G3_original_model_validation_failed_or_unavailable"
++                    end
++                    if !relaxed && fid in ("G0","G3") && result["termination"]=="INFEASIBLE"
+@@ -274 +316 @@ function run_suite(configpath,out)
+-                        row["reason"]="Pajarito_infeasibility_requires_independent_crosscheck_after_observed_false_infeasibility"
++                        row["reason"]="native_conic_infeasibility_requires_independent_crosscheck"
+@@ -279 +321 @@ function run_suite(configpath,out)
+-                    if JuMP.primal_status(pm.model)==JuMP.MOI.FEASIBLE_POINT
++                    if result["primal_status"]=="FEASIBLE_POINT"
+@@ -531,0 +574 @@ function compare(input,out)
++        get(r,"bound_certification",nothing)=="numerical_only_not_rigorous_currency_bound" && return nothing
+@@ -544,0 +588,4 @@ function compare(input,out)
++        if haskey(run,"bound_certification")
++            row["bound_certification"]=run["bound_certification"]
++            row["bound_source"]="unaccepted_native_numerical_bound"
++        end
+diff --git a/scripts/paper_a/NativeG3Solver.jl b/scripts/paper_a/NativeG3Solver.jl
+new file mode 100644
+index 0000000..7eadba1
+--- /dev/null
++++ b/scripts/paper_a/NativeG3Solver.jl
+@@ -0,0 +1,199 @@
++"""Finite-domain numerical guards for the native Paper-A G3 solver route."""
++module NativeG3Solver
++using JuMP
++import MosekTools, Gurobi
++const MOI = JuMP.MOI
++const MIN_CONSTRAINT_COEFFICIENT = 1e-9
++const MAX_COEFFICIENT = 2.0^40
++const MIN_OBJECTIVE_COEFFICIENT = 2.0^-8
++const PRIMAL_TOLERANCE = 1e-7
++
++struct NumericalInputError <: Exception
++    reason::String
++end
++Base.showerror(io::IO, e::NumericalInputError) = print(io, e.reason)
++
++mosek_options() = Dict{String,Any}(
++    "MSK_IPAR_NUM_THREADS"=>1, "MSK_DPAR_OPTIMIZER_MAX_TIME"=>120.,
++    "MSK_DPAR_MIO_TOL_REL_GAP"=>1e-8, "MSK_DPAR_MIO_TOL_ABS_GAP"=>1e-10,
++    "MSK_DPAR_MIO_TOL_FEAS"=>1e-8, "MSK_DPAR_MIO_TOL_ABS_RELAX_INT"=>1e-8,
++    "MSK_DPAR_INTPNT_CO_TOL_PFEAS"=>1e-10,
++    "MSK_DPAR_INTPNT_CO_TOL_DFEAS"=>1e-10,
++    "MSK_DPAR_INTPNT_CO_TOL_REL_GAP"=>1e-10)
++gurobi_options() = Dict{String,Any}("Threads"=>1,"TimeLimit"=>120.,"MIPGap"=>1e-8,
++    "FeasibilityTol"=>1e-8,"IntFeasTol"=>1e-8,"OptimalityTol"=>1e-9,"Seed"=>20261020,
++    "NonConvex"=>0)
++function optimizer(; backend=:gurobi, tighter_feasibility=false)
++    backend in (:gurobi,:mosek) || throw(ArgumentError("unknown native G3 backend"))
++    attrs=backend==:mosek ? mosek_options() : gurobi_options()
++    if tighter_feasibility
++        if backend==:mosek
++            attrs["MSK_DPAR_MIO_TOL_FEAS"]=5e-9
++            attrs["MSK_DPAR_INTPNT_CO_TOL_PFEAS"]=5e-11
++        else
++            attrs["FeasibilityTol"]=5e-9
++        end
++    end
++    return optimizer_with_attributes(backend==:mosek ? MosekTools.Optimizer : Gurobi.Optimizer, attrs...)
++end
++recorded_options(opt) = Dict(attr.name=>value for (attr,value) in opt.params if attr isa MOI.RawOptimizerAttribute)
++is_native(opt) = opt isa MOI.OptimizerWithAttributes && opt.optimizer_constructor in (MosekTools.Optimizer,Gurobi.Optimizer)
++backend_name(opt) = opt.optimizer_constructor === MosekTools.Optimizer ? "MOSEK" : "Gurobi"
++
++function configure_bridges!(model,opt)
++    if backend_name(opt)=="Gurobi"
++        # Keep the binary-rational RSOC model: the default variable rotation
++        # introduces rounded 1/sqrt(2) coefficients. The existing MOI bridge
++        # instead emits w^2 - 2*u*v <= 0 and u,v >= 0 using exact coefficients.
++        remove_bridge(model,MOI.Bridges.Variable.RSOCtoSOCBridge)
++        remove_bridge(model,MOI.Bridges.Constraint.RSOCtoSOCBridge)
++        add_bridge(model,MOI.Bridges.Constraint.RSOCtoNonConvexQuadBridge)
++    end
++    return
++end
++
++function prepare_backend!(model,opt)
++    backend_name(opt)=="Gurobi" || return Dict("status"=>"native_RSOC_supported")
++    MOI.Utilities.attach_optimizer(backend(model))
++    native=unsafe_backend(model)
++    # MOI's quadratic bridge emits nonnegativity as affine rows. Gurobi's
++    # convexity detector requires variable bounds; add only bounds proved by
++    # those exact existing rows. The feasible set is therefore unchanged.
++    proved=Set{MOI.VariableIndex}()
++    for ci in MOI.get(native,MOI.ListOfConstraintIndices{MOI.ScalarAffineFunction{Float64},MOI.GreaterThan{Float64}}())
++        f=MOI.get(native,MOI.ConstraintFunction(),ci);s=MOI.get(native,MOI.ConstraintSet(),ci)
++        length(f.terms)==1 && f.terms[1].coefficient==1. && f.constant==0. && s.lower==0. &&
++            push!(proved,f.terms[1].variable)
++    end
++    bounds=Dict(MOI.get(native,MOI.ConstraintFunction(),ci)=>ci for ci in
++        MOI.get(native,MOI.ListOfConstraintIndices{MOI.VariableIndex,MOI.GreaterThan{Float64}}()))
++    ledger=Any[]
++    for ci in MOI.get(native,MOI.ListOfConstraintIndices{MOI.ScalarQuadraticFunction{Float64},MOI.LessThan{Float64}}())
++        f=MOI.get(native,MOI.ConstraintFunction(),ci);s=MOI.get(native,MOI.ConstraintSet(),ci)
++        cross=filter(t->t.variable_1!=t.variable_2,f.quadratic_terms)
++        diag=filter(t->t.variable_1==t.variable_2,f.quadratic_terms)
++        length(cross)==1 && only(cross).coefficient==-2. && !isempty(diag) &&
++            all(t->t.coefficient==2.,diag) && isempty(f.affine_terms) && f.constant==0. && s.upper==0. ||
++            throw(NumericalInputError("unverified_native_rotated_quadratic_form"))
++        ends=(only(cross).variable_1,only(cross).variable_2)
++        for v in ends
++            v in proved || throw(NumericalInputError("native_RSOC_endpoint_nonnegativity_not_proved"))
++            if haskey(bounds,v)
++                old=MOI.get(native,MOI.ConstraintSet(),bounds[v]).lower
++                old<0. && MOI.set(native,MOI.ConstraintSet(),bounds[v],MOI.GreaterThan(0.))
++            else
++                bounds[v]=MOI.add_constraint(native,v,MOI.GreaterThan(0.))
++            end
++        end
++        push!(ledger,Dict("quadratic_constraint_index"=>ci.value,
++            "nonnegative_endpoint_indices"=>[v.value for v in ends],
++            "nonnegativity_proof"=>"existing_exact_1_times_variable_ge_0_affine_row",
++            "quad_form"=>"sum(w_squared)-2*u*v<=0; exact coefficients"))
++    end
++    return Dict("status"=>"exact_RSOC_quadratic_bridge_with_proved_redundant_bounds",
++        "cones"=>length(ledger),"ledger"=>ledger,"nonconvex_parameter"=>0)
++end
++
++function input_range(model)
++    magnitudes = Float64[]
++    for (F, S) in list_of_constraint_types(model)
++        S <: MOI.PositiveSemidefiniteConeTriangle && throw(NumericalInputError("native_G3_route_does_not_qualify_MISDP"))
++        for constraint in all_constraints(model, F, S)
++            object=constraint_object(constraint);f=object.func
++            if object.set isa MOI.Interval
++                s=object.set
++                isfinite(s.lower) && isfinite(s.upper) && isfinite(s.upper-s.lower) &&
++                    Rational{BigInt}(s.upper-s.lower)==Rational{BigInt}(s.upper)-Rational{BigInt}(s.lower) ||
++                    throw(NumericalInputError("inexact_native_range_slack_width"))
++            end
++            expressions = f isa AbstractVector ? f : (f,)
++            for expression in expressions
++                if expression isa GenericAffExpr
++                    append!(magnitudes, (abs(c) for (c, _) in linear_terms(expression) if c != 0))
++                    isfinite(expression.constant) || throw(NumericalInputError("nonfinite_constraint_constant"))
++                elseif !(expression isa VariableRef || expression isa Real)
++                    throw(NumericalInputError("unsupported_native_G3_constraint_function"))
++                end
++            end
++        end
++    end
++    lo = minimum(magnitudes; init=Inf)
++    hi = maximum(magnitudes; init=0.)
++    all(isfinite, magnitudes) && lo >= MIN_CONSTRAINT_COEFFICIENT && hi <= MAX_COEFFICIENT ||
++        throw(NumericalInputError("native_G3_constraint_coefficient_range_outside_declared_domain: [$lo,$hi]"))
++    return Dict("minimum_nonzero_coefficient"=>isfinite(lo) ? lo : nothing,
++        "maximum_coefficient"=>hi, "coefficient_floor"=>MIN_CONSTRAINT_COEFFICIENT)
++end
++
++"""Scale the entire emitted affine objective by an exactly checked power of two.
++The existing rebase/division precedes this operation; its rounding is separate.
++"""
++function condition_objective(f::GenericAffExpr)
++    cs = [abs(c) for (c, _) in linear_terms(f) if c != 0]
++    all(isfinite, cs) && isfinite(f.constant) || throw(NumericalInputError("nonfinite_objective"))
++    lo = minimum(cs; init=Inf)
++    exponent = isfinite(lo) && lo < MIN_OBJECTIVE_COEFFICIENT ?
++        ceil(Int, log2(MIN_OBJECTIVE_COEFFICIENT) - log2(lo)) : 0
++    0 <= exponent <= 1023 || throw(NumericalInputError("objective_multiplier_out_of_range"))
++    multiplier = ldexp(1., exponent)
++    g = f * multiplier
++    # Checking the actual Float64 bits catches subnormal rounding and overflow.
++    original = Dict(v=>c for (c,v) in linear_terms(f))
++    isfinite(g.constant) && Rational{BigInt}(g.constant) == Rational{BigInt}(f.constant)*Rational{BigInt}(multiplier) ||
++        throw(NumericalInputError("inexact_or_nonfinite_objective_constant_scaling"))
++    for (c, v) in linear_terms(g)
++        isfinite(c) && Rational{BigInt}(c) == Rational{BigInt}(original[v])*Rational{BigInt}(multiplier) ||
++            throw(NumericalInputError("inexact_or_nonfinite_objective_term_scaling"))
++    end
++    largest = maximum((abs(c) for (c,_) in linear_terms(g)); init=0.)
++    smallest = minimum((abs(c) for (c,_) in linear_terms(g) if c != 0); init=Inf)
++    largest <= MAX_COEFFICIENT && abs(g.constant) <= MAX_COEFFICIENT && (!isfinite(smallest) || smallest >= MIN_OBJECTIVE_COEFFICIENT) ||
++        throw(NumericalInputError("conditioned_objective_outside_declared_range"))
++    return g, Dict("power_two_exponent"=>exponent, "multiplier"=>multiplier,
++        "minimum_nonzero_coefficient"=>isfinite(smallest) ? smallest : nothing,
++        "maximum_coefficient"=>largest, "exact_binary_scaling_verified"=>true)
++end
++
++function primal_check(model)
++    has_values(model) || return Dict("status"=>"no_primal_point", "tolerance"=>PRIMAL_TOLERANCE)
++    all(v->isfinite(value(v)), all_variables(model)) || return Dict("status"=>"nonfinite_primal_point")
++    residual = maximum(values(primal_feasibility_report(model; atol=0.)); init=0.)
++    polynomial=0.
++    for (F,S) in list_of_constraint_types(model)
++        S <: MOI.RotatedSecondOrderCone || continue
++        for ci in all_constraints(model,F,S)
++            y=value.(constraint_object(ci).func)
++            polynomial=max(polynomial,-y[1],-y[2],sum(abs2,y[3:end])-2*y[1]*y[2])
++        end
++    end
++    return Dict("status"=>max(residual,polynomial) <= PRIMAL_TOLERANCE ? "passed" : "failed_original_primal_check",
++        "maximum_constraint_distance"=>residual, "tolerance"=>PRIMAL_TOLERANCE,
++        "maximum_polynomial_RSOC_violation"=>polynomial,
++        "interpretation"=>"numerical_original_model_check_not_exact_feasibility")
++end
++
++function seed_primal_start!(model,opt)
++    backend_name(opt)=="Gurobi" || return Dict("status"=>"not_used")
++    # The default floating rotation is only a candidate-generating heuristic.
++    # Its bounds never enter the final result. The final optimizer uses the
++    # exact quadratic RSOC bridge, and independently re-solves the original set.
++    heuristic,mapping=copy_model(model)
++    set_optimizer(heuristic,opt)
++    set_optimizer_attribute(heuristic,"TimeLimit",30.)
++    set_silent(heuristic)
++    wall=@elapsed optimize!(heuristic)
++    check=primal_check(heuristic)
++    result=Dict{String,Any}("status"=>"no_valid_seed","heuristic_wall_s"=>wall,
++        "heuristic_termination"=>string(termination_status(heuristic)),
++        "original_primal_check"=>check,"heuristic_bound_used"=>false,
++        "heuristic_time_limit_s"=>30.,
++        "scope"=>"temporary_default_bridge_for_primal_start_only; no bound or model-equivalence acceptance")
++    if check["status"]=="passed"
++        values=[value(mapping[v]) for v in all_variables(model)]
++        for (v,x) in zip(all_variables(model),values);set_start_value(v,x);end
++        result["status"]="checked_primal_start_applied"
++        result["values_in_original_variable_order"]=values
++    end
++    return result
++end
++end
+diff --git a/scripts/paper_a/qualify_native_g3.jl b/scripts/paper_a/qualify_native_g3.jl
+new file mode 100644
+index 0000000..a30b783
+--- /dev/null
++++ b/scripts/paper_a/qualify_native_g3.jl
+@@ -0,0 +1,92 @@
++#= Fresh finite-domain G3 qualification; always use a new external output directory.
++Usage: julia --project=. scripts/paper_a/qualify_native_g3.jl REPO OUT PRIOR
++PRIOR is the hash-verified extracted A3.6 witness archive. No historical file is written.
++=#
++using JuMP, JSON, SHA
++import Mosek, Gurobi, Pkg
++include("AP3Pipeline.jl")
++const P=AP3Pipeline
++const MOI=JuMP.MOI
++const W=abspath(ARGS[1]);const R=P.newoutput(ARGS[2]);const A=abspath(ARGS[3])
++save(path,data)=open(io->JSON.print(io,data,2),path,"w")
++hash(path)=bytes2hex(sha256(read(path)))
++rows=Any[]
++function export_result(m,dir,row)
++    path=joinpath(dir,"solver_input.mof.json");write_to_file(m,path)
++    row["solver_input_sha256"]=hash(path)
++    open(io->print_active_bridges(io,m),joinpath(dir,"active_bridges.txt"),"w")
++    if has_values(m)
++        # MOF makes duplicate auxiliary names unique while retaining variable order.
++        serialized=JSON.parsefile(path)["variables"]
++        vs=all_variables(m);@assert length(vs)==length(serialized)
++        save(joinpath(dir,"point.json"),Dict(serialized[i]["name"]=>value(v) for (i,v) in enumerate(vs)))
++        row["point_sha256"]=hash(joinpath(dir,"point.json"))
++    end
++    if P.NativeG3Solver.is_native(get(row,"_optimizer",nothing))
++        if P.NativeG3Solver.backend_name(row["_optimizer"])=="MOSEK"
++            nativepath=joinpath(dir,"actual_backend.ptf")
++            Mosek.writedata(unsafe_backend(m).task,nativepath)
++        else
++            nativepath=joinpath(dir,"actual_backend.lp")
++            MOI.write_to_file(unsafe_backend(m),nativepath)
++            native=unsafe_backend(m)
++            filemodel=MOI.FileFormats.Model(;format=MOI.FileFormats.FORMAT_MOF)
++            native_map=MOI.copy_to(filemodel,native)
++            native_mof=joinpath(dir,"actual_backend.mof.json")
++            MOI.write_to_file(filemodel,native_mof)
++            native_doc=JSON.parsefile(native_mof)
++            native_names=Dict(v.value=>native_doc["variables"][native_map[v].value]["name"] for v in MOI.get(native,MOI.ListOfVariableIndices()))
++            cached=JSON.parsefile(path)["variables"]
++            save(joinpath(dir,"backend_variable_map.json"),Dict("cached_to_native"=>Dict(
++                cached[i]["name"]=>native_names[optimizer_index(v).value] for (i,v) in enumerate(all_variables(m))),
++                "native_index_to_name"=>Dict(string(k)=>v for (k,v) in native_names)))
++            if has_values(m)
++                save(joinpath(dir,"backend_point.json"),Dict(native_names[v.value]=>MOI.get(native,MOI.VariablePrimal(),v) for v in MOI.get(native,MOI.ListOfVariableIndices())))
++            end
++            row["actual_backend_mof_sha256"]=hash(native_mof)
++        end
++        row["native_backend_sha256"]=hash(nativepath)
++        row["native_backend_type"]=string(typeof(unsafe_backend(m)))
++    end
++    pop!(row,"_optimizer",nothing)
++end
++
++save(joinpath(R,"runtime.json"),Dict("julia"=>string(VERSION),"packages"=>Dict(p.name=>string(p.version) for p in values(Pkg.dependencies()) if p.version!==nothing)))
++root=joinpath(W,"reports/ap3_runs/20261020_macro/accepted_suite")
++for id in sort([basename(d) for d in readdir(root;join=true) if isdir(d)&&isfile(joinpath(d,"case.json"))])
++    source=joinpath(root,id)
++    raw,data,scope=P.prepare(joinpath(source,"case.json");registry=joinpath(source,"parameter_registry.csv"),scenarios=joinpath(source,"study_scenarios.toml"))
++    lp=P.build(data,P.FP.NoGSCR(),scope;relaxed=true);lpstats=P.solve!(lp,P.HiGHS.Optimizer)
++    save(joinpath(R,id*"_BASE_LP.json"),lpstats)
++    @assert lpstats["termination"]=="OPTIMAL" && lpstats["objective"]>0
++    for (mode,factor,fid) in [("production_costscale",1.,"G3"),("half_costscale",.5,"G3"),
++        ("double_costscale",2.,"G3"),("tighter_feasibility",1.,"G3"),("production_costscale",1.,"G0")]
++        println("BEGIN ",id," ",fid," ",mode);flush(stdout)
++        dir=joinpath(R,id*"_"*fid*"_"*mode);mkpath(dir)
++        pm=P.build(data,P.formulation(fid,Dict()),scope;relaxed=false)
++        original=joinpath(dir,"original_model.mof.json");write_to_file(pm.model,original)
++        optimizer=fid=="G3" ? P.NativeG3Solver.optimizer(;tighter_feasibility=mode=="tighter_feasibility") : P.pajarito_optimizer()
++        row=Dict{String,Any}("case_id"=>id,"formulation"=>fid,"mode"=>mode,"factor"=>factor,
++            "case_sha256"=>hash(joinpath(source,"case.json")),"original_model_sha256"=>hash(original),
++            "directory"=>basename(dir),"_optimizer"=>optimizer)
++        try
++            row["stats"]=P.solve!(pm,optimizer;objective_scale=factor*lpstats["objective"])
++            export_result(pm.model,dir,row)
++        catch e
++            row["error"]=sprint(showerror,e,catch_backtrace());pop!(row,"_optimizer",nothing)
++        end
++        push!(rows,row);save(joinpath(R,"results.json"),rows)
++        println("END ",id," ",mode," ",get(get(row,"stats",Dict()),"termination","ERROR"));flush(stdout)
++    end
++end
++
++# Run the literal historical default-coordinate model through the production route.
++dir=joinpath(R,"reference_24snap_G3_original_serialized_default");mkpath(dir)
++input=joinpath(A,"original_01/b1_exact_native.mof.json")
++@assert hash(input)=="fcd52695238591d6c6019385d64e4407e1ea480849ca4125e1191b992581ab07"
++m=read_from_file(input);optimizer=P.native_g3_optimizer()
++row=Dict{String,Any}("case_id"=>"reference_24snap","formulation"=>"G3",
++    "mode"=>"original_serialized_default","input_sha256"=>hash(input),
++    "directory"=>basename(dir),"_optimizer"=>optimizer,"objective_coordinate"=>"literal_serialized_normalized_objective")
++row["stats"]=P.solve!((model=m,),optimizer)
++export_result(m,dir,row);push!(rows,row);save(joinpath(R,"results.json"),rows)
+diff --git a/scripts/paper_a/verify_native_g3.py b/scripts/paper_a/verify_native_g3.py
+new file mode 100644
+index 0000000..0aa0e83
+--- /dev/null
++++ b/scripts/paper_a/verify_native_g3.py
+@@ -0,0 +1,266 @@
++"""Separate binary-rational oracle for qualify_native_g3.jl outputs.
++Usage: python verify_native_g3.py RUN EXTRACTED_A36_ARCHIVE
++Native numerical bounds are checked against exact feasible witnesses, never certified.
++"""
++import collections,copy,hashlib,itertools,json,pathlib,sys
++from fractions import Fraction as Q
++import numpy as np
++
++RUN=pathlib.Path(sys.argv[1]);PRIOR=pathlib.Path(sys.argv[2]);TOL=Q(1,10_000_000)
++def load(p):return json.loads(p.read_text())
++def affine(f):
++    if f['type']=='Variable':return {f['name']:Q(1)},Q(0)
++    assert f['type']=='ScalarAffineFunction'
++    a=collections.defaultdict(Q)
++    for t in f['terms']:a[t['variable']]+=Q(t['coefficient'])
++    return {n:v for n,v in a.items() if v},Q(f['constant'])
++def scalar(f,x):
++    if f['type']=='ScalarQuadraticFunction':
++        value=Q(f['constant'])+sum((Q(t['coefficient'])*x[t['variable']] for t in f['affine_terms']),Q(0))
++        return value+sum((Q(t['coefficient'])*x[t['variable_1']]*x[t['variable_2']]/(2 if t['variable_1']==t['variable_2'] else 1) for t in f['quadratic_terms']),Q(0))
++    a,c=affine(f);return c+sum((v*x[n] for n,v in a.items()),Q(0))
++def vector(f,x):
++    assert f['type']=='VectorAffineFunction'
++    y=list(map(Q,f['constants']))
++    for t in f['terms']:y[t['output_index']-1]+=Q(t['scalar_term']['coefficient'])*x[t['scalar_term']['variable']]
++    return y
++def determinant(a):
++    a=[row.copy() for row in a];v=Q(1)
++    for i in range(len(a)):
++        k=next((k for k in range(i,len(a)) if a[k][i]),None)
++        if k is None:return Q(0)
++        if k!=i:a[k],a[i]=a[i],a[k];v=-v
++        pivot=a[i][i];v*=pivot
++        for k in range(i+1,len(a)):
++            factor=a[k][i]/pivot
++            for j in range(i+1,len(a)):a[k][j]-=factor*a[i][j]
++    return v
++def check_point(m,point,exact_psd=False):
++    x={n:Q(v) for n,v in point.items()};maxima=collections.defaultdict(Q);counts=collections.Counter();psd_min=0.
++    for c in m['constraints']:
++        f,s=c['function'],c['set'];typ=s['type'];counts[typ]+=1
++        if typ=='RotatedSecondOrderCone':
++            y=vector(f,x);v=max(Q(0),-y[0],-y[1],sum((z*z for z in y[2:]),Q(0))-2*y[0]*y[1])
++        elif typ=='PositiveSemidefiniteConeTriangle':
++            y=vector(f,x);n=s['side_dimension'];a=[[Q(0)]*n for _ in range(n)];k=0
++            for j in range(n):
++                for i in range(j+1):a[i][j]=a[j][i]=y[k];k+=1
++            if exact_psd:
++                v=max([Q(0)]+[-determinant([[a[i][j] for j in sub] for i in sub]) for k in range(1,n+1) for sub in itertools.combinations(range(n),k)])
++            else:
++                eig=float(np.linalg.eigvalsh(np.array(a,dtype=float))[0]);psd_min=min(psd_min,eig);v=Q(max(0.,-eig))
++        else:
++            z=scalar(f,x)
++            if typ=='EqualTo':v=abs(z-Q(s['value']))
++            elif typ=='GreaterThan':v=max(Q(0),Q(s['lower'])-z)
++            elif typ=='LessThan':v=max(Q(0),z-Q(s['upper']))
++            elif typ=='Interval':v=max(Q(0),Q(s['lower'])-z,z-Q(s['upper']))
++            elif typ=='Integer':v=abs(z-round(z))
++            elif typ=='ZeroOne':v=min(abs(z),abs(z-1))
++            else:raise ValueError(typ)
++        maxima[typ]=max(maxima[typ],v)
++    return dict(counts=dict(counts),residuals={k:dict(exact=str(v),display=float(v)) for k,v in maxima.items()},
++        numerical_pass=all(v<=TOL for v in maxima.values()),exact_pass=all(v==0 for v in maxima.values()),
++        minimum_psd_eigenvalue_numeric=psd_min,objective_exact=str(scalar(m['objective']['function'],x)))
++def key(c):
++    f=c['function'];s=c['set']
++    if f['type'] in ['Variable','ScalarAffineFunction']:
++        a,k=affine(f);fun=('affine',tuple(sorted((n,str(v)) for n,v in a.items())),str(k))
++    else:
++        fun=('vector',tuple(sorted((t['output_index'],t['scalar_term']['variable'],str(Q(t['scalar_term']['coefficient']))) for t in f['terms'])),tuple(str(Q(v)) for v in f['constants']))
++    return fun,json.dumps(s,sort_keys=True)
++def rows(m):return collections.Counter(key(c) for c in m['constraints'])
++def linear_key(a,sense,rhs):
++    a={n:v for n,v in a.items() if v}
++    if a and a[sorted(a)[0]]<0:
++        a={n:-v for n,v in a.items()};rhs=-rhs;sense={'le':'ge','ge':'le','eq':'eq'}[sense]
++    return tuple(sorted((n,str(v)) for n,v in a.items())),sense,str(rhs)
++def linear_rows(m,rename=None):
++    out=collections.Counter();rename=rename or {}
++    for c in m['constraints']:
++        f,s=c['function'],c['set'];typ=s['type']
++        if f['type'] not in ['Variable','ScalarAffineFunction'] or typ in ['Integer','ZeroOne']:continue
++        a,k=affine(f);a={rename.get(n,n):v for n,v in a.items()}
++        pairs=[]
++        if typ=='EqualTo':pairs=[('le',Q(s['value'])-k),('ge',Q(s['value'])-k)]
++        elif typ=='Interval':pairs=[('ge',Q(s['lower'])-k),('le',Q(s['upper'])-k)]
++        elif typ=='GreaterThan':pairs=[('ge',Q(s['lower'])-k)]
++        elif typ=='LessThan':pairs=[('le',Q(s['upper'])-k)]
++        else:raise ValueError(typ)
++        for sense,rhs in pairs:
++            if not a and ((sense=='ge' and rhs<=0) or (sense=='le' and rhs>=0)):continue
++            out[linear_key(a,sense,rhs)]+=1
++    return out
++def backend_identity(cached,native,mapping):
++    rename=mapping['cached_to_native'];before=linear_rows(cached,rename);after=linear_rows(native)
++    eqs=set()
++    for c in native['constraints']:
++        if c['function']['type'] in ['Variable','ScalarAffineFunction'] and c['set']['type']=='EqualTo':
++            a,k=affine(c['function']);eqs.add(linear_key(a,'eq',Q(c['set']['value'])-k))
++    # The standard MOI SlackBridge represents l<=f(x)<=u by f(x)=z,
++    # z in [l,u]. Check the actual endpoints and linking equation exactly.
++    range_aux=set()
++    for c in cached['constraints']:
++        if c['set']['type']!='Interval' or c['function']['type']=='Variable':continue
++        a,k=affine(c['function']);a={rename[n]:v for n,v in a.items()}
++        matched=None
++        for bound in native['constraints']:
++            if bound['function']['type']!='Variable' or bound['set']!=c['set']:continue
++            z=bound['function']['name']
++            if z in rename.values() or z in range_aux:continue
++            link=dict(a);link[z]=-1
++            if linear_key(link,'eq',-k) in eqs:matched=(z,bound,link);break
++        assert matched is not None,'native interval slack is not an exact projection'
++        z,bound,link=matched;range_aux.add(z)
++        before.subtract(linear_rows({'constraints':[c]},rename))
++        before.update(linear_rows({'constraints':[bound]}))
++        for sense in ['le','ge']:before[linear_key(link,sense,-k)]+=1
++    assert not before-after,'physical linear row lost in actual backend'
++    remaining=after-before
++    original_int={(rename[c['function']['name']],c['set']['type']) for c in cached['constraints'] if c['set']['type'] in ['Integer','ZeroOne']}
++    native_int={(c['function']['name'],c['set']['type']) for c in native['constraints'] if c['set']['type'] in ['Integer','ZeroOne']}
++    assert original_int==native_int,'integer domain changed'
++    ca,cc=affine(cached['objective']['function']);na,nc=affine(native['objective']['function'])
++    assert {rename[n]:v for n,v in ca.items()}==na and cc==nc,'backend objective changed'
++    quadratics=[]
++    for c in native['constraints']:
++        f,s=c['function'],c['set']
++        if f['type']!='ScalarQuadraticFunction':continue
++        assert s['type']=='LessThan' and Q(s['upper'])==0 and Q(f['constant'])==0 and not f['affine_terms']
++        cross=[t for t in f['quadratic_terms'] if t['variable_1']!=t['variable_2']]
++        diag=[t for t in f['quadratic_terms'] if t['variable_1']==t['variable_2']]
++        assert len(cross)==len(diag)==1 and Q(cross[0]['coefficient'])==-2 and Q(diag[0]['coefficient'])==2
++        quadratics.append((cross[0]['variable_1'],cross[0]['variable_2'],diag[0]['variable_1']))
++    cones=[c for c in cached['constraints'] if c['set']['type']=='RotatedSecondOrderCone']
++    assert len(cones)==len(quadratics)
++    used=set();aux=set()
++    for cone in cones:
++        f=cone['function'];assert f['type']=='VectorAffineFunction' and len(f['constants'])==3
++        components=[]
++        for i in range(3):
++            a=collections.defaultdict(Q)
++            for t in f['terms']:
++                if t['output_index']==i+1:a[rename[t['scalar_term']['variable']]]+=Q(t['scalar_term']['coefficient'])
++            components.append((dict(a),Q(f['constants'][i])))
++        matched=None
++        for j,triple in enumerate(quadratics):
++            if j in used:continue
++            for trial in [triple,(triple[1],triple[0],triple[2])]:
++                links=[]
++                for (a,c),var in zip(components,trial):
++                    b=dict(a);b[var]=b.get(var,Q(0))-1
++                    links.append((b,-c))
++                if all(linear_key(a,'eq',rhs) in eqs for a,rhs in links):matched=(j,trial,links);break
++            if matched:break
++        assert matched is not None,'RSOC-to-quadratic link not exact'
++        j,triple,links=matched;used.add(j);aux.update(triple)
++        for a,rhs in links:
++            for sense in ['ge','le']:remaining[linear_key(a,sense,rhs)]-=1
++        for var in triple[:2]:
++            assert after[linear_key({var:Q(1)},'ge',Q(0))]>0
++    allowed={linear_key({v:Q(1)},'ge',Q(0)) for j in used for v in quadratics[j][:2]}
++    assert all(v>=0 for v in remaining.values())
++    assert all(k in allowed for k,v in remaining.items() if v),'unexplained actual backend constraint'
++    assert {v['name'] for v in native['variables']}-set(rename.values())==aux|range_aux
++    return dict(exact_linear_integer_objective_and_RSOC_projection_verified=True,
++        exact_quadratic_cones=len(cones),rounded_RSOC_rotation_used=False,
++        exact_interval_slack_variables=len(range_aux),
++        redundant_endpoint_bounds_proved_by_existing_nonnegative_rows=True)
++def projection(original,solver):
++    before=rows(original);after=rows(solver)
++    assert not before-after,'original constraint lost or changed'
++    extras=after-before
++    old={v['name'] for v in original['variables']};new={v['name'] for v in solver['variables']}-old
++    mapping={};lower={}
++    for c in original['constraints']:
++        if c['function']['type']=='Variable' and c['set']['type']=='GreaterThan':lower[c['function']['name']]=Q(c['set']['lower'])
++    for c in solver['constraints']:
++        k=key(c)
++        if not extras[k]:continue
++        extras[k]-=1;f,s=c['function'],c['set']
++        if s['type']=='GreaterThan':
++            assert f['type']=='Variable' and f['name'] in new and Q(s['lower'])==0
++        else:
++            assert s['type']=='EqualTo';a,c0=affine(f);zs=set(a)&new
++            assert len(zs)==1 and len(a)==2
++            z=next(iter(zs));x=next(iter(set(a)-{z}));assert x in old and -a[x]/a[z]==1
++            offset=(Q(s['value'])-c0)/a[z]
++            assert x in lower and lower[x]+offset>=0
++            mapping[z]=(x,offset)
++    assert set(mapping)==new
++    return mapping
++def eliminate(f,mapping):
++    a,c=affine(f)
++    for z,(x,offset) in mapping.items():
++        coefficient=a.pop(z,Q(0));a[x]=a.get(x,Q(0))+coefficient;c+=coefficient*offset
++    return {n:v for n,v in a.items() if v},c
++
++results=[]
++for row in load(RUN/'results.json'):
++    dr=RUN/row['directory'];out={k:row[k] for k in ['case_id','formulation','mode','directory']}
++    if 'error' in row:out['error']=row['error'];results.append(out);continue
++    literal=row['mode']=='original_serialized_default'
++    original=load(PRIOR/'original_01/b1_exact_native.mof.json') if literal else load(dr/'original_model.mof.json')
++    if not literal:
++        reference=load(PRIOR/'model_inclusion'/f"{row['case_id']}_{row['formulation']}.mof.json")
++        out['physical_model_identical_to_certificate_input']=rows(original)==rows(reference) and affine(original['objective']['function'])==affine(reference['objective']['function'])
++        assert out['physical_model_identical_to_certificate_input']
++    solver=load(dr/'solver_input.mof.json');mapping=projection(original,solver)
++    out['exact_projection_identity_verified']=True;out['auxiliary_increment_variables']=len(mapping)
++    p=dr/'point.json'
++    if p.exists():
++        point=load(p)
++        out['original_primal']=check_point(original,point)
++        out['solver_input_primal']=check_point(solver,point)
++        iv=next(c['function']['name'] for c in original['constraints'] if c['set']['type']=='Integer')
++        bad=dict(point);bad[iv]+=0.5
++        assert not check_point(original,bad)['numerical_pass']
++        out['negative_integer_mutation_rejected']=True
++    nativefile=dr/'actual_backend.mof.json'
++    if nativefile.exists():
++        native=load(nativefile);vmap=load(dr/'backend_variable_map.json')
++        out['actual_backend_identity']=backend_identity(solver,native,vmap)
++        if (dr/'backend_point.json').exists():out['actual_backend_primal']=check_point(native,load(dr/'backend_point.json'))
++    witness=load(PRIOR/'exact_primals'/f"{row['case_id']}_{'native_point' if literal else 'point'}.json")
++    w={n:Q(v) for n,v in witness.items()}
++    for z,(x,offset) in mapping.items():w[z]=w[x]+offset
++    exact=check_point(solver,w,exact_psd=True);assert exact['exact_pass']
++    out['historical_exact_witness_still_feasible']=True
++    stats=row['stats'];mult=Q(stats.get('objective_conditioning',{}).get('multiplier',1))
++    seed=stats.get('primal_start_strategy',{})
++    if seed.get('status')=='checked_primal_start_applied':
++        assert seed['heuristic_bound_used'] is False
++        seedpoint={v['name']:x for v,x in zip(solver['variables'],seed['values_in_original_variable_order'])}
++        out['heuristic_seed_original_primal']=check_point(solver,seedpoint)
++        out['heuristic_bound_used']=False
++    scale=Q(stats.get('objective_requested_divisor',stats['objective_solver_scaling']))
++    a,c=eliminate(solver['objective']['function'],mapping);oa,oc=affine(original['objective']['function'])
++    delta={n:a.get(n,Q(0))*scale/mult-oa.get(n,Q(0)) for n in set(a)|set(oa)}
++    delta={n:v for n,v in delta.items() if v};dc=c*scale/mult-oc
++    out['actual_objective_coordinate_delta']=dict(constant=str(dc),coefficients={n:str(v) for n,v in delta.items()},
++        at_exact_witness=str(dc+sum((v*w[n] for n,v in delta.items()),Q(0))),
++        native_currency_bound_rigorously_certified=False)
++    if 'bound_backend_numerical' in stats and stats['bound_backend_numerical'] is not None:
++        excess=Q(stats['bound_backend_numerical'])-Q(exact['objective_exact'])
++        out['native_bound_minus_exact_feasible_backend_objective']=str(excess)
++        out['native_bound_contradiction']=excess>0
++    out['termination']=stats['termination'];out['primal_status']=stats['primal_status']
++    results.append(out)
++
++# Global validity of this RSOC dual cut is analytic; perturbations must be rejected.
++def in_dual(y):return y[0]>=0 and y[1]>=0 and 2*y[0]*y[1]>=y[2]*y[2]
++y=list(map(Q,[1,1,-1]));assert in_dual(y)
++assert not in_dual(list(map(Q,[-1,1,-1])))
++assert not in_dual(list(map(Q,[0,1,-1])))
++assert not in_dual(list(map(Q,[1,1,-2])))
++assert sum(a*b for a,b in zip([1,1,-2],[1,2,2]))<0
++assert sum(a*b for a,b in zip(y,[0,0,0]))<1 # inconsistent positive RHS invalid at cone origin
++assert all(Q(float(v)*2.**33)==v*2**33 for v in y)
++out=dict(results=results,original_tolerance_exact=str(TOL),
++    adversarial_dual_sign_missing_term_and_rhs_rejected=True,
++    global_internal_vendor_cut_certificate_available=False,
++    exact_currency_or_global_integer_optimality_claimed=False)
++(RUN/'independent_verification.json').write_text(json.dumps(out,indent=2),encoding='utf-8')
++print('verified',len(results),'models; original/solver point checks and exact witness/coordinate checks')
++print('numerical failures',[(a['case_id'],a['mode']) for a in results if not a.get('original_primal',{}).get('numerical_pass')])
++print('native bound contradictions',[(a['case_id'],a['mode']) for a in results if a.get('native_bound_contradiction')])
+diff --git a/test/paper_a_native_g3_solver.jl b/test/paper_a_native_g3_solver.jl
+new file mode 100644
+index 0000000..13149c2
+--- /dev/null
++++ b/test/paper_a_native_g3_solver.jl
+@@ -0,0 +1,66 @@
++using Test, JuMP
++include("../scripts/paper_a/AP3Pipeline.jl")
++const P = AP3Pipeline
++const N = P.NativeG3Solver
++
++@testset "Native G3 finite-domain numerical guards" begin
++    m=Model();@variable(m,x>=0)
++    f=3.7524903900502144e-9*x + 2.178606398164727e-15
++    g,meta=N.condition_objective(f)
++    @test meta["power_two_exponent"] == 20
++    @test Rational{BigInt}(coefficient(g,x)) == Rational{BigInt}(coefficient(f,x))*2^20
++    @test Rational{BigInt}(g.constant) == Rational{BigInt}(f.constant)*2^20
++    @test N.is_native(P.native_g3_optimizer())
++    @test N.is_native(P.mosek_optimizer())
++    @test !N.is_native(P.pajarito_optimizer())
++    @test_throws N.NumericalInputError N.condition_objective(1e-300*x + 1e300)
++    @test_throws N.NumericalInputError N.condition_objective(1e-300*x + 1.)
++    ranged=Model();@variable(ranged,w)
++    @constraint(ranged,1e-20 <= w <= 1.)
++    @test_throws N.NumericalInputError N.input_range(ranged)
++
++    # A valid row at each historical threshold must be refused, never filtered.
++    for a in (4.5830185178677806e-11,1.2740476362167553e-13)
++        tiny=Model();@variable(tiny,z>=0,Int)
++        @constraint(tiny,a*z>=3.025002202302713e-8);@objective(tiny,Min,z)
++        @test_throws N.NumericalInputError N.input_range(tiny)
++        result=P.solve!((model=tiny,),P.native_g3_optimizer())
++        @test result["termination"] == "OPTIMIZE_NOT_CALLED"
++        @test result["numerical_validation"] == "rejected_input"
++        @test result["bound"] === nothing
++    end
++
++    # The exact integer optimum is five; the physical objective stays tiny.
++    native=Model();@variable(native,0<=z<=10,Int);@variable(native,y==1)
++    @constraint(native,[z,y,3.] in RotatedSecondOrderCone())
++    @objective(native,Min,3.7524903900502144e-9*z + 2.178606398164727e-15)
++    result=P.solve!((model=native,),P.native_g3_optimizer())
++    @test result["termination"] == "OPTIMAL"
++    @test result["numerical_validation"] == "passed"
++    @test value(z) == 5.
++    @test result["objective"] ≈ 5*3.7524903900502144e-9+2.178606398164727e-15 atol=1e-20 rtol=1e-12
++    @test result["objective_conditioning"]["exact_binary_scaling_verified"]
++    @test result["bound_certification"] == "numerical_only_not_rigorous_currency_bound"
++    @test result["native_bridge_validation"]["cones"] == 1
++    @test result["native_bridge_validation"]["nonconvex_parameter"] == 0
++    @test result["primal_start_strategy"]["status"] == "checked_primal_start_applied"
++    @test result["primal_start_strategy"]["heuristic_bound_used"] === false
++    bridges=sprint(print_active_bridges,native)
++    @test occursin("RSOCtoNonConvexQuadBridge",bridges)
++    @test !occursin("RSOCtoSOCBridge",bridges)
++    actual=unsafe_backend(native)
++    for item in result["native_bridge_validation"]["ledger"],idx in item["nonnegative_endpoint_indices"]
++        ci=JuMP.MOI.ConstraintIndex{JuMP.MOI.VariableIndex,JuMP.MOI.GreaterThan{Float64}}(idx)
++        @test JuMP.MOI.get(actual,JuMP.MOI.ConstraintSet(),ci).lower >= 0.
++    end
++    mktempdir() do root
++        input=joinpath(root,"input");mkdir(input)
++        P.writejson(joinpath(input,"runs.json"),Dict("runs"=>[Dict("case_id"=>"guard",
++            "formulation"=>"G3","relaxed"=>false,"status"=>"numerical_inconclusive",
++            "objective"=>5.,"bound"=>5.,"bound_certification"=>result["bound_certification"])]))
++        comparison=only(P.compare(input,joinpath(root,"comparison")))
++        @test comparison["effective_global_lower_bound"] === nothing
++        @test !comparison["original_currency_bound_gap_pass"]
++        @test comparison["bound_source"] == "unaccepted_native_numerical_bound"
++    end
++end

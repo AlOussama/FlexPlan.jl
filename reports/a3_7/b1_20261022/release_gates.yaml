@@ -1,0 +1,17 @@
+m2_implementation_verdict: correction_ready_for_independent_reaudit
+specification_status: SPECIFICATION_READY
+science_amendment_approved: false
+owner_ratification: pending
+production_correction_A3_6_scoped_accepted: true
+m2_new_correction_independent_reaudit: pending
+B1_repaired: false
+native_G3_MISOCP: numerical_inconclusive
+m2_technical_candidate_for_reaudit: true
+integer_bounds_proved: true
+integer_bounds_scope: nine_inherited_normalized_binary_rational_intervals_only
+integer_optimality_proved: false
+integer_globality: case_specific_partial
+independent_A3_5_accepted: false
+A3_closed: false
+AP4_ready: false
+empirical_study_ready: false
