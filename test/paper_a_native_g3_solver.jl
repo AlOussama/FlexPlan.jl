@@ -10,6 +10,7 @@ const N = P.NativeG3Solver
     @test meta["power_two_exponent"] == 20
     @test Rational{BigInt}(coefficient(g,x)) == Rational{BigInt}(coefficient(f,x))*2^20
     @test Rational{BigInt}(g.constant) == Rational{BigInt}(f.constant)*2^20
+    @test N.is_native(P.native_g3_optimizer())
     @test N.is_native(P.mosek_optimizer())
     @test !N.is_native(P.pajarito_optimizer())
     @test_throws N.NumericalInputError N.condition_objective(1e-300*x + 1e300)
@@ -20,7 +21,7 @@ const N = P.NativeG3Solver
         tiny=Model();@variable(tiny,z>=0,Int)
         @constraint(tiny,a*z>=3.025002202302713e-8);@objective(tiny,Min,z)
         @test_throws N.NumericalInputError N.input_range(tiny)
-        result=P.solve!((model=tiny,),P.mosek_optimizer())
+        result=P.solve!((model=tiny,),P.native_g3_optimizer())
         @test result["termination"] == "OPTIMIZE_NOT_CALLED"
         @test result["numerical_validation"] == "rejected_input"
         @test result["bound"] === nothing
@@ -30,7 +31,7 @@ const N = P.NativeG3Solver
     native=Model();@variable(native,0<=z<=10,Int);@variable(native,y==1)
     @constraint(native,[z,y,3.] in RotatedSecondOrderCone())
     @objective(native,Min,3.7524903900502144e-9*z + 2.178606398164727e-15)
-    result=P.solve!((model=native,),P.mosek_optimizer())
+    result=P.solve!((model=native,),P.native_g3_optimizer())
     @test result["termination"] == "OPTIMAL"
     @test result["numerical_validation"] == "passed"
     @test value(z) == 5.

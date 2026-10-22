@@ -1,7 +1,7 @@
 """Finite-domain numerical guards for the native Paper-A G3 solver route."""
 module NativeG3Solver
 using JuMP
-import MosekTools
+import MosekTools, Gurobi
 const MOI = JuMP.MOI
 const MIN_CONSTRAINT_COEFFICIENT = 1e-9
 const MAX_COEFFICIENT = 2.0^40
@@ -13,23 +13,31 @@ struct NumericalInputError <: Exception
 end
 Base.showerror(io::IO, e::NumericalInputError) = print(io, e.reason)
 
-options() = Dict{String,Any}(
+mosek_options() = Dict{String,Any}(
     "MSK_IPAR_NUM_THREADS"=>1, "MSK_DPAR_OPTIMIZER_MAX_TIME"=>120.,
     "MSK_DPAR_MIO_TOL_REL_GAP"=>1e-8, "MSK_DPAR_MIO_TOL_ABS_GAP"=>1e-10,
     "MSK_DPAR_MIO_TOL_FEAS"=>1e-8, "MSK_DPAR_MIO_TOL_ABS_RELAX_INT"=>1e-8,
     "MSK_DPAR_INTPNT_CO_TOL_PFEAS"=>1e-10,
     "MSK_DPAR_INTPNT_CO_TOL_DFEAS"=>1e-10,
     "MSK_DPAR_INTPNT_CO_TOL_REL_GAP"=>1e-10)
-function optimizer(; tighter_feasibility=false)
-    attrs=options()
+gurobi_options() = Dict{String,Any}("Threads"=>1,"TimeLimit"=>120.,"MIPGap"=>1e-8,
+    "FeasibilityTol"=>1e-8,"IntFeasTol"=>1e-8,"OptimalityTol"=>1e-9,"Seed"=>20261020)
+function optimizer(; backend=:gurobi, tighter_feasibility=false)
+    backend in (:gurobi,:mosek) || throw(ArgumentError("unknown native G3 backend"))
+    attrs=backend==:mosek ? mosek_options() : gurobi_options()
     if tighter_feasibility
-        attrs["MSK_DPAR_MIO_TOL_FEAS"]=5e-9
-        attrs["MSK_DPAR_INTPNT_CO_TOL_PFEAS"]=5e-11
+        if backend==:mosek
+            attrs["MSK_DPAR_MIO_TOL_FEAS"]=5e-9
+            attrs["MSK_DPAR_INTPNT_CO_TOL_PFEAS"]=5e-11
+        else
+            attrs["FeasibilityTol"]=5e-9
+        end
     end
-    return optimizer_with_attributes(MosekTools.Optimizer, attrs...)
+    return optimizer_with_attributes(backend==:mosek ? MosekTools.Optimizer : Gurobi.Optimizer, attrs...)
 end
 recorded_options(opt) = Dict(attr.name=>value for (attr,value) in opt.params if attr isa MOI.RawOptimizerAttribute)
-is_native(opt) = opt isa MOI.OptimizerWithAttributes && opt.optimizer_constructor === MosekTools.Optimizer
+is_native(opt) = opt isa MOI.OptimizerWithAttributes && opt.optimizer_constructor in (MosekTools.Optimizer,Gurobi.Optimizer)
+backend_name(opt) = opt.optimizer_constructor === MosekTools.Optimizer ? "MOSEK" : "Gurobi"
 
 function input_range(model)
     magnitudes = Float64[]

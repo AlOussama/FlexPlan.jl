@@ -2,7 +2,8 @@ module AP3Pipeline
 using LinearAlgebra, JuMP
 import FlexPlan as FP, PowerModels as PM, HiGHS, Clarabel, Gurobi, Pajarito, JSON, SHA, TOML, CSV, Pkg
 include("NativeG3Solver.jl")
-mosek_optimizer() = NativeG3Solver.optimizer()
+mosek_optimizer() = NativeG3Solver.optimizer(;backend=:mosek)
+native_g3_optimizer() = NativeG3Solver.optimizer()
 const D=FP.PaperADiagnostics
 const SCHEMA=D.SCHEMA
 const SEED=20261020
@@ -142,7 +143,7 @@ function solve!(pm,optimizer;objective_scale=nothing)
             return Dict{String,Any}("termination"=>"OPTIMIZE_NOT_CALLED","primal_status"=>"NO_SOLUTION",
                 "dual_status"=>"NO_SOLUTION","objective"=>nothing,"bound"=>nothing,"relative_gap"=>nothing,
                 "numerical_validation"=>"rejected_input","numerical_reason"=>sprint(showerror,e),
-                "solver"=>"MOSEK","solve_wall_s"=>0.,"model"=>modelstats(m))
+                "solver"=>NativeG3Solver.backend_name(optimizer),"solve_wall_s"=>0.,"model"=>modelstats(m))
         end
     end
     JuMP.set_objective_function(m,emitted_objective)
@@ -162,7 +163,7 @@ function solve!(pm,optimizer;objective_scale=nothing)
         bound=safe(()->JuMP.dual_objective_value(m)*effective_scale)
     end
     gap=obj isa Real && bound isa Real && isfinite(bound) ? abs(obj-bound)/max(1.,abs(obj)) : nothing
-    result=Dict{String,Any}("termination"=>string(JuMP.termination_status(m)),"primal_status"=>string(JuMP.primal_status(m)),"dual_status"=>string(JuMP.dual_status(m)),"objective"=>obj,"objective_solver_scaling"=>effective_scale,"bound"=>bound,"relative_gap"=>gap,"raw_solver_relative_gap"=>nonnegative(()->JuMP.relative_gap(m)),"solve_wall_s"=>wall,"solver_time_s"=>nonnegative(()->JuMP.solve_time(m)),"solver"=>JuMP.solver_name(m),"optimizer_configuration"=>native_g3 ? "MOSEK: native G3, exact power-of-two objective conditioning; recorded options" : optimizer===HiGHS.Optimizer ? "HiGHS: threads=1,seed=20261020,mip_rel_gap=1e-8,time_limit=120s" : optimizer===Clarabel.Optimizer ? "Clarabel: tol_gap_abs=tol_gap_rel=tol_feas=1e-10,max_iter=300,objective_scaled_by_recorded_positive_factor" : "Pajarito: iterative,HiGHS+Clarabel,tol_rel_gap=tol_feas=1e-7,tol_abs_gap=1e-8,time_limit=120s,iteration_limit=100","barrier_iterations"=>nonnegative(()->JuMP.barrier_iterations(m)),"simplex_iterations"=>nonnegative(()->JuMP.simplex_iterations(m)),"nodes"=>nonnegative(()->JuMP.node_count(m)),"model"=>modelstats(m))
+    result=Dict{String,Any}("termination"=>string(JuMP.termination_status(m)),"primal_status"=>string(JuMP.primal_status(m)),"dual_status"=>string(JuMP.dual_status(m)),"objective"=>obj,"objective_solver_scaling"=>effective_scale,"bound"=>bound,"relative_gap"=>gap,"raw_solver_relative_gap"=>nonnegative(()->JuMP.relative_gap(m)),"solve_wall_s"=>wall,"solver_time_s"=>nonnegative(()->JuMP.solve_time(m)),"solver"=>JuMP.solver_name(m),"optimizer_configuration"=>native_g3 ? NativeG3Solver.backend_name(optimizer)*": native G3, exact power-of-two objective conditioning; recorded options" : optimizer===HiGHS.Optimizer ? "HiGHS: threads=1,seed=20261020,mip_rel_gap=1e-8,time_limit=120s" : optimizer===Clarabel.Optimizer ? "Clarabel: tol_gap_abs=tol_gap_rel=tol_feas=1e-10,max_iter=300,objective_scaled_by_recorded_positive_factor" : "Pajarito: iterative,HiGHS+Clarabel,tol_rel_gap=tol_feas=1e-7,tol_abs_gap=1e-8,time_limit=120s,iteration_limit=100","barrier_iterations"=>nonnegative(()->JuMP.barrier_iterations(m)),"simplex_iterations"=>nonnegative(()->JuMP.simplex_iterations(m)),"nodes"=>nonnegative(()->JuMP.node_count(m)),"model"=>modelstats(m))
     if native_g3
         check=NativeG3Solver.primal_check(m)
         merge!(result,Dict("objective_requested_divisor"=>scale,"objective_conditioning"=>conditioning,
@@ -263,7 +264,7 @@ function run_suite(configpath,out)
     cfg=readjson(configpath);out=newoutput(out);writejson(joinpath(out,"provenance.json"),provenance())
     cp(configpath,joinpath(out,"suite_config.json"))
     caps=capability_probe();writejson(joinpath(out,"capabilities.json"),caps)
-    mosek=any(r->r["solver"]=="MOSEK" && r["status"]=="supported_runtime_verified",caps)
+    gurobi=any(r->r["solver"]=="Gurobi" && r["status"]=="supported_runtime_verified",caps)
     pajsdp=any(r->r["solver"]=="Pajarito" && r["kind"]=="MISDP" && r["status"]=="supported_runtime_verified",caps)
     runs=Any[]
     for item in cfg["cases"]
@@ -292,12 +293,12 @@ function run_suite(configpath,out)
             name=fid*(relaxed ? "_continuous" : "_integer");row["solution_file"]="$id/$name.json"
             if !relaxed && fid=="G0" && !pajsdp
                 row["status"]="solver_unsupported";row["reason"]="no_native_MISDP; complete finite enumeration separately verified on tiny bounded fixture"
-            elseif !relaxed && fid=="G3" && !mosek
-                row["status"]="numerical_inconclusive";row["reason"]="selected_native_MOSEK_G3_backend_unavailable"
+            elseif !relaxed && fid=="G3" && !gurobi
+                row["status"]="numerical_inconclusive";row["reason"]="selected_native_Gurobi_G3_backend_unavailable"
             else
                 try
                     compile=@elapsed pm=build(data,formulation(fid,p),scope;relaxed)
-                    opt=fid in ("G0","G3") ? (relaxed ? Clarabel.Optimizer : fid=="G3" ? mosek_optimizer() : pajarito_optimizer()) : HiGHS.Optimizer
+                    opt=fid in ("G0","G3") ? (relaxed ? Clarabel.Optimizer : fid=="G3" ? native_g3_optimizer() : pajarito_optimizer()) : HiGHS.Optimizer
                     result=solve!(pm,opt;objective_scale=fid in ("G0","G3") ? baseline_scale : nothing);merge!(row,result);row["build_wall_s"]=compile
                     row["status"]=result["termination"]=="OPTIMAL" ? "optimal" : result["termination"]=="INFEASIBLE" ? "infeasible" : "numerical_inconclusive"
                     if NativeG3Solver.is_native(opt) && get(result,"numerical_validation",nothing)!="passed"

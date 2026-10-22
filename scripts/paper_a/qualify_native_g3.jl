@@ -3,9 +3,10 @@ Usage: julia --project=. scripts/paper_a/qualify_native_g3.jl REPO OUT PRIOR
 PRIOR is the hash-verified extracted A3.6 witness archive. No historical file is written.
 =#
 using JuMP, JSON, SHA
-import Mosek, Pkg
+import Mosek, Gurobi, Pkg
 include("AP3Pipeline.jl")
 const P=AP3Pipeline
+const MOI=JuMP.MOI
 const W=abspath(ARGS[1]);const R=P.newoutput(ARGS[2]);const A=abspath(ARGS[3])
 save(path,data)=open(io->JSON.print(io,data,2),path,"w")
 hash(path)=bytes2hex(sha256(read(path)))
@@ -21,8 +22,14 @@ function export_result(m,dir,row)
         row["point_sha256"]=hash(joinpath(dir,"point.json"))
     end
     if P.NativeG3Solver.is_native(get(row,"_optimizer",nothing))
-        Mosek.writedata(unsafe_backend(m).task,joinpath(dir,"actual_backend.ptf"))
-        row["native_backend_sha256"]=hash(joinpath(dir,"actual_backend.ptf"))
+        if P.NativeG3Solver.backend_name(row["_optimizer"])=="MOSEK"
+            nativepath=joinpath(dir,"actual_backend.ptf")
+            Mosek.writedata(unsafe_backend(m).task,nativepath)
+        else
+            nativepath=joinpath(dir,"actual_backend.lp")
+            MOI.write_to_file(unsafe_backend(m),nativepath)
+        end
+        row["native_backend_sha256"]=hash(nativepath)
         row["native_backend_type"]=string(typeof(unsafe_backend(m)))
     end
     pop!(row,"_optimizer",nothing)
@@ -61,7 +68,7 @@ end
 dir=joinpath(R,"reference_24snap_G3_original_serialized_default");mkpath(dir)
 input=joinpath(A,"original_01/b1_exact_native.mof.json")
 @assert hash(input)=="fcd52695238591d6c6019385d64e4407e1ea480849ca4125e1191b992581ab07"
-m=read_from_file(input);optimizer=P.mosek_optimizer()
+m=read_from_file(input);optimizer=P.native_g3_optimizer()
 row=Dict{String,Any}("case_id"=>"reference_24snap","formulation"=>"G3",
     "mode"=>"original_serialized_default","input_sha256"=>hash(input),
     "directory"=>basename(dir),"_optimizer"=>optimizer,"objective_coordinate"=>"literal_serialized_normalized_objective")
