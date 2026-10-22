@@ -14,6 +14,7 @@ rows=Any[]
 function export_result(m,dir,row)
     path=joinpath(dir,"solver_input.mof.json");write_to_file(m,path)
     row["solver_input_sha256"]=hash(path)
+    open(io->print_active_bridges(io,m),joinpath(dir,"active_bridges.txt"),"w")
     if has_values(m)
         # MOF makes duplicate auxiliary names unique while retaining variable order.
         serialized=JSON.parsefile(path)["variables"]
@@ -28,6 +29,21 @@ function export_result(m,dir,row)
         else
             nativepath=joinpath(dir,"actual_backend.lp")
             MOI.write_to_file(unsafe_backend(m),nativepath)
+            native=unsafe_backend(m)
+            filemodel=MOI.FileFormats.Model(;format=MOI.FileFormats.FORMAT_MOF)
+            native_map=MOI.copy_to(filemodel,native)
+            native_mof=joinpath(dir,"actual_backend.mof.json")
+            MOI.write_to_file(filemodel,native_mof)
+            native_doc=JSON.parsefile(native_mof)
+            native_names=Dict(v.value=>native_doc["variables"][native_map[v].value]["name"] for v in MOI.get(native,MOI.ListOfVariableIndices()))
+            cached=JSON.parsefile(path)["variables"]
+            save(joinpath(dir,"backend_variable_map.json"),Dict("cached_to_native"=>Dict(
+                cached[i]["name"]=>native_names[optimizer_index(v).value] for (i,v) in enumerate(all_variables(m))),
+                "native_index_to_name"=>Dict(string(k)=>v for (k,v) in native_names)))
+            if has_values(m)
+                save(joinpath(dir,"backend_point.json"),Dict(native_names[v.value]=>MOI.get(native,MOI.VariablePrimal(),v) for v in MOI.get(native,MOI.ListOfVariableIndices())))
+            end
+            row["actual_backend_mof_sha256"]=hash(native_mof)
         end
         row["native_backend_sha256"]=hash(nativepath)
         row["native_backend_type"]=string(typeof(unsafe_backend(m)))

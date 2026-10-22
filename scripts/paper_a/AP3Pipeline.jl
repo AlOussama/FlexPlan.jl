@@ -147,7 +147,9 @@ function solve!(pm,optimizer;objective_scale=nothing)
         end
     end
     JuMP.set_objective_function(m,emitted_objective)
-    JuMP.set_optimizer(m,optimizer);JuMP.set_silent(m)
+    JuMP.set_optimizer(m,optimizer)
+    native_g3 && NativeG3Solver.configure_bridges!(m,optimizer)
+    JuMP.set_silent(m)
     if optimizer===HiGHS.Optimizer
         JuMP.set_optimizer_attribute(m,"threads",1)
         JuMP.set_optimizer_attribute(m,"mip_rel_gap",1e-8);JuMP.set_optimizer_attribute(m,"time_limit",120.)
@@ -155,6 +157,9 @@ function solve!(pm,optimizer;objective_scale=nothing)
     elseif optimizer===Clarabel.Optimizer
         for (k,v) in (("tol_gap_abs",1e-10),("tol_gap_rel",1e-10),("tol_feas",1e-10),("max_iter",300));JuMP.set_optimizer_attribute(m,k,v);end
     end
+    native_bridge=nothing
+    native_seed=native_g3 ? NativeG3Solver.seed_primal_start!(m,optimizer) : nothing
+    preparation_wall=native_g3 ? @elapsed(native_bridge=NativeG3Solver.prepare_backend!(m,optimizer)) : 0.
     wall=@elapsed JuMP.optimize!(m)
     feasible=JuMP.primal_status(m)==JuMP.MOI.FEASIBLE_POINT
     effective_scale=scale/multiplier
@@ -168,6 +173,8 @@ function solve!(pm,optimizer;objective_scale=nothing)
         check=NativeG3Solver.primal_check(m)
         merge!(result,Dict("objective_requested_divisor"=>scale,"objective_conditioning"=>conditioning,
             "native_input_range"=>native_range,"optimizer_options"=>NativeG3Solver.recorded_options(optimizer),
+            "native_bridge_validation"=>native_bridge,"native_preparation_wall_s"=>preparation_wall,
+            "primal_start_strategy"=>native_seed,
             "numerical_validation"=>check["status"],"original_primal_check"=>check,
             "objective_backend"=>safe(()->JuMP.objective_value(m)),
             "bound_backend_numerical"=>safe(()->JuMP.objective_bound(m)),

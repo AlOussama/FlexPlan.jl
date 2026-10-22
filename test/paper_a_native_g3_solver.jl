@@ -15,6 +15,9 @@ const N = P.NativeG3Solver
     @test !N.is_native(P.pajarito_optimizer())
     @test_throws N.NumericalInputError N.condition_objective(1e-300*x + 1e300)
     @test_throws N.NumericalInputError N.condition_objective(1e-300*x + 1.)
+    ranged=Model();@variable(ranged,w)
+    @constraint(ranged,1e-20 <= w <= 1.)
+    @test_throws N.NumericalInputError N.input_range(ranged)
 
     # A valid row at each historical threshold must be refused, never filtered.
     for a in (4.5830185178677806e-11,1.2740476362167553e-13)
@@ -38,6 +41,18 @@ const N = P.NativeG3Solver
     @test result["objective"] ≈ 5*3.7524903900502144e-9+2.178606398164727e-15 atol=1e-20 rtol=1e-12
     @test result["objective_conditioning"]["exact_binary_scaling_verified"]
     @test result["bound_certification"] == "numerical_only_not_rigorous_currency_bound"
+    @test result["native_bridge_validation"]["cones"] == 1
+    @test result["native_bridge_validation"]["nonconvex_parameter"] == 0
+    @test result["primal_start_strategy"]["status"] == "checked_primal_start_applied"
+    @test result["primal_start_strategy"]["heuristic_bound_used"] === false
+    bridges=sprint(print_active_bridges,native)
+    @test occursin("RSOCtoNonConvexQuadBridge",bridges)
+    @test !occursin("RSOCtoSOCBridge",bridges)
+    actual=unsafe_backend(native)
+    for item in result["native_bridge_validation"]["ledger"],idx in item["nonnegative_endpoint_indices"]
+        ci=JuMP.MOI.ConstraintIndex{JuMP.MOI.VariableIndex,JuMP.MOI.GreaterThan{Float64}}(idx)
+        @test JuMP.MOI.get(actual,JuMP.MOI.ConstraintSet(),ci).lower >= 0.
+    end
     mktempdir() do root
         input=joinpath(root,"input");mkdir(input)
         P.writejson(joinpath(input,"runs.json"),Dict("runs"=>[Dict("case_id"=>"guard",
