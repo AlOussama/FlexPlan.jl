@@ -93,12 +93,30 @@ def linear_rows(m,rename=None):
     return out
 def backend_identity(cached,native,mapping):
     rename=mapping['cached_to_native'];before=linear_rows(cached,rename);after=linear_rows(native)
-    assert not before-after,'physical linear row lost in actual backend'
-    remaining=after-before
     eqs=set()
     for c in native['constraints']:
         if c['function']['type'] in ['Variable','ScalarAffineFunction'] and c['set']['type']=='EqualTo':
             a,k=affine(c['function']);eqs.add(linear_key(a,'eq',Q(c['set']['value'])-k))
+    # The standard MOI SlackBridge represents l<=f(x)<=u by f(x)=z,
+    # z in [l,u]. Check the actual endpoints and linking equation exactly.
+    range_aux=set()
+    for c in cached['constraints']:
+        if c['set']['type']!='Interval' or c['function']['type']=='Variable':continue
+        a,k=affine(c['function']);a={rename[n]:v for n,v in a.items()}
+        matched=None
+        for bound in native['constraints']:
+            if bound['function']['type']!='Variable' or bound['set']!=c['set']:continue
+            z=bound['function']['name']
+            if z in rename.values() or z in range_aux:continue
+            link=dict(a);link[z]=-1
+            if linear_key(link,'eq',-k) in eqs:matched=(z,bound,link);break
+        assert matched is not None,'native interval slack is not an exact projection'
+        z,bound,link=matched;range_aux.add(z)
+        before.subtract(linear_rows({'constraints':[c]},rename))
+        before.update(linear_rows({'constraints':[bound]}))
+        for sense in ['le','ge']:before[linear_key(link,sense,-k)]+=1
+    assert not before-after,'physical linear row lost in actual backend'
+    remaining=after-before
     original_int={(rename[c['function']['name']],c['set']['type']) for c in cached['constraints'] if c['set']['type'] in ['Integer','ZeroOne']}
     native_int={(c['function']['name'],c['set']['type']) for c in native['constraints'] if c['set']['type'] in ['Integer','ZeroOne']}
     assert original_int==native_int,'integer domain changed'
@@ -143,9 +161,10 @@ def backend_identity(cached,native,mapping):
     allowed={linear_key({v:Q(1)},'ge',Q(0)) for j in used for v in quadratics[j][:2]}
     assert all(v>=0 for v in remaining.values())
     assert all(k in allowed for k,v in remaining.items() if v),'unexplained actual backend constraint'
-    assert {v['name'] for v in native['variables']}-set(rename.values())==aux
+    assert {v['name'] for v in native['variables']}-set(rename.values())==aux|range_aux
     return dict(exact_linear_integer_objective_and_RSOC_projection_verified=True,
         exact_quadratic_cones=len(cones),rounded_RSOC_rotation_used=False,
+        exact_interval_slack_variables=len(range_aux),
         redundant_endpoint_bounds_proved_by_existing_nonnegative_rows=True)
 def projection(original,solver):
     before=rows(original);after=rows(solver)
