@@ -1,0 +1,16 @@
+# Reproduktion der unabhängigen A3.7-B1-Prüfung
+
+Nur den vorhandenen Checkout verwenden; keine historischen Outputs überschreiben. Der Kandidat ist `0ca85adad5b6bcdff5a3ce8df54f5b8ac8eb8568`. Die Review-Branch enthält ausschließlich additive Dokumente/Prüfer in diesem Ordner.
+
+Die Skripte dieses Ordners verwenden `D:/Downloads/A37_B1_REAUDIT_20261023` als **frischen** externen Output. Für eine Wiederholung den Pfad in `execute.py` auf einen neuen Ordner ändern und dessen Elternordner anlegen. `independent_oracle.py`, `check_diagnostics.py` und `summarize.py` erhalten beziehungsweise übernehmen denselben Ordner. Python: `C:/Users/User/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe`. Julia: `julia +1.10.11 --startup-file=no --project=<absoluter Repo-Pfad>`. Das gepinnte Manifest verwenden, kein `Pkg.update()`.
+
+1. Fremde 28 Dateien, ursprüngliche Refs und Worktree-Registrierungen vor Branchwechsel inventarisieren. Der vorhandene Handoff autorisiert ihr unverändertes Liegenlassen.
+2. `reports/a3_7/b1_20261022/verify_publication.py` ausführen. `reports/a3_6/reaudit_20261021/integrity.py REPO NEW_OUT/validation` prüft und extrahiert die historischen Inputs vollständig.
+3. `execute.py regression`, `execute.py exact`, `execute.py guards`, `execute.py exports`, `execute.py matrix` ausführen. Exitcodes und Unterbefehle werden separat aufgezeichnet. Unabhängige Läufe dürfen parallel erfolgen; ihre Ausgaben sind getrennt.
+4. Die im Implementierer-ZIP archivierten `.jl`-/`.py`-Treiber zuerst hashprüfen und unter `NEW_OUT/submitted_tools` extrahieren. `diagnostics.py commercial` und `diagnostics.py pajarito` ersetzen ausschließlich Input-/Outputpfade und führen raw Solves, Ein-Faktor-Kontrollen und die 14 Filtertests aus. Adaptationsmanifeste erhalten Original-/Ausgabehashes.
+5. `independent_oracle.py NEW_OUT` rekonstruiert alle Original-/Backend-/Startresiduen, native Quadratikpolynome und Objectivekoordinaten ohne Import des eingereichten Prüfers. `check_diagnostics.py NEW_OUT` vergleicht die raw Bounds exakt mit dem historischen zulässigen Zeugen. `summarize.py` prüft die Übereinstimmung der beiden separat neu berechneten Resultate.
+6. `cli_contract.py` führt acht echte CLI-Aktionen, drei erwartete Fehleraktionen und die 124-Metrik-/CSV-Prüfung aus. `backend_negative_controls.py` im Evidenzarchiv enthält die vier tatsächlich ausgeführten Backendmanipulationen; nur sein Matrixausgabepfad wurde gegenüber dem geprüften Originaltreiber angepasst.
+7. Vollständigen historischen `independent_reference_oracle.py` separat in einem frischen Ausgabeordner starten. In dieser Umgebung ist der archivierte Exit 1 wegen fehlendem `sympy` zu erwarten; das ersetzt keinen vollständigen PASS.
+8. `provenance.py` prüft erneut Originale, Dependencyeinträge, Archiv, fremde Dateien, Refs und Worktree-Registrierungen. Nach allen Prüfungen `package.py` ausführen. Das Packaging maskiert nur numerische LicenseIDs in publizierten Textkopien und protokolliert beide Hashes. Paket und ZIP vollständig zurücklesen.
+
+Die vollständigen tatsächlichen Argumentlisten, Exitcodes und UTC-Zeiten stehen in `*.command.json` und `validation/execution_*.json` im Archiv. Historische Inputkopien und Binärpakete sind vom neuen ZIP ausgeschlossen und über die ursprünglichen gepinnten Manifestarchive reproduzierbar.

@@ -1,0 +1,311 @@
+{
+  "historical_exact_original_objective": "22454572203146263911616174998561445803883171993578702189/1201226274627825100588289993483927156656454446845028990976",
+  "historical_exact_primal": {
+    "counts": {
+      "EqualTo": 1065,
+      "GreaterThan": 3440,
+      "LessThan": 2481,
+      "Interval": 144,
+      "RotatedSecondOrderCone": 144,
+      "Integer": 1353
+    },
+    "residuals": {
+      "EqualTo": "0",
+      "GreaterThan": "0",
+      "LessThan": "0",
+      "Interval": "0",
+      "RotatedSecondOrderCone": "0",
+      "Integer": "0"
+    },
+    "passed": true,
+    "exact": true,
+    "objective": "22454572203146263911616174998561445803883171993578702189/1201226274627825100588289993483927156656454446845028990976"
+  },
+  "raw_solves": [
+    {
+      "solver": "Gurobi",
+      "mode": "small_integer_RSOC",
+      "solver_version": "12.0.3",
+      "optimal_integer": 5
+    },
+    {
+      "solver": "Gurobi",
+      "mode": "original",
+      "termination": "OPTIMAL",
+      "exact_input_and_objective_identity": true,
+      "residuals": {
+        "counts": {
+          "EqualTo": 1065,
+          "GreaterThan": 3440,
+          "LessThan": 2481,
+          "Interval": 144,
+          "RotatedSecondOrderCone": 144,
+          "Integer": 1353
+        },
+        "residuals": {
+          "EqualTo": "1513019/4503599627370496",
+          "GreaterThan": "0",
+          "LessThan": "27/9007199254740992",
+          "Interval": "0",
+          "RotatedSecondOrderCone": "0",
+          "Integer": "0"
+        },
+        "passed": true,
+        "exact": false,
+        "objective": "208540361081577773385037502454683761088455/11150372599265311570767859136324180752990208"
+      },
+      "bound_excess": "11417952919962981927412418573293339287689591850465939/1201226274627825100588289993483927156656454446845028990976",
+      "bound_excess_display": 9.505247396874162e-06,
+      "bound_contradiction": true
+    },
+    {
+      "solver": "Gurobi",
+      "mode": "tight_dual",
+      "termination": "OPTIMAL",
+      "exact_input_and_objective_identity": true,
+      "residuals": {
+        "counts": {
+          "EqualTo": 1065,
+          "GreaterThan": 3440,
+          "LessThan": 2481,
+          "Interval": 144,
+          "RotatedSecondOrderCone": 144,
+          "Integer": 1353
+        },
+        "residuals": {
+          "EqualTo": "1001257/18014398509481984",
+          "GreaterThan": "0",
+          "LessThan": "0",
+          "Interval": "0",
+          "RotatedSecondOrderCone": "0",
+          "Integer": "0"
+        },
+        "passed": true,
+        "exact": false,
+        "objective": "53359226792928943502079881367370834066750413/2854495385411919762116571938898990272765493248"
+      },
+      "bound_excess": "11379318267256010972986922982191991204888589564563/1201226274627825100588289993483927156656454446845028990976",
+      "bound_excess_display": 9.473084719847354e-09,
+      "bound_contradiction": true
+    },
+    {
+      "solver": "Gurobi",
+      "mode": "amp20",
+      "termination": "OPTIMAL",
+      "exact_input_and_objective_identity": true,
+      "residuals": {
+        "counts": {
+          "EqualTo": 1065,
+          "GreaterThan": 3440,
+          "LessThan": 2481,
+          "Interval": 144,
+          "RotatedSecondOrderCone": 144,
+          "Integer": 1353
+        },
+        "residuals": {
+          "EqualTo": "26039/562949953421312",
+          "GreaterThan": "0",
+          "LessThan": "0",
+          "Interval": "0",
+          "RotatedSecondOrderCone": "0",
+          "Integer": "0"
+        },
+        "passed": true,
+        "exact": false,
+        "objective": "3414988789862125763617450313355221659119414813/182687704666362864775460604089535377456991567872"
+      },
+      "bound_excess": "-13172587216258477878156980746179906913414743405/1201226274627825100588289993483927156656454446845028990976",
+      "bound_excess_display": -1.0965949958378765e-11,
+      "bound_contradiction": false
+    },
+    {
+      "solver": "Gurobi",
+      "mode": "amp30",
+      "termination": "OPTIMAL",
+      "exact_input_and_objective_identity": true,
+      "residuals": {
+        "counts": {
+          "EqualTo": 1065,
+          "GreaterThan": 3440,
+          "LessThan": 2481,
+          "Interval": 144,
+          "RotatedSecondOrderCone": 144,
+          "Integer": 1353
+        },
+        "residuals": {
+          "EqualTo": "3417818981715893099/39614081257132168796771975168",
+          "GreaterThan": "0",
+          "LessThan": "0",
+          "Interval": "0",
+          "RotatedSecondOrderCone": "0",
+          "Integer": "0"
+        },
+        "passed": true,
+        "exact": false,
+        "objective": "6829977568307190016097531519772367831849362597/365375409332725729550921208179070754913983135744"
+      },
+      "bound_excess": "-9655665666179651429066130821686329286783468909/1201226274627825100588289993483927156656454446845028990976",
+      "bound_excess_display": -8.03817388124586e-12,
+      "bound_contradiction": false
+    },
+    {
+      "solver": "MOSEK",
+      "mode": "small_integer_RSOC",
+      "solver_version": "11.0.29",
+      "optimal_integer": 5
+    },
+    {
+      "solver": "MOSEK",
+      "mode": "original",
+      "termination": "OPTIMAL",
+      "exact_input_and_objective_identity": true,
+      "residuals": {
+        "counts": {
+          "EqualTo": 1065,
+          "GreaterThan": 3440,
+          "LessThan": 2481,
+          "Interval": 144,
+          "RotatedSecondOrderCone": 144,
+          "Integer": 1353
+        },
+        "residuals": {
+          "EqualTo": "4209/70368744177664",
+          "GreaterThan": "651/72057594037927936",
+          "LessThan": "0",
+          "Interval": "0",
+          "RotatedSecondOrderCone": "6720066989582997/309485009821345068724781056",
+          "Integer": "0"
+        },
+        "passed": true,
+        "exact": false,
+        "objective": "6669910096591104844063495403873088890040995/356811923176489970264571492362373784095686656"
+      },
+      "bound_excess": "12985677855261848847346129402208774990390496262803/1201226274627825100588289993483927156656454446845028990976",
+      "bound_excess_display": 1.0810351163260386e-08,
+      "bound_contradiction": true
+    },
+    {
+      "solver": "MOSEK",
+      "mode": "amp20",
+      "termination": "OPTIMAL",
+      "exact_input_and_objective_identity": true,
+      "residuals": {
+        "counts": {
+          "EqualTo": 1065,
+          "GreaterThan": 3440,
+          "LessThan": 2481,
+          "Interval": 144,
+          "RotatedSecondOrderCone": 144,
+          "Integer": 1353
+        },
+        "residuals": {
+          "EqualTo": "716901530525812623727413556649/21778071482940061661655974875633165533184",
+          "GreaterThan": "214910385/144115188075855872",
+          "LessThan": "5510491253454845/2417851639229258349412352",
+          "Interval": "0",
+          "RotatedSecondOrderCone": "1554979630871099/309485009821345068724781056",
+          "Integer": "10699447/9007199254740992"
+        },
+        "passed": true,
+        "exact": false,
+        "objective": "111902352477825304469158228796909620553776543074681/5986310706507378352962293074805895248510699696029696"
+      },
+      "bound_excess": "-118513286210204384202154938011250444466193773/1201226274627825100588289993483927156656454446845028990976",
+      "bound_excess_display": -9.866025137264272e-14,
+      "bound_contradiction": false
+    },
+    {
+      "solver": "Pajarito",
+      "mode": "tight_absolute_gap",
+      "termination": "OPTIMAL",
+      "residuals": {
+        "counts": {
+          "EqualTo": 1065,
+          "GreaterThan": 3440,
+          "LessThan": 2481,
+          "Interval": 144,
+          "RotatedSecondOrderCone": 144,
+          "Integer": 1353
+        },
+        "residuals": {
+          "EqualTo": "1200566574784943263801/41538374868278621028243970633760768",
+          "GreaterThan": "1391806045037701/20282409603651670423947251286016",
+          "LessThan": "4959829527947855/162259276829213363391578010288128",
+          "Interval": "0",
+          "RotatedSecondOrderCone": "0",
+          "Integer": "0"
+        },
+        "passed": true,
+        "exact": false,
+        "objective": "30038567741931876524857552010440583668553264061232738881719/1606938044258990275541962092341162602522202993782792835301376"
+      },
+      "bound_excess": "293519405594804096813019744423810875017127721619/1201226274627825100588289993483927156656454446845028990976",
+      "bound_excess_display": 2.443498046908314e-10,
+      "bound_contradiction": true
+    },
+    {
+      "solver": "Pajarito",
+      "mode": "tight_absolute_and_dual_gap",
+      "termination": "OPTIMAL",
+      "residuals": {
+        "counts": {
+          "EqualTo": 1065,
+          "GreaterThan": 3440,
+          "LessThan": 2481,
+          "Interval": 144,
+          "RotatedSecondOrderCone": 144,
+          "Integer": 1353
+        },
+        "residuals": {
+          "EqualTo": "119555967316082460265/2596148429267413814265248164610048",
+          "GreaterThan": "5416702836335415/40564819207303340847894502572032",
+          "LessThan": "2285705564937463/81129638414606681695789005144064",
+          "Interval": "0",
+          "RotatedSecondOrderCone": "0",
+          "Integer": "0"
+        },
+        "passed": true,
+        "exact": false,
+        "objective": "7509641802838382896279561905978625641102707417146033530701/401734511064747568885490523085290650630550748445698208825344"
+      },
+      "bound_excess": "259750033845112414108411365101325960848538008211/1201226274627825100588289993483927156656454446845028990976",
+      "bound_excess_display": 2.1623738951730018e-10,
+      "bound_contradiction": true
+    }
+  ],
+  "double_gap_control": [
+    {
+      "bound_numerical": 0.5000036814322534,
+      "objective_numerical": 0.5000042280043282,
+      "oa_options": {
+        "small_matrix_value": 1e-12,
+        "threads": 1,
+        "mip_feasibility_tolerance": 1e-08,
+        "mip_rel_gap": 1e-08,
+        "output_flag": false
+      },
+      "mode": "accepted_factory_default_gap",
+      "primal_status": "NO_SOLUTION",
+      "wall_s": 92.8989125,
+      "input_sha256": "2f16ef548a55bf63e83f8400b9627875cf58f55e64c317357255a0d37f3549db",
+      "termination": "ITERATION_LIMIT"
+    },
+    {
+      "bound_numerical": 0.5000042280043281,
+      "objective_numerical": 0.5000042280043282,
+      "oa_options": {
+        "small_matrix_value": 1e-12,
+        "threads": 1,
+        "mip_feasibility_tolerance": 1e-08,
+        "mip_abs_gap": 1e-10,
+        "mip_rel_gap": 1e-08,
+        "output_flag": false
+      },
+      "mode": "tight_absolute_gap",
+      "primal_status": "FEASIBLE_POINT",
+      "wall_s": 3.3915411,
+      "input_sha256": "2f16ef548a55bf63e83f8400b9627875cf58f55e64c317357255a0d37f3549db",
+      "termination": "OPTIMAL"
+    }
+  ]
+}
