@@ -233,8 +233,11 @@ function constraint_uc_gscr_block_storage_charge_discharge_bounds(pm::_PM.Abstra
     sd = _uc_gscr_block_storage_variable(pm, n, device_key, :discharge)
     na = _PM.var(pm, n, :na_block, device_key)
 
-    charge_bound = JuMP.@constraint(pm.model, sc <= p_block_max * na)
-    discharge_bound = JuMP.@constraint(pm.model, sd <= p_block_max * na)
+    native = get(_PM.ref(pm,n,device_key[1],device_key[2]),"paper_a_storage_unit",nothing)
+    charge_pu = native === nothing ? 1.0 : -native["p_min_pu"]
+    discharge_pu = native === nothing ? 1.0 : native["p_max_pu"]
+    charge_bound = JuMP.@constraint(pm.model, sc <= charge_pu * p_block_max * na)
+    discharge_bound = JuMP.@constraint(pm.model, sd <= discharge_pu * p_block_max * na)
 
     return (charge_bound, discharge_bound)
 end

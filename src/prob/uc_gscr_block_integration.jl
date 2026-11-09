@@ -85,6 +85,9 @@ function build_uc_gscr_block_integration(
             for (i, line) in _PM.ref(pm, n, :dcline)
                 _validate_paper_a_dcline_losses(line, n, i)
             end
+            intertemporal_constraints ||
+                all(dev->!haskey(dev,"paper_a_storage_unit"),values(_PM.ref(pm,n,:storage))) ||
+                throw(ArgumentError("AP1 native StorageUnit requires the intertemporal energy balance"))
         end
     end
     relax_blocks=isnothing(relax_block_variables) ? !paper_a : relax_block_variables
@@ -159,7 +162,12 @@ function build_uc_gscr_block_integration(
             constraint_block_minimum_up_down_times(pm; nw=n)
             if is_first_id(pm, n, :hour)
                 for i in _PM.ids(pm, :storage, nw=n)
-                    constraint_storage_state(pm, i, nw=n)
+                    native = get(_PM.ref(pm,n,:storage,i),"paper_a_storage_unit",nothing)
+                    if native !== nothing && native["cyclic_state_of_charge"]
+                        constraint_storage_state(pm, i, last_id(pm,n,:hour), n)
+                    else
+                        constraint_storage_state(pm, i, nw=n)
+                    end
                 end
                 for i in _PM.ids(pm, :storage_bounded_absorption, nw=n)
                     constraint_maximum_absorption(pm, i, nw=n)
@@ -651,6 +659,9 @@ function _apply_uc_gscr_storage_terminal_policy!(
 
     for device_key in device_keys
         table, i = device_key
+        # Native noncyclic units use the supplied E0 and a free terminal
+        # state. The native cyclic balance already links last to first.
+        haskey(_PM.ref(pm,nw,table,i),"paper_a_storage_unit") && continue
         se_final = _uc_gscr_storage_energy_variable(pm, nw, table, i)
         if storage_terminal_policy == :cyclic
             se_initial_snapshot = _uc_gscr_storage_energy_variable(pm, first_nw, table, i)

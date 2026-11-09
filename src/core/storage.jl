@@ -632,12 +632,23 @@ function constraint_storage_losses_ne(pm::_PM.AbstractBFAModel, n::Int, i, bus, 
     JuMP.@constraint(pm.model, qs == qsc + q_loss)
 end
 
+# PyPSA 1.1.0 permits shedding only the incoming water at each snapshot.
+# Keep spill distinct from electrical charge and fixed energy outflow.
+function _paper_a_storage_spill(pm, n, i, inflow)
+    haskey(_PM.ref(pm,n,:storage,i),"paper_a_storage_unit") && inflow > 0 || return 0.0
+    spill = get!(_PM.var(pm,n),:paper_a_storage_spill,Dict{Int,JuMP.VariableRef}())
+    return get!(spill,i) do
+        JuMP.@variable(pm.model, lower_bound=0.0, upper_bound=inflow)
+    end
+end
+
 function constraint_storage_state_initial(pm::_PM.AbstractPowerModel, n::Int, i::Int, energy, charge_eff, discharge_eff, inflow, outflow, self_discharge_rate, time_elapsed)
     sc = _PM.var(pm, n, :sc, i)
     sd = _PM.var(pm, n, :sd, i)
     se = _PM.var(pm, n, :se, i)
 
-    JuMP.@constraint(pm.model, se == ((1-self_discharge_rate)^time_elapsed)*energy + time_elapsed*(charge_eff*sc - sd/discharge_eff + inflow - outflow))
+    spill = _paper_a_storage_spill(pm,n,i,inflow)
+    JuMP.@constraint(pm.model, se == ((1-self_discharge_rate)^time_elapsed)*energy + time_elapsed*(charge_eff*sc - sd/discharge_eff + inflow - outflow - spill))
 end
 
 function constraint_storage_state_initial_ne(pm::_PM.AbstractPowerModel, n::Int, i::Int, energy, charge_eff, discharge_eff, inflow, outflow, self_discharge_rate, time_elapsed)
@@ -663,7 +674,8 @@ function constraint_storage_state(pm::_PM.AbstractPowerModel, n_1::Int, n_2::Int
     se_2 = _PM.var(pm, n_2, :se, i)
     se_1 = _PM.var(pm, n_1, :se, i)
 
-    JuMP.@constraint(pm.model, se_2 == ((1-self_discharge_rate)^time_elapsed)*se_1 + time_elapsed*(charge_eff*sc_2 - sd_2/discharge_eff + inflow - outflow))
+    spill = _paper_a_storage_spill(pm,n_2,i,inflow)
+    JuMP.@constraint(pm.model, se_2 == ((1-self_discharge_rate)^time_elapsed)*se_1 + time_elapsed*(charge_eff*sc_2 - sd_2/discharge_eff + inflow - outflow - spill))
 end
 
 function constraint_storage_state_ne(pm::_PM.AbstractPowerModel, n_1::Int, n_2::Int, i::Int, charge_eff, discharge_eff, inflow, outflow, self_discharge_rate, time_elapsed)

@@ -94,6 +94,10 @@ power fields. This function is formulation-independent and mutates only `ref`.
 """
 function ref_add_uc_gscr_block!(ref::Dict{Symbol,<:Any}, data::Dict{String,<:Any};paper_a_validation_scope::Symbol=:strict)
     paper_a = _paper_a_validate_markers(data)
+    if paper_a
+        _paper_a_validate_chronology(data)
+        _paper_a_validate_native_storage(data)
+    end
     any_block_data = any(_has_uc_gscr_block_data(nw_ref) for (_, nw_ref) in ref[:it][_PM.pm_it_sym][:nw])
     if any_block_data
         _validate_uc_gscr_block_schema_declaration(ref, data)

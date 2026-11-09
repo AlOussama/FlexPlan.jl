@@ -1,3 +1,5 @@
+import Dates
+
 # Deterministic consumer fixtures: these numbers are test inputs, never prices
 # or reactance evidence for a real study.
 function _ap2_marker()
@@ -56,7 +58,8 @@ function _ap2_fixture(;hours=2,alpha=4.0,conn=1.0,res=1.0)
         "reference_buses"=>["A"],"fixed_shunts"=>Dict{String,Any}(),
         "branch_primitives"=>[_ap2_primitive("A","B")],"fixed_sources_in_network"=>String[],
         "passive_domain_issues"=>String[],"B0_reference_pu"=>[[10.0,-10.0],[-10.0,10.0]])
-    temporal=[Dict{String,Any}("snapshot_id"=>string(t),"delta_t_h"=>3.0,
+    stamps=[string(Dates.DateTime(2013,3,1)+Dates.Hour(3*(t-1))) for t in 1:hours]
+    temporal=[Dict{String,Any}("snapshot_id"=>stamps[t],"delta_t_h"=>3.0,"pypsa_objective_weight_diagnostic"=>3.0,
         "representative_repetitions"=>2.0,"event_repetitions"=>4.0,"scenario_probability"=>0.5,
         "dispatch_weight"=>3.0,"event_weight"=>2.0) for t in 1:hours]
     _FP.add_dimension!(d,:hour,hours)
@@ -64,6 +67,15 @@ function _ap2_fixture(;hours=2,alpha=4.0,conn=1.0,res=1.0)
     _FP.add_dimension!(d,:year,1;metadata=Dict{String,Any}("scale_factor"=>1))
     mn=_FP.make_multinetwork(d,Dict{String,Any}();share_data=false)
     mn["paper_a_temporal"]=temporal
+    mn["snapshot_ids"]=Dict(string(t)=>stamps[t] for t in 1:hours)
+    mn["snapshot_weights"]=Dict(string(t)=>3.0 for t in 1:hours)
+    mn["snapshot_elapsed_hours"]=copy(mn["snapshot_weights"])
+    for t in 1:hours
+        sn=mn["nw"][string(t)]
+        sn["snapshot_id"]=stamps[t]
+        sn["paper_a_temporal"]=copy(temporal[t])
+        sn["pypsa_snapshot_weight_objective"]=3.0
+    end
     _FP.prepare_paper_a_data!(mn)
     return mn
 end

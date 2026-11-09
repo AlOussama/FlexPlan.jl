@@ -51,6 +51,8 @@ are converted on the common base. Already-pu input must carry block units.
 No temporal or investment cost weighting is performed here."""
 function prepare_paper_a_data!(data::Dict{String,Any})
     _paper_a_validate_markers(data) || throw(ArgumentError("AP1 extension required"))
+    _paper_a_validate_chronology(data)
+    _paper_a_validate_native_storage(data)
     snapshots=get(data,"multinetwork",false) ? data["nw"] : Dict("1"=>data)
     base=PaperARegional.number(data,"baseMVA";positive=true)
     if get(data,"per_unit",false)
@@ -88,8 +90,13 @@ function prepare_paper_a_data!(data::Dict{String,Any})
                 get!(dev,field,0.0)
             end
             get!(dev,"thermal_rating",dev["charge_rating"]+dev["discharge_rating"])
-            get!(dev,"qmin",dev["q_block_min"]*dev["nmax"])
-            get!(dev,"qmax",dev["q_block_max"]*dev["nmax"])
+            if haskey(dev,"paper_a_storage_unit") && !haskey(dev,"nmax")
+                get!(dev,"qmin",0.0)
+                get!(dev,"qmax",0.0)
+            else
+                get!(dev,"qmin",dev["q_block_min"]*dev["nmax"])
+                get!(dev,"qmax",dev["q_block_max"]*dev["nmax"])
+            end
         end
         get(sn,"per_unit",false)===false || throw(ArgumentError("mixed raw/pu snapshots"))
         _PM.make_per_unit!(sn)
@@ -102,10 +109,11 @@ function prepare_paper_a_data!(data::Dict{String,Any})
 end
 
 function _paper_a_temporal(data,nw)
-    alltemporal=get(data,"paper_a_temporal",nothing)
-    t = alltemporal isa AbstractVector ? alltemporal[nw] :
-        alltemporal isa AbstractDict && haskey(alltemporal,"delta_t_h") ? alltemporal :
-        alltemporal isa AbstractDict ? alltemporal[string(nw)] : nothing
+    sn=get(data,"multinetwork",false) ? data["nw"][string(nw)] : data
+    return _paper_a_temporal_values(sn["paper_a_temporal"])
+end
+
+function _paper_a_temporal_values(t)
     t isa AbstractDict || throw(ArgumentError("missing AP1 temporal contract"))
     dt=PaperARegional.number(t,"delta_t_h";positive=true)
     reps=PaperARegional.number(t,"representative_repetitions";nonnegative=true)
@@ -114,7 +122,132 @@ function _paper_a_temporal(data,nw)
     w=PaperARegional.dispatch_event_weights(dt,reps,prob,events)
     isapprox(PaperARegional.number(t,"dispatch_weight"),w.dispatch;atol=1e-9) &&
         isapprox(PaperARegional.number(t,"event_weight"),w.event;atol=1e-9) || throw(ArgumentError("inconsistent dispatch/event weights"))
-    return (delta_t_h=dt,dispatch=w.dispatch,event=w.event,probability=prob)
+    return (snapshot_id=t["snapshot_id"],delta_t_h=dt,dispatch=w.dispatch,event=w.event,probability=prob)
+end
+
+function _paper_a_snapshot_time(sn, id, weight, hours)
+    t = get(sn,"paper_a_temporal",nothing)
+    id isa AbstractString && !isempty(id) && id == strip(id) &&
+        get(sn,"snapshot_id",nothing) == id && t isa AbstractDict && get(t,"snapshot_id",nothing) == id ||
+        throw(ArgumentError("AP1 snapshot_id must match the network and temporal record"))
+    stamp = tryparse(Dates.DateTime, replace(id, ' '=>'T'))
+    stamp === nothing && throw(ArgumentError("AP1 invalid snapshot_id timestamp $id"))
+    bound = _paper_a_temporal_values(t)
+    isapprox(bound.delta_t_h,hours;atol=1e-9,rtol=0) &&
+        isapprox(PaperARegional.number(sn,"time_elapsed";positive=true),hours;atol=1e-9,rtol=0) ||
+        throw(ArgumentError("AP1 physical duration mismatch for snapshot_id $id"))
+    isapprox(PaperARegional.number(t,"pypsa_objective_weight_diagnostic";nonnegative=true),weight;atol=1e-9,rtol=0) &&
+        isapprox(PaperARegional.number(sn,"pypsa_snapshot_weight_objective";nonnegative=true),weight;atol=1e-9,rtol=0) ||
+        throw(ArgumentError("AP1 PyPSA objective weight mismatch for snapshot_id $id"))
+    return stamp
+end
+
+"""Check the complete AP1 axis before any data mutation or model construction.
+The temporal record travels with the profiles and agrees with the root copy."""
+function _paper_a_validate_chronology(data)
+    if !get(data,"multinetwork",false)
+        _paper_a_snapshot_time(data, get(data,"snapshot_id",nothing),
+            PaperARegional.number(data,"pypsa_snapshot_weight_objective";nonnegative=true),
+            PaperARegional.number(data,"time_elapsed";positive=true))
+        return nothing
+    end
+    snapshots = get(data,"nw",nothing)
+    snapshots isa AbstractDict || throw(ArgumentError("AP1 missing snapshot network table"))
+    n = length(snapshots)
+    n > 0 || throw(ArgumentError("AP1 empty snapshot chronology"))
+    axis = Set(string.(1:n))
+    maps = ("snapshot_ids","snapshot_weights","snapshot_elapsed_hours")
+    for field in ("nw", maps...)
+        records = get(data,field,nothing)
+        records isa AbstractDict && keys(records) == axis ||
+            throw(ArgumentError("AP1 snapshot index domain mismatch in $field"))
+    end
+    temporal = get(data,"paper_a_temporal",nothing)
+    temporal isa AbstractVector && length(temporal) == n ||
+        throw(ArgumentError("AP1 temporal axis length mismatch"))
+    if haskey(data,"dim")
+        dim_length(data,:hour)==n && dim_length(data,:scenario)==1 && dim_length(data,:year)==1 &&
+            all(t->coord(data,t,:hour)==t,1:n) ||
+            throw(ArgumentError("AP1 snapshot index does not match the hour dimension"))
+    end
+    previous_stamp = nothing
+    previous_hours = 0.0
+    for t in 1:n
+        key = string(t)
+        sn = snapshots[key]
+        id = data["snapshot_ids"][key]
+        hours = PaperARegional.number(data["snapshot_elapsed_hours"],key;positive=true)
+        weight = PaperARegional.number(data["snapshot_weights"],key;nonnegative=true)
+        stamp = _paper_a_snapshot_time(sn,id,weight,hours)
+        isequal(temporal[t],get(sn,"paper_a_temporal",nothing)) ||
+            throw(ArgumentError("AP1 root/network temporal record mismatch for snapshot_id $id"))
+        if previous_stamp !== nothing
+            stamp > previous_stamp || throw(ArgumentError("AP1 snapshot IDs must be unique and strictly increasing"))
+            step_hours = Dates.value(stamp-previous_stamp) / 3.6e6
+            isapprox(step_hours,previous_hours;atol=1e-9,rtol=0) ||
+                throw(ArgumentError("AP1 timestamp interval disagrees with physical duration before $id"))
+        end
+        previous_stamp, previous_hours = stamp, hours
+    end
+    return nothing
+end
+
+"""Validate native StorageUnit inputs and their physical or per-unit projections."""
+function _paper_a_validate_native_storage(data)
+    snapshots = get(data,"multinetwork",false) ? values(data["nw"]) : (data,)
+    units = get(data,"per_unit",false) ? PaperARegional.number(data,"baseMVA";positive=true) : 1.0
+    boundary = Dict{String,Any}()
+    for sn in snapshots, (id,dev) in get(sn,"storage",Dict())
+        native = get(dev,"paper_a_storage_unit",nothing)
+        if native === nothing
+            get(dev,"storage_boundary_scope",nothing) in ("native_initial","native_cyclic") &&
+                throw(ArgumentError("AP1 missing native StorageUnit metadata for $id"))
+            continue
+        end
+        native isa AbstractDict || throw(ArgumentError("AP1 invalid native StorageUnit metadata for $id"))
+        cyclic = get(native,"cyclic_state_of_charge",nothing)
+        cyclic isa Bool || throw(ArgumentError("AP1 invalid native StorageUnit cyclic policy for $id"))
+        p_nom = PaperARegional.number(native,"p_nom_MW";nonnegative=true)
+        hours = PaperARegional.number(native,"max_hours";positive=true)
+        capacity = p_nom * hours
+        e0 = get(native,"state_of_charge_initial_MWh",nothing)
+        if cyclic
+            e0 === nothing || throw(ArgumentError("AP1 cyclic StorageUnit cannot bind a fixed initial state for $id"))
+        else
+            e0 = PaperARegional.number(native,"state_of_charge_initial_MWh";nonnegative=true)
+            e0 <= capacity || throw(ArgumentError("AP1 StorageUnit initial energy exceeds native capacity for $id"))
+        end
+        init = (cyclic=cyclic, p_nom=p_nom, max_hours=hours, e0=e0)
+        get!(boundary,id,init) == init ||
+            throw(ArgumentError("AP1 native StorageUnit boundary changes across snapshots for $id"))
+        pmin = PaperARegional.number(native,"p_min_pu")
+        pmax = PaperARegional.number(native,"p_max_pu";nonnegative=true)
+        pmin <= 0 || throw(ArgumentError("AP1 unsupported native StorageUnit p_min_pu for $id"))
+        get(native,"inflow_unit",nothing) == "MW" ||
+            throw(ArgumentError("AP1 native StorageUnit inflow_unit must be MW for $id"))
+        inflow = PaperARegional.number(native,"inflow_MW";nonnegative=true)
+        for (field,expected) in (("energy",something(e0,0.0)),("energy_rating",capacity),
+            ("charge_rating",-pmin*p_nom),("discharge_rating",pmax*p_nom),("stationary_energy_inflow",inflow))
+            actual = PaperARegional.number(dev,field;nonnegative=true)
+            isapprox(actual*units,expected;atol=1e-9,rtol=1e-9) ||
+                throw(ArgumentError("AP1 native StorageUnit $field unit/value mismatch for $id"))
+        end
+        for (field,source) in (("self_discharge_rate","standing_loss"),("charge_efficiency","efficiency_store"),
+                               ("discharge_efficiency","efficiency_dispatch"))
+            expected = PaperARegional.number(native,source;positive=field!="self_discharge_rate",nonnegative=true)
+            expected <= 1 && PaperARegional.number(dev,field) == expected ||
+                throw(ArgumentError("AP1 native StorageUnit $field mismatch for $id"))
+        end
+        get(dev,"stationary_energy_outflow",0.0) == 0.0 ||
+            throw(ArgumentError("AP1 native StorageUnit spill cannot be supplied as stationary_energy_outflow for $id"))
+        if haskey(dev,"n0")
+            block = PaperARegional.number(dev,"p_block_max";positive=true)*units
+            isapprox(block*PaperARegional.number(dev,"n0";nonnegative=true),p_nom;atol=1e-9,rtol=1e-9) &&
+                isapprox(PaperARegional.number(dev,"e_block";positive=true)*units,block*hours;atol=1e-9,rtol=1e-9) ||
+                throw(ArgumentError("AP1 native StorageUnit block P/E capacity mismatch for $id"))
+        end
+    end
+    return nothing
 end
 
 function _paper_a_add_reference!(nw_ref,data,nw;validation_scope=:strict)
@@ -210,6 +343,7 @@ Accepts raw or prepared AP1 single/multinetwork input; changes only costs.
 Already scaled inputs carry exact applied factors and are rejected on repeat."""
 function scale_paper_a_costs!(data::Dict{String,Any}; cost_scale_factor::Real=1.0)
     _paper_a_validate_markers(data) || throw(ArgumentError("AP1 extension required"))
+    _paper_a_validate_chronology(data)
     isfinite(cost_scale_factor) && cost_scale_factor>0 || throw(ArgumentError("invalid currency scale"))
     snapshots=get(data,"multinetwork",false) ? data["nw"] : Dict("1"=>data)
     for sn in values(snapshots)
