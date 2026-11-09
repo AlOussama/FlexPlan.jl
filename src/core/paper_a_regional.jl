@@ -70,9 +70,15 @@ function validate_source(d::AbstractDict;synthetic_regression=false)
         for f in ("source_equivalent_time_scale", "source_parameter_provenance")
             evidence(get(d,f,nothing)) || throw(ArgumentError("missing/unverified "*f))
         end
-        b = source_b_block(s,d["S_base_MVA"],x*s/sn)
+        x_block = x*s/sn
+        if haskey(d,"native_source_kv_referred") || haskey(d,"source_bus_base_kv")
+            native_kv = number(d,"native_source_kv_referred";positive=true)
+            bus_kv = number(d,"source_bus_base_kv";positive=true)
+            x_block *= (native_kv/bus_kv)^2
+        end
+        b = source_b_block(s,d["S_base_MVA"],x_block)
         if get(d,"x_src_block_base",nothing)!==nothing
-            isapprox(number(d,"x_src_block_base";positive=true),x*s/sn;atol=1e-9,rtol=1e-9) || throw(ArgumentError("producer x_src_block_base mismatch"))
+            isapprox(number(d,"x_src_block_base";positive=true),x_block;atol=1e-9,rtol=1e-9) || throw(ArgumentError("producer x_src_block_base mismatch"))
         end
         isapprox(b,d["b_block"];atol=1e-9,rtol=1e-9) || throw(ArgumentError("b_block native-base normalization mismatch"))
         number(d,"mu_str";nonnegative=true)

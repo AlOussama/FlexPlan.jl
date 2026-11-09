@@ -82,6 +82,9 @@ function build_uc_gscr_block_integration(
         for n in nw_ids(pm)
             isempty(get(_PM.ref(pm,n),:switch,Dict())) || throw(ArgumentError("Paper-A fixed-topology DCP builder does not support switches"))
             isempty(get(_PM.ref(pm,n),:link,Dict())) || throw(ArgumentError("AP1 raw links require an explicit operational dcline conversion before model build"))
+            for (i, line) in _PM.ref(pm, n, :dcline)
+                _validate_paper_a_dcline_losses(line, n, i)
+            end
         end
     end
     relax_blocks=isnothing(relax_block_variables) ? !paper_a : relax_block_variables
@@ -153,6 +156,7 @@ function build_uc_gscr_block_integration(
         end
 
         if intertemporal_constraints
+            constraint_block_minimum_up_down_times(pm; nw=n)
             if is_first_id(pm, n, :hour)
                 for i in _PM.ids(pm, :storage, nw=n)
                     constraint_storage_state(pm, i, nw=n)
@@ -578,6 +582,19 @@ function _relax_standard_bounds_for_block_enabled_devices!(pm::_PM.AbstractActiv
             end
         end
     end
+end
+
+function _validate_paper_a_dcline_losses(line::AbstractDict, nw::Int, id)
+    loss0 = PaperARegional.number(line, "loss0"; nonnegative=true)
+    loss1 = PaperARegional.number(line, "loss1"; nonnegative=true)
+    pmin = PaperARegional.number(line, "pminf")
+    pmax = PaperARegional.number(line, "pmaxf")
+    pmin <= pmax && loss1 < 1 ||
+        throw(ArgumentError("invalid Paper-A dcline $id limits or loss slope at snapshot $nw"))
+    # PowerModels applies p_fr + p_to = loss0 + loss1 * p_fr on the signed range.
+    loss0 + loss1 * pmin >= 0 ||
+        throw(ArgumentError("Paper-A dcline $id permits negative losses at snapshot $nw; reverse loss model required"))
+    return nothing
 end
 
 function _uc_gscr_storage_terminal_policy_from_deprecated(final_storage_policy::Symbol)

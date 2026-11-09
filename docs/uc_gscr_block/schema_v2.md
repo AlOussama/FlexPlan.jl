@@ -129,7 +129,9 @@ For `BlockThermalCommitment`:
 
 `startup_cost_per_mw` and `shutdown_cost_per_mw` are required when startup and
 shutdown variables are created. `min_up_block_time` and `min_down_block_time`
-are required only for formulation templates that enable those constraints.
+are nonnegative integer snapshot counts. Supplying these fields enables
+minimum up/down windows for the template's startup/shutdown devices in the
+intertemporal integration build. A zero count adds no window constraint.
 
 For `BlockRenewableParticipation` and `BlockFixedInstalled`, startup/shutdown
 fields are not required and must not trigger startup/shutdown variables.

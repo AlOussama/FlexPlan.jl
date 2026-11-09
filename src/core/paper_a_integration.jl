@@ -165,7 +165,13 @@ function _paper_a_add_reference!(nw_ref,data,nw;validation_scope=:strict)
         dev["S_base_MVA"]==base || throw(ArgumentError("source system base mismatch"))
         P=dev["p_block_max_MW"]
         isapprox(dev["p_block_max"]*base,P;atol=1e-8,rtol=1e-9) || throw(ArgumentError("block MW/pu mismatch"))
-        bus=nw_ref[:bus][_uc_gscr_device_bus(table,dev)]["name"]
+        bus_data=nw_ref[:bus][_uc_gscr_device_bus(table,dev)]
+        bus=bus_data["name"]
+        if haskey(dev,"source_bus_base_kv")
+            isapprox(PaperARegional.number(dev,"source_bus_base_kv";positive=true),
+                PaperARegional.number(bus_data,"base_kv";positive=true);rtol=1e-9) ||
+                throw(ArgumentError("source voltage base disagrees with connected AC bus"))
+        end
         bus in regional.retained || throw(ArgumentError("nonpassive source on eliminated AC node"))
         region=dev["region_id"]
         region==regional.bus_to_region[bus] || throw(ArgumentError("device regional mapping mismatch"))

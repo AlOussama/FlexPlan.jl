@@ -972,36 +972,53 @@ end
         @test JuMP.coefficient(expr, _PM.var(pm, 1, :su_block, (:ne_storage, 1))) == 4.0 * 5.0
     end
 
-    @testset "Stage path does not activate min-up/min-down constraints" begin
-        data = _uc_gscr_transition_fixture(; na0=1.0, startup_cost=1.0, shutdown_cost=1.0, include_storage=false, hours=2)
-        for (_, nw_data) in data["nw"]
-            nw_data["gen"]["1"]["min_up_block_time"] = 3
-            nw_data["gen"]["1"]["min_down_block_time"] = 3
+    @testset "Integrated opt-in minimum up/down uses snapshot counts" begin
+        data = _uc_gscr_transition_fixture(; na0=1.0, n0=2.0, nmax=2.0, hours=2)
+        key = (:gen, 1)
+        for nw in values(data["nw"]), load in values(nw["load"])
+            load["pd"] = 0.0
+        end
+        for (field, policy, event, schedule) in (
+            ("min_up_block_time", :block_minimum_up_time, :su_block, (2.0, 0.0)),
+            ("min_down_block_time", :block_minimum_down_time, :sd_block, (0.0, 2.0)),
+        )
+            for nw in values(data["nw"])
+                nw["gen"]["1"]["min_up_block_time"] = 0
+                nw["gen"]["1"]["min_down_block_time"] = 0
+                nw["gen"]["1"][field] = 2
+            end
+            pm = _uc_gscr_build_integration_pm(data; relax_block_variables=false)
+            first_window = _PM.con(pm, 1)[policy][key]
+            second_window = _PM.con(pm, 2)[policy][key]
+            @test JuMP.normalized_coefficient(first_window, _PM.var(pm, 1, event, key)) == 1
+            @test JuMP.normalized_coefficient(first_window, _PM.var(pm, 2, event, key)) == 0
+            @test JuMP.normalized_coefficient(second_window, _PM.var(pm, 1, event, key)) == 1
+            @test JuMP.normalized_coefficient(second_window, _PM.var(pm, 2, event, key)) == 1
+            other_policy = policy == :block_minimum_up_time ? :block_minimum_down_time : :block_minimum_up_time
+            @test isempty(_PM.con(pm, 2)[other_policy])
+
+            for (nw, active) in enumerate(schedule)
+                JuMP.fix(_PM.var(pm, nw, :na_block, key), active; force=true)
+            end
+            JuMP.set_optimizer(pm.model, HiGHS.Optimizer)
+            JuMP.set_silent(pm.model)
+            JuMP.optimize!(pm.model)
+            @test JuMP.termination_status(pm.model) == JuMP.MOI.INFEASIBLE
+
+            relaxed_time = _uc_gscr_build_integration_pm(data; intertemporal_constraints=false,
+                relax_block_variables=false)
+            for (nw, active) in enumerate(schedule)
+                JuMP.fix(_PM.var(relaxed_time, nw, :na_block, key), active; force=true)
+            end
+            JuMP.set_optimizer(relaxed_time.model, HiGHS.Optimizer)
+            JuMP.set_silent(relaxed_time.model)
+            JuMP.optimize!(relaxed_time.model)
+            @test JuMP.termination_status(relaxed_time.model) == JuMP.MOI.OPTIMAL
         end
 
-        pm = _uc_gscr_transition_pm(data; relax=false)
-        @test !haskey(_PM.con(pm, 1), :block_minimum_up_time)
-        @test !haskey(_PM.con(pm, 1), :block_minimum_down_time)
-        @test !haskey(_PM.con(pm, 2), :block_minimum_up_time)
-        @test !haskey(_PM.con(pm, 2), :block_minimum_down_time)
-
-        JuMP.@objective(pm.model, Min, _FP.calc_uc_gscr_block_startup_shutdown_cost(pm))
-        JuMP.set_optimizer(pm.model, HiGHS.Optimizer)
-        JuMP.set_silent(pm.model)
-        JuMP.optimize!(pm.model)
-        @test JuMP.termination_status(pm.model) == JuMP.MOI.OPTIMAL
+        no_intertemporal = _uc_gscr_build_integration_pm(data; intertemporal_constraints=false)
+        @test !haskey(_PM.con(no_intertemporal, 2), :block_minimum_down_time)
     end
-
-    #=
-    Archived (commented-out) min-up/min-down tests kept for a future stage:
-    - Integration path with min-up/min-down keeps existing objective and gSCR behavior
-    - Minimum up-time prevents early shutdown
-    - Minimum down-time prevents early restart
-    - Count-based startup behavior is preserved (1 -> 4 implies three started blocks)
-    - Minimum down-time uses installed blocks n_block - na_block
-    - Boundary truncation at first snapshots is correct for min-up/min-down
-    - Min-up/min-down constraints remain collision-free across compound keys
-    =#
 
     @testset "Missing na0/startup/shutdown block fields raise explicit validation error" begin
         bad_device = Dict{String,Any}(

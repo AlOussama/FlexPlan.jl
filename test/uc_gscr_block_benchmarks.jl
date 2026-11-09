@@ -547,8 +547,8 @@ end
             ref_extensions=[_FP.ref_add_gen!, _FP.ref_add_storage!, _FP.ref_add_ne_storage!, _FP.ref_add_uc_gscr_block!],
         )
         for nw in sort(collect(_FP.nw_ids(pm_minud)))
-            @test !haskey(_PM.con(pm_minud, nw), :block_minimum_up_time)
-            @test !haskey(_PM.con(pm_minud, nw), :block_minimum_down_time)
+            @test haskey(_PM.con(pm_minud, nw), :block_minimum_up_time)
+            @test haskey(_PM.con(pm_minud, nw), :block_minimum_down_time)
         end
     end
 

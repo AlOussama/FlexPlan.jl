@@ -7,6 +7,13 @@ const _AP2_EVIDENCE=Dict{String,Any}()
     nr=PaperARegional.network_reference(net,sn["bus"],250.0)
     @test nr.Y ≈ [-10im 10im;10im -10im]
     @test nr.B0 ≈ [10.0 -10; -10 10]
+    # A shared transformer and two sources are reduced as a single topology.
+    b_tr = 1/0.12
+    b_parallel = 2/0.20
+    grounded = [b_tr -b_tr; -b_tr b_tr+b_parallel]
+    @test only(reduced_strength(grounded,[1],[2])) ≈ 1/(0.12 + 0.20/2)
+    @test !(only(reduced_strength(grounded,[1],[2])) ≈ 2/(0.12 + 0.20))
+    @test only(reduced_strength([b_tr -b_tr; -b_tr b_tr],[1],[2])) ≈ 0 atol=1e-12
     @test nr.B0_reference_residual<1e-12
     @test isempty(nr.eliminated) && nr.schur_residual==0
     # Genuine 3-bus passive elimination, with physical shunts before Schur.
@@ -55,6 +62,17 @@ const _AP2_EVIDENCE=Dict{String,Any}()
     @test sn["gen"]["2"]["b_block"] ≈ 0.5
 end
 
+@testset "Paper A operational DC loss domain" begin
+    function dcline(pmin, pmax, loss1; loss0=0.0)
+        Dict{String,Any}("pminf"=>pmin, "pmaxf"=>pmax, "loss0"=>loss0, "loss1"=>loss1)
+    end
+    @test _FP._validate_paper_a_dcline_losses(dcline(0.0, 2.0, 0.1), 1, 1) === nothing
+    @test _FP._validate_paper_a_dcline_losses(dcline(-2.0, 2.0, 0.0), 1, 1) === nothing
+    @test _FP._validate_paper_a_dcline_losses(dcline(0.0, 0.0, 0.1), 1, 1) === nothing
+    @test_throws ArgumentError _FP._validate_paper_a_dcline_losses(dcline(-2.0, 2.0, 0.1), 1, 1)
+    @test_throws ArgumentError _FP._validate_paper_a_dcline_losses(dcline(0.0, 2.0, -0.1), 1, 1)
+end
+
 @testset "AP2 physical sources and planning" begin
     syn=_ap2_physical!(Dict{String,Any}(),"SYN")
     @test validate_source(syn)
@@ -67,6 +85,19 @@ end
         @test_throws ArgumentError validate_source(bad)
     end
     @test_throws ArgumentError validate_source(_ap2_physical!(Dict{String,Any}(),"SC"))
+
+    referred = _ap2_physical!(Dict{String,Any}(),"SYN";S=50.0)
+    referred["S_base_MVA"] = 100.0
+    referred["x_src"] = 0.25
+    referred["native_source_kv_referred"] = 20.0
+    referred["source_bus_base_kv"] = 24.0
+    referred["b_block"] = 2.88
+    @test validate_source(referred)
+    missing_voltage = deepcopy(referred)
+    delete!(missing_voltage,"source_bus_base_kv")
+    @test_throws ArgumentError validate_source(missing_voltage)
+    referred["b_block"] = 2.0
+    @test_throws ArgumentError validate_source(referred)
     d=_ap2_fixture();_FP.scale_paper_a_costs!(d)
     pm=_ap2_model(d)
     @test JuMP.is_integer(_PM.var(pm,1,:na_block,(:gen,2)))

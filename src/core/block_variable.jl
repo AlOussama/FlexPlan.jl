@@ -370,6 +370,7 @@ function constraint_block_minimum_up_time(pm::_PM.AbstractPowerModel; nw::Int=_P
     for device_key in _uc_gscr_block_startup_shutdown_device_keys(pm, nw)
         min_up_block_time = _PM.ref(pm, nw, device_key[1], device_key[2], "min_up_block_time")
         window_nws = _uc_gscr_block_hour_window(pm, nw, min_up_block_time)
+        isempty(window_nws) && continue
         su_window = sum(_PM.var(pm, window_nw, :su_block, device_key) for window_nw in window_nws)
         constraints[device_key] = JuMP.@constraint(pm.model, su_window <= na_block[device_key])
     end
@@ -408,6 +409,7 @@ function constraint_block_minimum_down_time(pm::_PM.AbstractPowerModel; nw::Int=
     for device_key in _uc_gscr_block_startup_shutdown_device_keys(pm, nw)
         min_down_block_time = _PM.ref(pm, nw, device_key[1], device_key[2], "min_down_block_time")
         window_nws = _uc_gscr_block_hour_window(pm, nw, min_down_block_time)
+        isempty(window_nws) && continue
         sd_window = sum(_PM.var(pm, window_nw, :sd_block, device_key) for window_nw in window_nws)
         constraints[device_key] = JuMP.@constraint(pm.model, sd_window <= n_block[device_key] - na_block[device_key])
     end
