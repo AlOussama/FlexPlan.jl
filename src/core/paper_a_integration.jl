@@ -237,7 +237,8 @@ function _paper_a_validate_native_storage(data)
         end
         for (field,source) in (("self_discharge_rate","standing_loss"),("charge_efficiency","efficiency_store"),
                                ("discharge_efficiency","efficiency_dispatch"))
-            expected = PaperARegional.number(native,source;positive=field!="self_discharge_rate",nonnegative=true)
+            positive = field == "discharge_efficiency" || (field == "charge_efficiency" && pmin < 0)
+            expected = PaperARegional.number(native,source;positive,nonnegative=true)
             expected <= 1 && PaperARegional.number(dev,field) == expected ||
                 throw(ArgumentError("AP1 native StorageUnit $field mismatch for $id"))
         end

@@ -147,6 +147,13 @@ unverified="PROFILE_ORIGIN_UNVERIFIED"
     strict=deepcopy(original)
     strict["paper_a_extension"]["dataset_kind"]="real_pypsa_input_unverified"
     rejects(()->FP.prepare_paper_a_data!(strict),unverified)
+    zero_charge=deepcopy(changed)
+    dev=zero_charge["nw"]["1"]["storage"]["1"]
+    dev["charge_efficiency"]=dev["paper_a_storage_unit"]["efficiency_store"]=0.0
+    dev["paper_a_storage_unit"]["p_min_pu"]=-0.4
+    dev["charge_rating"]=20.0
+    pin=FP.paper_a_profile_identity(zero_charge)
+    rejects(()->FP.prepare_paper_a_data!(zero_charge;expected_profile_sha256=pin),"efficiency_store")
     @test !any(p->p.name=="HiGHS",keys(Base.loaded_modules))
 end
 
@@ -161,6 +168,7 @@ receipts=Any[]
             data=dims!(read_case(generation,n))
             @test data["nw"]["1"]["storage"]["1"]["energy"]*200 ≈ 37.0
             @test data["nw"]["1"]["storage"]["1"]["charge_rating"]==0
+            @test data["nw"]["1"]["storage"]["1"]["charge_efficiency"]==(new ? 0.0 : 0.95)
             initial_online=data["nw"]["1"]["gen"]["1"]["na0"]
             FP.scale_paper_a_costs!(data)
             pm=model(data)
