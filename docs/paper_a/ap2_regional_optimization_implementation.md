@@ -67,3 +67,29 @@ The final producer baseline is `32ff4525dc576af52c16298cb35ebd98f02cf8b2`. See [
 The pinned producer synthetic 3/6/24 files are actually parsed, normalized, templated and solved with positive G1, both integer and explicitly relaxed blocks. Their integer cases are infeasible because region C has only GFL devices and the SYN minimum of 128.25 MW exceeds the 10 MW load. Their LP relaxations solve optimally with independently checked source, exposure, SOC, power-balance and cost residuals. No infeasible integer case is relabeled as a positive acceptance result. `test/run_paper_a_ap1_acceptance.jl PINNED_DATA_ROOT OUTPUT_JSON` is the executable additional target; it errors if a required fixture is missing and checks the manifest's content hash.
 
 AP1's exported nmax remains binding. An expandable AP1 device must have positive finite investment price and cannot carry `investment_data_status=blocked_missing_cost`. Original requested unpriced maxima remain diagnostic only. Standard operational indices/unit-line fields and the existing ideal-efficiency storage abstraction are supplied at the adapter boundary; unknown physical source data is never replaced by those operational defaults.
+
+### DEV-04 profile-content intake
+
+For a persisted AP1 case, capture case_sha256 from the producer manifest before
+the consumer run. Pass it to FlexPlan.parse_file as expected_case_sha256.
+case_manifest defaults to case_manifest.json beside the case. Import checks
+the SHA-256 of the same raw JSON bytes it parses and validates the sidecar's
+case identity version, run ID and snapshot list.
+
+For an in-memory fixture, capture FlexPlan.paper_a_profile_identity before
+changes and pass it to prepare_paper_a_data! as expected_profile_sha256.
+paper_a_profiles_v1 covers the snapshot index and ID, durations, time and cost
+weights, base/units, the component tables and all their asset fields. Sorted
+object keys and typed UTF-8, decimal integer and exact finite Binary64
+encodings determine the digest. Null is explicit, omitted keys are distinct,
+and missing or non-finite values fail closed. gSCR policy and solver
+dimensions are run settings, with dimensions checked by the chronology guard.
+
+The normal unit conversion and one-time cost weighting verify the incoming
+binding before changing data, then record the derived digest. The builder
+checks that digest and the actual model reference payload. Explicit synthetic
+regressions may run without a prior expected input, with reference status
+PROFILE_ORIGIN_UNVERIFIED. A strict or parametric model requires prior
+identity. This contract identifies what the consumer received in a local run.
+Producer source-axis and asset-join checks independently establish the mapping
+from the CSV input.

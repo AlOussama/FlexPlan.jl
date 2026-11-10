@@ -94,9 +94,17 @@ power fields. This function is formulation-independent and mutates only `ref`.
 """
 function ref_add_uc_gscr_block!(ref::Dict{Symbol,<:Any}, data::Dict{String,<:Any};paper_a_validation_scope::Symbol=:strict)
     paper_a = _paper_a_validate_markers(data)
-    if paper_a
+    binding = if paper_a
+        profile_binding=_paper_a_profile_binding(data;
+            allow_unverified=paper_a_validation_scope==:synthetic_regression && _paper_a_synthetic_case(data))
         _paper_a_validate_chronology(data)
         _paper_a_validate_native_storage(data)
+        profile_binding
+    end
+    # Reuse the standard reference filtering on the verified input. Taking
+    # the expectation from the live ref would bless changes by earlier extensions.
+    expected_ref = if binding!==nothing
+        _PM.build_ref(data;ref_extensions=[ref_add_gen!,ref_add_storage!,ref_add_ne_storage!])[:it][_PM.pm_it_sym][:nw]
     end
     any_block_data = any(_has_uc_gscr_block_data(nw_ref) for (_, nw_ref) in ref[:it][_PM.pm_it_sym][:nw])
     if any_block_data
@@ -118,6 +126,14 @@ function ref_add_uc_gscr_block!(ref::Dict{Symbol,<:Any}, data::Dict{String,<:Any
         _add_uc_gscr_device_maps!(nw_ref)
         if paper_a
             _paper_a_add_reference!(nw_ref,data,nw;validation_scope=paper_a_validation_scope)
+            nw_ref[:paper_a_profile_origin]=binding===nothing ? "PROFILE_ORIGIN_UNVERIFIED" : "PROFILE_CONTENT_IDENTITY_VERIFIED"
+            if binding!==nothing
+                temporal=_paper_a_temporal(data,nw)
+                expected=_paper_a_reference_identity(expected_ref[nw],temporal)
+                expected==_paper_a_reference_identity(nw_ref) ||
+                    _paper_a_identity_mismatch("reference profiles differ from verified input at network $nw")
+                nw_ref[:paper_a_profile_reference_digest]=expected
+            end
         else
             _add_uc_gscr_row_metrics!(nw_ref)
         end

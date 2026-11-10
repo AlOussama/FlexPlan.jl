@@ -76,8 +76,19 @@ function build_uc_gscr_block_integration(
         storage_terminal_policy = _uc_gscr_storage_terminal_policy_from_deprecated(final_storage_policy)
     end
     _validate_uc_gscr_storage_terminal_policy(storage_terminal_policy, storage_terminal_fraction)
-    paper_a=any(haskey(_PM.ref(pm,n),:paper_a_regional) for n in nw_ids(pm))
+    paper_a=_paper_a_enabled(pm.data)
     if paper_a
+        scope=isnothing(template) ? :strict : template.paper_a_validation_scope
+        binding=_paper_a_profile_binding(pm.data;allow_unverified=scope==:synthetic_regression && _paper_a_synthetic_case(pm.data))
+        for n in nw_ids(pm)
+            ref=_PM.ref(pm,n)
+            haskey(ref,:paper_a_profile_origin) || _paper_a_origin_unverified("AP1 model requires validated reference data")
+            if binding!==nothing
+                digest=get(ref,:paper_a_profile_reference_digest,nothing)
+                digest==_paper_a_reference_identity(ref) ||
+                    _paper_a_identity_mismatch("model reference profiles changed at network $n")
+            end
+        end
         pm isa _PM.AbstractDCPModel || throw(ArgumentError("Paper-A operational integration requires a PowerModels DCP model"))
         for n in nw_ids(pm)
             isempty(get(_PM.ref(pm,n),:switch,Dict())) || throw(ArgumentError("Paper-A fixed-topology DCP builder does not support switches"))

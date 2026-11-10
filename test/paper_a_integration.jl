@@ -320,7 +320,9 @@ end
     @test_throws ArgumentError _ap2_model(unpriced)
     # A synthetic test scope cannot be applied to a real/unclassified dataset.
     template=_ap2_template();scoped=_FP.UCGSCRBlockTemplate(template.carrier_formulations,template.gscr_formulation;paper_a_validation_scope=:synthetic_regression)
-    @test_throws ArgumentError _ap2_model(priced;template=scoped)
+    unclassified=deepcopy(priced)
+    delete!(unclassified["paper_a_extension"],"dataset_kind")
+    @test_throws ArgumentError _ap2_model(unclassified;template=scoped)
 end
 
 if haskey(ENV,"PAPER_A_AP2_EVIDENCE")

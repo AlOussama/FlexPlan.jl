@@ -29,6 +29,7 @@ __init__() = Memento.register(_LOGGER)
 ## Includes
 
 include("core/paper_a_regional.jl")
+include("core/paper_a_profile_identity.jl")
 include("core/paper_a_integration.jl")
 include("core/paper_a_qualification.jl")
 include("prob/storage_tnep.jl")

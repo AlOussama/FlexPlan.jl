@@ -1,11 +1,15 @@
 """
-    parse_file(file; flex_load=true, <keyword arguments>)
+    parse_file(file; flex_load=true, expected_case_sha256=nothing, case_manifest=nothing, <keyword arguments>)
 
 Parse a Matpower .m `file` or PTI (PSS(R)E-v33) .raw `file` into a FlexPlan data structure,
 including non-dispatchable generators, DC components, storage and flexible loads.
 
 `flex_load` specifies whether to process flexible load data.
 Other keyword arguments, if any, are forwarded to `PowerModels.parse_file`.
+For a qualified AP1 JSON import, supply the SHA-256 captured from the producer
+manifest before processing the case. The manifest path defaults to the adjacent
+case_manifest.json. Without a previous expected SHA-256, only explicit AP1
+synthetic regression data may use the unverified path.
 
 Mandatory tables: `bus`, `gen`, `branch` (and `load_extra` if `flex_load==true`).
 
@@ -13,12 +17,30 @@ Optional tables: `gencost`, `ndgen`, `branch_oltc`, `storage`, `storage_extra`,
 `ne_storage`, and tables used by PowerModelsACDC.
 Other tables can be added as well: they will be made available in the returned object.
 """
-function parse_file(file::String; flex_load=true, kwargs...)
+function parse_file(file::String; flex_load=true, expected_case_sha256=nothing, case_manifest=nothing, kwargs...)
     if lowercase(splitext(file)[2])==".json"
-        raw=JSON.parsefile(file;dicttype=Dict{String,Any})
+        bytes=read(file)
+        if expected_case_sha256!==nothing
+            _paper_a_sha256_string(expected_case_sha256) ||
+                _paper_a_origin_unverified("invalid expected case SHA-256")
+            actual=bytes2hex(SHA.sha256(bytes))
+            actual==expected_case_sha256 ||
+                _paper_a_identity_mismatch("case SHA-256 $actual differs from expected $expected_case_sha256")
+        elseif case_manifest!==nothing
+            _paper_a_origin_unverified("a manifest path does not supply a previously recorded expected case SHA-256")
+        end
+        raw=JSON.parse(String(bytes);dicttype=Dict{String,Any})
         if _paper_a_validate_markers(raw)
+            if expected_case_sha256!==nothing
+                manifest_path=something(case_manifest,joinpath(dirname(file),"case_manifest.json"))
+                identity=_paper_a_validate_case_manifest(raw,manifest_path,expected_case_sha256)
+                raw[_PAPER_A_PROFILE_KEY]=_PaperAProfileBinding(identity,paper_a_profile_identity(raw))
+            end
             return prepare_paper_a_data!(raw)
         end
+    end
+    if expected_case_sha256!==nothing || case_manifest!==nothing
+        _paper_a_origin_unverified("the specified input is not an AP1 JSON case")
     end
     data = _PM.parse_file(file; kwargs...)
     _add_gen_data!(data)

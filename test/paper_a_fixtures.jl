@@ -3,7 +3,8 @@ import Dates
 # Deterministic consumer fixtures: these numbers are test inputs, never prices
 # or reactance evidence for a real study.
 function _ap2_marker()
-    Dict{String,Any}("name"=>"scientific_physical_data","version"=>"1.0","flexplan_ap2_required"=>true)
+    Dict{String,Any}("name"=>"scientific_physical_data","version"=>"1.0","flexplan_ap2_required"=>true,
+        "dataset_kind"=>"synthetic_regression_only")
 end
 
 function _ap2_primitive(a,b;name=a*b,x=0.1,r=0.0,base=250.0,kv=20.0,bc=0.0)
@@ -84,7 +85,7 @@ function _ap2_template(;gscr=_FP.GershgorinGSCR(),fixed_gfl=false,storage_cost_p
     _FP.UCGSCRBlockTemplate(Dict(
         (:gen,"GFL")=>(fixed_gfl ? _FP.BlockFixedInstalled() : _FP.BlockRenewableParticipation()),
         (:gen,"SYN")=>_FP.BlockThermalCommitment(),
-        (:storage,"GFM")=>_FP.BlockStorageParticipation()),gscr;storage_cost_policy)
+        (:storage,"GFM")=>_FP.BlockStorageParticipation()),gscr;storage_cost_policy,paper_a_validation_scope=:synthetic_regression)
 end
 
 function _ap2_model(data;template=_ap2_template(),kwargs...)

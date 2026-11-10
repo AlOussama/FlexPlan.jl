@@ -11,9 +11,10 @@ rows=Any[]
         path=joinpath(folder,"case.json")
         isfile(path) || error("BLOCKED: required pinned AP1 fixture missing: $path")
         manifest=JSON.parsefile(joinpath(folder,"case_manifest.json");dicttype=Dict{String,Any})
-        @test bytes2hex(sha256(read(path)))==manifest["case_sha256"]
+        expected_case_sha256=manifest["case_sha256"]
+        @test bytes2hex(sha256(read(path)))==expected_case_sha256
         for relax in (false,true)
-            data=FP.parse_file(path)
+            data=FP.parse_file(path;expected_case_sha256)
             FP.add_dimension!(data,:hour,n)
             FP.add_dimension!(data,:scenario,Dict(1=>Dict{String,Any}("probability"=>.5)))
             FP.add_dimension!(data,:year,1;metadata=Dict{String,Any}("scale_factor"=>1))

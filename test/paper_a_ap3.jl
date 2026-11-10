@@ -23,7 +23,7 @@ end
     for (name,f) in (("G0",_FP.ExactPSDGSCR()),("G3",_FP.ExactEdgeSOCGSCR()))
         d=_ap2_fixture(;hours=1);d["nw"]["1"]["gen"]["2"]["nmax"]=4
         _FP.scale_paper_a_costs!(d)
-        tpl=_FP.UCGSCRBlockTemplate(Dict((:gen,"GFL")=>_FP.BlockFixedInstalled(),(:gen,"SYN")=>_FP.BlockFixedInstalled(),(:storage,"GFM")=>_FP.BlockFixedInstalled()),f)
+        tpl=_FP.UCGSCRBlockTemplate(Dict((:gen,"GFL")=>_FP.BlockFixedInstalled(),(:gen,"SYN")=>_FP.BlockFixedInstalled(),(:storage,"GFM")=>_FP.BlockFixedInstalled()),f;paper_a_validation_scope=:synthetic_regression)
         feasible=Any[]
         for k in 0:4
             pm=_ap2_model(deepcopy(d);template=tpl,relax_block_variables=false,storage_terminal_policy=:fixed_initial)

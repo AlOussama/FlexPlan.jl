@@ -49,8 +49,9 @@ end
 power and polynomial costs, FlexPlan block P/Q/E fields, and candidate storage
 are converted on the common base. Already-pu input must carry block units.
 No temporal or investment cost weighting is performed here."""
-function prepare_paper_a_data!(data::Dict{String,Any})
+function prepare_paper_a_data!(data::Dict{String,Any};expected_profile_sha256=nothing)
     _paper_a_validate_markers(data) || throw(ArgumentError("AP1 extension required"))
+    binding=_paper_a_profile_binding(data;expected_profile_sha256,allow_unverified=_paper_a_synthetic_case(data))
     _paper_a_validate_chronology(data)
     _paper_a_validate_native_storage(data)
     snapshots=get(data,"multinetwork",false) ? data["nw"] : Dict("1"=>data)
@@ -58,6 +59,7 @@ function prepare_paper_a_data!(data::Dict{String,Any})
     if get(data,"per_unit",false)
         all(get(sn,"paper_a_block_units",nothing)=="pu_system" for sn in values(snapshots)) ||
             throw(ArgumentError("already-pu AP1 input requires paper_a_block_units=pu_system"))
+        _paper_a_advance_profile_binding!(data,binding)
         return data
     end
     for sn in values(snapshots)
@@ -105,6 +107,7 @@ function prepare_paper_a_data!(data::Dict{String,Any})
         sn["paper_a_block_units"]="pu_system"
     end
     data["per_unit"]=true
+    _paper_a_advance_profile_binding!(data,binding)
     return data
 end
 
@@ -343,6 +346,7 @@ Accepts raw or prepared AP1 single/multinetwork input; changes only costs.
 Already scaled inputs carry exact applied factors and are rejected on repeat."""
 function scale_paper_a_costs!(data::Dict{String,Any}; cost_scale_factor::Real=1.0)
     _paper_a_validate_markers(data) || throw(ArgumentError("AP1 extension required"))
+    binding=_paper_a_profile_binding(data;allow_unverified=_paper_a_synthetic_case(data))
     _paper_a_validate_chronology(data)
     isfinite(cost_scale_factor) && cost_scale_factor>0 || throw(ArgumentError("invalid currency scale"))
     snapshots=get(data,"multinetwork",false) ? data["nw"] : Dict("1"=>data)
@@ -375,6 +379,7 @@ function scale_paper_a_costs!(data::Dict{String,Any}; cost_scale_factor::Real=1.
         sn["paper_a_investment_fraction_applied"]=fraction
         sn["paper_a_currency_factor"]=cost_scale_factor
     end
+    _paper_a_advance_profile_binding!(data,binding)
     return data
 end
 
