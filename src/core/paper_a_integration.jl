@@ -64,6 +64,13 @@ function _paper_a_expansion_peaks(data)
     return result
 end
 
+function _paper_a_expansion_group(table, carrier)
+    carrier=lowercase(strip(carrier))
+    table==:gen && carrier in ("ccgt","ocgt") && return :gas
+    table in (:storage,:ne_storage) && carrier in ("battery","bess-gfm") && return :bess
+    return nothing
+end
+
 function _paper_a_expansion_groups(ref, peaks, base, nw)
     buses=ref[:bus]
     bus_name=Dict(i=>bus["name"] for (i,bus) in buses)
@@ -87,14 +94,9 @@ function _paper_a_expansion_groups(ref, peaks, base, nw)
     groups=Dict{Tuple{Symbol,Int},Tuple{String,Symbol}}()
     for (table,id,dev) in _uc_gscr_block_devices(ref)
         dev["nmax"]>dev["n0"] || continue
-        carrier=lowercase(strip(dev["carrier"]))
-        if table==:gen && carrier in ("ccgt","ocgt")
-            group=:gas
-        elseif table in (:storage,:ne_storage) && carrier in ("battery","bess-gfm")
-            group=:bess
-        else
-            throw(ArgumentError("Paper-A expansion policy prohibits investment in $table $id ($carrier)"))
-        end
+        carrier=dev["carrier"]
+        group=_paper_a_expansion_group(table,carrier)
+        group===nothing && throw(ArgumentError("Paper-A expansion policy prohibits investment in $table $id ($carrier)"))
         groups[(table,id)]=(bus_name[_uc_gscr_device_bus(table,dev)],group)
     end
     return groups

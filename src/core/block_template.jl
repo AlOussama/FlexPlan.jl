@@ -174,6 +174,11 @@ end
 function _validate_uc_gscr_block_template_device(pm::_PM.AbstractPowerModel, nw::Int, device_key::Tuple{Symbol,Any}, formulation::AbstractBlockDeviceFormulation)
     if haskey(_PM.ref(pm,nw),:paper_a_regional)
         dev=_PM.ref(pm,nw,device_key[1],device_key[2])
+        marker=get(pm.data,"paper_a_extension",nothing)
+        if marker isa AbstractDict && haskey(marker,"expansion_policy") &&
+                _paper_a_expansion_group(first(device_key),dev["carrier"])===:gas && !(formulation isa BlockThermalCommitment)
+            throw(ArgumentError("Paper-A expansion policy requires BlockThermalCommitment for gas device $(last(device_key)) at network $nw"))
+        end
         if formulation isa BlockFixedInstalled && !(dev["a_conn"] in (0,1))
             throw(ArgumentError("BlockFixedInstalled requires binary AP1 connection availability; use a participation template for fractional a_conn"))
         end

@@ -38,14 +38,14 @@ function _ap2_expansion_fixture()
     return data
 end
 
-function _ap2_expansion_model(data)
+function _ap2_expansion_model(data;device_formulations=Dict())
     template=_FP.UCGSCRBlockTemplate(Dict(
         (:gen,"GFL")=>_FP.BlockRenewableParticipation(),
         (:gen,"CCGT")=>_FP.BlockThermalCommitment(),
         (:gen,"OCGT")=>_FP.BlockThermalCommitment(),
         (:storage,"BESS-GFM")=>_FP.BlockStorageParticipation(),
         (:ne_storage,"battery")=>_FP.BlockStorageParticipation()),_FP.NoGSCR();
-        paper_a_validation_scope=:synthetic_regression)
+        device_formulations,paper_a_validation_scope=:synthetic_regression)
     return _ap2_model(data;template,objective=false)
 end
 
@@ -204,6 +204,26 @@ end
             @test err isa ArgumentError
             @test occursin("AP1_PROFILE_CONTENT_IDENTITY_MISMATCH",sprint(showerror,err))
         end
+    end
+
+    @testset "Opt-in gas requires thermal commitment after device overrides" begin
+        data=_ap2_expansion_fixture()
+        for sn in values(data["nw"])
+            sn["gen"]["3"]["nmax"]=sn["gen"]["3"]["n0"]
+        end
+        override=Dict((:gen,3)=>_FP.BlockRenewableParticipation())
+        err=try
+            _ap2_expansion_model(_ap2_expansion_prepared(deepcopy(data));device_formulations=override)
+            nothing
+        catch ex
+            ex
+        end
+        @test err isa ArgumentError
+        @test occursin("requires BlockThermalCommitment for gas device 3",sprint(showerror,err))
+
+        delete!(data["paper_a_extension"],"expansion_policy")
+        pm=_ap2_expansion_model(_ap2_expansion_prepared(data);device_formulations=override)
+        @test (:gen,3) ∉ axes(_PM.var(pm,1,:su_block),1)
     end
 end
 
