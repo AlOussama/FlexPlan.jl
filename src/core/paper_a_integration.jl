@@ -11,9 +11,13 @@ end
 
 function _paper_a_validate_markers(data)
     enabled=_paper_a_enabled(data)
+    expansion_policy=enabled ? get(data["paper_a_extension"],"expansion_policy",nothing) : nothing
     snapshots=get(data,"multinetwork",false) ? data["nw"] : Dict("1"=>data)
     for sn in values(snapshots)
         _paper_a_enabled(sn)==enabled || throw(ArgumentError("Paper-A root/snapshot extension mismatch"))
+        if enabled && !isequal(get(sn["paper_a_extension"],"expansion_policy",expansion_policy),expansion_policy)
+            throw(ArgumentError("AP1 root/snapshot expansion policy mismatch"))
+        end
         if !enabled && (haskey(sn,"paper_a_network") || haskey(sn,"paper_a_temporal") ||
             any(haskey(dev,"source_class") for table in ("gen","storage","ne_storage") for dev in values(get(sn,table,Dict()))))
             throw(ArgumentError("unversioned Paper-A physical input"))
@@ -43,6 +47,75 @@ function _paper_a_validate_shared_assets(ref)
             isequal(get(dev,field,nothing),get(baseline[(table,id)],field,nothing)) || throw(ArgumentError("shared AP1 asset field $field changes across snapshots"))
         end
     end
+end
+
+function _paper_a_expansion_peaks(data)
+    marker=data["paper_a_extension"]
+    haskey(marker,"expansion_policy") || return nothing
+    policy=marker["expansion_policy"]
+    policy isa AbstractDict && get(policy,"id",nothing)=="gas_bess_3x_bus_peak_v1" ||
+        throw(ArgumentError("unsupported Paper-A expansion policy"))
+    peaks=get(policy,"peak_load_MW_by_bus",nothing)
+    peaks isa AbstractDict && !isempty(peaks) && all(k->k isa AbstractString,keys(peaks)) ||
+        throw(ArgumentError("Paper-A expansion policy requires peak_load_MW_by_bus"))
+    result=Dict(name=>PaperARegional.number(peaks,name;nonnegative=true) for name in keys(peaks))
+    all(p->isfinite(3*p),values(result)) ||
+        throw(ArgumentError("nonfinite Paper-A expansion capacity"))
+    return result
+end
+
+function _paper_a_expansion_groups(ref, peaks, base, nw)
+    buses=ref[:bus]
+    bus_name=Dict(i=>bus["name"] for (i,bus) in buses)
+    length(buses)==length(peaks) && Set(values(bus_name))==Set(keys(peaks)) ||
+        throw(ArgumentError("Paper-A expansion peak buses differ from model buses at network $nw"))
+
+    demand=Dict(name=>0.0 for name in keys(peaks))
+    for load in values(ref[:load])
+        demand[bus_name[load["load_bus"]]]+=PaperARegional.number(load,"pd")*base
+    end
+    for (name,peak) in peaks
+        total=demand[name]
+        isfinite(total) && (total<=peak || isapprox(total,peak;atol=1e-8,rtol=1e-9)) ||
+            throw(ArgumentError("Paper-A expansion peak below represented demand at bus $name, network $nw"))
+    end
+    for (i,bus) in buses
+        PaperARegional.number(bus,"vmin")==0.95 && PaperARegional.number(bus,"vmax")==1.05 ||
+            throw(ArgumentError("Paper-A expansion policy requires 0.95/1.05 p.u. voltage limits at bus $(bus_name[i])"))
+    end
+
+    groups=Dict{Tuple{Symbol,Int},Tuple{String,Symbol}}()
+    for (table,id,dev) in _uc_gscr_block_devices(ref)
+        dev["nmax"]>dev["n0"] || continue
+        carrier=lowercase(strip(dev["carrier"]))
+        if table==:gen && carrier in ("ccgt","ocgt")
+            group=:gas
+        elseif table in (:storage,:ne_storage) && carrier in ("battery","bess-gfm")
+            group=:bess
+        else
+            throw(ArgumentError("Paper-A expansion policy prohibits investment in $table $id ($carrier)"))
+        end
+        groups[(table,id)]=(bus_name[_uc_gscr_device_bus(table,dev)],group)
+    end
+    return groups
+end
+
+function _paper_a_limit_expansion!(pm, nw, peaks, groups)
+    isempty(groups) && return nothing
+    installed=_PM.var(pm,nw,:n_block)
+    totals=Dict{Tuple{String,Symbol},JuMP.AffExpr}()
+    for key in sort!(collect(keys(groups)))
+        dev=_PM.ref(pm,nw,key...)
+        added=get!(() -> JuMP.AffExpr(0.0),totals,groups[key])
+        mw=dev["p_block_max_MW"]
+        JuMP.add_to_expression!(added,mw,installed[key])
+        JuMP.add_to_expression!(added,-mw*dev["n0"])
+    end
+    # Installed blocks are shared across this AP1 planning year's snapshots.
+    _PM.con(pm,nw)[:paper_a_expansion_limits]=Dict(
+        group=>JuMP.@constraint(pm.model,totals[group]<=3*peaks[first(group)])
+        for group in sort!(collect(keys(totals))))
+    return nothing
 end
 
 """Normalize a raw AP1 physical single/multinetwork once. Standard PowerModels

@@ -51,6 +51,11 @@ terms. Dcline active-power limits are enforced by the bounded
 it applies existing storage state constraints with an explicit terminal-storage
 policy gate.
 
+The optional AP1 expansion policy caps added installed MW for pooled CCGT/OCGT
+and independently for BESS at each bus. Each cap is three times the exported
+coincident load peak over the full source chronology. This case also requires
+lossless dclines and a 0.95–1.05 p.u. voltage band in the bus data.
+
 When `template` is supplied, this builder validates template compatibility and
 caches resolved formulation data in `pm.ext`; block variables, transition
 constraints, fixed-installed constraints, and startup/shutdown objective terms
@@ -77,6 +82,8 @@ function build_uc_gscr_block_integration(
     end
     _validate_uc_gscr_storage_terminal_policy(storage_terminal_policy, storage_terminal_fraction)
     paper_a=_paper_a_enabled(pm.data)
+    peaks=paper_a ? _paper_a_expansion_peaks(pm.data) : nothing
+    expansion_groups=nothing
     if paper_a
         scope=isnothing(template) ? :strict : template.paper_a_validation_scope
         binding=_paper_a_profile_binding(pm.data;allow_unverified=scope==:synthetic_regression && _paper_a_synthetic_case(pm.data))
@@ -94,7 +101,13 @@ function build_uc_gscr_block_integration(
             isempty(get(_PM.ref(pm,n),:switch,Dict())) || throw(ArgumentError("Paper-A fixed-topology DCP builder does not support switches"))
             isempty(get(_PM.ref(pm,n),:link,Dict())) || throw(ArgumentError("AP1 raw links require an explicit operational dcline conversion before model build"))
             for (i, line) in _PM.ref(pm, n, :dcline)
-                _validate_paper_a_dcline_losses(line, n, i)
+                _validate_paper_a_dcline_losses(line, n, i;lossless=peaks!==nothing)
+            end
+            if peaks!==nothing
+                groups=_paper_a_expansion_groups(_PM.ref(pm,n),peaks,pm.data["baseMVA"],n)
+                expansion_groups===nothing && (expansion_groups=groups)
+                groups==expansion_groups ||
+                    throw(ArgumentError("Paper-A expandable devices or bus/group assignment change across snapshots"))
             end
             intertemporal_constraints ||
                 all(dev->!haskey(dev,"paper_a_storage_unit"),values(_PM.ref(pm,n,:storage))) ||
@@ -126,6 +139,10 @@ function build_uc_gscr_block_integration(
         variable_uc_gscr_block(pm; nw=n, relax=relax_blocks)
         _paper_a_online_expressions!(pm,n)
         _relax_standard_bounds_for_block_enabled_devices!(pm, n)
+    end
+
+    if expansion_groups!==nothing
+        _paper_a_limit_expansion!(pm,first(nw_ids(pm)),peaks,expansion_groups)
     end
 
     if objective
@@ -603,9 +620,11 @@ function _relax_standard_bounds_for_block_enabled_devices!(pm::_PM.AbstractActiv
     end
 end
 
-function _validate_paper_a_dcline_losses(line::AbstractDict, nw::Int, id)
+function _validate_paper_a_dcline_losses(line::AbstractDict, nw::Int, id; lossless::Bool=false)
     loss0 = PaperARegional.number(line, "loss0"; nonnegative=true)
     loss1 = PaperARegional.number(line, "loss1"; nonnegative=true)
+    lossless && !(iszero(loss0) && iszero(loss1)) &&
+        throw(ArgumentError("Paper-A expansion policy requires lossless dcline $id at network $nw"))
     pmin = PaperARegional.number(line, "pminf")
     pmax = PaperARegional.number(line, "pmaxf")
     pmin <= pmax && loss1 < 1 ||

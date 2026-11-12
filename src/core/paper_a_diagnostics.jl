@@ -51,9 +51,15 @@ function reconstruct(raw,solution,t;tol=DEFAULT_TOL)
             # AC-side operating magnitude is explicitly distinct from nameplate.
             pop[r]+=d["mu_fl"]*abs(v["dispatch_MW"]-get(v,"charge_MW",0.))/base
         elseif !get(d,"fixed_strength_already_in_network",false)
-            strength=d["mu_str"]*d["native_source_MVA"]/(base*d["x_src"])*on
+            b_native=d["native_source_MVA"]/(base*d["x_src"])
+            if haskey(d,"native_source_kv_referred") || haskey(d,"source_bus_base_kv")
+                bus_id=d[table=="gen" ? "gen_bus" : "storage_bus"]
+                bus_kv=sn["bus"][string(bus_id)]["base_kv"]
+                b_native*=(bus_kv/d["native_source_kv_referred"])^2
+            end
+            strength=d["mu_str"]*b_native*on
             bs[r]+=strength
-            normres=max(normres,abs(d["b_block"]-d["native_source_MVA"]/(base*d["x_src"])))
+            normres=max(normres,abs(d["b_block"]-b_native))
         end
         push!(ledger,Dict("asset"=>"$table:$id","name"=>d["name"],"region"=>regions[r],"class"=>d["source_class"],"strength"=>strength,"exposure"=>exposure,"online"=>on,"installed"=>inst,"new_MW"=>(inst-d["n0"])*d["p_block_max_MW"],"installed_MVA"=>inst*d["S_block_MVA"],"installed_MWh"=>table=="gen" ? nothing : inst*d["e_block"]))
     end
