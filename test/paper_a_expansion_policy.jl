@@ -1,5 +1,5 @@
-function _ap2_expansion_fixture()
-    data=_ap2_fixture()
+function _ap2_expansion_fixture(;hours=2)
+    data=_ap2_fixture(;hours)
     data["paper_a_extension"]["expansion_policy"]=Dict(
         "id"=>"gas_bess_3x_bus_peak_v1","peak_load_MW_by_bus"=>Dict{String,Any}("A"=>90.0,"B"=>0.0))
     for (t,sn) in data["nw"]

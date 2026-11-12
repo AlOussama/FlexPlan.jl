@@ -11,18 +11,19 @@ end
 
 function _paper_a_validate_markers(data)
     enabled=_paper_a_enabled(data)
-    expansion_policy=enabled ? get(data["paper_a_extension"],"expansion_policy",nothing) : nothing
     snapshots=get(data,"multinetwork",false) ? data["nw"] : Dict("1"=>data)
     for sn in values(snapshots)
         _paper_a_enabled(sn)==enabled || throw(ArgumentError("Paper-A root/snapshot extension mismatch"))
-        if enabled && !isequal(get(sn["paper_a_extension"],"expansion_policy",expansion_policy),expansion_policy)
-            throw(ArgumentError("AP1 root/snapshot expansion policy mismatch"))
-        end
         if !enabled && (haskey(sn,"paper_a_network") || haskey(sn,"paper_a_temporal") ||
             any(haskey(dev,"source_class") for table in ("gen","storage","ne_storage") for dev in values(get(sn,table,Dict()))))
             throw(ArgumentError("unversioned Paper-A physical input"))
         end
         if enabled
+            for field in ("expansion_policy","owner_scenario")
+                declared=get(data["paper_a_extension"],field,nothing)
+                isequal(get(sn["paper_a_extension"],field,declared),declared) ||
+                    throw(ArgumentError("AP1 root/snapshot $field mismatch"))
+            end
             schema=get(sn,"block_model_schema",get(data,"block_model_schema",nothing))
             schema isa AbstractDict && get(schema,"name",nothing)=="uc_gscr_block" && get(schema,"version",nothing)=="2.0" || throw(ArgumentError("AP1 requires schema v2 on root and snapshots"))
             for table in ("gen","storage","ne_storage"), dev in values(get(sn,table,Dict()))
@@ -129,6 +130,7 @@ function prepare_paper_a_data!(data::Dict{String,Any};expected_profile_sha256=no
     binding=_paper_a_profile_binding(data;expected_profile_sha256,allow_unverified=_paper_a_synthetic_case(data))
     _paper_a_validate_chronology(data)
     _paper_a_validate_native_storage(data)
+    _paper_a_validate_owner_case(data,binding)
     snapshots=get(data,"multinetwork",false) ? data["nw"] : Dict("1"=>data)
     base=PaperARegional.number(data,"baseMVA";positive=true)
     if get(data,"per_unit",false)
@@ -348,7 +350,8 @@ function _paper_a_add_reference!(nw_ref,data,nw;validation_scope=:strict)
         get(data["paper_a_extension"],"dataset_kind",nothing)=="synthetic_regression_only" || throw(ArgumentError("synthetic regression scope cannot be used on real/unclassified input"))
         all(i=="grounding_reference_unverified" for i in net["passive_domain_issues"]) || throw(ArgumentError("synthetic regression still requires verified shunt/source inventories"))
     end
-    regional=PaperARegional.network_reference(net,nw_ref[:bus],base;diagnostic_only=synthetic || parametric)
+    regional=PaperARegional.network_reference(net,nw_ref[:bus],base;diagnostic_only=synthetic || parametric,
+        require_positive_eliminated=_paper_a_owner_scenario(data)!==nothing)
     temporal=_paper_a_temporal(data,nw)
     if haskey(data,"dim")
         isapprox(dim_prop(data,nw,:scenario,"probability"),temporal.probability;atol=1e-9) || throw(ArgumentError("AP1 scenario dimension/temporal probability mismatch"))
@@ -425,6 +428,8 @@ function scale_paper_a_costs!(data::Dict{String,Any}; cost_scale_factor::Real=1.
     binding=_paper_a_profile_binding(data;allow_unverified=_paper_a_synthetic_case(data))
     _paper_a_validate_chronology(data)
     isfinite(cost_scale_factor) && cost_scale_factor>0 || throw(ArgumentError("invalid currency scale"))
+    _paper_a_owner_scenario(data)===nothing || cost_scale_factor==1 ||
+        throw(ArgumentError("Owner scenario costs are already in EUR2025"))
     snapshots=get(data,"multinetwork",false) ? data["nw"] : Dict("1"=>data)
     for sn in values(snapshots)
         get(sn,"paper_a_cost_state","raw_hourly")=="raw_hourly" && !get(sn,"paper_a_capex_scaled",false) || throw(ArgumentError("AP1 costs already scaled"))

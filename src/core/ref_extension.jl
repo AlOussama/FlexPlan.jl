@@ -99,8 +99,10 @@ function ref_add_uc_gscr_block!(ref::Dict{Symbol,<:Any}, data::Dict{String,<:Any
             allow_unverified=paper_a_validation_scope==:synthetic_regression && _paper_a_synthetic_case(data))
         _paper_a_validate_chronology(data)
         _paper_a_validate_native_storage(data)
+        _paper_a_validate_owner_case(data,profile_binding)
         profile_binding
     end
+    owner=_paper_a_owner_scenario(data)
     # Reuse the standard reference filtering on the verified input. Taking
     # the expectation from the live ref would bless changes by earlier extensions.
     expected_ref = if binding!==nothing
@@ -118,10 +120,11 @@ function ref_add_uc_gscr_block!(ref::Dict{Symbol,<:Any}, data::Dict{String,<:Any
 
         _validate_uc_gscr_block_snapshot_fields(nw_ref, nw)
         min_up_down_enabled = _uc_gscr_block_min_up_down_enabled(nw_ref)
-        missing_report = _uc_gscr_missing_required_fields_report(nw_ref; min_up_down_enabled)
+        validate_all_min_times = owner===nothing && min_up_down_enabled
+        missing_report = _uc_gscr_missing_required_fields_report(nw_ref; min_up_down_enabled=validate_all_min_times)
         _warn_uc_gscr_missing_required_fields(missing_report)
         _validate_uc_gscr_rejected_block_fields(nw_ref)
-        _validate_uc_gscr_block_devices(nw_ref; min_up_down_enabled, paper_a)
+        _validate_uc_gscr_block_devices(nw_ref; min_up_down_enabled=validate_all_min_times, paper_a)
         _warn_uc_gscr_deprecated_block_fields(nw_ref)
         _add_uc_gscr_device_maps!(nw_ref)
         if paper_a

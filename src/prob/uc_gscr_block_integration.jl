@@ -115,6 +115,10 @@ function build_uc_gscr_block_integration(
         end
     end
     relax_blocks=isnothing(relax_block_variables) ? !paper_a : relax_block_variables
+    if _paper_a_owner_scenario(pm.data)!==nothing
+        !relax_blocks && intertemporal_constraints ||
+            throw(ArgumentError("Owner scenario requires integer blocks and intertemporal constraints"))
+    end
 
     if !isnothing(template)
         resolve_uc_gscr_block_template!(pm, template)

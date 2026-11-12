@@ -117,7 +117,8 @@ end
 """Assemble passive positive-sequence AC admittance from physical primitives.
 Producer matrices are diagnostics only. Unit-tap lines are the bounded supported
 primitive; native transformer models need a separate validated conversion."""
-function network_reference(net::AbstractDict, buses::AbstractDict, base::Real;tol=1e-9, diagnostic_only=false)
+function network_reference(net::AbstractDict, buses::AbstractDict, base::Real;tol=1e-9, diagnostic_only=false,
+                           require_positive_eliminated=false)
     isfinite(base) && base>0 || throw(ArgumentError("invalid baseMVA"))
     issues = get(net,"passive_domain_issues",nothing)
     issues isa AbstractVector || throw(ArgumentError("missing passive-domain inventory status"))
@@ -176,6 +177,9 @@ function network_reference(net::AbstractDict, buses::AbstractDict, base::Real;to
     r=String.(net["retained_physical_buses"]);e=String.(net["eliminated_physical_buses"])
     all(haskey(idx,b) for b in vcat(r,e)) || throw(ArgumentError("unknown reduction bus"))
     rr=[idx[b] for b in r];ee=[idx[b] for b in e]
+    if require_positive_eliminated && !isempty(ee) && eigmin(Symmetric(L[ee,ee]))<=tol
+        throw(ArgumentError("Owner scenario requires a positive-definite passive eliminated-node block"))
+    end
     B0=reduced_strength(L,rr,ee;tol); symmetric_z(B0;tol)
     mapping=net["bus_to_region"]
     Set(keys(mapping))==Set(names) || throw(ArgumentError("incomplete AC bus to region map"))

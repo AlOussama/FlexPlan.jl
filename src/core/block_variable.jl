@@ -304,17 +304,21 @@ function constraint_block_count_transitions(pm::_PM.AbstractPowerModel; nw::Int=
     su_block = _PM.var(pm, nw, :su_block)
     sd_block = _PM.var(pm, nw, :sd_block)
     constraints = _PM.con(pm, nw)[:block_count_transitions] = Dict{Tuple{Symbol,Any},JuMP.ConstraintRef}()
+    first_hour=is_first_id(pm,nw,:hour)
+    previous=first_hour ? nothing : _PM.var(pm,prev_id(pm,nw,:hour),:na_block)
+    owner=_paper_a_owner_scenario(pm.data)
+    if owner!==nothing
+        installed=_PM.var(pm,nw,:n_block)
+        bounds=_PM.con(pm,nw)[:paper_a_native_uc_event_bounds]=Dict{Tuple{Symbol,Any},Tuple{JuMP.ConstraintRef,JuMP.ConstraintRef}}()
+    end
 
-    if is_first_id(pm, nw, :hour)
-        for device_key in _uc_gscr_block_startup_shutdown_device_keys(pm, nw)
-            na0 = _PM.ref(pm, nw, device_key[1], device_key[2], "na0")
-            constraints[device_key] = JuMP.@constraint(pm.model, na_block[device_key] - na0 == su_block[device_key] - sd_block[device_key])
-        end
-    else
-        prev_nw = prev_id(pm, nw, :hour)
-        na_prev = _PM.var(pm, prev_nw, :na_block)
-        for device_key in _uc_gscr_block_startup_shutdown_device_keys(pm, nw)
-            constraints[device_key] = JuMP.@constraint(pm.model, na_block[device_key] - na_prev[device_key] == su_block[device_key] - sd_block[device_key])
+    for device_key in _uc_gscr_block_startup_shutdown_device_keys(pm,nw)
+        na_prev=first_hour ? _PM.ref(pm,nw,device_key...,"na0") : previous[device_key]
+        su,sd=su_block[device_key],sd_block[device_key]
+        constraints[device_key]=JuMP.@constraint(pm.model,na_block[device_key]-na_prev==su-sd)
+        if owner!==nothing
+            bounds[device_key]=(JuMP.@constraint(pm.model,su<=installed[device_key]-na_prev),
+                JuMP.@constraint(pm.model,sd<=na_prev))
         end
     end
 
@@ -372,7 +376,8 @@ function constraint_block_minimum_up_time(pm::_PM.AbstractPowerModel; nw::Int=_P
         window_nws = _uc_gscr_block_hour_window(pm, nw, min_up_block_time)
         isempty(window_nws) && continue
         su_window = sum(_PM.var(pm, window_nw, :su_block, device_key) for window_nw in window_nws)
-        constraints[device_key] = JuMP.@constraint(pm.model, su_window <= na_block[device_key])
+        locked=_paper_a_native_uc_history_lock(pm,nw,device_key,min_up_block_time;online=true)
+        constraints[device_key] = JuMP.@constraint(pm.model, su_window+locked <= na_block[device_key])
     end
 
     return constraints
@@ -411,7 +416,8 @@ function constraint_block_minimum_down_time(pm::_PM.AbstractPowerModel; nw::Int=
         window_nws = _uc_gscr_block_hour_window(pm, nw, min_down_block_time)
         isempty(window_nws) && continue
         sd_window = sum(_PM.var(pm, window_nw, :sd_block, device_key) for window_nw in window_nws)
-        constraints[device_key] = JuMP.@constraint(pm.model, sd_window <= n_block[device_key] - na_block[device_key])
+        locked=_paper_a_native_uc_history_lock(pm,nw,device_key,min_down_block_time;online=false)
+        constraints[device_key] = JuMP.@constraint(pm.model, sd_window+locked <= n_block[device_key] - na_block[device_key])
     end
 
     return constraints
