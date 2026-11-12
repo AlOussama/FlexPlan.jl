@@ -184,9 +184,41 @@ end
     delete!(net,"B0_reference_pu")
     R=_FP.PaperARegional
     @test only(R.network_reference(net,buses,250;require_positive_eliminated=true).B0)≈0 atol=1e-12
+    tol=_FP.PaperADiagnostics.DEFAULT_TOL
+    net["fixed_shunts"]["B"]=Dict("gs_pu"=>0.0,"bs_pu"=>10.0-tol/10)
+    @test_throws ArgumentError R.network_reference(net,buses,250;require_positive_eliminated=true)
+    net["fixed_shunts"]["B"]["bs_pu"]=10.0-2tol
+    @test isfinite(only(R.network_reference(net,buses,250;require_positive_eliminated=true).B0))
     net["fixed_shunts"]["B"]=Dict("gs_pu"=>0.0,"bs_pu"=>11.0)
     @test only(R.network_reference(net,buses,250).B0)≈110.0
     @test_throws ArgumentError R.network_reference(net,buses,250;require_positive_eliminated=true)
+end
+
+@testset "Owner case and manifest agree on scenario and derived CSV identity" begin
+    data=_owner_fixture()
+    owner=_owner_marker(data)
+    pin=repeat("a",64)
+    derived=repeat("b",64)
+    owner["source_binding"]=Dict("derived_csv_bundle_sha256"=>derived)
+    manifest=Dict{String,Any}("schema"=>"paper_a_ap1_manifest_1.0",
+        "case_content_identity"=>"sha256_raw_json_bytes_v1","case_sha256"=>pin,
+        "case_run_identity"=>"ap1:sha256:"*pin,"selected_snapshots"=>[data["snapshot_ids"][string(i)] for i in 1:3],
+        "owner_scenario"=>deepcopy(owner),"source_dataset_identity_sha256"=>derived)
+    mktempdir() do dir
+        function write_manifest(name)
+            path=joinpath(dir,name*".json")
+            open(io->_FP.JSON.print(io,manifest),path,"w")
+            return path
+        end
+        @test _FP._paper_a_validate_case_manifest(data,write_manifest("matching"),pin)=="ap1:sha256:"*pin
+        manifest["owner_scenario"]["bess_duration_h"]=6
+        @test_throws ArgumentError _FP._paper_a_validate_case_manifest(data,write_manifest("different-duration"),pin)
+        manifest["owner_scenario"]["bess_duration_h"]=4
+        manifest["source_dataset_identity_sha256"]=repeat("c",64)
+        @test_throws ArgumentError _FP._paper_a_validate_case_manifest(data,write_manifest("different-source"),pin)
+        # Release JSON's mapped file buffers before Windows removes the fixture directory.
+        Sys.iswindows() && GC.gc()
+    end
 end
 
 @testset "Reject inconsistent owner scenario inputs before model assembly" begin

@@ -1,9 +1,10 @@
 module PaperADiagnostics
 using LinearAlgebra
+using ..PaperARegional: PASSIVE_ELIMINATED_TOL
 import SHA, JSON
 
 const SCHEMA="paper_a_ap3/1.0"
-const DEFAULT_TOL=1e-7
+const DEFAULT_TOL=PASSIVE_ELIMINATED_TOL
 matrix(x)=x isa AbstractMatrix ? Matrix{Float64}(x) : reduce(vcat,permutedims.(Float64.(v) for v in x))
 rows(A::AbstractMatrix)=[collect(A[i,:]) for i in axes(A,1)]
 hashfile(path)=bytes2hex(SHA.sha256(read(path)))

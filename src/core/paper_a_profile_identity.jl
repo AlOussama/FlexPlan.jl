@@ -145,5 +145,17 @@ function _paper_a_validate_case_manifest(data,path,expected)
     ids isa AbstractDict && selected isa AbstractVector && length(ids)==length(selected) &&
         all(i->get(ids,string(i),nothing)==selected[i],eachindex(selected)) ||
         _paper_a_identity_mismatch("producer manifest snapshots do not match the case axis")
+    owner=_paper_a_owner_scenario(data)
+    if owner!==nothing
+        declared=get(manifest,"owner_scenario",nothing)
+        declared isa AbstractDict && _paper_a_canonical_digest(owner)==_paper_a_canonical_digest(declared) ||
+            _paper_a_identity_mismatch("producer manifest owner scenario does not match the case")
+        if haskey(owner,"source_binding")
+            source=owner["source_binding"]
+            derived=source isa AbstractDict ? get(source,"derived_csv_bundle_sha256",nothing) : nothing
+            _paper_a_sha256_string(derived) && get(manifest,"source_dataset_identity_sha256",nothing)==derived ||
+                _paper_a_identity_mismatch("producer manifest source CSV identity does not match the owner case")
+        end
+    end
     return run_identity
 end

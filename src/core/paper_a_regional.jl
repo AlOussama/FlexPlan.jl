@@ -5,6 +5,8 @@ using LinearAlgebra
 export reduced_strength, source_b_block, regional_strength, online_exposure,
        dispatch_event_weights, validate_source, assert_connection
 
+const PASSIVE_ELIMINATED_TOL=1e-7
+
 """Compute the passive fixed regional matrix using explicit retained/eliminated
 node positions. Endogenous sources must NOT be present in L."""
 function reduced_strength(L::AbstractMatrix{<:Real}, retained::AbstractVector{<:Integer},
@@ -177,7 +179,7 @@ function network_reference(net::AbstractDict, buses::AbstractDict, base::Real;to
     r=String.(net["retained_physical_buses"]);e=String.(net["eliminated_physical_buses"])
     all(haskey(idx,b) for b in vcat(r,e)) || throw(ArgumentError("unknown reduction bus"))
     rr=[idx[b] for b in r];ee=[idx[b] for b in e]
-    if require_positive_eliminated && !isempty(ee) && eigmin(Symmetric(L[ee,ee]))<=tol
+    if require_positive_eliminated && !isempty(ee) && eigmin(Symmetric(L[ee,ee]))<=PASSIVE_ELIMINATED_TOL
         throw(ArgumentError("Owner scenario requires a positive-definite passive eliminated-node block"))
     end
     B0=reduced_strength(L,rr,ee;tol); symmetric_z(B0;tol)
