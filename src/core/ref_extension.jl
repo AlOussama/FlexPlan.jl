@@ -201,6 +201,14 @@ function _uc_gscr_block_min_up_down_enabled(nw_ref::Dict{Symbol,<:Any})
     return false
 end
 
+function _uc_gscr_has_block_annotation(table, device)
+    # Native StorageUnits have a carrier even without a block model. Any
+    # other block field still triggers full schema validation.
+    native_storage = table == :storage && haskey(device, "paper_a_storage_unit")
+    return any(haskey(device, field) && !(native_storage && field == "carrier")
+               for field in _UC_GSCR_BLOCK_DETECTION_FIELDS)
+end
+
 """
     _has_uc_gscr_block_data(nw_ref)
 
@@ -217,7 +225,7 @@ function _has_uc_gscr_block_data(nw_ref::Dict{Symbol,<:Any})
             continue
         end
         for (device_id, device) in nw_ref[table_name]
-            if any(haskey(device, field) for field in _UC_GSCR_BLOCK_DETECTION_FIELDS)
+            if _uc_gscr_has_block_annotation(table_name, device)
                 return true
             end
         end
@@ -542,7 +550,7 @@ function _uc_gscr_block_devices(nw_ref::Dict{Symbol,<:Any})
             continue
         end
         for (device_id, device) in nw_ref[table_name]
-            if any(haskey(device, field) for field in _UC_GSCR_BLOCK_DETECTION_FIELDS)
+            if _uc_gscr_has_block_annotation(table_name, device)
                 if _uc_gscr_is_inactive_placeholder_device(device)
                     continue
                 end

@@ -8,6 +8,8 @@ const _PAPER_A_FULL37_PINS = (
     "phs_mode_sha256"=>"fb7fd61891eb2bed828f8e54b1ac022f30f4592bd9ee33bc90f6c808dc758add",
 )
 const _PAPER_A_SELECTIVE_SYN = Dict("hydro"=>0.3,"ror"=>0.3,"biomass"=>0.5,"oil"=>0.2)
+const _PAPER_A_FULL37_DISPATCH_POLICY = "reservoir_no_gscr_oil_coal_minimum_v1"
+const _PAPER_A_FULL37_NON_RESERVOIR_SELECTORS_SHA = "b1ea9cc64f4e2e94667737d9bacc591bb5106faee0b9d99e1d60665fb01351fe"
 # SHA of the ordered rational vector rounded once to Float64, represented as
 # newline-delimited sixteen-digit hexadecimal IEEE-754 bit patterns.
 const _PAPER_A_FULL37_G2_NUMERIC_SHA="5fee28dc98c8384c4c35edeef29a59210e1f84629428db6ff845036e390939"
@@ -24,6 +26,8 @@ _paper_a_full37_lines_sha(lines)=bytes2hex(SHA.sha256(join(lines,'\n')))
 _paper_a_full37(data)=get(get(data,"paper_a_extension",Dict()),"full37_specification",nothing)
 _paper_a_full37_mode(dev)=get(get(dev,"paper_a_full37_online",Dict()),"mode",nothing)
 _paper_a_full37_minimum(dev)=dev["paper_a_full37_online"]["strength_minimum_pu"]
+_paper_a_dispatch_reservoir(data,dev)=get(something(_paper_a_full37(data),Dict()),"dispatch_policy",nothing)==
+    _PAPER_A_FULL37_DISPATCH_POLICY && get(dev,"carrier",nothing)=="hydro"
 
 function _paper_a_full37_variant_digest(v)
     lines = (
@@ -36,6 +40,28 @@ function _paper_a_full37_variant_digest(v)
         "hours=" * string(Int(v["hours"])),
     )
     return _paper_a_full37_lines_sha(lines)
+end
+
+function _paper_a_full37_reservoir(dev, table)
+    native = get(dev,"paper_a_storage_unit",nothing)
+    table=="storage" && native isa AbstractDict && native["p_min_pu"]==0 &&
+        get(dev,"status",nothing)==1 && get(dev,"committable",false)===false &&
+        get(dev,"fixed_strength_already_in_network",false)===false &&
+        all(k->!haskey(dev,k),("source_class","grid_control_mode","paper_a_full37_online",
+            "paper_a_annual_cyclic","paper_a_carrier_uc","paper_a_native_uc",
+            "n0","nmax","na0","p_block_max","p_block_max_MW","e_block","b_block","a_conn","mu_str","mu_fl")) &&
+        PaperARegional.number(dev,"marginal_cost";nonnegative=true)>=0 ||
+        throw(ArgumentError("Full37 reservoir $(dev["name"]) requires native non-pumping storage without block or source parameters"))
+    return native
+end
+
+function _paper_a_full37_oil_minimum(dev)
+    source=get(dev,"p_min_pu_source",nothing)
+    lo=PaperARegional.number(dev,"p_min_pu")
+    hi=PaperARegional.number(dev,"p_max_pu")
+    coal_min=_PAPER_A_CARRIER_UC["coal"][4]
+    0<=lo<=hi<=1 && (source=="pypsa_generator_time_series" || (source=="owner_coal_proxy" && lo==coal_min)) ||
+        throw(ArgumentError("Full37 oil minimum must use its time series or the owner-approved coal proxy"))
 end
 
 function _paper_a_validate_full37(data,binding)
@@ -55,6 +81,10 @@ function _paper_a_validate_full37(data,binding)
         all(synthetic ? _paper_a_sha256_string(get(spec,key,nothing)) && spec[key]!=sha :
             get(spec,key,nothing)==sha for (key,sha) in _PAPER_A_FULL37_PINS) ||
         throw(ArgumentError("Full37 scientific input identity mismatch"))
+    dispatch_policy=get(spec,"dispatch_policy",nothing)
+    dispatch_policy in (nothing,_PAPER_A_FULL37_DISPATCH_POLICY) ||
+        throw(ArgumentError("Unsupported Full37 dispatch policy"))
+    revised_dispatch=dispatch_policy==_PAPER_A_FULL37_DISPATCH_POLICY
     owner=_paper_a_owner_scenario(data)
     owner!==nothing && owner["phs_mode"]=="MAIN" && _paper_a_carrier_uc(data) ||
         throw(ArgumentError("Full37 requires the main PHS and carrier UC scenario"))
@@ -122,13 +152,27 @@ function _paper_a_validate_full37(data,binding)
         sources=String[]
         counts=Dict("hydro"=>0,"ror"=>0,"oil"=>0,"biomass"=>0,"phs"=>0,"gfl"=>0,"gfm"=>0)
         for table in ("gen","storage","ne_storage"), (id,dev) in get(sn,table,Dict())
+            carrier=lowercase(dev["carrier"])
+            if revised_dispatch && carrier=="hydro"
+                native=_paper_a_full37_reservoir(dev,table)
+                bus=sn["bus"][string(dev["storage_bus"])]["name"]
+                roster[(table,id)]=(dev["name"],dev["carrier"],nothing,nothing,false,bus,
+                    nothing,nothing,native["p_nom_MW"],nothing,dev["status"])
+                counts[carrier]+=1
+                if !synthetic && baseline===nothing
+                    # Original physical source-class roster remains bound even
+                    # when this reservoir earns no modelled source credit.
+                    push!(sources,join((dev["name"],dev["carrier"],"SYN",bus),'\t'))
+                end
+                continue
+            end
+            revised_dispatch && carrier=="oil" && table=="gen" && _paper_a_full37_oil_minimum(dev)
             if !haskey(dev,"source_class")
                 !haskey(dev,"paper_a_full37_online") && !haskey(dev,"paper_a_annual_cyclic") ||
                     throw(ArgumentError("A Full37 selector requires a block source"))
                 synthetic || throw(ArgumentError("Full37 operating roster contains a non-block asset"))
                 continue
             end
-            carrier=lowercase(dev["carrier"])
             cls=dev["source_class"]
             selective=cls=="SYN" && haskey(_PAPER_A_SELECTIVE_SYN,carrier)
             phs=cls=="SYN" && carrier=="phs"
@@ -210,7 +254,9 @@ function _paper_a_validate_full37(data,binding)
                 names=ids[group]
                 isempty(names) && continue
                 sort!(names)
-                _paper_a_full37_lines_sha(names)==roster_sha ||
+                expected_sha=revised_dispatch && group=="SELECTIVE_SYN" ?
+                    _PAPER_A_FULL37_NON_RESERVOIR_SELECTORS_SHA : roster_sha
+                _paper_a_full37_lines_sha(names)==expected_sha ||
                     throw(ArgumentError("Full37 $group asset IDs differ from the frozen roster"))
             end
         end

@@ -67,6 +67,59 @@ function _full37_model(d;gscr=_FP.GershgorinGSCR(),biomass_form=_FP.BlockRenewab
     return _ap2_model(d;template,objective)
 end
 
+@testset "Full37 reservoir dispatch without blocks and oil minimum" begin
+    d=_full37_fixture()
+    spec=d["paper_a_extension"]["full37_specification"]
+    spec["dispatch_policy"]=_FP._PAPER_A_FULL37_DISPATCH_POLICY
+    for sn in values(d["nw"])
+        sn["paper_a_extension"]["full37_specification"]["dispatch_policy"]=spec["dispatch_policy"]
+        sn["storage"]["9"]=Dict{String,Any}(
+            "name"=>"synthetic reservoir","carrier"=>"hydro","index"=>9,"storage_bus"=>1,"status"=>1,
+            "energy"=>0.,"energy_rating"=>.8,"charge_rating"=>0.,"discharge_rating"=>.2*nextfloat(1.),
+            "charge_efficiency"=>0.,"discharge_efficiency"=>.8,"stationary_energy_inflow"=>.01,
+            "stationary_energy_outflow"=>0.,"self_discharge_rate"=>0.,"thermal_rating"=>.2*nextfloat(1.),
+            "r"=>0.,"x"=>0.,"qmin"=>0.,"qmax"=>0.,"p_loss"=>0.,"q_loss"=>0.,"marginal_cost"=>7.,
+            "paper_a_storage_unit"=>Dict("p_nom_MW"=>50.,"max_hours"=>4.,"p_min_pu"=>0.,"p_max_pu"=>nextfloat(1.),
+                "cyclic_state_of_charge"=>true,"state_of_charge_initial_MWh"=>nothing,
+                "inflow_MW"=>2.5,"inflow_unit"=>"MW","standing_loss"=>0.,"efficiency_store"=>0.,"efficiency_dispatch"=>.8))
+        oil=sn["gen"]["4"]
+        oil["carrier"]="oil"
+        oil["p_min_pu"]=.38
+        oil["p_min_pu_source"]="owner_coal_proxy"
+        oil["a_res"]=1.
+        oil["p_max_pu"]=1.
+        oil["paper_a_full37_online"]["strength_minimum_pu"]=.2
+    end
+    bad=deepcopy(d)
+    bad["nw"]["2"]["gen"]["4"]["p_min_pu"]=.5
+    @test_throws ArgumentError _ap2_expansion_prepared(bad)
+    bad=deepcopy(d)
+    bad["nw"]["2"]["storage"]["9"]["n0"]=1
+    @test_throws ArgumentError _ap2_expansion_prepared(bad)
+    template=_FP.UCGSCRBlockTemplate(Dict(
+        (:gen,"GFL")=>_FP.BlockRenewableParticipation(),(:gen,"CCGT")=>_FP.BlockThermalCommitment(),
+        (:gen,"OCGT")=>_FP.BlockThermalCommitment(),(:gen,"oil")=>_FP.BlockRenewableParticipation(),
+        (:storage,"BESS-GFM")=>_FP.BlockStorageParticipation(),(:ne_storage,"BESS-GFM")=>_FP.BlockStorageParticipation(),
+        (:storage,"PHS")=>_FP.BlockStorageParticipation()),_FP.GershgorinGSCR();
+        paper_a_validation_scope=:synthetic_regression,storage_cost_policy=:discharge)
+    pm=_ap2_model(_ap2_expansion_prepared(d);template,objective=true)
+    @test !haskey(_PM.ref(pm,1,:paper_a_coefficients),(:storage,9))
+    @test !((:storage,9) in axes(_PM.var(pm,1,:n_block),1))
+    @test !haskey(_PM.var(pm,1,:paper_a_strength_blocks),(:storage,9))
+    @test !((:gen,4) in axes(_PM.var(pm,1,:su_block),1))
+    @test JuMP.upper_bound(_PM.var(pm,1,:sc,9))==0
+    @test JuMP.upper_bound(_PM.var(pm,1,:sd,9))==.2*nextfloat(1.)
+    @test JuMP.coefficient(JuMP.objective_function(pm.model),_PM.var(pm,1,:sd,9))==7*250
+    lower=first(_PM.con(pm,1,:uc_gscr_block_active_dispatch_bounds)[(:gen,4)])
+    @test JuMP.normalized_coefficient(lower,_PM.var(pm,1,:na_block,(:gen,4))) ≈ -.38*_PM.ref(pm,1,:gen,4)["p_block_max"]
+    for t in 1:3
+        JuMP.fix(_PM.var(pm,t,:sd,9),t==3 ? .024 : 0.;force=true)
+        JuMP.fix(_PM.var(pm,t,:paper_a_storage_spill,9),0.;force=true)
+    end
+    @test _ap2_expansion_solve!(pm)==JuMP.MOI.OPTIMAL
+    @test JuMP.value(_PM.var(pm,2,:se,9))-JuMP.value(_PM.var(pm,3,:se,9)) ≈ .02
+end
+
 @testset "Full37 thermal minimum-output time series takes precedence" begin
     d=_full37_fixture()
     for (t,pmin) in zip(1:3,(0.20,0.25,0.30))

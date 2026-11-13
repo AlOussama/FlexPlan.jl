@@ -484,7 +484,7 @@ function _paper_a_storage_operation_cost(pm,nw)
         weight=_PM.ref(pm,nw,:paper_a_cost_state)=="raw_hourly" ? _PM.ref(pm,nw,:paper_a_temporal).dispatch : 1.0
         # sd is AC-side discharged MW on system pu base; charge is not billed.
         sd=_PM.var(pm,nw,table==:storage ? :sd : :sd_ne,id)
-        JuMP.add_to_expression!(cost,price*dev["S_base_MVA"]*weight,sd)
+        JuMP.add_to_expression!(cost,price*pm.data["baseMVA"]*weight,sd)
     end
     return cost
 end

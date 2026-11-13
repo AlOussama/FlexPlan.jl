@@ -205,6 +205,15 @@ function extract(pm)
             end
             assets["$table:$id"]=a
         end
+        for (id,dev) in PM.ref(pm,t,:storage)
+            FP._paper_a_dispatch_reservoir(pm.data,dev) || continue
+            spill=get(get(PM.var(pm,t),:paper_a_storage_spill,Dict()),id,nothing)
+            assets["storage:$id"]=Dict(
+                "dispatch_MW"=>base*JuMP.value(PM.var(pm,t,:sd,id)),
+                "charge_MW"=>base*JuMP.value(PM.var(pm,t,:sc,id)),
+                "energy_MWh"=>base*JuMP.value(PM.var(pm,t,:se,id)),
+                "spill_MW"=>spill===nothing ? 0.0 : base*JuMP.value(spill))
+        end
         x=pm.ext[:paper_a_online][t]
         exposure=JuMP.value.(x.p_fl)
         if x.B===nothing
@@ -533,6 +542,8 @@ end
 
 function planning(raw,solution,run)
     investment=0.;generation=0.;storage=0.;event=0.;noload=0.;soc=0.;terminal=0.;power=0.;thermal=0.;uc=0.;bounds=0.;curtail=0.;integer=0.;ledger=Any[]
+    reservoir_power_violation=reservoir_energy_violation=0.0
+    full37=FP._paper_a_full37(raw)!==nothing
     base=raw["baseMVA"];fraction=get(raw,"investment_period_fraction",1.)
     times=sort(collect(keys(raw["nw"]));by=x->parse(Int,x));sn1=raw["nw"][first(times)]
     for (kt,t) in enumerate(times)
@@ -545,6 +556,29 @@ function planning(raw,solution,run)
             f,to=ss["branch_flows_MW"][id];balance[string(br["f_bus"])]+=f;balance[string(br["t_bus"])]+=to
             thermal=max(thermal,max(0.,abs(f)-get(br,"rate_a",Inf),abs(to)-get(br,"rate_a",Inf)))
         end
+        for (id,dev) in get(sn,"storage",Dict())
+            FP._paper_a_dispatch_reservoir(raw,dev) || continue
+            key="storage:$id"
+            v=ss["assets"][key]
+            native=dev["paper_a_storage_unit"]
+            previous = if kt>1
+                solution["snapshots"][times[kt-1]]["assets"][key]["energy_MWh"]
+            elseif native["cyclic_state_of_charge"]
+                solution["snapshots"][last(times)]["assets"][key]["energy_MWh"]
+            else
+                native["state_of_charge_initial_MWh"]
+            end
+            expected=(1-native["standing_loss"])^dt*previous + dt*(native["inflow_MW"] -
+                v["spill_MW"] + native["efficiency_store"]*v["charge_MW"] - v["dispatch_MW"]/native["efficiency_dispatch"])
+            soc=max(soc,abs(v["energy_MWh"]-expected))
+            reservoir_power_violation=max(reservoir_power_violation,
+                abs(v["charge_MW"]),-v["dispatch_MW"],v["dispatch_MW"]-native["p_nom_MW"]*native["p_max_pu"],
+                -v["spill_MW"],v["spill_MW"]-native["inflow_MW"])
+            reservoir_energy_violation=max(reservoir_energy_violation,
+                -v["energy_MWh"],v["energy_MWh"]-native["p_nom_MW"]*native["max_hours"])
+            storage+=dw*dev["marginal_cost"]*v["dispatch_MW"]
+            balance[string(dev["storage_bus"])]+=v["charge_MW"]-v["dispatch_MW"]
+        end
         for table in ("gen","storage","ne_storage"),(id,d) in get(sn,table,Dict())
             haskey(d,"source_class") || continue
             v=ss["assets"]["$table:$id"];inst=v["installed"];on=v["online"];P=d["p_block_max_MW"]
@@ -556,7 +590,7 @@ function planning(raw,solution,run)
             end
             event+=P*ew*(d["startup_cost_per_mw"]*v["startup"]+d["shutdown_cost_per_mw"]*v["shutdown"])
             prev=kt==1 ? d["na0"] : solution["snapshots"][times[kt-1]]["assets"]["$table:$id"]["online"]
-            if d["source_class"]=="SYN" && table=="gen"
+            if table=="gen" && (full37 ? haskey(d,"paper_a_carrier_uc") : d["source_class"]=="SYN")
                 uc=max(uc,abs(on-prev-v["startup"]+v["shutdown"]))
             end
             if table=="gen"
@@ -574,7 +608,8 @@ function planning(raw,solution,run)
         end
         power=max(power,maximum(abs.(collect(values(balance)))))
     end
-    return Dict("schema"=>SCHEMA,"case_id"=>run["case_id"],"formulation"=>run["formulation"],"relaxed"=>run["relaxed"],"unit"=>"declared_input_currency_per_represented_horizon","investment"=>investment,"generation"=>generation,"storage"=>storage,"events"=>event,"no_load"=>noload,"FOM"=>Dict("status"=>"included_in_registered_annualized_price_when_declared","separately_identifiable"=>false),"objective_residual"=>abs(run["objective"]-investment-generation-storage-event-noload),"power_balance_MW"=>power,"thermal_violation_MW"=>thermal,"SOC_residual_MWh"=>soc,"terminal_residual_MWh"=>terminal,"UC_transition_residual"=>uc,"bounds_violation_blocks"=>bounds,"integrality_residual"=>run["relaxed"] ? nothing : integer,"curtailment_MWh"=>curtail,"portfolio"=>ledger)
+    return Dict("schema"=>SCHEMA,"case_id"=>run["case_id"],"formulation"=>run["formulation"],"relaxed"=>run["relaxed"],"unit"=>"declared_input_currency_per_represented_horizon","investment"=>investment,"generation"=>generation,"storage"=>storage,"events"=>event,"no_load"=>noload,"FOM"=>Dict("status"=>"included_in_registered_annualized_price_when_declared","separately_identifiable"=>false),"objective_residual"=>abs(run["objective"]-investment-generation-storage-event-noload),"power_balance_MW"=>power,"thermal_violation_MW"=>thermal,"reservoir_power_violation_MW"=>reservoir_power_violation,
+        "reservoir_energy_violation_MWh"=>reservoir_energy_violation,"SOC_residual_MWh"=>soc,"terminal_residual_MWh"=>terminal,"UC_transition_residual"=>uc,"bounds_violation_blocks"=>bounds,"integrality_residual"=>run["relaxed"] ? nothing : integer,"curtailment_MWh"=>curtail,"portfolio"=>ledger)
 end
 function assess(input,out)
     newoutput(out);a=Any[]
