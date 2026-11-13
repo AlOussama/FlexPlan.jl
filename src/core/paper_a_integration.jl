@@ -19,9 +19,10 @@ function _paper_a_validate_markers(data)
             throw(ArgumentError("unversioned Paper-A physical input"))
         end
         if enabled
-            for field in ("expansion_policy","owner_scenario")
+            for field in ("expansion_policy","owner_scenario","full37_specification")
                 declared=get(data["paper_a_extension"],field,nothing)
-                isequal(get(sn["paper_a_extension"],field,declared),declared) ||
+                default=field=="full37_specification" ? nothing : declared
+                isequal(get(sn["paper_a_extension"],field,default),declared) ||
                     throw(ArgumentError("AP1 root/snapshot $field mismatch"))
             end
             schema=get(sn,"block_model_schema",get(data,"block_model_schema",nothing))
@@ -131,6 +132,7 @@ function prepare_paper_a_data!(data::Dict{String,Any};expected_profile_sha256=no
     _paper_a_validate_chronology(data)
     _paper_a_validate_native_storage(data)
     _paper_a_validate_owner_case(data,binding)
+    _paper_a_validate_full37(data,binding)
     snapshots=get(data,"multinetwork",false) ? data["nw"] : Dict("1"=>data)
     base=PaperARegional.number(data,"baseMVA";positive=true)
     if get(data,"per_unit",false)
@@ -340,6 +342,7 @@ function _paper_a_add_reference!(nw_ref,data,nw;validation_scope=:strict)
     net isa AbstractDict || throw(ArgumentError("missing physical paper_a_network"))
     synthetic=validation_scope==:synthetic_regression
     parametric=validation_scope==:parametric_study
+    full37=_paper_a_full37(data)!==nothing
     validation_scope in (:strict,:synthetic_regression,:parametric_study) || throw(ArgumentError("unsupported validation scope"))
     if parametric
         _paper_a_validate_registered!(data)
@@ -350,7 +353,11 @@ function _paper_a_add_reference!(nw_ref,data,nw;validation_scope=:strict)
         get(data["paper_a_extension"],"dataset_kind",nothing)=="synthetic_regression_only" || throw(ArgumentError("synthetic regression scope cannot be used on real/unclassified input"))
         all(i=="grounding_reference_unverified" for i in net["passive_domain_issues"]) || throw(ArgumentError("synthetic regression still requires verified shunt/source inventories"))
     end
-    regional=PaperARegional.network_reference(net,nw_ref[:bus],base;diagnostic_only=synthetic || parametric,
+    if full37
+        all(==("grounding_reference_unverified"),net["passive_domain_issues"]) ||
+            throw(ArgumentError("Full37 physical grounding can remain unqualified in the screening model; other passive inputs must be verified"))
+    end
+    regional=PaperARegional.network_reference(net,nw_ref[:bus],base;diagnostic_only=synthetic || parametric || full37,
         require_positive_eliminated=_paper_a_owner_scenario(data)!==nothing)
     temporal=_paper_a_temporal(data,nw)
     if haskey(data,"dim")
@@ -368,7 +375,8 @@ function _paper_a_add_reference!(nw_ref,data,nw;validation_scope=:strict)
     coeff=Dict{Tuple{Symbol,Any},Any}()
     fixed_assets=String[]
     for (table,id,dev) in _uc_gscr_block_devices(nw_ref)
-        PaperARegional.validate_source(dev;synthetic_regression=synthetic)
+        PaperARegional.validate_source(dev;synthetic_regression=synthetic,
+            zero_strength_gfm=_paper_a_full37_mode(dev)=="GFM_ZERO_STRENGTH")
         if dev["nmax"]>dev["n0"]
             PaperARegional.number(dev,"cost_inv_per_mw";positive=true)
             get(dev,"investment_data_status",nothing)!="blocked_missing_cost" || throw(ArgumentError("blocked/unpriced AP1 asset cannot expand"))
@@ -489,13 +497,22 @@ function _paper_a_online_expressions!(pm,nw)
     b=[JuMP.AffExpr(x) for x in ref.b_fix]
     p=[JuMP.AffExpr(0.0) for _ in ref.regions]
     for (key,c) in _PM.ref(pm,nw,:paper_a_coefficients)
-        JuMP.add_to_expression!(b[c.region],c.strength,na[key])
+        if !iszero(c.strength)
+            JuMP.add_to_expression!(b[c.region],c.strength,_paper_a_strength_count(pm,nw,key,na[key]))
+        end
         JuMP.add_to_expression!(p[c.region],c.exposure,na[key])
     end
-    B=[JuMP.AffExpr(ref.B0[i,j]) for i in eachindex(b),j in eachindex(b)]
-    for i in eachindex(b);JuMP.add_to_expression!(B[i,i],b[i]);end
     alpha=get(_PM.ref(pm,nw),:g_min,nothing)
-    M=alpha isa Real ? [B[i,j]-(i==j ? alpha*p[i] : 0.0) for i in eachindex(b),j in eachindex(b)] : nothing
+    full37=_paper_a_full37(pm.data)
+    if full37!==nothing && full37["variant"]["formulation"]=="G1"
+        # G1 consumes the affine diagonals only. Its passive off-diagonals are
+        # fixed, so allocating full affine matrices for every hour adds no constraints.
+        B=M=nothing
+    else
+        B=[JuMP.AffExpr(ref.B0[i,j]) for i in eachindex(b),j in eachindex(b)]
+        for i in eachindex(b);JuMP.add_to_expression!(B[i,i],b[i]);end
+        M=alpha isa Real ? [B[i,j]-(i==j ? alpha*p[i] : 0.0) for i in eachindex(b),j in eachindex(b)] : nothing
+    end
     allsnap[nw]=(regions=ref.regions,b_src=b,p_fl=p,B=B,S_diag=p,M=M)
     return allsnap[nw]
 end

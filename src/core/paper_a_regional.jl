@@ -35,7 +35,7 @@ end
 
 """Validate the AP1 physical class, converter control mode and provenance.
 SC is purposefully rejected as an unpriced active-power planning option here."""
-function validate_source(d::AbstractDict;synthetic_regression=false)
+function validate_source(d::AbstractDict;synthetic_regression=false,zero_strength_gfm=false)
     cls = get(d,"source_class",nothing)
     cls in ("GFL","GFM","SYN","SC") || throw(ArgumentError("unknown physical source_class"))
     mode = get(d,"grid_control_mode",nothing)
@@ -57,7 +57,13 @@ function validate_source(d::AbstractDict;synthetic_regression=false)
     number(d,"b_block";nonnegative=true)
     fixed = get(d,"fixed_strength_already_in_network",nothing)
     fixed isa Bool || throw(ArgumentError("missing fixed source accounting flag"))
-    if cls in ("SYN","GFM") && !fixed
+    if zero_strength_gfm
+        cls=="GFM" && !fixed && iszero(d["b_block"]) &&
+            iszero(number(d,"mu_str")) && iszero(number(d,"mu_fl")) &&
+            get(d,"x_src",nothing)===nothing && get(d,"source_equivalent_valid",false)===false ||
+            throw(ArgumentError("Full37 GFM zero-strength case requires zero B and S and no fixed stamp"))
+        number(d,"S_block_MVA";positive=true)
+    elseif cls in ("SYN","GFM") && !fixed
         get(d,"source_equivalent_valid",false) === true ||
             throw(ArgumentError("unverified voltage-source equivalent"))
         get(d,"source_equivalent_type",nothing) == "voltage_behind_reactance" ||

@@ -92,7 +92,7 @@ function build_uc_gscr_block_integration(
             haskey(ref,:paper_a_profile_origin) || _paper_a_origin_unverified("AP1 model requires validated reference data")
             if binding!==nothing
                 digest=get(ref,:paper_a_profile_reference_digest,nothing)
-                digest==_paper_a_reference_identity(ref) ||
+                digest==_paper_a_reference_identity(ref;full37=_paper_a_full37(pm.data)!==nothing) ||
                     _paper_a_identity_mismatch("model reference profiles changed at network $n")
             end
         end
@@ -125,6 +125,9 @@ function build_uc_gscr_block_integration(
 
     if !isnothing(template)
         resolve_uc_gscr_block_template!(pm, template)
+        _paper_a_validate_full37_template(pm,template)
+    elseif _paper_a_full37(pm.data)!==nothing
+        throw(ArgumentError("Full37 requires an explicit operational template"))
     end
 
     for n in nw_ids(pm)
@@ -144,6 +147,7 @@ function build_uc_gscr_block_integration(
         end
 
         variable_uc_gscr_block(pm; nw=n, relax=relax_blocks)
+        _paper_a_full37_variables!(pm,n)
         _paper_a_online_expressions!(pm,n)
         _relax_standard_bounds_for_block_enabled_devices!(pm, n)
     end
@@ -210,7 +214,11 @@ function build_uc_gscr_block_integration(
                 end
                 if _has_uc_gscr_candidate_storage(pm, n)
                     for i in _PM.ids(pm, :ne_storage, nw=n)
-                        constraint_storage_state_ne_block(pm, i, nw=n)
+                        if get(_PM.ref(pm,n,:ne_storage,i),"paper_a_annual_cyclic",false)===true
+                            constraint_storage_state_ne_block(pm,i,last_id(pm,n,:hour),n)
+                        else
+                            constraint_storage_state_ne_block(pm, i, nw=n)
+                        end
                     end
                     for i in _PM.ids(pm, :ne_storage_bounded_absorption, nw=n)
                         constraint_maximum_absorption_ne(pm, i, nw=n)
@@ -699,7 +707,8 @@ function _apply_uc_gscr_storage_terminal_policy!(
         table, i = device_key
         # Native noncyclic units use the supplied E0 and a free terminal
         # state. The native cyclic balance already links last to first.
-        haskey(_PM.ref(pm,nw,table,i),"paper_a_storage_unit") && continue
+        dev=_PM.ref(pm,nw,table,i)
+        (haskey(dev,"paper_a_storage_unit") || get(dev,"paper_a_annual_cyclic",false)===true) && continue
         se_final = _uc_gscr_storage_energy_variable(pm, nw, table, i)
         if storage_terminal_policy == :cyclic
             se_initial_snapshot = _uc_gscr_storage_energy_variable(pm, first_nw, table, i)

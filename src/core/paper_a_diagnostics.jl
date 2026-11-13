@@ -38,7 +38,7 @@ function reconstruct(raw,solution,t;tol=DEFAULT_TOL)
     end
     regions=[net["bus_to_region"][b] for b in net["retained_physical_buses"]]
     bs=[Float64(get(get(net,"fixed_strength_by_region_pu",Dict()),r,0.)) for r in regions]
-    p=zeros(length(regions));pnom=copy(p);pop=copy(p);ledger=Any[];conn=0.;normres=0.
+    p=zeros(length(regions));pnom=copy(p);pop=copy(p);ledger=Any[];conn=0.;normres=0.;selector_residual=0.
     state=solution["snapshots"][string(t)]
     for table in ("gen","storage","ne_storage"),(id,d) in get(sn,table,Dict())
         haskey(d,"source_class") || continue
@@ -46,28 +46,57 @@ function reconstruct(raw,solution,t;tol=DEFAULT_TOL)
         r=findfirst(==(d["region_id"]),regions);r===nothing && throw(ArgumentError("source on eliminated/unknown region"))
         conn=max(conn,max(0.,on-d["a_conn"]*inst,-on))
         strength=0.;exposure=0.
+        selector=get(get(d,"paper_a_full37_online",Dict()),"mode",nothing)
+        strength_count=selector in ("SELECTIVE_SYN","PHS_SYN") ? v["strength_blocks"] : on
+        if selector in ("SELECTIVE_SYN","PHS_SYN")
+            block_MW=d["p_block_max_MW"]
+            lower=d["paper_a_full37_online"]["strength_minimum_pu"]*block_MW
+            gross=v["dispatch_MW"]
+            selector_residual=max(selector_residual,-strength_count,strength_count-on,
+                abs(strength_count-round(strength_count)))
+            if selector=="SELECTIVE_SYN"
+                upper=(table=="gen" ? d["a_res"] : d["paper_a_storage_unit"]["p_max_pu"])*block_MW
+                credit=v["credited_dispatch_MW"]
+                other=gross-credit
+                selector_residual=max(selector_residual,(lower*strength_count-credit)/base,
+                    (credit-upper*strength_count)/base,-other/base,(other-upper*(on-strength_count))/base)
+            else
+                pump=v["pump_blocks"]
+                native=d["paper_a_storage_unit"]
+                selector_residual=max(selector_residual,-pump,abs(pump-round(pump)),
+                    strength_count+pump-on,(lower*strength_count-gross)/base,
+                    (gross-native["p_max_pu"]*block_MW*strength_count)/base,
+                    (v["charge_MW"]+native["p_min_pu"]*block_MW*pump)/base)
+            end
+        end
         if d["source_class"]=="GFL"
             exposure=d["mu_fl"]*d["p_block_max_MW"]*on/base
             p[r]+=exposure;pnom[r]+=d["mu_fl"]*d["p_block_max_MW"]*inst/base
             # AC-side operating magnitude is explicitly distinct from nameplate.
             pop[r]+=d["mu_fl"]*abs(v["dispatch_MW"]-get(v,"charge_MW",0.))/base
-        elseif !get(d,"fixed_strength_already_in_network",false)
+        elseif selector!="GFM_ZERO_STRENGTH" && !get(d,"fixed_strength_already_in_network",false)
             b_native=d["native_source_MVA"]/(base*d["x_src"])
             if haskey(d,"native_source_kv_referred") || haskey(d,"source_bus_base_kv")
                 bus_id=d[table=="gen" ? "gen_bus" : "storage_bus"]
                 bus_kv=sn["bus"][string(bus_id)]["base_kv"]
                 b_native*=(bus_kv/d["native_source_kv_referred"])^2
             end
-            strength=d["mu_str"]*b_native*on
+            strength=d["mu_str"]*b_native*strength_count
             bs[r]+=strength
             normres=max(normres,abs(d["b_block"]-b_native))
         end
-        push!(ledger,Dict("asset"=>"$table:$id","name"=>d["name"],"region"=>regions[r],"class"=>d["source_class"],"strength"=>strength,"exposure"=>exposure,"online"=>on,"installed"=>inst,"new_MW"=>(inst-d["n0"])*d["p_block_max_MW"],"installed_MVA"=>inst*d["S_block_MVA"],"installed_MWh"=>table=="gen" ? nothing : inst*d["e_block"]))
+        row=Dict("asset"=>"$table:$id","name"=>d["name"],"region"=>regions[r],"class"=>d["source_class"],"strength"=>strength,"exposure"=>exposure,"online"=>on,"installed"=>inst,"new_MW"=>(inst-d["n0"])*d["p_block_max_MW"],"installed_MVA"=>inst*d["S_block_MVA"],"installed_MWh"=>table=="gen" ? nothing : inst*d["e_block"])
+        if selector!==nothing
+            merge!(row,Dict("online_selector"=>selector,"strength_blocks"=>selector=="GFM_ZERO_STRENGTH" ? 0 : strength_count,
+                "pump_blocks"=>get(v,"pump_blocks",nothing),"credited_dispatch_MW"=>get(v,"credited_dispatch_MW",nothing)))
+        end
+        push!(ledger,row)
     end
     B=B0+Diagonal(bs);alpha=sn["g_min"];M=B-alpha*Diagonal(p)
     pack=Dict{String,Any}("Y_real"=>rows(real.(Y)),"Y_imag"=>rows(imag.(Y)),"L"=>rows(L),"B0"=>rows(B0),"B"=>rows(B),"p"=>p,"M"=>rows(M),"b_src"=>bs,"regions"=>regions,"alpha"=>alpha,"base_MVA"=>base,"source_ledger"=>ledger,"schur_residual"=>schurres,"source_base_residual"=>normres,"connection_violation"=>conn,"S_nom_v1"=>pnom,"S_on_v1"=>p,"S_op_magnitude_v1"=>pop,"S_I_v1"=>nothing,"qualification"=>get(raw,"paper_a_parameter_qualification",Dict()),"passive_domain_issues"=>net["passive_domain_issues"],"empirical_approved"=>false)
     supplied=get(net,"B0_reference_pu",nothing)
     pack["producer_B0_residual"]=supplied===nothing ? nothing : norm(B0-matrix(supplied),Inf)
+    pack["online_selector_violation"]=selector_residual
     pack["affine_reconstruction_residual"]=haskey(state,"affine") ? maximum([norm(B-matrix(state["affine"]["B"]),Inf),norm(M-matrix(state["affine"]["M"]),Inf),norm(p-state["affine"]["p"],Inf)]) : nothing
     return pack
 end

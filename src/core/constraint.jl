@@ -233,11 +233,25 @@ function constraint_uc_gscr_block_storage_charge_discharge_bounds(pm::_PM.Abstra
     sd = _uc_gscr_block_storage_variable(pm, n, device_key, :discharge)
     na = _PM.var(pm, n, :na_block, device_key)
 
-    native = get(_PM.ref(pm,n,device_key[1],device_key[2]),"paper_a_storage_unit",nothing)
+    dev = _PM.ref(pm,n,device_key...)
+    native = get(dev,"paper_a_storage_unit",nothing)
     charge_pu = native === nothing ? 1.0 : -native["p_min_pu"]
     discharge_pu = native === nothing ? 1.0 : native["p_max_pu"]
-    charge_bound = JuMP.@constraint(pm.model, sc <= charge_pu * p_block_max * na)
-    discharge_bound = JuMP.@constraint(pm.model, sd <= discharge_pu * p_block_max * na)
+    mode=_paper_a_full37_mode(dev)
+    if mode=="PHS_SYN"
+        turbine=_PM.var(pm,n,:paper_a_strength_blocks,device_key)
+        pump=_PM.var(pm,n,:paper_a_pump_blocks,device_key)
+        JuMP.@constraint(pm.model,turbine+pump<=na)
+        JuMP.@constraint(pm.model,sd>=_paper_a_full37_minimum(dev)*p_block_max*turbine)
+        charge_bound=JuMP.@constraint(pm.model,sc<=charge_pu*p_block_max*pump)
+        discharge_bound=JuMP.@constraint(pm.model,sd<=discharge_pu*p_block_max*turbine)
+    else
+        charge_bound=JuMP.@constraint(pm.model,sc<=charge_pu*p_block_max*na)
+        discharge_bound=JuMP.@constraint(pm.model,sd<=discharge_pu*p_block_max*na)
+        if mode=="SELECTIVE_SYN"
+            _paper_a_full37_selective_constraints!(pm,n,device_key,sd,na,discharge_pu,p_block_max)
+        end
+    end
 
     return (charge_bound, discharge_bound)
 end

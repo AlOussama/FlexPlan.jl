@@ -100,6 +100,7 @@ function ref_add_uc_gscr_block!(ref::Dict{Symbol,<:Any}, data::Dict{String,<:Any
         _paper_a_validate_chronology(data)
         _paper_a_validate_native_storage(data)
         _paper_a_validate_owner_case(data,profile_binding)
+        _paper_a_validate_full37(data,profile_binding)
         profile_binding
     end
     owner=_paper_a_owner_scenario(data)
@@ -132,8 +133,9 @@ function ref_add_uc_gscr_block!(ref::Dict{Symbol,<:Any}, data::Dict{String,<:Any
             nw_ref[:paper_a_profile_origin]=binding===nothing ? "PROFILE_ORIGIN_UNVERIFIED" : "PROFILE_CONTENT_IDENTITY_VERIFIED"
             if binding!==nothing
                 temporal=_paper_a_temporal(data,nw)
-                expected=_paper_a_reference_identity(expected_ref[nw],temporal)
-                expected==_paper_a_reference_identity(nw_ref) ||
+                full37=_paper_a_full37(data)!==nothing
+                expected=_paper_a_reference_identity(expected_ref[nw],temporal;full37)
+                expected==_paper_a_reference_identity(nw_ref;full37) ||
                     _paper_a_identity_mismatch("reference profiles differ from verified input at network $nw")
                 nw_ref[:paper_a_profile_reference_digest]=expected
             end

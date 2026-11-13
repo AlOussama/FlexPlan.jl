@@ -42,7 +42,8 @@ function template(data,f,scope)
     assignments=Dict{Tuple{Symbol,Any},FP.AbstractBlockDeviceFormulation}()
     for table in ("gen","storage","ne_storage"),d in values(get(data["nw"]["1"],table,Dict()))
         haskey(d,"source_class") || continue
-        assignments[(Symbol(table),d["carrier"])]=table!="gen" ? FP.BlockStorageParticipation() : d["source_class"]=="SYN" ? FP.BlockThermalCommitment() : FP.BlockRenewableParticipation()
+        thermal=FP._paper_a_full37(data)===nothing ? d["source_class"]=="SYN" : haskey(d,"paper_a_carrier_uc")
+        assignments[(Symbol(table),d["carrier"])]=table!="gen" ? FP.BlockStorageParticipation() : thermal ? FP.BlockThermalCommitment() : FP.BlockRenewableParticipation()
     end
     return FP.UCGSCRBlockTemplate(assignments,f;paper_a_validation_scope=Symbol(scope),storage_cost_policy=:discharge)
 end
@@ -77,7 +78,9 @@ function parameters(raw)
     # Raw independent stamp with zero solved block decisions determines B0.
     snaps=Dict{String,Any}()
     for (t,sn) in raw["nw"]
-        assets=Dict("$table:$id"=>Dict("online"=>0.,"installed"=>d["n0"],"dispatch_MW"=>0.) for table in ("gen","storage","ne_storage") for (id,d) in get(sn,table,Dict()) if haskey(d,"source_class"))
+        assets=Dict("$table:$id"=>Dict("online"=>0.,"installed"=>d["n0"],"dispatch_MW"=>0.,
+            "strength_blocks"=>0.,"pump_blocks"=>0.,"credited_dispatch_MW"=>0.)
+            for table in ("gen","storage","ne_storage") for (id,d) in get(sn,table,Dict()) if haskey(d,"source_class"))
         snaps[t]=Dict("assets"=>assets)
     end
     rec=D.reconstruct(raw,Dict("snapshots"=>snaps),1);B0=D.matrix(rec["B0"]);n=size(B0,1)
@@ -191,6 +194,11 @@ function extract(pm)
             key=(table,id);vv=PM.var(pm,t);d=PM.ref(pm,t,table,id)
             event(sym)=haskey(vv,sym) && key in (vv[sym] isa AbstractDict ? keys(vv[sym]) : axes(vv[sym],1)) ? JuMP.value(vv[sym][key]) : 0.
             a=Dict{String,Any}("installed"=>JuMP.value(PM.var(pm,t,:n_block,key)),"online"=>JuMP.value(PM.var(pm,t,:na_block,key)),"startup"=>event(:su_block),"shutdown"=>event(:sd_block),"dispatch_MW"=>base*JuMP.value(PM.var(pm,t,table==:gen ? :pg : table==:storage ? :sd : :sd_ne,id)))
+            for (field,symbol,factor) in (("strength_blocks",:paper_a_strength_blocks,1.0),
+                    ("pump_blocks",:paper_a_pump_blocks,1.0),("credited_dispatch_MW",:paper_a_credited_power,base))
+                family=get(vv,symbol,nothing)
+                family===nothing || !haskey(family,key) || (a[field]=factor*JuMP.value(family[key]))
+            end
             if table!=:gen
                 a["charge_MW"]=base*JuMP.value(PM.var(pm,t,table==:storage ? :sc : :sc_ne,id))
                 a["energy_MWh"]=base*JuMP.value(PM.var(pm,t,table==:storage ? :se : :se_ne,id))
@@ -198,7 +206,15 @@ function extract(pm)
             assets["$table:$id"]=a
         end
         x=pm.ext[:paper_a_online][t]
-        affine=Dict("B"=>D.rows(JuMP.value.(x.B)),"M"=>D.rows(JuMP.value.(x.M)),"p"=>JuMP.value.(x.p_fl))
+        exposure=JuMP.value.(x.p_fl)
+        if x.B===nothing
+            B=PM.ref(pm,t,:paper_a_regional).B0+Diagonal(JuMP.value.(x.b_src))
+            M=B-PM.ref(pm,t,:g_min)*Diagonal(exposure)
+        else
+            B=JuMP.value.(x.B)
+            M=JuMP.value.(x.M)
+        end
+        affine=Dict("B"=>D.rows(B),"M"=>D.rows(M),"p"=>exposure)
         flows=Dict{String,Any}()
         for (i,br) in PM.ref(pm,t,:branch)
             flows[string(i)]=[base*JuMP.value(PM.var(pm,t,:p,(i,br["f_bus"],br["t_bus"]))),base*JuMP.value(PM.var(pm,t,:p,(i,br["t_bus"],br["f_bus"])))]
@@ -356,7 +372,7 @@ function evaluate_record(rec)
     p=rec["run"]["parameters"];r=rec["run"]["formulation"]=="G2_degree" ? p["r_degree"] : p["r_identity"]
     W=D.matrix(rec["run"]["formulation"]=="M2_neighbor" ? p["W_neighbor"] : p["W_full"])
     m=D.evaluate(D.matrix(rec["B"]),rec["p"],rec["alpha"];r,W,Bmin=D.matrix(p["Bmin"]),witness=rec["witness"])
-    for (id,key) in (("A.Y_real","Y_real"),("A.Y_imag","Y_imag"),("A.L","L"),("A.B0","B0"),("A.B","B"),("A.S_diag","p"),("A.M","M"),("A.source_ledger","source_ledger"),("A.schur_residual","schur_residual"),("A.source_base_residual","source_base_residual"),("A.connection_violation","connection_violation"),("A.producer_B0_residual","producer_B0_residual"),("A.affine_reconstruction_residual","affine_reconstruction_residual"),("E.S_nom_v1","S_nom_v1"),("E.S_on_v1","S_on_v1"),("E.S_op_magnitude_v1","S_op_magnitude_v1"))
+    for (id,key) in (("A.Y_real","Y_real"),("A.Y_imag","Y_imag"),("A.L","L"),("A.B0","B0"),("A.B","B"),("A.S_diag","p"),("A.M","M"),("A.source_ledger","source_ledger"),("A.schur_residual","schur_residual"),("A.source_base_residual","source_base_residual"),("A.connection_violation","connection_violation"),("A.online_selector_violation","online_selector_violation"),("A.producer_B0_residual","producer_B0_residual"),("A.affine_reconstruction_residual","affine_reconstruction_residual"),("E.S_nom_v1","S_nom_v1"),("E.S_on_v1","S_on_v1"),("E.S_op_magnitude_v1","S_op_magnitude_v1"))
         m[id]=D.entry(rec[key];method="independent_raw_stamp_and_solved_blocks")
     end
     m["E.S_I_v1"]=D.undefined("blocked_missing_current_capability_voltage_convention")

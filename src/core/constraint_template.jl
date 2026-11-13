@@ -177,6 +177,11 @@ function constraint_uc_gscr_block_active_dispatch_bounds(pm::_PM.AbstractPowerMo
         constraints[device_key] = constraint_uc_gscr_block_active_dispatch_bounds(
             pm, nw, device_key, p_min_pu, p_max_pu, device["p_block_max"]
         )
+        if _paper_a_full37_mode(device)=="SELECTIVE_SYN"
+            pg=_PM.var(pm,nw,:pg,device_key[2])
+            active=_PM.var(pm,nw,:na_block,device_key)
+            _paper_a_full37_selective_constraints!(pm,nw,device_key,pg,active,p_max_pu,device["p_block_max"])
+        end
     end
 
     return constraints

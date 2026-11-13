@@ -19,6 +19,7 @@ const _PAPER_A_PROFILE_ROOT_FIELDS = (
     _PAPER_A_PROFILE_FIELDS...,"snapshot_ids","snapshot_weights","snapshot_elapsed_hours",
     "paper_a_network","paper_a_extension","multinetwork","investment_period_fraction","paper_a_segment_identity",
 )
+const _PAPER_A_FULL37_PROFILE_FIELDS = (_PAPER_A_PROFILE_FIELDS...,"g_min","ndgen")
 
 _paper_a_synthetic_case(data) =
     get(get(data,"paper_a_extension",Dict()),"dataset_kind",nothing)=="synthetic_regression_only"
@@ -86,14 +87,16 @@ Solver dimensions and gSCR policy are separate run settings.
 function paper_a_profile_identity(data::AbstractDict)
     payload = _paper_a_project(data,_PAPER_A_PROFILE_ROOT_FIELDS)
     if get(data,"multinetwork",false)
-        payload["nw"] = Dict(id=>_paper_a_project(sn,_PAPER_A_PROFILE_FIELDS) for (id,sn) in data["nw"])
+        fields=_paper_a_full37(data)===nothing ? _PAPER_A_PROFILE_FIELDS : _PAPER_A_FULL37_PROFILE_FIELDS
+        payload["nw"] = Dict(id=>_paper_a_project(sn,fields) for (id,sn) in data["nw"])
     end
     return _paper_a_canonical_digest(payload)
 end
 
-function _paper_a_reference_identity(ref,temporal=get(ref,:paper_a_temporal,nothing))
+function _paper_a_reference_identity(ref,temporal=get(ref,:paper_a_temporal,nothing);full37=false)
     temporal isa NamedTuple || _paper_a_identity_mismatch("missing normalized model reference chronology")
-    fields=(_PAPER_A_PROFILE_FIELDS...,"dgen","ndgen","storage_bounded_absorption","ne_storage_bounded_absorption")
+    input_fields=full37 ? _PAPER_A_FULL37_PROFILE_FIELDS : _PAPER_A_PROFILE_FIELDS
+    fields=(input_fields...,"dgen","ndgen","storage_bounded_absorption","ne_storage_bounded_absorption")
     payload=Dict{String,Any}(key=>ref[Symbol(key)] for key in fields
         if key!="paper_a_temporal" && haskey(ref,Symbol(key)))
     payload["paper_a_temporal"]=(temporal.snapshot_id,temporal.delta_t_h,temporal.dispatch,temporal.event,temporal.probability)
@@ -146,6 +149,11 @@ function _paper_a_validate_case_manifest(data,path,expected)
         all(i->get(ids,string(i),nothing)==selected[i],eachindex(selected)) ||
         _paper_a_identity_mismatch("producer manifest snapshots do not match the case axis")
     owner=_paper_a_owner_scenario(data)
+    full37=_paper_a_full37(data)
+    if full37!==nothing
+        get(manifest,"full37_specification",nothing)==full37 ||
+            _paper_a_identity_mismatch("producer manifest Full37 specification does not match the case")
+    end
     if owner!==nothing
         declared=get(manifest,"owner_scenario",nothing)
         declared isa AbstractDict && _paper_a_canonical_digest(owner)==_paper_a_canonical_digest(declared) ||
