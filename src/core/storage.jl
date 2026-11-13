@@ -338,7 +338,8 @@ function constraint_storage_state(pm::_PM.AbstractPowerModel, i::Int; nw::Int=_P
         Memento.warn(_LOGGER, "network data should specify time_elapsed, using 1.0 as a default")
         time_elapsed = 1.0
     end
-    constraint_storage_state_initial(pm, nw, i, storage["energy"], storage["charge_efficiency"], storage["discharge_efficiency"], storage["stationary_energy_inflow"], storage["stationary_energy_outflow"], storage["self_discharge_rate"], time_elapsed)
+    energy=_paper_a_segment_initial_soc(pm,nw,:storage,i)
+    constraint_storage_state_initial(pm, nw, i, energy, storage["charge_efficiency"], storage["discharge_efficiency"], storage["stationary_energy_inflow"], storage["stationary_energy_outflow"], storage["self_discharge_rate"], time_elapsed)
 end
 
 function constraint_storage_state_ne(pm::_PM.AbstractPowerModel, i::Int; nw::Int=_PM.nw_id_default)
@@ -372,7 +373,7 @@ function constraint_storage_state_ne_block(pm::_PM.AbstractPowerModel, i::Int; n
         pm,
         nw,
         i,
-        storage["energy"],
+        _paper_a_segment_initial_soc(pm,nw,:ne_storage,i),
         storage["charge_efficiency"],
         storage["discharge_efficiency"],
         storage["stationary_energy_inflow"],

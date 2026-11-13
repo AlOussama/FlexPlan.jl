@@ -10,8 +10,8 @@ function _owner_bess_price!(dev,duration,premium)
         "cost_per_mw_year"=>cost,"source"=>"frozen_2040_EUR2025_P_plus_E")
 end
 
-function _owner_fixture(;phs_mode="MAIN",dc_mode="REFERENCE_2040",bess_hours=4)
-    data=_ap2_expansion_fixture(;hours=3)
+function _owner_fixture(;phs_mode="MAIN",dc_mode="REFERENCE_2040",bess_hours=4,hours=3)
+    data=_ap2_expansion_fixture(;hours)
     main=phs_mode=="MAIN"
     dc_off=dc_mode=="CONSTRUCTION_OFF"
     names=["synthetic PHS $i" for i in 1:5]
@@ -22,7 +22,7 @@ function _owner_fixture(;phs_mode="MAIN",dc_mode="REFERENCE_2040",bess_hours=4)
             "effective_energy_MWh"=>main ? nothing : 75.0,"fixed_E0_MWh"=>nothing,
             "disposition"=>main ? "PHS_STORAGE_OPERATION_EXCLUDED_IN_MAIN_CASE" : phs_mode) for name in names),
         "bess_duration_h"=>bess_hours,"bess_gfm_premium"=>0.2,"dc_construction_mode"=>dc_mode,
-        "uc_tariff_mode"=>"QUALIFIED_NATIVE","source_snapshot_count"=>3)
+        "uc_tariff_mode"=>"QUALIFIED_NATIVE","source_snapshot_count"=>hours)
     main || (data["paper_a_extension"]["storage_duration_overrides"]=Dict(name=>Dict("effective_max_hours"=>3) for name in names))
     for sn in values(data["nw"])
         for (id,na0,min_time,unit,start,stop) in (("2",1,2,"EUR_per_block_event",200.0,75.0),
@@ -101,6 +101,7 @@ function _owner_model(data;device_formulations=Dict(),kwargs...)
         (:gen,"CCGT")=>_FP.BlockThermalCommitment(),
         (:gen,"OCGT")=>_FP.BlockThermalCommitment(),
         (:storage,"BESS-GFM")=>_FP.BlockStorageParticipation(),
+        (:ne_storage,"BESS-GFM")=>_FP.BlockStorageParticipation(),
         (:storage,"PHS")=>_FP.BlockStorageParticipation()),_FP.NoGSCR();
         device_formulations,paper_a_validation_scope=:synthetic_regression)
     return _ap2_model(data;template,kwargs...)

@@ -282,6 +282,9 @@ for `cost_inv_per_mw`. This helper is formulation-independent and mutates no
 model state.
 """
 function calc_uc_gscr_block_investment_cost(pm::_PM.AbstractPowerModel)
+    segment=_paper_a_segment(pm.data)
+    # Installed counts are fixed across segments. Account for annual CAPEX once.
+    segment===nothing || segment.payload["first_hour"]==1 || return JuMP.AffExpr(0.0)
     first_nw = _uc_gscr_first_block_nw(pm)
     if isnothing(first_nw)
         return JuMP.AffExpr(0.0)

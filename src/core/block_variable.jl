@@ -313,7 +313,7 @@ function constraint_block_count_transitions(pm::_PM.AbstractPowerModel; nw::Int=
     end
 
     for device_key in _uc_gscr_block_startup_shutdown_device_keys(pm,nw)
-        na_prev=first_hour ? _PM.ref(pm,nw,device_key...,"na0") : previous[device_key]
+        na_prev=first_hour ? _paper_a_segment_initial_active(pm,nw,device_key) : previous[device_key]
         su,sd=su_block[device_key],sd_block[device_key]
         constraints[device_key]=JuMP.@constraint(pm.model,na_block[device_key]-na_prev==su-sd)
         if owner!==nothing

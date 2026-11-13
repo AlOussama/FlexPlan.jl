@@ -115,6 +115,9 @@ function build_uc_gscr_block_integration(
         end
     end
     relax_blocks=isnothing(relax_block_variables) ? !paper_a : relax_block_variables
+    segment=_paper_a_validate_segment_binding(pm.data)
+    segment===nothing || storage_terminal_policy==:none ||
+        throw(ArgumentError("Sequential segments require storage_terminal_policy=:none"))
     if _paper_a_owner_scenario(pm.data)!==nothing
         !relax_blocks && intertemporal_constraints ||
             throw(ArgumentError("Owner scenario requires integer blocks and intertemporal constraints"))
@@ -148,6 +151,7 @@ function build_uc_gscr_block_integration(
     if expansion_groups!==nothing
         _paper_a_limit_expansion!(pm,first(nw_ids(pm)),peaks,expansion_groups)
     end
+    _paper_a_segment_fix_plan!(pm,first(nw_ids(pm)))
 
     if objective
         objective_min_cost_uc_gscr_block_integration(pm)

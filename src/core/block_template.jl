@@ -175,9 +175,9 @@ function _validate_uc_gscr_block_template_device(pm::_PM.AbstractPowerModel, nw:
     if haskey(_PM.ref(pm,nw),:paper_a_regional)
         dev=_PM.ref(pm,nw,device_key[1],device_key[2])
         if _paper_a_owner_scenario(pm.data)!==nothing
-            native=haskey(dev,"paper_a_native_uc")
-            native==(formulation isa BlockThermalCommitment) ||
-                throw(ArgumentError("Owner scenario requires BlockThermalCommitment exactly for qualified native UC devices"))
+            key=_paper_a_carrier_uc(pm.data) ? "paper_a_carrier_uc" : "paper_a_native_uc"
+            haskey(dev,key)==(formulation isa BlockThermalCommitment) ||
+                throw(ArgumentError("Owner scenario requires BlockThermalCommitment exactly for qualified UC devices"))
         end
         marker=get(pm.data,"paper_a_extension",nothing)
         if marker isa AbstractDict && haskey(marker,"expansion_policy") &&

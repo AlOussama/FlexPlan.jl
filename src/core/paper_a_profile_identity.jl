@@ -17,7 +17,7 @@ const _PAPER_A_PROFILE_FIELDS = (
 )
 const _PAPER_A_PROFILE_ROOT_FIELDS = (
     _PAPER_A_PROFILE_FIELDS...,"snapshot_ids","snapshot_weights","snapshot_elapsed_hours",
-    "paper_a_network","paper_a_extension","multinetwork","investment_period_fraction",
+    "paper_a_network","paper_a_extension","multinetwork","investment_period_fraction","paper_a_segment_identity",
 )
 
 _paper_a_synthetic_case(data) =
