@@ -119,6 +119,7 @@ end
     @test_throws ArgumentError _FP.paper_a_segment_state(a)
     @test _ap2_expansion_solve!(a)==JuMP.MOI.OPTIMAL
     state=_FP.paper_a_segment_state(a)
+    previous_pin=state["sha256"]
     @test state["payload"]["thermal"]["gen:2"]==Dict("active"=>2,"starts"=>[0,0,2],"stops"=>[1])
     @test state["payload"]["soc_MWh"]["storage:1"]≈50
     @test state["payload"]["soc_MWh"]["ne_storage:7"]≈10
@@ -128,7 +129,7 @@ end
         _FP._paper_a_segment_installed(full["nw"]["1"]))
     @test first_cost≈expected
     @test first_cost>0
-    next=_FP.prepare_paper_a_segment(full,25:27,plan;previous=state)
+    next=_FP.prepare_paper_a_segment(full,25:27,plan;previous=state,expected_previous_state_sha256=previous_pin)
     @test first(next["paper_a_temporal"])["snapshot_id"]==full["snapshot_ids"]["25"]
     b=_owner_model(next;storage_terminal_policy=:none)
     @test iszero(_FP.calc_uc_gscr_block_investment_cost(b))
@@ -152,16 +153,21 @@ end
     @test _FP.paper_a_segment_state(b)["payload"]["next_snapshot_id"]===nothing
 
     @test_throws ArgumentError _FP.prepare_paper_a_segment(full,25:27,plan)
-    @test_throws ArgumentError _FP.prepare_paper_a_segment(full,24:27,plan;previous=state)
-    @test_throws ArgumentError _FP.prepare_paper_a_segment(full,26:27,plan;previous=state)
+    @test_throws ArgumentError _FP.prepare_paper_a_segment(full,25:27,plan;previous=state)
+    @test_throws ArgumentError _FP.prepare_paper_a_segment(full,1:24,plan;expected_previous_state_sha256=previous_pin)
+    @test_throws ArgumentError _FP.prepare_paper_a_segment(full,24:27,plan;previous=state,expected_previous_state_sha256=previous_pin)
+    @test_throws ArgumentError _FP.prepare_paper_a_segment(full,26:27,plan;previous=state,expected_previous_state_sha256=previous_pin)
     @test_throws ArgumentError _FP.prepare_paper_a_segment(full,1:25,plan)
     changed_plan=copy(plan); changed_plan["gen:2"]=3
-    @test_throws ArgumentError _FP.prepare_paper_a_segment(full,25:27,changed_plan;previous=state)
+    @test_throws ArgumentError _FP.prepare_paper_a_segment(full,25:27,changed_plan;previous=state,expected_previous_state_sha256=previous_pin)
     altered=deepcopy(state); altered["payload"]["soc_MWh"]["storage:1"]=0.0
-    @test_throws ArgumentError _FP.prepare_paper_a_segment(full,25:27,plan;previous=altered)
+    @test_throws ArgumentError _FP.prepare_paper_a_segment(full,25:27,plan;previous=altered,expected_previous_state_sha256=previous_pin)
+    altered["sha256"]=_FP._paper_a_canonical_digest(altered["payload"])
+    @test altered["payload"]["result_sha256"]==state["payload"]["result_sha256"]
+    @test_throws ArgumentError _FP.prepare_paper_a_segment(full,25:27,plan;previous=altered,expected_previous_state_sha256=previous_pin)
     altered["payload"]["thermal"]["gen:2"]["starts"]=[1]
     altered["sha256"]=_FP._paper_a_canonical_digest(altered["payload"])
-    @test_throws ArgumentError _FP.prepare_paper_a_segment(full,25:27,plan;previous=altered)
+    @test_throws ArgumentError _FP.prepare_paper_a_segment(full,25:27,plan;previous=altered,expected_previous_state_sha256=altered["sha256"])
     tamper=deepcopy(next); tamper["_paper_a_sequential_segment"].payload["first_hour"]=26
     @test_throws ArgumentError _owner_model(tamper;storage_terminal_policy=:none)
     cyclic=_ap2_expansion_prepared(_carrier_fixture(;phs_mode="HYPOTHETICAL_PHS_3H"))

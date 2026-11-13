@@ -53,12 +53,15 @@ function _paper_a_segment_plan(snapshot,fixed_installed)
     return plan
 end
 
-function _paper_a_validate_segment_previous(state,full,identity,plan,start)
+function _paper_a_validate_segment_previous(state,expected_sha256,full,identity,plan,start)
+    _paper_a_sha256_string(expected_sha256) ||
+        _paper_a_origin_unverified("sequential continuation requires the previously captured predecessor state SHA-256")
     state isa AbstractDict && get(state,"schema",nothing)=="paper_a_segment_state_v1" ||
         throw(ArgumentError("Sequential continuation requires previous segment state"))
     payload=get(state,"payload",nothing)
-    payload isa AbstractDict && get(state,"sha256",nothing)==_paper_a_canonical_digest(payload) ||
-        _paper_a_identity_mismatch("previous segment state SHA-256 does not match its payload")
+    payload isa AbstractDict && get(state,"sha256",nothing)==expected_sha256 &&
+        _paper_a_canonical_digest(payload)==expected_sha256 ||
+        _paper_a_identity_mismatch("previous segment state does not match the captured SHA-256")
     get(payload,"source_identity",nothing)==identity && get(payload,"installed",nothing)==plan &&
         get(payload,"baseMVA",nothing)==full["baseMVA"] && get(payload,"end_hour",nothing)==start-1 &&
         get(payload,"last_snapshot_id",nothing)==full["snapshot_ids"][string(start-1)] &&
@@ -105,13 +108,17 @@ end
 
 """Derive a contiguous 1–24 hour sequential case from verified, normalized,
 weighted full-horizon owner input. `fixed_installed` maps `"gen:1"` (and the
-corresponding storage keys) to fixed installed counts. After the first segment,
-pass `previous=paper_a_segment_state(pm)` from the immediately preceding model.
+corresponding storage keys) to fixed installed counts. When a segment solve
+completes, call `paper_a_segment_state(pm)` and capture its `sha256` separately
+in the run record. To continue, pass the state as `previous` and that captured
+digest as `expected_previous_state_sha256`. The digest binds the expected
+predecessor state bytes to the continuation.
 Segment builds require `storage_terminal_policy=:none`. Cyclic storage and
 cumulative energy budgets require the jointly optimized horizon. Sequential
 feasibility with a fixed plan does not establish the joint annual optimum.
 """
-function prepare_paper_a_segment(full::Dict{String,Any},hours::UnitRange{Int},fixed_installed;previous=nothing)
+function prepare_paper_a_segment(full::Dict{String,Any},hours::UnitRange{Int},fixed_installed;
+        previous=nothing,expected_previous_state_sha256=nothing)
     _paper_a_segment(full)===nothing && !haskey(full,"paper_a_segment_identity") && _paper_a_carrier_uc(full) ||
         throw(ArgumentError("Sequential segments require the full owner carrier UC case"))
     binding=_paper_a_profile_binding(full)
@@ -151,10 +158,11 @@ function prepare_paper_a_segment(full::Dict{String,Any},hours::UnitRange{Int},fi
     identity=Dict("run"=>binding.run_identity,"profile_sha256"=>binding.digest)
     start=first(hours)
     inbound=if start==1
-        previous===nothing || throw(ArgumentError("The first sequential segment cannot take predecessor state"))
+        previous===nothing && expected_previous_state_sha256===nothing ||
+            throw(ArgumentError("The first sequential segment cannot take predecessor state or SHA-256"))
         nothing
     else
-        _paper_a_validate_segment_previous(previous,full,identity,plan,start)
+        _paper_a_validate_segment_previous(previous,expected_previous_state_sha256,full,identity,plan,start)
     end
     payload=Dict{String,Any}("source_identity"=>identity,"installed"=>plan,"first_hour"=>start,
         "end_hour"=>last(hours),"baseMVA"=>full["baseMVA"],"inbound"=>deepcopy(inbound),
