@@ -67,6 +67,27 @@ function _full37_model(d;gscr=_FP.GershgorinGSCR(),biomass_form=_FP.BlockRenewab
     return _ap2_model(d;template,objective)
 end
 
+@testset "Full37 thermal minimum-output time series takes precedence" begin
+    d=_full37_fixture()
+    for (t,pmin) in zip(1:3,(0.20,0.25,0.30))
+        gen=d["nw"][string(t)]["gen"]["2"]
+        gen["p_min_pu"]=pmin
+        gen["paper_a_p_min_pu_time_series"]=true
+    end
+    pm=_full37_model(_ap2_expansion_prepared(deepcopy(d)))
+    for (t,pmin) in zip(1:3,(0.20,0.25,0.30))
+        active=_PM.var(pm,t,:na_block,(:gen,2))
+        lower=first(_PM.con(pm,t,:uc_gscr_block_active_dispatch_bounds)[(:gen,2)])
+        @test JuMP.normalized_coefficient(lower,active) ≈ -pmin*_PM.ref(pm,t,:gen,2)["p_block_max"]
+    end
+    bad=deepcopy(d)
+    delete!(bad["nw"]["2"]["gen"]["2"],"paper_a_p_min_pu_time_series")
+    @test_throws ArgumentError _ap2_expansion_prepared(bad)
+    bad=deepcopy(d)
+    bad["nw"]["2"]["gen"]["2"]["p_max_pu"]=0.1
+    @test_throws ArgumentError _ap2_expansion_prepared(bad)
+end
+
 @testset "Full37 thermal boundary and qualified multiple-block event cost" begin
     d=_ap2_expansion_prepared(_full37_fixture(;hours=6))
     pm=_full37_model(d;objective=true)

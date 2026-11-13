@@ -47,9 +47,12 @@ function _paper_a_validate_block_capacity(dev)
     return (nominal,maximum,p,n0,nmax)
 end
 
-function _paper_a_validate_carrier_uc(dev,capacity,weight)
+function _paper_a_validate_carrier_uc(dev,capacity,weight;full37=false)
     carrier=get(dev,"carrier",nothing)
     uc=get(dev,"paper_a_carrier_uc",nothing)
+    profiled_min=get(dev,"paper_a_p_min_pu_time_series",false)
+    profiled_min isa Bool && (!profiled_min || (full37 && haskey(_PAPER_A_CARRIER_UC,carrier))) ||
+        throw(ArgumentError("Invalid Full37 carrier UC minimum-output time-series marker for $carrier"))
     haskey(dev,"paper_a_native_uc") && throw(ArgumentError("Carrier UC cannot use the native tariff contract"))
     if !haskey(_PAPER_A_CARRIER_UC,carrier)
         uc===nothing && get(dev,"committable",false)===false ||
@@ -73,10 +76,12 @@ function _paper_a_validate_carrier_uc(dev,capacity,weight)
     ref isa AbstractDict && Set(keys(ref))==Set(_PAPER_A_CARRIER_UC_FIELDS) &&
         all(PaperARegional.number(ref,key)==value for (key,value) in zip(_PAPER_A_CARRIER_UC_FIELDS,values)) ||
         throw(ArgumentError("Carrier UC reference differs from the pinned CSV for $carrier"))
+    pmin=PaperARegional.number(dev,"p_min_pu")
+    pmax=PaperARegional.number(dev,"p_max_pu")
+    dispatch_ok=profiled_min ? 0<=pmin<=pmax<=1 : pmin==values[4] && pmax>=pmin
     _paper_a_owner_count(dev,"na0";existing=true)==0 && _paper_a_owner_count(dev,"min_up_block_time")==values[2] &&
-        _paper_a_owner_count(dev,"min_down_block_time")==values[3] && PaperARegional.number(dev,"p_min_pu")==values[4] &&
-        PaperARegional.number(dev,"p_max_pu")>=values[4] ||
-        throw(ArgumentError("Carrier UC thermal initial state, minimum times or minimum output disagree for $carrier"))
+        _paper_a_owner_count(dev,"min_down_block_time")==values[3] && dispatch_ok ||
+        throw(ArgumentError("Carrier UC thermal initial state, minimum times or dispatch bounds disagree for $carrier"))
     for (field,expected) in (("startup_cost_per_mw",values[1]*weight),("shutdown_cost_per_mw",values[1]*weight/5))
         isapprox(PaperARegional.number(dev,field;nonnegative=true),expected;atol=1e-9,rtol=1e-9) ||
             throw(ArgumentError("Carrier UC runtime $field disagrees with the CSV/Owner tariff"))
@@ -351,6 +356,7 @@ function _paper_a_validate_owner_case(data,binding)
             throw(ArgumentError("Real hypothetical PHS scenario requires boundary evidence SHA-256"))
     end
     base=get(data,"per_unit",false) ? data["baseMVA"] : 1.0
+    full37=_paper_a_full37(data)!==nothing
     baseline_uc=baseline_dc=baseline_cap=nothing
     for t in eachindex(temporal)
         time=temporal[t]
@@ -377,11 +383,11 @@ function _paper_a_validate_owner_case(data,binding)
                 capacity!==nothing || !any(PaperARegional.number(dev,k)>0 for k in ("pmin","pmax")) ||
                     throw(ArgumentError("Positive generator $id requires the carrier scenario block capacity record"))
                 capacity===nothing || (capacities[id]=(dev["name"],dev["carrier"],dev["gen_bus"],capacity))
-                block=_paper_a_validate_carrier_uc(dev,capacity,weight)
+                block=_paper_a_validate_carrier_uc(dev,capacity,weight;full37)
                 block===nothing && continue
                 block in blocks && throw(ArgumentError("Duplicate carrier UC block identity $block"))
                 push!(blocks,block)
-                uc[id]=(dev["name"],dev["paper_a_carrier_uc"])
+                uc[id]=(dev["name"],dev["paper_a_carrier_uc"],get(dev,"paper_a_p_min_pu_time_series",false))
                 continue
             end
             native=get(dev,"paper_a_native_uc",nothing)
