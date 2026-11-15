@@ -12,7 +12,9 @@ const _PAPER_A_FULL37_DISPATCH_POLICY = "reservoir_no_gscr_oil_coal_minimum_v1"
 const _PAPER_A_FULL37_NON_RESERVOIR_SELECTORS_SHA = "b1ea9cc64f4e2e94667737d9bacc591bb5106faee0b9d99e1d60665fb01351fe"
 # SHA of the ordered rational vector rounded once to Float64, represented as
 # newline-delimited sixteen-digit hexadecimal IEEE-754 bit patterns.
-const _PAPER_A_FULL37_G2_NUMERIC_SHA="5fee28dc98c8384c4c35edeef29a59210e1f84629428db6ff845036e390939"
+const _PAPER_A_FULL37_G2_NUMERIC_SHA="5fee28dc98c8384c4c4c35edeef29a59210e1f84629428db6ff845036e390939"
+const _PAPER_A_FULL37_G2_ORDERED_SHA="92804d711119cb0af0cd768232bc3186ef68c29bcbe48976d2894f469102f9f7"
+const _PAPER_A_FULL37_G2_FILE_SHA="8dc5b0f29038a5c2775e2b91252bd9e9e5b3e4658c4e284c802e25bc920f6926"
 const _PAPER_A_FULL37_SOURCE_ROLES_SHA="e43afdd45bbbec8e6e7e75957d6e9db24a0a3cd5466fd3d624f7eea9fb01c6f5"
 const _PAPER_A_FULL37_ROSTER_SHA = Dict(
     "SELECTIVE_SYN"=>"536da2362da0fd88e489c1d5681e02880ee295c57e6f9f32f302bef95a12785c",
@@ -64,6 +66,21 @@ function _paper_a_full37_oil_minimum(dev)
         throw(ArgumentError("Full37 oil minimum must use its time series or the owner-approved coal proxy"))
 end
 
+function _paper_a_validate_full37_g2(spec,buses,synthetic)
+    ordered_sha=get(spec,"g2_r_sha256",nothing)
+    expected=synthetic ? ordered_sha : _PAPER_A_FULL37_G2_NUMERIC_SHA
+    direction=get(spec,"g2_r",nothing)
+    _paper_a_sha256_string(expected) && _paper_a_sha256_string(ordered_sha) &&
+        (synthetic || (ordered_sha==_PAPER_A_FULL37_G2_ORDERED_SHA &&
+            get(spec,"g2_r_file_sha256",nothing)==_PAPER_A_FULL37_G2_FILE_SHA)) &&
+        get(spec,"g2_bus_order",nothing)==buses &&
+        direction isa AbstractVector && length(direction)==length(buses) &&
+        all(x->x isa Real && !(x isa Bool) && isfinite(x) && x>0,direction) &&
+        _paper_a_full37_lines_sha(string(reinterpret(UInt64,Float64(x));base=16,pad=16) for x in direction)==expected ||
+        throw(ArgumentError("Full37 requires the bound ordered G2 vector"))
+    return nothing
+end
+
 function _paper_a_validate_full37(data,binding)
     spec=_paper_a_full37(data)
     snapshots=get(data,"multinetwork",false) ? data["nw"] : Dict("1"=>data)
@@ -78,8 +95,8 @@ function _paper_a_validate_full37(data,binding)
     end
     synthetic=_paper_a_synthetic_case(data)
     spec isa AbstractDict && get(spec,"schema",nothing)=="paper_a_full37_frozen_v1" &&
-        all(synthetic ? _paper_a_sha256_string(get(spec,key,nothing)) && spec[key]!=sha :
-            get(spec,key,nothing)==sha for (key,sha) in _PAPER_A_FULL37_PINS) ||
+        all(_paper_a_sha256_string(get(spec,key,nothing)) &&
+            (synthetic ? spec[key]!=sha : spec[key]==sha) for (key,sha) in _PAPER_A_FULL37_PINS) ||
         throw(ArgumentError("Full37 scientific input identity mismatch"))
     dispatch_policy=get(spec,"dispatch_policy",nothing)
     dispatch_policy in (nothing,_PAPER_A_FULL37_DISPATCH_POLICY) ||
@@ -100,16 +117,7 @@ function _paper_a_validate_full37(data,binding)
         length(snapshots)==8760 && data["baseMVA"]==100) ||
         throw(ArgumentError("Full37 requires 8760 snapshots on the 100 MVA case base"))
     if !synthetic || v["formulation"]=="G2" || haskey(spec,"g2_r")
-        ordered_sha=get(spec,"g2_r_sha256",nothing)
-        expected=synthetic ? ordered_sha : _PAPER_A_FULL37_G2_NUMERIC_SHA
-        _paper_a_sha256_string(ordered_sha) &&
-            (synthetic || ordered_sha=="92804d711119cb0af0cd768232bc3186ef68c29bcbe48976d2894f469102f9f7") &&
-            get(spec,"g2_bus_order",nothing)==data["paper_a_network"]["retained_physical_buses"] &&
-            get(spec,"g2_r",nothing) isa AbstractVector &&
-            length(spec["g2_r"])==length(spec["g2_bus_order"]) &&
-            all(x->x isa Real && !(x isa Bool) && isfinite(x) && x>0,spec["g2_r"]) &&
-            _paper_a_full37_lines_sha(string(reinterpret(UInt64,Float64(x));base=16,pad=16) for x in spec["g2_r"])==expected ||
-            throw(ArgumentError("Full37 requires the bound ordered G2 vector"))
+        _paper_a_validate_full37_g2(spec,data["paper_a_network"]["retained_physical_buses"],synthetic)
     end
 
     if !synthetic
