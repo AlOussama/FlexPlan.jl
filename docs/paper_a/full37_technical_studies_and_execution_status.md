@@ -84,30 +84,49 @@ Beide Ganzzahlläufe bearbeiteten nur den Root-Knoten. Ohne gSCR fand der Solver
 
 Der relative Abstand der primalen und dualen Barriere-Zielwerte ohne gSCR fiel von 30,5 % bei Iteration 30 auf 0,51 % bei Iteration 50, 0,021 % bei Iteration 70 und 0,00068 % bei Iteration 108. Diese Zwischenwerte haben noch primale oder duale Residuen. Der Solver meldete den optimalen LP-Wert erst nach Crossover und Simplex-Nachprüfung.
 
-### Vergleich der kontinuierlichen Rechnungen
+### Vergleich von Ausbau, Dispatch und Kosten
 
-| Kennzahl | Mit gSCR, numerischer Kandidat | Ohne gSCR, geprüftes LP-Optimum |
-|---|---:|---:|
-| GuD / OCGT, Ausbau in GW | 0 / 4,803 | 0 / 3,699 |
-| Batterie GFL / GFM, Ausbau in GW | 19,880 / 3,336 | 43,388 / 0 |
-| Gasdispatch in 840 h, TWh | 17,788 | 13,284 |
-| Batterie Laden / Entladen in 840 h, TWh | 4,055 / 3,893 | 8,351 / 8,017 |
-| Wind-/PV-Einspeisung in 840 h, TWh | 155,411 | 155,411 |
-| Annualisierte CAPEX, Mrd. EUR2025 | 44,470 | 42,629 |
-| Annualisierte OPEX, Mrd. EUR2025 | 29,366 | 27,482 |
-| Annualisierte Gesamtkosten, Mrd. EUR2025 | 73,836 | 70,111 |
+| Kennzahl | Mit gSCR, numerischer LP-Kandidat | Ohne gSCR, geprüftes LP-Optimum | Ohne gSCR, geprüfter Ganzzahlplan |
+|---|---:|---:|---:|
+| GuD / OCGT, Ausbau in GW | 0 / 4,803 | 0 / 3,699 | 0 / 3,900 |
+| Batterie GFL / GFM, Ausbau in GW | 19,880 / 3,336 | 43,388 / 0 | 43,500 / 0 |
+| Onshore-Wind / PV, Ausbau in GW | 194,045 / 477,825 | 156,616 / 516,560 | 156,563 / 516,436 |
+| Gasdispatch in 840 h, TWh | 17,788 | 13,284 | 13,285 |
+| Batterie Laden / Entladen in 840 h, TWh | 4,055 / 3,893 | 8,351 / 8,017 | 8,587 / 8,243 |
+| Wind-/PV-Einspeisung in 840 h, TWh | 155,411 | 155,411 | 155,411 |
+| Annualisierte CAPEX, Mrd. EUR2025 | 44,469928 | 42,628893 | 42,636088 |
+| Annualisierte OPEX, Mrd. EUR2025 | 29,365672 | 27,482147 | 27,482406 |
+| Annualisierte Gesamtkosten, Mrd. EUR2025 | 73,835600 | 70,111040 | 70,118494 |
 
-Die gSCR-Spalte stammt aus `with_gscr/relaxed_retry` und dokumentiert einen Solver-Kandidaten mit 609 gSCR-Verletzungen. Die Unterschiede der Spalten sind daher ein numerischer Vergleich, dessen gSCR-Seite die Zulässigkeitsprüfung verfehlt. Die durch beide Dateien bestätigte Wind-/PV-Summe von 155,411 TWh entspricht jeweils 50 % der Lastsumme. Die CAPEX/OPEX-Summen wurden mit der Gewichtung 1 und 73/7 nachgerechnet.
+Die gSCR-Spalte stammt aus `with_gscr/relaxed_retry` und dokumentiert einen Solver-Kandidaten mit 609 gSCR-Verletzungen. Sein Ausbau und Dispatch haben Diagnosewert. Die Wind-/PV-Summe von 155,411 TWh entspricht in allen drei Rechnungen 50 % der Lastsumme. Die CAPEX/OPEX-Summen wurden mit der Gewichtung 1 und 73/7 nachgerechnet.
 
-### Weiterer Plan
+Für den ursprünglichen 840‑h-Fall beträgt der Abstand zwischen der nativen Solveruntergrenze mit gSCR und den geprüften Ganzzahlkosten ohne gSCR 3,717125670 Mrd. EUR2025. Sofern das ursprüngliche gSCR-MIP zulässig ist, liefert dieser Abstand aus Solveruntergrenze und zulässiger Obergrenze eine einseitige Untergrenze des Kostenunterschieds der beiden ganzzahligen Optima. Der genaue Kostenunterschied und die Portfolioänderung mit gSCR bleiben bis zu einem geprüften gSCR-Plan offen.
 
-Beide 840‑h-Varianten anhand der Solverstatus, der nachgerechneten Quote, der Stundenbilanzen und der primären Modellresiduen bewerten. Der Vergleich weist Ausbau in MW, Einspeisung und Speicherumsatz in MWh sowie annualisierte CAPEX und OPEX aus. Die Ganzzahlabweichungen einer Relaxation und die Gültigkeit der jeweiligen Schranke gehören zum Ergebnis. Bei einer Wiederaufnahme nach einem Solverabbruch zuerst prüfen, ob sich das bereits gebaute Modell oder eine daran gebundene Solverdatei wiederverwenden lässt. Das vermeidet Wiederholungen des AP2-Lese- und Aufbaupfads.
+### MIP-Starts und Reparaturläufe
 
 Der angeforderte MIP-Start verwendet je Variante ihr eigenes LP-Portfolio. Der Adapter prüft die 148 ausbaubaren Anlagen gegen ihre nativen Blockgrenzen und 74 gemeinsame Gas-/BESS-Knotendeckel. Er verwendet aufgerundete `n_inst`-Werte als Teilstart und fällt bei einem verletzten Deckel auf abgerundete Werte zurück. Die identischen Startwerte gelten in allen fünf Wochen. Gurobi vervollständigt bei Annahme UC-Ereignisse, Dispatch und Speicherzustände. Ein vollständig geprüfter zulässiger Plan liefert eine obere Schranke. [Gurobi-Dokumentation zu MIP-Starts](https://support.gurobi.com/hc/en-us/articles/360043834831-How-do-I-use-MIP-starts)
 
 Fehlt ein geprüfter LP-Plan oder scheitert die Vervollständigung, verwendet ein separater MIP-Reparaturlauf die Untergrenze `floor(n_inst_LP)` und die Obergrenze `ceil(n_inst_LP)+1` innerhalb der ursprünglichen Assetgrenzen. Alle übrigen Bedingungen einschließlich aktiver G1-Zeilen bleiben Teil der Reparatur. Die Box begrenzt ausschließlich die Suche nach einem Startplan. Nach Wiederherstellung der ursprünglichen Grenzen kann der Hauptlauf den reparierten Plan als Start verwenden. Der Versionsstand wurde mit einem Test für gemeinsame Ausbaugrenzen, Startwerte, engere Intervalle und Rückkehr zu den ursprünglichen Grenzen geprüft.
 
 Für die gSCR-Reparatur wird der gespeicherte Barrierekandidat mit der geringsten belegten Modellverletzung verwendet. Der direkte Teilstart ohne gSCR verwendet die geprüfte LP-Lösung. Die beiden gespeicherten Portfolios bestanden die Prüfung für 148 ausbaubare Anlagen und 74 Knotengrenzen auf den tatsächlichen AP1-Eingängen. Die MIP-Wiederholung verwendet zwei Solverthreads, 2.400 s je Hauptlauf und höchstens 1.800 s je Reparatur.
+
+Die gSCR-Reparatur hob bei den fünf periodischen Kopien insgesamt 85 Untergrenzen an und senkte 740 Obergrenzen ab. Sie endete nach 1.800,173 s im Crossover der Wurzelrelaxation mit `TIME_LIMIT / NO_SOLUTION`. Für den geplanten Wiederanlauf mit gSCR fehlte damit ein reparierter Startplan. Die ursprüngliche gSCR-Schranke von 73,835619339 Mrd. EUR2025 gehört weiter zum unveränderten 840‑h-MIP.
+
+Der direkte Start ohne gSCR übermittelte das aufgerundete Portfolio als 740 Teilstartwerte. Gurobi meldete `User MIP start did not produce a new incumbent solution` und einen Rest von 0,040824829 an der internen Solverzeile `R18573`. Der Lauf endete nach 2.400,172 s mit `TIME_LIMIT / NO_SOLUTION` bei unveränderter unterer Schranke von 70,111040156 Mrd. EUR2025. Anschließend startete die Reparatur mit engen Blockintervallen.
+
+Der Modellbauer hatte zusätzlich Startwerte für `n_active` und weitere Variablen gesetzt. Die 740 aus dem LP abgeleiteten Werte waren daher Teil eines gemischten Startvektors. Der korrigierte Teilstartadapter löschte am tatsächlichen Modell 1.171.045 vorhandene Startattribute und prüfte anschließend genau 740 gesetzte Ausbauwerte. Ein Julia-Test bestätigte die Entfernung vorhandener Betriebsstartwerte bei erhaltener Ganzzahligkeit. Die Modellgleichungen einschließlich des UC-Anfangszustands sind unabhängig von diesen Solverattributen.
+
+Die Reparatur ohne gSCR hob 40 Untergrenzen an und senkte 740 Obergrenzen ab. Sie endete nach 1.800,100 s mit `TIME_LIMIT / NO_SOLUTION`. Der Prozess mit beiden Start- und Reparaturvarianten hatte 13,438 GB Private Bytes und 10,869 GB Working Set in der Spitze.
+
+Der bereinigte Teilstart ohne gSCR wurde nach 1.746,32 s Vervollständigung geladen. Der Hauptlauf endete nach 2.330,890 s mit `OPTIMAL` zur Solvertoleranz. Aus dem Zielfunktionswert 70,118493669 Mrd. EUR2025 und der Schranke 70,111040156 Mrd. EUR2025 ergibt sich 0,0106299 % Gap. Der zuvor gespeicherte Ganzzahlplan hatte 95,6805 % Gap. Der neue ganzzahlige Plan liegt 7,454 Mio. EUR2025 über dem LP-Optimum. Die Prüfung umfasste 353 Blockanlagen, 74 Knotendeckel und 840 Stundenbilanzen. Die größte Abweichung der nachgerechneten stündlichen Systembilanz betrug 1,31e-5 MW. Die Ganzzahlabweichung war null. Der Prozess erreichte 12,047 GB Private Bytes und 9,801 GB Working Set.
+
+Die angeforderte Wiederholung mit gSCR übernimmt dieselben Eingänge, dieselben Reparaturintervalle und das Zweithread-Profil. Beide Reparaturläufe haben den Gurobi-Modellfingerprint `0x393bd2fe`. Das konfigurierte Solverbudget beträgt insgesamt 7.195 s mit fünf Sekunden Puffer zur Obergrenze von 7.200 s. Wenn die Reparatur einen geprüften Plan findet, steht nur die verbleibende Zeit für dessen Einsatz im unveränderten Haupt-MIP zur Verfügung. Modellaufbau und Replay werden separat gemessen.
+
+Die Wiederholung löste die Wurzelrelaxation nach rund 1.723 Solver-Sekunden mit null gemeldeter primaler und dualer Simplex-Verletzung. Nach 7.195,186 s und 445.764 Simplex-Iterationen am einzigen bearbeiteten Knoten endete sie mit `TIME_LIMIT / NO_SOLUTION`. Die Solveruntergrenze von 73,861375250 Mrd. EUR2025 gehört zu den eingeschränkten Blockintervallen. Die Schranke des ursprünglichen gSCR-MIP bleibt 73,835619339 Mrd. EUR2025. Ein zulässiger gSCR-Plan und damit ein MIP-Gap blieben offen. Der Lauf erreichte 13,433 GB Private Bytes und 10,937 GB Working Set ohne Ressourceneingriff.
+
+### Weiterer Plan
+
+Für einen weiteren gSCR-Versuch zuerst das aufgebaute Modell und die Zuordnung seiner Variablen zu den Eingangs-SHAs für Solverwiederaufnahmen speichern. Die gSCR-Qualifikation benötigt einen exportierten Plan mit bestandener Prüfung aller G1-Zeilen und der restlichen Modellbedingungen. Beim nächsten LP-basierten MIP-Start auch für gSCR die voreingestellten Solver-Startattribute vor der Übergabe entfernen. Erst mit einem geprüften gSCR-Plan lassen sich die technologiebezogenen Unterschiede als Vergleich zweier zulässiger Ausbaulösungen ausweisen.
 
 Die fünf Wochen bilden eine technische Stichprobe. Für eine größere Studienreihe wäre ihre Abdeckung von Stressstunden und saisonalen Speicherzuständen getrennt zu prüfen. PA‑SRC‑12 definiert für den formalen Fallback 168 oder 336 aufeinanderfolgende Stunden. Der 840‑h-Versuch ersetzt weder ein jährliches Q5-/F1-Modell noch Gate J.
 
@@ -119,7 +138,9 @@ M0/LOCAL bleibt an zulässige Postsolve-Domänen gebunden. Für M2 fehlt ein vor
 
 Die lokalen Studienartefakte liegen unter `E:/ResearchResults/FlexPlan_UC_GSCR/TECH_FULL37_FIVE_WEEKS_RE50_20261115_01`. `select_weeks.py` erzeugt `week_selection.json`, `export_selected_weeks.jl` exportiert die fünf AP1-Fälle und `run_common.jl` liest jeden Fall mit der 168‑h-Variante des Consumers ein. `run_joint_weeks.jl` koppelt die fünf Investitionsportfolios und setzt Zielfunktion und Quote. `run_joint_weeks_recovery.jl` dokumentiert den enger eingestellten Barrierelauf. `run_joint_weeks_crossover.jl` verwendet Crossover und den korrigierten Variantenwechsel. `replay.py` rechnet Quote, stündliche Systembilanz, Ausbau und Zielfunktion aus den Dispatch- und Ausbau-CSV-Dateien nach. Die Produktionsvalidierung des Jahrespfads wurde für diesen Versuch nicht editiert.
 
-Der Producer und der Consumer entsprechen den in der Q5-Tabelle genannten Commits. Das übernommene wissenschaftliche Manifest hat SHA‑256 `ec4986d4de0853f6a8188c0add991a139d014c247adee6cb960fae29416a4e9a`. Eingänge, Aufrufe und Laufgrenzen stehen in `AP1_EXPORT/launch.json` sowie `AP2_SOLVES/launch.json`, `AP2_RECOVERY/launch.json`, `AP2_CROSSOVER/launch.json`, `AP2_STABLE_BASIS/launch.json`, `AP2_SCALED_BARRIER/launch.json` und `AP2_MIP_START/launch.json`. Die SHA-gebundenen AP1-Sidecars, Solverlogs, die Prozessprofile und Kostenreceipts liegen bei den jeweiligen Läufen. `replay_final.py` verifiziert zusätzlich die Eingangsbytes und die Bindung der Run-Summaries. Der kombinierte Crossover-Prozess erreichte 14,596 GB Private Bytes und 11,966 GB Working Set ohne Eingriff der Ressourcengrenzen.
+Der Producer und der Consumer entsprechen den in der Q5-Tabelle genannten Commits. Das übernommene wissenschaftliche Manifest hat SHA‑256 `ec4986d4de0853f6a8188c0add991a139d014c247adee6cb960fae29416a4e9a`. Eingänge, Aufrufe und Laufgrenzen stehen in `AP1_EXPORT/launch.json` sowie `AP2_SOLVES/launch.json`, `AP2_RECOVERY/launch.json`, `AP2_CROSSOVER/launch.json`, `AP2_STABLE_BASIS/launch.json`, `AP2_SCALED_BARRIER/launch.json`, `AP2_MIP_START/launch.json`, `AP2_GSCR_MIP_2H/launch.json` und `AP2_PARTIAL_CLEAN_START/launch.json`. Die SHA-gebundenen AP1-Sidecars, Solverlogs, die Prozessprofile und Kostenreceipts liegen bei den jeweiligen Läufen. `replay_final.py` verifiziert zusätzlich die Eingangsbytes und die Bindung der Run-Summaries. Der kombinierte Crossover-Prozess erreichte 14,596 GB Private Bytes und 11,966 GB Working Set ohne Eingriff der Ressourcengrenzen.
+
+Der abschließende `comparison_final.json`-Receipt hat SHA‑256 `c79f14b13ebf149208bf9447006de505859b422763a81d39da33ad0ff70de740`. Die Run-Summary des geprüften Ganzzahlplans ohne gSCR hat SHA‑256 `2302b5e2e94fabb3755d0109507c5f8072b8497d93db76231ef3540671e03bd1`.
 
 | Ausführungsdatei | SHA‑256 |
 |---|---|
@@ -131,3 +152,5 @@ Der Producer und der Consumer entsprechen den in der Q5-Tabelle genannten Commit
 | `run_joint_weeks_stable_basis.jl` | `5d6fa109ed1518aed0960836328c9b0502e12ff58b78c4baf35cc5ced6c23a5f` |
 | `run_joint_weeks_scaled_barrier.jl` | `8732159fd22dbbef5acf03cde59ce548284439457d229485ef7af9ee813bbbec` |
 | `run_joint_weeks_mip_start.jl` | `821e5fc1224eca4e1bdf7af688c43b67677c58adac4d49a3d87b18cc87ad7c2f` |
+| `run_joint_weeks_gscr_2h.jl` | `4affbc8281690efe27f6c36ceac79402ab7f6204cc0a265072dcb850313de1b8` |
+| `run_joint_weeks_partial_clean_start.jl` | `c78bef8e2610a9532920be9978619a70b8fd2d3bac3a35e85ca2d85177001abd` |
