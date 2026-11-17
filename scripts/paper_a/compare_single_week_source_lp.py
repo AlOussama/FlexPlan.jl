@@ -7,6 +7,8 @@ import math
 import sys
 
 root, raw, parent = map(Path, sys.argv[1:4])
+quota_pct = int(sys.argv[4]) if len(sys.argv) > 4 else 50
+assert quota_pct in (50, 60, 70)
 source_path = parent / "replay.py"
 source_bytes = source_path.read_bytes()
 assert hashlib.sha256(source_bytes).hexdigest() == "45e172224308443c5c9164467b08d0388f31c658c403497467af6c7e3bf31aa0"
@@ -14,8 +16,10 @@ source = source_bytes.decode("utf-8-sig")
 for old, new in [
     ("r['hours']==840", "r['hours']==168"),
     ("r['weight']-73/7", "r['weight']-365/7"),
+    ("r['quota_pct']==50", f"r['quota_pct']=={quota_pct}"),
+    ("injection>=demand*.5-0.1", f"injection>=demand*{quota_pct / 100}-0.1"),
     ("'840-hour technical 50 percent original wind and solar'",
-     "'168-hour KW8 technical 50 percent Wind/PV fixed-E source comparison'"),
+     f"'168-hour KW8 technical {quota_pct} percent Wind/PV fixed-E source comparison'"),
 ]:
     assert source.count(old) == 1
     source = source.replace(old, new, 1)
@@ -38,6 +42,7 @@ sys.argv = saved_args
 receipt = json.loads((root / "comparison.json").read_bytes())
 receipt["source_model"] = "colib_epri_frozen_E_blocks_v1"
 receipt["hours"] = 168
+receipt["quota_pct"] = quota_pct
 receipt["OPEX_factor"] = 8760 / 168
 receipt["CAPEX_factor"] = 1
 receipt["integer_rounding_performed"] = False
