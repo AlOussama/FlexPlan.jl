@@ -1,9 +1,11 @@
-# One source variant of the existing five-week workflow; no integer rounding.
+# One source variant of the existing workflow; no integer rounding or warm starts.
 using SHA, JSON, CSV, Dates
-length(ARGS)==4 || error("usage: PARENT_STUDY OUTPUT_ROOT SCIENCE_CASE LP_SECONDS")
+length(ARGS)==4 || error("usage: PARENT_STUDY OUTPUT_ROOT SCIENCE_CASE SOLVER_SECONDS")
 const parent_study,output_root,science_case=abspath.(ARGS[1:3])
-const lp_seconds=parse(Float64,ARGS[4])
-0<lp_seconds<=7200 || error("LP solver budget must be in (0,7200] seconds")
+const solver_seconds=parse(Float64,ARGS[4])
+0<solver_seconds<=7200 || error("Solver budget must be in (0,7200] seconds")
+const integrality_mode=get(ENV,"PAPER_A_PROXY_INTEGRALITY","relaxed")
+integrality_mode in ("relaxed","integer") || error("Unsupported integrality mode")
 startswith(output_root,"E:") || error("Large outputs require E:")
 const source_variants=Dict{String,Any}()
 const candidate_receipt=Ref{Dict{String,Any}}()
@@ -131,17 +133,24 @@ function save_complete_candidate!(model,weeks,output,scenario)
     for name in ("ConstrVio","BoundVio","DualVio","IterCount","ObjVal","ObjBound")
         native[name]=try native_attribute(model,name) catch e; sprint(showerror,e) end
     end
+    discrete=filter(v->JuMP.is_integer(v) || JuMP.is_binary(v),JuMP.all_variables(model))
+    if !isempty(discrete)
+        native["IntVio"]=try native_attribute(model,"IntVio") catch e; sprint(showerror,e) end
+    end
     receipt=Dict{String,Any}("source_model"=>FP._PAPER_A_GFM_PROXY_ID,"claim"=>"frozen_E_planning_proxy",
         "derived_source_variants"=>source_variants,"native_solver_attributes"=>native,
+        "integrality_mode"=>integrality_mode,"discrete_variable_count"=>length(discrete),
+        "model_variable_count"=>JuMP.num_variables(model),
         "integer_rounding_performed"=>false,"full_primal_saved"=>false,"strength_constraints_active"=>scenario=="with_gscr")
     if JuMP.has_values(model)
         value=JuMP.value
         open(joinpath(output,"full_primal.csv"),"w") do io
-            println(io,"variable_index,value,lower_bound,upper_bound")
+            println(io,"variable_index,value,lower_bound,upper_bound,is_integer,is_binary")
             for variable in JuMP.all_variables(model)
                 println(io,JuMP.index(variable).value,',',value(variable),',',
                     JuMP.has_lower_bound(variable) ? JuMP.lower_bound(variable) : -Inf,',',
-                    JuMP.has_upper_bound(variable) ? JuMP.upper_bound(variable) : Inf)
+                    JuMP.has_upper_bound(variable) ? JuMP.upper_bound(variable) : Inf,',',
+                    JuMP.is_integer(variable),',',JuMP.is_binary(variable))
             end
         end
         # Retain symbolic container coordinates for every stored VariableRef.
@@ -160,6 +169,9 @@ function save_complete_candidate!(model,weeks,output,scenario)
             end
             for (period,w) in enumerate(weeks),project in w.projects
                 println(io,period,",0,renewable_capacity,\"",replace(project.name,"\""=>"\"\""),"\",",JuMP.index(project.installed).value)
+                for t in 1:168
+                    println(io,period,',',t,",renewable_dispatch,\"",replace(project.name,"\""=>"\"\""),"\",",JuMP.index(project.gen[t]).value)
+                end
             end
         end
         g1=[]
@@ -182,9 +194,12 @@ function save_complete_candidate!(model,weeks,output,scenario)
         end
         slack=minimum(r.slack_pu for r in g1)
         native_ok=all(get(native,k,nothing) isa Number && native[k]<=1e-6 for k in ("ConstrVio","BoundVio"))
+        integer_error=maximum((abs(value(v)-round(value(v))) for v in discrete);init=0.0)
+        integer_ok=isempty(discrete) || (integer_error<=1e-6 && get(native,"IntVio",Inf) isa Number && native["IntVio"]<=1e-6)
         merge!(receipt,Dict("full_primal_saved"=>true,"primal_violation_count_at_1e_6"=>length(violations),
+            "saved_discrete_max_residual"=>integer_error,
             "minimum_g1_slack_pu"=>slack,"g1_row_count"=>length(g1),
-            "numerically_accepted"=>isempty(violations) && (scenario!="with_gscr" || slack>=-1e-6) && native_ok))
+            "numerically_accepted"=>isempty(violations) && (scenario!="with_gscr" || slack>=-1e-6) && native_ok && integer_ok))
     end
     candidate_receipt[]=receipt
     open(io->JSON.print(io,receipt,2),joinpath(output,"complete_candidate_receipt.json"),"w")
@@ -227,7 +242,22 @@ legacy=matched_replace(legacy,"    open(io->JSON.print(io,result,2),joinpath(out
     "    merge!(result,candidate_receipt[])\n    open(io->JSON.print(io,result,2),joinpath(output,\"run_summary.json\"),\"w\")")
 legacy=matched_replace(legacy,"(\"NumericFocus\",1)","(\"NumericFocus\",3)")
 legacy=matched_replace(legacy,"(\"Crossover\",1)","(\"Crossover\",1),(\"BarHomogeneous\",1)")
+# Reuse the existing integer branch and skip its automatic LP fallback. Dropping
+# the optimizer and clearing starts gives the second variant the same cold start.
+legacy=matched_replace(legacy,
+    "            status=summarize(model,weeks,variant,\"integer\",terms,observed,target,integer_vars)",
+    "            status=summarize(model,weeks,variant,\"integer\",terms,observed,target,integer_vars)\n"*
+    "            if integrality_mode==\"integer\"\n"*
+    "                JuMP.MOI.Utilities.drop_optimizer(model)\n"*
+    "                for variable in JuMP.all_variables(model)\n"*
+    "                    JuMP.set_start_value(variable,nothing)\n"*
+    "                end\n"*
+    "                continue\n"*
+    "            end")
+# Match the existing 1e-6 independent acceptance threshold for integer witnesses.
+legacy=matched_replace(legacy,"(\"MIPGap\",0.005)","(\"MIPGap\",0.005),(\"IntFeasTol\",1e-8)")
 Base.include_string(Main,legacy,legacy_path)
 initialize_week_validators()
-run_study(output_root,joinpath(parent_study,"AP1_EXPORT"),science_case,0.,lp_seconds;
+run_study(output_root,joinpath(parent_study,"AP1_EXPORT"),science_case,
+    integrality_mode=="integer" ? solver_seconds : 0.,solver_seconds;
     solver_mode=selected_iso_week==0 ? "with_gscr" : "both")

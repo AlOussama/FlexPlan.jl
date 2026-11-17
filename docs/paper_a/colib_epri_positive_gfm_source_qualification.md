@@ -1,4 +1,4 @@
-# Positive GFM source projection for the 840-hour technical LP
+# Positive GFM source projection and one-week technical comparison
 
 Date: 2026-11-17. This is the separately identified `colib_epri_frozen_E_blocks_v1` planning proxy. It does not replace the original Full37 annual case or qualify a closed-loop EPRI controller, AC feasibility, fault current or dynamic stability.
 
@@ -75,4 +75,38 @@ The continuation reuses these qualified prepared-PU bytes through `PAPER_A_PROXY
 
 A directly relevant postprocess delta was also corrected: `PaperADiagnostics.reconstruct` previously reconstructed the new R/X source as purely reactive. Its new subtype branch now independently evaluates the complex series admittance, retaining the existing voltage-base transformation and unchanged SYN path. This affects diagnosis only; the model/solver already used the correct R/X coefficient. Focused tests cover R>0, R=0, unequal native MVA/voltage bases, correct source stamps and unchanged SYN results. No old mathematical/conic solver suite is rerun for this postprocess repair.
 
-The bounded continuation resource profile retains a 20-GiB process limit, 2-GiB commit reserve and 2-GiB E: reserve. Its physical-RAM reserve is 512 MiB, allowing normal Windows paging during temporary input-reading peaks. The solver budget remains at most 7,200 seconds per LP. Actual run and result receipts follow below after execution.
+The bounded continuation resource profile retains a 20-GiB process limit, 2-GiB commit reserve and 2-GiB E: reserve. Its physical-RAM reserve is 512 MiB, allowing normal Windows paging during temporary input-reading peaks. The solver budget remains at most 7,200 seconds per variant.
+
+## Actual KW 8 LP comparison, 18 November 2026
+
+Both joint expansion/dispatch LPs finished `OPTIMAL` (native Gurobi status 2) on 18–24 February 2013, 168 hourly steps. They use identical qualified AP2 bytes, cold starts and 50% positive Wind/PV injection divided by load. The objective is annualized CAPEX plus `(8760/168) * (generation + storage + startup/shutdown OPEX)`. Actual output root: `E:/ResearchResults/FlexPlan_UC_GSCR/TECH_FULL37_KW08_RE50_GFM_FROZEN_E_20261118_01`.
+
+| Quantity | With G1/gSCR | Without G1/gSCR |
+|---|---:|---:|
+| Annualized objective, billion EUR2025 | 98.619706096 | 97.551528967 |
+| Annualized CAPEX, billion EUR2025 | 62.062737889 | 60.351397209 |
+| Annualized OPEX, billion EUR2025 | 36.556968207 | 37.200131758 |
+| New CCGT / OCGT, GW | 1.799133 / 0 | 1.874730 / 0 |
+| New BESS GFL / GFM, GW | 7.270790 / 30.682728 | 16.970308 / 0 |
+| New onshore wind / PV, GW | 343.419994 / 438.061454 | 343.300595 / 436.277457 |
+| Gas dispatch in 168 h, TWh | 4.192861 | 4.560932 |
+| Battery charge / discharge in 168 h, TWh | 1.529788 / 1.468597 | 0.689396 / 0.661820 |
+| PHS charge / discharge in 168 h, TWh | 2.072406 / 1.554305 | 2.209661 / 1.657246 |
+| Native solve time, s | 155.315 | 162.664 |
+| Native maximum constraint violation | 3.056e-11 | 3.723e-10 |
+| Native maximum bound violation | 2.987e-11 | 8.569e-11 |
+| Active-model primal violations above 1e-6 | 0 | 0 |
+
+The common weekly load is 71.058866 TWh and Wind/PV injection is 35.529433 TWh (50%). Complete carrier dispatch aggregates and receipt hashes are in the compact [versioned result receipt](receipts/kw08_re50_frozen_E_lp_20261118.json). The independent CSV replay gives maximum hourly system-balance residuals of 3.493e-8 MW and 3.655e-8 MW, respectively. Replayed objective residuals are below EUR 0.004. Both native LP bounds equal their objective values at the reported precision. These are LP bounds for this exact weekly proxy formulation, not bounds for an independently weighted year or a different model.
+
+G1 adds EUR 1.068177130 billion/year (+1.094988%): CAPEX rises by EUR 1.711340680 billion/year and OPEX falls by EUR 0.643163550 billion/year. Of 6,216 G1 bus-hour rows, 942 are binding within 1e-6 pu at 25 buses and none is violated; minimum slack is -2.018e-12 pu. Removing these rows leaves 3,026 counterfactual violations, minimum -983.266908 pu. Those disabled rows do not invalidate the no-G1 solution. G1 is the implemented sufficient Gershgorin condition. Separate classical SCR/eSCR constraints and an exact spectral gSCR test were not introduced by this comparison.
+
+Runtime producer commit: `becec6d63c0fbf2b8a160c41f87631f5270046b9`; consumer commit: `89897ee8b0caa8a54533b0fb03fa61b6adb1bd88`. The source variant was created at consumer `73ae452ae95851a848b589acf39bd4c6d4dfee06`. The actual runner SHA-256 was `8f2d168f74e26deda62bdced90e83f8a15f41f2a049238044ad2ab4ea787e3c5`. The separately reviewed KW8 case-byte receipt has SHA-256 `9b35bc7616b555224a5fc72db135804ce7f7c4c0b508f906652a95b4af5ea0f7`; the successful real-reader probe has SHA-256 `e27416e65cc589c61e21719d0483e0d4e860b4e0198886ca1bd3d143366800ce`.
+
+The pair exited normally in 539.484 wall seconds. Sampled peak private memory was 4,267,048,960 bytes and peak working set 3,255,623,680 bytes; no resource guard fired. Raw case/dispatch/primal/log files remain on E:. No integer rounding or integer optimization occurred in this LP pair. All comparisons are restricted to the owner-selected fixed-E planning proxy.
+
+The separate mathematical/code reviewer accepted the saved results as `PASS_SCOPED_LP_RESULT_REVIEW`, receipt SHA-256 `98f1d2c3a567cf4a2570a8f59ff7c8466bb0f74bebc96688872bbe3acce7b026`. The review independently replays original load profiles, physical generation/storage dispatch prices, startup/shutdown variables and their block-MW event rates, investment coefficients, annualization, native bounds and G1 exports. No model or solver was run by the result reviewer. All 311,395 original JuMP variables are saved once with finite values. This is not a complete native-Gurobi auxiliary vector: the backend has 8,736 extra columns whose exact bridge mapping was not archived. The 12,432 new-renewable dispatch variables have values in the full vector and asset/time dispatch CSVs, but lack direct symbolic index-coordinate rows. These bounded archive limitations do not affect the independently reconciled energy/cost result; the receipt does not claim complete native auxiliary reconstruction.
+
+## Owner-authorized integer continuation
+
+After the LP comparison, the owner requested the same pair without LP relaxation. `PAPER_A_PROXY_INTEGRALITY=integer` reuses the existing integer branch, preserving installed/active/source/event integrality and leaving renewable MW expansion continuous as already specified. It skips automatic LP fallback, clears solver starts between variants, and retains the same case, quota and annualization. Each MIP has a 7,200-second budget and the existing 0.5% relative-gap target. Native `IntVio`, integer/binary flags in the complete primal CSV and independent integer residuals are recorded. Integer feasibility is checked at 1e-6; solver `IntFeasTol=1e-8` is stricter than that acceptance threshold. No LP-derived variable bounds or rounded incumbent are imposed. Actual MIP outcomes are added after execution and independent result review.

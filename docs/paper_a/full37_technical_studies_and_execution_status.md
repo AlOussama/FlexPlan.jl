@@ -2,6 +2,22 @@
 
 Dieses Dokument erfasst den KW‑3-Vergleich, die Q5-Speicherkorrektur und die am 15. November 2026 gestartete 840‑Stunden-Studie. Alle berechneten Fälle verwenden DC-Lastfluss mit verlustfreier HGÜ und die bestehenden 2040-Kostensätze in EUR2025.
 
+## Aktueller Rücklauf · KW 8 mit positivem GFM-Planungsproxy
+
+Am 18. November wurden auf Owner-Anweisung zunächst 168 Stunden (18.–24. Februar 2013) gemeinsam für Ausbau und Betrieb optimiert. Beide LP-Relaxationen sind `OPTIMAL` und im aktiven Modell numerisch zulässig. Bei gleicher 50-%-Wind/PV-Quote, OPEX ×8760/168 und CAPEX ×1 ergeben sich mit G1/gSCR 98,619706 Mrd. EUR2025 und ohne G1/gSCR 97,551529 Mrd. EUR2025. Der Mehrbetrag beträgt 1,068177 Mrd. EUR2025 (+1,095 %).
+
+| Ausbau beziehungsweise Wochenbetrieb | Mit G1/gSCR | Ohne G1/gSCR |
+|---|---:|---:|
+| Gaszubau, GW | 1,799 | 1,875 |
+| BESS-Zubau GFL / GFM, GW | 7,271 / 30,683 | 16,970 / 0 |
+| Onshore-/PV-Zubau, GW | 343,420 / 438,061 | 343,301 / 436,277 |
+| Gasdispatch, TWh | 4,193 | 4,561 |
+| Batterieentladung, TWh | 1,469 | 0,662 |
+
+Die aktive G1-Variante verletzt keine der 6.216 Zeilen; 942 sind bei 1e-6 pu bindend. Der Vergleich ohne G1 verletzt bei nachträglicher Auswertung 3.026 dieser deaktivierten Zeilen. Die native maximale Constraintverletzung liegt in beiden aktiven Modellen unter 4e-10. Neue separate klassische SCR-/eSCR-Formeln wurden nicht aktiviert. Der positive GFM-Beitrag ist auf den ausdrücklich gewählten fixed-E-Planungsproxy begrenzt, SYN behält `x''d=0.25`.
+
+Der [Qualifikations- und Ergebnisbericht](colib_epri_positive_gfm_source_qualification.md) und der [kompakte Ergebnisreceipt](receipts/kw08_re50_frozen_E_lp_20261118.json) binden Daten, Code, Kosten, stündliche Exporte und unabhängige Prüfung. Die Rohdateien liegen auf E:. Der 840-h-Lauf bleibt durch die Owner-Priorisierung zurückgestellt. Als unmittelbar anschließender Auftrag sind dieselben zwei Wochenläufe mit ganzzahligen Blockvariablen und je höchstens zwei Stunden Solverzeit freigegeben; keine erneuten LP-Läufe oder LP-basierten Schrankenänderungen. Ein Jahres-, Gate-J-, F3- oder AC-/Dynamik-GO folgt daraus nicht.
+
 ## KW 3 · Referenz und Wind-/PV-Quoten
 
 Die Wochenlast vom 14. bis 20. Januar 2013 beträgt 74,239 TWh. Für die Quote zählt die positive Einspeisung aus Wind und PV im Bestand und im Ausbau. Onshore-Wind und PV sind an je 37 Knoten mit vorhandenem Profil kontinuierlich ausbaubar. Die verfügbare Leistung neuer Anlagen geht über `p_max_pu` in den GFL-Term der G1-Ungleichung ein. Bei der Jahreshochrechnung kürzt sich der gleiche Gewichtungsfaktor für Einspeisung und Last. Die Quotenläufe verwenden annualisierte CAPEX einmal und Wochen-OPEX ×52.
