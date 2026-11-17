@@ -33,6 +33,15 @@ function source_b_block(S_block_MVA::Real,S_base_MVA::Real,x_src::Real)
     return S_block_MVA/(S_base_MVA*x_src)
 end
 
+"""Contribution to -Im(Y) of a series R+jX branch with fixed internal E.
+This component projection does not establish closed-loop controller stiffness."""
+function source_b_block(S_block_MVA::Real,S_base_MVA::Real,x_src::Real,r_src::Real)
+    all(z->isfinite(z) && z>0,(S_block_MVA,S_base_MVA,x_src)) &&
+        isfinite(r_src) && r_src>=0 || throw(ArgumentError("invalid fixed-E source impedance or MVA base"))
+    iszero(r_src) && return source_b_block(S_block_MVA,S_base_MVA,x_src)
+    return (S_block_MVA/S_base_MVA)*x_src/(r_src^2+x_src^2)
+end
+
 """Validate the AP1 physical class, converter control mode and provenance.
 SC is purposefully rejected as an unpriced active-power planning option here."""
 function validate_source(d::AbstractDict;synthetic_regression=false,zero_strength_gfm=false)
@@ -66,8 +75,14 @@ function validate_source(d::AbstractDict;synthetic_regression=false,zero_strengt
     elseif cls in ("SYN","GFM") && !fixed
         get(d,"source_equivalent_valid",false) === true ||
             throw(ArgumentError("unverified voltage-source equivalent"))
-        get(d,"source_equivalent_type",nothing) == "voltage_behind_reactance" ||
+        source_type=get(d,"source_equivalent_type",nothing)
+        fixed_E=source_type=="voltage_behind_series_impedance_frozen_E"
+        (source_type=="voltage_behind_reactance" || fixed_E) ||
             throw(ArgumentError("unsupported source equivalent"))
+        !fixed_E || (get(d,"frozen_internal_voltage",false)===true &&
+            get(d,"source_model_scope",nothing)=="frozen_E_planning_proxy" &&
+            get(d,"physical_controller_equivalent_qualified",nothing)===false) ||
+            throw(ArgumentError("fixed-E projection requires its explicit planning-proxy scope"))
         s = number(d,"S_block_MVA";positive=true)
         x = number(d,"x_src";positive=true)
         native = get(d,"native_parameter_base",nothing)
@@ -79,12 +94,15 @@ function validate_source(d::AbstractDict;synthetic_regression=false,zero_strengt
             evidence(get(d,f,nothing)) || throw(ArgumentError("missing/unverified "*f))
         end
         x_block = x*s/sn
+        r_block = fixed_E ? number(d,"r_src";nonnegative=true)*s/sn : 0.0
         if haskey(d,"native_source_kv_referred") || haskey(d,"source_bus_base_kv")
             native_kv = number(d,"native_source_kv_referred";positive=true)
             bus_kv = number(d,"source_bus_base_kv";positive=true)
             x_block *= (native_kv/bus_kv)^2
+            r_block *= (native_kv/bus_kv)^2
         end
-        b = source_b_block(s,d["S_base_MVA"],x_block)
+        b = fixed_E ? source_b_block(s,d["S_base_MVA"],x_block,r_block) :
+            source_b_block(s,d["S_base_MVA"],x_block)
         if get(d,"x_src_block_base",nothing)!==nothing
             isapprox(number(d,"x_src_block_base";positive=true),x_block;atol=1e-9,rtol=1e-9) || throw(ArgumentError("producer x_src_block_base mismatch"))
         end

@@ -28,6 +28,95 @@ _paper_a_full37_lines_sha(lines)=bytes2hex(SHA.sha256(join(lines,'\n')))
 _paper_a_full37(data)=get(get(data,"paper_a_extension",Dict()),"full37_specification",nothing)
 _paper_a_full37_mode(dev)=get(get(dev,"paper_a_full37_online",Dict()),"mode",nothing)
 _paper_a_full37_minimum(dev)=dev["paper_a_full37_online"]["strength_minimum_pu"]
+
+const _PAPER_A_GFM_PROXY_ID="colib_epri_frozen_E_blocks_v1"
+
+function _paper_a_gfm_proxy(data)
+    spec=_paper_a_full37(data)
+    spec===nothing && return nothing
+    proxy=get(spec,"technical_gfm_source_proxy",nothing)
+    proxy===nothing && return nothing
+    week=get(spec,"technical_week",Dict())
+    get(week,"kind",nothing)=="technical_independent_week_2013_v1" &&
+        get(week,"hours",nothing)==168 && length(get(data,"nw",Dict()))==168 &&
+        data["baseMVA"]==100 && get(proxy,"model",nothing)==_PAPER_A_GFM_PROXY_ID &&
+        get(proxy,"scope",nothing)=="frozen_E_planning_proxy" &&
+        get(proxy,"x_device_pu",nothing)==0.15 && get(proxy,"r_device_pu",nothing)==0.0015 &&
+        get(proxy,"S_block_MVA",nothing)==25 && get(proxy,"synchronous_xdpp",nothing)==0.25 &&
+        _paper_a_sha256_string(get(proxy,"parent_AP1_sha256",nothing)) &&
+        get(proxy,"owner_decision",nothing)=="2026-11-17: bilde beide modelle gleich ähnlich aus" ||
+        throw(ArgumentError("GFM proxy is restricted to the separately identified owner-selected 168h technical case"))
+    return proxy
+end
+
+function _paper_a_validate_gfm_proxy_device(dev)
+    get(dev,"source_equivalent_type",nothing)=="voltage_behind_series_impedance_frozen_E" &&
+        dev["x_src"]==0.15 && dev["r_src"]==0.0015 &&
+        dev["S_block_MVA"]==dev["native_source_MVA"]==25 &&
+        dev["native_parameter_base"]=="block_MVA" && dev["S_base_MVA"]==100 &&
+        dev["mu_str"]==1 && dev["mu_fl"]==0 &&
+        dev["fixed_strength_already_in_network"]===false &&
+        get(dev,"native_source_kv_referred",nothing)==get(dev,"source_bus_base_kv",nothing) ||
+        throw(ArgumentError("GFM proxy source coefficients or bases differ from the qualified component"))
+    PaperARegional.validate_source(dev)
+    return nothing
+end
+
+"""Create a separately identified technical source variant after authenticated AP1 parsing.
+Original AP1 files remain unchanged; callers must save/hash the derived AP2 bytes.
+Only GFM source fields change. No physical EPRI controller qualification is asserted."""
+function apply_paper_a_gfm_source_proxy!(data;parent_AP1_sha256)
+    _paper_a_sha256_string(parent_AP1_sha256) || throw(ArgumentError("invalid parent AP1 SHA-256"))
+    binding=_paper_a_profile_binding(data;allow_unverified=_paper_a_synthetic_case(data))
+    spec=_paper_a_full37(data)
+    spec isa AbstractDict && !haskey(spec,"technical_gfm_source_proxy") ||
+        throw(ArgumentError("GFM proxy requires an unmodified technical parent case"))
+    _paper_a_validate_full37(data,binding)
+    binding===nothing || binding.run_identity=="ap1:sha256:"*parent_AP1_sha256 ||
+        throw(ArgumentError("GFM proxy parent bytes do not match the authenticated AP1 identity"))
+    proxy=Dict{String,Any}("model"=>_PAPER_A_GFM_PROXY_ID,"scope"=>"frozen_E_planning_proxy",
+        "x_device_pu"=>0.15,"r_device_pu"=>0.0015,"S_block_MVA"=>25,
+        "synchronous_xdpp"=>0.25,"parent_AP1_sha256"=>parent_AP1_sha256,
+        "owner_decision"=>"2026-11-17: bilde beide modelle gleich ähnlich aus")
+    # Stage the complete source delta, including bus bases, before modifying input.
+    new_spec=merge(spec,Dict("technical_gfm_source_proxy"=>proxy))
+    scoped=merge(data,Dict("paper_a_extension"=>merge(data["paper_a_extension"],
+        Dict("full37_specification"=>new_spec))))
+    _paper_a_gfm_proxy(scoped)
+    proposed=Tuple{Any,Any}[]
+    for sn in values(data["nw"])
+        count_gfm=0
+        for table in ("storage","ne_storage"),dev in values(get(sn,table,Dict()))
+            get(dev,"source_class",nothing)=="GFM" || continue
+            PaperARegional.validate_source(dev;zero_strength_gfm=true)
+            kv=PaperARegional.number(sn["bus"][string(dev["storage_bus"])],"base_kv";positive=true)
+            candidate=merge(dev,Dict("source_equivalent_type"=>"voltage_behind_series_impedance_frozen_E",
+                "source_equivalent_valid"=>true,"frozen_internal_voltage"=>true,
+                "source_model_scope"=>"frozen_E_planning_proxy","physical_controller_equivalent_qualified"=>false,
+                "x_src"=>0.15,"r_src"=>0.0015,"S_base_MVA"=>100.0,"native_parameter_base"=>"block_MVA",
+                "native_source_MVA"=>25.0,"native_source_kv_referred"=>kv,"source_bus_base_kv"=>kv,
+                "x_src_block_base"=>0.15,"b_block"=>PaperARegional.source_b_block(25.,100.,.15,.0015),
+                "mu_str"=>1.0,"mu_fl"=>0.0,"source_parameter_provenance"=>"EPRI_3002021403_2021_Table2-1_and_A3.5_fixed_E_owner_proxy",
+                "source_equivalent_time_scale"=>"frozen_internal_E_component_at_each_hourly_operating_point",
+                "electrical_interface_evidence"=>"EPRI_3002021403_voltage_source_series_RX_interface_fixed_E_proxy_only"))
+            candidate["source_b_block_pu_reference"]=candidate["b_block"]
+            candidate["paper_a_full37_online"]=Dict("mode"=>"GFM_FROZEN_E_PROXY","strength_minimum_pu"=>0.0)
+            _paper_a_validate_gfm_proxy_device(candidate)
+            push!(proposed,(dev,candidate))
+            count_gfm+=1
+        end
+        count_gfm==37 || throw(ArgumentError("GFM proxy requires exactly 37 original candidates per snapshot"))
+    end
+    for (dev,candidate) in proposed
+        merge!(dev,candidate)
+    end
+    data["paper_a_extension"]["full37_specification"]=new_spec
+    for sn in values(data["nw"])
+        sn["paper_a_extension"]["full37_specification"]=new_spec
+    end
+    _paper_a_advance_profile_binding!(data,binding)
+    return data
+end
 _paper_a_dispatch_reservoir(data,dev)=get(something(_paper_a_full37(data),Dict()),"dispatch_policy",nothing)==
     _PAPER_A_FULL37_DISPATCH_POLICY && get(dev,"carrier",nothing)=="hydro"
 
@@ -83,6 +172,7 @@ end
 
 function _paper_a_validate_full37(data,binding)
     spec=_paper_a_full37(data)
+    source_proxy=_paper_a_gfm_proxy(data)
     snapshots=get(data,"multinetwork",false) ? data["nw"] : Dict("1"=>data)
     if spec===nothing
         get(data["paper_a_extension"],"dataset_kind",nothing)!="full37_frozen_study" ||
@@ -191,7 +281,9 @@ function _paper_a_validate_full37(data,binding)
                     (cls!="SYN" || (dev["mu_str"]==1 && dev["fixed_strength_already_in_network"]===false)) ||
                     throw(ArgumentError("Full37 source participation coefficients differ from the case"))
             end
-            mode=selective ? "SELECTIVE_SYN" : phs ? "PHS_SYN" : gfm ? "GFM_ZERO_STRENGTH" : nothing
+            mode=selective ? "SELECTIVE_SYN" : phs ? "PHS_SYN" :
+                gfm ? (source_proxy===nothing ? "GFM_ZERO_STRENGTH" : "GFM_FROZEN_E_PROXY") : nothing
+            gfm && source_proxy!==nothing && _paper_a_validate_gfm_proxy_device(dev)
             if (selective && carrier=="hydro") || phs
                 table=="storage" && get(dev,"paper_a_storage_unit",nothing) isa AbstractDict ||
                     throw(ArgumentError("Full37 hydro and PHS require native storage physics"))
