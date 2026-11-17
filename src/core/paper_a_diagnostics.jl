@@ -75,7 +75,11 @@ function reconstruct(raw,solution,t;tol=DEFAULT_TOL)
             # AC-side operating magnitude is explicitly distinct from nameplate.
             pop[r]+=d["mu_fl"]*abs(v["dispatch_MW"]-get(v,"charge_MW",0.))/base
         elseif selector!="GFM_ZERO_STRENGTH" && !get(d,"fixed_strength_already_in_network",false)
-            b_native=d["native_source_MVA"]/(base*d["x_src"])
+            # Independent complex-admittance oracle for the new fixed-E R/X
+            # projection; retain the established reactive source path exactly.
+            b_native=get(d,"source_equivalent_type",nothing)=="voltage_behind_series_impedance_frozen_E" ?
+                -imag(inv(complex(d["r_src"],d["x_src"]))) * d["native_source_MVA"]/base :
+                d["native_source_MVA"]/(base*d["x_src"])
             if haskey(d,"native_source_kv_referred") || haskey(d,"source_bus_base_kv")
                 bus_id=d[table=="gen" ? "gen_bus" : "storage_bus"]
                 bus_kv=sn["bus"][string(bus_id)]["base_kv"]

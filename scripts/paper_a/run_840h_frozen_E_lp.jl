@@ -7,6 +7,10 @@ const lp_seconds=parse(Float64,ARGS[4])
 startswith(output_root,"E:") || error("Large outputs require E:")
 const source_variants=Dict{String,Any}()
 const candidate_receipt=Ref{Dict{String,Any}}()
+const qualified_case_root=get(ENV,"PAPER_A_PROXY_QUALIFIED_CASE_ROOT","")
+const selected_iso_week=parse(Int,get(ENV,"PAPER_A_PROXY_SINGLE_WEEK","0"))
+const study_hours=selected_iso_week==0 ? 840 : 168
+const inherited_byte_review_sha="ca0d3806d96d63422d656e1fd7e2cd66cae0262deb7d26d9ca8d88d4943dac80"
 const proxy_fields=Set(["source_equivalent_type","source_equivalent_valid","frozen_internal_voltage",
     "source_model_scope","physical_controller_equivalent_qualified","x_src","r_src","S_base_MVA",
     "native_parameter_base","native_source_MVA","native_source_kv_referred","source_bus_base_kv",
@@ -17,6 +21,34 @@ const proxy_fields=Set(["source_equivalent_type","source_equivalent_valid","froz
 function matched_replace(s,old,new)
     length(findall(old,s))==1 || error("Nonunique existing workflow anchor: $old")
     return replace(s,old=>new;count=1)
+end
+
+function read_qualified_variant(parent_path,parent_sha)
+    isempty(qualified_case_root) && return FP.parse_file(parent_path;expected_case_sha256=parent_sha)
+    sha_file(parent_path)==parent_sha || error("Original AP1 bytes changed")
+    gate_path=joinpath(qualified_case_root,"independent_case_byte_review.json")
+    sha_file(gate_path)==inherited_byte_review_sha || error("Unrecognized inherited case-byte review")
+    gate=JSON.parsefile(gate_path)
+    gate["status"]=="PASS" && gate["source_model"]==FP._PAPER_A_GFM_PROXY_ID || error("Case-byte review not positive")
+    week=string(current_week[]["iso_week"])
+    dir=joinpath(qualified_case_root,"AP2_SOURCE_VARIANTS","week_"*week)
+    receipt=JSON.parsefile(joinpath(dir,"source_variant_receipt.json"))
+    actual=sha_file(joinpath(dir,"derived_case.json"))
+    receipt["parent_AP1_sha256"]==parent_sha &&
+        receipt["derived_AP2_case_sha256"]==actual==gate["derived_AP2_case_sha256_by_week"][week] ||
+        error("Derived variant bytes do not match the qualified lineage")
+    data=JSON.parsefile(joinpath(dir,"derived_case.json"))
+    # This is a consumer-derived byte identity, not a producer AP1 identity.
+    data[FP._PAPER_A_PROFILE_KEY]=FP._PaperAProfileBinding("ap2:sha256:"*actual,receipt["derived_profile_sha256"])
+    FP.prepare_paper_a_data!(data)
+    FP.paper_a_profile_identity(data)==receipt["derived_profile_sha256"] || error("Prepared variant profile changed")
+    return data
+end
+
+function parent_specification(data)
+    spec=copy(FP._paper_a_full37(data))
+    pop!(spec,"technical_gfm_source_proxy",nothing)
+    return spec
 end
 
 function neutral_profile(data)
@@ -37,6 +69,14 @@ function neutral_profile(data)
 end
 
 function apply_and_record_proxy!(data,parent_sha)
+    if !isempty(qualified_case_root)
+        week=string(current_week[]["iso_week"])
+        receipt=JSON.parsefile(joinpath(qualified_case_root,"AP2_SOURCE_VARIANTS","week_"*week,"source_variant_receipt.json"))
+        FP.paper_a_profile_identity(data)==receipt["derived_profile_sha256"] || error("Reused source profile mismatch")
+        source_variants[week]=receipt
+        report("reused_qualified_source_variant",receipt)
+        return
+    end
     preserved=neutral_profile(data)
     FP.apply_paper_a_gfm_source_proxy!(data;parent_AP1_sha256=parent_sha)
     neutral_profile(data)==preserved || error("Source overlay changed non-source data")
@@ -67,7 +107,7 @@ end
 
 function await_case_byte_review!()
     gate=joinpath(output_root,"independent_case_byte_review.json")
-    length(source_variants)==5 || error("Missing source variant receipts")
+    length(source_variants)==study_hours÷168 || error("Missing source variant receipts")
     report("awaiting_independent_case_byte_review",Dict("receipt"=>gate,"source_variants"=>source_variants))
     deadline=time()+900
     while !isfile(gate) && time()<deadline
@@ -83,7 +123,7 @@ function await_case_byte_review!()
     report("independent_case_byte_review_pass",Dict("sha256"=>sha_file(gate)))
 end
 
-function save_complete_candidate!(model,weeks,output)
+function save_complete_candidate!(model,weeks,output,scenario)
     native=Dict{String,Any}()
     for name in ("Status","SolCount","BarIterCount")
         native[name]=try native_attribute(model,name;integer=true) catch e; sprint(showerror,e) end
@@ -93,7 +133,7 @@ function save_complete_candidate!(model,weeks,output)
     end
     receipt=Dict{String,Any}("source_model"=>FP._PAPER_A_GFM_PROXY_ID,"claim"=>"frozen_E_planning_proxy",
         "derived_source_variants"=>source_variants,"native_solver_attributes"=>native,
-        "integer_rounding_performed"=>false,"full_primal_saved"=>false)
+        "integer_rounding_performed"=>false,"full_primal_saved"=>false,"strength_constraints_active"=>scenario=="with_gscr")
     if JuMP.has_values(model)
         value=JuMP.value
         open(joinpath(output,"full_primal.csv"),"w") do io
@@ -123,12 +163,14 @@ function save_complete_candidate!(model,weeks,output)
             end
         end
         g1=[]
-        for (period,w) in enumerate(weeks),t in 1:168,(region,row) in fp.con(w.pm,t)[:gscr_gershgorin_sufficient]
-            object=JuMP.constraint_object(row)
-            f=object.func-object.set.lower
+        for (period,w) in enumerate(weeks)
+          margins=Dict(row=>margin for (row,margin) in zip(w.gscr_rows,w.margins))
+          for t in 1:168,(region,row) in fp.con(w.pm,t)[:gscr_gershgorin_sufficient]
+            f=margins[row]
             lhs=f.constant+sum(c*value(v) for (c,v) in JuMP.linear_terms(f) if c>0;init=0.0)
             rhs=sum(-c*value(v) for (c,v) in JuMP.linear_terms(f) if c<0;init=0.0)
             push!(g1,(;period,snapshot=t,region,lhs_pu=lhs,rhs_pu=rhs,slack_pu=value(f)))
+          end
         end
         CSV.write(joinpath(output,"g1_all_bus_hours.csv"),g1)
         violations=JuMP.primal_feasibility_report(model;atol=1e-6)
@@ -142,7 +184,7 @@ function save_complete_candidate!(model,weeks,output)
         native_ok=all(get(native,k,nothing) isa Number && native[k]<=1e-6 for k in ("ConstrVio","BoundVio"))
         merge!(receipt,Dict("full_primal_saved"=>true,"primal_violation_count_at_1e_6"=>length(violations),
             "minimum_g1_slack_pu"=>slack,"g1_row_count"=>length(g1),
-            "numerically_accepted"=>isempty(violations) && slack>=-1e-6 && native_ok))
+            "numerically_accepted"=>isempty(violations) && (scenario!="with_gscr" || slack>=-1e-6) && native_ok))
     end
     candidate_receipt[]=receipt
     open(io->JSON.print(io,receipt,2),joinpath(output,"complete_candidate_receipt.json"),"w")
@@ -154,6 +196,11 @@ bytes2hex(sha256(bytes))=="40eb3f9d55289f031ba2f6ed965b9bb4beee5a5b7dda408cd4b83
 common=String(bytes)
 runtime_commit=ENV["PAPER_A_PROXY_CONSUMER_COMMIT"]
 common=matched_replace(common,"const consumer_pin = \"4a78a9b6afb8e1a192c169073d43fffd8acc7330\"","const consumer_pin = \"$runtime_commit\"")
+common=matched_replace(common,"const annual_factor = 8760/840","const annual_factor = 8760/study_hours")
+common=matched_replace(common,"data = FP.parse_file(case_path; expected_case_sha256=expected_case_sha)",
+    "data = read_qualified_variant(case_path,expected_case_sha)")
+common=matched_replace(common,"data[\"paper_a_extension\"][\"full37_specification\"] == declared",
+    "parent_specification(data) == declared")
 common=matched_replace(common,"    FP.add_dimension!(data, :hour, 168)",
     "    apply_and_record_proxy!(data,expected_case_sha)\n    FP.add_dimension!(data, :hour, 168)")
 Base.include_string(Main,common,common_path)
@@ -162,14 +209,25 @@ bytes=read(legacy_path)
 bytes2hex(sha256(bytes))=="37cbb440910d9f0b80ecab9cc5a7cc2b080298c3c05e898d85ca5c5ad7120cb3" || error("Existing joint workflow changed")
 legacy=first(split(String(bytes),"\nlength(ARGS)==6";limit=2))
 legacy=matched_replace(legacy,"include(\"run_common.jl\")","")
+# The input marker describes its authenticated five-week parent cohort. It is
+# not the annual factor used by this run's objective or results.
+legacy=matched_replace(legacy,"\"operation_factor\"=>annual_factor,\"investment_factor\"=>1",
+    "\"operation_factor\"=>8760/840,\"investment_factor\"=>1")
 legacy=matched_replace(legacy,"selected_file=joinpath(root,\"week_selection.json\")","selected_file=joinpath(parent_study,\"week_selection.json\")")
+legacy=matched_replace(legacy,"length(rows)==4length(reference)","length(rows)==(length(weeks)-1)*length(reference)")
+legacy=matched_replace(legacy,"    model=JuMP.Model()",
+    "    if selected_iso_week!=0\n        chosen=filter(w->w[\"iso_week\"]==selected_iso_week,chosen)\n        length(chosen)==1 || error(\"Requested week is not in the qualified selection\")\n    end\n    model=JuMP.Model()")
+legacy=matched_replace(legacy,"length(gscr)==840*37","length(gscr)==study_hours*37")
+length(findall("\"hours\"=>840",legacy))==2 || error("Study hours anchors changed")
+legacy=replace(legacy,"\"hours\"=>840"=>"\"hours\"=>study_hours")
 legacy=matched_replace(legacy,"    terms=(investment,gen,storage,events,quota,demand)",
     "    terms=(investment,gen,storage,events,quota,demand)\n    await_case_byte_review!()")
-legacy=matched_replace(legacy,"    status=JuMP.termination_status(model)","    status=JuMP.termination_status(model)\n    save_complete_candidate!(model,weeks,output)")
+legacy=matched_replace(legacy,"    status=JuMP.termination_status(model)","    status=JuMP.termination_status(model)\n    save_complete_candidate!(model,weeks,output,scenario)")
 legacy=matched_replace(legacy,"    open(io->JSON.print(io,result,2),joinpath(output,\"run_summary.json\"),\"w\")",
     "    merge!(result,candidate_receipt[])\n    open(io->JSON.print(io,result,2),joinpath(output,\"run_summary.json\"),\"w\")")
 legacy=matched_replace(legacy,"(\"NumericFocus\",1)","(\"NumericFocus\",3)")
 legacy=matched_replace(legacy,"(\"Crossover\",1)","(\"Crossover\",1),(\"BarHomogeneous\",1)")
 Base.include_string(Main,legacy,legacy_path)
 initialize_week_validators()
-run_study(output_root,joinpath(parent_study,"AP1_EXPORT"),science_case,0.,lp_seconds;solver_mode="with_gscr")
+run_study(output_root,joinpath(parent_study,"AP1_EXPORT"),science_case,0.,lp_seconds;
+    solver_mode=selected_iso_week==0 ? "with_gscr" : "both")

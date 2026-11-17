@@ -31,6 +31,14 @@ _paper_a_full37_minimum(dev)=dev["paper_a_full37_online"]["strength_minimum_pu"]
 
 const _PAPER_A_GFM_PROXY_ID="colib_epri_frozen_E_blocks_v1"
 
+function _paper_a_full37_origin(binding,source_proxy)
+    binding===nothing && return false
+    startswith(binding.run_identity,"ap1:sha256:") && return true
+    prefix="ap2:sha256:"
+    return source_proxy!==nothing && startswith(binding.run_identity,prefix) &&
+        _paper_a_sha256_string(chopprefix(binding.run_identity,prefix))
+end
+
 function _paper_a_gfm_proxy(data)
     spec=_paper_a_full37(data)
     spec===nothing && return nothing
@@ -211,7 +219,7 @@ function _paper_a_validate_full37(data,binding)
     end
 
     if !synthetic
-        binding!==nothing && startswith(binding.run_identity,"ap1:sha256:") ||
+        _paper_a_full37_origin(binding,source_proxy) ||
             _paper_a_origin_unverified("Full37 requires a pinned AP1 JSON and producer manifest")
         net=data["paper_a_network"]
         isempty(net["eliminated_physical_buses"]) && isempty(net["fixed_shunts"]) &&

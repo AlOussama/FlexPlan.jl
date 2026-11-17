@@ -1,4 +1,9 @@
 @testset "CoLib/EPRI fixed-E source projection" begin
+    @test _FP._paper_a_full37_origin(_FP._PaperAProfileBinding("ap1:sha256:"*repeat("a",64),""),nothing)
+    derived=_FP._PaperAProfileBinding("ap2:sha256:"*repeat("a",64),"")
+    @test _FP._paper_a_full37_origin(derived,Dict("model"=>_FP._PAPER_A_GFM_PROXY_ID))
+    @test !_FP._paper_a_full37_origin(derived,nothing)
+    @test !_FP._paper_a_full37_origin(_FP._PaperAProfileBinding("ap2:sha256:"*repeat("a",62),""),Dict())
     beta=25/100*.15/(.15^2+.0015^2)
     @test _FP.PaperARegional.source_b_block(25.,100.,.15,.0015)≈beta
     @test _FP.PaperARegional.source_b_block(25.,100.,.25,0.)==_FP.PaperARegional.source_b_block(25.,100.,.25)==1.0
@@ -47,6 +52,44 @@
     @test_throws ArgumentError _FP._paper_a_gfm_proxy(bad)
     original=deepcopy(data);delete!(original["paper_a_extension"]["full37_specification"],"technical_gfm_source_proxy")
     @test _FP._paper_a_gfm_proxy(original)===nothing
+end
+
+@testset "Independent fixed-E R/X diagnostic reconstruction" begin
+    raw=_ap2_fixture(;hours=1)
+    sn=raw["nw"]["1"]
+    syn=sn["gen"]["2"]
+    syn["x_src"]=.25
+    syn["mu_str"]=1.
+    syn["b_block"]=syn["native_source_MVA"]/(250*.25)
+    gfm=sn["storage"]["1"]
+    merge!(gfm,Dict("source_equivalent_type"=>"voltage_behind_series_impedance_frozen_E",
+        "x_src"=>.15,"r_src"=>.0015,"mu_str"=>1.,"mu_fl"=>0.,"frozen_internal_voltage"=>true,
+        "source_model_scope"=>"frozen_E_planning_proxy","physical_controller_equivalent_qualified"=>false))
+    assets=Dict{String,Any}("$table:$id"=>Dict("installed"=>1.,"online"=>1.,"dispatch_MW"=>0.)
+        for table in ("gen","storage","ne_storage") for id in keys(sn[table]))
+    solution=Dict("snapshots"=>Dict("1"=>Dict("assets"=>assets)))
+    for resistance in (.0015,0.)
+        gfm["r_src"]=resistance
+        expected=25/250*.15/(resistance^2+.15^2)
+        gfm["b_block"]=expected
+        rec=_FP.PaperADiagnostics.reconstruct(raw,solution,1)
+        @test rec["source_base_residual"]<1e-12
+        @test only(r for r in rec["source_ledger"] if r["class"]=="GFM")["strength"]≈expected
+        @test only(r for r in rec["source_ledger"] if r["class"]=="SYN")["strength"]≈.4
+        @test rec["b_src"][1]≈.4+expected
+    end
+    gfm["r_src"]=.0015
+    gfm["native_parameter_base"]="source_MVA"
+    gfm["native_source_MVA"]=50.
+    gfm["native_source_kv_referred"]=40.
+    gfm["source_bus_base_kv"]=20.
+    expected=50/250*.15/(.0015^2+.15^2)/4
+    gfm["b_block"]=expected
+    rec=_FP.PaperADiagnostics.reconstruct(raw,solution,1)
+    @test rec["source_base_residual"]<1e-12
+    @test only(r for r in rec["source_ledger"] if r["class"]=="GFM")["strength"]≈expected
+    @test only(r for r in rec["source_ledger"] if r["class"]=="SYN")["strength"]≈.4
+    @test rec["b_src"][1]≈.4+expected
 end
 
 function _gfm_proxy_api_fixture()
