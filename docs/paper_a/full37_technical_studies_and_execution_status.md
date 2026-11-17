@@ -124,9 +124,53 @@ Die angeforderte Wiederholung mit gSCR übernimmt dieselben Eingänge, dieselben
 
 Die Wiederholung löste die Wurzelrelaxation nach rund 1.723 Solver-Sekunden mit null gemeldeter primaler und dualer Simplex-Verletzung. Nach 7.195,186 s und 445.764 Simplex-Iterationen am einzigen bearbeiteten Knoten endete sie mit `TIME_LIMIT / NO_SOLUTION`. Die Solveruntergrenze von 73,861375250 Mrd. EUR2025 gehört zu den eingeschränkten Blockintervallen. Die Schranke des ursprünglichen gSCR-MIP bleibt 73,835619339 Mrd. EUR2025. Ein zulässiger gSCR-Plan und damit ein MIP-Gap blieben offen. Der Lauf erreichte 13,433 GB Private Bytes und 10,937 GB Working Set ohne Ressourceneingriff.
 
+### Prüfung der Stärkebedingung vor einer Wiederholung
+
+Am 17. November 2026 wurden auf Owner-Anfrage die gespeicherten 840‑h-Eingänge, Solverreceipts und Rundungsadapter gezielt nachgeprüft. Das Specification Gate betrifft die vorhandene G1-Ungleichung, ihre Vorzeichen, Quellenkoeffizienten und die Folgen einer Aufrundung aktiver Quellen. Der Audit führte keine Optimierung aus.
+
+Die ausgeführte G1-Zeile hat die Form
+
+\[
+m_{i,t}=\sigma_i^0+b_i^{fix}
++\sum_{k\in\mathrm{SYN}\cup\mathrm{GFM}}\mu_k^{str}b_k z_{k,t}
+-\alpha\left(
+\sum_{k\in\mathrm{GFL}}\mu_k^{fl}\frac{P_k^{block}}{S_{base}}n_{k,t}^{active}
++\sum_{r\in\mathrm{neue\ Wind/PV}}\frac{a_{r,t}^{res}\Delta P_r}{S_{base}}
+\right)\ge0.
+\]
+
+`_paper_a_g1!` in `src/core/paper_a_integration.jl` erzeugt die Zeile. `_paper_a_online_expressions!` verwendet für thermisches UC den aktiven Blockzähler. Bei `SELECTIVE_SYN` und `PHS_SYN` liefert `_paper_a_strength_count` in `src/core/paper_a_full37.jl` den eigenen gutgeschriebenen Quellenzähler `paper_a_strength_blocks`. Die 20‑%-PHS-Erzeugungsschwelle und die Erzeugungsschwellen selektiver SYN-Quellen sind an diesen Zähler gekoppelt.
+
+Bei festgehaltener GFL-Seite und nichtnegativen Quellenkoeffizienten gilt
+
+\[
+\Delta m_{i,t}
+=\sum_k\mu_k^{str}b_k\left(\lceil z_{k,t}\rceil-z_{k,t}\right)\ge0.
+\]
+
+Die Aufrundung positiv angerechneter Quellen erhält damit eine bereits erfüllte G1-Zeile. Bei einem negativen Ausgangsrest muss die tatsächliche Verbesserung am betroffenen Knoten mindestens dessen Betrag erreichen. Das Aufrunden von `n_inst` allein ändert die Zeile nicht. Bei selektiven Quellen reicht auch eine Änderung von `n_active` ohne den gutgeschriebenen Quellenzähler nicht.
+
+| Feststellung | Tatsächlicher Beleg | Bedeutung für die Rundung |
+|---|---|---|
+| GFM besitzt im eingefrorenen Fall keine statische Stärkegutschrift. | Alle 37 GFM-Kandidaten an allen 840 Stunden haben `b_block=mu_str=mu_fl=0` und `GFM_ZERO_STRENGTH`. | Eine GFM-Aufrundung verändert den G1-Slack um exakt null. Der Quellenkoeffizient entspricht der übernommenen Fallentscheidung. |
+| Die bisherigen Adapter rundeten installierte Kapazitäten. | `apply_capacity_start!` und `tighten_capacity_bounds!` in `run_joint_weeks_mip_start.jl` verarbeiten `n_block`. | Eine Aufrundung der tatsächlichen stündlichen Quellenzähler wurde damit noch nicht ausgeführt. |
+| Der gespeicherte LP-Kandidat verfehlt die unskalierte Prüfung. | 609 G1-Zeilen unter −1e-6 pu, kleinster Slack −0,001980756 pu, Status `LOCALLY_SOLVED`. | Der Ausgangskandidat erfüllt die Voraussetzung einer zulässigen LP-Lösung für eine automatische Erhaltung nicht. |
+| Der eigene Zähler für gutgeschriebene Quellen ist erforderlich. | Selektive SYN- und PHS-Zeilen koppeln Stärke an Mindestproduktion und PHS-Erzeugungsmodus. | Allein höhere angeschlossene oder installierte Blockzahlen liefern keine zusätzliche Gutschrift. |
+| Vollständige LP-Blockzähler wurden nicht exportiert. | `summarize` und `fill_dispatch` speichern Ausbau und Leistung, aber keine vollständigen `na_block`-, Quellen-, Pump-, Start-/Stopp- und SOC-Vektoren. | Der ursprüngliche Plan lässt sich nachträglich nicht exakt aufrunden oder zeilenweise aus diesen Dateien rekonstruieren. |
+
+Die Leistungsgrenzen verlangen nach einer Aufrundung einen neuen Dispatch. Ein konkretes Beispiel aus dem gespeicherten LP ist `EE6 0 OCGT` am 18. Februar 2013 um 00 Uhr. Bei 36,261057 MW Erzeugung, 300 MW Blocknennleistung und `p_min_pu=0.2` erfordert mindestens ein aktiver Ganzzahlblock 60 MW Erzeugung. Die Aufrundung verlangt hier mindestens 23,738943 MW zusätzliche Erzeugung. Der Fahrplan muss diese Leistung bilanziell aufnehmen. Thermische Mindestzeiten, Start-/Stopplogik und Speicherzustände gehören ebenfalls zur Reparatur.
+
+Eine zusätzliche notwendige Bedingung wurde für alle 31.080 Knotenstunden aus dem gespeicherten LP-Dispatch nachgerechnet. Verwendet wurden eine möglichst hohe Stärkegutschrift bei diesem Dispatch und eine möglichst geringe erforderliche GFL-Exposition. Selbst bei aufgerundeter installierter Kapazität unterschreitet die Obergrenze des erreichbaren G1-Slacks für ganzzahlige Quellenzähler an 12.963 Knotenstunden −0,01 pu. Damit erfordert die ganzzahlige Reparatur eine Anpassung des Dispatch. Diese Schrankenrechnung rekonstruiert keine fehlenden LP-Zähler und trifft keine Aussage über die Zulässigkeit einer neuen gemeinsamen Optimierung.
+
+Die tatsächlichen Produktionsfunktionen wurden an den 37 G1-Zeilen und 353 quellmarkierten Anlagen mit 15.764 Assertions ohne Solver geprüft. Geprüft wurden Quellen-/GFL-Vorzeichen, MW-/100‑MVA-Normierung, die Wahl separater Quellenzähler, die monotone Wirkung positiver Quellenaufrundung, die Nullwirkung der 37 GFM-Kandidaten und ein Mindestleistungsgegenbeispiel. Der passive Matrixstempel wurde separat aus den physischen Pi-Leitungsdaten rekonstruiert. Seine größte Abweichung vom Fallwert betrug 5,68e-14 pu. Im geprüften algebraischen Codepfad wurde kein Vorzeichen- oder Quellenbasisfehler gefunden.
+
+Ein negativer G1-Slack bedeutet eine verletzte hinreichende Gershgorin-Bedingung. Er beweist für sich allein keine Verletzung des exakten spektralen gSCR-Kriteriums. Für diese Prüfung werden die tatsächlichen B-/S-Zustände und die zugehörige Matrixdomäne benötigt. Die ausgewerteten `TIME_LIMIT / NO_SOLUTION`-Läufe liefern ebenfalls keinen Unzulässigkeitsbeweis. Die 17.479 negativen Zeilen des geprüften Ganzzahlplans ohne gSCR sind eine nachträgliche Auswertung der in diesem Modell deaktivierten G1-Zeilen.
+
+Die gezielten Receipts liegen im Studienverzeichnis unter `ROUNDING_DIAGNOSIS_20261117_01`. `input_and_dispatch_audit.json` bindet die fünf Eingangs-SHAs und hat SHA‑256 `573d3abd64a0ebcf2705d3ca01a8143521c399ecc6577d20c4be768187ff217d`. `production_row_receipt.json` dokumentiert die Produktionsfunktionsprüfung mit SHA‑256 `4af3c3e9a7b70375904ddaa13cf44368e8ea3aa7e30898b30df64468a6f9ece6`. `fixed_dispatch_examples.json` enthält die Leistungsbeispiele mit SHA‑256 `158c8a1df62259cd5b1caadb85afde1a157541f1cc30356e00e5a33df59adb81`. Die beiden CSV-Dateien dokumentieren die notwendigen Stärkeschranken je Knotenstunde und die stündlichen Grenzen einer Reparatur bei festem Dispatch.
+
 ### Weiterer Plan
 
-Für einen weiteren gSCR-Versuch zuerst das aufgebaute Modell und die Zuordnung seiner Variablen zu den Eingangs-SHAs für Solverwiederaufnahmen speichern. Die gSCR-Qualifikation benötigt einen exportierten Plan mit bestandener Prüfung aller G1-Zeilen und der restlichen Modellbedingungen. Beim nächsten LP-basierten MIP-Start auch für gSCR die voreingestellten Solver-Startattribute vor der Übergabe entfernen. Erst mit einem geprüften gSCR-Plan lassen sich die technologiebezogenen Unterschiede als Vergleich zweier zulässiger Ausbaulösungen ausweisen.
+Für einen weiteren gSCR-Versuch zuerst das aufgebaute Modell und einen vollständigen LP-Vektor an die Eingangs-SHAs binden. Der benötigte Vektor umfasst installierte, aktive, gutgeschriebene und Pump-Blöcke, UC-Ereignisse, Dispatch, Speicherzustände sowie G1-LHS, GFL-RHS und Slack je Knotenstunde. Die Reparatur rundet die positiv angerechneten Quellenzähler auf und erhöht erforderlichenfalls die zugehörigen aktiven Blockzahlen. Die gemeinsame installierte Blockzahl muss das Maximum der aktiven Blöcke über alle fünf Wochen decken. Für PHS gilt zusätzlich die gemeinsame Turbinen-/Pumpgrenze. Anschließend sind Knotendeckel, Mindestproduktion, UC, Speicher, Quote und Lastfluss gemeinsam zu prüfen und bei Bedarf der Dispatch neu zu bestimmen. Die Solver-Startattribute werden vor der Übergabe vollständig bereinigt. Für einen positiven GFM-Stärkebeitrag benötigt der bisherige Nullansatz ein qualifiziertes Quellenmodell.
 
 Die fünf Wochen bilden eine technische Stichprobe. Für eine größere Studienreihe wäre ihre Abdeckung von Stressstunden und saisonalen Speicherzuständen getrennt zu prüfen. PA‑SRC‑12 definiert für den formalen Fallback 168 oder 336 aufeinanderfolgende Stunden. Der 840‑h-Versuch ersetzt weder ein jährliches Q5-/F1-Modell noch Gate J.
 
