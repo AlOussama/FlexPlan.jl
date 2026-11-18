@@ -502,6 +502,12 @@ function _paper_a_online_expressions!(pm,nw)
         end
         JuMP.add_to_expression!(p[c.region],c.exposure,na[key])
     end
+    extra=get(pm.ext,:paper_a_additional_gfl,nothing)
+    native_p=extra===nothing ? p : copy.(p)
+    new_p=extra===nothing ? nothing : [extra[nw][region] for region in ref.regions]
+    if new_p!==nothing
+        for i in eachindex(p);JuMP.add_to_expression!(p[i],new_p[i]);end
+    end
     alpha=get(_PM.ref(pm,nw),:g_min,nothing)
     full37=_paper_a_full37(pm.data)
     if full37!==nothing && full37["variant"]["formulation"]=="G1"
@@ -513,7 +519,7 @@ function _paper_a_online_expressions!(pm,nw)
         for i in eachindex(b);JuMP.add_to_expression!(B[i,i],b[i]);end
         M=alpha isa Real ? [B[i,j]-(i==j ? alpha*p[i] : 0.0) for i in eachindex(b),j in eachindex(b)] : nothing
     end
-    allsnap[nw]=(regions=ref.regions,b_src=b,p_fl=p,B=B,S_diag=p,M=M)
+    allsnap[nw]=(regions=ref.regions,b_src=b,p_fl=p,p_native=native_p,p_new=new_p,B=B,S_diag=p,M=M)
     return allsnap[nw]
 end
 

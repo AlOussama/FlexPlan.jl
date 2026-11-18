@@ -59,6 +59,61 @@ function _paper_a_formulation!(pm,nw,f::AbstractPaperAFormulation)
     return c
 end
 
+"""Finish a deliberately deferred Paper-A build with added GFL exposure.
+
+`additional_gfl[nw][region]` is nonnegative affine available power in case p.u.,
+not dispatched MW. Every network and retained region must be present. Create
+the renewable capacity/dispatch variables and physical balance terms first;
+this function attaches their exposure once before B/S/M or strength rows exist.
+The ordinary builder path and all existing formulation equations are retained.
+"""
+function finalize_paper_a_strength!(pm;additional_gfl)
+    get(pm.ext,:paper_a_strength_pending,false)===true ||
+        throw(ArgumentError("Paper-A strength was not deferred or is already finalized"))
+    isempty(get(pm.ext,:paper_a_online,Dict())) ||
+        throw(ArgumentError("Additional GFL exposure must precede the B/S/M cache"))
+    networks=collect(nw_ids(pm))
+    additional_gfl isa AbstractDict && Set(keys(additional_gfl))==Set(networks) ||
+        throw(ArgumentError("Additional GFL network identities differ"))
+    prepared=Dict{Int,Dict{Any,JuMP.AffExpr}}()
+    # Validate the complete attachment before touching model/cache state.
+    for n in networks
+        regions=_PM.ref(pm,n,:paper_a_regional).regions
+        values=additional_gfl[n]
+        values isa AbstractDict && Set(keys(values))==Set(regions) ||
+            throw(ArgumentError("Additional GFL region identities differ at $n"))
+        current=Dict{Any,JuMP.AffExpr}()
+        for region in regions
+            value=values[region]
+            (value isa Real && !(value isa Bool)) || value isa JuMP.VariableRef || value isa JuMP.AffExpr ||
+                throw(ArgumentError("Additional GFL must be affine in renewable capacity"))
+            expr=JuMP.AffExpr(0.)+value
+            isfinite(expr.constant) && expr.constant>=0 ||
+                throw(ArgumentError("Additional GFL constant must be finite and nonnegative"))
+            for (variable,coefficient) in expr.terms
+                isfinite(coefficient) && coefficient>=0 && JuMP.owner_model(variable)===pm.model ||
+                    throw(ArgumentError("Additional GFL has invalid coefficient or foreign variable"))
+                coefficient==0 && continue
+                lower=JuMP.is_fixed(variable) ? JuMP.fix_value(variable) :
+                    JuMP.has_lower_bound(variable) ? JuMP.lower_bound(variable) : -Inf
+                isfinite(lower) && lower>=0 ||
+                    throw(ArgumentError("Additional GFL capacity must have a nonnegative lower bound"))
+            end
+            current[region]=expr
+        end
+        prepared[n]=current
+    end
+    pm.ext[:paper_a_additional_gfl]=prepared
+    for n in networks
+        _paper_a_online_expressions!(pm,n)
+        if _uc_gscr_block_requires_gscr_constraints(pm,n)
+            _paper_a_formulation!(pm,n,_uc_gscr_block_gscr_formulation(pm,n))
+        end
+    end
+    pm.ext[:paper_a_strength_pending]=false
+    return pm
+end
+
 """Attach a frozen formulation to supplied affine objects, also used by analytic
 fixtures. No import, UC, cost, or physical coefficient calculation occurs here."""
 function add_paper_a_constraints!(model,B,p,M,f::AbstractPaperAFormulation;alpha)

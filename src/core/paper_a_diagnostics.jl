@@ -15,7 +15,7 @@ undefined(reason)=entry(nothing;status=reason)
 primitives and physical native source bases, never AP2 coefficients or B caches.
 The importer remains responsible for inventory/qualification acceptance.
 """
-function reconstruct(raw,solution,t;tol=DEFAULT_TOL)
+function reconstruct(raw,solution,t;tol=DEFAULT_TOL,renewable_projects=Any[])
     net=raw["paper_a_network"];sn=raw["nw"][string(t)];base=raw["baseMVA"]
     names=String.(net["physical_ac_bus_order"]); idx=Dict(x=>i for (i,x) in enumerate(names))
     bus=Dict(d["name"]=>d for d in values(sn["bus"]))
@@ -96,8 +96,33 @@ function reconstruct(raw,solution,t;tol=DEFAULT_TOL)
         end
         push!(ledger,row)
     end
+    native_p=copy(p);new_p=zeros(length(p));seen=Set{String}()
+    for project in renewable_projects
+        name=String(project["name"]);bus_name=String(project["bus"])
+        name in seen && throw(ArgumentError("duplicate additional renewable project"))
+        push!(seen,name)
+        project["carrier"] in ("onwind","solar") || throw(ArgumentError("additional renewable must be GFL onwind/solar"))
+        ids=project["snapshot_ids"];availability=project["availability"]
+        normalized_ids=replace.(String.(ids),'T'=>' ')
+        expected_ids=[replace(String(x["snapshot_id"]),'T'=>' ') for x in raw["paper_a_temporal"]]
+        length(ids)==length(availability)==length(raw["nw"]) &&
+            length(unique(normalized_ids))==length(normalized_ids) && normalized_ids==expected_ids ||
+            throw(ArgumentError("additional renewable snapshot identity mismatch"))
+        a=Float64(availability[t]);added=Float64(solution["renewable_capacity_MW"][name])
+        dispatch=Float64(state["renewable_dispatch_MW"][name])
+        isfinite(a) && 0<=a<=1 && isfinite(added) && added>=-tol && isfinite(dispatch) ||
+            throw(ArgumentError("invalid additional renewable availability/capacity/dispatch"))
+        region=get(net["bus_to_region"],bus_name,nothing)
+        r=findfirst(==(region),regions)
+        r===nothing && throw(ArgumentError("additional renewable on unknown/eliminated region"))
+        capacity=max(0.,added);exposure=a*capacity/base
+        p[r]+=exposure;new_p[r]+=exposure;pnom[r]+=capacity/base;pop[r]+=abs(dispatch)/base
+        push!(ledger,Dict("asset"=>"new_renewable:$name","name"=>name,"region"=>region,
+            "class"=>"GFL_NEW","strength"=>0.,"exposure"=>exposure,"new_MW"=>capacity,
+            "availability"=>a,"snapshot_id"=>ids[t],"capacity_roundoff_MW"=>max(0.,-added)))
+    end
     B=B0+Diagonal(bs);alpha=sn["g_min"];M=B-alpha*Diagonal(p)
-    pack=Dict{String,Any}("Y_real"=>rows(real.(Y)),"Y_imag"=>rows(imag.(Y)),"L"=>rows(L),"B0"=>rows(B0),"B"=>rows(B),"p"=>p,"M"=>rows(M),"b_src"=>bs,"regions"=>regions,"alpha"=>alpha,"base_MVA"=>base,"source_ledger"=>ledger,"schur_residual"=>schurres,"source_base_residual"=>normres,"connection_violation"=>conn,"S_nom_v1"=>pnom,"S_on_v1"=>p,"S_op_magnitude_v1"=>pop,"S_I_v1"=>nothing,"qualification"=>get(raw,"paper_a_parameter_qualification",Dict()),"passive_domain_issues"=>net["passive_domain_issues"],"empirical_approved"=>false)
+    pack=Dict{String,Any}("Y_real"=>rows(real.(Y)),"Y_imag"=>rows(imag.(Y)),"L"=>rows(L),"B0"=>rows(B0),"B"=>rows(B),"p"=>p,"p_native"=>native_p,"p_new"=>new_p,"M"=>rows(M),"b_src"=>bs,"regions"=>regions,"alpha"=>alpha,"base_MVA"=>base,"source_ledger"=>ledger,"schur_residual"=>schurres,"source_base_residual"=>normres,"connection_violation"=>conn,"S_nom_v1"=>pnom,"S_on_v1"=>p,"S_op_magnitude_v1"=>pop,"S_I_v1"=>nothing,"qualification"=>get(raw,"paper_a_parameter_qualification",Dict()),"passive_domain_issues"=>net["passive_domain_issues"],"empirical_approved"=>false)
     supplied=get(net,"B0_reference_pu",nothing)
     pack["producer_B0_residual"]=supplied===nothing ? nothing : norm(B0-matrix(supplied),Inf)
     pack["online_selector_violation"]=selector_residual

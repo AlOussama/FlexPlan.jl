@@ -66,6 +66,11 @@ This builder is formulation-specific to active-power formulations in this
 repository workflow and mutates the JuMP model plus PowerModels variable and
 constraint dictionaries. It assumes fixed topology: no AC/DC line or
 converter expansion components are introduced in this integrated path.
+
+`defer_paper_a_strength=true` is restricted to Paper-A builds with
+`objective=false`. It leaves B/S/M and strength rows pending so an external
+renewable-capacity workflow can add its balance terms, then call
+`finalize_paper_a_strength!` exactly once before optimization.
 """
 function build_uc_gscr_block_integration(
     pm::_PM.AbstractActivePowerModel;
@@ -75,6 +80,7 @@ function build_uc_gscr_block_integration(
     storage_terminal_fraction::Float64=1.0,
     final_storage_policy::Union{Nothing,Symbol}=nothing,
     relax_block_variables::Union{Nothing,Bool}=nothing,
+    defer_paper_a_strength::Bool=false,
     template=nothing,
 )
     if !isnothing(final_storage_policy)
@@ -82,6 +88,9 @@ function build_uc_gscr_block_integration(
     end
     _validate_uc_gscr_storage_terminal_policy(storage_terminal_policy, storage_terminal_fraction)
     paper_a=_paper_a_enabled(pm.data)
+    defer_paper_a_strength && (!paper_a || objective) &&
+        throw(ArgumentError("Deferred Paper-A strength requires AP1 and an externally assembled objective"))
+    defer_paper_a_strength && (pm.ext[:paper_a_strength_pending]=true)
     peaks=paper_a ? _paper_a_expansion_peaks(pm.data) : nothing
     expansion_groups=nothing
     if paper_a
@@ -148,7 +157,7 @@ function build_uc_gscr_block_integration(
 
         variable_uc_gscr_block(pm; nw=n, relax=relax_blocks)
         _paper_a_full37_variables!(pm,n)
-        _paper_a_online_expressions!(pm,n)
+        defer_paper_a_strength || _paper_a_online_expressions!(pm,n)
         _relax_standard_bounds_for_block_enabled_devices!(pm, n)
     end
 
@@ -180,7 +189,7 @@ function build_uc_gscr_block_integration(
 
         constraint_uc_gscr_block_dispatch(pm; nw=n)
         constraint_uc_gscr_block_storage_bounds(pm; nw=n)
-        if _uc_gscr_block_requires_gscr_constraints(pm, n)
+        if !defer_paper_a_strength && _uc_gscr_block_requires_gscr_constraints(pm, n)
             _paper_a_formulation!(pm,n,_uc_gscr_block_gscr_formulation(pm,n))
         end
 

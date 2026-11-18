@@ -97,7 +97,8 @@ end
 function input_range(model)
     magnitudes = Float64[]
     for (F, S) in list_of_constraint_types(model)
-        S <: MOI.PositiveSemidefiniteConeTriangle && throw(NumericalInputError("native_G3_route_does_not_qualify_MISDP"))
+        (S <: MOI.PositiveSemidefiniteConeTriangle || S <: MOI.PositiveSemidefiniteConeSquare) &&
+            throw(NumericalInputError("native_G3_route_does_not_qualify_MISDP"))
         for constraint in all_constraints(model, F, S)
             object=constraint_object(constraint);f=object.func
             if object.set isa MOI.Interval
