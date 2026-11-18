@@ -30,12 +30,11 @@ common=replace_once(common,"data = FP.parse_file(case_path; expected_case_sha256
 common=replace_once(common,"data[\"paper_a_extension\"][\"full37_specification\"] == declared","normalized_parent_spec(data) == declared")
 common=replace_once(common,"    f = FP.GershgorinGSCR()","    f = selected_formulation(data)")
 common=replace_once(common,"pm;objective=false,template,relax_block_variables=false","pm;objective=false,template,defer_paper_a_strength=true,relax_block_variables=false")
-old="""    for ((t,region),terms) in coeffs
-        row=fp.con(pm,t)[:gscr_gershgorin_sufficient][region]
-        for (coef,v) in terms
-            JuMP.set_normalized_coefficient(row,v,coef)
-        end
-    end"""
+old=join(["    for ((t,region),terms) in coeffs",
+          "        row=fp.con(pm,t)[:gscr_gershgorin_sufficient][region]",
+          "        for (coef,v) in terms",
+          "            JuMP.set_normalized_coefficient(row,v,coef)",
+          "        end","    end"],"\n")
 common=replace_once(common,old,"""    extra=Dict(t=>Dict(region=>JuMP.AffExpr(0.) for region in fp.ref(pm,t,:paper_a_regional).regions) for t in 1:168)
     for p in projects,t in 1:168
         region=fp.ref(pm,t,:paper_a_regional).bus_to_region[p.bus]
