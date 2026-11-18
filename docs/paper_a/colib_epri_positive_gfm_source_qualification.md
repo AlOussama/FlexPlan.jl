@@ -103,6 +103,8 @@ G1 adds EUR 1.068177130 billion/year (+1.094988%): CAPEX rises by EUR 1.71134068
 
 Runtime producer commit: `becec6d63c0fbf2b8a160c41f87631f5270046b9`; consumer commit: `89897ee8b0caa8a54533b0fb03fa61b6adb1bd88`. The source variant was created at consumer `73ae452ae95851a848b589acf39bd4c6d4dfee06`. The actual runner SHA-256 was `8f2d168f74e26deda62bdced90e83f8a15f41f2a049238044ad2ab4ea787e3c5`. The separately reviewed KW8 case-byte receipt has SHA-256 `9b35bc7616b555224a5fc72db135804ce7f7c4c0b508f906652a95b4af5ea0f7`; the successful real-reader probe has SHA-256 `e27416e65cc589c61e21719d0483e0d4e860b4e0198886ca1bd3d143366800ce`.
 
+The pre-existing, already tested producer memory-export commit is now also remotely reachable on [`codex/paper-a-q5-memory-139`](https://github.com/AlOussama/PyPSA2MatpowerX/tree/codex/paper-a-q5-memory-139), with remote SHA `becec6d63c0fbf2b8a160c41f87631f5270046b9` verified by `ls-remote`. The unpublished delta was 40 source-code lines in two files, containing no original data. The existing dirty Q4 hunk in `src/block_gscr_converter.jl` was not edited or included in the push; the producer HEAD and untracked evidence remain in place.
+
 The pair exited normally in 539.484 wall seconds. Sampled peak private memory was 4,267,048,960 bytes and peak working set 3,255,623,680 bytes; no resource guard fired. Raw case/dispatch/primal/log files remain on E:. No integer rounding or integer optimization occurred in this LP pair. All comparisons are restricted to the owner-selected fixed-E planning proxy.
 
 The separate mathematical/code reviewer accepted the saved results as `PASS_SCOPED_LP_RESULT_REVIEW`, receipt SHA-256 `98f1d2c3a567cf4a2570a8f59ff7c8466bb0f74bebc96688872bbe3acce7b026`. The review independently replays original load profiles, physical generation/storage dispatch prices, startup/shutdown variables and their block-MW event rates, investment coefficients, annualization, native bounds and G1 exports. No model or solver was run by the result reviewer. All 311,395 original JuMP variables are saved once with finite values. This is not a complete native-Gurobi auxiliary vector: the backend has 8,736 extra columns whose exact bridge mapping was not archived. The 12,432 new-renewable dispatch variables have values in the full vector and asset/time dispatch CSVs, but lack direct symbolic index-coordinate rows. These bounded archive limitations do not affect the independently reconciled energy/cost result; the receipt does not claim complete native auxiliary reconstruction.
@@ -113,8 +115,52 @@ After the LP comparison, the owner requested the same pair without LP relaxation
 
 The 50% MIP pair uses the archived exact runner bytes from `d11f3f3e8376768d97e08f339990c6bb489e6ce5` (SHA-256 `04a369470b8e53565b5e175f2b8977567b9498b13d50334750dae4f572313dbc`) under `E:/ResearchResults/FlexPlan_UC_GSCR/TECH_FULL37_KW08_RE50_GFM_FROZEN_E_MIP_20261118_01`. Its separate `PASS_SCOPED_RUNNER_DELTA` receipt has SHA-256 `8a3cc0e0575715a77c8b8a67735210946986bb7024b83942631a704378dae7d7`, and the inherited exact-case byte gate has SHA-256 `a17718c92a6393f7c4a5489a0bfa209e4f0fd2f2b30a3d2f3505890dd0d132f5`. Both were written by the independent reviewer before optimization. They grant this bounded technical run, not result acceptance.
 
+Both 50% MILPs subsequently reached the configured gap target and passed independent saved-result replay. `independent_result_review.json` has SHA-256 `82d75f5b9e65cfa91170b0412612bd49a395d53381486aa4183a22d16fbde987`.
+
+| 50% MILP result | With G1 | Without G1 |
+|---|---:|---:|
+| Objective, billion EUR2025/year | 98.998127117 | 97.566598150 |
+| Native lower bound, billion EUR2025/year | 98.619706096 | 97.551528967 |
+| Actual relative gap | 0.3822507% | 0.0154450% |
+| CCGT / OCGT expansion, GW | 1.840500 / 4.200000 | 1.840500 / 0 |
+| BESS GFL / GFM expansion, GW | 7.300000 / 33.525000 | 16.975000 / 0 |
+| Onshore / PV expansion, GW | 341.283182 / 442.799946 | 344.307199 / 434.410593 |
+| Gas generation in 168 h, TWh | 4.164204 | 4.542495 |
+| BESS charge / discharge in 168 h, TWh | 1.596535 / 1.532673 | 0.686437 / 0.658979 |
+| Native solve time, s | 2948.019 | 288.012 |
+| Integer residual, native and exported | 0 | 0 |
+| Active-model violations above 1e-6 | 0 | 0 |
+
+These are gap-qualified feasible plans; the investment mix is not certified at exact zero gap. Relative to its LP, the with-G1 plan costs EUR 378.421021 million/year more. Its larger gas portfolio therefore must not be described as a uniquely optimal consequence of G1. The difference between the two reported integer-plan costs is EUR 1.431528967 billion/year. All 311,395 original variables, including the 12,432 new-renewable dispatch coordinates, are now fully indexed. Without G1, 3,004 counterfactual G1 rows are negative; the actual model remains feasible.
+
+The common CCGT addition is nine 204.5-MW blocks at `NO2 0`. The with-G1 plan additionally builds fourteen 300-MW OCGT blocks at ten buses. Their combined generation is only 1.920 GWh in the week (0.457 equivalent full-load hours, 0.272% utilization); total gas generation is predominantly CCGT. A read-only check of installed versus hourly active counts finds no newly installed gas capacity above the observed active-count peak: every added block is used in at least one hour. This documents the rare-hour role of those OCGT additions without claiming that their exact portfolio is globally necessary or uniquely optimal. The diagnostic is retained as `gas_capacity_utilization_diagnosis.json` in the MIP50 output root.
+
+The with-G1 trace has no incumbent until its root heuristic finds the reported plan at 2,947 seconds, immediately reaching 0.3823%. The no-G1 trace improves from a very poor feasible plan (86.8% gap at 252 seconds) to 0.0154% at 287 seconds. The first variant's original builder default start was rejected at row R18573 by 0.040824829 model units; this was not a reused LP plan or model infeasibility. The second variant used a fresh optimizer with cleared starts. The independent initialization note has SHA-256 `b27d0e5b71f9e44d39cd0abd31d56064bb6f374d631993fd57ae4fac06cea289`. The pair exited normally in 3,506.734 wall seconds, peak private memory 5,556,383,744 bytes, peak working set 3,684,007,936 bytes, no resource guards.
+
 ## Additional 60% and 70% comparisons
 
 The owner subsequently authorized LP and MILP pairs with and without G1 at both 60% and 70%, after completing the 50% pair. The same workflow accepts `PAPER_A_PROXY_WIND_PV_QUOTA_PCT=50|60|70`; default is 50. Only the lower bound on positive Wind/PV injection divided by total 168-hour demand changes, together with matching summary and replay checks. The annual factor remains `8760/168`, CAPEX remains once, and input profiles, prices and source assumptions are unchanged. All quota cases begin cold, without borrowing another quota's plan or modifying discrete-variable bounds.
 
 The additional output root is `E:/ResearchResults/FlexPlan_UC_GSCR/TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01`. Execution order: 50% integer pair, 60% LP pair, 60% integer pair, 70% LP pair, 70% integer pair. LP pairs use up to 7,200 solver seconds per variant; each MILP retains the same 7,200-second limit and 0.5% gap target. A time-limited integer witness is reported with its actual bound/gap; absence of a witness is reported explicitly. Such an outcome does not suppress the independently authorized other quota runs. All pending outcomes remain unaccepted until their actual numerical and independent result checks complete.
+
+The 60% LP pair is complete and independently accepted (`quota_60/relaxed/independent_result_review.json`, SHA-256 `0bcce35812babb0dfcc3957913efbae1a2b99f3d9cd3daf00029358cdb339333`). Both native statuses are `OPTIMAL`, bounds equal objectives, all active-model violations are below 1e-6, and positive Wind/PV injection is exactly 60% of load.
+
+| 60% LP result | With G1 | Without G1 |
+|---|---:|---:|
+| Annualized cost, billion EUR2025 | 111.395759439 | 109.730971330 |
+| Annualized CAPEX / OPEX, billion EUR2025 | 86.782272332 / 24.613487108 | 84.708983069 / 25.021988261 |
+| Gas expansion, GW | 1.724421 | 1.811264 |
+| BESS GFL / GFM expansion, GW | 37.270316 / 56.094183 | 76.297822 / 0 |
+| Onshore / PV expansion, GW | 457.061804 / 620.166645 | 459.515013 / 603.455024 |
+| Gas generation in 168 h, TWh | 1.503129 | 1.718438 |
+| BESS charge / discharge in 168 h, TWh | 3.546705 / 3.404837 | 2.716798 / 2.608126 |
+
+The 60% LP pair exited normally in 435.984 seconds with peak private memory 4,269,821,952 bytes and no guards. All remaining pairs subsequently completed and passed independent review. The final [50/60/70% result report](kw08_re50_60_70_joint_expansion_dispatch.md) and its [machine-readable index](receipts/kw08_re50_60_70_joint_results_20261118.json) contain all twelve results, actual capacity/dispatch/cost comparisons and their review/resource receipts. Every MILP reached the configured 0.5% gap target; no solver fallback was needed.
+
+The 70% MILP objectives are EUR 127.818618545 billion/year with G1 and EUR 125.055972701 billion/year without G1, gaps 0.367897965% and 0.052967773%, respectively. The final pair review has SHA-256 `a420186466f44b8f85a48ace151aeedb22c6af6e1d06720a421a5d1c275843a6`. QREF selects 70% as the highest requested qualified reference, receipt SHA-256 `971c4bac09ed5f859a7a4a07d378a4fa8a8d5314f12284a1ef57290be7f06b34`.
+
+## Conditional comparison of strength formulations
+
+After these quota runs, the owner requested a comparison of different gSCR/SCR/eSCR conditions at the highest converged RE level. The owner explicitly selected the criterion: a numerically accepted integer plan and achieved relative gap at most 0.5%; if none qualifies, no additional constraint comparison is performed yet. The reference for selecting the highest quota is the MILP with active gSCR. LP optimality alone does not trigger this continuation.
+
+A separate read-only inventory prepares that continuation without changing the current G1 runs. It maps existing mathematical definitions and partial implementations to executable formulation selectors, postsolve metrics and their remaining integration requirements. The owner explicitly confirmed that many conditions are already formulated; those definitions and implementations are reused. The current helper inserts new Wind/PV expansion exposure directly into G1 rows; another selector cannot be substituted without separately checking the same new-renewable exposure in its shared p/S/M input. Classical SCR/eSCR variants use their specified source/fault conventions and are kept distinct from the G1 Gershgorin condition. A missing integrated selector does not imply that its mathematical definition is absent. Exact readiness findings, existing mathematical-source pointers and code paths are recorded under the additional output root's `STRENGTH_CONSTRAINT_COMPARISON_READINESS`. No extra formulation optimization is started before the owner-selected convergence condition is met.

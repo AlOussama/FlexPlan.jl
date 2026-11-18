@@ -1,0 +1,5161 @@
+{
+  "schema": "paper_a_kw08_50_60_70_joint_LP_MILP_v1",
+  "date": "2026-11-18",
+  "hours": 168,
+  "iso_week": 8,
+  "OPEX_factor": 52.142857142857146,
+  "CAPEX_factor": 1,
+  "scope": "Technical frozen-E planning proxy; no AC, dynamic or annual Full37 scientific gate release.",
+  "selected_quota_pct": 70,
+  "QREF_selection_sha256": "971c4bac09ed5f859a7a4a07d378a4fa8a8d5314f12284a1ef57290be7f06b34",
+  "QREF_selection": {
+    "schema": "paper_a_independent_QREF_result_selection_v1",
+    "status": "PASS_SCOPED_HIGHEST_REQUESTED_QUOTA_SELECTION",
+    "reviewer": "independent_math_code_and_result_reviewer_root_gfm_epri_math_qual",
+    "created_utc": "2026-11-18T02:51:25.284052+00:00",
+    "requested_quotas_pct": [
+      50,
+      60,
+      70
+    ],
+    "selected_QREF_quota_pct": 70,
+    "selection_rule": "Highest of the explicitly requested quota values with independently verified integer feasible witnesses in both strength-on and strength-off variants and actual native relative gaps no greater than the configured 0.5 percent. This is not an economic or globally maximum feasible quota decision.",
+    "selected_integer_pair_receipt": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01\\quota_70\\integer\\independent_result_review.json",
+    "selected_integer_pair_receipt_sha256": "a420186466f44b8f85a48ace151aeedb22c6af6e1d06720a421a5d1c275843a6",
+    "runtime_consumer_commit": "1edcc857036cec3703a581f2704a51dbcc886586",
+    "derived_AP2_sha256": "c03dfc3cd78d68e0aeb8fb6875a3875e71db5d2c2efd8d680ba1904f95a79cfe",
+    "derived_profile_sha256": "13a242fc5f3e2f8f651d6d0dec2ec8d5cb8fb41e8c543b2daf03beb7879c26c2",
+    "source_model": "colib_epri_frozen_E_blocks_v1",
+    "hours": 168,
+    "iso_week": 8,
+    "OPEX_factor": 52.142857142857146,
+    "CAPEX_factor": 1,
+    "quota_denominator": "Total represented 168-hour load; numerator positive wind and PV injections. Annual factors cancel in the energy ratio.",
+    "result_matrix": [
+      {
+        "quota_pct": 50,
+        "mode": "relaxed",
+        "independent_pair_receipt": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE50_GFM_FROZEN_E_20261118_01\\independent_lp_result_review.json",
+        "independent_pair_receipt_sha256": "98f1d2c3a567cf4a2570a8f59ff7c8466bb0f74bebc96688872bbe3acce7b026",
+        "comparison_sha256": "4484f2e591aef2715c37e2fcce2f1d56ded3a923265574a032703bdad0a39420",
+        "variants": {
+          "with_gscr": {
+            "objective_EUR2025": 98619706096.27434,
+            "best_bound_EUR2025": null,
+            "reported_relative_gap": null,
+            "minimum_G1_slack_pu": -2.0179413695586845e-12,
+            "negative_G1_rows": 0,
+            "native_IntVio": null,
+            "csv_integer_residual": null
+          },
+          "without_gscr": {
+            "objective_EUR2025": 97551528966.55472,
+            "best_bound_EUR2025": null,
+            "reported_relative_gap": null,
+            "minimum_G1_slack_pu": -983.2669080905102,
+            "negative_G1_rows": 3026,
+            "native_IntVio": null,
+            "csv_integer_residual": null
+          }
+        }
+      },
+      {
+        "quota_pct": 50,
+        "mode": "integer",
+        "independent_pair_receipt": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE50_GFM_FROZEN_E_MIP_20261118_01\\independent_result_review.json",
+        "independent_pair_receipt_sha256": "82d75f5b9e65cfa91170b0412612bd49a395d53381486aa4183a22d16fbde987",
+        "comparison_sha256": "540cdb4c0418d01ef6da1a625331a480a3efa436d94c7f31ea339ea6b49e2e72",
+        "variants": {
+          "with_gscr": {
+            "objective_EUR2025": 98998127117.23685,
+            "best_bound_EUR2025": 98619706096.27202,
+            "reported_relative_gap": 0.0038225068694133276,
+            "minimum_G1_slack_pu": -4.263256414560601e-14,
+            "negative_G1_rows": 0,
+            "native_IntVio": 0.0,
+            "csv_integer_residual": 0.0
+          },
+          "without_gscr": {
+            "objective_EUR2025": 97566598150.30052,
+            "best_bound_EUR2025": 97551528966.55356,
+            "reported_relative_gap": 0.00015445023227705172,
+            "minimum_G1_slack_pu": -982.8028922062938,
+            "negative_G1_rows": 3004,
+            "native_IntVio": 0.0,
+            "csv_integer_residual": 0.0
+          }
+        }
+      },
+      {
+        "quota_pct": 60,
+        "mode": "relaxed",
+        "independent_pair_receipt": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01\\quota_60\\relaxed\\independent_result_review.json",
+        "independent_pair_receipt_sha256": "0bcce35812babb0dfcc3957913efbae1a2b99f3d9cd3daf00029358cdb339333",
+        "comparison_sha256": "deca1b4975730c8a733b59577ea88481675dc86ad427c8533e6ef4829d8f4647",
+        "variants": {
+          "with_gscr": {
+            "objective_EUR2025": 111395759439.4385,
+            "best_bound_EUR2025": 111395759439.43652,
+            "reported_relative_gap": 0.0,
+            "minimum_G1_slack_pu": -3.240074875066057e-12,
+            "negative_G1_rows": 0,
+            "native_IntVio": null,
+            "csv_integer_residual": 0.0
+          },
+          "without_gscr": {
+            "objective_EUR2025": 109730971329.91551,
+            "best_bound_EUR2025": 109730971329.91434,
+            "reported_relative_gap": 0.0,
+            "minimum_G1_slack_pu": -1935.610386644849,
+            "negative_G1_rows": 3538,
+            "native_IntVio": null,
+            "csv_integer_residual": 0.0
+          }
+        }
+      },
+      {
+        "quota_pct": 60,
+        "mode": "integer",
+        "independent_pair_receipt": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01\\quota_60\\integer\\independent_result_review.json",
+        "independent_pair_receipt_sha256": "16d63b1a9732052e1411a02287adea9c79aae9ca145e0e3eee793f2335900753",
+        "comparison_sha256": "fdb3e69f3127dcbafc48a5d9337d551be967b7aea7bd76bad3807ca0161b1874",
+        "variants": {
+          "with_gscr": {
+            "objective_EUR2025": 111814150707.299,
+            "best_bound_EUR2025": 111395759439.43794,
+            "reported_relative_gap": 0.0037418454213007093,
+            "minimum_G1_slack_pu": -5.684341886080802e-14,
+            "negative_G1_rows": 0,
+            "native_IntVio": 0.0,
+            "csv_integer_residual": 0.0
+          },
+          "without_gscr": {
+            "objective_EUR2025": 109743617288.29498,
+            "best_bound_EUR2025": 109730971329.91548,
+            "reported_relative_gap": 0.00011523183481429252,
+            "minimum_G1_slack_pu": -1935.8863899230334,
+            "negative_G1_rows": 3472,
+            "native_IntVio": 0.0,
+            "csv_integer_residual": 0.0
+          }
+        }
+      },
+      {
+        "quota_pct": 70,
+        "mode": "relaxed",
+        "independent_pair_receipt": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01\\quota_70\\relaxed\\independent_result_review.json",
+        "independent_pair_receipt_sha256": "fd2401b8b9a27e93426500baaaec98f41169549351944c82c0dc5314c197e8a1",
+        "comparison_sha256": "708b8e52ee838b4fe7d5fbc172beacfaafaf8815d65f88e7ff60f0edba9c84e1",
+        "variants": {
+          "with_gscr": {
+            "objective_EUR2025": 127348376448.76027,
+            "best_bound_EUR2025": 127348376448.75821,
+            "reported_relative_gap": 0.0,
+            "minimum_G1_slack_pu": -6.198774826771114e-11,
+            "negative_G1_rows": 0,
+            "native_IntVio": null,
+            "csv_integer_residual": 0.0
+          },
+          "without_gscr": {
+            "objective_EUR2025": 124989733337.15738,
+            "best_bound_EUR2025": 124989733337.156,
+            "reported_relative_gap": 0.0,
+            "minimum_G1_slack_pu": -2628.489315351452,
+            "negative_G1_rows": 3799,
+            "native_IntVio": null,
+            "csv_integer_residual": 0.0
+          }
+        }
+      },
+      {
+        "quota_pct": 70,
+        "mode": "integer",
+        "independent_pair_receipt": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01\\quota_70\\integer\\independent_result_review.json",
+        "independent_pair_receipt_sha256": "a420186466f44b8f85a48ace151aeedb22c6af6e1d06720a421a5d1c275843a6",
+        "comparison_sha256": "a3c892d016784128522e6dcf5e36741a8f1586ef17a51f51a3d9e99e033a4aaa",
+        "variants": {
+          "with_gscr": {
+            "objective_EUR2025": 127818618545.37375,
+            "best_bound_EUR2025": 127348376448.75867,
+            "reported_relative_gap": 0.0036789796507465072,
+            "minimum_G1_slack_pu": -3.7971403799019754e-11,
+            "negative_G1_rows": 0,
+            "native_IntVio": 0.0,
+            "csv_integer_residual": 0.0
+          },
+          "without_gscr": {
+            "objective_EUR2025": 125055972701.08397,
+            "best_bound_EUR2025": 124989733337.15735,
+            "reported_relative_gap": 0.0005296777314639733,
+            "minimum_G1_slack_pu": -2627.2049847119524,
+            "negative_G1_rows": 3769,
+            "native_IntVio": 0.0,
+            "csv_integer_residual": 0.0
+          }
+        }
+      }
+    ],
+    "new_model_or_solver_built_by_reviewer": false,
+    "scientific_scope": "Technical frozen internal E planning proxy only. Integer plans satisfy their active recorded model rows at 1e-6; MIP optimality is only within stated actual native gaps. No closed-loop EPRI, AC/dynamic, full-year, SCI02, Gate-J, F3 or publication GO. Negative counterfactual G1 margins without strength constraints do not prove exact SCR/eSCR infeasibility.",
+    "permitted_reuse": "Use the SHA-bound 70-percent with-G1 and without-G1 integer results as the tested highest requested quota pair for subsequent already specified differential work. This receipt adds no new G2/G3 or shared-renewable formulation acceptance."
+  },
+  "pairs": [
+    {
+      "quota_pct": 50,
+      "mode": "LP",
+      "root": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE50_GFM_FROZEN_E_20261118_01",
+      "comparison_sha256": "4484f2e591aef2715c37e2fcce2f1d56ded3a923265574a032703bdad0a39420",
+      "review_sha256": "98f1d2c3a567cf4a2570a8f59ff7c8466bb0f74bebc96688872bbe3acce7b026",
+      "independent_review": {
+        "status": "PASS_SCOPED_LP_RESULT_REVIEW",
+        "reviewer": "independent_math_code_and_result_reviewer_root_gfm_epri_math_qual",
+        "runtime_consumer_commit": "89897ee8b0caa8a54533b0fb03fa61b6adb1bd88",
+        "derived_AP2_sha256": "c03dfc3cd78d68e0aeb8fb6875a3875e71db5d2c2efd8d680ba1904f95a79cfe",
+        "derived_profile_sha256": "13a242fc5f3e2f8f651d6d0dec2ec8d5cb8fb41e8c543b2daf03beb7879c26c2",
+        "OPEX_factor": 52.142857142857146,
+        "CAPEX_factor": 1,
+        "hours": 168,
+        "iso_week": 8,
+        "optimized_by_reviewer": false,
+        "model_built_by_reviewer": false,
+        "results": {
+          "with_gscr": {
+            "status": "PASS_SCOPED_OPTIMAL_PROXY_LP_SAVED_RESULT_REPLAY",
+            "objective_EUR2025": 98619706096.27434,
+            "objective_replay_difference_EUR2025": 0.0029296875,
+            "annual_CAPEX_EUR2025": 62062737888.896385,
+            "annual_OPEX_EUR2025": 36556968207.37795,
+            "represented_OPEX_EUR2025": {
+              "generation": 668184821.0657521,
+              "storage": 0.0,
+              "startup_shutdown": 32907719.897660594
+            },
+            "load_MWh": 71058866.10244864,
+            "Wind_PV_MWh": 35529433.05122408,
+            "Wind_PV_pct": 49.999999999999666,
+            "max_system_balance_residual_MW": 3.4924596548080444e-08,
+            "minimum_G1_slack_pu": -2.0179413695586845e-12,
+            "negative_G1_rows": 0,
+            "strength_constraints_active": true,
+            "native_row_count": 417555,
+            "native_column_count": 320131,
+            "original_JuMP_primal_variable_count": 311395,
+            "max_exported_original_variable_bound_violation": 2.987121661135461e-11,
+            "symbolically_mapped_original_variables": 298963,
+            "separately_saved_renewable_dispatch_without_index_coordinates": 12432,
+            "event_variables_replayed": 36624,
+            "expansion_MW": {
+              "CCGT": 1799.1329184278352,
+              "OCGT": 0.0,
+              "oil": 0.0,
+              "ror": 0.0,
+              "solar": 438061.45360175817,
+              "onwind": 343419.99354964937,
+              "lignite": 0.0,
+              "biomass": 0.0,
+              "offwind-ac": 0.0,
+              "offwind-dc": 0.0,
+              "coal": 0.0,
+              "nuclear": 0.0,
+              "geothermal": 0.0,
+              "PHS": 0.0,
+              "battery": 7270.789612969066,
+              "BESS-GFM": 30682.728491191945
+            },
+            "dispatch_MWh": {
+              "solar": [
+                10197267.898256516,
+                0.0,
+                0.0
+              ],
+              "nuclear": [
+                12887946.495781133,
+                0.0,
+                0.0
+              ],
+              "coal": [
+                3947678.605853975,
+                0.0,
+                0.0
+              ],
+              "offwind-ac": [
+                727512.2130483948,
+                0.0,
+                0.0
+              ],
+              "biomass": [
+                2479429.103560737,
+                0.0,
+                0.0
+              ],
+              "onwind": [
+                23044825.16387357,
+                0.0,
+                0.0
+              ],
+              "OCGT": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "ror": [
+                2530084.46998463,
+                0.0,
+                0.0
+              ],
+              "offwind-dc": [
+                1559827.7760456025,
+                0.0,
+                0.0
+              ],
+              "CCGT": [
+                4192860.6459310064,
+                0.0,
+                0.0
+              ],
+              "lignite": [
+                5295977.642232936,
+                0.0,
+                0.0
+              ],
+              "oil": [
+                5.193675744858836,
+                0.0,
+                0.0
+              ],
+              "geothermal": [
+                9440.0,
+                0.0,
+                0.0
+              ],
+              "hydro": [
+                0.0,
+                0.0,
+                4765303.992154683
+              ],
+              "battery": [
+                0.0,
+                290661.48347906023,
+                279035.0241398978
+              ],
+              "BESS-GFM": [
+                0.0,
+                1239126.8689521211,
+                1189561.7941940362
+              ],
+              "PHS": [
+                0.0,
+                2072406.255411874,
+                1554304.691558909
+              ]
+            },
+            "summary_sha256": "af9a4b7d6adea33e15a93f1126b7f01b2ebe3d7677085d1f9181255140d0966a",
+            "complete_candidate_receipt_sha256": "e37eceb56954254df6db171758881c4e1c2715870b09e31085f569b0f5fb2222",
+            "full_primal_sha256": "2932b243dbaff38436246e60c00a5392c8890d5185521e797d2c0982ffd8e7bf",
+            "coordinates_sha256": "53a661620069eabfd5ddc82af78afdc98916d215bd2cc0dba991488bc38808ed",
+            "g1_export_sha256": "525eea3260c552d79f2ca39cf5d0e1d4183fda814cc0491e00dcbeb6c1cb58fb",
+            "native_log_sha256": "e384c307e58594ffcd552fa4ddf8b33123ca9b12b2c00c64a628e5549640589e"
+          },
+          "without_gscr": {
+            "status": "PASS_SCOPED_OPTIMAL_PROXY_LP_SAVED_RESULT_REPLAY",
+            "objective_EUR2025": 97551528966.55472,
+            "objective_replay_difference_EUR2025": 0.002044677734375,
+            "annual_CAPEX_EUR2025": 60351397208.73977,
+            "annual_OPEX_EUR2025": 37200131757.81496,
+            "represented_OPEX_EUR2025": {
+              "generation": 676251101.5793791,
+              "storage": 0.0,
+              "startup_shutdown": 37176082.81707207
+            },
+            "load_MWh": 71058866.10244864,
+            "Wind_PV_MWh": 35529433.051224045,
+            "Wind_PV_pct": 49.99999999999961,
+            "max_system_balance_residual_MW": 3.655441105365753e-08,
+            "minimum_G1_slack_pu": -983.2669080905102,
+            "negative_G1_rows": 3026,
+            "strength_constraints_active": false,
+            "native_row_count": 411339,
+            "native_column_count": 320131,
+            "original_JuMP_primal_variable_count": 311395,
+            "max_exported_original_variable_bound_violation": 8.569323028950748e-11,
+            "symbolically_mapped_original_variables": 298963,
+            "separately_saved_renewable_dispatch_without_index_coordinates": 12432,
+            "event_variables_replayed": 36624,
+            "expansion_MW": {
+              "CCGT": 1874.7302565285574,
+              "OCGT": 0.0,
+              "oil": 0.0,
+              "ror": 0.0,
+              "solar": 436277.4569871213,
+              "onwind": 343300.5947669466,
+              "lignite": 0.0,
+              "biomass": 0.0,
+              "offwind-ac": 0.0,
+              "offwind-dc": 0.0,
+              "coal": 0.0,
+              "nuclear": 0.0,
+              "geothermal": 0.0,
+              "PHS": 0.0,
+              "battery": 16970.307946503628,
+              "BESS-GFM": 0.0
+            },
+            "dispatch_MWh": {
+              "solar": [
+                10171193.572819205,
+                0.0,
+                0.0
+              ],
+              "nuclear": [
+                12937593.977132749,
+                0.0,
+                0.0
+              ],
+              "coal": [
+                3868809.8835730716,
+                0.0,
+                0.0
+              ],
+              "offwind-ac": [
+                732472.9893274468,
+                0.0,
+                0.0
+              ],
+              "biomass": [
+                2387250.120098475,
+                0.0,
+                0.0
+              ],
+              "onwind": [
+                23035272.946243815,
+                0.0,
+                0.0
+              ],
+              "OCGT": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "ror": [
+                2525289.242939534,
+                0.0,
+                0.0
+              ],
+              "offwind-dc": [
+                1590493.542833575,
+                0.0,
+                0.0
+              ],
+              "CCGT": [
+                4560931.59610468,
+                0.0,
+                0.0
+              ],
+              "lignite": [
+                5054694.900380421,
+                0.0,
+                0.0
+              ],
+              "oil": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "geothermal": [
+                9381.0,
+                0.0,
+                0.0
+              ],
+              "hydro": [
+                0.0,
+                0.0,
+                4765473.492154774
+              ],
+              "battery": [
+                0.0,
+                689396.1593374457,
+                661820.3129639479
+              ],
+              "BESS-GFM": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "PHS": [
+                0.0,
+                2209661.2591426554,
+                1657245.9443569935
+              ]
+            },
+            "summary_sha256": "5780e2c18d64eb1fa9661cd7d8203f14576d2918f7a7d03b2d5ff83a03022ab8",
+            "complete_candidate_receipt_sha256": "6adb0bfbb500fe2661c45a808c0971382e1b9a0bd0cc74a3316dcdf341e980e1",
+            "full_primal_sha256": "65872fb327c0f0c0efc2c0b58fb0e934cbb9cd59080bfc091e7ceea1e5491501",
+            "coordinates_sha256": "53a661620069eabfd5ddc82af78afdc98916d215bd2cc0dba991488bc38808ed",
+            "g1_export_sha256": "98610f088b4da2232ef70586b332d3117a7fe2312f4bb360bbc3d856d1f6ec55",
+            "native_log_sha256": "970bb56408c4cb1610f0976df0eb8ded5d97711055839a25c0f3a8c576186946"
+          }
+        },
+        "scope": "Continuous owner-selected frozen-E planning proxy; no MIP, AC, dynamic, year or scientific gate acceptance.",
+        "primal_completeness": "All 311395 original JuMP variables are present once. This is not a complete native-Gurobi auxiliary vector: backend has 8736 additional columns. 12432 original renewable dispatch variables lack symbolic index coordinates but have all values and separate asset/time dispatch CSV.",
+        "native_extra_column_note": "Difference is 8736=52*168 and is consistent with backend bridge auxiliaries. Exact native auxiliary-to-bridge mapping is not archived and is not asserted.",
+        "cost_oracle": "Physical dispatch times source marginal prices; original startup/shutdown VariableRef values times block-MW and native event rates; original and renewable expansion times their separate frozen investment coefficients. Single prepared source snapshot supplies static asset prices.",
+        "review_script_sha256": "0017627af8ab9f02be8f88f6b59e841ce7a86bce0938889a7d028c09821fb0fe",
+        "comparison_receipt_sha256": "4484f2e591aef2715c37e2fcce2f1d56ded3a923265574a032703bdad0a39420",
+        "comparison_classification_review": "Both accepted only as LP, not MIP; checked against the independent saved-result replay.",
+        "original_variable_count_evidence": "stdout.log joint_model reports 311395 JuMP variables; each full_primal.csv contains exactly indices 1..311395 once. Gurobi native logs report 320131 columns; auxiliary columns are not exported by JuMP.all_variables."
+      },
+      "process_profile": {
+        "exit_code": 0,
+        "max_sample_private_B": 4267048960,
+        "max_sample_rss_B": 3255623680,
+        "max_private_B": 21474836480,
+        "max_wall_s": 16000,
+        "guards": [],
+        "wall_s": 539.4840000000004,
+        "initial_host": {
+          "host_available_B": 10629304320,
+          "commit_headroom_B": 25750290432,
+          "E_free_B": 9287585792
+        },
+        "last_sample": {
+          "private_B": 1934225408,
+          "rs_B": 1913446400,
+          "wall_s": 539.2340000000004,
+          "utc_s": 1794959191.2500236,
+          "host_available_B": 6164713472,
+          "commit_headroom_B": 17809268736,
+          "E_free_B": 9238855680
+        },
+        "cmd": [
+          "C:/Users/User/.julia/juliaup/julia-1.10.11+0.x64.w64.mingw32/bin/julia.exe",
+          "--project=D:/Projekte/Code/FlexPlan_UC_GSCR",
+          "--startup-file=no",
+          "--threads=1",
+          "D:/Projekte/Code/FlexPlan_UC_GSCR/scripts/paper_a/run_840h_frozen_E_lp.jl",
+          "E:/ResearchResults/FlexPlan_UC_GSCR/TECH_FULL37_FIVE_WEEKS_RE50_20261115_01",
+          "E:/ResearchResults/FlexPlan_UC_GSCR/TECH_FULL37_KW08_RE50_GFM_FROZEN_E_20261118_01",
+          "E:/ResearchResults/FlexPlan_UC_GSCR/ORCH_FULL37_SEQUENTIAL_117_20261113_01/SCI02_POSITIVE_SYN_MINIMUM_04/CASE.json",
+          "7200"
+        ],
+        "pid": 25288
+      }
+    },
+    {
+      "quota_pct": 50,
+      "mode": "MILP",
+      "root": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE50_GFM_FROZEN_E_MIP_20261118_01",
+      "comparison_sha256": "540cdb4c0418d01ef6da1a625331a480a3efa436d94c7f31ea339ea6b49e2e72",
+      "review_sha256": "82d75f5b9e65cfa91170b0412612bd49a395d53381486aa4183a22d16fbde987",
+      "independent_review": {
+        "status": "PASS_SCOPED_RESULT_REPORTING_REVIEW",
+        "reviewer": "independent_math_code_and_result_reviewer_root_gfm_epri_math_qual",
+        "runtime_consumer_commit": "d11f3f3e8376768d97e08f339990c6bb489e6ce5",
+        "derived_AP2_sha256": "c03dfc3cd78d68e0aeb8fb6875a3875e71db5d2c2efd8d680ba1904f95a79cfe",
+        "derived_profile_sha256": "13a242fc5f3e2f8f651d6d0dec2ec8d5cb8fb41e8c543b2daf03beb7879c26c2",
+        "OPEX_factor": 52.142857142857146,
+        "CAPEX_factor": 1,
+        "hours": 168,
+        "iso_week": 8,
+        "optimized_by_reviewer": false,
+        "model_built_by_reviewer": false,
+        "results": {
+          "with_gscr": {
+            "status": "PASS_SCOPED_FEASIBLE_PROXY_SAVED_RESULT_REPLAY",
+            "objective_EUR2025": 98998127117.23685,
+            "objective_replay_difference_EUR2025": 0.0001373291015625,
+            "annual_CAPEX_EUR2025": 62455556241.64873,
+            "annual_OPEX_EUR2025": 36542570875.58811,
+            "represented_OPEX_EUR2025": {
+              "generation": 667372946.3669384,
+              "storage": 0.0,
+              "startup_shutdown": 33443481.384066433
+            },
+            "load_MWh": 71058866.10244864,
+            "Wind_PV_MWh": 35529433.05122409,
+            "Wind_PV_pct": 49.99999999999967,
+            "max_system_balance_residual_MW": 5.326000973582268e-08,
+            "minimum_G1_slack_pu": -4.263256414560601e-14,
+            "negative_G1_rows": 0,
+            "strength_constraints_active": true,
+            "native_row_count": 417555,
+            "native_column_count": 320131,
+            "original_JuMP_primal_variable_count": 311395,
+            "max_exported_original_variable_bound_violation": 0.0,
+            "symbolically_mapped_original_variables": 311395,
+            "separately_saved_renewable_dispatch_without_index_coordinates": 0,
+            "event_variables_replayed": 36624,
+            "expansion_MW": {
+              "CCGT": 1840.5,
+              "OCGT": 4200.0,
+              "oil": 0.0,
+              "ror": 0.0,
+              "solar": 442799.9457664621,
+              "onwind": 341283.18242722296,
+              "lignite": 0.0,
+              "biomass": 0.0,
+              "offwind-ac": 0.0,
+              "offwind-dc": 0.0,
+              "coal": 0.0,
+              "nuclear": 0.0,
+              "geothermal": 0.0,
+              "PHS": 0.0,
+              "battery": 7300.0,
+              "BESS-GFM": 33525.0
+            },
+            "dispatch_MWh": {
+              "solar": [
+                10269671.15445328,
+                0.0,
+                0.0
+              ],
+              "nuclear": [
+                12902711.824010823,
+                0.0,
+                0.0
+              ],
+              "coal": [
+                3958839.5100990376,
+                0.0,
+                0.0
+              ],
+              "offwind-ac": [
+                727440.5127910795,
+                0.0,
+                0.0
+              ],
+              "biomass": [
+                2481575.276620508,
+                0.0,
+                0.0
+              ],
+              "onwind": [
+                22975814.736593705,
+                0.0,
+                0.0
+              ],
+              "OCGT": [
+                1920.0,
+                0.0,
+                0.0
+              ],
+              "ror": [
+                2533624.5272055287,
+                0.0,
+                0.0
+              ],
+              "offwind-dc": [
+                1556506.6473860291,
+                0.0,
+                0.0
+              ],
+              "CCGT": [
+                4162284.399114073,
+                0.0,
+                0.0
+              ],
+              "lignite": [
+                5296565.391116778,
+                0.0,
+                0.0
+              ],
+              "oil": [
+                235.90019999999998,
+                0.0,
+                0.0
+              ],
+              "geothermal": [
+                9440.000000000002,
+                0.0,
+                0.0
+              ],
+              "hydro": [
+                0.0,
+                0.0,
+                4765395.6137820175
+              ],
+              "battery": [
+                0.0,
+                279754.8685117431,
+                268564.67377127334
+              ],
+              "BESS-GFM": [
+                0.0,
+                1316779.9881712103,
+                1264108.7886443618
+              ],
+              "PHS": [
+                0.0,
+                2077191.9866279433,
+                1557893.989970959
+              ]
+            },
+            "summary_sha256": "3c6fa3e6458905019d4fbfb42e2cd01b45bae8cf36acb6757d146cb31a19098e",
+            "complete_candidate_receipt_sha256": "cadf5a91a85f6f366263a5d178f78c4bddf3907d5f84b22173027ede7186050d",
+            "full_primal_sha256": "3f87e6836e8a7465486a09e28ebeeef104f0e72e96992ba67e19ac28f0205fa4",
+            "coordinates_sha256": "d7ba8f8a9e4e3c97d96b4265cb64ae871eed6864186ac49d6205d2fb9281bd14",
+            "g1_export_sha256": "7f2dcf32461ff21ecd3f5d758163018a218264179db19374ecf4c3df7fbe25e9",
+            "native_log_sha256": "5acf860e394e8d8e148785ffaeea153460f7c3579e0614f2bd7261f78e2a3800",
+            "feasible_plan_accepted": true,
+            "solver_status": "OPTIMAL",
+            "native_status": 2,
+            "native_SolCount": 1,
+            "native_IntVio": 0.0,
+            "csv_discrete_count": 111401,
+            "csv_binary_count": 0,
+            "csv_integer_residual": 0.0,
+            "best_bound_EUR2025": 98619706096.27202,
+            "reported_relative_gap": 0.0038225068694133276,
+            "optimality_scope": "Within configured 0.5% MIP gap if integer/OPTIMAL; report actual bound/gap. A time-limited incumbent is only a verified feasible witness.",
+            "initialization": {
+              "user_start_rejected": true,
+              "solver_internal_start_retry_observed": true,
+              "native_start_event_lines": [
+                "User MIP start did not produce a new incumbent solution",
+                "User MIP start violates constraint R18573 by 0.040824829",
+                "Another try with MIP start"
+              ],
+              "rejected_native_rows": [
+                [
+                  "R18573",
+                  "0.040824829"
+                ]
+              ],
+              "scope": "No optimized LP/MIP plan or LP-derived bounds supplied. A first builder-default start may be present; rejection is not task infeasibility. Second-variant starts were cleared by the reviewed runner."
+            },
+            "corresponding_LP_reference": {
+              "status": "OPTIMAL_VALIDATED_LP_REFERENCE",
+              "summary_sha256": "af9a4b7d6adea33e15a93f1126b7f01b2ebe3d7677085d1f9181255140d0966a",
+              "LP_objective_EUR2025": 98619706096.27141,
+              "MIP_primal_minus_LP_EUR2025": 378421020.9653015,
+              "native_MIP_bound_not_replaced": true
+            }
+          },
+          "without_gscr": {
+            "status": "PASS_SCOPED_FEASIBLE_PROXY_SAVED_RESULT_REPLAY",
+            "objective_EUR2025": 97566598150.30052,
+            "objective_replay_difference_EUR2025": 0.0001678466796875,
+            "annual_CAPEX_EUR2025": 60393267353.898224,
+            "annual_OPEX_EUR2025": 37173330796.4023,
+            "represented_OPEX_EUR2025": {
+              "generation": 675637921.539546,
+              "storage": 0.0,
+              "startup_shutdown": 37275271.816114426
+            },
+            "load_MWh": 71058866.10244864,
+            "Wind_PV_MWh": 35529433.05122422,
+            "Wind_PV_pct": 49.99999999999985,
+            "max_system_balance_residual_MW": 5.608308129012585e-07,
+            "minimum_G1_slack_pu": -982.8028922062938,
+            "negative_G1_rows": 3004,
+            "strength_constraints_active": false,
+            "native_row_count": 411339,
+            "native_column_count": 320131,
+            "original_JuMP_primal_variable_count": 311395,
+            "max_exported_original_variable_bound_violation": 0.0,
+            "symbolically_mapped_original_variables": 311395,
+            "separately_saved_renewable_dispatch_without_index_coordinates": 0,
+            "event_variables_replayed": 36624,
+            "expansion_MW": {
+              "CCGT": 1840.5,
+              "OCGT": 0.0,
+              "oil": 0.0,
+              "ror": 0.0,
+              "solar": 434410.5928517995,
+              "onwind": 344307.19870843255,
+              "lignite": 0.0,
+              "biomass": 0.0,
+              "offwind-ac": 0.0,
+              "offwind-dc": 0.0,
+              "coal": 0.0,
+              "nuclear": 0.0,
+              "geothermal": 0.0,
+              "PHS": 0.0,
+              "battery": 16975.0,
+              "BESS-GFM": 0.0
+            },
+            "dispatch_MWh": {
+              "solar": [
+                10138741.963330956,
+                0.0,
+                0.0
+              ],
+              "nuclear": [
+                12942200.932808932,
+                0.0,
+                0.0
+              ],
+              "coal": [
+                3869941.1752326554,
+                0.0,
+                0.0
+              ],
+              "offwind-ac": [
+                716805.8146337942,
+                0.0,
+                0.0
+              ],
+              "biomass": [
+                2389213.047138916,
+                0.0,
+                0.0
+              ],
+              "onwind": [
+                23136348.243108295,
+                0.0,
+                0.0
+              ],
+              "OCGT": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "ror": [
+                2528356.3528534533,
+                0.0,
+                0.0
+              ],
+              "offwind-dc": [
+                1537537.030151169,
+                0.0,
+                0.0
+              ],
+              "CCGT": [
+                4542494.859138477,
+                0.0,
+                0.0
+              ],
+              "lignite": [
+                5060387.321433352,
+                0.0,
+                0.0
+              ],
+              "oil": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "geothermal": [
+                9384.646597780622,
+                0.0,
+                0.0
+              ],
+              "hydro": [
+                0.0,
+                0.0,
+                4765473.492154741
+              ],
+              "battery": [
+                0.0,
+                686436.645741076,
+                658979.1799114328
+              ],
+              "BESS-GFM": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "PHS": [
+                0.0,
+                2202245.241219883,
+                1651683.9309149156
+              ]
+            },
+            "summary_sha256": "a86ab36f6e7786daed002e2d636b68f1531224dd6fc95e0e51c7445cb407a28f",
+            "complete_candidate_receipt_sha256": "93cd52e658e23e55aa7619b6e15ed7e7d81b163ce1511b38697ef113e026390a",
+            "full_primal_sha256": "dff7a6defb4c2f56b65a5f9f074f8a68d9b894e3ea8dde20031a91454b869927",
+            "coordinates_sha256": "d7ba8f8a9e4e3c97d96b4265cb64ae871eed6864186ac49d6205d2fb9281bd14",
+            "g1_export_sha256": "07c6c1e60ebaa841425d5c073d6f839d8443dc1a7fae3f3daf2b99bcd4b9c32d",
+            "native_log_sha256": "a6f225a5113621e968b4976999d3ba9d69f9fa801b95d2c342f9749e49c6c5bc",
+            "feasible_plan_accepted": true,
+            "solver_status": "OPTIMAL",
+            "native_status": 2,
+            "native_SolCount": 10,
+            "native_IntVio": 0.0,
+            "csv_discrete_count": 111401,
+            "csv_binary_count": 0,
+            "csv_integer_residual": 0.0,
+            "best_bound_EUR2025": 97551528966.55356,
+            "reported_relative_gap": 0.00015445023227705172,
+            "optimality_scope": "Within configured 0.5% MIP gap if integer/OPTIMAL; report actual bound/gap. A time-limited incumbent is only a verified feasible witness.",
+            "initialization": {
+              "user_start_rejected": false,
+              "solver_internal_start_retry_observed": false,
+              "native_start_event_lines": [],
+              "rejected_native_rows": [],
+              "scope": "No optimized LP/MIP plan or LP-derived bounds supplied. A first builder-default start may be present; rejection is not task infeasibility. Second-variant starts were cleared by the reviewed runner."
+            },
+            "corresponding_LP_reference": {
+              "status": "OPTIMAL_VALIDATED_LP_REFERENCE",
+              "summary_sha256": "5780e2c18d64eb1fa9661cd7d8203f14576d2918f7a7d03b2d5ff83a03022ab8",
+              "LP_objective_EUR2025": 97551528966.55267,
+              "MIP_primal_minus_LP_EUR2025": 15069183.747680664,
+              "native_MIP_bound_not_replaced": true
+            }
+          }
+        },
+        "reviewed_variants": [
+          "with_gscr",
+          "without_gscr"
+        ],
+        "quota_pct": 50,
+        "mode": "integer",
+        "scope": "Owner-selected technical frozen-E proxy only. Integer feasibility and actual gaps are distinguished from LP relaxation; no AC/dynamic/year/scientific gate acceptance.",
+        "primal_completeness": "For each saved candidate all 311395 original JuMP variables are present once, with complete symbolic and renewable coordinates. Backend auxiliary columns are not exported as original variables.",
+        "native_extra_column_note": "Difference is 8736=52*168, consistent with backend auxiliary columns; exact native auxiliary-to-bridge mapping is not archived and is not asserted.",
+        "cost_oracle": "Physical dispatch times source marginal prices; original startup/shutdown VariableRef values times block-MW and native event rates; original and renewable expansion times their separate frozen investment coefficients. Single prepared source snapshot supplies static asset prices.",
+        "review_script_sha256": "39f5931dff2fd4c83a2a5c42f98ac5c9b1ca4e6d292d144470f12d4e8aa20134",
+        "comparison_receipt_sha256": "540cdb4c0418d01ef6da1a625331a480a3efa436d94c7f31ea339ea6b49e2e72",
+        "comparison_classification_review": "Both saved candidates independently accepted at their stated LP or integer domain; actual MIP bounds/gaps retained.",
+        "pair_has_verified_candidates_in_both_variants": true
+      },
+      "process_profile": {
+        "exit_code": 0,
+        "max_sample_private_B": 5556383744,
+        "max_sample_rss_B": 3684007936,
+        "max_private_B": 21474836480,
+        "max_wall_s": 16000,
+        "guards": [],
+        "wall_s": 3506.7340000000004,
+        "initial_host": {
+          "host_available_B": 8054288384,
+          "commit_headroom_B": 18628018176,
+          "E_free_B": 9238069248
+        },
+        "last_sample": {
+          "private_B": 1008726016,
+          "rs_B": 928993280,
+          "wall_s": 3506.4840000000004,
+          "utc_s": 1794963456.2132797,
+          "host_available_B": 9360674816,
+          "commit_headroom_B": 15933726720,
+          "E_free_B": 9064329216
+        },
+        "cmd": [
+          "C:/Users/User/.julia/juliaup/julia-1.10.11+0.x64.w64.mingw32/bin/julia.exe",
+          "--project=D:/Projekte/Code/FlexPlan_UC_GSCR",
+          "--startup-file=no",
+          "--threads=1",
+          "E:/ResearchResults/FlexPlan_UC_GSCR/TECH_FULL37_KW08_RE50_GFM_FROZEN_E_MIP_20261118_01/run_840h_frozen_E_lp.jl",
+          "E:/ResearchResults/FlexPlan_UC_GSCR/TECH_FULL37_FIVE_WEEKS_RE50_20261115_01",
+          "E:/ResearchResults/FlexPlan_UC_GSCR/TECH_FULL37_KW08_RE50_GFM_FROZEN_E_MIP_20261118_01",
+          "E:/ResearchResults/FlexPlan_UC_GSCR/ORCH_FULL37_SEQUENTIAL_117_20261113_01/SCI02_POSITIVE_SYN_MINIMUM_04/CASE.json",
+          "7200"
+        ],
+        "pid": 25860
+      }
+    },
+    {
+      "quota_pct": 60,
+      "mode": "LP",
+      "root": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01\\quota_60\\relaxed",
+      "comparison_sha256": "deca1b4975730c8a733b59577ea88481675dc86ad427c8533e6ef4829d8f4647",
+      "review_sha256": "0bcce35812babb0dfcc3957913efbae1a2b99f3d9cd3daf00029358cdb339333",
+      "independent_review": {
+        "status": "PASS_SCOPED_RESULT_REPORTING_REVIEW",
+        "reviewer": "independent_math_code_and_result_reviewer_root_gfm_epri_math_qual",
+        "runtime_consumer_commit": "1edcc857036cec3703a581f2704a51dbcc886586",
+        "derived_AP2_sha256": "c03dfc3cd78d68e0aeb8fb6875a3875e71db5d2c2efd8d680ba1904f95a79cfe",
+        "derived_profile_sha256": "13a242fc5f3e2f8f651d6d0dec2ec8d5cb8fb41e8c543b2daf03beb7879c26c2",
+        "OPEX_factor": 52.142857142857146,
+        "CAPEX_factor": 1,
+        "hours": 168,
+        "iso_week": 8,
+        "optimized_by_reviewer": false,
+        "model_built_by_reviewer": false,
+        "results": {
+          "with_gscr": {
+            "status": "PASS_SCOPED_FEASIBLE_PROXY_SAVED_RESULT_REPLAY",
+            "objective_EUR2025": 111395759439.4385,
+            "objective_replay_difference_EUR2025": 0.001983642578125,
+            "annual_CAPEX_EUR2025": 86782272331.9315,
+            "annual_OPEX_EUR2025": 24613487107.507008,
+            "represented_OPEX_EUR2025": {
+              "generation": 443000201.463312,
+              "storage": 0.0,
+              "startup_shutdown": 29039277.310795
+            },
+            "load_MWh": 71058866.10244864,
+            "Wind_PV_MWh": 42635319.661469035,
+            "Wind_PV_pct": 59.99999999999979,
+            "max_system_balance_residual_MW": 2.4330802261829376e-08,
+            "minimum_G1_slack_pu": -3.240074875066057e-12,
+            "negative_G1_rows": 0,
+            "strength_constraints_active": true,
+            "native_row_count": 417555,
+            "native_column_count": 320131,
+            "original_JuMP_primal_variable_count": 311395,
+            "max_exported_original_variable_bound_violation": 5.828049154388282e-11,
+            "symbolically_mapped_original_variables": 311395,
+            "separately_saved_renewable_dispatch_without_index_coordinates": 0,
+            "event_variables_replayed": 36624,
+            "expansion_MW": {
+              "CCGT": 1724.4214535074636,
+              "OCGT": 0.0,
+              "oil": 0.0,
+              "ror": 0.0,
+              "solar": 620166.6454635042,
+              "onwind": 457061.80395976355,
+              "lignite": 0.0,
+              "biomass": 0.0,
+              "offwind-ac": 0.0,
+              "offwind-dc": 0.0,
+              "coal": 0.0,
+              "nuclear": 0.0,
+              "geothermal": 0.0,
+              "PHS": 0.0,
+              "battery": 37270.31646538624,
+              "BESS-GFM": 56094.18278073496
+            },
+            "dispatch_MWh": {
+              "solar": [
+                12780157.008253347,
+                0.0,
+                0.0
+              ],
+              "nuclear": [
+                11815517.60678632,
+                0.0,
+                0.0
+              ],
+              "coal": [
+                3082342.2789217616,
+                0.0,
+                0.0
+              ],
+              "offwind-ac": [
+                726375.2413964035,
+                0.0,
+                0.0
+              ],
+              "biomass": [
+                2082233.8470257875,
+                0.0,
+                0.0
+              ],
+              "onwind": [
+                27581149.280099314,
+                0.0,
+                0.0
+              ],
+              "OCGT": [
+                150.88,
+                0.0,
+                0.0
+              ],
+              "ror": [
+                2358974.783289207,
+                0.0,
+                0.0
+              ],
+              "offwind-dc": [
+                1547638.1317199736,
+                0.0,
+                0.0
+              ],
+              "CCGT": [
+                1502978.0891693158,
+                0.0,
+                0.0
+              ],
+              "lignite": [
+                3488361.7133571426,
+                0.0,
+                0.0
+              ],
+              "oil": [
+                53.558599807206555,
+                0.0,
+                0.0
+              ],
+              "geothermal": [
+                8732.0,
+                0.0,
+                0.0
+              ],
+              "hydro": [
+                0.0,
+                0.0,
+                4762372.368060464
+              ],
+              "battery": [
+                0.0,
+                1273402.866468022,
+                1222466.751809301
+              ],
+              "BESS-GFM": [
+                0.0,
+                2273302.3936723922,
+                2182370.297925496
+              ],
+              "PHS": [
+                0.0,
+                2145209.8952981587,
+                1608907.4214736202
+              ]
+            },
+            "summary_sha256": "42c448d1863004952b5ef039db57ca7051cd7823d9caa69abfc196b79eed0c92",
+            "complete_candidate_receipt_sha256": "77f82108e699481917d976c7e86595afb738746cd2a519ffc1d896ad16088546",
+            "full_primal_sha256": "170bcfe655d9da12584fae934ba88ad7b27d3595bbdc38b868f92f7332270739",
+            "coordinates_sha256": "d7ba8f8a9e4e3c97d96b4265cb64ae871eed6864186ac49d6205d2fb9281bd14",
+            "g1_export_sha256": "57cf1c55029dd5aeba7279d6d20a35779e6719cb3ec870d745f728fb4d90bf53",
+            "native_log_sha256": "1d6ade548bfaa20579d0164d5a8d84bec4ce1272b9012325a2dbb57270dfba3e",
+            "feasible_plan_accepted": true,
+            "solver_status": "OPTIMAL",
+            "native_status": 2,
+            "native_SolCount": 1,
+            "native_IntVio": null,
+            "csv_discrete_count": 0,
+            "csv_binary_count": 0,
+            "csv_integer_residual": 0.0,
+            "best_bound_EUR2025": 111395759439.43652,
+            "reported_relative_gap": 0.0,
+            "optimality_scope": "Within configured 0.5% MIP gap if integer/OPTIMAL; report actual bound/gap. A time-limited incumbent is only a verified feasible witness.",
+            "initialization": {
+              "user_start_rejected": false,
+              "solver_internal_start_retry_observed": false,
+              "native_start_event_lines": [],
+              "rejected_native_rows": [],
+              "scope": "No optimized LP/MIP plan or LP-derived bounds supplied. A first builder-default start may be present; rejection is not task infeasibility. Second-variant starts were cleared by the reviewed runner."
+            },
+            "corresponding_LP_reference": null
+          },
+          "without_gscr": {
+            "status": "PASS_SCOPED_FEASIBLE_PROXY_SAVED_RESULT_REPLAY",
+            "objective_EUR2025": 109730971329.91551,
+            "objective_replay_difference_EUR2025": 0.0011749267578125,
+            "annual_CAPEX_EUR2025": 84708983068.99423,
+            "annual_OPEX_EUR2025": 25021988260.921284,
+            "represented_OPEX_EUR2025": {
+              "generation": 448496763.9868167,
+              "storage": 0.0,
+              "startup_shutdown": 31376983.482906543
+            },
+            "load_MWh": 71058866.10244864,
+            "Wind_PV_MWh": 42635319.66146914,
+            "Wind_PV_pct": 59.999999999999936,
+            "max_system_balance_residual_MW": 1.3154931366443634e-08,
+            "minimum_G1_slack_pu": -1935.610386644849,
+            "negative_G1_rows": 3538,
+            "strength_constraints_active": false,
+            "native_row_count": 411339,
+            "native_column_count": 320131,
+            "original_JuMP_primal_variable_count": 311395,
+            "max_exported_original_variable_bound_violation": 1.1675105326958146e-10,
+            "symbolically_mapped_original_variables": 311395,
+            "separately_saved_renewable_dispatch_without_index_coordinates": 0,
+            "event_variables_replayed": 36624,
+            "expansion_MW": {
+              "CCGT": 1811.2644628042085,
+              "OCGT": 0.0,
+              "oil": 0.0,
+              "ror": 0.0,
+              "solar": 603455.0242596356,
+              "onwind": 459515.01334207656,
+              "lignite": 0.0,
+              "biomass": 0.0,
+              "offwind-ac": 0.0,
+              "offwind-dc": 0.0,
+              "coal": 0.0,
+              "nuclear": 0.0,
+              "geothermal": 0.0,
+              "PHS": 0.0,
+              "battery": 76297.82247323151,
+              "BESS-GFM": 0.0
+            },
+            "dispatch_MWh": {
+              "solar": [
+                12717166.669975122,
+                0.0,
+                0.0
+              ],
+              "nuclear": [
+                11740191.870526673,
+                0.0,
+                0.0
+              ],
+              "coal": [
+                2967816.77833556,
+                0.0,
+                0.0
+              ],
+              "offwind-ac": [
+                732016.1616947881,
+                0.0,
+                0.0
+              ],
+              "biomass": [
+                2074316.9368354743,
+                0.0,
+                0.0
+              ],
+              "onwind": [
+                27595958.95050291,
+                0.0,
+                0.0
+              ],
+              "OCGT": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "ror": [
+                2374724.153618239,
+                0.0,
+                0.0
+              ],
+              "offwind-dc": [
+                1590177.8792963203,
+                0.0,
+                0.0
+              ],
+              "CCGT": [
+                1718437.8465623774,
+                0.0,
+                0.0
+              ],
+              "lignite": [
+                3449967.586491032,
+                0.0,
+                0.0
+              ],
+              "oil": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "geothermal": [
+                9086.0,
+                0.0,
+                0.0
+              ],
+              "hydro": [
+                0.0,
+                0.0,
+                4762738.737015545
+              ],
+              "battery": [
+                0.0,
+                2716798.2522481317,
+                2608126.3221582077
+              ],
+              "BESS-GFM": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "PHS": [
+                0.0,
+                2260246.153261907,
+                1695184.6149464455
+              ]
+            },
+            "summary_sha256": "e0aef6d632484ae9a77a3bba3982b26e53b86a062139ea90e4aa5f2b89cddb5a",
+            "complete_candidate_receipt_sha256": "e3eb1be5c95a0cf13d94f89b034e83eb9dfadce5561bd989d43680c77fe144a2",
+            "full_primal_sha256": "119562e4c80358a4fc0d351fa1535233fcb5d1fe81a1bdab54e0039724f97101",
+            "coordinates_sha256": "d7ba8f8a9e4e3c97d96b4265cb64ae871eed6864186ac49d6205d2fb9281bd14",
+            "g1_export_sha256": "03fc02d33ff5e7f57f7dd59dc767a8da09e9e54d6f75bf029612543a286be2ce",
+            "native_log_sha256": "70cc4058a2e6d60b17e995aeffe317731b91e78f9d099777703ab541b56cde36",
+            "feasible_plan_accepted": true,
+            "solver_status": "OPTIMAL",
+            "native_status": 2,
+            "native_SolCount": 1,
+            "native_IntVio": null,
+            "csv_discrete_count": 0,
+            "csv_binary_count": 0,
+            "csv_integer_residual": 0.0,
+            "best_bound_EUR2025": 109730971329.91434,
+            "reported_relative_gap": 0.0,
+            "optimality_scope": "Within configured 0.5% MIP gap if integer/OPTIMAL; report actual bound/gap. A time-limited incumbent is only a verified feasible witness.",
+            "initialization": {
+              "user_start_rejected": false,
+              "solver_internal_start_retry_observed": false,
+              "native_start_event_lines": [],
+              "rejected_native_rows": [],
+              "scope": "No optimized LP/MIP plan or LP-derived bounds supplied. A first builder-default start may be present; rejection is not task infeasibility. Second-variant starts were cleared by the reviewed runner."
+            },
+            "corresponding_LP_reference": null
+          }
+        },
+        "reviewed_variants": [
+          "with_gscr",
+          "without_gscr"
+        ],
+        "quota_pct": 60,
+        "mode": "relaxed",
+        "scope": "Owner-selected technical frozen-E proxy only. Integer feasibility and actual gaps are distinguished from LP relaxation; no AC/dynamic/year/scientific gate acceptance.",
+        "primal_completeness": "For each saved candidate all 311395 original JuMP variables are present once, with complete symbolic and renewable coordinates. Backend auxiliary columns are not exported as original variables.",
+        "native_extra_column_note": "Difference is 8736=52*168, consistent with backend auxiliary columns; exact native auxiliary-to-bridge mapping is not archived and is not asserted.",
+        "cost_oracle": "Physical dispatch times source marginal prices; original startup/shutdown VariableRef values times block-MW and native event rates; original and renewable expansion times their separate frozen investment coefficients. Single prepared source snapshot supplies static asset prices.",
+        "review_script_sha256": "39f5931dff2fd4c83a2a5c42f98ac5c9b1ca4e6d292d144470f12d4e8aa20134",
+        "comparison_receipt_sha256": "deca1b4975730c8a733b59577ea88481675dc86ad427c8533e6ef4829d8f4647",
+        "comparison_classification_review": "Both saved candidates independently accepted at their stated LP or integer domain; actual MIP bounds/gaps retained.",
+        "pair_has_verified_candidates_in_both_variants": true
+      },
+      "process_profile": {
+        "exit_code": 0,
+        "max_sample_private_B": 4269821952,
+        "max_sample_rss_B": 3235250176,
+        "max_private_B": 21474836480,
+        "max_wall_s": 16000,
+        "guards": [],
+        "wall_s": 435.9840000000004,
+        "initial_host": {
+          "host_available_B": 10348511232,
+          "commit_headroom_B": 16957321216,
+          "E_free_B": 9061773312
+        },
+        "last_sample": {
+          "private_B": 1120141312,
+          "rs_B": 1113833472,
+          "wall_s": 435.7340000000004,
+          "utc_s": 1794963904.9661765,
+          "host_available_B": 9279561728,
+          "commit_headroom_B": 16009129984,
+          "E_free_B": 9004400640
+        },
+        "cmd": [
+          "C:/Users/User/.julia/juliaup/julia-1.10.11+0.x64.w64.mingw32/bin/julia.exe",
+          "--project=D:\\Projekte\\Code\\FlexPlan_UC_GSCR",
+          "--startup-file=no",
+          "--threads=1",
+          "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01\\run_840h_frozen_E_lp.jl",
+          "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_FIVE_WEEKS_RE50_20261115_01",
+          "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01\\quota_60\\relaxed",
+          "E:\\ResearchResults\\FlexPlan_UC_GSCR\\ORCH_FULL37_SEQUENTIAL_117_20261113_01\\SCI02_POSITIVE_SYN_MINIMUM_04\\CASE.json",
+          "7200"
+        ],
+        "pid": 27356
+      }
+    },
+    {
+      "quota_pct": 60,
+      "mode": "MILP",
+      "root": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01\\quota_60\\integer",
+      "comparison_sha256": "fdb3e69f3127dcbafc48a5d9337d551be967b7aea7bd76bad3807ca0161b1874",
+      "review_sha256": "16d63b1a9732052e1411a02287adea9c79aae9ca145e0e3eee793f2335900753",
+      "independent_review": {
+        "status": "PASS_SCOPED_RESULT_REPORTING_REVIEW",
+        "reviewer": "independent_math_code_and_result_reviewer_root_gfm_epri_math_qual",
+        "runtime_consumer_commit": "1edcc857036cec3703a581f2704a51dbcc886586",
+        "derived_AP2_sha256": "c03dfc3cd78d68e0aeb8fb6875a3875e71db5d2c2efd8d680ba1904f95a79cfe",
+        "derived_profile_sha256": "13a242fc5f3e2f8f651d6d0dec2ec8d5cb8fb41e8c543b2daf03beb7879c26c2",
+        "OPEX_factor": 52.142857142857146,
+        "CAPEX_factor": 1,
+        "hours": 168,
+        "iso_week": 8,
+        "optimized_by_reviewer": false,
+        "model_built_by_reviewer": false,
+        "results": {
+          "with_gscr": {
+            "status": "PASS_SCOPED_FEASIBLE_PROXY_SAVED_RESULT_REPLAY",
+            "objective_EUR2025": 111814150707.299,
+            "objective_replay_difference_EUR2025": 0.0003204345703125,
+            "annual_CAPEX_EUR2025": 87244212316.91217,
+            "annual_OPEX_EUR2025": 24569938390.386826,
+            "represented_OPEX_EUR2025": {
+              "generation": 442419269.9468119,
+              "storage": 0.0,
+              "startup_shutdown": 28785027.951017607
+            },
+            "load_MWh": 71058866.10244864,
+            "Wind_PV_MWh": 42635319.66146907,
+            "Wind_PV_pct": 59.999999999999844,
+            "max_system_balance_residual_MW": 1.280568540096283e-09,
+            "minimum_G1_slack_pu": -5.684341886080802e-14,
+            "negative_G1_rows": 0,
+            "strength_constraints_active": true,
+            "native_row_count": 417555,
+            "native_column_count": 320131,
+            "original_JuMP_primal_variable_count": 311395,
+            "max_exported_original_variable_bound_violation": 0.0,
+            "symbolically_mapped_original_variables": 311395,
+            "separately_saved_renewable_dispatch_without_index_coordinates": 0,
+            "event_variables_replayed": 36624,
+            "expansion_MW": {
+              "CCGT": 2658.5,
+              "OCGT": 0.0,
+              "oil": 0.0,
+              "ror": 0.0,
+              "solar": 628293.0139765519,
+              "onwind": 452695.6982031403,
+              "lignite": 0.0,
+              "biomass": 0.0,
+              "offwind-ac": 0.0,
+              "offwind-dc": 0.0,
+              "coal": 0.0,
+              "nuclear": 0.0,
+              "geothermal": 0.0,
+              "PHS": 0.0,
+              "battery": 38175.0,
+              "BESS-GFM": 62800.0
+            },
+            "dispatch_MWh": {
+              "solar": [
+                12911795.724404005,
+                0.0,
+                0.0
+              ],
+              "nuclear": [
+                11881075.033589471,
+                0.0,
+                0.0
+              ],
+              "coal": [
+                3064936.071233535,
+                0.0,
+                0.0
+              ],
+              "offwind-ac": [
+                726861.7019108627,
+                0.0,
+                0.0
+              ],
+              "biomass": [
+                2041442.4613488752,
+                0.0,
+                0.0
+              ],
+              "onwind": [
+                27436673.485006202,
+                0.0,
+                0.0
+              ],
+              "OCGT": [
+                150.87999999927186,
+                0.0,
+                0.0
+              ],
+              "ror": [
+                2362416.6569351936,
+                0.0,
+                0.0
+              ],
+              "offwind-dc": [
+                1559988.7501480035,
+                0.0,
+                0.0
+              ],
+              "CCGT": [
+                1493303.3327905887,
+                0.0,
+                0.0
+              ],
+              "lignite": [
+                3496204.1066700593,
+                0.0,
+                0.0
+              ],
+              "oil": [
+                483.7851144365313,
+                0.0,
+                0.0
+              ],
+              "geothermal": [
+                9027.0,
+                0.0,
+                0.0
+              ],
+              "hydro": [
+                0.0,
+                0.0,
+                4761734.768862513
+              ],
+              "battery": [
+                0.0,
+                1292355.4155112775,
+                1240661.1988908264
+              ],
+              "BESS-GFM": [
+                0.0,
+                2548583.2951314277,
+                2446639.9633261785
+              ],
+              "PHS": [
+                0.0,
+                2134360.4285576274,
+                1600770.32141822
+              ]
+            },
+            "summary_sha256": "044c4cc363e77716656e5a6216b303ac08ebf2ca1b8d53a11426775b048335fd",
+            "complete_candidate_receipt_sha256": "e10939f00fa075c0f999c8ae6b4b5cd578667a3906913e4923b681f4bebad689",
+            "full_primal_sha256": "1d1ff09be1a3b1ed6ddb70f863ecc7a2f23940248208ff5bc873aa8bf00446cb",
+            "coordinates_sha256": "d7ba8f8a9e4e3c97d96b4265cb64ae871eed6864186ac49d6205d2fb9281bd14",
+            "g1_export_sha256": "4779dd01c049a2d3387c48d2d08504b4c3d383f37335bf5fea76f75d708458c6",
+            "native_log_sha256": "0dcedd5b76f9d6ce9253cc6fc5b93c725f899360e279cd0e5ef76536166f5922",
+            "feasible_plan_accepted": true,
+            "solver_status": "OPTIMAL",
+            "native_status": 2,
+            "native_SolCount": 1,
+            "native_IntVio": 0.0,
+            "csv_discrete_count": 111401,
+            "csv_binary_count": 0,
+            "csv_integer_residual": 0.0,
+            "best_bound_EUR2025": 111395759439.43794,
+            "reported_relative_gap": 0.0037418454213007093,
+            "optimality_scope": "Within configured 0.5% MIP gap if integer/OPTIMAL; report actual bound/gap. A time-limited incumbent is only a verified feasible witness.",
+            "initialization": {
+              "user_start_rejected": true,
+              "solver_internal_start_retry_observed": true,
+              "native_start_event_lines": [
+                "User MIP start did not produce a new incumbent solution",
+                "User MIP start violates constraint R18573 by 0.040824829",
+                "Another try with MIP start"
+              ],
+              "rejected_native_rows": [
+                [
+                  "R18573",
+                  "0.040824829"
+                ]
+              ],
+              "scope": "No optimized LP/MIP plan or LP-derived bounds supplied. A first builder-default start may be present; rejection is not task infeasibility. Second-variant starts were cleared by the reviewed runner."
+            },
+            "corresponding_LP_reference": {
+              "status": "OPTIMAL_VALIDATED_LP_REFERENCE",
+              "summary_sha256": "42c448d1863004952b5ef039db57ca7051cd7823d9caa69abfc196b79eed0c92",
+              "LP_objective_EUR2025": 111395759439.43652,
+              "MIP_primal_minus_LP_EUR2025": 418391267.8621521,
+              "native_MIP_bound_not_replaced": true
+            }
+          },
+          "without_gscr": {
+            "status": "PASS_SCOPED_FEASIBLE_PROXY_SAVED_RESULT_REPLAY",
+            "objective_EUR2025": 109743617288.29498,
+            "objective_replay_difference_EUR2025": 0.000213623046875,
+            "annual_CAPEX_EUR2025": 84711422839.4563,
+            "annual_OPEX_EUR2025": 25032194448.838688,
+            "represented_OPEX_EUR2025": {
+              "generation": 448698075.10240364,
+              "storage": 0.0,
+              "startup_shutdown": 31371407.47806427
+            },
+            "load_MWh": 71058866.10244864,
+            "Wind_PV_MWh": 42635319.66146918,
+            "Wind_PV_pct": 59.99999999999999,
+            "max_system_balance_residual_MW": 2.8172507882118225e-08,
+            "minimum_G1_slack_pu": -1935.8863899230334,
+            "negative_G1_rows": 3472,
+            "strength_constraints_active": false,
+            "native_row_count": 411339,
+            "native_column_count": 320131,
+            "original_JuMP_primal_variable_count": 311395,
+            "max_exported_original_variable_bound_violation": 0.0,
+            "symbolically_mapped_original_variables": 311395,
+            "separately_saved_renewable_dispatch_without_index_coordinates": 0,
+            "event_variables_replayed": 36624,
+            "expansion_MW": {
+              "CCGT": 1840.5,
+              "OCGT": 0.0,
+              "oil": 0.0,
+              "ror": 0.0,
+              "solar": 602437.2225633392,
+              "onwind": 459831.30376907624,
+              "lignite": 0.0,
+              "biomass": 0.0,
+              "offwind-ac": 0.0,
+              "offwind-dc": 0.0,
+              "coal": 0.0,
+              "nuclear": 0.0,
+              "geothermal": 0.0,
+              "PHS": 0.0,
+              "battery": 76325.0,
+              "BESS-GFM": 0.0
+            },
+            "dispatch_MWh": {
+              "solar": [
+                12705581.840547927,
+                0.0,
+                0.0
+              ],
+              "nuclear": [
+                11736566.925568596,
+                0.0,
+                0.0
+              ],
+              "coal": [
+                2972125.140257799,
+                0.0,
+                0.0
+              ],
+              "offwind-ac": [
+                715887.5234124186,
+                0.0,
+                0.0
+              ],
+              "biomass": [
+                2065957.71343008,
+                0.0,
+                0.0
+              ],
+              "onwind": [
+                27682901.12453444,
+                0.0,
+                0.0
+              ],
+              "OCGT": [
+                -9.07220965018496e-09,
+                0.0,
+                0.0
+              ],
+              "ror": [
+                2372035.2171503687,
+                0.0,
+                0.0
+              ],
+              "offwind-dc": [
+                1530949.1729743916,
+                0.0,
+                0.0
+              ],
+              "CCGT": [
+                1718263.3789340607,
+                0.0,
+                0.0
+              ],
+              "lignite": [
+                3461297.7012375807,
+                0.0,
+                0.0
+              ],
+              "oil": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "geothermal": [
+                9145.0,
+                0.0,
+                0.0
+              ],
+              "hydro": [
+                0.0,
+                0.0,
+                4763181.443016674
+              ],
+              "battery": [
+                0.0,
+                2729611.805771263,
+                2620427.333540412
+              ],
+              "BESS-GFM": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "PHS": [
+                0.0,
+                2263366.425539648,
+                1697524.8191547352
+              ]
+            },
+            "summary_sha256": "860f85405558f0d76d986b2c08e59bf2368c763b138ebdce26393aca62012611",
+            "complete_candidate_receipt_sha256": "af2cce3b2c1007bc80d2109bc0d6a3aea2285a64e3e2e4b5c950eec87e77773a",
+            "full_primal_sha256": "62183c5f63dde92b3dc409e2384b091d6d7b3a4e1d4ff67eb1e1783964b822d0",
+            "coordinates_sha256": "d7ba8f8a9e4e3c97d96b4265cb64ae871eed6864186ac49d6205d2fb9281bd14",
+            "g1_export_sha256": "afc9ee88e067dacc313d0da29b3982aba246daed98f30a32fd65ea33b7e99f3d",
+            "native_log_sha256": "ef7cfca7bddae8ec22d698fd99d6a969a96ba628fcb772de86f4937e8a25299a",
+            "feasible_plan_accepted": true,
+            "solver_status": "OPTIMAL",
+            "native_status": 2,
+            "native_SolCount": 1,
+            "native_IntVio": 0.0,
+            "csv_discrete_count": 111401,
+            "csv_binary_count": 0,
+            "csv_integer_residual": 0.0,
+            "best_bound_EUR2025": 109730971329.91548,
+            "reported_relative_gap": 0.00011523183481429252,
+            "optimality_scope": "Within configured 0.5% MIP gap if integer/OPTIMAL; report actual bound/gap. A time-limited incumbent is only a verified feasible witness.",
+            "initialization": {
+              "user_start_rejected": false,
+              "solver_internal_start_retry_observed": false,
+              "native_start_event_lines": [],
+              "rejected_native_rows": [],
+              "scope": "No optimized LP/MIP plan or LP-derived bounds supplied. A first builder-default start may be present; rejection is not task infeasibility. Second-variant starts were cleared by the reviewed runner."
+            },
+            "corresponding_LP_reference": {
+              "status": "OPTIMAL_VALIDATED_LP_REFERENCE",
+              "summary_sha256": "e0aef6d632484ae9a77a3bba3982b26e53b86a062139ea90e4aa5f2b89cddb5a",
+              "LP_objective_EUR2025": 109730971329.91434,
+              "MIP_primal_minus_LP_EUR2025": 12645958.380432129,
+              "native_MIP_bound_not_replaced": true
+            }
+          }
+        },
+        "reviewed_variants": [
+          "with_gscr",
+          "without_gscr"
+        ],
+        "quota_pct": 60,
+        "mode": "integer",
+        "scope": "Owner-selected technical frozen-E proxy only. Integer feasibility and actual gaps are distinguished from LP relaxation; no AC/dynamic/year/scientific gate acceptance.",
+        "primal_completeness": "For each saved candidate all 311395 original JuMP variables are present once, with complete symbolic and renewable coordinates. Backend auxiliary columns are not exported as original variables.",
+        "native_extra_column_note": "Difference is 8736=52*168, consistent with backend auxiliary columns; exact native auxiliary-to-bridge mapping is not archived and is not asserted.",
+        "cost_oracle": "Physical dispatch times source marginal prices; original startup/shutdown VariableRef values times block-MW and native event rates; original and renewable expansion times their separate frozen investment coefficients. Single prepared source snapshot supplies static asset prices.",
+        "review_script_sha256": "39f5931dff2fd4c83a2a5c42f98ac5c9b1ca4e6d292d144470f12d4e8aa20134",
+        "comparison_receipt_sha256": "fdb3e69f3127dcbafc48a5d9337d551be967b7aea7bd76bad3807ca0161b1874",
+        "comparison_classification_review": "Both saved candidates independently accepted at their stated LP or integer domain; actual MIP bounds/gaps retained.",
+        "pair_has_verified_candidates_in_both_variants": true
+      },
+      "process_profile": {
+        "exit_code": 0,
+        "max_sample_private_B": 5255090176,
+        "max_sample_rss_B": 4100460544,
+        "max_private_B": 21474836480,
+        "max_wall_s": 16000,
+        "guards": [],
+        "wall_s": 1897.1399999999976,
+        "initial_host": {
+          "host_available_B": 10394214400,
+          "commit_headroom_B": 17119133696,
+          "E_free_B": 9004093440
+        },
+        "last_sample": {
+          "private_B": 1776607232,
+          "rs_B": 1769426944,
+          "wall_s": 1896.8899999999976,
+          "utc_s": 1794965807.0846176,
+          "host_available_B": 7557144576,
+          "commit_headroom_B": 14431617024,
+          "E_free_B": 8946802688
+        },
+        "cmd": [
+          "C:/Users/User/.julia/juliaup/julia-1.10.11+0.x64.w64.mingw32/bin/julia.exe",
+          "--project=D:\\Projekte\\Code\\FlexPlan_UC_GSCR",
+          "--startup-file=no",
+          "--threads=1",
+          "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01\\run_840h_frozen_E_lp.jl",
+          "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_FIVE_WEEKS_RE50_20261115_01",
+          "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01\\quota_60\\integer",
+          "E:\\ResearchResults\\FlexPlan_UC_GSCR\\ORCH_FULL37_SEQUENTIAL_117_20261113_01\\SCI02_POSITIVE_SYN_MINIMUM_04\\CASE.json",
+          "7200"
+        ],
+        "pid": 11176
+      }
+    },
+    {
+      "quota_pct": 70,
+      "mode": "LP",
+      "root": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01\\quota_70\\relaxed",
+      "comparison_sha256": "708b8e52ee838b4fe7d5fbc172beacfaafaf8815d65f88e7ff60f0edba9c84e1",
+      "review_sha256": "fd2401b8b9a27e93426500baaaec98f41169549351944c82c0dc5314c197e8a1",
+      "independent_review": {
+        "status": "PASS_SCOPED_RESULT_REPORTING_REVIEW",
+        "reviewer": "independent_math_code_and_result_reviewer_root_gfm_epri_math_qual",
+        "runtime_consumer_commit": "1edcc857036cec3703a581f2704a51dbcc886586",
+        "derived_AP2_sha256": "c03dfc3cd78d68e0aeb8fb6875a3875e71db5d2c2efd8d680ba1904f95a79cfe",
+        "derived_profile_sha256": "13a242fc5f3e2f8f651d6d0dec2ec8d5cb8fb41e8c543b2daf03beb7879c26c2",
+        "OPEX_factor": 52.142857142857146,
+        "CAPEX_factor": 1,
+        "hours": 168,
+        "iso_week": 8,
+        "optimized_by_reviewer": false,
+        "model_built_by_reviewer": false,
+        "results": {
+          "with_gscr": {
+            "status": "PASS_SCOPED_FEASIBLE_PROXY_SAVED_RESULT_REPLAY",
+            "objective_EUR2025": 127348376448.76027,
+            "objective_replay_difference_EUR2025": 0.0020599365234375,
+            "annual_CAPEX_EUR2025": 111232096756.64642,
+            "annual_OPEX_EUR2025": 16116279692.11384,
+            "represented_OPEX_EUR2025": {
+              "generation": 280185379.9495464,
+              "storage": 0.0,
+              "startup_shutdown": 28893956.611540906
+            },
+            "load_MWh": 71058866.10244864,
+            "Wind_PV_MWh": 49741206.27171371,
+            "Wind_PV_pct": 69.99999999999953,
+            "max_system_balance_residual_MW": 2.403976395726204e-08,
+            "minimum_G1_slack_pu": -6.198774826771114e-11,
+            "negative_G1_rows": 0,
+            "strength_constraints_active": true,
+            "native_row_count": 417555,
+            "native_column_count": 320131,
+            "original_JuMP_primal_variable_count": 311395,
+            "max_exported_original_variable_bound_violation": 3.6910918765897804e-11,
+            "symbolically_mapped_original_variables": 311395,
+            "separately_saved_renewable_dispatch_without_index_coordinates": 0,
+            "event_variables_replayed": 36624,
+            "expansion_MW": {
+              "CCGT": 1714.9106238918425,
+              "OCGT": 0.0,
+              "oil": 0.0,
+              "ror": 0.0,
+              "solar": 719818.1103522244,
+              "onwind": 588959.4605484416,
+              "lignite": 0.0,
+              "biomass": 0.0,
+              "offwind-ac": 0.0,
+              "offwind-dc": 0.0,
+              "coal": 0.0,
+              "nuclear": 0.0,
+              "geothermal": 0.0,
+              "PHS": 0.0,
+              "battery": 57676.64240561282,
+              "BESS-GFM": 101288.68176482126
+            },
+            "dispatch_MWh": {
+              "solar": [
+                14359540.147436578,
+                0.0,
+                0.0
+              ],
+              "nuclear": [
+                8629193.106399102,
+                0.0,
+                0.0
+              ],
+              "coal": [
+                2375622.319863469,
+                0.0,
+                0.0
+              ],
+              "offwind-ac": [
+                725182.5328258306,
+                0.0,
+                0.0
+              ],
+              "biomass": [
+                1798281.435827385,
+                0.0,
+                0.0
+              ],
+              "onwind": [
+                33108778.341810912,
+                0.0,
+                0.0
+              ],
+              "OCGT": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "ror": [
+                2318899.0666558407,
+                0.0,
+                0.0
+              ],
+              "offwind-dc": [
+                1547705.2496403907,
+                0.0,
+                0.0
+              ],
+              "CCGT": [
+                496544.0989958889,
+                0.0,
+                0.0
+              ],
+              "lignite": [
+                1737314.7642012546,
+                0.0,
+                0.0
+              ],
+              "oil": [
+                139.5536101390056,
+                0.0,
+                0.0
+              ],
+              "geothermal": [
+                8614.0,
+                0.0,
+                0.0
+              ],
+              "hydro": [
+                0.0,
+                0.0,
+                4761093.275232058
+              ],
+              "battery": [
+                0.0,
+                1851171.2492918372,
+                1777124.3993201633
+              ],
+              "BESS-GFM": [
+                0.0,
+                4164918.267613329,
+                3998321.536908795
+              ],
+              "PHS": [
+                0.0,
+                2269592.837496322,
+                1702194.6281222503
+              ]
+            },
+            "summary_sha256": "107cb3b315673159897bd04ed246b0045c35ef44d6b7c61211061badc28206fa",
+            "complete_candidate_receipt_sha256": "e1c427147c52e613b569a5752ac6ae51469e131b53d6c4067f4f0fa49b36230c",
+            "full_primal_sha256": "39c98de34476a2608582914781eb57c495f89c4e9c7abfc329956ee4bae11761",
+            "coordinates_sha256": "d7ba8f8a9e4e3c97d96b4265cb64ae871eed6864186ac49d6205d2fb9281bd14",
+            "g1_export_sha256": "4be70202341b7b5803f45afa731c1a31f70e5b07f92616f5047107712cdf7343",
+            "native_log_sha256": "dc0c4cef54cbf343dc1a61602565b188cbde0311f4e67d6e850cab8509f65072",
+            "feasible_plan_accepted": true,
+            "solver_status": "OPTIMAL",
+            "native_status": 2,
+            "native_SolCount": 1,
+            "native_IntVio": null,
+            "csv_discrete_count": 0,
+            "csv_binary_count": 0,
+            "csv_integer_residual": 0.0,
+            "best_bound_EUR2025": 127348376448.75821,
+            "reported_relative_gap": 0.0,
+            "optimality_scope": "Within configured 0.5% MIP gap if integer/OPTIMAL; report actual bound/gap. A time-limited incumbent is only a verified feasible witness.",
+            "initialization": {
+              "user_start_rejected": false,
+              "solver_internal_start_retry_observed": false,
+              "native_start_event_lines": [],
+              "rejected_native_rows": [],
+              "scope": "No optimized LP/MIP plan or LP-derived bounds supplied. A first builder-default start may be present; rejection is not task infeasibility. Second-variant starts were cleared by the reviewed runner."
+            },
+            "corresponding_LP_reference": null
+          },
+          "without_gscr": {
+            "status": "PASS_SCOPED_FEASIBLE_PROXY_SAVED_RESULT_REPLAY",
+            "objective_EUR2025": 124989733337.15738,
+            "objective_replay_difference_EUR2025": 0.001373291015625,
+            "annual_CAPEX_EUR2025": 108292792450.57051,
+            "annual_OPEX_EUR2025": 16696940886.586866,
+            "represented_OPEX_EUR2025": {
+              "generation": 287495278.041436,
+              "storage": 0.0,
+              "startup_shutdown": 32720026.632832654
+            },
+            "load_MWh": 71058866.10244864,
+            "Wind_PV_MWh": 49741206.271713585,
+            "Wind_PV_pct": 69.99999999999935,
+            "max_system_balance_residual_MW": 1.8044374883174896e-08,
+            "minimum_G1_slack_pu": -2628.489315351452,
+            "negative_G1_rows": 3799,
+            "strength_constraints_active": false,
+            "native_row_count": 411339,
+            "native_column_count": 320131,
+            "original_JuMP_primal_variable_count": 311395,
+            "max_exported_original_variable_bound_violation": 1.0484058066140278e-10,
+            "symbolically_mapped_original_variables": 311395,
+            "separately_saved_renewable_dispatch_without_index_coordinates": 0,
+            "event_variables_replayed": 36624,
+            "expansion_MW": {
+              "CCGT": 1784.5023237445068,
+              "OCGT": 0.0,
+              "oil": 0.0,
+              "ror": 0.0,
+              "solar": 719221.2993529636,
+              "onwind": 583441.7095320068,
+              "lignite": 0.0,
+              "biomass": 0.0,
+              "offwind-ac": 0.0,
+              "offwind-dc": 0.0,
+              "coal": 0.0,
+              "nuclear": 0.0,
+              "geothermal": 0.0,
+              "PHS": 0.0,
+              "battery": 141758.09321047665,
+              "BESS-GFM": 0.0
+            },
+            "dispatch_MWh": {
+              "solar": [
+                14641431.405739354,
+                0.0,
+                0.0
+              ],
+              "nuclear": [
+                8459102.899967628,
+                0.0,
+                0.0
+              ],
+              "coal": [
+                2542798.120907216,
+                0.0,
+                0.0
+              ],
+              "offwind-ac": [
+                731879.165309179,
+                0.0,
+                0.0
+              ],
+              "biomass": [
+                1673819.5536813722,
+                0.0,
+                0.0
+              ],
+              "onwind": [
+                32779301.599552292,
+                0.0,
+                0.0
+              ],
+              "OCGT": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "ror": [
+                2263309.2606196855,
+                0.0,
+                0.0
+              ],
+              "offwind-dc": [
+                1588594.1011127634,
+                0.0,
+                0.0
+              ],
+              "CCGT": [
+                599696.1010058888,
+                0.0,
+                0.0
+              ],
+              "lignite": [
+                1841144.7330010987,
+                0.0,
+                0.0
+              ],
+              "oil": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "geothermal": [
+                8909.0,
+                0.0,
+                0.0
+              ],
+              "hydro": [
+                0.0,
+                0.0,
+                4761226.268862659
+              ],
+              "battery": [
+                0.0,
+                5444259.965032027,
+                5226489.566430745
+              ],
+              "BESS-GFM": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "PHS": [
+                0.0,
+                2458302.8348372537,
+                1843727.1261279504
+              ]
+            },
+            "summary_sha256": "401aa57d445f0082635d07945e88de2b16da9b5be0aa0ce9d6b4a33cf1c4e9cc",
+            "complete_candidate_receipt_sha256": "e6e61cbb2dbf5f6bffcc80fec455a3888ce28ceb656e31206685d287f715379c",
+            "full_primal_sha256": "0fd2886aa420a261cf988a7c45d9d10d84957f585eaeddebd4a40a4cc4cbd1dd",
+            "coordinates_sha256": "d7ba8f8a9e4e3c97d96b4265cb64ae871eed6864186ac49d6205d2fb9281bd14",
+            "g1_export_sha256": "ecab6a44e963c583dc79ea3d3f4b2f6aaece05c9eec72fec1d7938f19d098756",
+            "native_log_sha256": "5f04984da138429172367105b1cd590eb35811e584dad8d3ea5ebb198fea785c",
+            "feasible_plan_accepted": true,
+            "solver_status": "OPTIMAL",
+            "native_status": 2,
+            "native_SolCount": 1,
+            "native_IntVio": null,
+            "csv_discrete_count": 0,
+            "csv_binary_count": 0,
+            "csv_integer_residual": 0.0,
+            "best_bound_EUR2025": 124989733337.156,
+            "reported_relative_gap": 0.0,
+            "optimality_scope": "Within configured 0.5% MIP gap if integer/OPTIMAL; report actual bound/gap. A time-limited incumbent is only a verified feasible witness.",
+            "initialization": {
+              "user_start_rejected": false,
+              "solver_internal_start_retry_observed": false,
+              "native_start_event_lines": [],
+              "rejected_native_rows": [],
+              "scope": "No optimized LP/MIP plan or LP-derived bounds supplied. A first builder-default start may be present; rejection is not task infeasibility. Second-variant starts were cleared by the reviewed runner."
+            },
+            "corresponding_LP_reference": null
+          }
+        },
+        "reviewed_variants": [
+          "with_gscr",
+          "without_gscr"
+        ],
+        "quota_pct": 70,
+        "mode": "relaxed",
+        "scope": "Owner-selected technical frozen-E proxy only. Integer feasibility and actual gaps are distinguished from LP relaxation; no AC/dynamic/year/scientific gate acceptance.",
+        "primal_completeness": "For each saved candidate all 311395 original JuMP variables are present once, with complete symbolic and renewable coordinates. Backend auxiliary columns are not exported as original variables.",
+        "native_extra_column_note": "Difference is 8736=52*168, consistent with backend auxiliary columns; exact native auxiliary-to-bridge mapping is not archived and is not asserted.",
+        "cost_oracle": "Physical dispatch times source marginal prices; original startup/shutdown VariableRef values times block-MW and native event rates; original and renewable expansion times their separate frozen investment coefficients. Single prepared source snapshot supplies static asset prices.",
+        "review_script_sha256": "39f5931dff2fd4c83a2a5c42f98ac5c9b1ca4e6d292d144470f12d4e8aa20134",
+        "comparison_receipt_sha256": "708b8e52ee838b4fe7d5fbc172beacfaafaf8815d65f88e7ff60f0edba9c84e1",
+        "comparison_classification_review": "Both saved candidates independently accepted at their stated LP or integer domain; actual MIP bounds/gaps retained.",
+        "pair_has_verified_candidates_in_both_variants": true
+      },
+      "process_profile": {
+        "exit_code": 0,
+        "max_sample_private_B": 4272128000,
+        "max_sample_rss_B": 3237957632,
+        "max_private_B": 21474836480,
+        "max_wall_s": 16000,
+        "guards": [],
+        "wall_s": 422.7350000000006,
+        "initial_host": {
+          "host_available_B": 9329278976,
+          "commit_headroom_B": 16205926400,
+          "E_free_B": 8945410048
+        },
+        "last_sample": {
+          "private_B": 187424768,
+          "rs_B": 85053440,
+          "wall_s": 422.46900000000096,
+          "utc_s": 1794966234.6820796,
+          "host_available_B": 9180286976,
+          "commit_headroom_B": 15980867584,
+          "E_free_B": 8888127488
+        },
+        "cmd": [
+          "C:/Users/User/.julia/juliaup/julia-1.10.11+0.x64.w64.mingw32/bin/julia.exe",
+          "--project=D:\\Projekte\\Code\\FlexPlan_UC_GSCR",
+          "--startup-file=no",
+          "--threads=1",
+          "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01\\run_840h_frozen_E_lp.jl",
+          "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_FIVE_WEEKS_RE50_20261115_01",
+          "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01\\quota_70\\relaxed",
+          "E:\\ResearchResults\\FlexPlan_UC_GSCR\\ORCH_FULL37_SEQUENTIAL_117_20261113_01\\SCI02_POSITIVE_SYN_MINIMUM_04\\CASE.json",
+          "7200"
+        ],
+        "pid": 29360
+      }
+    },
+    {
+      "quota_pct": 70,
+      "mode": "MILP",
+      "root": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01\\quota_70\\integer",
+      "comparison_sha256": "a3c892d016784128522e6dcf5e36741a8f1586ef17a51f51a3d9e99e033a4aaa",
+      "review_sha256": "a420186466f44b8f85a48ace151aeedb22c6af6e1d06720a421a5d1c275843a6",
+      "independent_review": {
+        "status": "PASS_SCOPED_RESULT_REPORTING_REVIEW",
+        "reviewer": "independent_math_code_and_result_reviewer_root_gfm_epri_math_qual",
+        "runtime_consumer_commit": "1edcc857036cec3703a581f2704a51dbcc886586",
+        "derived_AP2_sha256": "c03dfc3cd78d68e0aeb8fb6875a3875e71db5d2c2efd8d680ba1904f95a79cfe",
+        "derived_profile_sha256": "13a242fc5f3e2f8f651d6d0dec2ec8d5cb8fb41e8c543b2daf03beb7879c26c2",
+        "OPEX_factor": 52.142857142857146,
+        "CAPEX_factor": 1,
+        "hours": 168,
+        "iso_week": 8,
+        "optimized_by_reviewer": false,
+        "model_built_by_reviewer": false,
+        "results": {
+          "with_gscr": {
+            "status": "PASS_SCOPED_FEASIBLE_PROXY_SAVED_RESULT_REPLAY",
+            "objective_EUR2025": 127818618545.37375,
+            "objective_replay_difference_EUR2025": 0.0001220703125,
+            "annual_CAPEX_EUR2025": 111598590415.4346,
+            "annual_OPEX_EUR2025": 16220028129.939142,
+            "represented_OPEX_EUR2025": {
+              "generation": 282768071.9375946,
+              "storage": 0.0,
+              "startup_shutdown": 28300960.691375274
+            },
+            "load_MWh": 71058866.10244864,
+            "Wind_PV_MWh": 49741206.27171396,
+            "Wind_PV_pct": 69.99999999999986,
+            "max_system_balance_residual_MW": 4.0745362639427185e-09,
+            "minimum_G1_slack_pu": -3.7971403799019754e-11,
+            "negative_G1_rows": 0,
+            "strength_constraints_active": true,
+            "native_row_count": 417555,
+            "native_column_count": 320131,
+            "original_JuMP_primal_variable_count": 311395,
+            "max_exported_original_variable_bound_violation": 0.0,
+            "symbolically_mapped_original_variables": 311395,
+            "separately_saved_renewable_dispatch_without_index_coordinates": 0,
+            "event_variables_replayed": 36624,
+            "expansion_MW": {
+              "CCGT": 1636.0,
+              "OCGT": 0.0,
+              "oil": 0.0,
+              "ror": 0.0,
+              "solar": 726052.7116451459,
+              "onwind": 587424.0427000469,
+              "lignite": 0.0,
+              "biomass": 0.0,
+              "offwind-ac": 0.0,
+              "offwind-dc": 0.0,
+              "coal": 0.0,
+              "nuclear": 0.0,
+              "geothermal": 0.0,
+              "PHS": 0.0,
+              "battery": 58875.0,
+              "BESS-GFM": 104575.0
+            },
+            "dispatch_MWh": {
+              "solar": [
+                14473427.420887526,
+                0.0,
+                0.0
+              ],
+              "nuclear": [
+                8663713.179608868,
+                0.0,
+                0.0
+              ],
+              "coal": [
+                2281122.932836742,
+                0.0,
+                0.0
+              ],
+              "offwind-ac": [
+                724662.7951583158,
+                0.0,
+                0.0
+              ],
+              "biomass": [
+                1777602.5914144106,
+                0.0,
+                0.0
+              ],
+              "onwind": [
+                32995587.595577434,
+                0.0,
+                0.0
+              ],
+              "OCGT": [
+                1584.2399999923546,
+                0.0,
+                0.0
+              ],
+              "ror": [
+                2315321.7776209284,
+                0.0,
+                0.0
+              ],
+              "offwind-dc": [
+                1547528.4600906777,
+                0.0,
+                0.0
+              ],
+              "CCGT": [
+                602029.0529440905,
+                0.0,
+                0.0
+              ],
+              "lignite": [
+                1718705.4412027176,
+                0.0,
+                0.0
+              ],
+              "oil": [
+                1019.4591197529755,
+                0.0,
+                0.0
+              ],
+              "geothermal": [
+                8496.0,
+                0.0,
+                0.0
+              ],
+              "hydro": [
+                0.0,
+                0.0,
+                4761625.2497544065
+              ],
+              "battery": [
+                0.0,
+                1801405.4662745388,
+                1729349.247623557
+              ],
+              "BESS-GFM": [
+                0.0,
+                4566446.195659127,
+                4383788.347832767
+              ],
+              "PHS": [
+                0.0,
+                2235384.109159535,
+                1676538.0818696506
+              ]
+            },
+            "summary_sha256": "5923a336458cbb05e7c6739468c00a4e80900d0ce71eb5f209ee62963a0659af",
+            "complete_candidate_receipt_sha256": "79ebae71723c0d880aededac2234d104c80ab5df6f681efb9fc5fdec911e67f8",
+            "full_primal_sha256": "fb14d1c4b279f857cbb6d42273f74c58c566ef0f7ec6875e2179f756f1693aa5",
+            "coordinates_sha256": "d7ba8f8a9e4e3c97d96b4265cb64ae871eed6864186ac49d6205d2fb9281bd14",
+            "g1_export_sha256": "adc284f26187f8c15256fd002d4001579b85f560ad9242c848cc86f53cee33a4",
+            "native_log_sha256": "ee0b383e3c9f1fcc90313f5805a2c32da72a474f6818b5ed8bf7cda517ed7df4",
+            "feasible_plan_accepted": true,
+            "solver_status": "OPTIMAL",
+            "native_status": 2,
+            "native_SolCount": 1,
+            "native_IntVio": 0.0,
+            "csv_discrete_count": 111401,
+            "csv_binary_count": 0,
+            "csv_integer_residual": 0.0,
+            "best_bound_EUR2025": 127348376448.75867,
+            "reported_relative_gap": 0.0036789796507465072,
+            "optimality_scope": "Within configured 0.5% MIP gap if integer/OPTIMAL; report actual bound/gap. A time-limited incumbent is only a verified feasible witness.",
+            "initialization": {
+              "user_start_rejected": true,
+              "solver_internal_start_retry_observed": true,
+              "native_start_event_lines": [
+                "User MIP start did not produce a new incumbent solution",
+                "User MIP start violates constraint R18573 by 0.040824829",
+                "Another try with MIP start"
+              ],
+              "rejected_native_rows": [
+                [
+                  "R18573",
+                  "0.040824829"
+                ]
+              ],
+              "scope": "No optimized LP/MIP plan or LP-derived bounds supplied. A first builder-default start may be present; rejection is not task infeasibility. Second-variant starts were cleared by the reviewed runner."
+            },
+            "corresponding_LP_reference": {
+              "status": "OPTIMAL_VALIDATED_LP_REFERENCE",
+              "summary_sha256": "107cb3b315673159897bd04ed246b0045c35ef44d6b7c61211061badc28206fa",
+              "LP_objective_EUR2025": 127348376448.75821,
+              "MIP_primal_minus_LP_EUR2025": 470242096.6154175,
+              "native_MIP_bound_not_replaced": true
+            }
+          },
+          "without_gscr": {
+            "status": "PASS_SCOPED_FEASIBLE_PROXY_SAVED_RESULT_REPLAY",
+            "objective_EUR2025": 125055972701.08397,
+            "objective_replay_difference_EUR2025": 0.0002899169921875,
+            "annual_CAPEX_EUR2025": 108352825554.0054,
+            "annual_OPEX_EUR2025": 16703147147.078571,
+            "represented_OPEX_EUR2025": {
+              "generation": 287618991.23382974,
+              "storage": 0.0,
+              "startup_shutdown": 32715337.61425242
+            },
+            "load_MWh": 71058866.10244864,
+            "Wind_PV_MWh": 49741206.27171405,
+            "Wind_PV_pct": 70.0,
+            "max_system_balance_residual_MW": 3.5157427191734314e-08,
+            "minimum_G1_slack_pu": -2627.2049847119524,
+            "negative_G1_rows": 3769,
+            "strength_constraints_active": false,
+            "native_row_count": 411339,
+            "native_column_count": 320131,
+            "original_JuMP_primal_variable_count": 311395,
+            "max_exported_original_variable_bound_violation": 0.0,
+            "symbolically_mapped_original_variables": 311395,
+            "separately_saved_renewable_dispatch_without_index_coordinates": 0,
+            "event_variables_replayed": 36624,
+            "expansion_MW": {
+              "CCGT": 1840.5,
+              "OCGT": 0.0,
+              "oil": 0.0,
+              "ror": 0.0,
+              "solar": 718922.7283523587,
+              "onwind": 583958.1114946161,
+              "lignite": 0.0,
+              "biomass": 0.0,
+              "offwind-ac": 0.0,
+              "offwind-dc": 0.0,
+              "coal": 0.0,
+              "nuclear": 0.0,
+              "geothermal": 0.0,
+              "PHS": 0.0,
+              "battery": 141800.0,
+              "BESS-GFM": 0.0
+            },
+            "dispatch_MWh": {
+              "solar": [
+                14631340.005872818,
+                0.0,
+                0.0
+              ],
+              "nuclear": [
+                8462892.30655514,
+                0.0,
+                0.0
+              ],
+              "coal": [
+                2544371.455595661,
+                0.0,
+                0.0
+              ],
+              "offwind-ac": [
+                716700.558671881,
+                0.0,
+                0.0
+              ],
+              "biomass": [
+                1666103.9554978271,
+                0.0,
+                0.0
+              ],
+              "onwind": [
+                32864592.511006556,
+                0.0,
+                0.0
+              ],
+              "OCGT": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "ror": [
+                2265592.028110628,
+                0.0,
+                0.0
+              ],
+              "offwind-dc": [
+                1528573.196162792,
+                0.0,
+                0.0
+              ],
+              "CCGT": [
+                601379.5914182797,
+                0.0,
+                0.0
+              ],
+              "lignite": [
+                1844974.058325879,
+                0.0,
+                0.0
+              ],
+              "oil": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "geothermal": [
+                8496.0,
+                0.0,
+                0.0
+              ],
+              "hydro": [
+                0.0,
+                0.0,
+                4761054.277047727
+              ],
+              "battery": [
+                0.0,
+                5607436.639105556,
+                5383139.1735413335
+              ],
+              "BESS-GFM": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "PHS": [
+                0.0,
+                2451625.505009738,
+                1838719.1287573096
+              ]
+            },
+            "summary_sha256": "2a84f411dac4e27dfef0ddcf53ccd9b4df859381451992ad8c38e911cb21b96a",
+            "complete_candidate_receipt_sha256": "f7f7c9e4d38ebd89277971d31a88439c40f6384c261d5f675b64dd09e9e2db2e",
+            "full_primal_sha256": "dec5fe556c634d92f6da06841dd315ca5eb773b42c59f11c6d14383bc0ce6244",
+            "coordinates_sha256": "d7ba8f8a9e4e3c97d96b4265cb64ae871eed6864186ac49d6205d2fb9281bd14",
+            "g1_export_sha256": "c53d98dde0e34a4f921382af90a1b9af86a2d38b75de8c8a74be1f220b784e02",
+            "native_log_sha256": "2ec05a026b1afd4cd6c880a6abfcfa6a187175e8a72c556caa81add4feef594c",
+            "feasible_plan_accepted": true,
+            "solver_status": "OPTIMAL",
+            "native_status": 2,
+            "native_SolCount": 1,
+            "native_IntVio": 0.0,
+            "csv_discrete_count": 111401,
+            "csv_binary_count": 0,
+            "csv_integer_residual": 0.0,
+            "best_bound_EUR2025": 124989733337.15735,
+            "reported_relative_gap": 0.0005296777314639733,
+            "optimality_scope": "Within configured 0.5% MIP gap if integer/OPTIMAL; report actual bound/gap. A time-limited incumbent is only a verified feasible witness.",
+            "initialization": {
+              "user_start_rejected": false,
+              "solver_internal_start_retry_observed": false,
+              "native_start_event_lines": [],
+              "rejected_native_rows": [],
+              "scope": "No optimized LP/MIP plan or LP-derived bounds supplied. A first builder-default start may be present; rejection is not task infeasibility. Second-variant starts were cleared by the reviewed runner."
+            },
+            "corresponding_LP_reference": {
+              "status": "OPTIMAL_VALIDATED_LP_REFERENCE",
+              "summary_sha256": "401aa57d445f0082635d07945e88de2b16da9b5be0aa0ce9d6b4a33cf1c4e9cc",
+              "LP_objective_EUR2025": 124989733337.156,
+              "MIP_primal_minus_LP_EUR2025": 66239363.92767334,
+              "native_MIP_bound_not_replaced": true
+            }
+          }
+        },
+        "reviewed_variants": [
+          "with_gscr",
+          "without_gscr"
+        ],
+        "quota_pct": 70,
+        "mode": "integer",
+        "scope": "Owner-selected technical frozen-E proxy only. Integer feasibility and actual gaps are distinguished from LP relaxation; no AC/dynamic/year/scientific gate acceptance.",
+        "primal_completeness": "For each saved candidate all 311395 original JuMP variables are present once, with complete symbolic and renewable coordinates. Backend auxiliary columns are not exported as original variables.",
+        "native_extra_column_note": "Difference is 8736=52*168, consistent with backend auxiliary columns; exact native auxiliary-to-bridge mapping is not archived and is not asserted.",
+        "cost_oracle": "Physical dispatch times source marginal prices; original startup/shutdown VariableRef values times block-MW and native event rates; original and renewable expansion times their separate frozen investment coefficients. Single prepared source snapshot supplies static asset prices.",
+        "review_script_sha256": "39f5931dff2fd4c83a2a5c42f98ac5c9b1ca4e6d292d144470f12d4e8aa20134",
+        "comparison_receipt_sha256": "a3c892d016784128522e6dcf5e36741a8f1586ef17a51f51a3d9e99e033a4aaa",
+        "comparison_classification_review": "Both saved candidates independently accepted at their stated integer domain; actual MIP bounds/gaps retained. Counterfactual negative G1 rows in the off case are not active feasibility failures.",
+        "pair_has_verified_candidates_in_both_variants": true
+      },
+      "process_profile": {
+        "exit_code": 0,
+        "max_sample_private_B": 5299032064,
+        "max_sample_rss_B": 4124860416,
+        "max_private_B": 21474836480,
+        "max_wall_s": 16000,
+        "guards": [],
+        "wall_s": 3865.6879999999983,
+        "initial_host": {
+          "host_available_B": 9313554432,
+          "commit_headroom_B": 16263507968,
+          "E_free_B": 8887832576
+        },
+        "last_sample": {
+          "private_B": 1358278656,
+          "rs_B": 1355423744,
+          "wall_s": 3865.4379999999983,
+          "utc_s": 1794970105.1656973,
+          "host_available_B": 7218282496,
+          "commit_headroom_B": 14921895936,
+          "E_free_B": 8830881792
+        },
+        "cmd": [
+          "C:/Users/User/.julia/juliaup/julia-1.10.11+0.x64.w64.mingw32/bin/julia.exe",
+          "--project=D:\\Projekte\\Code\\FlexPlan_UC_GSCR",
+          "--startup-file=no",
+          "--threads=1",
+          "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01\\run_840h_frozen_E_lp.jl",
+          "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_FIVE_WEEKS_RE50_20261115_01",
+          "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01\\quota_70\\integer",
+          "E:\\ResearchResults\\FlexPlan_UC_GSCR\\ORCH_FULL37_SEQUENTIAL_117_20261113_01\\SCI02_POSITIVE_SYN_MINIMUM_04\\CASE.json",
+          "7200"
+        ],
+        "pid": 23372
+      }
+    }
+  ],
+  "runs": [
+    {
+      "quota_pct": 50,
+      "study_mode": "LP",
+      "result": {
+        "strength_constraints_active": true,
+        "annualized_opex_EUR2025": 36556968207.378105,
+        "g1_row_count": 6216,
+        "mode": "relaxed",
+        "max_primal_violation_above_1e_6": 0.0,
+        "result_count": 1,
+        "objective_EUR2025": 98619706096.27141,
+        "variant": "with_gscr",
+        "solve_time_s": 155.31500005722046,
+        "primal_violation_count_at_1e_6": 0,
+        "case_sha256_by_week": {
+          "8": "f4b66af21fe59240eaa236698cf371458ce1cc22cdd3c25d9af9aafa92c4939d"
+        },
+        "wind_pv_MWh": 35529433.051224396,
+        "gscr_validation_passed": true,
+        "claim": "frozen_E_planning_proxy",
+        "numerically_accepted": true,
+        "weight": 52.142857142857146,
+        "operation_840h_components_EUR2025": {
+          "startup_shutdown": 32907719.897660583,
+          "generation": 668184821.0657551,
+          "storage": 0.0
+        },
+        "scientific_manifest_sha256": "ec4986d4de0853f6a8188c0add991a139d014c247adee6cb960fae29416a4e9a",
+        "integer_rounding_performed": false,
+        "full_primal_saved": true,
+        "C_commit": "89897ee8b0caa8a54533b0fb03fa61b6adb1bd88",
+        "source_model": "colib_epri_frozen_E_blocks_v1",
+        "native_solver_attributes": {
+          "SolCount": 1,
+          "ConstrVio": 3.055866670820251e-11,
+          "ObjVal": 98619706096.27141,
+          "ObjBound": 98619706096.27141,
+          "Status": 2,
+          "IterCount": 69392.0,
+          "BoundVio": 2.987121661135461e-11,
+          "BarIterCount": 76,
+          "DualVio": 2.501998879866843e-09
+        },
+        "annualized_capex_EUR2025": 62062737888.89639,
+        "minimum_g1_slack_pu": -2.0179413695586845e-12,
+        "negative_gscr_rows": 0,
+        "status": "OPTIMAL",
+        "quota_pct": 50,
+        "operation_840h_EUR2025": 701092540.9634157,
+        "load_MWh": 71058866.10244863,
+        "derived_source_variants": {
+          "8": {
+            "parent_AP1_sha256": "f4b66af21fe59240eaa236698cf371458ce1cc22cdd3c25d9af9aafa92c4939d",
+            "consumer_commit": "73ae452ae95851a848b589acf39bd4c6d4dfee06",
+            "variant": {
+              "parent_AP1_sha256": "f4b66af21fe59240eaa236698cf371458ce1cc22cdd3c25d9af9aafa92c4939d",
+              "synchronous_xdpp": 0.25,
+              "scope": "frozen_E_planning_proxy",
+              "model": "colib_epri_frozen_E_blocks_v1",
+              "S_block_MVA": 25,
+              "owner_decision": "2026-11-17: bilde beide modelle gleich \u00e4hnlich aus",
+              "x_device_pu": 0.15,
+              "r_device_pu": 0.0015
+            },
+            "derived_profile_sha256": "13a242fc5f3e2f8f651d6d0dec2ec8d5cb8fb41e8c543b2daf03beb7879c26c2",
+            "derived_AP2_case_sha256": "c03dfc3cd78d68e0aeb8fb6875a3875e71db5d2c2efd8d680ba1904f95a79cfe",
+            "stage": "prepared_pu_before_dimensions_and_cost_weights",
+            "unchanged_non_source_profile_sha256": "b9f82374cd9a87cacd729777e130010fa5c13694ff4e93f535b8e2716c2a2e7c",
+            "week": "8",
+            "schema": "paper_a_consumer_source_variant_v1",
+            "snapshot_count": 168
+          }
+        },
+        "objective_replay_residual_EUR2025": 0.00308990478515625,
+        "investment_factor": 1,
+        "selection_sha256": "88d30f72eb2e8edb176fb7eb75b413a99d6b14228005b3792753365eb990d9d3",
+        "P_commit": "becec6d63c0fbf2b8a160c41f87631f5270046b9",
+        "wind_pv_share_pct": 50.000000000000114,
+        "min_gscr_slack_pu": -2.0179413695586845e-12,
+        "hours": 168,
+        "max_integer_residual": 0.4995362210201906,
+        "primal_status": "FEASIBLE_POINT",
+        "best_bound_EUR2025": 98619706096.27141,
+        "relative_gap": 0.0,
+        "physical_replay_passed": true,
+        "expansion_MW": {
+          "BESS-GFM": 30682.728491191945,
+          "CCGT": 1799.1329184278352,
+          "OCGT": 0.0,
+          "PHS": 0.0,
+          "battery": 7270.789612969066,
+          "biomass": 0.0,
+          "coal": 0.0,
+          "geothermal": 0.0,
+          "lignite": 0.0,
+          "nuclear": 0.0,
+          "offwind-ac": 0.0,
+          "offwind-dc": 0.0,
+          "oil": 0.0,
+          "onwind": 343419.99354964937,
+          "ror": 0.0,
+          "solar": 438061.45360175817
+        },
+        "dispatch_MWh": {
+          "BESS-GFM": [
+            0.0,
+            1239126.8689521211,
+            1189561.7941940362
+          ],
+          "CCGT": [
+            4192860.6459310064,
+            0.0,
+            0.0
+          ],
+          "OCGT": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "PHS": [
+            0.0,
+            2072406.255411874,
+            1554304.691558909
+          ],
+          "battery": [
+            0.0,
+            290661.48347906023,
+            279035.0241398978
+          ],
+          "biomass": [
+            2479429.103560737,
+            0.0,
+            0.0
+          ],
+          "coal": [
+            3947678.605853975,
+            0.0,
+            0.0
+          ],
+          "geothermal": [
+            9440.0,
+            0.0,
+            0.0
+          ],
+          "hydro": [
+            0.0,
+            0.0,
+            4765303.992154683
+          ],
+          "lignite": [
+            5295977.642232936,
+            0.0,
+            0.0
+          ],
+          "nuclear": [
+            12887946.495781133,
+            0.0,
+            0.0
+          ],
+          "offwind-ac": [
+            727512.2130483948,
+            0.0,
+            0.0
+          ],
+          "offwind-dc": [
+            1559827.7760456025,
+            0.0,
+            0.0
+          ],
+          "oil": [
+            5.193675744858836,
+            0.0,
+            0.0
+          ],
+          "onwind": [
+            23044825.16387357,
+            0.0,
+            0.0
+          ],
+          "ror": [
+            2530084.46998463,
+            0.0,
+            0.0
+          ],
+          "solar": [
+            10197267.898256516,
+            0.0,
+            0.0
+          ]
+        },
+        "replay_periods": [
+          {
+            "iso_week": 8,
+            "load_MWh": 71058866.10244864,
+            "wind_pv_MWh": 35529433.05122408,
+            "max_balance_residual_MW": 3.4924596548080444e-08
+          }
+        ],
+        "receipt_sha256": "af9a4b7d6adea33e15a93f1126b7f01b2ebe3d7677085d1f9181255140d0966a",
+        "complete_primal_variable_count": 311395,
+        "csv_bound_violation": 2.987121661135461e-11,
+        "csv_discrete_variable_count": 0,
+        "csv_integer_residual": 0.0,
+        "energy_and_active_G1_replay_passed": true,
+        "accepted_for_proxy_LP_comparison": true,
+        "accepted_for_proxy_MIP_comparison": false,
+        "represented_operation_components_EUR2025": {
+          "startup_shutdown": 32907719.897660583,
+          "generation": 668184821.0657551,
+          "storage": 0.0
+        },
+        "represented_operation_EUR2025": 701092540.9634157
+      },
+      "raw_root": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE50_GFM_FROZEN_E_20261118_01",
+      "result_directory": "with_gscr/relaxed_crossover"
+    },
+    {
+      "quota_pct": 50,
+      "study_mode": "LP",
+      "result": {
+        "strength_constraints_active": false,
+        "annualized_opex_EUR2025": 37200131757.81485,
+        "g1_row_count": 6216,
+        "mode": "relaxed",
+        "max_primal_violation_above_1e_6": 0.0,
+        "result_count": 1,
+        "objective_EUR2025": 97551528966.55267,
+        "variant": "without_gscr",
+        "solve_time_s": 162.66400003433228,
+        "primal_violation_count_at_1e_6": 0,
+        "case_sha256_by_week": {
+          "8": "f4b66af21fe59240eaa236698cf371458ce1cc22cdd3c25d9af9aafa92c4939d"
+        },
+        "wind_pv_MWh": 35529433.05122443,
+        "gscr_validation_passed": true,
+        "claim": "frozen_E_planning_proxy",
+        "numerically_accepted": true,
+        "weight": 52.142857142857146,
+        "operation_840h_components_EUR2025": {
+          "startup_shutdown": 37176082.817072034,
+          "generation": 676251101.579377,
+          "storage": 0.0
+        },
+        "scientific_manifest_sha256": "ec4986d4de0853f6a8188c0add991a139d014c247adee6cb960fae29416a4e9a",
+        "integer_rounding_performed": false,
+        "full_primal_saved": true,
+        "C_commit": "89897ee8b0caa8a54533b0fb03fa61b6adb1bd88",
+        "source_model": "colib_epri_frozen_E_blocks_v1",
+        "native_solver_attributes": {
+          "SolCount": 1,
+          "ConstrVio": 3.723403807498471e-10,
+          "ObjVal": 97551528966.55267,
+          "ObjBound": 97551528966.55267,
+          "Status": 2,
+          "IterCount": 57889.0,
+          "BoundVio": 8.569323028950748e-11,
+          "BarIterCount": 72,
+          "DualVio": 5.2677933126688e-09
+        },
+        "annualized_capex_EUR2025": 60351397208.739784,
+        "minimum_g1_slack_pu": -983.2669080905102,
+        "negative_gscr_rows": 3026,
+        "status": "OPTIMAL",
+        "quota_pct": 50,
+        "operation_840h_EUR2025": 713427184.3964491,
+        "load_MWh": 71058866.10244863,
+        "derived_source_variants": {
+          "8": {
+            "parent_AP1_sha256": "f4b66af21fe59240eaa236698cf371458ce1cc22cdd3c25d9af9aafa92c4939d",
+            "consumer_commit": "73ae452ae95851a848b589acf39bd4c6d4dfee06",
+            "variant": {
+              "parent_AP1_sha256": "f4b66af21fe59240eaa236698cf371458ce1cc22cdd3c25d9af9aafa92c4939d",
+              "synchronous_xdpp": 0.25,
+              "scope": "frozen_E_planning_proxy",
+              "model": "colib_epri_frozen_E_blocks_v1",
+              "S_block_MVA": 25,
+              "owner_decision": "2026-11-17: bilde beide modelle gleich \u00e4hnlich aus",
+              "x_device_pu": 0.15,
+              "r_device_pu": 0.0015
+            },
+            "derived_profile_sha256": "13a242fc5f3e2f8f651d6d0dec2ec8d5cb8fb41e8c543b2daf03beb7879c26c2",
+            "derived_AP2_case_sha256": "c03dfc3cd78d68e0aeb8fb6875a3875e71db5d2c2efd8d680ba1904f95a79cfe",
+            "stage": "prepared_pu_before_dimensions_and_cost_weights",
+            "unchanged_non_source_profile_sha256": "b9f82374cd9a87cacd729777e130010fa5c13694ff4e93f535b8e2716c2a2e7c",
+            "week": "8",
+            "schema": "paper_a_consumer_source_variant_v1",
+            "snapshot_count": 168
+          }
+        },
+        "objective_replay_residual_EUR2025": 0.00196075439453125,
+        "investment_factor": 1,
+        "selection_sha256": "88d30f72eb2e8edb176fb7eb75b413a99d6b14228005b3792753365eb990d9d3",
+        "P_commit": "becec6d63c0fbf2b8a160c41f87631f5270046b9",
+        "wind_pv_share_pct": 50.00000000000016,
+        "min_gscr_slack_pu": -983.2669080905102,
+        "hours": 168,
+        "max_integer_residual": 0.4999999999999991,
+        "primal_status": "FEASIBLE_POINT",
+        "best_bound_EUR2025": 97551528966.55267,
+        "relative_gap": 0.0,
+        "physical_replay_passed": true,
+        "expansion_MW": {
+          "BESS-GFM": 0.0,
+          "CCGT": 1874.7302565285574,
+          "OCGT": 0.0,
+          "PHS": 0.0,
+          "battery": 16970.307946503628,
+          "biomass": 0.0,
+          "coal": 0.0,
+          "geothermal": 0.0,
+          "lignite": 0.0,
+          "nuclear": 0.0,
+          "offwind-ac": 0.0,
+          "offwind-dc": 0.0,
+          "oil": 0.0,
+          "onwind": 343300.5947669466,
+          "ror": 0.0,
+          "solar": 436277.4569871213
+        },
+        "dispatch_MWh": {
+          "BESS-GFM": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "CCGT": [
+            4560931.59610468,
+            0.0,
+            0.0
+          ],
+          "OCGT": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "PHS": [
+            0.0,
+            2209661.2591426554,
+            1657245.9443569935
+          ],
+          "battery": [
+            0.0,
+            689396.1593374457,
+            661820.3129639479
+          ],
+          "biomass": [
+            2387250.120098475,
+            0.0,
+            0.0
+          ],
+          "coal": [
+            3868809.8835730716,
+            0.0,
+            0.0
+          ],
+          "geothermal": [
+            9381.0,
+            0.0,
+            0.0
+          ],
+          "hydro": [
+            0.0,
+            0.0,
+            4765473.492154774
+          ],
+          "lignite": [
+            5054694.900380421,
+            0.0,
+            0.0
+          ],
+          "nuclear": [
+            12937593.977132749,
+            0.0,
+            0.0
+          ],
+          "offwind-ac": [
+            732472.9893274468,
+            0.0,
+            0.0
+          ],
+          "offwind-dc": [
+            1590493.542833575,
+            0.0,
+            0.0
+          ],
+          "oil": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "onwind": [
+            23035272.946243815,
+            0.0,
+            0.0
+          ],
+          "ror": [
+            2525289.242939534,
+            0.0,
+            0.0
+          ],
+          "solar": [
+            10171193.572819205,
+            0.0,
+            0.0
+          ]
+        },
+        "replay_periods": [
+          {
+            "iso_week": 8,
+            "load_MWh": 71058866.10244864,
+            "wind_pv_MWh": 35529433.051224045,
+            "max_balance_residual_MW": 3.655441105365753e-08
+          }
+        ],
+        "receipt_sha256": "5780e2c18d64eb1fa9661cd7d8203f14576d2918f7a7d03b2d5ff83a03022ab8",
+        "complete_primal_variable_count": 311395,
+        "csv_bound_violation": 8.569323028950748e-11,
+        "csv_discrete_variable_count": 0,
+        "csv_integer_residual": 0.0,
+        "energy_and_active_G1_replay_passed": true,
+        "accepted_for_proxy_LP_comparison": true,
+        "accepted_for_proxy_MIP_comparison": false,
+        "represented_operation_components_EUR2025": {
+          "startup_shutdown": 37176082.817072034,
+          "generation": 676251101.579377,
+          "storage": 0.0
+        },
+        "represented_operation_EUR2025": 713427184.3964491
+      },
+      "raw_root": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE50_GFM_FROZEN_E_20261118_01",
+      "result_directory": "without_gscr/relaxed_crossover"
+    },
+    {
+      "quota_pct": 50,
+      "study_mode": "MILP",
+      "result": {
+        "strength_constraints_active": true,
+        "discrete_variable_count": 111401,
+        "annualized_opex_EUR2025": 36542570875.58788,
+        "g1_row_count": 6216,
+        "mode": "integer",
+        "max_primal_violation_above_1e_6": 0.0,
+        "result_count": 1,
+        "objective_EUR2025": 98998127117.23671,
+        "variant": "with_gscr",
+        "solve_time_s": 2948.0190000534058,
+        "primal_violation_count_at_1e_6": 0,
+        "model_variable_count": 311395,
+        "case_sha256_by_week": {
+          "8": "f4b66af21fe59240eaa236698cf371458ce1cc22cdd3c25d9af9aafa92c4939d"
+        },
+        "integrality_mode": "integer",
+        "wind_pv_MWh": 35529433.05122441,
+        "gscr_validation_passed": true,
+        "claim": "frozen_E_planning_proxy",
+        "numerically_accepted": true,
+        "weight": 52.142857142857146,
+        "operation_840h_components_EUR2025": {
+          "startup_shutdown": 33443481.384066433,
+          "generation": 667372946.3669341,
+          "storage": 0.0
+        },
+        "saved_discrete_max_residual": 0.0,
+        "scientific_manifest_sha256": "ec4986d4de0853f6a8188c0add991a139d014c247adee6cb960fae29416a4e9a",
+        "integer_rounding_performed": false,
+        "full_primal_saved": true,
+        "C_commit": "d11f3f3e8376768d97e08f339990c6bb489e6ce5",
+        "source_model": "colib_epri_frozen_E_blocks_v1",
+        "native_solver_attributes": {
+          "SolCount": 1,
+          "ConstrVio": 1.6391277313232422e-07,
+          "ObjVal": 98998127117.23671,
+          "ObjBound": 98619706096.27202,
+          "Status": 2,
+          "IterCount": 97122.0,
+          "BoundVio": 0.0,
+          "BarIterCount": 80,
+          "IntVio": 0.0,
+          "DualVio": "Gurobi attribute DualVio returned 10005"
+        },
+        "annualized_capex_EUR2025": 62455556241.648735,
+        "minimum_g1_slack_pu": -4.263256414560601e-14,
+        "negative_gscr_rows": 0,
+        "status": "OPTIMAL",
+        "quota_pct": 50,
+        "operation_840h_EUR2025": 700816427.7510005,
+        "load_MWh": 71058866.10244863,
+        "derived_source_variants": {
+          "8": {
+            "parent_AP1_sha256": "f4b66af21fe59240eaa236698cf371458ce1cc22cdd3c25d9af9aafa92c4939d",
+            "consumer_commit": "73ae452ae95851a848b589acf39bd4c6d4dfee06",
+            "variant": {
+              "parent_AP1_sha256": "f4b66af21fe59240eaa236698cf371458ce1cc22cdd3c25d9af9aafa92c4939d",
+              "synchronous_xdpp": 0.25,
+              "scope": "frozen_E_planning_proxy",
+              "model": "colib_epri_frozen_E_blocks_v1",
+              "S_block_MVA": 25,
+              "owner_decision": "2026-11-17: bilde beide modelle gleich \u00e4hnlich aus",
+              "x_device_pu": 0.15,
+              "r_device_pu": 0.0015
+            },
+            "derived_profile_sha256": "13a242fc5f3e2f8f651d6d0dec2ec8d5cb8fb41e8c543b2daf03beb7879c26c2",
+            "derived_AP2_case_sha256": "c03dfc3cd78d68e0aeb8fb6875a3875e71db5d2c2efd8d680ba1904f95a79cfe",
+            "stage": "prepared_pu_before_dimensions_and_cost_weights",
+            "unchanged_non_source_profile_sha256": "b9f82374cd9a87cacd729777e130010fa5c13694ff4e93f535b8e2716c2a2e7c",
+            "week": "8",
+            "schema": "paper_a_consumer_source_variant_v1",
+            "snapshot_count": 168
+          }
+        },
+        "objective_replay_residual_EUR2025": 9.1552734375e-05,
+        "investment_factor": 1,
+        "selection_sha256": "88d30f72eb2e8edb176fb7eb75b413a99d6b14228005b3792753365eb990d9d3",
+        "P_commit": "becec6d63c0fbf2b8a160c41f87631f5270046b9",
+        "wind_pv_share_pct": 50.00000000000014,
+        "min_gscr_slack_pu": -4.263256414560601e-14,
+        "hours": 168,
+        "max_integer_residual": 0.0,
+        "primal_status": "FEASIBLE_POINT",
+        "best_bound_EUR2025": 98619706096.27202,
+        "relative_gap": 0.0038225068694133276,
+        "physical_replay_passed": true,
+        "expansion_MW": {
+          "BESS-GFM": 33525.0,
+          "CCGT": 1840.5,
+          "OCGT": 4200.0,
+          "PHS": 0.0,
+          "battery": 7300.0,
+          "biomass": 0.0,
+          "coal": 0.0,
+          "geothermal": 0.0,
+          "lignite": 0.0,
+          "nuclear": 0.0,
+          "offwind-ac": 0.0,
+          "offwind-dc": 0.0,
+          "oil": 0.0,
+          "onwind": 341283.18242722296,
+          "ror": 0.0,
+          "solar": 442799.9457664621
+        },
+        "dispatch_MWh": {
+          "BESS-GFM": [
+            0.0,
+            1316779.9881712103,
+            1264108.7886443618
+          ],
+          "CCGT": [
+            4162284.399114073,
+            0.0,
+            0.0
+          ],
+          "OCGT": [
+            1920.0,
+            0.0,
+            0.0
+          ],
+          "PHS": [
+            0.0,
+            2077191.9866279433,
+            1557893.989970959
+          ],
+          "battery": [
+            0.0,
+            279754.8685117431,
+            268564.67377127334
+          ],
+          "biomass": [
+            2481575.276620508,
+            0.0,
+            0.0
+          ],
+          "coal": [
+            3958839.5100990376,
+            0.0,
+            0.0
+          ],
+          "geothermal": [
+            9440.000000000002,
+            0.0,
+            0.0
+          ],
+          "hydro": [
+            0.0,
+            0.0,
+            4765395.6137820175
+          ],
+          "lignite": [
+            5296565.391116778,
+            0.0,
+            0.0
+          ],
+          "nuclear": [
+            12902711.824010823,
+            0.0,
+            0.0
+          ],
+          "offwind-ac": [
+            727440.5127910795,
+            0.0,
+            0.0
+          ],
+          "offwind-dc": [
+            1556506.6473860291,
+            0.0,
+            0.0
+          ],
+          "oil": [
+            235.90019999999998,
+            0.0,
+            0.0
+          ],
+          "onwind": [
+            22975814.736593705,
+            0.0,
+            0.0
+          ],
+          "ror": [
+            2533624.5272055287,
+            0.0,
+            0.0
+          ],
+          "solar": [
+            10269671.15445328,
+            0.0,
+            0.0
+          ]
+        },
+        "replay_periods": [
+          {
+            "iso_week": 8,
+            "load_MWh": 71058866.10244864,
+            "wind_pv_MWh": 35529433.05122409,
+            "max_balance_residual_MW": 5.326000973582268e-08
+          }
+        ],
+        "receipt_sha256": "3c6fa3e6458905019d4fbfb42e2cd01b45bae8cf36acb6757d146cb31a19098e",
+        "complete_primal_variable_count": 311395,
+        "csv_bound_violation": 0.0,
+        "csv_discrete_variable_count": 111401,
+        "csv_integer_residual": 0.0,
+        "energy_and_active_G1_replay_passed": true,
+        "accepted_for_proxy_LP_comparison": false,
+        "accepted_for_proxy_MIP_comparison": true,
+        "represented_operation_components_EUR2025": {
+          "startup_shutdown": 33443481.384066433,
+          "generation": 667372946.3669341,
+          "storage": 0.0
+        },
+        "represented_operation_EUR2025": 700816427.7510005
+      },
+      "raw_root": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE50_GFM_FROZEN_E_MIP_20261118_01",
+      "result_directory": "with_gscr/integer"
+    },
+    {
+      "quota_pct": 50,
+      "study_mode": "MILP",
+      "result": {
+        "strength_constraints_active": false,
+        "discrete_variable_count": 111401,
+        "annualized_opex_EUR2025": 37173330796.40219,
+        "g1_row_count": 6216,
+        "mode": "integer",
+        "max_primal_violation_above_1e_6": 0.0,
+        "result_count": 10,
+        "objective_EUR2025": 97566598150.30035,
+        "variant": "without_gscr",
+        "solve_time_s": 288.01200008392334,
+        "primal_violation_count_at_1e_6": 0,
+        "model_variable_count": 311395,
+        "case_sha256_by_week": {
+          "8": "f4b66af21fe59240eaa236698cf371458ce1cc22cdd3c25d9af9aafa92c4939d"
+        },
+        "integrality_mode": "integer",
+        "wind_pv_MWh": 35529433.05122445,
+        "gscr_validation_passed": true,
+        "claim": "frozen_E_planning_proxy",
+        "numerically_accepted": true,
+        "weight": 52.142857142857146,
+        "operation_840h_components_EUR2025": {
+          "startup_shutdown": 37275271.81611441,
+          "generation": 675637921.539544,
+          "storage": 0.0
+        },
+        "saved_discrete_max_residual": 0.0,
+        "scientific_manifest_sha256": "ec4986d4de0853f6a8188c0add991a139d014c247adee6cb960fae29416a4e9a",
+        "integer_rounding_performed": false,
+        "full_primal_saved": true,
+        "C_commit": "d11f3f3e8376768d97e08f339990c6bb489e6ce5",
+        "source_model": "colib_epri_frozen_E_blocks_v1",
+        "native_solver_attributes": {
+          "SolCount": 10,
+          "ConstrVio": 1.6391277313232422e-07,
+          "ObjVal": 97566598150.30035,
+          "ObjBound": 97551528966.55356,
+          "Status": 2,
+          "IterCount": 67290.0,
+          "BoundVio": 0.0,
+          "BarIterCount": 79,
+          "IntVio": 0.0,
+          "DualVio": "Gurobi attribute DualVio returned 10005"
+        },
+        "annualized_capex_EUR2025": 60393267353.898224,
+        "minimum_g1_slack_pu": -982.8028922062938,
+        "negative_gscr_rows": 3004,
+        "status": "OPTIMAL",
+        "quota_pct": 50,
+        "operation_840h_EUR2025": 712913193.3556584,
+        "load_MWh": 71058866.10244863,
+        "derived_source_variants": {
+          "8": {
+            "parent_AP1_sha256": "f4b66af21fe59240eaa236698cf371458ce1cc22cdd3c25d9af9aafa92c4939d",
+            "consumer_commit": "73ae452ae95851a848b589acf39bd4c6d4dfee06",
+            "variant": {
+              "parent_AP1_sha256": "f4b66af21fe59240eaa236698cf371458ce1cc22cdd3c25d9af9aafa92c4939d",
+              "synchronous_xdpp": 0.25,
+              "scope": "frozen_E_planning_proxy",
+              "model": "colib_epri_frozen_E_blocks_v1",
+              "S_block_MVA": 25,
+              "owner_decision": "2026-11-17: bilde beide modelle gleich \u00e4hnlich aus",
+              "x_device_pu": 0.15,
+              "r_device_pu": 0.0015
+            },
+            "derived_profile_sha256": "13a242fc5f3e2f8f651d6d0dec2ec8d5cb8fb41e8c543b2daf03beb7879c26c2",
+            "derived_AP2_case_sha256": "c03dfc3cd78d68e0aeb8fb6875a3875e71db5d2c2efd8d680ba1904f95a79cfe",
+            "stage": "prepared_pu_before_dimensions_and_cost_weights",
+            "unchanged_non_source_profile_sha256": "b9f82374cd9a87cacd729777e130010fa5c13694ff4e93f535b8e2716c2a2e7c",
+            "week": "8",
+            "schema": "paper_a_consumer_source_variant_v1",
+            "snapshot_count": 168
+          }
+        },
+        "objective_replay_residual_EUR2025": 6.103515625e-05,
+        "investment_factor": 1,
+        "selection_sha256": "88d30f72eb2e8edb176fb7eb75b413a99d6b14228005b3792753365eb990d9d3",
+        "P_commit": "becec6d63c0fbf2b8a160c41f87631f5270046b9",
+        "wind_pv_share_pct": 50.000000000000185,
+        "min_gscr_slack_pu": -982.8028922062938,
+        "hours": 168,
+        "max_integer_residual": 0.0,
+        "primal_status": "FEASIBLE_POINT",
+        "best_bound_EUR2025": 97551528966.55356,
+        "relative_gap": 0.00015445023227705172,
+        "physical_replay_passed": true,
+        "expansion_MW": {
+          "BESS-GFM": 0.0,
+          "CCGT": 1840.5,
+          "OCGT": 0.0,
+          "PHS": 0.0,
+          "battery": 16975.0,
+          "biomass": 0.0,
+          "coal": 0.0,
+          "geothermal": 0.0,
+          "lignite": 0.0,
+          "nuclear": 0.0,
+          "offwind-ac": 0.0,
+          "offwind-dc": 0.0,
+          "oil": 0.0,
+          "onwind": 344307.19870843255,
+          "ror": 0.0,
+          "solar": 434410.5928517995
+        },
+        "dispatch_MWh": {
+          "BESS-GFM": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "CCGT": [
+            4542494.859138477,
+            0.0,
+            0.0
+          ],
+          "OCGT": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "PHS": [
+            0.0,
+            2202245.241219883,
+            1651683.9309149156
+          ],
+          "battery": [
+            0.0,
+            686436.645741076,
+            658979.1799114328
+          ],
+          "biomass": [
+            2389213.047138916,
+            0.0,
+            0.0
+          ],
+          "coal": [
+            3869941.1752326554,
+            0.0,
+            0.0
+          ],
+          "geothermal": [
+            9384.646597780622,
+            0.0,
+            0.0
+          ],
+          "hydro": [
+            0.0,
+            0.0,
+            4765473.492154741
+          ],
+          "lignite": [
+            5060387.321433352,
+            0.0,
+            0.0
+          ],
+          "nuclear": [
+            12942200.932808932,
+            0.0,
+            0.0
+          ],
+          "offwind-ac": [
+            716805.8146337942,
+            0.0,
+            0.0
+          ],
+          "offwind-dc": [
+            1537537.030151169,
+            0.0,
+            0.0
+          ],
+          "oil": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "onwind": [
+            23136348.243108295,
+            0.0,
+            0.0
+          ],
+          "ror": [
+            2528356.3528534533,
+            0.0,
+            0.0
+          ],
+          "solar": [
+            10138741.963330956,
+            0.0,
+            0.0
+          ]
+        },
+        "replay_periods": [
+          {
+            "iso_week": 8,
+            "load_MWh": 71058866.10244864,
+            "wind_pv_MWh": 35529433.05122422,
+            "max_balance_residual_MW": 5.608308129012585e-07
+          }
+        ],
+        "receipt_sha256": "a86ab36f6e7786daed002e2d636b68f1531224dd6fc95e0e51c7445cb407a28f",
+        "complete_primal_variable_count": 311395,
+        "csv_bound_violation": 0.0,
+        "csv_discrete_variable_count": 111401,
+        "csv_integer_residual": 0.0,
+        "energy_and_active_G1_replay_passed": true,
+        "accepted_for_proxy_LP_comparison": false,
+        "accepted_for_proxy_MIP_comparison": true,
+        "represented_operation_components_EUR2025": {
+          "startup_shutdown": 37275271.81611441,
+          "generation": 675637921.539544,
+          "storage": 0.0
+        },
+        "represented_operation_EUR2025": 712913193.3556584
+      },
+      "raw_root": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE50_GFM_FROZEN_E_MIP_20261118_01",
+      "result_directory": "without_gscr/integer"
+    },
+    {
+      "quota_pct": 60,
+      "study_mode": "LP",
+      "result": {
+        "strength_constraints_active": true,
+        "discrete_variable_count": 0,
+        "annualized_opex_EUR2025": 24613487107.506912,
+        "g1_row_count": 6216,
+        "mode": "relaxed",
+        "max_primal_violation_above_1e_6": 0.0,
+        "result_count": 1,
+        "objective_EUR2025": 111395759439.43652,
+        "variant": "with_gscr",
+        "solve_time_s": 126.98300004005432,
+        "primal_violation_count_at_1e_6": 0,
+        "model_variable_count": 311395,
+        "case_sha256_by_week": {
+          "8": "f4b66af21fe59240eaa236698cf371458ce1cc22cdd3c25d9af9aafa92c4939d"
+        },
+        "integrality_mode": "relaxed",
+        "wind_pv_MWh": 42635319.66146918,
+        "gscr_validation_passed": true,
+        "claim": "frozen_E_planning_proxy",
+        "numerically_accepted": true,
+        "weight": 52.142857142857146,
+        "operation_840h_components_EUR2025": {
+          "startup_shutdown": 29039277.31079502,
+          "generation": 443000201.4633101,
+          "storage": 0.0
+        },
+        "saved_discrete_max_residual": 0.0,
+        "scientific_manifest_sha256": "ec4986d4de0853f6a8188c0add991a139d014c247adee6cb960fae29416a4e9a",
+        "integer_rounding_performed": false,
+        "full_primal_saved": true,
+        "C_commit": "1edcc857036cec3703a581f2704a51dbcc886586",
+        "source_model": "colib_epri_frozen_E_blocks_v1",
+        "native_solver_attributes": {
+          "SolCount": 1,
+          "ConstrVio": 5.788791668237536e-11,
+          "ObjVal": 111395759439.43652,
+          "ObjBound": 111395759439.43652,
+          "Status": 2,
+          "IterCount": 68328.0,
+          "BoundVio": 5.828049154388282e-11,
+          "BarIterCount": 72,
+          "DualVio": 8.847564458847046e-09
+        },
+        "annualized_capex_EUR2025": 86782272331.9315,
+        "minimum_g1_slack_pu": -3.240074875066057e-12,
+        "negative_gscr_rows": 0,
+        "status": "OPTIMAL",
+        "quota_pct": 60,
+        "operation_840h_EUR2025": 472039478.77410513,
+        "load_MWh": 71058866.10244863,
+        "derived_source_variants": {
+          "8": {
+            "parent_AP1_sha256": "f4b66af21fe59240eaa236698cf371458ce1cc22cdd3c25d9af9aafa92c4939d",
+            "consumer_commit": "73ae452ae95851a848b589acf39bd4c6d4dfee06",
+            "variant": {
+              "parent_AP1_sha256": "f4b66af21fe59240eaa236698cf371458ce1cc22cdd3c25d9af9aafa92c4939d",
+              "synchronous_xdpp": 0.25,
+              "scope": "frozen_E_planning_proxy",
+              "model": "colib_epri_frozen_E_blocks_v1",
+              "S_block_MVA": 25,
+              "owner_decision": "2026-11-17: bilde beide modelle gleich \u00e4hnlich aus",
+              "x_device_pu": 0.15,
+              "r_device_pu": 0.0015
+            },
+            "derived_profile_sha256": "13a242fc5f3e2f8f651d6d0dec2ec8d5cb8fb41e8c543b2daf03beb7879c26c2",
+            "derived_AP2_case_sha256": "c03dfc3cd78d68e0aeb8fb6875a3875e71db5d2c2efd8d680ba1904f95a79cfe",
+            "stage": "prepared_pu_before_dimensions_and_cost_weights",
+            "unchanged_non_source_profile_sha256": "b9f82374cd9a87cacd729777e130010fa5c13694ff4e93f535b8e2716c2a2e7c",
+            "week": "8",
+            "schema": "paper_a_consumer_source_variant_v1",
+            "snapshot_count": 168
+          }
+        },
+        "objective_replay_residual_EUR2025": 0.00189208984375,
+        "investment_factor": 1,
+        "selection_sha256": "88d30f72eb2e8edb176fb7eb75b413a99d6b14228005b3792753365eb990d9d3",
+        "P_commit": "becec6d63c0fbf2b8a160c41f87631f5270046b9",
+        "wind_pv_share_pct": 60.0,
+        "min_gscr_slack_pu": -3.240074875066057e-12,
+        "hours": 168,
+        "max_integer_residual": 0.4999999999999929,
+        "primal_status": "FEASIBLE_POINT",
+        "best_bound_EUR2025": 111395759439.43652,
+        "relative_gap": 0.0,
+        "physical_replay_passed": true,
+        "expansion_MW": {
+          "BESS-GFM": 56094.18278073496,
+          "CCGT": 1724.4214535074636,
+          "OCGT": 0.0,
+          "PHS": 0.0,
+          "battery": 37270.31646538624,
+          "biomass": 0.0,
+          "coal": 0.0,
+          "geothermal": 0.0,
+          "lignite": 0.0,
+          "nuclear": 0.0,
+          "offwind-ac": 0.0,
+          "offwind-dc": 0.0,
+          "oil": 0.0,
+          "onwind": 457061.80395976355,
+          "ror": 0.0,
+          "solar": 620166.6454635042
+        },
+        "dispatch_MWh": {
+          "BESS-GFM": [
+            0.0,
+            2273302.3936723922,
+            2182370.297925496
+          ],
+          "CCGT": [
+            1502978.0891693158,
+            0.0,
+            0.0
+          ],
+          "OCGT": [
+            150.88,
+            0.0,
+            0.0
+          ],
+          "PHS": [
+            0.0,
+            2145209.8952981587,
+            1608907.4214736202
+          ],
+          "battery": [
+            0.0,
+            1273402.866468022,
+            1222466.751809301
+          ],
+          "biomass": [
+            2082233.8470257875,
+            0.0,
+            0.0
+          ],
+          "coal": [
+            3082342.2789217616,
+            0.0,
+            0.0
+          ],
+          "geothermal": [
+            8732.0,
+            0.0,
+            0.0
+          ],
+          "hydro": [
+            0.0,
+            0.0,
+            4762372.368060464
+          ],
+          "lignite": [
+            3488361.7133571426,
+            0.0,
+            0.0
+          ],
+          "nuclear": [
+            11815517.60678632,
+            0.0,
+            0.0
+          ],
+          "offwind-ac": [
+            726375.2413964035,
+            0.0,
+            0.0
+          ],
+          "offwind-dc": [
+            1547638.1317199736,
+            0.0,
+            0.0
+          ],
+          "oil": [
+            53.558599807206555,
+            0.0,
+            0.0
+          ],
+          "onwind": [
+            27581149.280099314,
+            0.0,
+            0.0
+          ],
+          "ror": [
+            2358974.783289207,
+            0.0,
+            0.0
+          ],
+          "solar": [
+            12780157.008253347,
+            0.0,
+            0.0
+          ]
+        },
+        "replay_periods": [
+          {
+            "iso_week": 8,
+            "load_MWh": 71058866.10244864,
+            "wind_pv_MWh": 42635319.661469035,
+            "max_balance_residual_MW": 2.4330802261829376e-08
+          }
+        ],
+        "receipt_sha256": "42c448d1863004952b5ef039db57ca7051cd7823d9caa69abfc196b79eed0c92",
+        "complete_primal_variable_count": 311395,
+        "csv_bound_violation": 5.828049154388282e-11,
+        "csv_discrete_variable_count": 0,
+        "csv_integer_residual": 0.0,
+        "energy_and_active_G1_replay_passed": true,
+        "accepted_for_proxy_LP_comparison": true,
+        "accepted_for_proxy_MIP_comparison": false,
+        "represented_operation_components_EUR2025": {
+          "startup_shutdown": 29039277.31079502,
+          "generation": 443000201.4633101,
+          "storage": 0.0
+        },
+        "represented_operation_EUR2025": 472039478.77410513
+      },
+      "raw_root": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01\\quota_60\\relaxed",
+      "result_directory": "with_gscr/relaxed_crossover"
+    },
+    {
+      "quota_pct": 60,
+      "study_mode": "LP",
+      "result": {
+        "strength_constraints_active": false,
+        "discrete_variable_count": 0,
+        "annualized_opex_EUR2025": 25021988260.921043,
+        "g1_row_count": 6216,
+        "mode": "relaxed",
+        "max_primal_violation_above_1e_6": 0.0,
+        "result_count": 1,
+        "objective_EUR2025": 109730971329.91434,
+        "variant": "without_gscr",
+        "solve_time_s": 107.65999984741211,
+        "primal_violation_count_at_1e_6": 0,
+        "model_variable_count": 311395,
+        "case_sha256_by_week": {
+          "8": "f4b66af21fe59240eaa236698cf371458ce1cc22cdd3c25d9af9aafa92c4939d"
+        },
+        "integrality_mode": "relaxed",
+        "wind_pv_MWh": 42635319.66146938,
+        "gscr_validation_passed": true,
+        "claim": "frozen_E_planning_proxy",
+        "numerically_accepted": true,
+        "weight": 52.142857142857146,
+        "operation_840h_components_EUR2025": {
+          "startup_shutdown": 31376983.482906535,
+          "generation": 448496763.9868121,
+          "storage": 0.0
+        },
+        "saved_discrete_max_residual": 0.0,
+        "scientific_manifest_sha256": "ec4986d4de0853f6a8188c0add991a139d014c247adee6cb960fae29416a4e9a",
+        "integer_rounding_performed": false,
+        "full_primal_saved": true,
+        "C_commit": "1edcc857036cec3703a581f2704a51dbcc886586",
+        "source_model": "colib_epri_frozen_E_blocks_v1",
+        "native_solver_attributes": {
+          "SolCount": 1,
+          "ConstrVio": 1.1537970578956447e-10,
+          "ObjVal": 109730971329.91434,
+          "ObjBound": 109730971329.91434,
+          "Status": 2,
+          "IterCount": 57311.0,
+          "BoundVio": 1.1675105326958146e-10,
+          "BarIterCount": 60,
+          "DualVio": 4.35396796092391e-09
+        },
+        "annualized_capex_EUR2025": 84708983068.99423,
+        "minimum_g1_slack_pu": -1935.610386644849,
+        "negative_gscr_rows": 3538,
+        "status": "OPTIMAL",
+        "quota_pct": 60,
+        "operation_840h_EUR2025": 479873747.46971864,
+        "load_MWh": 71058866.10244863,
+        "derived_source_variants": {
+          "8": {
+            "parent_AP1_sha256": "f4b66af21fe59240eaa236698cf371458ce1cc22cdd3c25d9af9aafa92c4939d",
+            "consumer_commit": "73ae452ae95851a848b589acf39bd4c6d4dfee06",
+            "variant": {
+              "parent_AP1_sha256": "f4b66af21fe59240eaa236698cf371458ce1cc22cdd3c25d9af9aafa92c4939d",
+              "synchronous_xdpp": 0.25,
+              "scope": "frozen_E_planning_proxy",
+              "model": "colib_epri_frozen_E_blocks_v1",
+              "S_block_MVA": 25,
+              "owner_decision": "2026-11-17: bilde beide modelle gleich \u00e4hnlich aus",
+              "x_device_pu": 0.15,
+              "r_device_pu": 0.0015
+            },
+            "derived_profile_sha256": "13a242fc5f3e2f8f651d6d0dec2ec8d5cb8fb41e8c543b2daf03beb7879c26c2",
+            "derived_AP2_case_sha256": "c03dfc3cd78d68e0aeb8fb6875a3875e71db5d2c2efd8d680ba1904f95a79cfe",
+            "stage": "prepared_pu_before_dimensions_and_cost_weights",
+            "unchanged_non_source_profile_sha256": "b9f82374cd9a87cacd729777e130010fa5c13694ff4e93f535b8e2716c2a2e7c",
+            "week": "8",
+            "schema": "paper_a_consumer_source_variant_v1",
+            "snapshot_count": 168
+          }
+        },
+        "objective_replay_residual_EUR2025": 0.00093841552734375,
+        "investment_factor": 1,
+        "selection_sha256": "88d30f72eb2e8edb176fb7eb75b413a99d6b14228005b3792753365eb990d9d3",
+        "P_commit": "becec6d63c0fbf2b8a160c41f87631f5270046b9",
+        "wind_pv_share_pct": 60.000000000000284,
+        "min_gscr_slack_pu": -1935.610386644849,
+        "hours": 168,
+        "max_integer_residual": 0.49991953937833955,
+        "primal_status": "FEASIBLE_POINT",
+        "best_bound_EUR2025": 109730971329.91434,
+        "relative_gap": 0.0,
+        "physical_replay_passed": true,
+        "expansion_MW": {
+          "BESS-GFM": 0.0,
+          "CCGT": 1811.2644628042085,
+          "OCGT": 0.0,
+          "PHS": 0.0,
+          "battery": 76297.82247323151,
+          "biomass": 0.0,
+          "coal": 0.0,
+          "geothermal": 0.0,
+          "lignite": 0.0,
+          "nuclear": 0.0,
+          "offwind-ac": 0.0,
+          "offwind-dc": 0.0,
+          "oil": 0.0,
+          "onwind": 459515.01334207656,
+          "ror": 0.0,
+          "solar": 603455.0242596356
+        },
+        "dispatch_MWh": {
+          "BESS-GFM": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "CCGT": [
+            1718437.8465623774,
+            0.0,
+            0.0
+          ],
+          "OCGT": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "PHS": [
+            0.0,
+            2260246.153261907,
+            1695184.6149464455
+          ],
+          "battery": [
+            0.0,
+            2716798.2522481317,
+            2608126.3221582077
+          ],
+          "biomass": [
+            2074316.9368354743,
+            0.0,
+            0.0
+          ],
+          "coal": [
+            2967816.77833556,
+            0.0,
+            0.0
+          ],
+          "geothermal": [
+            9086.0,
+            0.0,
+            0.0
+          ],
+          "hydro": [
+            0.0,
+            0.0,
+            4762738.737015545
+          ],
+          "lignite": [
+            3449967.586491032,
+            0.0,
+            0.0
+          ],
+          "nuclear": [
+            11740191.870526673,
+            0.0,
+            0.0
+          ],
+          "offwind-ac": [
+            732016.1616947881,
+            0.0,
+            0.0
+          ],
+          "offwind-dc": [
+            1590177.8792963203,
+            0.0,
+            0.0
+          ],
+          "oil": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "onwind": [
+            27595958.95050291,
+            0.0,
+            0.0
+          ],
+          "ror": [
+            2374724.153618239,
+            0.0,
+            0.0
+          ],
+          "solar": [
+            12717166.669975122,
+            0.0,
+            0.0
+          ]
+        },
+        "replay_periods": [
+          {
+            "iso_week": 8,
+            "load_MWh": 71058866.10244864,
+            "wind_pv_MWh": 42635319.66146914,
+            "max_balance_residual_MW": 1.3154931366443634e-08
+          }
+        ],
+        "receipt_sha256": "e0aef6d632484ae9a77a3bba3982b26e53b86a062139ea90e4aa5f2b89cddb5a",
+        "complete_primal_variable_count": 311395,
+        "csv_bound_violation": 1.1675105326958146e-10,
+        "csv_discrete_variable_count": 0,
+        "csv_integer_residual": 0.0,
+        "energy_and_active_G1_replay_passed": true,
+        "accepted_for_proxy_LP_comparison": true,
+        "accepted_for_proxy_MIP_comparison": false,
+        "represented_operation_components_EUR2025": {
+          "startup_shutdown": 31376983.482906535,
+          "generation": 448496763.9868121,
+          "storage": 0.0
+        },
+        "represented_operation_EUR2025": 479873747.46971864
+      },
+      "raw_root": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01\\quota_60\\relaxed",
+      "result_directory": "without_gscr/relaxed_crossover"
+    },
+    {
+      "quota_pct": 60,
+      "study_mode": "MILP",
+      "result": {
+        "strength_constraints_active": true,
+        "discrete_variable_count": 111401,
+        "annualized_opex_EUR2025": 24569938390.386726,
+        "g1_row_count": 6216,
+        "mode": "integer",
+        "max_primal_violation_above_1e_6": 0.0,
+        "result_count": 1,
+        "objective_EUR2025": 111814150707.29868,
+        "variant": "with_gscr",
+        "solve_time_s": 1408.9249999523163,
+        "primal_violation_count_at_1e_6": 0,
+        "model_variable_count": 311395,
+        "case_sha256_by_week": {
+          "8": "f4b66af21fe59240eaa236698cf371458ce1cc22cdd3c25d9af9aafa92c4939d"
+        },
+        "integrality_mode": "integer",
+        "wind_pv_MWh": 42635319.66146938,
+        "gscr_validation_passed": true,
+        "claim": "frozen_E_planning_proxy",
+        "numerically_accepted": true,
+        "weight": 52.142857142857146,
+        "operation_840h_components_EUR2025": {
+          "startup_shutdown": 28785027.951017596,
+          "generation": 442419269.94680995,
+          "storage": 0.0
+        },
+        "saved_discrete_max_residual": 0.0,
+        "scientific_manifest_sha256": "ec4986d4de0853f6a8188c0add991a139d014c247adee6cb960fae29416a4e9a",
+        "integer_rounding_performed": false,
+        "full_primal_saved": true,
+        "C_commit": "1edcc857036cec3703a581f2704a51dbcc886586",
+        "source_model": "colib_epri_frozen_E_blocks_v1",
+        "native_solver_attributes": {
+          "SolCount": 1,
+          "ConstrVio": 1.3639986917723945e-09,
+          "ObjVal": 111814150707.29868,
+          "ObjBound": 111395759439.43794,
+          "Status": 2,
+          "IterCount": 96732.0,
+          "BoundVio": 0.0,
+          "BarIterCount": 78,
+          "IntVio": 0.0,
+          "DualVio": "Gurobi attribute DualVio returned 10005"
+        },
+        "annualized_capex_EUR2025": 87244212316.9122,
+        "minimum_g1_slack_pu": -5.684341886080802e-14,
+        "negative_gscr_rows": 0,
+        "status": "OPTIMAL",
+        "quota_pct": 60,
+        "operation_840h_EUR2025": 471204297.89782757,
+        "load_MWh": 71058866.10244863,
+        "derived_source_variants": {
+          "8": {
+            "parent_AP1_sha256": "f4b66af21fe59240eaa236698cf371458ce1cc22cdd3c25d9af9aafa92c4939d",
+            "consumer_commit": "73ae452ae95851a848b589acf39bd4c6d4dfee06",
+            "variant": {
+              "parent_AP1_sha256": "f4b66af21fe59240eaa236698cf371458ce1cc22cdd3c25d9af9aafa92c4939d",
+              "synchronous_xdpp": 0.25,
+              "scope": "frozen_E_planning_proxy",
+              "model": "colib_epri_frozen_E_blocks_v1",
+              "S_block_MVA": 25,
+              "owner_decision": "2026-11-17: bilde beide modelle gleich \u00e4hnlich aus",
+              "x_device_pu": 0.15,
+              "r_device_pu": 0.0015
+            },
+            "derived_profile_sha256": "13a242fc5f3e2f8f651d6d0dec2ec8d5cb8fb41e8c543b2daf03beb7879c26c2",
+            "derived_AP2_case_sha256": "c03dfc3cd78d68e0aeb8fb6875a3875e71db5d2c2efd8d680ba1904f95a79cfe",
+            "stage": "prepared_pu_before_dimensions_and_cost_weights",
+            "unchanged_non_source_profile_sha256": "b9f82374cd9a87cacd729777e130010fa5c13694ff4e93f535b8e2716c2a2e7c",
+            "week": "8",
+            "schema": "paper_a_consumer_source_variant_v1",
+            "snapshot_count": 168
+          }
+        },
+        "objective_replay_residual_EUR2025": 0.00025177001953125,
+        "investment_factor": 1,
+        "selection_sha256": "88d30f72eb2e8edb176fb7eb75b413a99d6b14228005b3792753365eb990d9d3",
+        "P_commit": "becec6d63c0fbf2b8a160c41f87631f5270046b9",
+        "wind_pv_share_pct": 60.000000000000284,
+        "min_gscr_slack_pu": -5.684341886080802e-14,
+        "hours": 168,
+        "max_integer_residual": 0.0,
+        "primal_status": "FEASIBLE_POINT",
+        "best_bound_EUR2025": 111395759439.43794,
+        "relative_gap": 0.0037418454213007093,
+        "physical_replay_passed": true,
+        "expansion_MW": {
+          "BESS-GFM": 62800.0,
+          "CCGT": 2658.5,
+          "OCGT": 0.0,
+          "PHS": 0.0,
+          "battery": 38175.0,
+          "biomass": 0.0,
+          "coal": 0.0,
+          "geothermal": 0.0,
+          "lignite": 0.0,
+          "nuclear": 0.0,
+          "offwind-ac": 0.0,
+          "offwind-dc": 0.0,
+          "oil": 0.0,
+          "onwind": 452695.6982031403,
+          "ror": 0.0,
+          "solar": 628293.0139765519
+        },
+        "dispatch_MWh": {
+          "BESS-GFM": [
+            0.0,
+            2548583.2951314277,
+            2446639.9633261785
+          ],
+          "CCGT": [
+            1493303.3327905887,
+            0.0,
+            0.0
+          ],
+          "OCGT": [
+            150.87999999927186,
+            0.0,
+            0.0
+          ],
+          "PHS": [
+            0.0,
+            2134360.4285576274,
+            1600770.32141822
+          ],
+          "battery": [
+            0.0,
+            1292355.4155112775,
+            1240661.1988908264
+          ],
+          "biomass": [
+            2041442.4613488752,
+            0.0,
+            0.0
+          ],
+          "coal": [
+            3064936.071233535,
+            0.0,
+            0.0
+          ],
+          "geothermal": [
+            9027.0,
+            0.0,
+            0.0
+          ],
+          "hydro": [
+            0.0,
+            0.0,
+            4761734.768862513
+          ],
+          "lignite": [
+            3496204.1066700593,
+            0.0,
+            0.0
+          ],
+          "nuclear": [
+            11881075.033589471,
+            0.0,
+            0.0
+          ],
+          "offwind-ac": [
+            726861.7019108627,
+            0.0,
+            0.0
+          ],
+          "offwind-dc": [
+            1559988.7501480035,
+            0.0,
+            0.0
+          ],
+          "oil": [
+            483.7851144365313,
+            0.0,
+            0.0
+          ],
+          "onwind": [
+            27436673.485006202,
+            0.0,
+            0.0
+          ],
+          "ror": [
+            2362416.6569351936,
+            0.0,
+            0.0
+          ],
+          "solar": [
+            12911795.724404005,
+            0.0,
+            0.0
+          ]
+        },
+        "replay_periods": [
+          {
+            "iso_week": 8,
+            "load_MWh": 71058866.10244864,
+            "wind_pv_MWh": 42635319.66146907,
+            "max_balance_residual_MW": 1.280568540096283e-09
+          }
+        ],
+        "receipt_sha256": "044c4cc363e77716656e5a6216b303ac08ebf2ca1b8d53a11426775b048335fd",
+        "complete_primal_variable_count": 311395,
+        "csv_bound_violation": 0.0,
+        "csv_discrete_variable_count": 111401,
+        "csv_integer_residual": 0.0,
+        "energy_and_active_G1_replay_passed": true,
+        "accepted_for_proxy_LP_comparison": false,
+        "accepted_for_proxy_MIP_comparison": true,
+        "represented_operation_components_EUR2025": {
+          "startup_shutdown": 28785027.951017596,
+          "generation": 442419269.94680995,
+          "storage": 0.0
+        },
+        "represented_operation_EUR2025": 471204297.89782757
+      },
+      "raw_root": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01\\quota_60\\integer",
+      "result_directory": "with_gscr/integer"
+    },
+    {
+      "quota_pct": 60,
+      "study_mode": "MILP",
+      "result": {
+        "strength_constraints_active": false,
+        "discrete_variable_count": 111401,
+        "annualized_opex_EUR2025": 25032194448.838673,
+        "g1_row_count": 6216,
+        "mode": "integer",
+        "max_primal_violation_above_1e_6": 0.0,
+        "result_count": 1,
+        "objective_EUR2025": 109743617288.29477,
+        "variant": "without_gscr",
+        "solve_time_s": 290.5149998664856,
+        "primal_violation_count_at_1e_6": 0,
+        "model_variable_count": 311395,
+        "case_sha256_by_week": {
+          "8": "f4b66af21fe59240eaa236698cf371458ce1cc22cdd3c25d9af9aafa92c4939d"
+        },
+        "integrality_mode": "integer",
+        "wind_pv_MWh": 42635319.661469355,
+        "gscr_validation_passed": true,
+        "claim": "frozen_E_planning_proxy",
+        "numerically_accepted": true,
+        "weight": 52.142857142857146,
+        "operation_840h_components_EUR2025": {
+          "startup_shutdown": 31371407.478064235,
+          "generation": 448698075.10240346,
+          "storage": 0.0
+        },
+        "saved_discrete_max_residual": 0.0,
+        "scientific_manifest_sha256": "ec4986d4de0853f6a8188c0add991a139d014c247adee6cb960fae29416a4e9a",
+        "integer_rounding_performed": false,
+        "full_primal_saved": true,
+        "C_commit": "1edcc857036cec3703a581f2704a51dbcc886586",
+        "source_model": "colib_epri_frozen_E_blocks_v1",
+        "native_solver_attributes": {
+          "SolCount": 1,
+          "ConstrVio": 3.325908437545877e-10,
+          "ObjVal": 109743617288.29477,
+          "ObjBound": 109730971329.91548,
+          "Status": 2,
+          "IterCount": 66430.0,
+          "BoundVio": 0.0,
+          "BarIterCount": 77,
+          "IntVio": 0.0,
+          "DualVio": "Gurobi attribute DualVio returned 10005"
+        },
+        "annualized_capex_EUR2025": 84711422839.45633,
+        "minimum_g1_slack_pu": -1935.8863899230334,
+        "negative_gscr_rows": 3472,
+        "status": "OPTIMAL",
+        "quota_pct": 60,
+        "operation_840h_EUR2025": 480069482.5804677,
+        "load_MWh": 71058866.10244863,
+        "derived_source_variants": {
+          "8": {
+            "parent_AP1_sha256": "f4b66af21fe59240eaa236698cf371458ce1cc22cdd3c25d9af9aafa92c4939d",
+            "consumer_commit": "73ae452ae95851a848b589acf39bd4c6d4dfee06",
+            "variant": {
+              "parent_AP1_sha256": "f4b66af21fe59240eaa236698cf371458ce1cc22cdd3c25d9af9aafa92c4939d",
+              "synchronous_xdpp": 0.25,
+              "scope": "frozen_E_planning_proxy",
+              "model": "colib_epri_frozen_E_blocks_v1",
+              "S_block_MVA": 25,
+              "owner_decision": "2026-11-17: bilde beide modelle gleich \u00e4hnlich aus",
+              "x_device_pu": 0.15,
+              "r_device_pu": 0.0015
+            },
+            "derived_profile_sha256": "13a242fc5f3e2f8f651d6d0dec2ec8d5cb8fb41e8c543b2daf03beb7879c26c2",
+            "derived_AP2_case_sha256": "c03dfc3cd78d68e0aeb8fb6875a3875e71db5d2c2efd8d680ba1904f95a79cfe",
+            "stage": "prepared_pu_before_dimensions_and_cost_weights",
+            "unchanged_non_source_profile_sha256": "b9f82374cd9a87cacd729777e130010fa5c13694ff4e93f535b8e2716c2a2e7c",
+            "week": "8",
+            "schema": "paper_a_consumer_source_variant_v1",
+            "snapshot_count": 168
+          }
+        },
+        "objective_replay_residual_EUR2025": 0.000232696533203125,
+        "investment_factor": 1,
+        "selection_sha256": "88d30f72eb2e8edb176fb7eb75b413a99d6b14228005b3792753365eb990d9d3",
+        "P_commit": "becec6d63c0fbf2b8a160c41f87631f5270046b9",
+        "wind_pv_share_pct": 60.00000000000025,
+        "min_gscr_slack_pu": -1935.8863899230334,
+        "hours": 168,
+        "max_integer_residual": 0.0,
+        "primal_status": "FEASIBLE_POINT",
+        "best_bound_EUR2025": 109730971329.91548,
+        "relative_gap": 0.00011523183481429252,
+        "physical_replay_passed": true,
+        "expansion_MW": {
+          "BESS-GFM": 0.0,
+          "CCGT": 1840.5,
+          "OCGT": 0.0,
+          "PHS": 0.0,
+          "battery": 76325.0,
+          "biomass": 0.0,
+          "coal": 0.0,
+          "geothermal": 0.0,
+          "lignite": 0.0,
+          "nuclear": 0.0,
+          "offwind-ac": 0.0,
+          "offwind-dc": 0.0,
+          "oil": 0.0,
+          "onwind": 459831.30376907624,
+          "ror": 0.0,
+          "solar": 602437.2225633392
+        },
+        "dispatch_MWh": {
+          "BESS-GFM": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "CCGT": [
+            1718263.3789340607,
+            0.0,
+            0.0
+          ],
+          "OCGT": [
+            -9.07220965018496e-09,
+            0.0,
+            0.0
+          ],
+          "PHS": [
+            0.0,
+            2263366.425539648,
+            1697524.8191547352
+          ],
+          "battery": [
+            0.0,
+            2729611.805771263,
+            2620427.333540412
+          ],
+          "biomass": [
+            2065957.71343008,
+            0.0,
+            0.0
+          ],
+          "coal": [
+            2972125.140257799,
+            0.0,
+            0.0
+          ],
+          "geothermal": [
+            9145.0,
+            0.0,
+            0.0
+          ],
+          "hydro": [
+            0.0,
+            0.0,
+            4763181.443016674
+          ],
+          "lignite": [
+            3461297.7012375807,
+            0.0,
+            0.0
+          ],
+          "nuclear": [
+            11736566.925568596,
+            0.0,
+            0.0
+          ],
+          "offwind-ac": [
+            715887.5234124186,
+            0.0,
+            0.0
+          ],
+          "offwind-dc": [
+            1530949.1729743916,
+            0.0,
+            0.0
+          ],
+          "oil": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "onwind": [
+            27682901.12453444,
+            0.0,
+            0.0
+          ],
+          "ror": [
+            2372035.2171503687,
+            0.0,
+            0.0
+          ],
+          "solar": [
+            12705581.840547927,
+            0.0,
+            0.0
+          ]
+        },
+        "replay_periods": [
+          {
+            "iso_week": 8,
+            "load_MWh": 71058866.10244864,
+            "wind_pv_MWh": 42635319.66146918,
+            "max_balance_residual_MW": 2.8172507882118225e-08
+          }
+        ],
+        "receipt_sha256": "860f85405558f0d76d986b2c08e59bf2368c763b138ebdce26393aca62012611",
+        "complete_primal_variable_count": 311395,
+        "csv_bound_violation": 0.0,
+        "csv_discrete_variable_count": 111401,
+        "csv_integer_residual": 0.0,
+        "energy_and_active_G1_replay_passed": true,
+        "accepted_for_proxy_LP_comparison": false,
+        "accepted_for_proxy_MIP_comparison": true,
+        "represented_operation_components_EUR2025": {
+          "startup_shutdown": 31371407.478064235,
+          "generation": 448698075.10240346,
+          "storage": 0.0
+        },
+        "represented_operation_EUR2025": 480069482.5804677
+      },
+      "raw_root": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01\\quota_60\\integer",
+      "result_directory": "without_gscr/integer"
+    },
+    {
+      "quota_pct": 70,
+      "study_mode": "LP",
+      "result": {
+        "strength_constraints_active": true,
+        "discrete_variable_count": 0,
+        "annualized_opex_EUR2025": 16116279692.113842,
+        "g1_row_count": 6216,
+        "mode": "relaxed",
+        "max_primal_violation_above_1e_6": 0.0,
+        "result_count": 1,
+        "objective_EUR2025": 127348376448.75821,
+        "variant": "with_gscr",
+        "solve_time_s": 126.92700004577637,
+        "primal_violation_count_at_1e_6": 0,
+        "model_variable_count": 311395,
+        "case_sha256_by_week": {
+          "8": "f4b66af21fe59240eaa236698cf371458ce1cc22cdd3c25d9af9aafa92c4939d"
+        },
+        "integrality_mode": "relaxed",
+        "wind_pv_MWh": 49741206.27171403,
+        "gscr_validation_passed": true,
+        "claim": "frozen_E_planning_proxy",
+        "numerically_accepted": true,
+        "weight": 52.142857142857146,
+        "operation_840h_components_EUR2025": {
+          "startup_shutdown": 28893956.6115409,
+          "generation": 280185379.94954646,
+          "storage": 0.0
+        },
+        "saved_discrete_max_residual": 0.0,
+        "scientific_manifest_sha256": "ec4986d4de0853f6a8188c0add991a139d014c247adee6cb960fae29416a4e9a",
+        "integer_rounding_performed": false,
+        "full_primal_saved": true,
+        "C_commit": "1edcc857036cec3703a581f2704a51dbcc886586",
+        "source_model": "colib_epri_frozen_E_blocks_v1",
+        "native_solver_attributes": {
+          "SolCount": 1,
+          "ConstrVio": 3.140065985007823e-11,
+          "ObjVal": 127348376448.75821,
+          "ObjBound": 127348376448.75821,
+          "Status": 2,
+          "IterCount": 68620.0,
+          "BoundVio": 3.6910918765897804e-11,
+          "BarIterCount": 68,
+          "DualVio": 5.145921022631228e-09
+        },
+        "annualized_capex_EUR2025": 111232096756.64642,
+        "minimum_g1_slack_pu": -6.198774826771114e-11,
+        "negative_gscr_rows": 0,
+        "status": "OPTIMAL",
+        "quota_pct": 70,
+        "operation_840h_EUR2025": 309079336.56108737,
+        "load_MWh": 71058866.10244863,
+        "derived_source_variants": {
+          "8": {
+            "parent_AP1_sha256": "f4b66af21fe59240eaa236698cf371458ce1cc22cdd3c25d9af9aafa92c4939d",
+            "consumer_commit": "73ae452ae95851a848b589acf39bd4c6d4dfee06",
+            "variant": {
+              "parent_AP1_sha256": "f4b66af21fe59240eaa236698cf371458ce1cc22cdd3c25d9af9aafa92c4939d",
+              "synchronous_xdpp": 0.25,
+              "scope": "frozen_E_planning_proxy",
+              "model": "colib_epri_frozen_E_blocks_v1",
+              "S_block_MVA": 25,
+              "owner_decision": "2026-11-17: bilde beide modelle gleich \u00e4hnlich aus",
+              "x_device_pu": 0.15,
+              "r_device_pu": 0.0015
+            },
+            "derived_profile_sha256": "13a242fc5f3e2f8f651d6d0dec2ec8d5cb8fb41e8c543b2daf03beb7879c26c2",
+            "derived_AP2_case_sha256": "c03dfc3cd78d68e0aeb8fb6875a3875e71db5d2c2efd8d680ba1904f95a79cfe",
+            "stage": "prepared_pu_before_dimensions_and_cost_weights",
+            "unchanged_non_source_profile_sha256": "b9f82374cd9a87cacd729777e130010fa5c13694ff4e93f535b8e2716c2a2e7c",
+            "week": "8",
+            "schema": "paper_a_consumer_source_variant_v1",
+            "snapshot_count": 168
+          }
+        },
+        "objective_replay_residual_EUR2025": 0.002056121826171875,
+        "investment_factor": 1,
+        "selection_sha256": "88d30f72eb2e8edb176fb7eb75b413a99d6b14228005b3792753365eb990d9d3",
+        "P_commit": "becec6d63c0fbf2b8a160c41f87631f5270046b9",
+        "wind_pv_share_pct": 69.99999999999999,
+        "min_gscr_slack_pu": -6.198774826771114e-11,
+        "hours": 168,
+        "max_integer_residual": 0.4994905450089462,
+        "primal_status": "FEASIBLE_POINT",
+        "best_bound_EUR2025": 127348376448.75821,
+        "relative_gap": 0.0,
+        "physical_replay_passed": true,
+        "expansion_MW": {
+          "BESS-GFM": 101288.68176482126,
+          "CCGT": 1714.9106238918425,
+          "OCGT": 0.0,
+          "PHS": 0.0,
+          "battery": 57676.64240561282,
+          "biomass": 0.0,
+          "coal": 0.0,
+          "geothermal": 0.0,
+          "lignite": 0.0,
+          "nuclear": 0.0,
+          "offwind-ac": 0.0,
+          "offwind-dc": 0.0,
+          "oil": 0.0,
+          "onwind": 588959.4605484416,
+          "ror": 0.0,
+          "solar": 719818.1103522244
+        },
+        "dispatch_MWh": {
+          "BESS-GFM": [
+            0.0,
+            4164918.267613329,
+            3998321.536908795
+          ],
+          "CCGT": [
+            496544.0989958889,
+            0.0,
+            0.0
+          ],
+          "OCGT": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "PHS": [
+            0.0,
+            2269592.837496322,
+            1702194.6281222503
+          ],
+          "battery": [
+            0.0,
+            1851171.2492918372,
+            1777124.3993201633
+          ],
+          "biomass": [
+            1798281.435827385,
+            0.0,
+            0.0
+          ],
+          "coal": [
+            2375622.319863469,
+            0.0,
+            0.0
+          ],
+          "geothermal": [
+            8614.0,
+            0.0,
+            0.0
+          ],
+          "hydro": [
+            0.0,
+            0.0,
+            4761093.275232058
+          ],
+          "lignite": [
+            1737314.7642012546,
+            0.0,
+            0.0
+          ],
+          "nuclear": [
+            8629193.106399102,
+            0.0,
+            0.0
+          ],
+          "offwind-ac": [
+            725182.5328258306,
+            0.0,
+            0.0
+          ],
+          "offwind-dc": [
+            1547705.2496403907,
+            0.0,
+            0.0
+          ],
+          "oil": [
+            139.5536101390056,
+            0.0,
+            0.0
+          ],
+          "onwind": [
+            33108778.341810912,
+            0.0,
+            0.0
+          ],
+          "ror": [
+            2318899.0666558407,
+            0.0,
+            0.0
+          ],
+          "solar": [
+            14359540.147436578,
+            0.0,
+            0.0
+          ]
+        },
+        "replay_periods": [
+          {
+            "iso_week": 8,
+            "load_MWh": 71058866.10244864,
+            "wind_pv_MWh": 49741206.27171371,
+            "max_balance_residual_MW": 2.403976395726204e-08
+          }
+        ],
+        "receipt_sha256": "107cb3b315673159897bd04ed246b0045c35ef44d6b7c61211061badc28206fa",
+        "complete_primal_variable_count": 311395,
+        "csv_bound_violation": 3.6910918765897804e-11,
+        "csv_discrete_variable_count": 0,
+        "csv_integer_residual": 0.0,
+        "energy_and_active_G1_replay_passed": true,
+        "accepted_for_proxy_LP_comparison": true,
+        "accepted_for_proxy_MIP_comparison": false,
+        "represented_operation_components_EUR2025": {
+          "startup_shutdown": 28893956.6115409,
+          "generation": 280185379.94954646,
+          "storage": 0.0
+        },
+        "represented_operation_EUR2025": 309079336.56108737
+      },
+      "raw_root": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01\\quota_70\\relaxed",
+      "result_directory": "with_gscr/relaxed_crossover"
+    },
+    {
+      "quota_pct": 70,
+      "study_mode": "LP",
+      "result": {
+        "strength_constraints_active": false,
+        "discrete_variable_count": 0,
+        "annualized_opex_EUR2025": 16696940886.586723,
+        "g1_row_count": 6216,
+        "mode": "relaxed",
+        "max_primal_violation_above_1e_6": 0.0,
+        "result_count": 1,
+        "objective_EUR2025": 124989733337.156,
+        "variant": "without_gscr",
+        "solve_time_s": 102.34799981117249,
+        "primal_violation_count_at_1e_6": 0,
+        "model_variable_count": 311395,
+        "case_sha256_by_week": {
+          "8": "f4b66af21fe59240eaa236698cf371458ce1cc22cdd3c25d9af9aafa92c4939d"
+        },
+        "integrality_mode": "relaxed",
+        "wind_pv_MWh": 49741206.27171392,
+        "gscr_validation_passed": true,
+        "claim": "frozen_E_planning_proxy",
+        "numerically_accepted": true,
+        "weight": 52.142857142857146,
+        "operation_840h_components_EUR2025": {
+          "startup_shutdown": 32720026.632832646,
+          "generation": 287495278.0414333,
+          "storage": 0.0
+        },
+        "saved_discrete_max_residual": 0.0,
+        "scientific_manifest_sha256": "ec4986d4de0853f6a8188c0add991a139d014c247adee6cb960fae29416a4e9a",
+        "integer_rounding_performed": false,
+        "full_primal_saved": true,
+        "C_commit": "1edcc857036cec3703a581f2704a51dbcc886586",
+        "source_model": "colib_epri_frozen_E_blocks_v1",
+        "native_solver_attributes": {
+          "SolCount": 1,
+          "ConstrVio": 1.4265388870171591e-10,
+          "ObjVal": 124989733337.156,
+          "ObjBound": 124989733337.156,
+          "Status": 2,
+          "IterCount": 58393.0,
+          "BoundVio": 1.0484058066140278e-10,
+          "BarIterCount": 62,
+          "DualVio": 2.066371962428093e-09
+        },
+        "annualized_capex_EUR2025": 108292792450.57053,
+        "minimum_g1_slack_pu": -2628.489315351452,
+        "negative_gscr_rows": 3799,
+        "status": "OPTIMAL",
+        "quota_pct": 70,
+        "operation_840h_EUR2025": 320215304.6742659,
+        "load_MWh": 71058866.10244863,
+        "derived_source_variants": {
+          "8": {
+            "parent_AP1_sha256": "f4b66af21fe59240eaa236698cf371458ce1cc22cdd3c25d9af9aafa92c4939d",
+            "consumer_commit": "73ae452ae95851a848b589acf39bd4c6d4dfee06",
+            "variant": {
+              "parent_AP1_sha256": "f4b66af21fe59240eaa236698cf371458ce1cc22cdd3c25d9af9aafa92c4939d",
+              "synchronous_xdpp": 0.25,
+              "scope": "frozen_E_planning_proxy",
+              "model": "colib_epri_frozen_E_blocks_v1",
+              "S_block_MVA": 25,
+              "owner_decision": "2026-11-17: bilde beide modelle gleich \u00e4hnlich aus",
+              "x_device_pu": 0.15,
+              "r_device_pu": 0.0015
+            },
+            "derived_profile_sha256": "13a242fc5f3e2f8f651d6d0dec2ec8d5cb8fb41e8c543b2daf03beb7879c26c2",
+            "derived_AP2_case_sha256": "c03dfc3cd78d68e0aeb8fb6875a3875e71db5d2c2efd8d680ba1904f95a79cfe",
+            "stage": "prepared_pu_before_dimensions_and_cost_weights",
+            "unchanged_non_source_profile_sha256": "b9f82374cd9a87cacd729777e130010fa5c13694ff4e93f535b8e2716c2a2e7c",
+            "week": "8",
+            "schema": "paper_a_consumer_source_variant_v1",
+            "snapshot_count": 168
+          }
+        },
+        "objective_replay_residual_EUR2025": 0.00124359130859375,
+        "investment_factor": 1,
+        "selection_sha256": "88d30f72eb2e8edb176fb7eb75b413a99d6b14228005b3792753365eb990d9d3",
+        "P_commit": "becec6d63c0fbf2b8a160c41f87631f5270046b9",
+        "wind_pv_share_pct": 69.99999999999984,
+        "min_gscr_slack_pu": -2628.489315351452,
+        "hours": 168,
+        "max_integer_residual": 0.4965765580345476,
+        "primal_status": "FEASIBLE_POINT",
+        "best_bound_EUR2025": 124989733337.156,
+        "relative_gap": 0.0,
+        "physical_replay_passed": true,
+        "expansion_MW": {
+          "BESS-GFM": 0.0,
+          "CCGT": 1784.5023237445068,
+          "OCGT": 0.0,
+          "PHS": 0.0,
+          "battery": 141758.09321047665,
+          "biomass": 0.0,
+          "coal": 0.0,
+          "geothermal": 0.0,
+          "lignite": 0.0,
+          "nuclear": 0.0,
+          "offwind-ac": 0.0,
+          "offwind-dc": 0.0,
+          "oil": 0.0,
+          "onwind": 583441.7095320068,
+          "ror": 0.0,
+          "solar": 719221.2993529636
+        },
+        "dispatch_MWh": {
+          "BESS-GFM": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "CCGT": [
+            599696.1010058888,
+            0.0,
+            0.0
+          ],
+          "OCGT": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "PHS": [
+            0.0,
+            2458302.8348372537,
+            1843727.1261279504
+          ],
+          "battery": [
+            0.0,
+            5444259.965032027,
+            5226489.566430745
+          ],
+          "biomass": [
+            1673819.5536813722,
+            0.0,
+            0.0
+          ],
+          "coal": [
+            2542798.120907216,
+            0.0,
+            0.0
+          ],
+          "geothermal": [
+            8909.0,
+            0.0,
+            0.0
+          ],
+          "hydro": [
+            0.0,
+            0.0,
+            4761226.268862659
+          ],
+          "lignite": [
+            1841144.7330010987,
+            0.0,
+            0.0
+          ],
+          "nuclear": [
+            8459102.899967628,
+            0.0,
+            0.0
+          ],
+          "offwind-ac": [
+            731879.165309179,
+            0.0,
+            0.0
+          ],
+          "offwind-dc": [
+            1588594.1011127634,
+            0.0,
+            0.0
+          ],
+          "oil": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "onwind": [
+            32779301.599552292,
+            0.0,
+            0.0
+          ],
+          "ror": [
+            2263309.2606196855,
+            0.0,
+            0.0
+          ],
+          "solar": [
+            14641431.405739354,
+            0.0,
+            0.0
+          ]
+        },
+        "replay_periods": [
+          {
+            "iso_week": 8,
+            "load_MWh": 71058866.10244864,
+            "wind_pv_MWh": 49741206.271713585,
+            "max_balance_residual_MW": 1.8044374883174896e-08
+          }
+        ],
+        "receipt_sha256": "401aa57d445f0082635d07945e88de2b16da9b5be0aa0ce9d6b4a33cf1c4e9cc",
+        "complete_primal_variable_count": 311395,
+        "csv_bound_violation": 1.0484058066140278e-10,
+        "csv_discrete_variable_count": 0,
+        "csv_integer_residual": 0.0,
+        "energy_and_active_G1_replay_passed": true,
+        "accepted_for_proxy_LP_comparison": true,
+        "accepted_for_proxy_MIP_comparison": false,
+        "represented_operation_components_EUR2025": {
+          "startup_shutdown": 32720026.632832646,
+          "generation": 287495278.0414333,
+          "storage": 0.0
+        },
+        "represented_operation_EUR2025": 320215304.6742659
+      },
+      "raw_root": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01\\quota_70\\relaxed",
+      "result_directory": "without_gscr/relaxed_crossover"
+    },
+    {
+      "quota_pct": 70,
+      "study_mode": "MILP",
+      "result": {
+        "strength_constraints_active": true,
+        "discrete_variable_count": 111401,
+        "annualized_opex_EUR2025": 16220028129.939196,
+        "g1_row_count": 6216,
+        "mode": "integer",
+        "max_primal_violation_above_1e_6": 0.0,
+        "result_count": 1,
+        "objective_EUR2025": 127818618545.37363,
+        "variant": "with_gscr",
+        "solve_time_s": 3347.149999856949,
+        "primal_violation_count_at_1e_6": 0,
+        "model_variable_count": 311395,
+        "case_sha256_by_week": {
+          "8": "f4b66af21fe59240eaa236698cf371458ce1cc22cdd3c25d9af9aafa92c4939d"
+        },
+        "integrality_mode": "integer",
+        "wind_pv_MWh": 49741206.2717142,
+        "gscr_validation_passed": true,
+        "claim": "frozen_E_planning_proxy",
+        "numerically_accepted": true,
+        "weight": 52.142857142857146,
+        "operation_840h_components_EUR2025": {
+          "startup_shutdown": 28300960.691375267,
+          "generation": 282768071.9375956,
+          "storage": 0.0
+        },
+        "saved_discrete_max_residual": 0.0,
+        "scientific_manifest_sha256": "ec4986d4de0853f6a8188c0add991a139d014c247adee6cb960fae29416a4e9a",
+        "integer_rounding_performed": false,
+        "full_primal_saved": true,
+        "C_commit": "1edcc857036cec3703a581f2704a51dbcc886586",
+        "source_model": "colib_epri_frozen_E_blocks_v1",
+        "native_solver_attributes": {
+          "SolCount": 1,
+          "ConstrVio": 4.297362465877086e-11,
+          "ObjVal": 127818618545.37363,
+          "ObjBound": 127348376448.75867,
+          "Status": 2,
+          "IterCount": 98450.0,
+          "BoundVio": 0.0,
+          "BarIterCount": 78,
+          "IntVio": 0.0,
+          "DualVio": "Gurobi attribute DualVio returned 10005"
+        },
+        "annualized_capex_EUR2025": 111598590415.43462,
+        "minimum_g1_slack_pu": -3.7971403799019754e-11,
+        "negative_gscr_rows": 0,
+        "status": "OPTIMAL",
+        "quota_pct": 70,
+        "operation_840h_EUR2025": 311069032.62897086,
+        "load_MWh": 71058866.10244863,
+        "derived_source_variants": {
+          "8": {
+            "parent_AP1_sha256": "f4b66af21fe59240eaa236698cf371458ce1cc22cdd3c25d9af9aafa92c4939d",
+            "consumer_commit": "73ae452ae95851a848b589acf39bd4c6d4dfee06",
+            "variant": {
+              "parent_AP1_sha256": "f4b66af21fe59240eaa236698cf371458ce1cc22cdd3c25d9af9aafa92c4939d",
+              "synchronous_xdpp": 0.25,
+              "scope": "frozen_E_planning_proxy",
+              "model": "colib_epri_frozen_E_blocks_v1",
+              "S_block_MVA": 25,
+              "owner_decision": "2026-11-17: bilde beide modelle gleich \u00e4hnlich aus",
+              "x_device_pu": 0.15,
+              "r_device_pu": 0.0015
+            },
+            "derived_profile_sha256": "13a242fc5f3e2f8f651d6d0dec2ec8d5cb8fb41e8c543b2daf03beb7879c26c2",
+            "derived_AP2_case_sha256": "c03dfc3cd78d68e0aeb8fb6875a3875e71db5d2c2efd8d680ba1904f95a79cfe",
+            "stage": "prepared_pu_before_dimensions_and_cost_weights",
+            "unchanged_non_source_profile_sha256": "b9f82374cd9a87cacd729777e130010fa5c13694ff4e93f535b8e2716c2a2e7c",
+            "week": "8",
+            "schema": "paper_a_consumer_source_variant_v1",
+            "snapshot_count": 168
+          }
+        },
+        "objective_replay_residual_EUR2025": 0.0001850128173828125,
+        "investment_factor": 1,
+        "selection_sha256": "88d30f72eb2e8edb176fb7eb75b413a99d6b14228005b3792753365eb990d9d3",
+        "P_commit": "becec6d63c0fbf2b8a160c41f87631f5270046b9",
+        "wind_pv_share_pct": 70.00000000000023,
+        "min_gscr_slack_pu": -3.7971403799019754e-11,
+        "hours": 168,
+        "max_integer_residual": 0.0,
+        "primal_status": "FEASIBLE_POINT",
+        "best_bound_EUR2025": 127348376448.75867,
+        "relative_gap": 0.0036789796507465072,
+        "physical_replay_passed": true,
+        "expansion_MW": {
+          "BESS-GFM": 104575.0,
+          "CCGT": 1636.0,
+          "OCGT": 0.0,
+          "PHS": 0.0,
+          "battery": 58875.0,
+          "biomass": 0.0,
+          "coal": 0.0,
+          "geothermal": 0.0,
+          "lignite": 0.0,
+          "nuclear": 0.0,
+          "offwind-ac": 0.0,
+          "offwind-dc": 0.0,
+          "oil": 0.0,
+          "onwind": 587424.0427000469,
+          "ror": 0.0,
+          "solar": 726052.7116451459
+        },
+        "dispatch_MWh": {
+          "BESS-GFM": [
+            0.0,
+            4566446.195659127,
+            4383788.347832767
+          ],
+          "CCGT": [
+            602029.0529440905,
+            0.0,
+            0.0
+          ],
+          "OCGT": [
+            1584.2399999923546,
+            0.0,
+            0.0
+          ],
+          "PHS": [
+            0.0,
+            2235384.109159535,
+            1676538.0818696506
+          ],
+          "battery": [
+            0.0,
+            1801405.4662745388,
+            1729349.247623557
+          ],
+          "biomass": [
+            1777602.5914144106,
+            0.0,
+            0.0
+          ],
+          "coal": [
+            2281122.932836742,
+            0.0,
+            0.0
+          ],
+          "geothermal": [
+            8496.0,
+            0.0,
+            0.0
+          ],
+          "hydro": [
+            0.0,
+            0.0,
+            4761625.2497544065
+          ],
+          "lignite": [
+            1718705.4412027176,
+            0.0,
+            0.0
+          ],
+          "nuclear": [
+            8663713.179608868,
+            0.0,
+            0.0
+          ],
+          "offwind-ac": [
+            724662.7951583158,
+            0.0,
+            0.0
+          ],
+          "offwind-dc": [
+            1547528.4600906777,
+            0.0,
+            0.0
+          ],
+          "oil": [
+            1019.4591197529755,
+            0.0,
+            0.0
+          ],
+          "onwind": [
+            32995587.595577434,
+            0.0,
+            0.0
+          ],
+          "ror": [
+            2315321.7776209284,
+            0.0,
+            0.0
+          ],
+          "solar": [
+            14473427.420887526,
+            0.0,
+            0.0
+          ]
+        },
+        "replay_periods": [
+          {
+            "iso_week": 8,
+            "load_MWh": 71058866.10244864,
+            "wind_pv_MWh": 49741206.27171396,
+            "max_balance_residual_MW": 4.0745362639427185e-09
+          }
+        ],
+        "receipt_sha256": "5923a336458cbb05e7c6739468c00a4e80900d0ce71eb5f209ee62963a0659af",
+        "complete_primal_variable_count": 311395,
+        "csv_bound_violation": 0.0,
+        "csv_discrete_variable_count": 111401,
+        "csv_integer_residual": 0.0,
+        "energy_and_active_G1_replay_passed": true,
+        "accepted_for_proxy_LP_comparison": false,
+        "accepted_for_proxy_MIP_comparison": true,
+        "represented_operation_components_EUR2025": {
+          "startup_shutdown": 28300960.691375267,
+          "generation": 282768071.9375956,
+          "storage": 0.0
+        },
+        "represented_operation_EUR2025": 311069032.62897086
+      },
+      "raw_root": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01\\quota_70\\integer",
+      "result_directory": "with_gscr/integer"
+    },
+    {
+      "quota_pct": 70,
+      "study_mode": "MILP",
+      "result": {
+        "strength_constraints_active": false,
+        "discrete_variable_count": 111401,
+        "annualized_opex_EUR2025": 16703147147.07853,
+        "g1_row_count": 6216,
+        "mode": "integer",
+        "max_primal_violation_above_1e_6": 0.0,
+        "result_count": 1,
+        "objective_EUR2025": 125055972701.08368,
+        "variant": "without_gscr",
+        "solve_time_s": 319.6470000743866,
+        "primal_violation_count_at_1e_6": 0,
+        "model_variable_count": 311395,
+        "case_sha256_by_week": {
+          "8": "f4b66af21fe59240eaa236698cf371458ce1cc22cdd3c25d9af9aafa92c4939d"
+        },
+        "integrality_mode": "integer",
+        "wind_pv_MWh": 49741206.27171414,
+        "gscr_validation_passed": true,
+        "claim": "frozen_E_planning_proxy",
+        "numerically_accepted": true,
+        "weight": 52.142857142857146,
+        "operation_840h_components_EUR2025": {
+          "startup_shutdown": 32715337.614252407,
+          "generation": 287618991.23382896,
+          "storage": 0.0
+        },
+        "saved_discrete_max_residual": 0.0,
+        "scientific_manifest_sha256": "ec4986d4de0853f6a8188c0add991a139d014c247adee6cb960fae29416a4e9a",
+        "integer_rounding_performed": false,
+        "full_primal_saved": true,
+        "C_commit": "1edcc857036cec3703a581f2704a51dbcc886586",
+        "source_model": "colib_epri_frozen_E_blocks_v1",
+        "native_solver_attributes": {
+          "SolCount": 1,
+          "ConstrVio": 3.512354851409327e-10,
+          "ObjVal": 125055972701.08368,
+          "ObjBound": 124989733337.15735,
+          "Status": 2,
+          "IterCount": 68162.0,
+          "BoundVio": 0.0,
+          "BarIterCount": 74,
+          "IntVio": 0.0,
+          "DualVio": "Gurobi attribute DualVio returned 10005"
+        },
+        "annualized_capex_EUR2025": 108352825554.00539,
+        "minimum_g1_slack_pu": -2627.2049847119524,
+        "negative_gscr_rows": 3769,
+        "status": "OPTIMAL",
+        "quota_pct": 70,
+        "operation_840h_EUR2025": 320334328.84808135,
+        "load_MWh": 71058866.10244863,
+        "derived_source_variants": {
+          "8": {
+            "parent_AP1_sha256": "f4b66af21fe59240eaa236698cf371458ce1cc22cdd3c25d9af9aafa92c4939d",
+            "consumer_commit": "73ae452ae95851a848b589acf39bd4c6d4dfee06",
+            "variant": {
+              "parent_AP1_sha256": "f4b66af21fe59240eaa236698cf371458ce1cc22cdd3c25d9af9aafa92c4939d",
+              "synchronous_xdpp": 0.25,
+              "scope": "frozen_E_planning_proxy",
+              "model": "colib_epri_frozen_E_blocks_v1",
+              "S_block_MVA": 25,
+              "owner_decision": "2026-11-17: bilde beide modelle gleich \u00e4hnlich aus",
+              "x_device_pu": 0.15,
+              "r_device_pu": 0.0015
+            },
+            "derived_profile_sha256": "13a242fc5f3e2f8f651d6d0dec2ec8d5cb8fb41e8c543b2daf03beb7879c26c2",
+            "derived_AP2_case_sha256": "c03dfc3cd78d68e0aeb8fb6875a3875e71db5d2c2efd8d680ba1904f95a79cfe",
+            "stage": "prepared_pu_before_dimensions_and_cost_weights",
+            "unchanged_non_source_profile_sha256": "b9f82374cd9a87cacd729777e130010fa5c13694ff4e93f535b8e2716c2a2e7c",
+            "week": "8",
+            "schema": "paper_a_consumer_source_variant_v1",
+            "snapshot_count": 168
+          }
+        },
+        "objective_replay_residual_EUR2025": 0.00023651123046875,
+        "investment_factor": 1,
+        "selection_sha256": "88d30f72eb2e8edb176fb7eb75b413a99d6b14228005b3792753365eb990d9d3",
+        "P_commit": "becec6d63c0fbf2b8a160c41f87631f5270046b9",
+        "wind_pv_share_pct": 70.00000000000014,
+        "min_gscr_slack_pu": -2627.2049847119524,
+        "hours": 168,
+        "max_integer_residual": 0.0,
+        "primal_status": "FEASIBLE_POINT",
+        "best_bound_EUR2025": 124989733337.15735,
+        "relative_gap": 0.0005296777314639733,
+        "physical_replay_passed": true,
+        "expansion_MW": {
+          "BESS-GFM": 0.0,
+          "CCGT": 1840.5,
+          "OCGT": 0.0,
+          "PHS": 0.0,
+          "battery": 141800.0,
+          "biomass": 0.0,
+          "coal": 0.0,
+          "geothermal": 0.0,
+          "lignite": 0.0,
+          "nuclear": 0.0,
+          "offwind-ac": 0.0,
+          "offwind-dc": 0.0,
+          "oil": 0.0,
+          "onwind": 583958.1114946161,
+          "ror": 0.0,
+          "solar": 718922.7283523587
+        },
+        "dispatch_MWh": {
+          "BESS-GFM": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "CCGT": [
+            601379.5914182797,
+            0.0,
+            0.0
+          ],
+          "OCGT": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "PHS": [
+            0.0,
+            2451625.505009738,
+            1838719.1287573096
+          ],
+          "battery": [
+            0.0,
+            5607436.639105556,
+            5383139.1735413335
+          ],
+          "biomass": [
+            1666103.9554978271,
+            0.0,
+            0.0
+          ],
+          "coal": [
+            2544371.455595661,
+            0.0,
+            0.0
+          ],
+          "geothermal": [
+            8496.0,
+            0.0,
+            0.0
+          ],
+          "hydro": [
+            0.0,
+            0.0,
+            4761054.277047727
+          ],
+          "lignite": [
+            1844974.058325879,
+            0.0,
+            0.0
+          ],
+          "nuclear": [
+            8462892.30655514,
+            0.0,
+            0.0
+          ],
+          "offwind-ac": [
+            716700.558671881,
+            0.0,
+            0.0
+          ],
+          "offwind-dc": [
+            1528573.196162792,
+            0.0,
+            0.0
+          ],
+          "oil": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "onwind": [
+            32864592.511006556,
+            0.0,
+            0.0
+          ],
+          "ror": [
+            2265592.028110628,
+            0.0,
+            0.0
+          ],
+          "solar": [
+            14631340.005872818,
+            0.0,
+            0.0
+          ]
+        },
+        "replay_periods": [
+          {
+            "iso_week": 8,
+            "load_MWh": 71058866.10244864,
+            "wind_pv_MWh": 49741206.27171405,
+            "max_balance_residual_MW": 3.5157427191734314e-08
+          }
+        ],
+        "receipt_sha256": "2a84f411dac4e27dfef0ddcf53ccd9b4df859381451992ad8c38e911cb21b96a",
+        "complete_primal_variable_count": 311395,
+        "csv_bound_violation": 0.0,
+        "csv_discrete_variable_count": 111401,
+        "csv_integer_residual": 0.0,
+        "energy_and_active_G1_replay_passed": true,
+        "accepted_for_proxy_LP_comparison": false,
+        "accepted_for_proxy_MIP_comparison": true,
+        "represented_operation_components_EUR2025": {
+          "startup_shutdown": 32715337.614252407,
+          "generation": 287618991.23382896,
+          "storage": 0.0
+        },
+        "represented_operation_EUR2025": 320334328.84808135
+      },
+      "raw_root": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01\\quota_70\\integer",
+      "result_directory": "without_gscr/integer"
+    }
+  ]
+}

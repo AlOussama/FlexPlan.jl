@@ -4,6 +4,8 @@ Dieses Dokument erfasst den KW‑3-Vergleich, die Q5-Speicherkorrektur und die a
 
 ## Aktueller Rücklauf · KW 8 mit positivem GFM-Planungsproxy
 
+Alle zwölf LP-/MILP-Varianten für 50/60/70 % Wind/PV mit und ohne G1 sind abgeschlossen und unabhängig geprüft. Alle sechs MILPs erreichen das 0,5-%-Gapziel. Der [vollständige neue Ergebnisbericht](kw08_re50_60_70_joint_expansion_dispatch.md) dokumentiert Ausbau, Dispatch, annualisierte CAPEX/OPEX, Schranken und tatsächliche Gaps. Bei 70 % betragen die MILP-Kosten 127,818619 Mrd. EUR2025 mit G1 und 125,055973 Mrd. EUR2025 ohne G1. QREF hat 70 % als Referenz für den anschließend beauftragten Vergleich der bereits vorhandenen Netzstärkeformulierungen ausgewählt. Die bisherigen 840-h- und Jahresbefunde bleiben in ihren unten dokumentierten historischen Scopes erhalten.
+
 Am 18. November wurden auf Owner-Anweisung zunächst 168 Stunden (18.–24. Februar 2013) gemeinsam für Ausbau und Betrieb optimiert. Beide LP-Relaxationen sind `OPTIMAL` und im aktiven Modell numerisch zulässig. Bei gleicher 50-%-Wind/PV-Quote, OPEX ×8760/168 und CAPEX ×1 ergeben sich mit G1/gSCR 98,619706 Mrd. EUR2025 und ohne G1/gSCR 97,551529 Mrd. EUR2025. Der Mehrbetrag beträgt 1,068177 Mrd. EUR2025 (+1,095 %).
 
 | Ausbau beziehungsweise Wochenbetrieb | Mit G1/gSCR | Ohne G1/gSCR |
@@ -16,7 +18,7 @@ Am 18. November wurden auf Owner-Anweisung zunächst 168 Stunden (18.–24. Febr
 
 Die aktive G1-Variante verletzt keine der 6.216 Zeilen; 942 sind bei 1e-6 pu bindend. Der Vergleich ohne G1 verletzt bei nachträglicher Auswertung 3.026 dieser deaktivierten Zeilen. Die native maximale Constraintverletzung liegt in beiden aktiven Modellen unter 4e-10. Neue separate klassische SCR-/eSCR-Formeln wurden nicht aktiviert. Der positive GFM-Beitrag ist auf den ausdrücklich gewählten fixed-E-Planungsproxy begrenzt, SYN behält `x''d=0.25`.
 
-Der [Qualifikations- und Ergebnisbericht](colib_epri_positive_gfm_source_qualification.md) und der [kompakte Ergebnisreceipt](receipts/kw08_re50_frozen_E_lp_20261118.json) binden Daten, Code, Kosten, stündliche Exporte und unabhängige Prüfung. Die Rohdateien liegen auf E:. Der 840-h-Lauf bleibt durch die Owner-Priorisierung zurückgestellt. Als unmittelbar anschließender Auftrag sind dieselben zwei Wochenläufe mit ganzzahligen Blockvariablen und je höchstens zwei Stunden Solverzeit freigegeben; keine erneuten LP-Läufe oder LP-basierten Schrankenänderungen. Ein Jahres-, Gate-J-, F3- oder AC-/Dynamik-GO folgt daraus nicht.
+Der [Qualifikations- und Ergebnisbericht](colib_epri_positive_gfm_source_qualification.md) und der [kompakte Ergebnisreceipt](receipts/kw08_re50_frozen_E_lp_20261118.json) binden Daten, Code, Kosten, stündliche Exporte und unabhängige Prüfung. Die Rohdateien liegen auf E:. Der 840-h-Lauf bleibt durch die Owner-Priorisierung zurückgestellt. Die anschließend beauftragten Integerläufe und die 60-/70-%-Paare sind inzwischen im neuen Gesamtbericht abgeschlossen; es wurden keine LP-basierten Variablenschranken eingeführt. Ein Jahres-, Gate-J-, F3- oder AC-/Dynamik-GO folgt daraus nicht.
 
 ## KW 3 · Referenz und Wind-/PV-Quoten
 
