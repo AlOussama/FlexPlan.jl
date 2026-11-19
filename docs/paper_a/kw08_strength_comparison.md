@@ -226,3 +226,28 @@ Die Korrektur besteht 37 gezielte Skalierungs-/Kegel-/Reportingassertions
 und 34 bestehende Native-G3-Default-Regressionsassertions. Die unabhängige
 Deltaabnahme und die erneute tatsächliche Originalprimalprüfung sind die
 nächsten Schritte; ein positiver synthetischer Test ist kein Fullcase-PASS.
+
+### Negative Gurobi-Nachprüfung und vorhandener MOSEK-Pfad
+
+Auch der skalierte Gurobi-Punkt wird unabhängig zurückgewiesen: Status 13
+(`LOCALLY_SOLVED`/suboptimal), 4.278 Originalverletzungen, maximal
+0,0001944473068 pu. Alle 8.736 Kegel und Knotenbudgets erfüllen inzwischen
+die unveränderte Toleranz; die verbleibenden Fehler betreffen lineare
+physische Bedingungen und Bounds. Die Schranke und der Gap sind korrekt
+als nicht verfügbar ausgewiesen. Das unabhängige MIP-Gate ist NEGATIVE;
+ein MIP wurde nicht gestartet. Negativreceipt:
+`aacfe17607c36b451849efc5d4f93f73ae06ea0297d8a87b71bfd9caf09c5279`.
+Das gemeinsame Ledger wird weiterverwendet, keine weitere Gurobi-
+Parameterrunde durchgeführt.
+
+Der bereits vorhandene native MOSEK-Backend ist lokal verfügbar. Die
+gezielte kontinuierliche und ganzzahlige G3-Klassenprüfung besteht 22
+Assertions einschließlich Originalprimalprüfung und Kostenrückabbildung.
+Der vorhandene Wochenrunner erhält dafür einen Backendselektor; derselbe
+physische Modellaufbau und dieselben originalen Kegel werden wiederverwendet.
+MOSEK nutzt die vorhandenen `NativeG3Solver.mosek_options`, mit vier Threads,
+7.200 Sekunden und relativem MIP-Gapziel 0,005. Gurobi-spezifische Attribute
+werden für MOSEK nicht erfunden. Native MOI-Status/Schranken und die separate
+Originalprimalprüfung werden ausdrücklich unterschieden. Ein strukturierter
+Start-/Endmarker begrenzt die Optimierungszeit unabhängig vom Logformat.
+Diese kleine Klassenprüfung ist noch keine Fullcase- oder Gate-J-Freigabe.

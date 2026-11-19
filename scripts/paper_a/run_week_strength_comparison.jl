@@ -4,6 +4,8 @@ using SHA, JSON, Dates
 length(ARGS)==5 || error("usage: OUTPUT_ROOT SCIENCE_CASE G2|G3 relaxed|integer prepare|profile|solve")
 const root,science=abspath.(ARGS[1:2])
 const criterion,mode,phase=ARGS[3:5]
+const native_backend=Symbol(get(ENV,"PAPER_A_STRENGTH_BACKEND","gurobi"))
+native_backend in (:gurobi,:mosek) && (criterion=="G3" || native_backend==:gurobi) || error("Unsupported native backend for criterion")
 criterion in ("G2","G3") && mode in ("relaxed","integer") && phase in ("prepare","profile","solve") || error("Unsupported comparison")
 startswith(root,"E:") || error("E: output required")
 const parent_study="E:/ResearchResults/FlexPlan_UC_GSCR/TECH_FULL37_FIVE_WEEKS_RE50_20261115_01"
@@ -51,6 +53,18 @@ const case_dir=joinpath(root,"CASES",criterion)
 const case_path=joinpath(case_dir,"case.json")
 writejson(path,obj)=open(io->JSON.print(io,obj,2),path,"w")
 function native_attributes(model)
+    if native_backend==:mosek
+        safe(f)=begin
+            x=try f() catch; nothing end
+            x isa Real && !isfinite(x) ? nothing : x
+        end
+        return Dict{String,Any}("backend"=>"MOSEK","termination_status"=>string(JuMP.termination_status(model)),
+            "primal_status"=>string(JuMP.primal_status(model)),"dual_status"=>string(JuMP.dual_status(model)),
+            "result_count"=>JuMP.result_count(model),"runtime_s"=>safe(()->JuMP.solve_time(model)),
+            "barrier_iterations"=>safe(()->JuMP.barrier_iterations(model)),"node_count"=>safe(()->JuMP.node_count(model)),
+            "objective_backend"=>safe(()->JuMP.objective_value(model)),"bound_backend"=>safe(()->JuMP.objective_bound(model)),
+            "quality_scope"=>"native_MOI_status_and_separate_original_JuMP_primal_check")
+    end
     native=JuMP.unsafe_backend(model)
     result=Dict{String,Any}()
     for name in ("Status","SolCount","BarIterCount","IsMIP","NumVars","NumConstrs","NumQConstrs")
@@ -131,15 +145,24 @@ else
     else
         merge!(params,Dict("Crossover"=>1,"BarHomogeneous"=>1,"BarConvTol"=>1e-8))
     end
+    if native_backend==:mosek
+        params=N.mosek_options()
+        params["MSK_IPAR_NUM_THREADS"]=4
+        params["MSK_DPAR_OPTIMIZER_MAX_TIME"]=budget
+        params["MSK_DPAR_MIO_TOL_REL_GAP"]=0.005
+    end
     profile=Dict{String,Any}("consumer_commit"=>pin,"runner_sha256"=>sha_file(@__FILE__),"criterion"=>criterion,
+        "native_backend"=>string(native_backend),
         "mode"=>mode,"case_sha256"=>sha_file(case_path),"hours"=>168,"quota_pct"=>70,"annual_factor"=>annual_factor,
         "variables"=>JuMP.num_variables(model),"original_discrete_count"=>length(discrete),"attributes"=>params,
         "strength_rows"=>length(w.gscr_rows),"solver_class"=>criterion=="G2" ? (mode=="integer" ? "MILP" : "LP") : (mode=="integer" ? "MISOCP" : "SOCP"))
     if criterion=="G3"
-        params["NonConvex"]=0
-        params["BarQCPConvTol"]=1e-10
-        params["FeasibilityTol"]=1e-9
-        params["OptimalityTol"]=1e-9
+        if native_backend==:gurobi
+            params["NonConvex"]=0
+            params["BarQCPConvTol"]=1e-10
+            params["FeasibilityTol"]=1e-9
+            params["OptimalityTol"]=1e-9
+        end
         try
             profile["input_range"]=N.input_range(model)
             conditioned,meta=N.condition_objective(original_objective;divisor=objective_divisor)
@@ -164,13 +187,20 @@ else
         gate["status"]=="PASS" && gate["consumer_commit"]==pin &&
             gate["profiles"]["$criterion/$mode"]==sha_file(joinpath(out,"profile.json")) &&
             gate["cases"][criterion]==sha_file(case_path) || error("Independent actual case/profile admission missing")
-        opt=JuMP.optimizer_with_attributes(Gurobi.Optimizer,params...)
+        constructor=native_backend==:mosek ? N.MosekTools.Optimizer : Gurobi.Optimizer
+        opt=JuMP.optimizer_with_attributes(constructor,params...)
         JuMP.set_optimizer(model,opt)
         criterion=="G3" && N.configure_bridges!(model,opt)
         bridge=criterion=="G3" ? N.prepare_backend!(model,opt) : nothing
-        JuMP.set_optimizer_attribute(model,"LogFile",joinpath(out,"gurobi.log"))
+        native_backend==:gurobi && JuMP.set_optimizer_attribute(model,"LogFile",joinpath(out,"gurobi.log"))
         report("solve_enter",profile)
+        started=time()
+        writejson(joinpath(out,"native_optimization_window.json"),Dict("status"=>"running",
+            "backend"=>string(native_backend),"started_epoch_s"=>started))
         JuMP.optimize!(model)
+        writejson(joinpath(out,"native_optimization_window.json"),Dict("status"=>"finished",
+            "backend"=>string(native_backend),"started_epoch_s"=>started,"finished_epoch_s"=>time(),
+            "reported_solver_time_s"=>JuMP.solve_time(model)))
         native=native_attributes(model)
         reported_bound=try JuMP.objective_bound(model) catch; nothing end
         currency_bound=N.original_currency_bound(reported_bound,objective_divisor)
@@ -232,7 +262,8 @@ else
             CSV.write(joinpath(out,"primal_violations.csv"),[(;constraint=string(c),violation=r) for (c,r) in residuals])
             int_error=mode=="integer" ? maximum(abs(v(x)-round(v(x))) for x in discrete) : nothing
             original_check=criterion=="G3" ? N.primal_check(model) : Dict("status"=>isempty(residuals) ? "passed" : "failed","tolerance"=>1e-6)
-            native_ok=all(get(native,k,nothing) isa Number && native[k]<=1e-6 for k in ("ConstrVio","BoundVio")) &&
+            native_ok=native_backend==:mosek ? JuMP.primal_status(model)==JuMP.MOI.FEASIBLE_POINT :
+                all(get(native,k,nothing) isa Number && native[k]<=1e-6 for k in ("ConstrVio","BoundVio")) &&
                 (mode=="relaxed" || (get(native,"IntVio",nothing) isa Number && native["IntVio"]<=1e-6))
             original_value=v(original_objective)
             merge!(result,Dict("objective_EUR2025"=>original_value,"annualized_capex_EUR2025"=>capex,
