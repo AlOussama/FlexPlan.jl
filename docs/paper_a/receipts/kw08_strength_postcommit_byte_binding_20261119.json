@@ -1,0 +1,71 @@
+{
+  "schema": "paper_a_independent_documentation_postcommit_byte_binding_v1",
+  "status": "PASS_EXACT_EOL_AND_JSON_BYTE_BINDING",
+  "reviewer_role": "root_gfm_epri_math_qual",
+  "created_utc": "2026-11-19T22:28:07.640799+00:00",
+  "documentation_commit": "655052a8c2d5be7e188f947059f7841f1b34870a",
+  "parent_reviewed_code_commit": "2fa3e6b5e4d1b034f080a2a1d512b3fad2dfbf81",
+  "exact_four_published_paths": [
+    "docs/paper_a/full37_technical_studies_and_execution_status.md",
+    "docs/paper_a/kw08_strength_comparison.md",
+    "docs/paper_a/receipts/kw08_existing_strength_comparison_20261119.json",
+    "docs/paper_a/receipts/kw08_strength_resource_documentation_review_20261119.json"
+  ],
+  "JSON_bindings": [
+    {
+      "repository_path": "docs/paper_a/receipts/kw08_existing_strength_comparison_20261119.json",
+      "source_path": "D:\\Projekte\\Code\\FlexPlan_UC_GSCR\\docs\\paper_a\\receipts\\kw08_existing_strength_comparison_20261119.json",
+      "source_sha256": "fffd46049d13eff6831ac6acda95382301adb73c9016c5a6cde34b696b9de4eb",
+      "worktree_sha256": "fffd46049d13eff6831ac6acda95382301adb73c9016c5a6cde34b696b9de4eb",
+      "committed_blob_sha256": "7794939db4d63992a51981d0a27721422211101d06751c9dc6eefefa9e7c5773",
+      "git_blob_object_id": "1934a1b16e0fcd3e301c3ea791425759b68d2ac8",
+      "source_bytes": 37151,
+      "worktree_bytes": 37151,
+      "committed_bytes": 36411,
+      "source_CRLF_count": 740,
+      "worktree_CRLF_count": 740,
+      "committed_CRLF_count": 0,
+      "exact_only_CRLF_to_LF": true,
+      "JSON_equality": true
+    },
+    {
+      "repository_path": "docs/paper_a/receipts/kw08_strength_resource_documentation_review_20261119.json",
+      "source_path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_MOSEK_20261119_01\\INDEPENDENT_REVIEW\\final_documentation_resource_delta_review_2fa3e6b5.json",
+      "source_sha256": "0598f7dd6bfd2f4f49c339c6c5e0c9a959a0d0583684668067e3782e8a2298b2",
+      "worktree_sha256": "0598f7dd6bfd2f4f49c339c6c5e0c9a959a0d0583684668067e3782e8a2298b2",
+      "committed_blob_sha256": "0598f7dd6bfd2f4f49c339c6c5e0c9a959a0d0583684668067e3782e8a2298b2",
+      "git_blob_object_id": "c4385b1dfe83ec1732eef700ab3393953628c3d5",
+      "source_bytes": 5643,
+      "worktree_bytes": 5643,
+      "committed_bytes": 5643,
+      "source_CRLF_count": 0,
+      "worktree_CRLF_count": 0,
+      "committed_CRLF_count": 0,
+      "exact_only_CRLF_to_LF": true,
+      "JSON_equality": true
+    }
+  ],
+  "markdown_review_hashes_equal_committed_blobs": [
+    {
+      "repository_path": "docs/paper_a/kw08_strength_comparison.md",
+      "reviewed_source_sha256": "6237a031a77c4292b9425fff3594fe1e15252df56dde5a5b44af7a34f7917481",
+      "committed_blob_sha256": "6237a031a77c4292b9425fff3594fe1e15252df56dde5a5b44af7a34f7917481"
+    },
+    {
+      "repository_path": "docs/paper_a/full37_technical_studies_and_execution_status.md",
+      "reviewed_source_sha256": "eee9af2681ad2db0907cb00c7fd4420ffe5a73dd5d3aac21e179a003a80b504e",
+      "committed_blob_sha256": "eee9af2681ad2db0907cb00c7fd4420ffe5a73dd5d3aac21e179a003a80b504e"
+    }
+  ],
+  "foreign_Project_change_unstaged": true,
+  "foreign_Project_not_in_publication": true,
+  "revalidation_scope": "Byte normalization and publication scope only; prior scientific/resource/result conclusions reused unchanged.",
+  "no_new_execution_or_scientific_gate": true,
+  "reviewer_operations": {
+    "repository_writes": 0,
+    "model_builds": 0,
+    "solver_calls": 0,
+    "case_reads": 0,
+    "environment_changes": 0
+  }
+}
