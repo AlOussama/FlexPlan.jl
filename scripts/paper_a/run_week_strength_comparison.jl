@@ -121,6 +121,7 @@ else
     JuMP.@constraint(model,w.quota>=0.70*w.demand)
     original_objective=investment+annual_factor*(w.gen+w.storage+w.events)
     JuMP.@objective(model,Min,original_objective)
+    objective_divisor=criterion=="G3" ? 8192. : 1.
     discrete=filter(v->JuMP.is_integer(v)||JuMP.is_binary(v),JuMP.all_variables(model))
     mode=="relaxed" && JuMP.relax_integrality(model)
     params=Dict{String,Any}("Threads"=>4,"Method"=>2,"TimeLimit"=>budget,"NumericFocus"=>3,
@@ -136,11 +137,16 @@ else
         "strength_rows"=>length(w.gscr_rows),"solver_class"=>criterion=="G2" ? (mode=="integer" ? "MILP" : "LP") : (mode=="integer" ? "MISOCP" : "SOCP"))
     if criterion=="G3"
         params["NonConvex"]=0
+        params["BarQCPConvTol"]=1e-10
+        params["FeasibilityTol"]=1e-9
+        params["OptimalityTol"]=1e-9
         try
             profile["input_range"]=N.input_range(model)
-            conditioned,meta=N.condition_objective(original_objective)
+            conditioned,meta=N.condition_objective(original_objective;divisor=objective_divisor)
             meta["multiplier"]==1 || error("Explicit objective coordinate qualification required")
             profile["objective_conditioning"]=meta
+            profile["objective_backend_divisor"]=objective_divisor
+            JuMP.set_objective_function(model,conditioned)
             profile["status"]="PROFILE_READY"
         catch e
             profile["status"]="OPTIMIZE_NOT_CALLED";profile["reason"]=sprint(showerror,e)
@@ -166,9 +172,12 @@ else
         report("solve_enter",profile)
         JuMP.optimize!(model)
         native=native_attributes(model)
+        reported_bound=try JuMP.objective_bound(model) catch; nothing end
+        currency_bound=N.original_currency_bound(reported_bound,objective_divisor)
         result=merge(copy(profile),Dict("status"=>string(JuMP.termination_status(model)),"primal_status"=>string(JuMP.primal_status(model)),
             "result_count"=>JuMP.result_count(model),"solve_time_s"=>JuMP.solve_time(model),"bound_certification"=>"numerical_only_not_rigorous_currency_bound",
-            "best_bound_EUR2025"=>try JuMP.objective_bound(model) catch; nothing end,
+            "best_bound_EUR2025"=>currency_bound,"native_objective_cost_divisor"=>objective_divisor,
+            "native_cost_coordinate"=>"original_EUR2025_divided_by_native_objective_cost_divisor",
             "native_bridge_validation"=>bridge,"native_solver_attributes"=>native,"warm_start_from_other_run"=>false))
         if JuMP.has_values(model)
             v=JuMP.value;capex=v(investment);op=Dict("generation"=>v(w.gen),"storage"=>v(w.storage),"startup_shutdown"=>v(w.events))
@@ -225,11 +234,13 @@ else
             original_check=criterion=="G3" ? N.primal_check(model) : Dict("status"=>isempty(residuals) ? "passed" : "failed","tolerance"=>1e-6)
             native_ok=all(get(native,k,nothing) isa Number && native[k]<=1e-6 for k in ("ConstrVio","BoundVio")) &&
                 (mode=="relaxed" || (get(native,"IntVio",nothing) isa Number && native["IntVio"]<=1e-6))
-            merge!(result,Dict("objective_EUR2025"=>JuMP.objective_value(model),"annualized_capex_EUR2025"=>capex,
+            original_value=v(original_objective)
+            merge!(result,Dict("objective_EUR2025"=>original_value,"annualized_capex_EUR2025"=>capex,
                 "operation_168h_components_EUR2025"=>op,"annualized_opex_EUR2025"=>annual_factor*sum(values(op)),
-                "objective_replay_residual_EUR2025"=>abs(JuMP.objective_value(model)-capex-annual_factor*sum(values(op))),
+                "objective_replay_residual_EUR2025"=>abs(original_value-capex-annual_factor*sum(values(op))),
+                "native_objective_backmap_residual_EUR2025"=>abs(original_value-JuMP.objective_value(model)*objective_divisor),
                 "wind_pv_MWh"=>v(w.quota),"load_MWh"=>w.demand,"wind_pv_share_pct"=>100*v(w.quota)/w.demand,
-                "relative_gap"=>mode=="integer" ? JuMP.relative_gap(model) : abs(JuMP.objective_value(model)-JuMP.objective_bound(model))/abs(JuMP.objective_value(model)),
+                "relative_gap"=>currency_bound===nothing ? nothing : abs(original_value-currency_bound)/max(1.,abs(original_value)),
                 "primal_violation_count_at_1e_6"=>length(residuals),"max_integer_residual"=>int_error,
                 "original_primal_check"=>original_check,"numerically_accepted"=>native_ok && isempty(residuals) && original_check["status"]=="passed" && (mode=="relaxed" || int_error<=1e-6)))
             roster=fp.var(pm,1,:n_block)

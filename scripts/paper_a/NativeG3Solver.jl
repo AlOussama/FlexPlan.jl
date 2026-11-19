@@ -126,10 +126,30 @@ function input_range(model)
         "maximum_coefficient"=>hi, "coefficient_floor"=>MIN_CONSTRAINT_COEFFICIENT)
 end
 
-"""Scale the entire emitted affine objective by an exactly checked power of two.
-The existing rebase/division precedes this operation; its rounding is separate.
+"""Condition an affine objective with checked binary scaling.
+An optional power-of-two divisor is verified in the supplied original cost
+coordinates. Rounding from any earlier caller-side rebase/division is separate.
+The default divisor preserves the existing conditioning path and metadata.
 """
-function condition_objective(f::GenericAffExpr)
+function condition_objective(f::GenericAffExpr;divisor=1.)
+    # Reuse AP3's positive objective division without adding increment variables
+    # or a heuristic solve. Binary division is checked in original coordinates.
+    requested=Float64(divisor)
+    isfinite(requested) && requested>0 && significand(requested)==1. ||
+        throw(NumericalInputError("objective_divisor_must_be_a_positive_power_of_two"))
+    if requested!=1.
+        original=f
+        all(isfinite(c) for (c,_) in linear_terms(original)) && isfinite(original.constant) ||
+            throw(NumericalInputError("nonfinite_objective"))
+        f=original/requested
+        all(isfinite(c) for (c,_) in linear_terms(f)) && isfinite(f.constant) ||
+            throw(NumericalInputError("nonfinite_divided_objective"))
+        coefficients=Dict(v=>c for (c,v) in linear_terms(f))
+        Rational{BigInt}(f.constant)*Rational{BigInt}(requested)==Rational{BigInt}(original.constant) &&
+            all(Rational{BigInt}(get(coefficients,v,0.))*Rational{BigInt}(requested)==Rational{BigInt}(c)
+                for (c,v) in linear_terms(original)) ||
+            throw(NumericalInputError("inexact_binary_objective_division"))
+    end
     cs = [abs(c) for (c, _) in linear_terms(f) if c != 0]
     all(isfinite, cs) && isfinite(f.constant) || throw(NumericalInputError("nonfinite_objective"))
     lo = minimum(cs; init=Inf)
@@ -150,9 +170,19 @@ function condition_objective(f::GenericAffExpr)
     smallest = minimum((abs(c) for (c,_) in linear_terms(g) if c != 0); init=Inf)
     largest <= MAX_COEFFICIENT && abs(g.constant) <= MAX_COEFFICIENT && (!isfinite(smallest) || smallest >= MIN_OBJECTIVE_COEFFICIENT) ||
         throw(NumericalInputError("conditioned_objective_outside_declared_range"))
-    return g, Dict("power_two_exponent"=>exponent, "multiplier"=>multiplier,
+    metadata=Dict{String,Any}("power_two_exponent"=>exponent, "multiplier"=>multiplier,
         "minimum_nonzero_coefficient"=>isfinite(smallest) ? smallest : nothing,
         "maximum_coefficient"=>largest, "exact_binary_scaling_verified"=>true)
+    requested==1. || merge!(metadata,Dict("requested_divisor"=>requested,
+        "effective_divisor"=>requested/multiplier,"exact_binary_division_verified"=>true))
+    return g,metadata
+end
+
+"""Map a reported native cost bound back; infinity sentinels are unavailable."""
+function original_currency_bound(raw,effective_divisor)
+    raw isa Real && isfinite(raw) && abs(raw)<5e99 || return nothing
+    result=raw*effective_divisor
+    return isfinite(result) ? result : nothing
 end
 
 function primal_check(model)
