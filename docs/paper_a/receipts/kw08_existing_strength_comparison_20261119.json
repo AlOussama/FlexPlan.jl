@@ -1,0 +1,740 @@
+{
+  "schema": "paper_a_kw08_existing_strength_formulations_single_execution_index_v1",
+  "period": {
+    "iso_week": 8,
+    "year": 2013,
+    "hours": 168,
+    "wind_pv_quota_pct": 70,
+    "load_MWh": 71058866.10244863,
+    "OPEX_factor": 52.142857142857146,
+    "CAPEX_factor": 1,
+    "dispatch_model": "DCP",
+    "source_model": "colib_epri_frozen_E_blocks_v1"
+  },
+  "scientific_manifest_sha256": "ec4986d4de0853f6a8188c0add991a139d014c247adee6cb960fae29416a4e9a",
+  "producer_commit": "becec6d63c0fbf2b8a160c41f87631f5270046b9",
+  "consumer_commits": {
+    "shared_exposure": "c842bbd7db0eaf03c5804db6ba73c6f6ebb07f63",
+    "G3_conditioning": "8e046881296dfad5a93d86968a85ea3541d1ca7a",
+    "existing_native_MOSEK_route": "2fa3e6b5e4d1b034f080a2a1d512b3fad2dfbf81"
+  },
+  "reuse": "Existing G1/G2/G3 equations, NativeG3 guards/backends, AP3 physical extraction and accepted cost/UC/storage logic.",
+  "changed_code_paths": [
+    "src/core/paper_a_integration.jl",
+    "src/core/paper_a_formulations.jl",
+    "src/core/paper_a_diagnostics.jl",
+    "src/prob/uc_gscr_block_integration.jl",
+    "scripts/paper_a/NativeG3Solver.jl",
+    "scripts/paper_a/run_week_strength_comparison.jl"
+  ],
+  "cases": {
+    "G2": {
+      "hours": 168,
+      "consumer_commit": "c842bbd7db0eaf03c5804db6ba73c6f6ebb07f63",
+      "changed_fields": [
+        "variant.formulation",
+        "variant_sha256"
+      ],
+      "parent_sha256": "c03dfc3cd78d68e0aeb8fb6875a3875e71db5d2c2efd8d680ba1904f95a79cfe",
+      "QREF_sha256": "971c4bac09ed5f859a7a4a07d378a4fa8a8d5314f12284a1ef57290be7f06b34",
+      "case_sha256": "c154322ea868313405ac7be70c541ad87839bbb070ac2fa556f18c1d2547e2d5",
+      "profile_sha256": "223f15ae0f78021846ef636e2db975a29607aa8524be18d9bf3ed9ca0e46d787",
+      "criterion": "G2",
+      "quota_pct": 70
+    },
+    "G3": {
+      "hours": 168,
+      "consumer_commit": "c842bbd7db0eaf03c5804db6ba73c6f6ebb07f63",
+      "changed_fields": [
+        "variant.formulation",
+        "variant_sha256"
+      ],
+      "parent_sha256": "c03dfc3cd78d68e0aeb8fb6875a3875e71db5d2c2efd8d680ba1904f95a79cfe",
+      "QREF_sha256": "971c4bac09ed5f859a7a4a07d378a4fa8a8d5314f12284a1ef57290be7f06b34",
+      "case_sha256": "1ceb274ab48bf2e4f90783fa881d394c79fb216d311c6bde197c6fe77dbbb15d",
+      "profile_sha256": "7e043c288061a828e5ab69fddcc5055b7d2afd7b16545b63d78ba097c53880ff",
+      "criterion": "G3",
+      "quota_pct": 70
+    }
+  },
+  "accepted_reference": {
+    "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01\\independent_QREF_result_selection.json",
+    "sha256": "971c4bac09ed5f859a7a4a07d378a4fa8a8d5314f12284a1ef57290be7f06b34"
+  },
+  "results": {
+    "G2/relaxed": {
+      "annualized_opex_EUR2025": 16113846415.52491,
+      "runner_sha256": "0d32d6fcede58661a20904b701fa8d0eec373470f84070fe6cf0a91ef8ac2a54",
+      "criterion": "G2",
+      "mode": "relaxed",
+      "result_count": 1,
+      "operation_168h_components_EUR2025": {
+        "startup_shutdown": 28759856.65724522,
+        "generation": 280272814.32542425,
+        "storage": 0.0
+      },
+      "native_solver_attributes": {
+        "ObjBound": 127408221525.42139,
+        "NumVars": 320131,
+        "NumConstrs": 417555,
+        "IntVio": null,
+        "Status": 2,
+        "IterCount": 68068.0,
+        "BoundVio": 1.2295942042328534e-11,
+        "NodeCount": 0.0,
+        "Runtime": 249.1670000553131,
+        "DualVio": 7.38600647309795e-09,
+        "ConstrVio": 2.028954781962966e-11,
+        "ObjVal": 127408221525.42139,
+        "MIPGap": null,
+        "NumQConstrs": 0,
+        "BarIterCount": 70,
+        "IsMIP": 0,
+        "SolCount": 1
+      },
+      "objective_EUR2025": 127408221525.42139,
+      "annualized_capex_EUR2025": 111294375109.89828,
+      "variables": 311395,
+      "strength_rows": 6216,
+      "status": "OPTIMAL",
+      "solve_time_s": 249.1670000553131,
+      "case_sha256": "c154322ea868313405ac7be70c541ad87839bbb070ac2fa556f18c1d2547e2d5",
+      "quota_pct": 70,
+      "primal_violation_count_at_1e_6": 0,
+      "load_MWh": 71058866.10244863,
+      "objective_replay_residual_EUR2025": 0.00180816650390625,
+      "consumer_commit": "c842bbd7db0eaf03c5804db6ba73c6f6ebb07f63",
+      "original_discrete_count": 111401,
+      "native_bridge_validation": null,
+      "wind_pv_MWh": 49741206.27171376,
+      "solver_class": "LP",
+      "annual_factor": 52.142857142857146,
+      "numerically_accepted": true,
+      "wind_pv_share_pct": 69.99999999999962,
+      "hours": 168,
+      "original_primal_check": {
+        "status": "passed",
+        "tolerance": 1e-06
+      },
+      "max_integer_residual": null,
+      "warm_start_from_other_run": false,
+      "attributes": {
+        "FeasibilityTol": 1e-08,
+        "Method": 2,
+        "BarHomogeneous": 1,
+        "Crossover": 1,
+        "Threads": 4,
+        "OptimalityTol": 1e-08,
+        "NodefileDir": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_20261118_01\\G2\\relaxed",
+        "NodefileStart": 0.5,
+        "TimeLimit": 7200.0,
+        "Seed": 1,
+        "NumericFocus": 3,
+        "BarConvTol": 1e-08
+      },
+      "bound_certification": "numerical_only_not_rigorous_currency_bound",
+      "primal_status": "FEASIBLE_POINT",
+      "best_bound_EUR2025": 127408221525.42139,
+      "relative_gap": 0.0,
+      "summary_sha256": "87a3b3bb94ccc04927157aec06a4a967adfb384ba6719fc32bd5bf1cafb6ae20",
+      "expansion_MW": {
+        "CCGT": 1712.787136429091,
+        "solar": 718399.0084131575,
+        "OCGT": 0.0,
+        "biomass": 0.0,
+        "nuclear": 0.0,
+        "offwind-ac": 0.0,
+        "oil": 0.0,
+        "onwind": 589728.7389109852,
+        "ror": 0.0,
+        "coal": 0.0,
+        "offwind-dc": 0.0,
+        "lignite": 0.0,
+        "geothermal": 0.0,
+        "PHS": 0.0,
+        "BESS-GFM": 102089.70683652525,
+        "battery": 57164.69139421631
+      },
+      "dispatch_MWh": {
+        "solar": [
+          14323345.034713488,
+          0.0,
+          0.0
+        ],
+        "nuclear": [
+          8627041.80340146,
+          0.0,
+          0.0
+        ],
+        "coal": [
+          2378145.480367898,
+          0.0,
+          0.0
+        ],
+        "offwind-ac": [
+          725276.0703914135,
+          0.0,
+          0.0
+        ],
+        "biomass": [
+          1791709.723656821,
+          0.0,
+          0.0
+        ],
+        "onwind": [
+          33142895.262477975,
+          0.0,
+          0.0
+        ],
+        "OCGT": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "ror": [
+          2321806.811791517,
+          0.0,
+          0.0
+        ],
+        "offwind-dc": [
+          1549689.9041307203,
+          0.0,
+          0.0
+        ],
+        "CCGT": [
+          499555.96097894444,
+          0.0,
+          0.0
+        ],
+        "lignite": [
+          1738692.1590782201,
+          0.0,
+          0.0
+        ],
+        "oil": [
+          133.77540247616494,
+          0.0,
+          0.0
+        ],
+        "geothermal": [
+          8496.0,
+          0.0,
+          0.0
+        ],
+        "hydro": [
+          0.0,
+          0.0,
+          4761093.27523213
+        ],
+        "battery": [
+          0.0,
+          1899299.5841458577,
+          1823327.600780023
+        ],
+        "BESS-GFM": [
+          0.0,
+          4178813.806043629,
+          4011661.253801883
+        ],
+        "PHS": [
+          0.0,
+          2263562.494268051,
+          1697671.8707010294
+        ]
+      },
+      "capex_csv_residual_EUR2025": 1.52587890625e-05,
+      "postsolve_condition_hours": {
+        "B.G0": {
+          "true_hours": 168,
+          "false_hours": 0,
+          "statuses": [
+            "valid"
+          ]
+        },
+        "B.G1": {
+          "true_hours": 87,
+          "false_hours": 81,
+          "statuses": [
+            "valid"
+          ]
+        },
+        "B.G2": {
+          "true_hours": 168,
+          "false_hours": 0,
+          "statuses": [
+            "valid"
+          ]
+        },
+        "B.G3": {
+          "true_hours": 168,
+          "false_hours": 0,
+          "statuses": [
+            "valid"
+          ]
+        },
+        "C.LOCAL": {
+          "true_hours": 168,
+          "false_hours": 0,
+          "statuses": [
+            "valid"
+          ]
+        },
+        "C.M0": {
+          "true_hours": 150,
+          "false_hours": 18,
+          "statuses": [
+            "valid"
+          ]
+        }
+      }
+    },
+    "G2/integer": {
+      "status": "TIME_LIMIT",
+      "primal_status": "NO_SOLUTION",
+      "objective_EUR2025": null,
+      "best_bound_EUR2025": 127408221525.42133,
+      "relative_gap": null,
+      "result_count": 0,
+      "numerically_accepted": null,
+      "primal_violation_count_at_1e_6": null,
+      "original_primal_check": null,
+      "native_solver_attributes": {
+        "ObjBound": 127408221525.42133,
+        "NumVars": 320131,
+        "NumConstrs": 417555,
+        "IntVio": null,
+        "Status": 9,
+        "IterCount": 101951.0,
+        "BoundVio": null,
+        "NodeCount": 1.0,
+        "Runtime": 8144.059000015259,
+        "DualVio": null,
+        "ConstrVio": null,
+        "ObjVal": 1e+100,
+        "MIPGap": 1e+100,
+        "NumQConstrs": 0,
+        "BarIterCount": 74,
+        "IsMIP": 1,
+        "SolCount": 0
+      },
+      "summary": {
+        "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_20261118_01\\G2\\integer\\run_summary.json",
+        "sha256": "2afc742dde27349730d24ff690e62173924a48ca758aee8b23a4116260cee52c"
+      },
+      "accepted": false,
+      "classification": "TIME_LIMIT_NO_INCUMBENT_NOT_INFEASIBLE"
+    },
+    "G3/Gurobi_original": {
+      "status": "OPTIMAL",
+      "primal_status": "FEASIBLE_POINT",
+      "objective_EUR2025": 127001477664.90482,
+      "best_bound_EUR2025": null,
+      "relative_gap": null,
+      "result_count": 1,
+      "numerically_accepted": false,
+      "primal_violation_count_at_1e_6": 4623,
+      "original_primal_check": {
+        "maximum_polynomial_RSOC_violation": 0.005417822538220207,
+        "interpretation": "numerical_original_model_check_not_exact_feasibility",
+        "status": "failed_original_primal_check",
+        "maximum_constraint_distance": 0.007862104994337926,
+        "tolerance": 1e-07
+      },
+      "native_solver_attributes": {
+        "ObjBound": -1e+100,
+        "NumVars": 363811,
+        "NumConstrs": 461235,
+        "IntVio": null,
+        "Status": 2,
+        "IterCount": 0.0,
+        "BoundVio": 0.005325646608071111,
+        "NodeCount": 0.0,
+        "Runtime": 197.91100001335144,
+        "DualVio": null,
+        "ConstrVio": 0.007862104994337926,
+        "ObjVal": 127001477664.90482,
+        "MIPGap": null,
+        "NumQConstrs": 8736,
+        "BarIterCount": 59,
+        "IsMIP": 0,
+        "SolCount": 1
+      },
+      "summary": {
+        "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_RESTART_20261119_01\\G3\\relaxed\\run_summary.json",
+        "sha256": "c8d2e8b3f25d4326308b6407e65f534e5b89605159874e25e7280afdeada5d73"
+      },
+      "accepted": false,
+      "classification": "NUMERICALLY_REJECTED_NOT_INFEASIBLE",
+      "objective_is_unaccepted_raw_point": true
+    },
+    "G3/Gurobi_conditioned": {
+      "status": "LOCALLY_SOLVED",
+      "primal_status": "FEASIBLE_POINT",
+      "objective_EUR2025": 127001484073.91397,
+      "best_bound_EUR2025": null,
+      "relative_gap": null,
+      "result_count": 1,
+      "numerically_accepted": false,
+      "primal_violation_count_at_1e_6": 4278,
+      "original_primal_check": {
+        "maximum_polynomial_RSOC_violation": 0.0,
+        "interpretation": "numerical_original_model_check_not_exact_feasibility",
+        "status": "failed_original_primal_check",
+        "maximum_constraint_distance": 0.00019444730678230826,
+        "tolerance": 1e-07
+      },
+      "native_solver_attributes": {
+        "ObjBound": -1e+100,
+        "NumVars": 363811,
+        "NumConstrs": 461235,
+        "IntVio": null,
+        "Status": 13,
+        "IterCount": 0.0,
+        "BoundVio": 6.28741763648577e-05,
+        "NodeCount": 0.0,
+        "Runtime": 176.00099992752075,
+        "DualVio": null,
+        "ConstrVio": 0.00019444730678230826,
+        "ObjVal": 15503110.848866768,
+        "MIPGap": null,
+        "NumQConstrs": 8736,
+        "BarIterCount": 73,
+        "IsMIP": 0,
+        "SolCount": 1
+      },
+      "summary": {
+        "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_NUMERIC_RECOVERY_20261119_01\\G3\\relaxed\\run_summary.json",
+        "sha256": "7c57a4f8b4fa0606777cd1ce5188806a854fbf177d93bb30620ce12adee7ba14"
+      },
+      "accepted": false,
+      "classification": "NUMERICALLY_REJECTED_NOT_INFEASIBLE",
+      "objective_is_unaccepted_raw_point": true
+    },
+    "G3/MOSEK": {
+      "classification": "RESOURCE_BLOCKED_NO_CANDIDATE",
+      "accepted": false,
+      "native_result_available": false,
+      "continuous_candidate": null,
+      "integer_started": false,
+      "attempts": [
+        {
+          "classification": "RESOURCE_STOP_BEFORE_OPTIMIZE",
+          "optimization_start_marker_seen": false,
+          "process_profile": {
+            "exit_code": 15,
+            "max_sample_private_B": 3748470784,
+            "max_sample_rss_B": 3749470208,
+            "max_private_B": 12884901888,
+            "max_wall_s": 9000,
+            "guards": [
+              "host_commit_reserve"
+            ],
+            "wall_s": 107.9210000000021,
+            "initial_host": {
+              "host_available_B": 5255159808,
+              "commit_headroom_B": 8142782464,
+              "E_free_B": 10224492544
+            },
+            "last_sample": {
+              "private_B": 2668462080,
+              "rs_B": 2672357376,
+              "wall_s": 107.5,
+              "utc_s": 1795124924.201478,
+              "host_available_B": 2995646464,
+              "commit_headroom_B": 1808502784,
+              "E_free_B": 10224377856
+            },
+            "cmd": [
+              "C:\\Users\\User\\.julia\\juliaup\\julia-1.10.11+0.x64.w64.mingw32\\bin\\julia.exe",
+              "--project=D:\\Projekte\\Code\\FlexPlan_UC_GSCR",
+              "--startup-file=no",
+              "--threads=1",
+              "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_MOSEK_20261119_01\\run_week_strength_comparison.jl",
+              "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_20261118_01",
+              "E:/ResearchResults/FlexPlan_UC_GSCR/ORCH_FULL37_SEQUENTIAL_117_20261113_01/SCI02_POSITIVE_SYN_MINIMUM_04/CASE.json",
+              "G3",
+              "relaxed",
+              "solve"
+            ],
+            "pid": 21436
+          },
+          "profile_evidence": {
+            "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_MOSEK_20261119_01\\PROCESS_LOGS\\G3_relaxed_fresh_01\\process_profile.json",
+            "sha256": "17e9f8456457f4442aed72bb868abbf5a89b3d973795b008771170611a72fbc5"
+          }
+        },
+        {
+          "classification": "RESOURCE_STOP_DURING_OPTIMIZATION_WINDOW_NO_CANDIDATE",
+          "optimization_start_marker_seen": true,
+          "optimization_end_marker_seen": false,
+          "native_solver_iterations_proved": false,
+          "process_profile": {
+            "exit_code": 15,
+            "max_sample_private_B": 4550295552,
+            "max_sample_rss_B": 4065193984,
+            "max_private_B": 12884901888,
+            "max_wall_s": 9000,
+            "guards": [
+              "host_commit_reserve"
+            ],
+            "wall_s": 229.39100000000326,
+            "initial_host": {
+              "host_available_B": 8448581632,
+              "commit_headroom_B": 8789581824,
+              "E_free_B": 9934262272
+            },
+            "last_sample": {
+              "private_B": 4550295552,
+              "rs_B": 4065193984,
+              "wall_s": 228.90700000000652,
+              "utc_s": 1795126407.5404825,
+              "host_available_B": 3992924160,
+              "commit_headroom_B": 1884160000,
+              "E_free_B": 21602488320
+            },
+            "cmd": [
+              "C:\\Users\\User\\.julia\\juliaup\\julia-1.10.11+0.x64.w64.mingw32\\bin\\julia.exe",
+              "--project=D:\\Projekte\\Code\\FlexPlan_UC_GSCR",
+              "--startup-file=no",
+              "--threads=1",
+              "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_MOSEK_20261119_01\\run_week_strength_comparison.jl",
+              "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_20261118_01",
+              "E:/ResearchResults/FlexPlan_UC_GSCR/ORCH_FULL37_SEQUENTIAL_117_20261113_01/SCI02_POSITIVE_SYN_MINIMUM_04/CASE.json",
+              "G3",
+              "relaxed",
+              "solve"
+            ],
+            "pid": 27368
+          },
+          "profile_evidence": {
+            "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_MOSEK_20261119_01\\PROCESS_LOGS\\G3_relaxed_resource_retry_02\\process_profile.json",
+            "sha256": "5c198501da3464f7a838ab913839e079aa72359660d9c6c11aa83fb9340ad839"
+          },
+          "supervision": {
+            "mode": "relaxed",
+            "profiler_exit_code": 1,
+            "wall_s": 229.65600000001723,
+            "maximum_observed_monitor_gap_s": 0.34400000001187436,
+            "native_hard_limit_s": 7200.0,
+            "observed_native_end_marker": false,
+            "hard_stop": null,
+            "native_window_elapsed_wall_s": 18.74310040473938,
+            "runtime_budget_qualification": "native_end_not_observed",
+            "monitoring_gap_flag_threshold_s": 5.0,
+            "claim": "resource supervision only; candidate acceptance is separate"
+          },
+          "supervision_evidence": {
+            "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_MOSEK_20261119_01\\PROCESS_LOGS\\G3_relaxed_resource_retry_02\\hard_supervision.json",
+            "sha256": "36d6b5dd03d91f2d4b649ff65cfc54a8c89db1a31ba654e0e0740c44175be69d"
+          },
+          "window_evidence": {
+            "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_MOSEK_20261119_01\\G3\\relaxed\\native_optimization_window.json",
+            "sha256": "43f537a9636252aa88acf1955caecc835003d79904ee2244a7ddebbc2b7adbf7"
+          }
+        }
+      ],
+      "restart_preparation": {
+        "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_MOSEK_20261119_01\\resource_retry_02_preparation.json",
+        "sha256": "86a46923378fb9b1a99cad3b13a46e8d9e5a55ff803010c3d4f4ecb4672de3c5"
+      },
+      "prepared_supervisor_already_consumed": true,
+      "retry_immediately_runnable": false,
+      "required_next_step": "Establish durable host commit reserve; use fresh I/O-only admission and unchanged runtime pin.",
+      "independent_resource_stop_review": {
+        "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_MOSEK_20261119_01\\INDEPENDENT_REVIEW\\resource_stop_before_optimize_review_2fa3e6b5.json",
+        "sha256": "c58b36d9cdbc027244264eb437a3b6460e578d6d68593f3176fd58818816a931"
+      },
+      "independent_resource_retry_review": {
+        "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_MOSEK_20261119_01\\INDEPENDENT_REVIEW\\resource_retry_02_delta_review_2fa3e6b5.json",
+        "sha256": "64f465fe7344059cffe7716dfadb7cdb99b02cbf9ae19a87bbfdc88ec94e8e3e"
+      },
+      "restart_supervisor": {
+        "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_MOSEK_20261119_01\\run_resource_retry_02.py",
+        "sha256": "662308ae58e3500245701d810e16aaf5e28443fa4f03bc0eaa5e7e43ae7475db"
+      },
+      "restart_entry_minimum_commit_B": 7516192768,
+      "live_commit_reserve_guard_B": 2147483648,
+      "entry_is_fit_guarantee": false,
+      "unrelated_processes_terminated": false,
+      "OS_pagefile_changed": false
+    }
+  },
+  "reviews": {
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_20261118_01\\INDEPENDENT_REVIEW\\additional_gfl_clean_commit_review_c842bbd.json": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_20261118_01\\INDEPENDENT_REVIEW\\additional_gfl_clean_commit_review_c842bbd.json",
+      "sha256": "42d4c1a949bbbf9317da1574e2a61467ebfc3358f8f04c7d499cdbdd54e69965"
+    },
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_20261118_01\\INDEPENDENT_REVIEW\\strength_runner_clean_commit_c842bbd_review.json": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_20261118_01\\INDEPENDENT_REVIEW\\strength_runner_clean_commit_c842bbd_review.json",
+      "sha256": "94bd6acb843cd4dad9165ba41d5b4d6d45cd16d6c33661ebb885a80e83d0c782"
+    },
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_20261118_01\\INDEPENDENT_REVIEW\\admission.json": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_20261118_01\\INDEPENDENT_REVIEW\\admission.json",
+      "sha256": "f6ec875e967e23bc9a01201c3b3f0cc0e399fc5bf4461b69ce88669ec40c8ffe"
+    },
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_20261118_01\\INDEPENDENT_REVIEW\\actual_case_byte_review_G2_c842bbd.json": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_20261118_01\\INDEPENDENT_REVIEW\\actual_case_byte_review_G2_c842bbd.json",
+      "sha256": "5d5d68660ce4ac262ff0b30a832c90040f189d8706688125eaaca6b443055d01"
+    },
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_20261118_01\\INDEPENDENT_REVIEW\\actual_case_byte_review_G3_c842bbd.json": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_20261118_01\\INDEPENDENT_REVIEW\\actual_case_byte_review_G3_c842bbd.json",
+      "sha256": "820ad34af748afaa8be6275683eb2154bf59a35308677adfb6211cf66e9095f9"
+    },
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_20261118_01\\INDEPENDENT_REVIEW\\independent_case_byte_gate_c842bbd.json": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_20261118_01\\INDEPENDENT_REVIEW\\independent_case_byte_gate_c842bbd.json",
+      "sha256": "ed5f55f52f6eb308dccf271b7b3bcf153598c0604139d6ccfa2b983caa80c565"
+    },
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_20261118_01\\INDEPENDENT_REVIEW\\actual_profile_review_G2_integer_c842bbd.json": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_20261118_01\\INDEPENDENT_REVIEW\\actual_profile_review_G2_integer_c842bbd.json",
+      "sha256": "11d15ea56497978a87701dff9e7a04f9aa2f7818f185106d4ad42f0e723e5f09"
+    },
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_20261118_01\\INDEPENDENT_REVIEW\\actual_profile_review_G2_relaxed_c842bbd.json": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_20261118_01\\INDEPENDENT_REVIEW\\actual_profile_review_G2_relaxed_c842bbd.json",
+      "sha256": "4b7221b51496563485aa4a481854bb01de81e3c6275a5797cda4353d0447bcfd"
+    },
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_20261118_01\\INDEPENDENT_REVIEW\\actual_profile_review_G3_integer_c842bbd.json": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_20261118_01\\INDEPENDENT_REVIEW\\actual_profile_review_G3_integer_c842bbd.json",
+      "sha256": "d7be42833f87f02271f0b75aa61ae26a6d9ca043a375744fd826be5ef8258771"
+    },
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_20261118_01\\INDEPENDENT_REVIEW\\actual_profile_review_G3_relaxed_c842bbd.json": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_20261118_01\\INDEPENDENT_REVIEW\\actual_profile_review_G3_relaxed_c842bbd.json",
+      "sha256": "511325d7da9e2670874dc19ef69ddc8a7f9d98ec33636af23572adc9048875f3"
+    },
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_20261118_01\\INDEPENDENT_REVIEW\\mathematical_candidate_review_G2_integer_c842bbd.json": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_20261118_01\\INDEPENDENT_REVIEW\\mathematical_candidate_review_G2_integer_c842bbd.json",
+      "sha256": "f653dfe21f411b0c6dc6dacf57d1c2674d3b4c73c00c4fc9b2ca6b1e33f6e1fe"
+    },
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_20261118_01\\INDEPENDENT_REVIEW\\mathematical_candidate_review_G2_relaxed_c842bbd.json": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_20261118_01\\INDEPENDENT_REVIEW\\mathematical_candidate_review_G2_relaxed_c842bbd.json",
+      "sha256": "76a0ef859ac44d7465369549d10fb9fe7517b937fa6dd99f1077335e53880af3"
+    },
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_20261118_01\\INDEPENDENT_REVIEW\\physical_candidate_review_G2_relaxed_c842bbd.json": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_20261118_01\\INDEPENDENT_REVIEW\\physical_candidate_review_G2_relaxed_c842bbd.json",
+      "sha256": "e2115e19d4b592fee6546de45b013d5fa8262a4069228fb2c420a96af91bdfae"
+    },
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_20261118_01\\INDEPENDENT_REVIEW\\G2_integer_time_limit_and_monitoring_finding_ledger.json": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_20261118_01\\INDEPENDENT_REVIEW\\G2_integer_time_limit_and_monitoring_finding_ledger.json",
+      "sha256": "1d00041df886e68f25b44e1c664270ebb226036f8ee58959f541e11c5a67e1b4"
+    },
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_RESTART_20261119_01\\INDEPENDENT_REVIEW\\admission.json": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_RESTART_20261119_01\\INDEPENDENT_REVIEW\\admission.json",
+      "sha256": "90ae3064d01aef358cc21757c417edf8a44a99405c84a2bd41898c16604872ad"
+    },
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_RESTART_20261119_01\\INDEPENDENT_REVIEW\\G3_NUMERICAL_REJECT_AND_TARGETED_PROFILE_CORRECTION_FINDING_LEDGER.json": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_RESTART_20261119_01\\INDEPENDENT_REVIEW\\G3_NUMERICAL_REJECT_AND_TARGETED_PROFILE_CORRECTION_FINDING_LEDGER.json",
+      "sha256": "f29bc009caa743cf6520411f733ea790be63c392631eadc08003f933114ff981"
+    },
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_RESTART_20261119_01\\INDEPENDENT_REVIEW\\G3_numeric_reject_diagnostics.json": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_RESTART_20261119_01\\INDEPENDENT_REVIEW\\G3_numeric_reject_diagnostics.json",
+      "sha256": "84bd9e0411a4f47dfe8ec917ca43635c9422f1fbab09d49cde8d1495e7f74ab9"
+    },
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_NUMERIC_RECOVERY_20261119_01\\INDEPENDENT_REVIEW\\numeric_correction_clean_commit_8e046881_review.json": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_NUMERIC_RECOVERY_20261119_01\\INDEPENDENT_REVIEW\\numeric_correction_clean_commit_8e046881_review.json",
+      "sha256": "b867b970dae7276f1700f05860b90aab85625a9f67791b626c7207730ebba49a"
+    },
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_NUMERIC_RECOVERY_20261119_01\\INDEPENDENT_REVIEW\\admission.json": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_NUMERIC_RECOVERY_20261119_01\\INDEPENDENT_REVIEW\\admission.json",
+      "sha256": "0992651f36a8c52f2d3c7b5ae69f7d7b49838e779c789860e22bd1c6c4a64d1c"
+    },
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_NUMERIC_RECOVERY_20261119_01\\INDEPENDENT_REVIEW\\G3_numeric_reject_diagnostics.json": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_NUMERIC_RECOVERY_20261119_01\\INDEPENDENT_REVIEW\\G3_numeric_reject_diagnostics.json",
+      "sha256": "8806618aee399cbbe8387d3e2cb36bd7eb0ba1ab3d833ccb44f2ac5174a860bd"
+    },
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_MOSEK_20261119_01\\INDEPENDENT_REVIEW\\admission.json": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_MOSEK_20261119_01\\INDEPENDENT_REVIEW\\admission.json",
+      "sha256": "2b05c64a6345cb0fc65bdb34bca3c8f278e1b2d8c463611c4e27c6a8c88af45a"
+    },
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_MOSEK_20261119_01\\INDEPENDENT_REVIEW\\mathematical_reader_mosek_configuration.json": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_MOSEK_20261119_01\\INDEPENDENT_REVIEW\\mathematical_reader_mosek_configuration.json",
+      "sha256": "c07a1ac30521d9733777efc03209b2f3c8d837a695b70aff3fcbb7693b0ee807"
+    },
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_MOSEK_20261119_01\\INDEPENDENT_REVIEW\\physical_reader_mosek_configuration.json": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_MOSEK_20261119_01\\INDEPENDENT_REVIEW\\physical_reader_mosek_configuration.json",
+      "sha256": "1236d8b19e608363e309a6d78b35e38f1364c9897dd75bcee07a3b0631013303"
+    },
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_MOSEK_20261119_01\\INDEPENDENT_REVIEW\\existing_native_mosek_delta_review_2fa3e6b5.json": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_MOSEK_20261119_01\\INDEPENDENT_REVIEW\\existing_native_mosek_delta_review_2fa3e6b5.json",
+      "sha256": "dd3b3cb6f60e2ccb15463b33469de8851ceb3136277292c748b56e69f8ac09ee"
+    },
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_MOSEK_20261119_01\\INDEPENDENT_REVIEW\\resource_retry_02_delta_review_2fa3e6b5.json": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_MOSEK_20261119_01\\INDEPENDENT_REVIEW\\resource_retry_02_delta_review_2fa3e6b5.json",
+      "sha256": "64f465fe7344059cffe7716dfadb7cdb99b02cbf9ae19a87bbfdc88ec94e8e3e"
+    },
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_MOSEK_20261119_01\\INDEPENDENT_REVIEW\\resource_retry_02_stopped_window_review_2fa3e6b5.json": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_MOSEK_20261119_01\\INDEPENDENT_REVIEW\\resource_retry_02_stopped_window_review_2fa3e6b5.json",
+      "sha256": "020682a4fb50118cbceedbaead91f535de96db710811c825b80402398540135e"
+    },
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_MOSEK_20261119_01\\INDEPENDENT_REVIEW\\resource_stop_before_optimize_review_2fa3e6b5.json": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_MOSEK_20261119_01\\INDEPENDENT_REVIEW\\resource_stop_before_optimize_review_2fa3e6b5.json",
+      "sha256": "c58b36d9cdbc027244264eb437a3b6460e578d6d68593f3176fd58818816a931"
+    },
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_MOSEK_20261119_01\\INDEPENDENT_REVIEW\\mathematical_mosek_metadata_smoke.json": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_MOSEK_20261119_01\\INDEPENDENT_REVIEW\\mathematical_mosek_metadata_smoke.json",
+      "sha256": "9b41eb1aac53607170d474af34f7e6a2304f3f3113917809adab1dc142ba1f4e"
+    }
+  },
+  "tests": {
+    "shared_gfl_tests_04.log": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_20261118_01\\shared_gfl_tests_04.log",
+      "sha256": "4b188c50d4444c39b87199f2a51e615b0e88643ff549a24ce946a453eb4d4a3f"
+    },
+    "shared_gfl_tests_06_native.log": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_20261118_01\\shared_gfl_tests_06_native.log",
+      "sha256": "ae460f6a3461dae455a34c5d92b46ffc3148f0f2d83f5aa28fdd5c0bd81d4fb8"
+    },
+    "helper_anchor_test.log": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_20261118_01\\helper_anchor_test.log",
+      "sha256": "7069707d3b50161d73e66243988dfc052e83672cc6a902dfb9a9aa31a360341e"
+    },
+    "numeric_remediation_tests.log": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_RESTART_20261119_01\\numeric_remediation_tests.log",
+      "sha256": "adf5d1b93d1de817aac2d4f1b3e7b8469d4534f84c9decdbe78a448459b08ff8"
+    },
+    "numeric_remediation_default_regression.log": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_RESTART_20261119_01\\numeric_remediation_default_regression.log",
+      "sha256": "852fcdee6451afaf33c65d00fa6b89466da7a898768816d7986494ca0284fe39"
+    },
+    "mosek_class_and_currency_tests.log": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_NUMERIC_RECOVERY_20261119_01\\mosek_class_and_currency_tests.log",
+      "sha256": "a53525ee2b2cefa600c851e74149dbdff96147f4234b10625d195cd98fc5e3af"
+    }
+  },
+  "scope_limits": [
+    "Only the selected technical 168-hour study; no observed full-year energy-mix claim.",
+    "Frozen-E source proxy; no physical controlled/current-limited GFM equivalence.",
+    "No new Full37-year, SCI02, Gate-J, F3, AC, fault-current or dynamic release.",
+    "LOCAL/M0 are postsolve diagnostics, not activated optimization variants.",
+    "External SCR/eSCR needs the actual chosen source/fault/denominator/Qc binding; M1 needs qualified Bmin and M2 qualified W."
+  ],
+  "test_scope": {
+    "shared_exposure_assertions": 259,
+    "initial_native_assertions": 17,
+    "corrective_native_assertions": 37,
+    "default_regression_assertions": 34,
+    "native_MOSEK_class_assertions": 22,
+    "note": "Failed earlier harness/adapter attempts retained; scoped tests only, no closed general review repeated."
+  },
+  "retention": {
+    "HEAD": "becec6d63c0fbf2b8a160c41f87631f5270046b9",
+    "branch": "codex/paper-a-q5-memory-139",
+    "status": " M src/block_gscr_converter.jl\n?? docs/data_ssot/\n?? scripts/archive/\n",
+    "preserved_file": "D:\\Projekte\\Code\\pypsatomatpowerx\\src\\block_gscr_converter.jl",
+    "working_file_sha256": "aceb4661c9fe3c92e41acf44a52250af2549a46c437a162e46f319453dfa1314",
+    "Q4_diff_sha256": "56e116eb31589a19fe981dac46cc7f707bc603caedb57a1f5ff6183d740fefa8",
+    "current_working_file_sha256": "aceb4661c9fe3c92e41acf44a52250af2549a46c437a162e46f319453dfa1314",
+    "Q4_unchanged": true,
+    "original_data_published": false,
+    "large_outputs_local_E": true,
+    "additional_worktrees": false,
+    "special_backups": false
+  },
+  "observed_dependency_drift": {
+    "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_MOSEK_20261119_01\\observed_dependency_drift_20261119.json",
+    "sha256": "4b5d50292d49115bf88237486d5ef40acdf93421c386792da98a52900995005c"
+  },
+  "unresolved_execution_requirements": [
+    "Durable host commit reserve above the unchanged live guard.",
+    "Reconcile externally changed Project/Manifest and qualify actual solver environment before another run."
+  ],
+  "execution_status": "G1/G2 evidence closed; G3 MOSEK resource-blocked after two guarded attempts; later observed environment drift unresolved; no own numerical process remains active"
+}

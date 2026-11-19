@@ -1,0 +1,99 @@
+{
+  "schema": "paper_a_final_independent_documentation_resource_delta_review_v1",
+  "status": "PASS_SCOPED_DOCUMENTATION_RESOURCE_AND_DEPENDENCY_OBSERVATION",
+  "reviewer_role": "root_gfm_epri_math_qual",
+  "created_utc": "2026-11-19T22:25:32.166056+00:00",
+  "consumer_code_pin": "2fa3e6b5e4d1b034f080a2a1d512b3fad2dfbf81",
+  "index": {
+    "path": "D:\\Projekte\\Code\\FlexPlan_UC_GSCR\\docs\\paper_a\\receipts\\kw08_existing_strength_comparison_20261119.json",
+    "sha256": "fffd46049d13eff6831ac6acda95382301adb73c9016c5a6cde34b696b9de4eb"
+  },
+  "documents": [
+    {
+      "path": "D:\\Projekte\\Code\\FlexPlan_UC_GSCR\\docs\\paper_a\\kw08_strength_comparison.md",
+      "sha256": "6237a031a77c4292b9425fff3594fe1e15252df56dde5a5b44af7a34f7917481"
+    },
+    {
+      "path": "D:\\Projekte\\Code\\FlexPlan_UC_GSCR\\docs\\paper_a\\full37_technical_studies_and_execution_status.md",
+      "sha256": "eee9af2681ad2db0907cb00c7fd4420ffe5a73dd5d3aac21e179a003a80b504e"
+    }
+  ],
+  "inherited_closed_documentation_review": {
+    "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_MOSEK_20261119_01\\INDEPENDENT_REVIEW\\documentation_evidence_index_review_2fa3e6b5.json",
+    "sha256": "33524f7f0b091ca2c898193f2655fb0371cb2b2754588c5267b9a893883bf0fe"
+  },
+  "inherited_unique_reference_pairs": 39,
+  "inherited_reference_occurrences": 41,
+  "inherited_reference_pairs_all_retained": true,
+  "added_unique_small_artifact_references": [
+    {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_MOSEK_20261119_01\\G3\\relaxed\\native_optimization_window.json",
+      "sha256": "43f537a9636252aa88acf1955caecc835003d79904ee2244a7ddebbc2b7adbf7"
+    },
+    {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_MOSEK_20261119_01\\INDEPENDENT_REVIEW\\resource_retry_02_stopped_window_review_2fa3e6b5.json",
+      "sha256": "020682a4fb50118cbceedbaead91f535de96db710811c825b80402398540135e"
+    },
+    {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_MOSEK_20261119_01\\PROCESS_LOGS\\G3_relaxed_fresh_01\\process_profile.json",
+      "sha256": "17e9f8456457f4442aed72bb868abbf5a89b3d973795b008771170611a72fbc5"
+    },
+    {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_MOSEK_20261119_01\\PROCESS_LOGS\\G3_relaxed_resource_retry_02\\hard_supervision.json",
+      "sha256": "36d6b5dd03d91f2d4b649ff65cfc54a8c89db1a31ba654e0e0740c44175be69d"
+    },
+    {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_MOSEK_20261119_01\\PROCESS_LOGS\\G3_relaxed_resource_retry_02\\process_profile.json",
+      "sha256": "5c198501da3464f7a838ab913839e079aa72359660d9c6c11aa83fb9340ad839"
+    },
+    {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_MOSEK_20261119_01\\observed_dependency_drift_20261119.json",
+      "sha256": "4b5d50292d49115bf88237486d5ef40acdf93421c386792da98a52900995005c"
+    }
+  ],
+  "actual_second_resource_receipt": {
+    "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_MOSEK_20261119_01\\INDEPENDENT_REVIEW\\resource_retry_02_stopped_window_review_2fa3e6b5.json",
+    "sha256": "020682a4fb50118cbceedbaead91f535de96db710811c825b80402398540135e"
+  },
+  "checked_claims": [
+    "Both guarded attempts accurately distinguished; no MOSEK candidate, solver status or integer run claimed.",
+    "Second solve_enter/window marker does not establish native iterations, completed optimize, feasibility or CPU time.",
+    "Consumed supervisor cannot be reused over existing output; no automatic retry release.",
+    "G2 no-incumbent/budget gaps and two rejected Gurobi points remain separate and unchanged.",
+    "Original CAPEX/OPEX weighting, cost/sentinel exclusions and scientific gate limits preserved.",
+    "Q4 working-file and git-diff bytes unchanged."
+  ],
+  "dependency_observation": {
+    "receipt": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_MOSEK_20261119_01\\observed_dependency_drift_20261119.json",
+      "sha256": "4b5d50292d49115bf88237486d5ef40acdf93421c386792da98a52900995005c"
+    },
+    "working_Project": {
+      "path": "D:\\Projekte\\Code\\FlexPlan_UC_GSCR\\Project.toml",
+      "sha256": "30efd0627fd65a4ef11944e75b669bed0279c1b10ff72f802c66a0da86ceb25e"
+    },
+    "working_Manifest": {
+      "path": "D:\\Projekte\\Code\\FlexPlan_UC_GSCR\\Manifest.toml",
+      "sha256": "89e4a3323bd8991280d7cac72b9f5fa4941765934201a70fc301b1097d3caa83"
+    },
+    "pinned_Project_blob_sha256": "9bddc0fcad4fb4f23d9b7ea8996d76b76ae4c33e2a09b4873c9c26b51d2e7318",
+    "diff_matches_observation": true,
+    "last_write_times_within_retry_sampling_window": true,
+    "loaded_process_package_versions": "UNKNOWN_NOT_EXPORTED",
+    "writer": "UNATTRIBUTED",
+    "environment_for_another_run": "REQUIRES_RECONCILIATION_AND_TARGETED_QUALIFICATION",
+    "Project_and_Manifest_unstaged_at_review": true
+  },
+  "remaining_documentation_findings": [],
+  "actual_candidate_gate_issued": false,
+  "scientific_or_numerical_finding_ledger_created": false,
+  "release_limit": "Review permits documentation only. No new optimization, dependency change, environment qualification, candidate/Full37-year/SCI02/Gate-J/F3/AC/dynamic/publication GO.",
+  "reviewer_operations": {
+    "repository_writes": 0,
+    "environment_changes": 0,
+    "model_builds": 0,
+    "solver_calls": 0,
+    "large_case_reads": 0,
+    "process_actions": 0
+  }
+}

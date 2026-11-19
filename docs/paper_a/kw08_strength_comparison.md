@@ -199,7 +199,7 @@ Knotenbilanz, Dispatch, Untergrenzen und Kegel; die vollständigen 52 Kanten
 und alle q-Zeugen sind vorhanden. Es handelt sich um einen breit numerisch
 schlechten Primalpunkt, keinen Nachweis mathematischer G3-Infeasibility.
 Diagnose-SHA:
-`eb4b26e79826a279fda5a1dea651b0f8e89f2644eb98913ec6300d4510db32ec`.
+`84bd9e0411a4f47dfe8ec917ca43635c9422f1fbab09d49cde8d1495e7f74ab9`.
 Der folgende MISOCP-Aufbau wurde deshalb vor `optimize!` beendet; alle
 Teil-/Fehlerdateien bleiben erhalten. Die Zeitaufsicht des SOCP-Laufs war
 beobachtet (maximale Monitoringlücke 0,297 s), der Prozess endete in
@@ -251,3 +251,109 @@ werden für MOSEK nicht erfunden. Native MOI-Status/Schranken und die separate
 Originalprimalprüfung werden ausdrücklich unterschieden. Ein strukturierter
 Start-/Endmarker begrenzt die Optimierungszeit unabhängig vom Logformat.
 Diese kleine Klassenprüfung ist noch keine Fullcase- oder Gate-J-Freigabe.
+
+### MOSEK: Ressourcenstopp vor der Optimierung
+
+Der neue Versuch verwendet Consumer-Commit
+`2fa3e6b5e4d1b034f080a2a1d512b3fad2dfbf81` und Runtime-SHA
+`49a44d705ff46c2eee15daffeb4f1abb950be609115806efbd001651f440204d`.
+Er wurde nach 107,921 s während der AP2-Modellinstanziierung, vor
+`optimize!`, beendet: Die freie
+Windows-Commit-Reserve sank von 8.142.782.464 auf 1.808.502.784 Bytes und
+unterschritt den unveränderten 2-GiB-Reserveguard. Der Prozess erreichte
+3.748.470.784 Private Bytes. `optimize!` wurde nicht aufgerufen; weder ein
+kontinuierlicher Kandidat noch ein Ganzzahllauf liegen vor. Dieser Status
+ist `RESOURCE_STOP_BEFORE_OPTIMIZE`, keine numerische Zurückweisung und
+kein Infeasibility-Nachweis. Der generische Queue-Text zum fehlenden
+Relaxationsgate wird ausschließlich als fehlende Summary interpretiert.
+Unabhängiger Ressourcenreceipt:
+`c58b36d9cdbc027244264eb437a3b6460e578d6d68593f3176fd58818816a931`.
+
+Für einen frischen Versuch wurden unveränderte Runtime-, Case- und Profilbytes
+vorbereitet. Er nutzt eigene Prozesslogs und einen eigenen Queuestatus;
+vorhandene Ausgaben dürfen nicht überschrieben werden. Der Start verlangt
+mindestens 7 GiB freie Windows-Commit-Reserve und 2 GiB freien Platz auf E:.
+Dies ist ein technisches Eintrittsminimum, keine Zusage, dass das Modell
+passt; der laufende 2-GiB-Guard bleibt maßgeblich. Der erste Versuch begann
+bereits oberhalb dieses Eintrittsminimums. Die unabhängige Prüfung dieses
+ausschließlichen Ressourcen-/I/O-Deltas ist PASS, Receipt-SHA
+`64f465fe7344059cffe7716dfadb7cdb99b02cbf9ae19a87bbfdc88ec94e8e3e`.
+Der für diesen Versuch verwendete Supervisor ist
+`E:/ResearchResults/FlexPlan_UC_GSCR/TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_MOSEK_20261119_01/run_resource_retry_02.py`.
+
+Für den tatsächlichen Neustart muss im bestehenden Consumer-Worktree der
+geprüfte Code-Commit `2fa3e6b5e4d1b034f080a2a1d512b3fad2dfbf81` aktiv sein.
+Ein späterer reiner Berichtscommit ändert diesen Laufpin nicht; ein Start
+unter einem ungeprüften anderen HEAD wird vom Supervisor zurückgewiesen.
+Nach einem gespeicherten SOCP-Kandidaten müssen die unabhängige physische
+und mathematisch-ökonomische Originalpunktprüfung beide PASS ergeben,
+bevor der MISOCP-Lauf beginnen darf. Es werden keine alten LP-Werte als
+Starts, Rundungen oder künstliche Blockuntergrenzen übernommen.
+
+### Zweiter MOSEK-Versuch: Ressourcenstopp im Optimierungsfenster
+
+Nach einer tatsächlich positiven Eintrittsmessung wurde `resource_retry_02`
+am 19. November gestartet. Der identische Modellaufbau erreichte
+`solve_enter` und den strukturierten Optimierungsstartmarker. Nach
+229,391 s Prozesszeit stoppte der unveränderte Guard erneut den eigenen
+Julia-Prozess: globale Commit-Reserve 1.884.160.000 Bytes, bei anfänglich
+8.789.581.824 Bytes. Peak Private lag bei 4.550.295.552 Bytes und damit
+unter dem separaten Prozesslimit von 12 GiB. Die letzte physische
+RAM-Reserve betrug 3.992.924.160 Bytes, freier Platz auf E: etwa 21,6 GB.
+Entscheidend war somit die globale Windows-Commit-Reserve, nicht der freie
+Plattenplatz und nicht eine Überschreitung des Prozesslimits.
+
+Das Optimierungsfenster war 18,743 s offen; ein Endmarker, nativer
+Ergebnisstatus und Kandidat fehlen. Aus dem Startmarker werden keine
+belegten MOSEK-Iterationen oder aktiven CPU-Sekunden abgeleitet. Der
+Supervisor misst höchstens 0,344 s Monitoringlücke; sein 7.200-s-Hardlimit
+war nicht erreicht. Die Klassifikation ist
+`RESOURCE_STOP_DURING_OPTIMIZATION_WINDOW_NO_CANDIDATE`. Weder ein
+Infeasibility-Nachweis noch eine numerische Modellzurückweisung liegt vor.
+Das nachgelagerte Ganzzahlmodell wurde nicht gestartet. Queue, Profiler
+und Julia-Prozess sind beendet; es bleibt kein eigener Solverlauf aktiv.
+
+Die Dateien dieses zweiten Versuchs bleiben unter
+`PROCESS_LOGS/G3_relaxed_resource_retry_02` und `queue_resource_retry_02.json`
+im MOSEK-Ausgabeverzeichnis erhalten. Der oben genannte Supervisor ist
+damit bereits verbraucht; sein Überschreibschutz weist einen unmittelbaren
+Wiederaufruf zurück. Ein nächster Versuch benötigt neue reine I/O-Ziele
+und eine dazu passende gezielte Admission bei unverändertem Codepin.
+Zuvor muss ausreichend dauerhafte Windows-Commit-Reserve verfügbar sein.
+Das bloße erneute Erreichen des 7-GiB-Eintrittsminimums hat sich nicht als
+hinreichende Ressourcenqualifikation erwiesen. Fremde Prozesse oder die
+Windows-Auslagerungsdatei wurden durch diesen Auftrag nicht verändert.
+
+Die unabhängige Prüfung dieses zweiten Ressourcenstopps bestätigt die
+Klassifikation, SHA-256
+`020682a4fb50118cbceedbaead91f535de96db710811c825b80402398540135e`.
+Das bestehende Findingledger wird referenziert; es gibt kein zusätzliches
+numerisches oder wissenschaftliches Negativledger.
+
+### Parallel beobachtete Änderung der Solverumgebung
+
+Während des zweiten Versuchs wurden um 23:12:50 Uhr die lokalen
+`Project.toml`-/`Manifest.toml`-Dateien außerhalb dieses ORCH-Auftrags
+geändert. In `Project.toml` wurden `Mosek = "=11.0.1"` und
+`MosekTools = "=0.15.10"` durch `"11.2.1"` beziehungsweise `"0.15.11"`
+ersetzt. Diese Änderungen bleiben unangetastet und außerhalb des
+Berichtscommits. Der Verursacher ist nicht zugeordnet. Die vom abgebrochenen
+Prozess tatsächlich geladenen Paketversionen wurden nicht exportiert und
+werden nicht aus dem später geänderten Manifest abgeleitet.
+
+Beobachtungsreceipt:
+`4b5d50292d49115bf88237486d5ef40acdf93421c386792da98a52900995005c`.
+Vor einem weiteren Lauf sind deshalb sowohl die dauerhafte Ressourcenreserve
+als auch eine eindeutig qualifizierte Solverumgebung herzustellen. Das ist
+keine erneute allgemeine Parameter- oder Modellprüfung; die abgeschlossenen
+G1-/G2-Ergebnisse werden dadurch nicht erneut geöffnet. Ein akzeptierter
+G3-Punkt ist aus den abgebrochenen Versuchen ohnehin nicht vorhanden.
+
+Der kompakte, versionierte Evidenzindex steht unter
+[`receipts/kw08_existing_strength_comparison_20261119.json`](receipts/kw08_existing_strength_comparison_20261119.json).
+Originaldaten, Fälle, vollständige Solverlogs, Profile und Kandidaten
+bleiben auf E:. Der Producer-Q4-Hunk bleibt unverändert. Die offenen Punkte
+sind damit getrennt: G2-MILP ohne Incumbent, zwei numerisch zurückgewiesene
+G3-Gurobi-Punkte und der ressourcenblockierte G3-MOSEK-Lauf. Nur die
+akzeptierte G2-LP-Lösung und die bereits geprüften G1-/Gegenläufe werden als
+Vergleichsergebnisse verwendet.
