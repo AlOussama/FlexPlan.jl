@@ -175,7 +175,7 @@ else
             profile["objective_backend_divisor"]=objective_divisor
             JuMP.set_objective_function(model,conditioned)
             if equivalent_conditioning
-                conditioned_copy=G3EquivalentConditioning.scaled_copy(model;protected=Set(discrete))
+                global conditioned_copy=G3EquivalentConditioning.scaled_copy(model;protected=Set(discrete))
                 profile["equivalent_conditioning"]=conditioned_copy.metadata
                 profile["conditioning_source_sha256"]=sha_file(joinpath(@__DIR__,"G3EquivalentConditioning.jl"))
                 profile["conditioned_input_range"]=N.input_range(conditioned_copy.model)
@@ -186,6 +186,9 @@ else
         end
     else
         profile["status"]="PROFILE_READY"
+    end
+    if equivalent_conditioning && profile["status"]=="PROFILE_READY"
+        conditioned_copy!==nothing && conditioned_copy.model!==model || error("Conditioned copy missing; optimize not called")
     end
     if phase=="profile"
         writejson(joinpath(out,"profile.json"),profile)
@@ -200,6 +203,10 @@ else
         constructor=native_backend==:mosek ? N.MosekTools.Optimizer : Gurobi.Optimizer
         opt=JuMP.optimizer_with_attributes(constructor,params...)
         solver_model=conditioned_copy===nothing ? model : conditioned_copy.model
+        if equivalent_conditioning
+            solver_model===conditioned_copy.model && solver_model!==model || error("Wrong conditioned solver model; optimize not called")
+            N.input_range(solver_model)==profile["conditioned_input_range"] || error("Actual conditioned input range differs from profile; optimize not called")
+        end
         JuMP.set_optimizer(solver_model,opt)
         criterion=="G3" && N.configure_bridges!(solver_model,opt)
         bridge=criterion=="G3" ? N.prepare_backend!(solver_model,opt) : nothing

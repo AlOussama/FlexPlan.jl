@@ -62,6 +62,35 @@ analytical, symbolic and actual-native mapping reviews. MISOCP requires an
 independent positive SOCP original-point gate. A negative result ends this
 bounded numerical recovery; no general parameter sweeps follow.
 
-Execution results and independent receipt SHAs are appended after the bounded
-attempt. No new annual Full37, Gate J, F3, AC, dynamics or publication approval
-is implied by this technical conditioning work.
+## Actual attempt and technical routing correction
+
+The single actual native call under `773d16df2ece04c01c90781fdfcd6089ef8382de`
+submitted the original model. A noninteractive Julia top-level `try` created
+a local `conditioned_copy`, leaving the outer binding `nothing`. The profile
+therefore described the correct transformed copy, while the solve branch
+selected the untransformed model. The explicit scope warning and native old
+matrix ranges/fingerprint independently confirm this integration defect.
+The initial reviewer admission is revoked for the actual submission. Algebraic
+equivalence proofs and the analytical scaling tests retain their own scopes.
+
+Gurobi finished its unscaled solve after 190.375 s with suboptimal termination.
+The exact task worker was terminated after that native finish, interrupting
+the remaining candidate export. The saved full primal is retained; its
+coordinate file is empty and the final run summary/completion marker is absent.
+No accepted G3 costs or bounds are derived from this incomplete, misrouted run.
+
+The source repair explicitly assigns the global copy, rejects a missing copy
+before publishing a ready profile, and checks solver-model identity and actual
+coefficient range immediately before optimization. A noninteractive test
+executes the actual runner's `try` and preopt guard blocks, including missing
+copy, range mismatch and the original soft-scope regression. This closes a gap
+left by the initial module-level tests.
+
+One actual native Fullcase call is counted, zero qualified conditioned calls.
+There is no hidden retry. Further fixed-week validation of the routing repair
+is profile/native-attachment only, without `optimize!`. Numerical efficacy of
+the conditioning remains untested. MISOCP remains blocked; a new numerical
+attempt requires a new bounded attempt allocation.
+
+Final receipt SHAs are recorded in the accompanying compact handoff index.
+No new annual Full37, Gate J, F3, AC, dynamics or publication approval is implied.
