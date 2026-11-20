@@ -48,8 +48,11 @@ common=replace_once(common,"gscr_rows=[row for t in 1:168 for row in values(fp.c
 Base.include_string(Main,common,common_path)
 include("AP3Pipeline.jl")
 const N=AP3Pipeline.NativeG3Solver
+const equivalent_conditioning=get(ENV,"PAPER_A_G3_EQUIVALENT_CONDITIONING","0")=="1"
+equivalent_conditioning && (criterion!="G3" || native_backend!=:gurobi) && error("Conditioning is qualified only for G3/Gurobi")
+equivalent_conditioning && include("G3EquivalentConditioning.jl")
 const out=joinpath(root,criterion,mode)
-const case_dir=joinpath(root,"CASES",criterion)
+const case_dir=get(ENV,"PAPER_A_STRENGTH_EXISTING_CASE_DIR",joinpath(root,"CASES",criterion))
 const case_path=joinpath(case_dir,"case.json")
 writejson(path,obj)=open(io->JSON.print(io,obj,2),path,"w")
 function native_attributes(model)
@@ -156,6 +159,7 @@ else
         "mode"=>mode,"case_sha256"=>sha_file(case_path),"hours"=>168,"quota_pct"=>70,"annual_factor"=>annual_factor,
         "variables"=>JuMP.num_variables(model),"original_discrete_count"=>length(discrete),"attributes"=>params,
         "strength_rows"=>length(w.gscr_rows),"solver_class"=>criterion=="G2" ? (mode=="integer" ? "MILP" : "LP") : (mode=="integer" ? "MISOCP" : "SOCP"))
+    conditioned_copy=nothing
     if criterion=="G3"
         if native_backend==:gurobi
             params["NonConvex"]=0
@@ -170,6 +174,12 @@ else
             profile["objective_conditioning"]=meta
             profile["objective_backend_divisor"]=objective_divisor
             JuMP.set_objective_function(model,conditioned)
+            if equivalent_conditioning
+                conditioned_copy=G3EquivalentConditioning.scaled_copy(model;protected=Set(discrete))
+                profile["equivalent_conditioning"]=conditioned_copy.metadata
+                profile["conditioning_source_sha256"]=sha_file(joinpath(@__DIR__,"G3EquivalentConditioning.jl"))
+                profile["conditioned_input_range"]=N.input_range(conditioned_copy.model)
+            end
             profile["status"]="PROFILE_READY"
         catch e
             profile["status"]="OPTIMIZE_NOT_CALLED";profile["reason"]=sprint(showerror,e)
@@ -189,19 +199,29 @@ else
             gate["cases"][criterion]==sha_file(case_path) || error("Independent actual case/profile admission missing")
         constructor=native_backend==:mosek ? N.MosekTools.Optimizer : Gurobi.Optimizer
         opt=JuMP.optimizer_with_attributes(constructor,params...)
-        JuMP.set_optimizer(model,opt)
-        criterion=="G3" && N.configure_bridges!(model,opt)
-        bridge=criterion=="G3" ? N.prepare_backend!(model,opt) : nothing
-        native_backend==:gurobi && JuMP.set_optimizer_attribute(model,"LogFile",joinpath(out,"gurobi.log"))
+        solver_model=conditioned_copy===nothing ? model : conditioned_copy.model
+        JuMP.set_optimizer(solver_model,opt)
+        criterion=="G3" && N.configure_bridges!(solver_model,opt)
+        bridge=criterion=="G3" ? N.prepare_backend!(solver_model,opt) : nothing
+        native_backend==:gurobi && JuMP.set_optimizer_attribute(solver_model,"LogFile",joinpath(out,"gurobi.log"))
         report("solve_enter",profile)
         started=time()
         writejson(joinpath(out,"native_optimization_window.json"),Dict("status"=>"running",
             "backend"=>string(native_backend),"started_epoch_s"=>started))
-        JuMP.optimize!(model)
+        JuMP.optimize!(solver_model)
         writejson(joinpath(out,"native_optimization_window.json"),Dict("status"=>"finished",
             "backend"=>string(native_backend),"started_epoch_s"=>started,"finished_epoch_s"=>time(),
-            "reported_solver_time_s"=>JuMP.solve_time(model)))
-        native=native_attributes(model)
+            "reported_solver_time_s"=>JuMP.solve_time(solver_model)))
+        native=native_attributes(solver_model)
+        if conditioned_copy!==nothing
+            if JuMP.has_values(solver_model)
+                CSV.write(joinpath(out,"scaled_primal_backmap.csv"),[(original_index=JuMP.index(v).value,
+                    scaled_index=JuMP.index(conditioned_copy.variables[v]).value,exponent=conditioned_copy.exponents[v],
+                    scaled_value=JuMP.value(conditioned_copy.variables[v]),original_value=G3EquivalentConditioning.backmap(conditioned_copy,v))
+                    for v in JuMP.all_variables(model)])
+            end
+            G3EquivalentConditioning.project_results!(model,conditioned_copy)
+        end
         reported_bound=try JuMP.objective_bound(model) catch; nothing end
         currency_bound=N.original_currency_bound(reported_bound,objective_divisor)
         result=merge(copy(profile),Dict("status"=>string(JuMP.termination_status(model)),"primal_status"=>string(JuMP.primal_status(model)),
