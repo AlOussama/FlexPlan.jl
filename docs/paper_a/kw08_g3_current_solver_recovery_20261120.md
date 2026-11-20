@@ -71,7 +71,23 @@ Der Gurobi-Wochenlauf verwendet die bestehenden vier Threads, 7.200 s,
 exakte RSOC-Brücke und die separate Originalprimalprüfung werden beibehalten.
 Ein positives `PrimalStatus` allein ist kein Zulässigkeitsnachweis.
 
+Der erste neue Start unter `e86745fa5dc8a9e0ec4394069e9e4d1cd27a43fc`
+endete nach 45,828 s vor der Optimierung: JSON 1.13.4 liefert standardmäßig
+`JSON.Object`, die bestehende Consumer-Schnittstelle benötigt `Dict{String,Any}`.
+Der Wochenrunner fordert diesen Typ nun an seinen zwei Falllesestellen
+explizit an, genau wie der vorhandene AP1-Importer in `src/io/parse.jl`.
+PowerModels 0.21.7 benötigt JSON 1; alle Paketversionen und das Lockfile
+bleiben unverändert. Die acht gezielten Assertions am tatsächlichen G3-Fall
+bestätigen rekursive Dict-Container, 168 Snapshots, erfolgreiche Vorbereitung,
+unveränderte Originalbytes und unveränderten Profildigest
+`7e043c288061a828e5ab69fddcc5055b7d2afd7b16545b63d78ba097c53880ff`.
+Der Test verwendet denselben vorhandenen SHA-geprüften technischen
+Wochenkontext wie der Runner; die Kernregeln für die Jahreschronologie
+wurden nicht geändert. Es wurde kein Modell oder Solver im Importtest gestartet.
+
 Der frische Lauf erhält eigene Ausgaben unter
+`E:/ResearchResults/FlexPlan_UC_GSCR/TECH_FULL37_KW08_RE70_G3_GUROBI_DICT_20261120_02`.
+Der vorherige technische Start und die Importtestbelege bleiben unter
 `E:/ResearchResults/FlexPlan_UC_GSCR/TECH_FULL37_KW08_RE70_G3_GUROBI_CURRENT_20261120_01`.
 Versions-, System- und zusätzliche MOSEK-Kleintestbelege liegen unter
 `E:/ResearchResults/FlexPlan_UC_GSCR/TECH_FULL37_KW08_RE70_G3_MOSEK_CURRENT_20261120_01`.

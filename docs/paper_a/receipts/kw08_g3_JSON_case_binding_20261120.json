@@ -1,0 +1,11 @@
+{
+  "JSON_version": "1.13.4",
+  "assertions": 8,
+  "case_sha256": "1ceb274ab48bf2e4f90783fa881d394c79fb216d311c6bde197c6fe77dbbb15d",
+  "hours": 168,
+  "model_builds": 0,
+  "original_bytes_unchanged": true,
+  "profile_sha256": "7e043c288061a828e5ab69fddcc5055b7d2afd7b16545b63d78ba097c53880ff",
+  "solver_calls": 0,
+  "status": "PASS"
+}
