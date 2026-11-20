@@ -104,3 +104,50 @@ frühere Lösungen werden nicht als Startwerte übernommen.
 Tatsächliche Code-/Lauf-SHAs, Ergebnisse und Ergebnis-QA werden nach dem Lauf
 ergänzt. Die bestehenden Full37-Jahres-, SCI02-, Gate-J-, F3-, AC- und
 Dynamikgrenzen bleiben erhalten.
+
+## Tatsächlicher Gurobi-Punkt und gebündelte numerische Nachkorrektur
+
+Der Dict-Lauf unter `97b11ee9ac9dfba387e1b8cac3a56720ec4e66a9`
+reproduziert das erwartete Modellprofil. Gurobi 13.0.3 endet nach
+187,713 s mit Status 13 (`LOCALLY_SOLVED`/suboptimal). Der gespeicherte
+Originalpunkt besitzt 4.278 Verletzungen über 1e-6; maximale
+Constraintabweichung 0,0001944473068 und Boundabweichung 0,0000628741764.
+Die ursprünglichen RSOC-Bedingungen bestehen, die Fehler liegen in linearen
+physikalischen Bedingungen und Bounds. Quellen und RE-Exposition stimmen
+weiter bis 1,36e-12 pu. Die unabhängige physische Prüfung findet unter
+anderem 0,0194447 MWh SOC-Abweichung und 0,0081721 MW nodale Bilanzabweichung.
+Es liegt kein zulässiger Studienpunkt vor; sein roher Kostenwert wird nicht
+als Ergebnis oder Kostenuntergrenze verwendet. Bound und Gap sind null.
+
+Originalvektor und Koordinaten sind bytegleich zum früher verworfenen
+NUMERIC_RECOVERY-Punkt. Dessen tatsächlicher nativer Logheader lautet
+Gurobi **12.0.3**; eine abweichende JLL-Manifestversion bezeichnet nicht die
+tatsächlich geladene Bibliothek. Auch die 4.278 Verletzungsdatensätze sind
+feldgleich, nur ihre Reihenfolge unterscheidet sich. Die aktuelle
+mathematische Negativprüfung ist SHA-256
+`2259911538db9b7633681a566eefacb7e987bd37711a2a0c67ba487899ca165e`,
+die physische Negativprüfung
+`5b49f9e6e801f21452acfb88c922b98af2d6f0ae3a5019e739bbf518e3151234`.
+Das SHA-gebundene Eintrittsgate für MISOCP ist NEGATIVE
+(`4be4d3da7773017aa8737ede4d3c5b63ae93550c047db087a41f0aabae44cbae`).
+Der Ganzzahllauf wurde nicht gestartet.
+
+Der Lauf passt nach der aktiven Pagefile-Erweiterung in die beobachteten
+Ressourcen: Peak Private 3.742.691.328 Bytes, Prozesswandzeit 435,641 s,
+keine Ressourcenguards, maximale Monitoringlücke 0,282 s. Die verbleibende
+Blockade dieses Punkts ist numerisch. Dies ist kein Infeasibility-Nachweis.
+
+Genau ein gebündelter technischer Nachkorrekturversuch ergänzt für G3 mit
+Gurobi `ScaleFlag=2` und `Aggregate=0`. Die beobachtete lineare Matrixspanne
+ist etwa 8e-8 bis 3e3, der größte RHS etwa 5e7. Geometrische Skalierung und
+deaktivierte Aggregation sind entsprechende Optionen der
+[Gurobi-13-Numerikhinweise](https://docs.gurobi.com/projects/optimizer/en/13.0/concepts/numericguide/numeric_parameters.html).
+Presolve ist damit nicht als Ursache bewiesen; ein Erfolg wird nicht aus
+der Parameterwahl abgeleitet. Alle Gleichungen, Datensätze, Variablen,
+Zielfunktionskoeffizienten, Prüf- und Feasibility-Toleranzen bleiben erhalten.
+Die 37 vorhandenen gezielten LP-/MIP-/Kegel-/Kostenassertions bestehen auch
+mit diesen beiden Attributen (17,1 s). G1/G2 und der MOSEK-Pfad werden nicht
+geändert. Der frische Nachkorrekturlauf wird separat unter
+`E:/ResearchResults/FlexPlan_UC_GSCR/TECH_FULL37_KW08_RE70_G3_GUROBI_NUMERIC_20261120_03`
+ausgeführt; MISOCP bleibt von zwei tatsächlichen positiven Ergebnis-QAs
+abhängig.

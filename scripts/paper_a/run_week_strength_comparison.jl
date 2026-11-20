@@ -159,6 +159,8 @@ else
     if criterion=="G3"
         if native_backend==:gurobi
             params["NonConvex"]=0
+            params["ScaleFlag"]=2
+            params["Aggregate"]=0
             params["BarQCPConvTol"]=1e-10
             params["FeasibilityTol"]=1e-9
             params["OptimalityTol"]=1e-9

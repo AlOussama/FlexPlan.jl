@@ -25,6 +25,8 @@ include("../scripts/paper_a/NativeG3Solver.jl")
         set_optimizer_attribute(m,"BarQCPConvTol",1e-10)
         set_optimizer_attribute(m,"FeasibilityTol",1e-9)
         set_optimizer_attribute(m,"OptimalityTol",1e-9)
+        set_optimizer_attribute(m,"ScaleFlag",2)
+        set_optimizer_attribute(m,"Aggregate",0)
         N.configure_bridges!(m,opt)
         bridge=N.prepare_backend!(m,opt)
         @test bridge["cones"]==1 && bridge["nonconvex_parameter"]==0
