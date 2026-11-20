@@ -1,0 +1,154 @@
+{
+  "schema": "paper_a_G3_numeric_01_independent_final_handoff_documentation_review_v1",
+  "reviewer": "root_g3_numeric_math",
+  "created_utc": "2026-11-20T20:08:06.905143+00:00",
+  "status": "PASS_SCOPED_FINAL_DOCUMENTATION_AND_BYTE_BINDINGS",
+  "handoff": "G3_NUMERIC_01_EQUIVALENT_CONDITIONING_FINAL_HANDOFF",
+  "reviewed_files": {
+    "D:\\Projekte\\Code\\FlexPlan_UC_GSCR\\docs\\paper_a\\g3_equivalent_conditioning_20261120.md": "d6d241c64a53088ee2e1210229faf4e3f70ed74729174baba4592de0c74056c5",
+    "D:\\Projekte\\Code\\FlexPlan_UC_GSCR\\docs\\paper_a\\receipts\\g3_equivalent_conditioning_final_handoff_20261120.json": "b00c1b0b3bd09f97975bd434f635c61195886b7f012898e6f5d5277e9ff782ae",
+    "D:\\Projekte\\Code\\FlexPlan_UC_GSCR\\docs\\paper_a\\full37_technical_studies_and_execution_status.md": "340b7b886ff190bd15bdc95426bc60a6818ed2170f32ac581f592ac19712d016"
+  },
+  "all_indexed_path_sha_pairs_verified": 25,
+  "verified_artifact_bindings": [
+    {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\G3_NUMERIC_01_EQUIVALENT_CONDITIONING_20261120_01\\execution_environment.json",
+      "sha256": "39fd7a836f18e08c6fe302a3e74e6bdee30ba729655dca7a962e8704d63775c4"
+    },
+    {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\G3_NUMERIC_01_EQUIVALENT_CONDITIONING_20261120_01\\resource_profile.json",
+      "sha256": "bdc6689934f4c38e1c8f305af7d8cbd52e4d0f92aa5dde280e4a5331d038f431"
+    },
+    {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\G3_NUMERIC_01_EQUIVALENT_CONDITIONING_20261120_01\\routing_failure_abort.json",
+      "sha256": "b57688543bc56e9c0668f0191c6cbd14b37c8b41099762da1774edff9d9bd48c"
+    },
+    {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\G3_NUMERIC_01_EQUIVALENT_CONDITIONING_20261120_01\\ANALYSIS\\original_point_replays.json",
+      "sha256": "b4ee137792ca0fbce0535c7ae64c4899f3e3d7ea4cd5b83628082604dce58c69"
+    },
+    {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\G3_NUMERIC_01_EQUIVALENT_CONDITIONING_20261120_01\\ANALYSIS\\original_and_scaled_constraints.jsonl",
+      "sha256": "dfe21bd9f7ad4e771689d58c01711a7ab14be70bf15c5c97c9f5cc171f0a96fd"
+    },
+    {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\G3_NUMERIC_01_EQUIVALENT_CONDITIONING_20261120_01\\ANALYSIS\\actual_native_model.json",
+      "sha256": "5dbbffef606cd987b383c20a080ca02ef462bebd67f1451058b0eed723a9f50b"
+    },
+    {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\G3_NUMERIC_01_EQUIVALENT_CONDITIONING_20261120_01\\ANALYSIS\\column_scaling.csv",
+      "sha256": "95dc1cbb8ecd944e45aaaceef72a20de2c2faff422549e521765cea03855ab88"
+    },
+    {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\G3_NUMERIC_01_EQUIVALENT_CONDITIONING_20261120_01\\ANALYSIS\\reference_native_values.csv",
+      "sha256": "0257cfa61c0fcaa34fc3ec4cfb9da6be19acabf7be4faaa60decc48b807bf6a4"
+    },
+    {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\G3_NUMERIC_01_EQUIVALENT_CONDITIONING_20261120_01\\ANALYSIS\\analytic_tests_final_02.log",
+      "sha256": "2b1b7b2057581cb776ecda219b61c0ca59d303367dd162de0a71c905a9c2ffb0"
+    },
+    {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\G3_NUMERIC_01_EQUIVALENT_CONDITIONING_20261120_01\\ANALYSIS\\top_level_runner_scope_tests_final.log",
+      "sha256": "beb31ceb167b2554efb2c83c7aa94a675786a5e234e084f207a330c3151efb8f"
+    },
+    {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\G3_NUMERIC_01_EQUIVALENT_CONDITIONING_20261120_01\\ROUTE_FIX_NO_SOLVE\\profile_and_native_proof_corrected_labels.json",
+      "sha256": "43ddb91e6284c4660c5ca19851ab878f48db236d30382506e5ed7f9bd1c3ff06"
+    },
+    {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\G3_NUMERIC_01_EQUIVALENT_CONDITIONING_20261120_01\\INDEPENDENT_REVIEW\\admission.json",
+      "sha256": "4a457a7bdaee65ac9335554715304866ca619d955c79112e777d17fa1261bad2"
+    },
+    {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\G3_NUMERIC_01_EQUIVALENT_CONDITIONING_20261120_01\\INDEPENDENT_REVIEW\\independent_relaxed_gate.json",
+      "sha256": "d0e70318d398ed7c859451d569311b999e56683ff19e51d60e504c468da2cfad"
+    },
+    {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\G3_NUMERIC_01_EQUIVALENT_CONDITIONING_20261120_01\\INDEPENDENT_REVIEW\\math_route_fix_no_solve_review.json",
+      "sha256": "bae3eda142f5bfe22b2a1fb4990889db6e29c85cd73f4d8e59a0e7b2543261ff"
+    },
+    {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\G3_NUMERIC_01_EQUIVALENT_CONDITIONING_20261120_01\\INDEPENDENT_REVIEW\\mathematical_actual_submission_admission_revocation_softscope_01.json",
+      "sha256": "2327ade03c35ade5b81e6d4ab0f5c61580114a9aa685a2d0af784a4bafd24d07"
+    },
+    {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\G3_NUMERIC_01_EQUIVALENT_CONDITIONING_20261120_01\\INDEPENDENT_REVIEW\\mathematical_actual_unscaled_original_point_review_773d16df.json",
+      "sha256": "6cda8c917cfe085ecc6a7ffacb4d8e0320cb32ea8342b4f5958542c96ee19d4d"
+    },
+    {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\G3_NUMERIC_01_EQUIVALENT_CONDITIONING_20261120_01\\INDEPENDENT_REVIEW\\mathematical_all_rows_symbolic_native_reference_review_01.json",
+      "sha256": "344c6bf1a4f34a24827bfa53e53c838e41676af6ac759210a62e8a757f0951c4"
+    },
+    {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\G3_NUMERIC_01_EQUIVALENT_CONDITIONING_20261120_01\\INDEPENDENT_REVIEW\\mathematical_conditioning_design_and_smallmodel_review_01.json",
+      "sha256": "fc3de342c8bb3798ac78383e24c22858b4ac25399165d86a35065f7a2870ffed"
+    },
+    {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\G3_NUMERIC_01_EQUIVALENT_CONDITIONING_20261120_01\\INDEPENDENT_REVIEW\\mathematical_frozen_profile_admission_773d16df.json",
+      "sha256": "a9df7892fa73e634024a19464a36f3ed625401111cbeaef6c47deada60322186"
+    },
+    {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\G3_NUMERIC_01_EQUIVALENT_CONDITIONING_20261120_01\\INDEPENDENT_REVIEW\\physical_actual_unscaled_point_and_resource_closeout.json",
+      "sha256": "1f6cb7a3d1317ca90248a1759d81474fbdeef234335d8df0030618f38eddd809"
+    },
+    {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\G3_NUMERIC_01_EQUIVALENT_CONDITIONING_20261120_01\\INDEPENDENT_REVIEW\\physical_conditioned_route_admission_revocation_773d16df.json",
+      "sha256": "89a9081a4601a94079569672907acdf7d4428d55932ff0e9d0e574c336947b96"
+    },
+    {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\G3_NUMERIC_01_EQUIVALENT_CONDITIONING_20261120_01\\INDEPENDENT_REVIEW\\physical_equivalent_conditioning_code_review.json",
+      "sha256": "7c16767b3dc140bac5739cdd187e4e5c02941eec7ce1cc9c89d6ae1142e86c41"
+    },
+    {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\G3_NUMERIC_01_EQUIVALENT_CONDITIONING_20261120_01\\INDEPENDENT_REVIEW\\physical_fixed_week_conditioning_reference_review.json",
+      "sha256": "b69e195d24a4f27f883306ff61e8b7da02d19feb0cd6c7b5121d5ac87ca4d00b"
+    },
+    {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\G3_NUMERIC_01_EQUIVALENT_CONDITIONING_20261120_01\\INDEPENDENT_REVIEW\\physical_frozen_profile_single_SOCP_admission_773d16d.json",
+      "sha256": "94e8f180ebf8fd410bcef5da47733e2185ac28f2b26f865460ddd607c5462831"
+    },
+    {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\G3_NUMERIC_01_EQUIVALENT_CONDITIONING_20261120_01\\INDEPENDENT_REVIEW\\physical_route_fix_no_solve_review.json",
+      "sha256": "d39cf111cf6b1d34aa3e9c2bb6d72942f9de45b4c0da6a0030744f7092e4341c"
+    }
+  ],
+  "source_and_case": {
+    "baseline": "a36414fbefba6dc3e414d0c63f3de450df274885",
+    "actual_unscaled_attempt_code": "773d16df2ece04c01c90781fdfcd6089ef8382de",
+    "routing_fixed_source": "4719e08c153d7b387840260dec0561ff6488da43",
+    "case_sha256": "1ceb274ab48bf2e4f90783fa881d394c79fb216d311c6bde197c6fe77dbbb15d",
+    "input_profile_sha256": "7e043c288061a828e5ab69fddcc5055b7d2afd7b16545b63d78ba097c53880ff",
+    "prepared_model_profile_sha256": "f5bddb1817bcd31cff3cc7068685c7b2b35ffcc5cd97c680cfdfb22c04e8cb0c",
+    "actual_attempt_profile_sha256": "25dae3fa305aa348991de45ff1ebe5d18c3f79e85a2c82c5adaf09b19b0b1982",
+    "fixed_no_solve_profile_sha256": "c8a34e36a72273228f2b64b27e6d7483bae4561f2dd241d02fff4dbad0554dce",
+    "all_fixed_source_hashes_match": true,
+    "scientific_core_NativeG3Solver_and_dependency_diff_empty": true,
+    "actual_producer_commit_unchanged": "becec6d63c0fbf2b8a160c41f87631f5270046b9",
+    "actual_producer_Q4_file_and_diff_hashes_reverified": true
+  },
+  "substantive_claims_checked": [
+    "Exactly1actualnativeFullcasecall and0qualifiedconditionedcalls; no second hiddenretry afterroutingfix",
+    "Wrongactualunscaledsubmission, postsolveexportabort, complete actualoriginalvector and incompletecoordinate/summary scope correctly separated",
+    "IndependentactualOriginalpointNEGATIVE at unchanged1e-7 and no MISOCP",
+    "No acceptedG3costs/bound/gap",
+    "Positivealgebraic/43analytic/14runnerscope/sourceNativeAttachmentproof is not a conditioned numericalresult",
+    "NativeStatusLOADED1/Runtime0/SolCount0/nooptimizationwindow correctly qualified",
+    "Rawinput7e043... distinct frompreparedmodel f5bdd...",
+    "TinyactualG2quotaviolation disclosed within original1e-6 acceptance, noG2recalc orreference repair",
+    "Initialpositiveadmissions shown revoked/superseded",
+    "No new annualFull37/SCI02/GateJ/F3/AC/dynamics/publicationGO",
+    "All indexed artifact paths/hashes and original producerretention verified",
+    "Valid UTF8 report and no rawlicenseID publication"
+  ],
+  "remaining_open_canonical_finding": "G3-NUMERIC-01; conditioned efficacy untested and another bounded attempt allocation required",
+  "actual_SOCP_point_gate": "NEGATIVE",
+  "MISOCP_gate": "NOT_EXECUTED_BLOCKED",
+  "new_solve_permission_in_this_review": false,
+  "review_limit": "Documentation/byte review only. Does not grant new runtime budget or override actual negative gate. Root will copy this receipt byte-identically and commit/push documentation only; published Git blob parity remains to be checked by root.",
+  "operations": {
+    "repository_writes": 0,
+    "original_receipt_writes": 0,
+    "reviewer_model_builds": 0,
+    "reviewer_solver_calls": 0
+  }
+}

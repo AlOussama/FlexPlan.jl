@@ -1,0 +1,313 @@
+{
+  "handoff": "G3_NUMERIC_01_EQUIVALENT_CONDITIONING_FINAL_HANDOFF",
+  "final_status": "TECHNICAL_ROUTING_FIX_QUALIFIED_NO_SOLVE__ACTUAL_ORIGINAL_POINT_NEGATIVE__CONDITIONING_EFFICACY_NOT_EXECUTED",
+  "commits": {
+    "baseline": "a36414fbefba6dc3e414d0c63f3de450df274885",
+    "initial_conditioning": "773d16df2ece04c01c90781fdfcd6089ef8382de",
+    "routing_fix": "4719e08c153d7b387840260dec0561ff6488da43",
+    "producer_unchanged": "becec6d63c0fbf2b8a160c41f87631f5270046b9"
+  },
+  "branch": "codex/paper-a-q5-digest-139",
+  "case_sha256": "1ceb274ab48bf2e4f90783fa881d394c79fb216d311c6bde197c6fe77dbbb15d",
+  "input_profile_sha256": "7e043c288061a828e5ab69fddcc5055b7d2afd7b16545b63d78ba097c53880ff",
+  "prepared_model_profile_sha256": "f5bddb1817bcd31cff3cc7068685c7b2b35ffcc5cd97c680cfdfb22c04e8cb0c",
+  "attempt_run_profile_sha256": "25dae3fa305aa348991de45ff1ebe5d18c3f79e85a2c82c5adaf09b19b0b1982",
+  "fixed_no_solve_run_profile_sha256": "c8a34e36a72273228f2b64b27e6d7483bae4561f2dd241d02fff4dbad0554dce",
+  "scope": {
+    "year": 2013,
+    "ISO_week": 8,
+    "hours": 168,
+    "Wind_PV_quota_pct": 70,
+    "OPEX_factor": 52.142857142857146,
+    "CAPEX_factor": 1,
+    "source_proxy": "colib_epri_frozen_E_blocks_v1",
+    "physical_model": "DCP",
+    "original_primal_tolerance": 1e-07
+  },
+  "attempt_accounting": {
+    "actual_Fullcase_native_optimize_calls": 1,
+    "qualified_conditioned_Fullcase_calls": 0,
+    "new_Fullcase_calls_after_routing_fix": 0,
+    "MISOCP_calls": 0,
+    "unit_model_solves_are_separate_from_Fullcase_count": true
+  },
+  "tests": {
+    "analytic_assertions_passed": 43,
+    "actual_noninteractive_runner_scope_assertions_passed": 14,
+    "original_constraints_symbolically_verified": 756257,
+    "original_terms_verified": 1617411,
+    "protected_original_discrete_coordinates": 111401
+  },
+  "actual_original_point": {
+    "status": "NEGATIVE",
+    "complete_original_variables": 328867,
+    "violations_over_1e_7": 20430,
+    "violations_over_1e_6": 4278,
+    "maximum_original_distance": 0.00019444730678230826,
+    "maximum_cone_polynomial_violation": 0.0,
+    "byte_identity_to_old_rejected_DICT": true,
+    "native_termination": "SUBOPTIMAL",
+    "native_solver_time_s": 190.375,
+    "postsolve_export_aborted": true,
+    "accepted_G3_costs_EUR2025": null,
+    "reportable_G3_bound_EUR2025": null,
+    "reportable_G3_gap": null
+  },
+  "reference_G2_scope": {
+    "old_accepted_original_tolerance": 1e-06,
+    "new_G3_full_strict_reference_PASS": false,
+    "actual_exact_quota_shortfall_MWh": 4.413141224455483e-07,
+    "maximum_original_cone_polynomial_violation": 1.8189894035458565e-11,
+    "G2_optimization_repeated": false,
+    "reference_point_modified": false
+  },
+  "scaling": {
+    "method": "positive_dyadic_x_D_y_and_R_constraints",
+    "D_max": 128,
+    "original_discrete_D": 1,
+    "scalar_row_R_min": 0.015625,
+    "original_coefficient_range": [
+      8.419356024802635e-08,
+      3031.803672268908
+    ],
+    "scaled_coefficient_range": [
+      6.735484819842108e-07,
+      47.37193237920169
+    ],
+    "objective_divisor": 8192,
+    "all_native_rows_columns_quadratics_objective_exactly_verified": true,
+    "numerical_efficacy": "NOT_EXECUTED"
+  },
+  "fixed_no_solve_validation": {
+    "actual_input_range": {
+      "coefficient_floor": 1e-09,
+      "maximum_coefficient": 47.37193237920169,
+      "minimum_nonzero_coefficient": 6.735484819842108e-07
+    },
+    "actual_optimize_calls_this_validation": 0,
+    "all_native_model_fields_identical_to_qualified_scaling": true,
+    "conditioned_copy_is_nothing": false,
+    "consumer_commit": "4719e08c153d7b387840260dec0561ff6488da43",
+    "input_profile_sha256": "7e043c288061a828e5ab69fddcc5055b7d2afd7b16545b63d78ba097c53880ff",
+    "label_clarification": "Frozen on-disk input identity and prepared in-memory model identity are distinct; no case bytes changed. Initial proof retained.",
+    "native_model_sha256": "5dbbffef606cd987b383c20a080ca02ef462bebd67f1451058b0eed723a9f50b",
+    "native_status": {
+      "BarIterCount": null,
+      "BoundVio": null,
+      "ConstrVio": null,
+      "DualVio": null,
+      "IntVio": null,
+      "IsMIP": 0,
+      "IterCount": null,
+      "MIPGap": null,
+      "NodeCount": null,
+      "NumConstrs": 461235,
+      "NumQConstrs": 8736,
+      "NumVars": 363811,
+      "ObjBound": null,
+      "ObjVal": null,
+      "Runtime": 0.0,
+      "SolCount": 0,
+      "Status": 1
+    },
+    "optimization_window_exists": false,
+    "original_case_sha256": "1ceb274ab48bf2e4f90783fa881d394c79fb216d311c6bde197c6fe77dbbb15d",
+    "original_proof_sha256": "a6111aec6b99072d3cbcbb04e7e78480e0eb65227b521cdf14cccb55bd989fca",
+    "prepared_model_profile_sha256": "f5bddb1817bcd31cff3cc7068685c7b2b35ffcc5cd97c680cfdfb22c04e8cb0c",
+    "profile_sha256": "c8a34e36a72273228f2b64b27e6d7483bae4561f2dd241d02fff4dbad0554dce",
+    "qualified_native_model_sha256": "5dbbffef606cd987b383c20a080ca02ef462bebd67f1451058b0eed723a9f50b",
+    "runner_sha256": "78ccdaf466a07a1e5d63a16259ffcaad4d4f15c384fd595391e07f4f18c2abf9",
+    "solver_is_conditioned_copy": true,
+    "solver_is_original_model": false,
+    "status": "PASS_PROFILE_AND_ACTUAL_NATIVE_ATTACHMENT_ONLY",
+    "termination_status": "OPTIMIZE_NOT_CALLED"
+  },
+  "resource_profile": {
+    "pid": 18756,
+    "process_creation_epoch": 1795203338.2502816,
+    "peak_private_B": 4301619200,
+    "peak_rss_B": 3565391872,
+    "wall_s": 435.03099999999995,
+    "maximum_monitor_gap_s": 0.26600000000053114,
+    "samples": 1729,
+    "guards": [],
+    "native_window": {
+      "backend": "gurobi",
+      "finished_epoch_s": 1795203987.938,
+      "reported_solver_time_s": 190.375,
+      "started_epoch_s": 1795203797.388,
+      "status": "finished"
+    },
+    "scope": "MCP worker memory; only this exact process can be stopped; actual solve and original-point acceptance are separate",
+    "completion_observed": false
+  },
+  "gates": {
+    "actual_SOCP_original_point": "NEGATIVE",
+    "fixed_route_and_native_mapping": "PASS_NO_OPTIMIZATION_ONLY",
+    "conditioned_SOCP": "NOT_EXECUTED",
+    "MISOCP": "NOT_EXECUTED_BLOCKED",
+    "new_annual_Full37_SCI02_GateJ_F3_AC_dynamics_publication_GO": false
+  },
+  "remaining_findings": [
+    {
+      "id": "G3-NUMERIC-01",
+      "status": "OPEN_CONDITIONING_EFFICACY_UNTESTED",
+      "next_action": "A new bounded Fullcase attempt allocation is required; the original one-call allocation is consumed."
+    },
+    {
+      "id": "G3-RUNNER-SCOPE",
+      "status": "CLOSED_SOURCE_AND_ACTUAL_NATIVE_NO_SOLVE_MAPPING",
+      "actual_misrouted_call_remains_negative": true
+    }
+  ],
+  "owner_action_if_continuation_requested": "Authorize exactly one additional conditioned SOCP Fullcase attempt on the repaired frozen code/profile. No new scientific model, price, data or feasibility-tolerance decision is required.",
+  "retention": {
+    "producer_commit": "becec6d63c0fbf2b8a160c41f87631f5270046b9",
+    "protected_file_sha256": "aceb4661c9fe3c92e41acf44a52250af2549a46c437a162e46f319453dfa1314",
+    "protected_diff_sha256": "56e116eb31589a19fe981dac46cc7f707bc603caedb57a1f5ff6183d740fefa8",
+    "expected_file_sha256": "aceb4661c9fe3c92e41acf44a52250af2549a46c437a162e46f319453dfa1314",
+    "expected_diff_sha256": "56e116eb31589a19fe981dac46cc7f707bc603caedb57a1f5ff6183d740fefa8",
+    "unchanged": true
+  },
+  "artifacts": {
+    "execution_environment.json": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\G3_NUMERIC_01_EQUIVALENT_CONDITIONING_20261120_01\\execution_environment.json",
+      "sha256": "39fd7a836f18e08c6fe302a3e74e6bdee30ba729655dca7a962e8704d63775c4"
+    },
+    "resource_profile.json": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\G3_NUMERIC_01_EQUIVALENT_CONDITIONING_20261120_01\\resource_profile.json",
+      "sha256": "bdc6689934f4c38e1c8f305af7d8cbd52e4d0f92aa5dde280e4a5331d038f431"
+    },
+    "routing_failure_abort.json": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\G3_NUMERIC_01_EQUIVALENT_CONDITIONING_20261120_01\\routing_failure_abort.json",
+      "sha256": "b57688543bc56e9c0668f0191c6cbd14b37c8b41099762da1774edff9d9bd48c"
+    },
+    "original_point_replays.json": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\G3_NUMERIC_01_EQUIVALENT_CONDITIONING_20261120_01\\ANALYSIS\\original_point_replays.json",
+      "sha256": "b4ee137792ca0fbce0535c7ae64c4899f3e3d7ea4cd5b83628082604dce58c69"
+    },
+    "original_and_scaled_constraints.jsonl": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\G3_NUMERIC_01_EQUIVALENT_CONDITIONING_20261120_01\\ANALYSIS\\original_and_scaled_constraints.jsonl",
+      "sha256": "dfe21bd9f7ad4e771689d58c01711a7ab14be70bf15c5c97c9f5cc171f0a96fd"
+    },
+    "actual_native_model.json": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\G3_NUMERIC_01_EQUIVALENT_CONDITIONING_20261120_01\\ANALYSIS\\actual_native_model.json",
+      "sha256": "5dbbffef606cd987b383c20a080ca02ef462bebd67f1451058b0eed723a9f50b"
+    },
+    "column_scaling.csv": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\G3_NUMERIC_01_EQUIVALENT_CONDITIONING_20261120_01\\ANALYSIS\\column_scaling.csv",
+      "sha256": "95dc1cbb8ecd944e45aaaceef72a20de2c2faff422549e521765cea03855ab88"
+    },
+    "reference_native_values.csv": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\G3_NUMERIC_01_EQUIVALENT_CONDITIONING_20261120_01\\ANALYSIS\\reference_native_values.csv",
+      "sha256": "0257cfa61c0fcaa34fc3ec4cfb9da6be19acabf7be4faaa60decc48b807bf6a4"
+    },
+    "analytic_tests_final_02.log": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\G3_NUMERIC_01_EQUIVALENT_CONDITIONING_20261120_01\\ANALYSIS\\analytic_tests_final_02.log",
+      "sha256": "2b1b7b2057581cb776ecda219b61c0ca59d303367dd162de0a71c905a9c2ffb0"
+    },
+    "top_level_runner_scope_tests_final.log": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\G3_NUMERIC_01_EQUIVALENT_CONDITIONING_20261120_01\\ANALYSIS\\top_level_runner_scope_tests_final.log",
+      "sha256": "beb31ceb167b2554efb2c83c7aa94a675786a5e234e084f207a330c3151efb8f"
+    },
+    "profile_and_native_proof_corrected_labels.json": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\G3_NUMERIC_01_EQUIVALENT_CONDITIONING_20261120_01\\ROUTE_FIX_NO_SOLVE\\profile_and_native_proof_corrected_labels.json",
+      "sha256": "43ddb91e6284c4660c5ca19851ab878f48db236d30382506e5ed7f9bd1c3ff06"
+    }
+  },
+  "independent_receipts": {
+    "admission.json": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\G3_NUMERIC_01_EQUIVALENT_CONDITIONING_20261120_01\\INDEPENDENT_REVIEW\\admission.json",
+      "sha256": "4a457a7bdaee65ac9335554715304866ca619d955c79112e777d17fa1261bad2",
+      "status": "PASS",
+      "superseded_as_run_admission": true
+    },
+    "independent_relaxed_gate.json": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\G3_NUMERIC_01_EQUIVALENT_CONDITIONING_20261120_01\\INDEPENDENT_REVIEW\\independent_relaxed_gate.json",
+      "sha256": "d0e70318d398ed7c859451d569311b999e56683ff19e51d60e504c468da2cfad",
+      "status": "NEGATIVE",
+      "superseded_as_run_admission": false
+    },
+    "math_route_fix_no_solve_review.json": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\G3_NUMERIC_01_EQUIVALENT_CONDITIONING_20261120_01\\INDEPENDENT_REVIEW\\math_route_fix_no_solve_review.json",
+      "sha256": "bae3eda142f5bfe22b2a1fb4990889db6e29c85cd73f4d8e59a0e7b2543261ff",
+      "status": "PASS_SCOPED_ROUTE_REPAIR_AND_FULL_WEEK_NATIVE_ATTACHMENT_ONLY",
+      "superseded_as_run_admission": false
+    },
+    "mathematical_actual_submission_admission_revocation_softscope_01.json": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\G3_NUMERIC_01_EQUIVALENT_CONDITIONING_20261120_01\\INDEPENDENT_REVIEW\\mathematical_actual_submission_admission_revocation_softscope_01.json",
+      "sha256": "2327ade03c35ade5b81e6d4ab0f5c61580114a9aa685a2d0af784a4bafd24d07",
+      "status": "NEGATIVE_ADMISSION_REVOKED_WRONG_UNSCALED_SUBMISSION",
+      "superseded_as_run_admission": false
+    },
+    "mathematical_actual_unscaled_original_point_review_773d16df.json": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\G3_NUMERIC_01_EQUIVALENT_CONDITIONING_20261120_01\\INDEPENDENT_REVIEW\\mathematical_actual_unscaled_original_point_review_773d16df.json",
+      "sha256": "6cda8c917cfe085ecc6a7ffacb4d8e0320cb32ea8342b4f5958542c96ee19d4d",
+      "status": "NEGATIVE_ACTUAL_ORIGINAL_POINT_AND_WRONG_UNSCALED_ROUTE",
+      "superseded_as_run_admission": false
+    },
+    "mathematical_all_rows_symbolic_native_reference_review_01.json": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\G3_NUMERIC_01_EQUIVALENT_CONDITIONING_20261120_01\\INDEPENDENT_REVIEW\\mathematical_all_rows_symbolic_native_reference_review_01.json",
+      "sha256": "344c6bf1a4f34a24827bfa53e53c838e41676af6ac759210a62e8a757f0951c4",
+      "status": "PASS_EXACT_SCALING_AND_NATIVE_MAP_REFERENCE_HAS_STRICT_QUOTA_ROUNDOFF_HOLD",
+      "superseded_as_run_admission": false
+    },
+    "mathematical_conditioning_design_and_smallmodel_review_01.json": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\G3_NUMERIC_01_EQUIVALENT_CONDITIONING_20261120_01\\INDEPENDENT_REVIEW\\mathematical_conditioning_design_and_smallmodel_review_01.json",
+      "sha256": "fc3de342c8bb3798ac78383e24c22858b4ac25399165d86a35065f7a2870ffed",
+      "status": "PASS_SCOPED_DESIGN_AND_ANALYTICAL_TESTS_PENDING_FULLCASE_MAPPING",
+      "superseded_as_run_admission": false
+    },
+    "mathematical_frozen_profile_admission_773d16df.json": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\G3_NUMERIC_01_EQUIVALENT_CONDITIONING_20261120_01\\INDEPENDENT_REVIEW\\mathematical_frozen_profile_admission_773d16df.json",
+      "sha256": "a9df7892fa73e634024a19464a36f3ed625401111cbeaef6c47deada60322186",
+      "status": "PASS",
+      "superseded_as_run_admission": true
+    },
+    "physical_actual_unscaled_point_and_resource_closeout.json": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\G3_NUMERIC_01_EQUIVALENT_CONDITIONING_20261120_01\\INDEPENDENT_REVIEW\\physical_actual_unscaled_point_and_resource_closeout.json",
+      "sha256": "1f6cb7a3d1317ca90248a1759d81474fbdeef234335d8df0030618f38eddd809",
+      "status": "NEGATIVE_ACTUAL_UNSCALED_ORIGINAL_POINT_REPEATS_PHYSICAL_FAILURES",
+      "superseded_as_run_admission": false
+    },
+    "physical_conditioned_route_admission_revocation_773d16df.json": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\G3_NUMERIC_01_EQUIVALENT_CONDITIONING_20261120_01\\INDEPENDENT_REVIEW\\physical_conditioned_route_admission_revocation_773d16df.json",
+      "sha256": "89a9081a4601a94079569672907acdf7d4428d55932ff0e9d0e574c336947b96",
+      "status": "NEGATIVE_ACTUAL_CONDITIONED_SOLVER_ROUTE_NOT_USED",
+      "superseded_as_run_admission": false
+    },
+    "physical_equivalent_conditioning_code_review.json": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\G3_NUMERIC_01_EQUIVALENT_CONDITIONING_20261120_01\\INDEPENDENT_REVIEW\\physical_equivalent_conditioning_code_review.json",
+      "sha256": "7c16767b3dc140bac5739cdd187e4e5c02941eec7ce1cc9c89d6ae1142e86c41",
+      "status": "PASS_SCOPED_CODE_AND_ANALYTICAL_TESTS_PENDING_FIXED_WEEK_PROFILE",
+      "superseded_as_run_admission": false
+    },
+    "physical_fixed_week_conditioning_reference_review.json": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\G3_NUMERIC_01_EQUIVALENT_CONDITIONING_20261120_01\\INDEPENDENT_REVIEW\\physical_fixed_week_conditioning_reference_review.json",
+      "sha256": "b69e195d24a4f27f883306ff61e8b7da02d19feb0cd6c7b5121d5ac87ca4d00b",
+      "status": "PASS_SCOPED_PHYSICAL_COORDINATE_TRANSFORMATION_REFERENCE_LIMIT_DISCLOSED",
+      "superseded_as_run_admission": false
+    },
+    "physical_frozen_profile_single_SOCP_admission_773d16d.json": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\G3_NUMERIC_01_EQUIVALENT_CONDITIONING_20261120_01\\INDEPENDENT_REVIEW\\physical_frozen_profile_single_SOCP_admission_773d16d.json",
+      "sha256": "94e8f180ebf8fd410bcef5da47733e2185ac28f2b26f865460ddd607c5462831",
+      "status": "PASS_SCOPED_PHYSICAL_ADMISSION_ONE_SOCP",
+      "superseded_as_run_admission": true
+    },
+    "physical_route_fix_no_solve_review.json": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\G3_NUMERIC_01_EQUIVALENT_CONDITIONING_20261120_01\\INDEPENDENT_REVIEW\\physical_route_fix_no_solve_review.json",
+      "sha256": "d39cf111cf6b1d34aa3e9c2bb6d72942f9de45b4c0da6a0030744f7092e4341c",
+      "status": "PASS_FIXED_ROUTE_PROFILE_AND_NATIVE_MAPPING_ONLY",
+      "superseded_as_run_admission": false
+    }
+  },
+  "changed_paths": [
+    "docs/paper_a/g3_equivalent_conditioning_20261120.md",
+    "scripts/paper_a/G3ConditioningAudit.jl",
+    "scripts/paper_a/G3EquivalentConditioning.jl",
+    "scripts/paper_a/run_week_strength_comparison.jl",
+    "test/paper_a_g3_conditioned_runner_scope.jl",
+    "test/paper_a_g3_equivalent_conditioning.jl"
+  ],
+  "unchanged_scientific_core_diff": ""
+}
