@@ -1,0 +1,1376 @@
+{
+  "schema": "paper_a_KW8_sequential_remaining_formulations_and_numeric_continuation_handoff_v1",
+  "handoff_kind": "G3_NUMERIC_01_EQUIVALENT_CONDITIONING_FINAL_HANDOFF",
+  "extension": "owner_additional_budget_for_representative_week_only",
+  "created_utc": "2026-11-20T22:23:07.470594+00:00",
+  "status": "WEEK_G2_MILP_PASS__G3_SOCP_NEGATIVE__MISOCP_NOT_EXECUTED",
+  "scope": {
+    "calendar_year": 2013,
+    "ISO_week": 8,
+    "hours": 168,
+    "start": "2013-02-18T00:00:00",
+    "end": "2013-02-24T23:00:00",
+    "Wind_PV_injection_quota_pct_of_load": 70,
+    "OPEX_factor": 52.142857142857146,
+    "CAPEX_factor": 1,
+    "physical_step_h": 1,
+    "power_flow": "DCP",
+    "HVDC": "lossless",
+    "source_model": "owner_frozen_E_planning_proxy",
+    "SYN_xd_doubleprime_device_pu": 0.25,
+    "full_year_solve": false,
+    "load_MWh": 71058866.10244863
+  },
+  "consumer_runtime_commits": {
+    "initial": "b8b4c67dbda948606f744913f7eb796e342b5211",
+    "binary_million_objective_coordinate": "f2675487486532d2823a6ad24179b279a09149c0",
+    "G2_empty_Q_audit_and_executable_head": "a6eadd1bf3d534765cbd26c6599d975489d955ed"
+  },
+  "producer_commit_unchanged": "becec6d63c0fbf2b8a160c41f87631f5270046b9",
+  "scientific_manifest_sha256": "ec4986d4de0853f6a8188c0add991a139d014c247adee6cb960fae29416a4e9a",
+  "model_marker": "reservoir_no_gscr_oil_coal_minimum_v1",
+  "source_bindings": [
+    {
+      "path": "D:\\Projekte\\Code\\FlexPlan_UC_GSCR\\scripts\\paper_a\\G3EquivalentConditioning.jl",
+      "sha256": "e3534c6b6cf21ddd8700df13652df5a9edd2027455c6e9f7c60f20c2d7ad519e",
+      "bytes": 8786
+    },
+    {
+      "path": "D:\\Projekte\\Code\\FlexPlan_UC_GSCR\\scripts\\paper_a\\G3ConditioningAudit.jl",
+      "sha256": "463a293bd6483a85b4a70a97364c4b16e44910d0d399bc9aaa4c61e15335f422",
+      "bytes": 6033
+    },
+    {
+      "path": "D:\\Projekte\\Code\\FlexPlan_UC_GSCR\\scripts\\paper_a\\NativeG3Solver.jl",
+      "sha256": "92a596b8b228317f97fdf0e742fafcf76054337a599a978d21cac4595bf82e0c",
+      "bytes": 13228
+    },
+    {
+      "path": "D:\\Projekte\\Code\\FlexPlan_UC_GSCR\\scripts\\paper_a\\run_week_strength_comparison.jl",
+      "sha256": "034d8eb47c2ba934612e2c7fce9e37c4f21d960719d25bd9a6ca6821de4b21b9",
+      "bytes": 22156
+    },
+    {
+      "path": "D:\\Projekte\\Code\\FlexPlan_UC_GSCR\\test\\paper_a_g3_equivalent_conditioning.jl",
+      "sha256": "25a97a21632b2c294e1fa451f0d3e8874fc9280f1b0f939e269553e9dc3f0685",
+      "bytes": 5584
+    },
+    {
+      "path": "D:\\Projekte\\Code\\FlexPlan_UC_GSCR\\test\\paper_a_g3_conditioned_runner_scope.jl",
+      "sha256": "30902119d657384fad728bc0258f50d4eeb6622712656af34ec6be9bf10835b4",
+      "bytes": 3464
+    },
+    {
+      "path": "D:\\Projekte\\Code\\FlexPlan_UC_GSCR\\test\\paper_a_native_audit_empty_q.jl",
+      "sha256": "fa61c842f8c16d90812d2d7a4e8da37a3b65fe60cde3b7227c616cbbe603d761",
+      "bytes": 1090
+    }
+  ],
+  "actual_native_optimizations_this_extension": 3,
+  "runs": [
+    {
+      "folder": "01_G3_SOCP",
+      "criterion": "G3",
+      "mode": "relaxed",
+      "hours": 168,
+      "actual_native_solver_calls": 1,
+      "consumer_commit": "b8b4c67dbda948606f744913f7eb796e342b5211",
+      "case_sha256": "1ceb274ab48bf2e4f90783fa881d394c79fb216d311c6bde197c6fe77dbbb15d",
+      "runtime_runner_sha256": "78ccdaf466a07a1e5d63a16259ffcaad4d4f15c384fd595391e07f4f18c2abf9",
+      "profile": {
+        "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_SEQUENTIAL_CONDITIONED_20261120_01\\01_G3_SOCP\\G3\\relaxed\\profile.json",
+        "sha256": "19759293a85c7ad42953aed7487a6699a973b9024630fd79b90907e58ac83738",
+        "bytes": 2452
+      },
+      "summary": {
+        "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_SEQUENTIAL_CONDITIONED_20261120_01\\01_G3_SOCP\\G3\\relaxed\\run_summary.json",
+        "sha256": "b7dca33a94cf813e6d12a79d47093ce190ff88baf13704219c4af00cc96de22e",
+        "bytes": 2625226
+      },
+      "entry_admission": {
+        "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_SEQUENTIAL_CONDITIONED_20261120_01\\01_G3_SOCP\\INDEPENDENT_REVIEW\\admission.json",
+        "sha256": "61866521639e44fe6c156e267d8d1a93ebfde2c93f8e2a90359fdfd012787464",
+        "bytes": 2707
+      },
+      "independent_result_gate": {
+        "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_SEQUENTIAL_CONDITIONED_20261120_01\\01_G3_SOCP\\INDEPENDENT_REVIEW\\independent_relaxed_gate.json",
+        "sha256": "4cf808d0b091e4ef6a7bc19f942c15a75f8722a16fc422b73b692d0dd5915f75",
+        "bytes": 11138
+      },
+      "result_gate_status": "NEGATIVE",
+      "resource_profile": {
+        "pid": 17132,
+        "process_creation_epoch": 1795207200.9434257,
+        "peak_private_B": 5009231872,
+        "peak_rss_B": 4110782464,
+        "wall_s": 637.9680000000008,
+        "maximum_monitor_gap_s": 0.2819999999992433,
+        "samples": 2535,
+        "guards": [],
+        "native_window": {
+          "backend": "gurobi",
+          "finished_epoch_s": 1795208152.972,
+          "reported_solver_time_s": 298.86100006103516,
+          "started_epoch_s": 1795207853.955,
+          "status": "finished"
+        },
+        "scope": "MCP worker memory; only this exact process can be stopped; actual solve and original-point acceptance are separate",
+        "completion_observed": true
+      },
+      "resource_profile_binding": {
+        "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_SEQUENTIAL_CONDITIONED_20261120_01\\01_G3_SOCP\\resource_profile.json",
+        "sha256": "0692b1dd4175c3e50063c2b7d7dcddd6d1828bc5821acbd20f9a1e284572c5dd",
+        "bytes": 622
+      },
+      "native_status": 13,
+      "solve_time_s": 298.86100006103516,
+      "worker_original_primal": {
+        "interpretation": "numerical_original_model_check_not_exact_feasibility",
+        "maximum_constraint_distance": 1.633704148673587e-05,
+        "maximum_polynomial_RSOC_violation": 0.0,
+        "status": "failed_original_primal_check",
+        "tolerance": 1e-07
+      },
+      "actual_native_model": {
+        "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_SEQUENTIAL_CONDITIONED_20261120_01\\01_G3_SOCP\\actual_native_model.json",
+        "sha256": "5dbbffef606cd987b383c20a080ca02ef462bebd67f1451058b0eed723a9f50b",
+        "bytes": 35045151
+      },
+      "retained_results": [
+        {
+          "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_SEQUENTIAL_CONDITIONED_20261120_01\\01_G3_SOCP\\G3\\relaxed\\full_primal.csv",
+          "sha256": "3e5fde3fb1b26f8f6c308404e5bacc1175af35782a80090f950e70c220d8d4da",
+          "bytes": 15150958
+        },
+        {
+          "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_SEQUENTIAL_CONDITIONED_20261120_01\\01_G3_SOCP\\G3\\relaxed\\native_primal.csv",
+          "sha256": "68f89cf8f30f0416b677df75a0d40779c95e7bc261aaaaced5e17ddfcea0440a",
+          "bytes": 8873200
+        },
+        {
+          "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_SEQUENTIAL_CONDITIONED_20261120_01\\01_G3_SOCP\\G3\\relaxed\\variable_coordinates.csv",
+          "sha256": "8f7836c76ec6c7f6b41ca39bf349ee19d738f412a1abaada0994c81598f0fc24",
+          "bytes": 11830267
+        },
+        {
+          "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_SEQUENTIAL_CONDITIONED_20261120_01\\01_G3_SOCP\\G3\\relaxed\\physical_point.json",
+          "sha256": "5fca6e08811d1afa496c8775dc660b28161f34df8fcc4ef1f105c1a7770acf66",
+          "bytes": 28075404
+        },
+        {
+          "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_SEQUENTIAL_CONDITIONED_20261120_01\\01_G3_SOCP\\G3\\relaxed\\dispatch.csv",
+          "sha256": "02892a381f49e1a21486a2e10c8feaaf16fab28430f6a6cca782f890a57ccaa4",
+          "bytes": 5834226
+        },
+        {
+          "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_SEQUENTIAL_CONDITIONED_20261120_01\\01_G3_SOCP\\G3\\relaxed\\block_expansion.csv",
+          "sha256": "929a61fab157bee31e820e22d62c9d5c2aa8fe0e588bc2bd13a774b70cb8cdb9",
+          "bytes": 20303
+        },
+        {
+          "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_SEQUENTIAL_CONDITIONED_20261120_01\\01_G3_SOCP\\G3\\relaxed\\renewable_expansion.csv",
+          "sha256": "3e437e5fa7fa905fe6492e170a0423748ec4848ce3cb8a0515c4683151d6317c",
+          "bytes": 7346
+        },
+        {
+          "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_SEQUENTIAL_CONDITIONED_20261120_01\\01_G3_SOCP\\G3\\relaxed\\strength_reconstruction.json",
+          "sha256": "eead3e7a69454600e8ebea38fe60e1e96ff66453ec23034091293eecc297a968",
+          "bytes": 76061118
+        },
+        {
+          "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_SEQUENTIAL_CONDITIONED_20261120_01\\01_G3_SOCP\\G3\\relaxed\\gurobi.log",
+          "sha256": "c78d807a68d40386f10b35098dfdd634b62f5a54b95b920e72d7a99186a2b6a2",
+          "bytes": 9274
+        }
+      ],
+      "accepted_costs_EUR2025": null,
+      "valid_cost_bound_EUR2025": null,
+      "valid_gap": null,
+      "original_point": {
+        "constraint_count": 756257,
+        "max_distance": 1.633704148673587e-05,
+        "max_RSOC_polynomial": 0.0,
+        "distance_count_above_1e_7": 723,
+        "distance_count_above_1e_6": 153,
+        "families": {
+          "eq": 691,
+          "ge": 27,
+          "le": 5
+        },
+        "worst_original_rows": [
+          {
+            "distance": 1.633704148673587e-05,
+            "polynomial": 0.0,
+            "type": "MathOptInterface.EqualTo{Float64}",
+            "index": 23626,
+            "kind": "eq",
+            "function": {
+              "constant": 0.0,
+              "terms": [
+                [
+                  22130.0,
+                  -1.0
+                ],
+                [
+                  23880.0,
+                  1.0
+                ],
+                [
+                  24122.0,
+                  1.1111111111111112
+                ],
+                [
+                  294725.0,
+                  1.0
+                ]
+              ]
+            },
+            "set": {
+              "kind": "eq",
+              "rhs": 66.54739630944879
+            },
+            "terms": 4
+          },
+          {
+            "distance": 1.5302920914450624e-05,
+            "polynomial": 0.0,
+            "type": "MathOptInterface.EqualTo{Float64}",
+            "index": 78871,
+            "kind": "eq",
+            "function": {
+              "constant": 0.0,
+              "terms": [
+                [
+                  275880.0,
+                  -1.0
+                ],
+                [
+                  277630.0,
+                  1.0
+                ],
+                [
+                  277872.0,
+                  1.1111111111111112
+                ],
+                [
+                  298640.0,
+                  1.0
+                ]
+              ]
+            },
+            "set": {
+              "kind": "eq",
+              "rhs": 63.33143376535823
+            },
+            "terms": 4
+          },
+          {
+            "distance": 1.4825003603391451e-05,
+            "polynomial": 0.0,
+            "type": "MathOptInterface.EqualTo{Float64}",
+            "index": 53725,
+            "kind": "eq",
+            "function": {
+              "constant": 0.0,
+              "terms": [
+                [
+                  160380.0,
+                  -1.0
+                ],
+                [
+                  162130.0,
+                  1.0
+                ],
+                [
+                  162372.0,
+                  1.1111111111111112
+                ],
+                [
+                  296858.0,
+                  1.0
+                ]
+              ]
+            },
+            "set": {
+              "kind": "eq",
+              "rhs": 64.57057197054792
+            },
+            "terms": 4
+          },
+          {
+            "distance": 1.472088143827932e-05,
+            "polynomial": 0.0,
+            "type": "MathOptInterface.EqualTo{Float64}",
+            "index": 71251,
+            "kind": "eq",
+            "function": {
+              "constant": 0.0,
+              "terms": [
+                [
+                  240880.0,
+                  -1.0
+                ],
+                [
+                  242630.0,
+                  1.0
+                ],
+                [
+                  242872.0,
+                  1.1111111111111112
+                ],
+                [
+                  298100.0,
+                  1.0
+                ]
+              ]
+            },
+            "set": {
+              "kind": "eq",
+              "rhs": 63.59168066452317
+            },
+            "terms": 4
+          },
+          {
+            "distance": 1.4006988138248744e-05,
+            "polynomial": 0.0,
+            "type": "MathOptInterface.EqualTo{Float64}",
+            "index": 25150,
+            "kind": "eq",
+            "function": {
+              "constant": 0.0,
+              "terms": [
+                [
+                  29130.0,
+                  -1.0
+                ],
+                [
+                  30880.0,
+                  1.0
+                ],
+                [
+                  31122.0,
+                  1.1111111111111112
+                ],
+                [
+                  294833.0,
+                  1.0
+                ]
+              ]
+            },
+            "set": {
+              "kind": "eq",
+              "rhs": 66.49162201149747
+            },
+            "terms": 4
+          },
+          {
+            "distance": 1.3748664827062385e-05,
+            "polynomial": 0.0,
+            "type": "MathOptInterface.EqualTo{Float64}",
+            "index": 59821,
+            "kind": "eq",
+            "function": {
+              "constant": 0.0,
+              "terms": [
+                [
+                  188380.0,
+                  -1.0
+                ],
+                [
+                  190130.0,
+                  1.0
+                ],
+                [
+                  190372.0,
+                  1.1111111111111112
+                ],
+                [
+                  297290.0,
+                  1.0
+                ]
+              ]
+            },
+            "set": {
+              "kind": "eq",
+              "rhs": 64.18385806100896
+            },
+            "terms": 4
+          },
+          {
+            "distance": 1.3127172948657062e-05,
+            "polynomial": 0.0,
+            "type": "MathOptInterface.EqualTo{Float64}",
+            "index": 38485,
+            "kind": "eq",
+            "function": {
+              "constant": 0.0,
+              "terms": [
+                [
+                  90380.0,
+                  -1.0
+                ],
+                [
+                  92130.0,
+                  1.0
+                ],
+                [
+                  92372.0,
+                  1.1111111111111112
+                ],
+                [
+                  295778.0,
+                  1.0
+                ]
+              ]
+            },
+            "set": {
+              "kind": "eq",
+              "rhs": 65.58122678454774
+            },
+            "terms": 4
+          },
+          {
+            "distance": 1.2793860314275207e-05,
+            "polynomial": 0.0,
+            "type": "MathOptInterface.EqualTo{Float64}",
+            "index": 80776,
+            "kind": "eq",
+            "function": {
+              "constant": 0.0,
+              "terms": [
+                [
+                  284630.0,
+                  -1.0
+                ],
+                [
+                  286380.0,
+                  1.0
+                ],
+                [
+                  286622.0,
+                  1.1111111111111112
+                ],
+                [
+                  298775.0,
+                  1.0
+                ]
+              ]
+            },
+            "set": {
+              "kind": "eq",
+              "rhs": 63.21385931580383
+            },
+            "terms": 4
+          },
+          {
+            "distance": 1.2399253364492324e-05,
+            "polynomial": 0.0,
+            "type": "MathOptInterface.EqualTo{Float64}",
+            "index": 44200,
+            "kind": "eq",
+            "function": {
+              "constant": 0.0,
+              "terms": [
+                [
+                  116630.0,
+                  -1.0
+                ],
+                [
+                  118380.0,
+                  1.0
+                ],
+                [
+                  118622.0,
+                  1.1111111111111112
+                ],
+                [
+                  296183.0,
+                  1.0
+                ]
+              ]
+            },
+            "set": {
+              "kind": "eq",
+              "rhs": 65.18920070147965
+            },
+            "terms": 4
+          },
+          {
+            "distance": 1.1965610838160501e-05,
+            "polynomial": 0.0,
+            "type": "MathOptInterface.EqualTo{Float64}",
+            "index": 41533,
+            "kind": "eq",
+            "function": {
+              "constant": 0.0,
+              "terms": [
+                [
+                  104380.0,
+                  -1.0
+                ],
+                [
+                  106130.0,
+                  1.0
+                ],
+                [
+                  106372.0,
+                  1.1111111111111112
+                ],
+                [
+                  295994.0,
+                  1.0
+                ]
+              ]
+            },
+            "set": {
+              "kind": "eq",
+              "rhs": 65.37127127569173
+            },
+            "terms": 4
+          },
+          {
+            "distance": 1.1894039346316276e-05,
+            "polynomial": 0.0,
+            "type": "MathOptInterface.EqualTo{Float64}",
+            "index": 26293,
+            "kind": "eq",
+            "function": {
+              "constant": 0.0,
+              "terms": [
+                [
+                  34380.0,
+                  -1.0
+                ],
+                [
+                  36130.0,
+                  1.0
+                ],
+                [
+                  36372.0,
+                  1.1111111111111112
+                ],
+                [
+                  294914.0,
+                  1.0
+                ]
+              ]
+            },
+            "set": {
+              "kind": "eq",
+              "rhs": 66.42577325460947
+            },
+            "terms": 4
+          },
+          {
+            "distance": 1.163772250833972e-05,
+            "polynomial": 0.0,
+            "type": "MathOptInterface.EqualTo{Float64}",
+            "index": 23245,
+            "kind": "eq",
+            "function": {
+              "constant": 0.0,
+              "terms": [
+                [
+                  20380.0,
+                  -1.0
+                ],
+                [
+                  22130.0,
+                  1.0
+                ],
+                [
+                  22372.0,
+                  1.1111111111111112
+                ],
+                [
+                  294698.0,
+                  1.0
+                ]
+              ]
+            },
+            "set": {
+              "kind": "eq",
+              "rhs": 66.55904088001566
+            },
+            "terms": 4
+          }
+        ]
+      },
+      "MISOCP_entry": "NOT_GRANTED"
+    },
+    {
+      "folder": "02_G3_SOCP_BINARY_MILLION",
+      "criterion": "G3",
+      "mode": "relaxed",
+      "hours": 168,
+      "actual_native_solver_calls": 1,
+      "consumer_commit": "f2675487486532d2823a6ad24179b279a09149c0",
+      "case_sha256": "1ceb274ab48bf2e4f90783fa881d394c79fb216d311c6bde197c6fe77dbbb15d",
+      "runtime_runner_sha256": "de5cbd9d9400d7188fc4a598682bbccb4d57db386d03bc595e173895453c8aa8",
+      "profile": {
+        "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_SEQUENTIAL_CONDITIONED_20261120_01\\02_G3_SOCP_BINARY_MILLION\\G3\\relaxed\\profile.json",
+        "sha256": "9d7e729577f4de71af1699662feb6715009a7963710ad655caa8fb53259d3a5f",
+        "bytes": 2598
+      },
+      "summary": {
+        "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_SEQUENTIAL_CONDITIONED_20261120_01\\02_G3_SOCP_BINARY_MILLION\\G3\\relaxed\\run_summary.json",
+        "sha256": "cb0b38fcc5882b8b5744fe26f4c041542162818b877e55a11441aa8638d8f260",
+        "bytes": 2625377
+      },
+      "entry_admission": {
+        "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_SEQUENTIAL_CONDITIONED_20261120_01\\02_G3_SOCP_BINARY_MILLION\\INDEPENDENT_REVIEW\\admission.json",
+        "sha256": "d7d3223311b439beac7321988d9763b32bb74bbbdd3cd9a07959fc63997ee013",
+        "bytes": 2799
+      },
+      "independent_result_gate": {
+        "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_SEQUENTIAL_CONDITIONED_20261120_01\\02_G3_SOCP_BINARY_MILLION\\INDEPENDENT_REVIEW\\independent_relaxed_gate.json",
+        "sha256": "2415b64fb60179fa1b6607f9a688b8c064a4d8d98287d873ad8b7bda126de25c",
+        "bytes": 4988
+      },
+      "result_gate_status": "NEGATIVE",
+      "resource_profile": {
+        "pid": 12436,
+        "process_creation_epoch": 1795209249.000418,
+        "peak_private_B": 5174157312,
+        "peak_rss_B": 4263591936,
+        "wall_s": 782.094000000001,
+        "maximum_monitor_gap_s": 0.26600000000144064,
+        "samples": 3110,
+        "guards": [],
+        "native_window": {
+          "backend": "gurobi",
+          "finished_epoch_s": 1795210335.047,
+          "reported_solver_time_s": 254.52999997138977,
+          "started_epoch_s": 1795210080.39,
+          "status": "finished"
+        },
+        "scope": "MCP worker memory; only this exact process can be stopped; actual solve and original-point acceptance are separate",
+        "completion_observed": true
+      },
+      "resource_profile_binding": {
+        "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_SEQUENTIAL_CONDITIONED_20261120_01\\02_G3_SOCP_BINARY_MILLION\\resource_profile.json",
+        "sha256": "5b836ea8796954be4aad5761232f44fc991ebc3499091f841f452cd57f50293a",
+        "bytes": 620
+      },
+      "native_status": 13,
+      "solve_time_s": 254.52999997138977,
+      "worker_original_primal": {
+        "interpretation": "numerical_original_model_check_not_exact_feasibility",
+        "maximum_constraint_distance": 0.002469585084128312,
+        "maximum_polynomial_RSOC_violation": 0.0,
+        "status": "failed_original_primal_check",
+        "tolerance": 1e-07
+      },
+      "actual_native_model": {
+        "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_SEQUENTIAL_CONDITIONED_20261120_01\\02_G3_SOCP_BINARY_MILLION\\actual_native_model.json",
+        "sha256": "37b11ac3f78129b962c3e212a0332fe0e24c7d5a7a4b0884a7792747caa89f95",
+        "bytes": 35112300
+      },
+      "retained_results": [
+        {
+          "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_SEQUENTIAL_CONDITIONED_20261120_01\\02_G3_SOCP_BINARY_MILLION\\G3\\relaxed\\full_primal.csv",
+          "sha256": "9bee92a47bf7f4e7eea901260d1d8a8c8684fdee0e244d6d3a261e8941a590c7",
+          "bytes": 15139131
+        },
+        {
+          "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_SEQUENTIAL_CONDITIONED_20261120_01\\02_G3_SOCP_BINARY_MILLION\\G3\\relaxed\\native_primal.csv",
+          "sha256": "77748e46e3405c10fc91ac19b26549c54be08ef5eb3cc196ba69deae4d8e59e6",
+          "bytes": 8861348
+        },
+        {
+          "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_SEQUENTIAL_CONDITIONED_20261120_01\\02_G3_SOCP_BINARY_MILLION\\G3\\relaxed\\variable_coordinates.csv",
+          "sha256": "8f7836c76ec6c7f6b41ca39bf349ee19d738f412a1abaada0994c81598f0fc24",
+          "bytes": 11830267
+        },
+        {
+          "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_SEQUENTIAL_CONDITIONED_20261120_01\\02_G3_SOCP_BINARY_MILLION\\G3\\relaxed\\physical_point.json",
+          "sha256": "953dbccd53d73e33bcb142465559757d6654ed9c35c6e9631a602c9daff282ad",
+          "bytes": 28095109
+        },
+        {
+          "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_SEQUENTIAL_CONDITIONED_20261120_01\\02_G3_SOCP_BINARY_MILLION\\G3\\relaxed\\dispatch.csv",
+          "sha256": "2764e0c2a393df85a81612c1a2d2851e509d27595019f9276a44690b23203e1e",
+          "bytes": 5860542
+        },
+        {
+          "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_SEQUENTIAL_CONDITIONED_20261120_01\\02_G3_SOCP_BINARY_MILLION\\G3\\relaxed\\block_expansion.csv",
+          "sha256": "8076354dbf6e5433599414db426062aa9ecf5520252b7205e1c775480e9a7cdc",
+          "bytes": 20192
+        },
+        {
+          "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_SEQUENTIAL_CONDITIONED_20261120_01\\02_G3_SOCP_BINARY_MILLION\\G3\\relaxed\\renewable_expansion.csv",
+          "sha256": "aa727ab4e2ae446c385133d19115a52838c9993a02a57027457c8b20f05fbee8",
+          "bytes": 7303
+        },
+        {
+          "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_SEQUENTIAL_CONDITIONED_20261120_01\\02_G3_SOCP_BINARY_MILLION\\G3\\relaxed\\strength_reconstruction.json",
+          "sha256": "a1ee84ccfe1f99bdd892131d0bbdd3c26f605ddaeb5fd78f52407788e4bb4907",
+          "bytes": 75985961
+        },
+        {
+          "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_SEQUENTIAL_CONDITIONED_20261120_01\\02_G3_SOCP_BINARY_MILLION\\G3\\relaxed\\gurobi.log",
+          "sha256": "25438b5aaedfa9269b48bbdc36904461031ed7448225d7427dbfc973337136d4",
+          "bytes": 8663
+        }
+      ],
+      "accepted_costs_EUR2025": null,
+      "valid_cost_bound_EUR2025": null,
+      "valid_gap": null,
+      "original_point": {
+        "constraint_count": 756257,
+        "max_distance": 0.002469585084128312,
+        "max_RSOC_polynomial": 0.0,
+        "distance_count_above_1e_7": 4633,
+        "distance_count_above_1e_6": 1921,
+        "families": {
+          "eq": 4589,
+          "ge": 39,
+          "le": 5
+        }
+      },
+      "MISOCP_entry": "NOT_GRANTED"
+    },
+    {
+      "folder": "03_G2_MILP",
+      "criterion": "G2",
+      "mode": "integer",
+      "hours": 168,
+      "actual_native_solver_calls": 1,
+      "consumer_commit": "a6eadd1bf3d534765cbd26c6599d975489d955ed",
+      "case_sha256": "c154322ea868313405ac7be70c541ad87839bbb070ac2fa556f18c1d2547e2d5",
+      "runtime_runner_sha256": "3f2ad5e5be741319d4838b136e4cbe204b4aae6702f3dce1f387c2848c4f5cca",
+      "profile": {
+        "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_SEQUENTIAL_CONDITIONED_20261120_01\\03_G2_MILP\\G2\\integer\\profile.json",
+        "sha256": "ede315108e08dfa2e7e8d42f9441ceb749809b01e272fce16f39f7d09d8e8e1d",
+        "bytes": 2222
+      },
+      "summary": {
+        "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_SEQUENTIAL_CONDITIONED_20261120_01\\03_G2_MILP\\G2\\integer\\run_summary.json",
+        "sha256": "6c39b0526942a10461523ff05b116bf09b07abb6e703f67ee6f0df943fd0dc88",
+        "bytes": 3963
+      },
+      "entry_admission": {
+        "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_SEQUENTIAL_CONDITIONED_20261120_01\\03_G2_MILP\\INDEPENDENT_REVIEW\\admission.json",
+        "sha256": "651bf43446cf307969a1b04b7ab87971e499335de54bcefe322cd652be046a46",
+        "bytes": 3213
+      },
+      "independent_result_gate": {
+        "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_SEQUENTIAL_CONDITIONED_20261120_01\\03_G2_MILP\\INDEPENDENT_REVIEW\\independent_G2_MILP_original_point_cost_gap_gate.json",
+        "sha256": "dd1af5ee5f3cc1951587314b2919389b6955833d37893d979f7dc82064bc1dac",
+        "bytes": 6053
+      },
+      "result_gate_status": "PASS_SCOPED_WEEK_G2_INTEGER_PLAN_AND_GAP_TARGET",
+      "resource_profile": {
+        "pid": 13868,
+        "process_creation_epoch": 1795211345.0947747,
+        "peak_private_B": 6042988544,
+        "peak_rss_B": 4794892288,
+        "wall_s": 1181.75,
+        "maximum_monitor_gap_s": 0.2809999999990396,
+        "samples": 4693,
+        "guards": [],
+        "native_window": {
+          "backend": "gurobi",
+          "finished_epoch_s": 1795212841.478,
+          "reported_solver_time_s": 513.1259999275208,
+          "started_epoch_s": 1795212328.209,
+          "status": "finished"
+        },
+        "scope": "MCP worker memory; only this exact process can be stopped; actual solve and original-point acceptance are separate",
+        "completion_observed": true
+      },
+      "resource_profile_binding": {
+        "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_SEQUENTIAL_CONDITIONED_20261120_01\\03_G2_MILP\\resource_profile.json",
+        "sha256": "ae8ad729bfd63a04cac10838818f092f6ba68262b5cfb743510a6cb5f48ffc09",
+        "bytes": 611
+      },
+      "native_status": 2,
+      "solve_time_s": 513.1259999275208,
+      "worker_original_primal": {
+        "status": "passed",
+        "tolerance": 1e-06
+      },
+      "actual_native_model": {
+        "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_SEQUENTIAL_CONDITIONED_20261120_01\\03_G2_MILP\\actual_native_model.json",
+        "sha256": "c5b2ac5bc83639fda2a8201cef78def73a94a6278f960847f3c80171869f9589",
+        "bytes": 30822788
+      },
+      "retained_results": [
+        {
+          "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_SEQUENTIAL_CONDITIONED_20261120_01\\03_G2_MILP\\G2\\integer\\full_primal.csv",
+          "sha256": "3e3a7b4863a29adaf60ba2b446b03529aa12cedef2d9aec924095d6cca80c33f",
+          "bytes": 11072674
+        },
+        {
+          "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_SEQUENTIAL_CONDITIONED_20261120_01\\03_G2_MILP\\G2\\integer\\native_primal.csv",
+          "sha256": "dfd3604176f170a3aba2807c817cec0520ff980d2dc549e014a527629553eeda",
+          "bytes": 4571750
+        },
+        {
+          "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_SEQUENTIAL_CONDITIONED_20261120_01\\03_G2_MILP\\G2\\integer\\variable_coordinates.csv",
+          "sha256": "0a08ecf3d8945a2652377eda992a5f1f53b723197c889cf1eefe048fb25c4994",
+          "bytes": 11207467
+        },
+        {
+          "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_SEQUENTIAL_CONDITIONED_20261120_01\\03_G2_MILP\\G2\\integer\\physical_point.json",
+          "sha256": "1cca3e082a8e58d62a4c153eb36eb47280e3913854139ccd8fd36670b9faab75",
+          "bytes": 23649493
+        },
+        {
+          "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_SEQUENTIAL_CONDITIONED_20261120_01\\03_G2_MILP\\G2\\integer\\dispatch.csv",
+          "sha256": "a43c8026e832e0513d928af1532463b48c06fe2bddf3ef7aee1b7a40d6a1bbda",
+          "bytes": 4932863
+        },
+        {
+          "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_SEQUENTIAL_CONDITIONED_20261120_01\\03_G2_MILP\\G2\\integer\\block_expansion.csv",
+          "sha256": "1fd99e8c623482bf565123db4acaae8b29f58739766cdd14758a1d16e4dbc568",
+          "bytes": 16041
+        },
+        {
+          "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_SEQUENTIAL_CONDITIONED_20261120_01\\03_G2_MILP\\G2\\integer\\renewable_expansion.csv",
+          "sha256": "ec3286e25e047eb011844a21238e774f6f70bf688cbfc3bc557a664c6f011001",
+          "bytes": 6168
+        },
+        {
+          "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_SEQUENTIAL_CONDITIONED_20261120_01\\03_G2_MILP\\G2\\integer\\strength_reconstruction.json",
+          "sha256": "d3ab27eef9a2861bf57c0530c56f659f8c4e5ae6bf9dcbea7795dc314fd5a4f7",
+          "bytes": 72609937
+        },
+        {
+          "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_SEQUENTIAL_CONDITIONED_20261120_01\\03_G2_MILP\\G2\\integer\\gurobi.log",
+          "sha256": "6627d1b7e9c4aace12878dbc69ad93582a0adcf09d4c7df3792aa4c2890fc05b",
+          "bytes": 15499
+        }
+      ],
+      "accepted_costs_EUR2025": 127449599028.67305,
+      "annualized_CAPEX_EUR2025": 111340588724.01581,
+      "annualized_OPEX_EUR2025": 16109010304.654667,
+      "numerical_bound_EUR2025": 127408221525.4212,
+      "relative_gap": 0.00032465777505143336,
+      "original_integer_count": 111401,
+      "integer_residual": 0.0,
+      "diagnostics": {
+        "minimum_G2_row_all_hours": 7.635877744505137e-05,
+        "G0_failed_hours": 0,
+        "LOCAL_failed_hours": 0,
+        "M0_failed_defined_hours": 10,
+        "M0_undefined_hours": 0,
+        "G1_failed_hours_at_existing_absolute1e_6_diagnostic": 116,
+        "scope": "G0/LOCAL/M0 are postsolve-only existing mathematical definitions, not physical fault SCR/eSCR or separately enforced model selectors."
+      },
+      "physical_errors": {
+        "original_variable_bound_violation": 1.0125802418770036e-09,
+        "original_integer_domain_residual": 0.0,
+        "renewable_capacity_bounds_MW": 0.0,
+        "capacity_export_vs_primal_MW": 0.0,
+        "branch_point_vs_primal_MW": 0.0,
+        "ACbranch_lossless_residual_MW": 0.0,
+        "ACbranch_thermal_violation_MW": 3.4368895285297185e-08,
+        "DC_lossless_residual_MW": 4.547473508864641e-13,
+        "DC_source_P_bound_violation_MW": 4.547473508864641e-13,
+        "native_gen_point_vs_primal_MW": 0.0,
+        "generator_dispatch_source_bounds_MW": 9.378487675348879e-08,
+        "installed_blocks_time_consistency": 0.0,
+        "native_asset_blocks_bounds": 0.0,
+        "native_asset_blocks_vs_primal": 0.0,
+        "UC_events_point_vs_primal": 0.0,
+        "UC_transition_blocks": 0.0,
+        "source_b_field_vs_native_oracle_pu": 0.0,
+        "storage_point_vs_primal": 0.0,
+        "SOC_energy_residual_MWh": 5.022233970919388e-07,
+        "SOC_energy_bounds_MWh": 1.8189894035458565e-12,
+        "storage_dispatch_source_bounds_MW": 4.951743903802708e-09,
+        "spill_source_bounds_MW": 2.842170943040401e-14,
+        "spill_point_vs_primal_MW": 0.0,
+        "new_dispatch_vs_primal_MW": 0.0,
+        "new_dispatch_envelope_MW": 2.62188223132398e-07,
+        "nodal_DC_power_balance_MW": 5.125373547798517e-07,
+        "affine_total_exposure_pu": 2.2737367544323206e-13,
+        "saved_native_exposure_pu": 0.0,
+        "saved_new_exposure_pu": 0.0,
+        "saved_total_exposure_pu": 2.2737367544323206e-13,
+        "affine_B_pu": 4.547473508864641e-13,
+        "affine_M_pu": 9.094947017729282e-13,
+        "native_dispatch_CSV_vs_point_MW": 0.0,
+        "new_dispatch_CSV_vs_point_MW": 0.0,
+        "system_energy_balance_MW": 7.409835234284401e-07
+      }
+    }
+  ],
+  "independent_evidence": [
+    {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_SEQUENTIAL_CONDITIONED_20261120_01\\01_G3_SOCP\\INDEPENDENT_REVIEW\\remaining_formulations_qualification.json",
+      "sha256": "9b92f204a24548394323221dc00bfb1d51e88d2752e86ce6fa1db1c24d107ffd",
+      "bytes": 11001
+    },
+    {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_SEQUENTIAL_CONDITIONED_20261120_01\\01_G3_SOCP\\INDEPENDENT_REVIEW\\remaining_formulations_actual_case_binding_physical_inventory.json",
+      "sha256": "d0514e6bb8c819c987c4a89d4f60a31e0af78027bf3845d2bd6e090d86178916",
+      "bytes": 11594
+    },
+    {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_SEQUENTIAL_CONDITIONED_20261120_01\\01_G3_SOCP\\INDEPENDENT_REVIEW\\objective_binary_million_source_delta_review.json",
+      "sha256": "97c6f1e385099a739f5cd6df8e1353027dd88e2d8c1d05dd89976e519f1f5812",
+      "bytes": 4642
+    },
+    {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_SEQUENTIAL_CONDITIONED_20261120_01\\01_G3_SOCP\\INDEPENDENT_REVIEW\\physical_binary_million_objective_code_unit_review.json",
+      "sha256": "5f73878d87e29f7ea568b2702fb18e8b4dbcf7cf47f542bdc8431d84c30bcb51",
+      "bytes": 5727
+    },
+    {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_SEQUENTIAL_CONDITIONED_20261120_01\\02_G3_SOCP_BINARY_MILLION\\INDEPENDENT_REVIEW\\native_empty_q_audit_delta_mathematical_review.json",
+      "sha256": "fbef0dd782d22675ffd42478dbbd45dafd245f0b730e5b83f6340d478e2605c9",
+      "bytes": 1895
+    },
+    {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_SEQUENTIAL_CONDITIONED_20261120_01\\02_G3_SOCP_BINARY_MILLION\\INDEPENDENT_REVIEW\\physical_empty_quadratic_native_audit_delta_review.json",
+      "sha256": "69834145e2ee680b70f32af4fc851f19e964a602560d244f2cfa339aa75e1356",
+      "bytes": 2213
+    },
+    {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_SEQUENTIAL_CONDITIONED_20261120_01\\03_G2_MILP\\INDEPENDENT_REVIEW\\actual_native_original_point_gate.json",
+      "sha256": "3ba78d8f2adc7e8d8fdd87e231e59c8054c08c332ea2301511a2762d36b11e6c",
+      "bytes": 4881
+    },
+    {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_SEQUENTIAL_CONDITIONED_20261120_01\\03_G2_MILP\\INDEPENDENT_REVIEW\\mathematical_candidate_review_G2_integer_a6eadd1.json",
+      "sha256": "a2cf5e106d9a5e66e91c688a09cc64066ed9f65ef3954bd34a8a95d78315f501",
+      "bytes": 348334
+    },
+    {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_SEQUENTIAL_CONDITIONED_20261120_01\\03_G2_MILP\\INDEPENDENT_REVIEW\\physical_candidate_review_G2_integer_a6eadd1.json",
+      "sha256": "d03b35797e7448c9ea48bb1df12c38074b7f0c1fa009ac4dc5e5ec059d02d826",
+      "bytes": 6328
+    },
+    {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_SEQUENTIAL_CONDITIONED_20261120_01\\03_G2_MILP\\INDEPENDENT_REVIEW\\physical_G2_MILP_energy_annualization_LP_comparison.json",
+      "sha256": "c15559b38eefd0348fd440669ecd88d3bbb2ad964e5558665ced4575ab742b12",
+      "bytes": 13732
+    },
+    {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_SEQUENTIAL_CONDITIONED_20261120_01\\03_G2_MILP\\INDEPENDENT_REVIEW\\partial_start_vs_final_original_point.json",
+      "sha256": "342b5ffbdc731cd7b8532c6570131eebf0430c920bd7bbd99b28dc85730e4d69",
+      "bytes": 2018
+    },
+    {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_SEQUENTIAL_CONDITIONED_20261120_01\\03_G2_MILP\\INDEPENDENT_REVIEW\\G2_MILP_G3_witness_reference_original_rows_review.json",
+      "sha256": "6d940f4b33d47d4acca29833953a1b53af7940b1e1e355091356a9dcc7456b7b",
+      "bytes": 43004
+    },
+    {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_SEQUENTIAL_CONDITIONED_20261120_01\\03_G2_MILP\\partial_start_provenance.json",
+      "sha256": "ba8462b3715377441b21228a41ebb8b20ee97e350f2e9eb6330892db480a1777",
+      "bytes": 1068
+    },
+    {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_SEQUENTIAL_CONDITIONED_20261120_01\\03_G2_MILP\\partial_start_values.json",
+      "sha256": "40c6f7297640ab0902f9c7576ad207e9f9532826358aee695345c25d3ca7db3d",
+      "bytes": 30907
+    },
+    {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_SEQUENTIAL_CONDITIONED_20261120_01\\03_G2_MILP\\INDEPENDENT_REVIEW\\G2_MILP_actual_G1_MILP_G2_LP_comparison.json",
+      "sha256": "1749bca245676495ff3858163cb0ee0e35c451ee5341c27cd7327bdd232b4a0c",
+      "bytes": 8692
+    },
+    {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_SEQUENTIAL_CONDITIONED_20261120_01\\03_G2_MILP\\INDEPENDENT_REVIEW\\physical_G2_MILP_G3_reference_binding_review.json",
+      "sha256": "47e950c8da19cd28e317cf089b70565462d00275ce2f79f9b1c8cbed94398fe0",
+      "bytes": 4374
+    }
+  ],
+  "targeted_tests": {
+    "equivalent_conditioning_and_cost_units": 116,
+    "noninteractive_actual_runner_scope": 30,
+    "existing_native_default_guards": 34,
+    "native_empty_quadratic_audit": 9,
+    "new_default_guard_floor_unchanged": true,
+    "proof_log": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_SEQUENTIAL_CONDITIONED_20261120_01\\01_G3_SOCP\\objective_coordinate_tests_01.log",
+      "sha256": "7004616f73f29dcc3980dce133efd0bba8f07804c22a77faf746af187a3d2044",
+      "bytes": 2912
+    },
+    "empty_Q_log": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_SEQUENTIAL_CONDITIONED_20261120_01\\02_G3_SOCP_BINARY_MILLION\\native_empty_q_audit_tests.log",
+      "sha256": "7c26bf208c4c78a98f1df096c9da9a109649891fa714021e663055fc257ba385",
+      "bytes": 271
+    }
+  },
+  "G2_expansion_MW": {
+    "BESS-GFM": 102450.0,
+    "CCGT": 1840.5,
+    "OCGT": 0.0,
+    "PHS": 0.0,
+    "battery": 57225.0,
+    "biomass": 0.0,
+    "coal": 0.0,
+    "geothermal": 0.0,
+    "lignite": 0.0,
+    "nuclear": 0.0,
+    "offwind-ac": 0.0,
+    "offwind-dc": 0.0,
+    "oil": 0.0,
+    "onwind": 589728.7389109852,
+    "ror": 0.0,
+    "solar": 718399.0084286081
+  },
+  "G2_dispatch_MWh": {
+    "BESS-GFM": {
+      "generation_MWh": 0.0,
+      "charge_MWh": 4453010.788462823,
+      "discharge_MWh": 4274890.356923962
+    },
+    "CCGT": {
+      "generation_MWh": 501633.3679841195,
+      "charge_MWh": 0.0,
+      "discharge_MWh": 0.0
+    },
+    "OCGT": {
+      "generation_MWh": 0.0,
+      "charge_MWh": 0.0,
+      "discharge_MWh": 0.0
+    },
+    "PHS": {
+      "generation_MWh": 0.0,
+      "charge_MWh": 2257339.1945007676,
+      "discharge_MWh": 1693004.395875656
+    },
+    "battery": {
+      "generation_MWh": 0.0,
+      "charge_MWh": 1868459.1387240845,
+      "discharge_MWh": 1793720.7731750302
+    },
+    "biomass": {
+      "generation_MWh": 1791154.9123433083,
+      "charge_MWh": 0.0,
+      "discharge_MWh": 0.0
+    },
+    "coal": {
+      "generation_MWh": 2387575.390295234,
+      "charge_MWh": 0.0,
+      "discharge_MWh": 0.0
+    },
+    "geothermal": {
+      "generation_MWh": 8437.000000027661,
+      "charge_MWh": 0.0,
+      "discharge_MWh": 0.0
+    },
+    "hydro": {
+      "generation_MWh": 0.0,
+      "charge_MWh": 0.0,
+      "discharge_MWh": 4761192.781209437
+    },
+    "lignite": {
+      "generation_MWh": 1732162.9019898418,
+      "charge_MWh": 0.0,
+      "discharge_MWh": 0.0
+    },
+    "nuclear": {
+      "generation_MWh": 8625475.581430357,
+      "charge_MWh": 0.0,
+      "discharge_MWh": 0.0
+    },
+    "offwind-ac": {
+      "generation_MWh": 718843.0224690668,
+      "charge_MWh": 0.0,
+      "discharge_MWh": 0.0
+    },
+    "offwind-dc": {
+      "generation_MWh": 1547261.9294414301,
+      "charge_MWh": 0.0,
+      "discharge_MWh": 0.0
+    },
+    "oil": {
+      "generation_MWh": 416.24113063562305,
+      "charge_MWh": 0.0,
+      "discharge_MWh": 0.0
+    },
+    "onwind": {
+      "generation_MWh": 33150528.796735425,
+      "charge_MWh": 0.0,
+      "discharge_MWh": 0.0
+    },
+    "ror": {
+      "generation_MWh": 2326805.2500619753,
+      "charge_MWh": 0.0,
+      "discharge_MWh": 0.0
+    },
+    "solar": {
+      "generation_MWh": 14324572.523068028,
+      "charge_MWh": 0.0,
+      "discharge_MWh": 0.0
+    }
+  },
+  "reference_only_G2_MILP_to_G3": {
+    "status": "PASS_SCOPED_REFERENCE_REPLAY_AT1e_7",
+    "reference_only": true,
+    "actual_G3_SOCP_original_point_gate": "REMAINS_NEGATIVE_NOT_REPLACED",
+    "G3_MISOCP_entry": "NOT_GRANTED_BY_REFERENCE",
+    "actual_original_NativeG3_JuMP_primal_check_called": false,
+    "independent_arithmetic_original_constraint_replays": 756257,
+    "all_complete_RSOC_cones": 8736,
+    "q_values": 17472,
+    "original_reference_variables": 328867,
+    "maximum_original_distance_independent_fsum": 8.940696716308594e-08,
+    "maximum_actual_Float64_RSOC_polynomial_violation": 1.4551915228366852e-11
+  },
+  "remaining_findings": [
+    {
+      "id": "G3-NUMERIC-01",
+      "status": "NEGATIVE_ORIGINAL_POINTS",
+      "required": "Actual independently accepted G3-SOCP original point at unchanged1e-7 before MISOCP; reference replay is not the actual solver gate."
+    },
+    {
+      "id": "M1-CASE-BMIN",
+      "status": "BLOCKED_CASE_EVIDENCE",
+      "required": "Case-bound SPD Bmin from actually enforced minimum online source IDs/stamps for all admissible states."
+    },
+    {
+      "id": "M2-CASE-W",
+      "status": "BLOCKED_CASE_EVIDENCE",
+      "required": "Ex ante fixed nontrivial W with bus/source/reference-state/normalization/island/right bindings."
+    },
+    {
+      "id": "EXTERNAL-SCR-ESCR",
+      "status": "BLOCKED_CASE_EVIDENCE",
+      "required": "Explicit source/fault/terminal/denominator and eSCR compensation convention/data; no silent Qc=0."
+    }
+  ],
+  "formulation_limits": {
+    "BASE_G1": "Accepted prior LP and MILP reused without rerun.",
+    "G2": "Accepted own LP reused; new MILP independently PASS below0.5percentgap.",
+    "G3": "Two conditioned SOCPs NEGATIVE; MISOCP not executed.",
+    "G0": "Postsolve eigenvalue diagnostics only; no direct SDP/MISDP solver run.",
+    "LOCAL": "Postsolve rank-one diagnostic only.",
+    "M0": "Domain-qualified postsolve diagnostic; not an enforced full-week model.",
+    "M1_M2_external_SCR_eSCR": "Case evidence gates remain binding.",
+    "E2_Woodbury_Neumann": "Diagnostic only; no safe certificate claim."
+  },
+  "solver_followup": {
+    "selected_solver": "Gurobi",
+    "alternative_MOSEK_path": "Existing installed route; new solver-switch response pending, no new MOSEK solve executed.",
+    "no_parameter_sweep": true,
+    "no_feasibility_tolerance_increase": true
+  },
+  "retention": {
+    "large_output_root": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_SEQUENTIAL_CONDITIONED_20261120_01",
+    "all_failed_attempts_originals_logs_and_review_receipts_retained": true,
+    "new_worktrees": 0,
+    "additional_backups": 0,
+    "deletions": 0,
+    "producer_source_edits": 0,
+    "producer_Q4_file_sha256": "aceb4661c9fe3c92e41acf44a52250af2549a46c437a162e46f319453dfa1314",
+    "producer_Q4_diff_sha256": "56e116eb31589a19fe981dac46cc7f707bc603caedb57a1f5ff6183d740fefa8",
+    "unrelated_untracked_repo_files_not_staged": true
+  },
+  "not_granted": [
+    "8760h annual Full37",
+    "SCI02",
+    "Gate J",
+    "F3",
+    "physical faultSCR/eSCR",
+    "AC/PQ/current/dynamics",
+    "publication"
+  ],
+  "bound_scope": "Native numerical bounds/gaps in original EUR2025, not rigorous exact monetary certificates; OPTIMAL is requested gap target, not zero-gap proof.",
+  "accepted_G1_G2_reference_comparison": {
+    "schema": "paper_a_KW8_G2_MILP_actual_comparison_to_accepted_G1_MILP_and_G2_LP_v1",
+    "created_utc": "2026-11-20T22:22:27.726033+00:00",
+    "reviewer": "root_g3_numeric_math",
+    "status": "PASS_READ_ONLY_ACCEPTED_REFERENCE_COMPARISON",
+    "cases": {
+      "G1_MILP_existing": {
+        "objective_EUR2025": 127818618545.37363,
+        "annual_CAPEX_EUR2025": 111598590415.4346,
+        "annual_OPEX_EUR2025": 16220028129.939142,
+        "best_numerical_bound_EUR2025": 127348376448.75867,
+        "relative_gap": 0.0036789796507465072,
+        "solver_status": "OPTIMAL",
+        "expansion_MW": {
+          "CCGT": 1636.0,
+          "OCGT": 0.0,
+          "battery": 58875.0,
+          "BESS-GFM": 104575.0,
+          "onwind": 587424.0427000469,
+          "solar": 726052.7116451459
+        },
+        "dispatch_week_MWh": {
+          "Gas_generation_MWh": 603613.2929440828,
+          "CCGT_MWh": 602029.0529440905,
+          "OCGT_MWh": 1584.2399999923546,
+          "BESS_GFL_charge_MWh": 1801405.4662745388,
+          "BESS_GFL_discharge_MWh": 1729349.247623557,
+          "BESS_GFM_charge_MWh": 4566446.195659127,
+          "BESS_GFM_discharge_MWh": 4383788.347832767,
+          "BESS_total_discharge_MWh": 6113137.5954563245,
+          "BESS_total_charge_MWh": 6367851.661933666
+        },
+        "diagnostics": {
+          "G1_failed_hours": 0,
+          "G0_failed_hours": null,
+          "G2_failed_hours": null,
+          "M0_failed_defined_hours": null,
+          "M0_undefined_hours": null,
+          "LOCAL_failed_hours": null,
+          "scope": "OnlyexistingG1hourlyresidualCSVwasexportedandreusedforG1reference. OtherdiagnosticcountswerenotarchivedinthereusedG1receiptsandarenotfabricated."
+        }
+      },
+      "G2_LP_existing": {
+        "objective_EUR2025": 127408221525.42139,
+        "annual_CAPEX_EUR2025": 111294375109.89827,
+        "annual_OPEX_EUR2025": 16113846415.524942,
+        "best_numerical_bound_EUR2025": 127408221525.42139,
+        "relative_gap": 0.0,
+        "solver_status": "OPTIMAL",
+        "expansion_MW": {
+          "CCGT": 1712.787136429091,
+          "OCGT": 0.0,
+          "battery": 57164.69139421631,
+          "BESS-GFM": 102089.70683652525,
+          "onwind": 589728.7389109852,
+          "solar": 718399.0084131575
+        },
+        "dispatch_week_MWh": {
+          "Gas_generation_MWh": 499555.96097894444,
+          "CCGT_MWh": 499555.96097894444,
+          "OCGT_MWh": 0.0,
+          "BESS_GFL_charge_MWh": 1899299.5841458577,
+          "BESS_GFL_discharge_MWh": 1823327.600780023,
+          "BESS_GFM_charge_MWh": 4178813.806043629,
+          "BESS_GFM_discharge_MWh": 4011661.253801883,
+          "BESS_total_discharge_MWh": 5834988.854581906,
+          "BESS_total_charge_MWh": 6078113.390189487
+        },
+        "diagnostics": {
+          "G0_failed_hours": 0,
+          "G1_failed_hours": 81,
+          "G2_failed_hours": 0,
+          "M0_failed_defined_hours": 18,
+          "M0_undefined_hours": 0,
+          "LOCAL_failed_hours": 0,
+          "scope": "Existing168h matrix diagnostics. G2active only in G2case; otherconditionsnotactive. No externalSCR/eSCR claim."
+        }
+      },
+      "G2_MILP_new": {
+        "objective_EUR2025": 127449599028.67305,
+        "annual_CAPEX_EUR2025": 111340588724.01581,
+        "annual_OPEX_EUR2025": 16109010304.654667,
+        "best_numerical_bound_EUR2025": 127408221525.4212,
+        "relative_gap": 0.00032465777505143336,
+        "solver_status": "OPTIMAL",
+        "expansion_MW": {
+          "CCGT": 1840.5,
+          "OCGT": 0.0,
+          "battery": 57225.0,
+          "BESS-GFM": 102450.0,
+          "onwind": 589728.7389109852,
+          "solar": 718399.0084286081
+        },
+        "dispatch_week_MWh": {
+          "Gas_generation_MWh": 501633.3679841195,
+          "CCGT_MWh": 501633.3679841195,
+          "OCGT_MWh": 0.0,
+          "BESS_GFL_charge_MWh": 1868459.1387240845,
+          "BESS_GFL_discharge_MWh": 1793720.7731750302,
+          "BESS_GFM_charge_MWh": 4453010.788462823,
+          "BESS_GFM_discharge_MWh": 4274890.356923962,
+          "BESS_total_discharge_MWh": 6068611.130098992,
+          "BESS_total_charge_MWh": 6321469.927186908
+        },
+        "diagnostics": {
+          "G0_failed_hours": 0,
+          "G1_failed_hours": 116,
+          "G2_failed_hours": 0,
+          "M0_failed_defined_hours": 10,
+          "M0_undefined_hours": 0,
+          "LOCAL_failed_hours": 0,
+          "scope": "Existing168h matrix diagnostics. G2active only in G2case; otherconditionsnotactive. No externalSCR/eSCR claim."
+        }
+      }
+    },
+    "deltas_new_G2_MILP_minus_existing_G1_MILP": {
+      "objective_EUR2025": -369019516.7005768,
+      "annual_CAPEX_EUR2025": -258001691.41879272,
+      "annual_OPEX_EUR2025": -111017825.28447533,
+      "expansion_MW": {
+        "CCGT": 204.5,
+        "OCGT": 0.0,
+        "battery": -1650.0,
+        "BESS-GFM": -2125.0,
+        "onwind": 2304.696210938273,
+        "solar": -7653.703216537833
+      },
+      "dispatch_week_MWh": {
+        "Gas_generation_MWh": -101979.92495996325,
+        "CCGT_MWh": -100395.68495997094,
+        "OCGT_MWh": -1584.2399999923546,
+        "BESS_GFL_charge_MWh": 67053.6724495457,
+        "BESS_GFL_discharge_MWh": 64371.525551473256,
+        "BESS_GFM_charge_MWh": -113435.40719630383,
+        "BESS_GFM_discharge_MWh": -108897.99090880528,
+        "BESS_total_discharge_MWh": -44526.46535733249,
+        "BESS_total_charge_MWh": -46381.734746757895
+      }
+    },
+    "deltas_new_G2_MILP_minus_own_existing_G2_LP": {
+      "objective_EUR2025": 41377503.25166321,
+      "annual_CAPEX_EUR2025": 46213614.11753845,
+      "annual_OPEX_EUR2025": -4836110.870275497,
+      "expansion_MW": {
+        "CCGT": 127.7128635709089,
+        "OCGT": 0.0,
+        "battery": 60.308605783691746,
+        "BESS-GFM": 360.29316347475105,
+        "onwind": 0.0,
+        "solar": 1.545052509754896e-05
+      },
+      "dispatch_week_MWh": {
+        "Gas_generation_MWh": 2077.407005175075,
+        "CCGT_MWh": 2077.407005175075,
+        "OCGT_MWh": 0.0,
+        "BESS_GFL_charge_MWh": -30840.445421773242,
+        "BESS_GFL_discharge_MWh": -29606.82760499278,
+        "BESS_GFM_charge_MWh": 274196.9824191942,
+        "BESS_GFM_discharge_MWh": 263229.1031220788,
+        "BESS_total_discharge_MWh": 233622.27551708557,
+        "BESS_total_charge_MWh": 243356.53699742164
+      }
+    },
+    "G1_G2_native_objective_intervals_overlap": true,
+    "interpretation": "NewG2incumbent is369.019517millionEURbelowtheacceptedG1incumbent, but numericaloptimumintervalsoverlap and gapsdiffer. FixedrG2 and G1 are notgenericallynested; not a proofG2islessconservativeorhasaloweroptimum. CurrentG2LP objective127.408221525bn exceedsG1LPbound127.348376449bn.",
+    "annualization": "AnnualizedCAPEXonce + actualweekgeneration/storage/startup/shutdownOPEX8760/168once. Dispatchquantitiesarephysical168hMWh, notalreadyannualenergy.",
+    "G3_cost": null,
+    "scope": "No newLP/G1solve or broadreview. Existingacceptedreferenceevidence reused; newactualG2MIP resultboundtoitsindependentgate.",
+    "inputs": {
+      "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01\\quota_70\\integer\\independent_with_gscr_result_review.json": "a2e28e42129b0a50ec80bc5a00f7f43fc2dac2023c08e7a8196010301ab9b87e",
+      "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01\\quota_70\\integer\\with_gscr\\integer\\run_summary.json": "5923a336458cbb05e7c6739468c00a4e80900d0ce71eb5f209ee62963a0659af",
+      "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01\\quota_70\\integer\\with_gscr\\integer\\g1_all_bus_hours.csv": "adc284f26187f8c15256fd002d4001579b85f560ad9242c848cc86f53cee33a4",
+      "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_20261118_01\\INDEPENDENT_REVIEW\\mathematical_candidate_review_G2_relaxed_c842bbd.json": "76a0ef859ac44d7465369549d10fb9fe7517b937fa6dd99f1077335e53880af3",
+      "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_20261118_01\\G2\\relaxed\\run_summary.json": "87a3b3bb94ccc04927157aec06a4a967adfb384ba6719fc32bd5bf1cafb6ae20",
+      "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_SEQUENTIAL_CONDITIONED_20261120_01\\03_G2_MILP\\INDEPENDENT_REVIEW\\mathematical_candidate_review_G2_integer_a6eadd1.json": "a2cf5e106d9a5e66e91c688a09cc64066ed9f65ef3954bd34a8a95d78315f501",
+      "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_SEQUENTIAL_CONDITIONED_20261120_01\\03_G2_MILP\\G2\\integer\\run_summary.json": "6c39b0526942a10461523ff05b116bf09b07abb6e703f67ee6f0df943fd0dc88",
+      "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_SEQUENTIAL_CONDITIONED_20261120_01\\03_G2_MILP\\INDEPENDENT_REVIEW\\independent_G2_MILP_original_point_cost_gap_gate.json": "dd1af5ee5f3cc1951587314b2919389b6955833d37893d979f7dc82064bc1dac"
+    },
+    "operations": {
+      "solver_calls": 0,
+      "model_builds": 0,
+      "repo_writes": 0
+    }
+  },
+  "unchanged_input_cases": {
+    "G2": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_20261118_01\\CASES\\G2\\case.json",
+      "sha256": "c154322ea868313405ac7be70c541ad87839bbb070ac2fa556f18c1d2547e2d5",
+      "bytes": 171432763
+    },
+    "G3": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_20261118_01\\CASES\\G3\\case.json",
+      "sha256": "1ceb274ab48bf2e4f90783fa881d394c79fb216d311c6bde197c6fe77dbbb15d",
+      "bytes": 171432763
+    }
+  },
+  "input_profile_sha256": {
+    "G2": "223f15ae0f78021846ef636e2db975a29607aa8524be18d9bf3ed9ca0e46d787",
+    "G3": "7e043c288061a828e5ab69fddcc5055b7d2afd7b16545b63d78ba097c53880ff"
+  }
+}

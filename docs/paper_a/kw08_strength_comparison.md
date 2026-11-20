@@ -3,6 +3,10 @@
 Die Fortsetzung vom 20. November mit aktiv vergrößerter Auslagerungsdatei und
 aktueller, separat gebundener Solverumgebung steht im
 [neuen G3-Laufbericht](kw08_g3_current_solver_recovery_20261120.md).
+Die anschließende [sequenzielle Fortsetzung mit erweitertem Budget](kw08_sequential_strength_continuation_20261120.md)
+schließt den offenen G2-MILP mit unabhängigem PASS und 0,03246578 % Gap;
+zwei korrekt konditionierte G3-SOCPs bleiben unabhängig NEGATIVE.
+Die folgenden früheren Laufbefunde bleiben in ihrem historischen Scope erhalten.
 
 QREF hat aus den zwölf unabhängig geprüften 50-/60-/70-%-Varianten den
 70-%-Fall gewählt (MILP mit G1: Gap 0,367898 %, ohne G1: 0,052968 %).
