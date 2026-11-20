@@ -130,11 +130,16 @@ end
 An optional power-of-two divisor is verified in the supplied original cost
 coordinates. Rounding from any earlier caller-side rebase/division is separate.
 The default divisor preserves the existing conditioning path and metadata.
+A different coefficient floor requires its own numerical qualification; the
+binary-million G3 coordinate records that floor and its original-EUR meaning.
 """
-function condition_objective(f::GenericAffExpr;divisor=1.)
+function condition_objective(f::GenericAffExpr;divisor=1.,minimum_coefficient=MIN_OBJECTIVE_COEFFICIENT)
     # Reuse AP3's positive objective division without adding increment variables
     # or a heuristic solve. Binary division is checked in original coordinates.
     requested=Float64(divisor)
+    floor=Float64(minimum_coefficient)
+    isfinite(floor) && 0<floor<=MAX_COEFFICIENT ||
+        throw(NumericalInputError("invalid_qualified_objective_coefficient_floor"))
     isfinite(requested) && requested>0 && significand(requested)==1. ||
         throw(NumericalInputError("objective_divisor_must_be_a_positive_power_of_two"))
     if requested!=1.
@@ -153,8 +158,8 @@ function condition_objective(f::GenericAffExpr;divisor=1.)
     cs = [abs(c) for (c, _) in linear_terms(f) if c != 0]
     all(isfinite, cs) && isfinite(f.constant) || throw(NumericalInputError("nonfinite_objective"))
     lo = minimum(cs; init=Inf)
-    exponent = isfinite(lo) && lo < MIN_OBJECTIVE_COEFFICIENT ?
-        ceil(Int, log2(MIN_OBJECTIVE_COEFFICIENT) - log2(lo)) : 0
+    exponent = isfinite(lo) && lo < floor ?
+        ceil(Int, log2(floor) - log2(lo)) : 0
     0 <= exponent <= 1023 || throw(NumericalInputError("objective_multiplier_out_of_range"))
     multiplier = ldexp(1., exponent)
     g = f * multiplier
@@ -168,13 +173,15 @@ function condition_objective(f::GenericAffExpr;divisor=1.)
     end
     largest = maximum((abs(c) for (c,_) in linear_terms(g)); init=0.)
     smallest = minimum((abs(c) for (c,_) in linear_terms(g) if c != 0); init=Inf)
-    largest <= MAX_COEFFICIENT && abs(g.constant) <= MAX_COEFFICIENT && (!isfinite(smallest) || smallest >= MIN_OBJECTIVE_COEFFICIENT) ||
+    largest <= MAX_COEFFICIENT && abs(g.constant) <= MAX_COEFFICIENT && (!isfinite(smallest) || smallest >= floor) ||
         throw(NumericalInputError("conditioned_objective_outside_declared_range"))
     metadata=Dict{String,Any}("power_two_exponent"=>exponent, "multiplier"=>multiplier,
         "minimum_nonzero_coefficient"=>isfinite(smallest) ? smallest : nothing,
         "maximum_coefficient"=>largest, "exact_binary_scaling_verified"=>true)
     requested==1. || merge!(metadata,Dict("requested_divisor"=>requested,
         "effective_divisor"=>requested/multiplier,"exact_binary_division_verified"=>true))
+    floor==MIN_OBJECTIVE_COEFFICIENT || merge!(metadata,Dict("qualified_minimum_objective_coefficient"=>floor,
+        "original_currency_coefficient_floor"=>floor*requested/multiplier))
     return g,metadata
 end
 

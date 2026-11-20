@@ -50,6 +50,8 @@ include("AP3Pipeline.jl")
 const N=AP3Pipeline.NativeG3Solver
 const equivalent_conditioning=get(ENV,"PAPER_A_G3_EQUIVALENT_CONDITIONING","0")=="1"
 equivalent_conditioning && (criterion!="G3" || native_backend!=:gurobi) && error("Conditioning is qualified only for G3/Gurobi")
+const binary_million_cost=get(ENV,"PAPER_A_G3_BINARY_MILLION_COST","0")=="1"
+binary_million_cost && !equivalent_conditioning && error("Binary-million cost coordinate requires qualified G3/Gurobi conditioning")
 equivalent_conditioning && include("G3EquivalentConditioning.jl")
 const out=joinpath(root,criterion,mode)
 const case_dir=get(ENV,"PAPER_A_STRENGTH_EXISTING_CASE_DIR",joinpath(root,"CASES",criterion))
@@ -138,7 +140,7 @@ else
     JuMP.@constraint(model,w.quota>=0.70*w.demand)
     original_objective=investment+annual_factor*(w.gen+w.storage+w.events)
     JuMP.@objective(model,Min,original_objective)
-    objective_divisor=criterion=="G3" ? 8192. : 1.
+    objective_divisor=criterion=="G3" ? (binary_million_cost ? 2.0^20 : 8192.) : 1.
     discrete=filter(v->JuMP.is_integer(v)||JuMP.is_binary(v),JuMP.all_variables(model))
     mode=="relaxed" && JuMP.relax_integrality(model)
     params=Dict{String,Any}("Threads"=>4,"Method"=>2,"TimeLimit"=>budget,"NumericFocus"=>3,
@@ -169,13 +171,14 @@ else
         end
         try
             profile["input_range"]=N.input_range(model)
-            conditioned,meta=N.condition_objective(original_objective;divisor=objective_divisor)
+            conditioned,meta=N.condition_objective(original_objective;divisor=objective_divisor,
+                minimum_coefficient=binary_million_cost ? 2.0^-20 : N.MIN_OBJECTIVE_COEFFICIENT)
             meta["multiplier"]==1 || error("Explicit objective coordinate qualification required")
             profile["objective_conditioning"]=meta
             profile["objective_backend_divisor"]=objective_divisor
             JuMP.set_objective_function(model,conditioned)
             if equivalent_conditioning
-                global conditioned_copy=G3EquivalentConditioning.scaled_copy(model;protected=Set(discrete))
+                global conditioned_copy=G3EquivalentConditioning.scaled_copy(model;protected=Set(discrete),objective_divisor)
                 profile["equivalent_conditioning"]=conditioned_copy.metadata
                 profile["conditioning_source_sha256"]=sha_file(joinpath(@__DIR__,"G3EquivalentConditioning.jl"))
                 profile["conditioned_input_range"]=N.input_range(conditioned_copy.model)

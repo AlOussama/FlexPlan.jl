@@ -52,7 +52,9 @@ function coefficient_max(f, exponents; constants=false)
 end
 
 """Create x=D*y and R*f(D*y) in a separate model, without optimizing it."""
-function scaled_copy(original; protected=Set{VariableRef}())
+function scaled_copy(original; protected=Set{VariableRef}(), objective_divisor=8192.)
+    divisor=Float64(objective_divisor)
+    isfinite(divisor) && divisor>0 && significand(divisor)==1. || error("Unqualified objective coordinate divisor")
     variables_original=all_variables(original)
     exponents=Dict(v=>(v in protected || is_integer(v) || is_binary(v) ? 0 : column_exponent(finite_magnitude(v))) for v in variables_original)
     # q has no finite upper bound. Its scale uses only the fixed original edge
@@ -105,7 +107,7 @@ function scaled_copy(original; protected=Set{VariableRef}())
         "variables"=>length(variables),"constraints"=>length(constraints),
         "original_row_error_amplification_max"=>maximum(ldexp(1.,-e) for (c,e) in rows if !(constraint_object(c).func isa VariableRef)),
         "original_bound_error_amplification_max"=>maximum(ldexp(1.,e) for e in values(exponents)),
-        "exact_dyadic_coefficient_roundtrip"=>true,"objective_divisor_unchanged"=>8192.,
+        "exact_dyadic_coefficient_roundtrip"=>true,"objective_divisor_unchanged"=>divisor,
         "acceptance"=>"Unchanged original NativeG3Solver.primal_check, not scaled-native residuals")
     return (;model=transformed,variables,exponents,constraints,rows,metadata)
 end

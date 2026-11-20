@@ -7,7 +7,7 @@ const N=NativeG3Solver
 const MOI=JuMP.MOI
 
 @testset "Invertible G3 conditioning and original result projection" begin
-    for integer in (false,true)
+    for integer in (false,true), divisor in (8192.,2.0^20)
         m=Model()
         @variable(m,0<=z<=3,Int)
         protected=Set([z])
@@ -22,8 +22,14 @@ const MOI=JuMP.MOI
         cone=@constraint(m,[q[1],q[2],sqrt(2.)*512.] in RotatedSecondOrderCone())
         @constraint(m,q[1]+q[2]<=1024. + z)
         original=1e8*z+100.0*capacity+123.25
-        @objective(m,Min,original/8192.)
-        copy=C.scaled_copy(m;protected)
+        conditioned,meta=N.condition_objective(original;divisor,
+            minimum_coefficient=divisor==8192. ? N.MIN_OBJECTIVE_COEFFICIENT : 2.0^-20)
+        @test meta["multiplier"]==1.
+        @test meta["effective_divisor"]==divisor
+        @test Rational{BigInt}(conditioned.constant)*Rational{BigInt}(divisor)==Rational{BigInt}(original.constant)
+        @objective(m,Min,conditioned)
+        copy=C.scaled_copy(m;protected,objective_divisor=divisor)
+        @test copy.metadata["objective_divisor_unchanged"]==divisor
         @test copy.exponents[z]==0
         @test copy.exponents[e]==copy.exponents[capacity]==7
         @test copy.exponents[q[1]]>0
@@ -49,9 +55,30 @@ const MOI=JuMP.MOI
         @test N.primal_check(m)["status"]=="passed"
         @test primal_feasibility_report(m;atol=0.)==primal_feasibility_report(m,saved;atol=0.)
         @test MOI.get(unsafe_backend(m),MOI.ConstraintPrimal(),index(cone))≈value.(constraint_object(cone).func)
-        @test value(original)≈objective_value(m)*8192. atol=1e-6
+        @test value(original)≈objective_value(m)*divisor atol=1e-6
+        @test N.original_currency_bound(objective_bound(m),divisor)≈value(original) atol=1e-5 rtol=1e-10
         @test num_variables(m)==num_variables(copy.model)
         @test all(start_value(v)===nothing for v in all_variables(copy.model))
+    end
+    costmodel=Model();@variable(costmodel,a);@variable(costmodel,b)
+    actual_min=0.006365094866071429*8192.
+    actual_max=4737.052242170494*8192.
+    f=actual_min*a+actual_max*b-2.6565906453343933e6*8192.
+    legacy,old=N.condition_objective(f;divisor=2.0^20)
+    normalized,new=N.condition_objective(f;divisor=2.0^20,minimum_coefficient=2.0^-20)
+    @test old["effective_divisor"]==8192.
+    @test new["effective_divisor"]==2.0^20 && new["multiplier"]==1.
+    @test new["original_currency_coefficient_floor"]==1.
+    @test new["minimum_nonzero_coefficient"]>2.0^-20
+    @test Rational{BigInt}(coefficient(normalized,a))*2^20==Rational{BigInt}(actual_min)
+    @test Rational{BigInt}(coefficient(normalized,b))*2^20==Rational{BigInt}(actual_max)
+    @test Rational{BigInt}(normalized.constant)*2^20==Rational{BigInt}(f.constant)
+    @test N.original_currency_bound(-1e100,2.0^20)===nothing
+    @test N.original_currency_bound(1e100,2.0^20)===nothing
+    @test N.original_currency_bound(118.,2.0^20)==118.0*2.0^20
+    @test abs((121000.0-120000.0)/121000.0-((121000.0*128)-(120000.0*128))/(121000.0*128))<=eps()
+    for invalid in (0.,-1.,Inf,NaN)
+        @test_throws N.NumericalInputError N.condition_objective(f;minimum_coefficient=invalid)
     end
     # Direct non-normalized affine objects test symbolic construction only;
     # Gurobi's native interface requires normalized scalar affine constants.

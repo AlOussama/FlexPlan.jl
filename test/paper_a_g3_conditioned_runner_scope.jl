@@ -2,6 +2,7 @@ module G3ConditionedRunnerScopeTests
 using Test
 
 @testset "Noninteractive actual runner try-scope and fail-closed routing" begin
+    for binary_million in (false,true)
     repo=normpath(joinpath(@__DIR__,".."))
     runner=read(joinpath(repo,"scripts/paper_a/run_week_strength_comparison.jl"),String)
     start="    conditioned_copy=nothing\n    if criterion==\"G3\"\n"
@@ -20,7 +21,8 @@ using Test
     const criterion="G3"
     const native_backend=:gurobi
     const equivalent_conditioning=true
-    const objective_divisor=8192.
+    const binary_million_cost=$binary_million
+    const objective_divisor=$(binary_million ? 2.0^20 : 8192.)
     params=Dict{String,Any}()
     model=JuMP.Model()
     JuMP.@variable(model,0<=z<=3,Int)
@@ -36,6 +38,7 @@ using Test
     @test fresh.conditioned_copy.model!==fresh.model
     @test fresh.conditioned_copy.exponents[fresh.z]==0
     @test fresh.conditioned_copy.exponents[fresh.capacity]==7
+    @test fresh.conditioned_copy.metadata["objective_divisor_unchanged"]==fresh.objective_divisor
     @test fresh.N.input_range(fresh.conditioned_copy.model)==fresh.profile["conditioned_input_range"]
     @test fresh.N.input_range(fresh.model)!=fresh.profile["conditioned_input_range"]
     old_scope=Module(:G3OldTryScopeRegression)
@@ -62,5 +65,6 @@ using Test
     fresh.profile["conditioned_input_range"]=expected
     Base.include_string(fresh,"conditioned_copy=nothing","negative_missing_copy")
     @test_throws LoadError Base.include_string(fresh,guard,"negative_preopt_guard")
+    end
 end
 end
