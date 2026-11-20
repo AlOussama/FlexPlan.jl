@@ -1,5 +1,9 @@
 # KW 8 / 70 %: vorhandene Netzstärkekriterien
 
+Die Fortsetzung vom 20. November mit aktiv vergrößerter Auslagerungsdatei und
+aktueller, separat gebundener Solverumgebung steht im
+[neuen G3-Laufbericht](kw08_g3_current_solver_recovery_20261120.md).
+
 QREF hat aus den zwölf unabhängig geprüften 50-/60-/70-%-Varianten den
 70-%-Fall gewählt (MILP mit G1: Gap 0,367898 %, ohne G1: 0,052968 %).
 Die vorhandenen G1-/G2-/G3-Gleichungen werden unverändert wiederverwendet.
