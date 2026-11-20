@@ -59,6 +59,7 @@ function native_dump(model,path)
     starts=zeros(Cint,nr);columns=zeros(Cint,nz[]);coefficients=zeros(Float64,nz[])
     ok(Gurobi.GRBgetconstrs(native,nz,starts,columns,coefficients,0,nr))
     function darr(name,n)
+        n==0 && return Float64[]
         a=zeros(Float64,n);ok(Gurobi.GRBgetdblattrarray(native,name,0,n,a));a
     end
     senses=zeros(Cchar,nr);ok(Gurobi.GRBgetcharattrarray(native,"Sense",0,nr,senses))
