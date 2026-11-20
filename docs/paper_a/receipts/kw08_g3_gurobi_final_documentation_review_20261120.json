@@ -1,0 +1,81 @@
+{
+  "schema": "paper_a_final_independent_G3_restoration_documentation_index_review_v1",
+  "status": "PASS_SCOPED_RESTORATION_DOCUMENTATION_AND_EVIDENCE_INDEX",
+  "reviewer_role": "root_gfm_epri_math_qual",
+  "created_utc": "2026-11-20T01:25:49.889415+00:00",
+  "precommit_HEAD": "f81c6c52125556c7301c7e359568555d614ebdcc",
+  "documents": [
+    {
+      "path": "D:\\Projekte\\Code\\FlexPlan_UC_GSCR\\docs\\paper_a\\kw08_g3_current_solver_recovery_20261120.md",
+      "sha256": "a0f5ae2898878aea2a7fd5f7d1decab9d4f255666c80ae01583bb31d52a35783"
+    },
+    {
+      "path": "D:\\Projekte\\Code\\FlexPlan_UC_GSCR\\docs\\paper_a\\full37_technical_studies_and_execution_status.md",
+      "sha256": "ab91d014ddb8362eef1250c4eb14e11973ce76db91982d5fd37102f81c80eed9"
+    }
+  ],
+  "index": {
+    "path": "D:\\Projekte\\Code\\FlexPlan_UC_GSCR\\docs\\paper_a\\receipts\\kw08_g3_gurobi_closeout_20261120.json",
+    "sha256": "77bcb9024ef070f4b3e414d5d5546d0e1807aaf42c5a070007163d217106cfef"
+  },
+  "exact_references_verified": 28,
+  "reference_manifest_sha256": "d5e5977b935ed0884c1f6c06a43ff4d0bda5abfe7a195474408af291a7bf68f1",
+  "restoration": {
+    "runner": {
+      "path": "D:\\Projekte\\Code\\FlexPlan_UC_GSCR\\scripts\\paper_a\\run_week_strength_comparison.jl",
+      "sha256": "930e27eace04b7a7aa9db6b3928c58d148029e68b97a294cb441c57d5730a6bf"
+    },
+    "test": {
+      "path": "D:\\Projekte\\Code\\FlexPlan_UC_GSCR\\test\\paper_a_added_gfl_native_g3.jl",
+      "sha256": "20f1de74a1263cc9fcfe386863f4495086e9b076af3f4e069f17d5c1594d9cc2"
+    },
+    "exact_source_and_test_match": "97b11ee9ac9dfba387e1b8cac3a56720ec4e66a9",
+    "only_two_experimental_attributes_and_two_test_setters_removed": true,
+    "explicit_Dict_import_preserved": true,
+    "Project_and_all_manifest_bytes_unchanged": true
+  },
+  "actual_two_run_summary_projections_equal": true,
+  "original_raw_summaries_not_republished": true,
+  "source_and_status_checks": [
+    "Both numerical points rejected, raw native FEASIBLE_POINT distinguished from actual original-primal acceptance.",
+    "61616 original row failures,3646 bounds and243 G3 node budgets/55h correctly reported; zero polynomial errors is not full G3 PASS.",
+    "Observed168h resource success does not imply full-year fit or numerical success.",
+    "Valid study costs/lower bounds/gaps unavailable; native -1e100 correctly labelled sentinel.",
+    "MISOCP not executed and no model-infeasibility or scientific GO claimed.",
+    "Historical19Nov resource stop separated from20Nov numerical closeout; no further parameter run claimed.",
+    "One remaining numerical issue refers to canonical ledger; closed JSON start defect remains separately evidenced."
+  ],
+  "consolidated_actual_negative_closeout": {
+    "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_G3_GUROBI_NUMERIC_20261120_03\\INDEPENDENT_REVIEW\\mathematical_candidate_review_G3_relaxed_f81c6c52.json",
+    "sha256": "8ee63ecfa1abb3355f9b6b3e52595dcd2d51fad9b17c8cea0e9bcdd74c8d730f"
+  },
+  "remaining_findings_count": 1,
+  "remaining_finding_identifier": {
+    "id": "G3-NUMERIC-01",
+    "canonical_ledger_id": "G3-NUMERIC-01",
+    "status": "OPEN",
+    "scope": "Selected168-hour70pctG3case",
+    "description": "Both actual Gurobi SOCP candidates fail unchanged original-model tolerances; recovery additionally violates243G3nodebudget rows in55hours.",
+    "dependent_action": "MISOCP NOT_EXECUTED because independent predecessor gate is NEGATIVE.",
+    "cause": "Numerical cause not isolated; not an infeasibility proof.",
+    "next_technical_scope": "Specify and independently validate mathematically equivalent conditioning of this fixed model; retain original-unit replay. No further parameter sweep performed."
+  },
+  "preserved_Q4": {
+    "file": {
+      "path": "D:\\Projekte\\Code\\pypsatomatpowerx\\src\\block_gscr_converter.jl",
+      "sha256": "aceb4661c9fe3c92e41acf44a52250af2549a46c437a162e46f319453dfa1314"
+    },
+    "git_diff_sha256": "56e116eb31589a19fe981dac46cc7f707bc603caedb57a1f5ff6183d740fefa8"
+  },
+  "no_new_numerical_or_scientific_gate": true,
+  "no_new_finding_ledger": true,
+  "claim_limit": "Publication of this compact documentation and exact default restoration only; no new optimization, feasible-plan/optimality, full-year, SCI02, Gate-J, F3, AC/dynamic or publication-study GO.",
+  "reviewer_operations": {
+    "repository_writes": 0,
+    "model_builds": 0,
+    "solver_calls": 0,
+    "case_reads": 0,
+    "new_physics_replays": 0,
+    "environment_changes": 0
+  }
+}

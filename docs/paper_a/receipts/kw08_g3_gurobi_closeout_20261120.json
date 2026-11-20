@@ -1,0 +1,400 @@
+{
+  "schema": "paper_a_week8_G3_Gurobi_pagefile_and_independent_closeout_v1",
+  "execution_status": "NUMERICAL_REJECT_AFTER_ONE_BUNDLED_RECOVERY_NO_MIP",
+  "period": {
+    "year": 2013,
+    "iso_week": 8,
+    "hours": 168,
+    "wind_PV_quota_pct": 70,
+    "OPEX_factor": 52.142857142857146,
+    "CAPEX_factor": 1,
+    "powerflow": "DCP",
+    "source_proxy": "colib_epri_frozen_E_blocks_v1"
+  },
+  "scientific_manifest_sha256": "ec4986d4de0853f6a8188c0add991a139d014c247adee6cb960fae29416a4e9a",
+  "case_sha256": "1ceb274ab48bf2e4f90783fa881d394c79fb216d311c6bde197c6fe77dbbb15d",
+  "profile_sha256": "7e043c288061a828e5ab69fddcc5055b7d2afd7b16545b63d78ba097c53880ff",
+  "canonical_numerical_ledger": {
+    "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_RESTART_20261119_01\\INDEPENDENT_REVIEW\\G3_NUMERICAL_REJECT_AND_TARGETED_PROFILE_CORRECTION_FINDING_LEDGER.json",
+    "sha256": "f29bc009caa743cf6520411f733ea790be63c392631eadc08003f933114ff981"
+  },
+  "producer_commit": "becec6d63c0fbf2b8a160c41f87631f5270046b9",
+  "runtime_commits": {
+    "environment": "e86745fa5dc8a9e0ec4394069e9e4d1cd27a43fc",
+    "dict_import": "97b11ee9ac9dfba387e1b8cac3a56720ec4e66a9",
+    "numeric_recovery": "f81c6c52125556c7301c7e359568555d614ebdcc"
+  },
+  "versions": {
+    "Gurobi": "1.9.3",
+    "Gurobi_jll_manifest": "13.0.3",
+    "Gurobi_library": "13.0.3",
+    "JuMP": "1.32.1",
+    "Julia": "1.11.5",
+    "MOSEK_library": "11.2.6",
+    "MathOptInterface": "1.54.0",
+    "Mosek": "11.2.1",
+    "MosekTools": "0.15.11",
+    "JSON": "1.13.4"
+  },
+  "version_and_license_evidence": {
+    "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_G3_MOSEK_CURRENT_20261120_01\\solver_versions_and_license_smokes.json",
+    "sha256": "0a834dfb68774e9d8b8c705846fdd05cd0146e016475c91bafae0ee26c6cf825"
+  },
+  "pagefile": {
+    "before_E_MiB": 8192,
+    "after_E_MiB": 16384,
+    "active_allocation_verified": true,
+    "C_unchanged_MiB": 18076,
+    "restart_performed": false,
+    "configuration": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_G3_MOSEK_CURRENT_20261120_01\\SYSTEM\\pagefile_change_result.json",
+      "sha256": "cbf316562fe949fbc742eb62939e6cece23d1aad33f1463bfeea9258217acd7d"
+    },
+    "active_growth": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_G3_MOSEK_CURRENT_20261120_01\\SYSTEM\\active_pagefile_extension_result.json",
+      "sha256": "a6e25cd7733b85b40b2d923fd8cd9302578b42b9240ee5a64c88204491be71e2"
+    }
+  },
+  "import_fix": {
+    "code_paths": [
+      "scripts/paper_a/run_week_strength_comparison.jl:comparison_case",
+      "scripts/paper_a/run_week_strength_comparison.jl:prepare_phase"
+    ],
+    "change": "Explicit dicttype=Dict{String,Any}, matching existing src/io/parse.jl; no dependency downgrade.",
+    "actual_case_test": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_G3_GUROBI_CURRENT_20261120_01\\JSON_case_binding_test.json",
+      "sha256": "9805caf84f8b2b85c5f8141b01ba0adb593128eae6dc7850ae51a1c9996f71d2"
+    },
+    "test_log": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_G3_GUROBI_CURRENT_20261120_01\\JSON_case_binding_test_02.log",
+      "sha256": "cf81c2e9a032c42f7de1e2a228e6bb690a921e5bfc2202dab97c2e33e6c67986"
+    },
+    "single_technical_finding_ledger": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_G3_GUROBI_CURRENT_20261120_01\\INDEPENDENT_REVIEW\\JSON_CASE_START_DEFECT_AND_TARGETED_FIX_SINGLE_FINDING_LEDGER.json",
+      "sha256": "8028dd0d1c4720813c9cebd775838ee17b8eeb022ba414788dae8758930b5fc3"
+    }
+  },
+  "tests": {
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_G3_GUROBI_CURRENT_20261120_01\\paper_a_native_g3_solver.log": {
+      "assertions_passed": 34,
+      "scope": "Existing native guards under new environment",
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_G3_GUROBI_CURRENT_20261120_01\\paper_a_native_g3_solver.log",
+      "sha256": "86b04f5fc2420bb3b650443c4b8cc28d1e186ed0cb4bd489a0ce288877151e3e"
+    },
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_G3_GUROBI_CURRENT_20261120_01\\paper_a_added_gfl_native_g3.log": {
+      "assertions_passed": 37,
+      "scope": "Existing exact G3 LP and MIP witnesses",
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_G3_GUROBI_CURRENT_20261120_01\\paper_a_added_gfl_native_g3.log",
+      "sha256": "6952f46f96a3ac19987aed1fca37762f228cdc6381d6ad21480582e41ea966a2"
+    },
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_G3_GUROBI_CURRENT_20261120_01\\paper_a_mosek_zeroone_bounds.log": {
+      "assertions_passed": 18,
+      "scope": "Additional installed MOSEK binary bound check; not productive solver",
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_G3_GUROBI_CURRENT_20261120_01\\paper_a_mosek_zeroone_bounds.log",
+      "sha256": "734c0b9f32bc5390ec8ee5d25f424b314e6383df812ed9595ced7a313719222a"
+    },
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_G3_MOSEK_CURRENT_20261120_01\\paper_a_added_gfl_mosek.log": {
+      "assertions_passed": 22,
+      "scope": "Additional installed MOSEK class/currency check",
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_G3_MOSEK_CURRENT_20261120_01\\paper_a_added_gfl_mosek.log",
+      "sha256": "756799fecfdd3955b79ff46fea461661fd44b0ba239cf56bf86f8816c9f30cd4"
+    },
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_G3_GUROBI_DICT_20261120_02\\Gurobi_scaling_aggregation_targeted_test.log": {
+      "assertions_passed": 37,
+      "scope": "Same Gurobi golden LP/MIP with experimental scaling attributes",
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_G3_GUROBI_DICT_20261120_02\\Gurobi_scaling_aggregation_targeted_test.log",
+      "sha256": "026cc3eb51ece48d651264f3f5f179eb099f14d3ad7967d5e160b5856d7acdba"
+    }
+  },
+  "runs": {
+    "Gurobi13_baseline": {
+      "consumer_commit": "97b11ee9ac9dfba387e1b8cac3a56720ec4e66a9",
+      "runner_sha256": "3cf2cdca69a6b28e2a7e7d1c418270c9f5c7c396670786bc500fb2caa3bdf094",
+      "status": "LOCALLY_SOLVED",
+      "primal_status": "FEASIBLE_POINT",
+      "numerically_accepted": false,
+      "solve_time_s": 187.71299982070923,
+      "primal_violation_count_at_1e_6": 4278,
+      "original_primal_check": {
+        "interpretation": "numerical_original_model_check_not_exact_feasibility",
+        "maximum_constraint_distance": 0.00019444730678230826,
+        "maximum_polynomial_RSOC_violation": 0.0,
+        "status": "failed_original_primal_check",
+        "tolerance": 1e-07
+      },
+      "native_solver_attributes": {
+        "BarIterCount": 73,
+        "BoundVio": 6.28741763648577e-05,
+        "ConstrVio": 0.00019444730678230826,
+        "DualVio": null,
+        "IntVio": null,
+        "IsMIP": 0,
+        "IterCount": 0.0,
+        "MIPGap": null,
+        "NodeCount": 0.0,
+        "NumConstrs": 461235,
+        "NumQConstrs": 8736,
+        "NumVars": 363811,
+        "ObjBound": -1e+100,
+        "ObjVal": 15503110.848866768,
+        "Runtime": 187.71299982070923,
+        "SolCount": 1,
+        "Status": 13
+      },
+      "best_bound_EUR2025": null,
+      "relative_gap": null,
+      "objective_backend_divisor": 8192.0,
+      "summary": {
+        "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_G3_GUROBI_DICT_20261120_02\\G3\\relaxed\\run_summary.json",
+        "sha256": "44175b4175a1b9e57c1b48dbe0af910e13ff2869d9c77c39292bb8b67fdc3609"
+      },
+      "process_profile": {
+        "exit_code": 0,
+        "max_sample_private_B": 3742691328,
+        "max_sample_rss_B": 3542622208,
+        "max_private_B": 12884901888,
+        "max_wall_s": 9000,
+        "guards": [],
+        "wall_s": 435.64100000000326,
+        "initial_host": {
+          "host_available_B": 8465678336,
+          "commit_headroom_B": 13125349376,
+          "E_free_B": 13447680000
+        },
+        "last_sample": {
+          "private_B": 111988736,
+          "rs_B": 112603136,
+          "wall_s": 435.39100000000326,
+          "utc_s": 1795135477.0193772,
+          "host_available_B": 9607045120,
+          "commit_headroom_B": 12556152832,
+          "E_free_B": 13294718976
+        },
+        "cmd": [
+          "C:\\Users\\User\\.julia\\juliaup\\julia-1.11.5+0.x64.w64.mingw32\\bin\\julia.exe",
+          "--project=D:\\Projekte\\Code\\FlexPlan_UC_GSCR",
+          "--startup-file=no",
+          "--threads=1",
+          "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_G3_GUROBI_DICT_20261120_02\\run_week_strength_comparison.jl",
+          "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_20261118_01",
+          "E:/ResearchResults/FlexPlan_UC_GSCR/ORCH_FULL37_SEQUENTIAL_117_20261113_01/SCI02_POSITIVE_SYN_MINIMUM_04/CASE.json",
+          "G3",
+          "relaxed",
+          "solve"
+        ],
+        "pid": 31004
+      },
+      "hard_supervision": {
+        "mode": "relaxed",
+        "profiler_exit_code": 0,
+        "wall_s": 436.0780000000086,
+        "maximum_observed_monitor_gap_s": 0.28200000000651926,
+        "native_hard_limit_s": 7200.0,
+        "observed_native_end_marker": true,
+        "hard_stop": null,
+        "native_window_elapsed_wall_s": 187.88300013542175,
+        "runtime_budget_qualification": "sampled_native_end_within_limit",
+        "monitoring_gap_flag_threshold_s": 5.0,
+        "claim": "resource supervision only; candidate acceptance is separate"
+      },
+      "continuous_plan_accepted": false,
+      "integer_started": false,
+      "accepted_study_costs": null,
+      "native_bound_minus_1e100_is_unavailable_sentinel": true
+    },
+    "Gurobi13_scale2_aggregate0": {
+      "consumer_commit": "f81c6c52125556c7301c7e359568555d614ebdcc",
+      "runner_sha256": "53789c9c2b73dd333a2d9f3746440e09d27cd6278864518f39f0b757cd171156",
+      "status": "LOCALLY_SOLVED",
+      "primal_status": "FEASIBLE_POINT",
+      "numerically_accepted": false,
+      "solve_time_s": 432.4630000591278,
+      "primal_violation_count_at_1e_6": 61616,
+      "original_primal_check": {
+        "interpretation": "numerical_original_model_check_not_exact_feasibility",
+        "maximum_constraint_distance": 0.0068429547437589555,
+        "maximum_polynomial_RSOC_violation": 0.0,
+        "status": "failed_original_primal_check",
+        "tolerance": 1e-07
+      },
+      "native_solver_attributes": {
+        "BarIterCount": 172,
+        "BoundVio": 0.001738615392241627,
+        "ConstrVio": 0.0068429547437589555,
+        "DualVio": null,
+        "IntVio": null,
+        "IsMIP": 0,
+        "IterCount": 0.0,
+        "MIPGap": null,
+        "NodeCount": 0.0,
+        "NumConstrs": 461235,
+        "NumQConstrs": 8736,
+        "NumVars": 363811,
+        "ObjBound": -1e+100,
+        "ObjVal": 15503110.36686417,
+        "Runtime": 432.4630000591278,
+        "SolCount": 1,
+        "Status": 13
+      },
+      "best_bound_EUR2025": null,
+      "relative_gap": null,
+      "objective_backend_divisor": 8192.0,
+      "summary": {
+        "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_G3_GUROBI_NUMERIC_20261120_03\\G3\\relaxed\\run_summary.json",
+        "sha256": "9211be678e789f1800db16d627fa68c5baa0c9268420722af7658f1db791a36f"
+      },
+      "process_profile": {
+        "exit_code": 0,
+        "max_sample_private_B": 3743215616,
+        "max_sample_rss_B": 3582517248,
+        "max_private_B": 12884901888,
+        "max_wall_s": 9000,
+        "guards": [],
+        "wall_s": 663.734999999986,
+        "initial_host": {
+          "host_available_B": 9064407040,
+          "commit_headroom_B": 12238741504,
+          "E_free_B": 13277167616
+        },
+        "last_sample": {
+          "private_B": 2296668160,
+          "rs_B": 2110525440,
+          "wall_s": 663.484999999986,
+          "utc_s": 1795137061.3283265,
+          "host_available_B": 7365087232,
+          "commit_headroom_B": 9766383616,
+          "E_free_B": 13123960832
+        },
+        "cmd": [
+          "C:\\Users\\User\\.julia\\juliaup\\julia-1.11.5+0.x64.w64.mingw32\\bin\\julia.exe",
+          "--project=D:\\Projekte\\Code\\FlexPlan_UC_GSCR",
+          "--startup-file=no",
+          "--threads=1",
+          "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_G3_GUROBI_NUMERIC_20261120_03\\run_week_strength_comparison.jl",
+          "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_20261118_01",
+          "E:/ResearchResults/FlexPlan_UC_GSCR/ORCH_FULL37_SEQUENTIAL_117_20261113_01/SCI02_POSITIVE_SYN_MINIMUM_04/CASE.json",
+          "G3",
+          "relaxed",
+          "solve"
+        ],
+        "pid": 26132
+      },
+      "hard_supervision": {
+        "mode": "relaxed",
+        "profiler_exit_code": 0,
+        "wall_s": 664.1720000000205,
+        "maximum_observed_monitor_gap_s": 0.28200000000651926,
+        "native_hard_limit_s": 7200.0,
+        "observed_native_end_marker": true,
+        "hard_stop": null,
+        "native_window_elapsed_wall_s": 432.6139998435974,
+        "runtime_budget_qualification": "sampled_native_end_within_limit",
+        "monitoring_gap_flag_threshold_s": 5.0,
+        "claim": "resource supervision only; candidate acceptance is separate"
+      },
+      "continuous_plan_accepted": false,
+      "integer_started": false,
+      "accepted_study_costs": null,
+      "native_bound_minus_1e100_is_unavailable_sentinel": true
+    },
+    "JSON_Object_initial_failure": {
+      "classification": "TYPE_ERROR_BEFORE_OPTIMIZE",
+      "case_not_optimized": true,
+      "process_profile": {
+        "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_G3_GUROBI_CURRENT_20261120_01\\PROCESS_LOGS\\G3_relaxed_fresh_environment_01\\process_profile.json",
+        "sha256": "266140ee8c0382960306e751b832c23e93a98fd9f2d30a8ca19fa58fe3343b20"
+      },
+      "stderr": {
+        "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_G3_GUROBI_CURRENT_20261120_01\\PROCESS_LOGS\\G3_relaxed_fresh_environment_01\\stderr.log",
+        "sha256": "669c922426c687a5c337dde60cea4a6442d82c7186a9e4b44fd6978b65cff3a2"
+      }
+    }
+  },
+  "independent_reviews": {
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_G3_MOSEK_CURRENT_20261120_01\\INDEPENDENT_REVIEW\\installed_MosekTools_0_15_11_source_delta_review_20261120.json": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_G3_MOSEK_CURRENT_20261120_01\\INDEPENDENT_REVIEW\\installed_MosekTools_0_15_11_source_delta_review_20261120.json",
+      "sha256": "3659bfc2c1463e8d8ef06508349dc954b2d9f054ecb6d6df438ff96b6782a19a"
+    },
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_G3_MOSEK_CURRENT_20261120_01\\INDEPENDENT_REVIEW\\installed_Gurobi_1_9_3_MOI_1_54_source_delta_review_20261120.json": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_G3_MOSEK_CURRENT_20261120_01\\INDEPENDENT_REVIEW\\installed_Gurobi_1_9_3_MOI_1_54_source_delta_review_20261120.json",
+      "sha256": "5f0cabf29899f8545b32a63bc8616a15474a0b3c479055051b4a2e23997f442e"
+    },
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_G3_GUROBI_DICT_20261120_02\\INDEPENDENT_REVIEW\\admission.json": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_G3_GUROBI_DICT_20261120_02\\INDEPENDENT_REVIEW\\admission.json",
+      "sha256": "76a79b7c378f355946538d21749f93f7229d2c84ccd24ce7826c8160ea5bdc90"
+    },
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_G3_GUROBI_DICT_20261120_02\\INDEPENDENT_REVIEW\\mathematical_candidate_review_G3_relaxed_97b11ee9.json": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_G3_GUROBI_DICT_20261120_02\\INDEPENDENT_REVIEW\\mathematical_candidate_review_G3_relaxed_97b11ee9.json",
+      "sha256": "2259911538db9b7633681a566eefacb7e987bd37711a2a0c67ba487899ca165e"
+    },
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_G3_GUROBI_DICT_20261120_02\\INDEPENDENT_REVIEW\\physical_candidate_review_G3_relaxed_97b11ee9.json": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_G3_GUROBI_DICT_20261120_02\\INDEPENDENT_REVIEW\\physical_candidate_review_G3_relaxed_97b11ee9.json",
+      "sha256": "5b49f9e6e801f21452acfb88c922b98af2d6f0ae3a5019e739bbf518e3151234"
+    },
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_G3_GUROBI_DICT_20261120_02\\INDEPENDENT_REVIEW\\physical_reject_case_window_binding_97b11ee9.json": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_G3_GUROBI_DICT_20261120_02\\INDEPENDENT_REVIEW\\physical_reject_case_window_binding_97b11ee9.json",
+      "sha256": "64aa00336174f9010fea18e13c2d28118c401cabc7ad15d037dd7ef50cfd562c"
+    },
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_G3_GUROBI_DICT_20261120_02\\INDEPENDENT_REVIEW\\independent_relaxed_gate.json": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_G3_GUROBI_DICT_20261120_02\\INDEPENDENT_REVIEW\\independent_relaxed_gate.json",
+      "sha256": "4be4d3da7773017aa8737ede4d3c5b63ae93550c047db087a41f0aabae44cbae"
+    },
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_G3_GUROBI_NUMERIC_20261120_03\\INDEPENDENT_REVIEW\\admission.json": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_G3_GUROBI_NUMERIC_20261120_03\\INDEPENDENT_REVIEW\\admission.json",
+      "sha256": "e7b8c86bf6a87722255a46e3943c5ae49afd00a49a0503e4ce543eee5be04f8b"
+    },
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_G3_GUROBI_NUMERIC_20261120_03\\INDEPENDENT_REVIEW\\mathematical_candidate_review_G3_relaxed_f81c6c52.json": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_G3_GUROBI_NUMERIC_20261120_03\\INDEPENDENT_REVIEW\\mathematical_candidate_review_G3_relaxed_f81c6c52.json",
+      "sha256": "8ee63ecfa1abb3355f9b6b3e52595dcd2d51fad9b17c8cea0e9bcdd74c8d730f"
+    },
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_G3_GUROBI_NUMERIC_20261120_03\\INDEPENDENT_REVIEW\\physical_candidate_review_G3_relaxed_f81c6c52.json": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_G3_GUROBI_NUMERIC_20261120_03\\INDEPENDENT_REVIEW\\physical_candidate_review_G3_relaxed_f81c6c52.json",
+      "sha256": "259d4d63e37bf030b9911f601040bb9d28e03c1fff5194b79dc85f0f53d9c27e"
+    },
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_G3_GUROBI_NUMERIC_20261120_03\\INDEPENDENT_REVIEW\\physical_negative_closeout_f81c6c52.json": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_G3_GUROBI_NUMERIC_20261120_03\\INDEPENDENT_REVIEW\\physical_negative_closeout_f81c6c52.json",
+      "sha256": "dc9df70dba331f4e82dce8c9dba8c35e59d6a7a04a0ea31dc151864841dd9c3a"
+    },
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_G3_GUROBI_NUMERIC_20261120_03\\INDEPENDENT_REVIEW\\independent_relaxed_gate.json": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_G3_GUROBI_NUMERIC_20261120_03\\INDEPENDENT_REVIEW\\independent_relaxed_gate.json",
+      "sha256": "526ad273e64b58cd502cc2a2560292dfbd9af60358343ac87f932a264e9e8213"
+    }
+  },
+  "retention": {
+    "original_data_uploaded": false,
+    "large_outputs_local_E": true,
+    "additional_worktrees": false,
+    "special_backups": false,
+    "unrelated_processes_terminated": false,
+    "historical_attempts_preserved": true,
+    "Q4_working_file_sha256": "aceb4661c9fe3c92e41acf44a52250af2549a46c437a162e46f319453dfa1314",
+    "Q4_diff_sha256": "56e116eb31589a19fe981dac46cc7f707bc603caedb57a1f5ff6183d740fefa8",
+    "Q4_unchanged": true
+  },
+  "remaining_findings": [
+    {
+      "id": "G3-NUMERIC-01",
+      "canonical_ledger_id": "G3-NUMERIC-01",
+      "status": "OPEN",
+      "scope": "Selected168-hour70pctG3case",
+      "description": "Both actual Gurobi SOCP candidates fail unchanged original-model tolerances; recovery additionally violates243G3nodebudget rows in55hours.",
+      "dependent_action": "MISOCP NOT_EXECUTED because independent predecessor gate is NEGATIVE.",
+      "cause": "Numerical cause not isolated; not an infeasibility proof.",
+      "next_technical_scope": "Specify and independently validate mathematically equivalent conditioning of this fixed model; retain original-unit replay. No further parameter sweep performed."
+    }
+  ],
+  "scientific_gates": {
+    "MISOCP_entry": "NEGATIVE",
+    "Full37_year": "NO_NEW_GO",
+    "SCI02": "NO_NEW_GO",
+    "Gate_J": "NO_NEW_GO",
+    "F3": "NO_NEW_GO",
+    "AC_dynamic": "NOT_CLAIMED"
+  },
+  "default_code_after_closeout": {
+    "experimental_parameters_promoted": false,
+    "restored_to_tested_dict_import_source_sha256": "930e27eace04b7a7aa9db6b3928c58d148029e68b97a294cb441c57d5730a6bf",
+    "matches_commit": "97b11ee9ac9dfba387e1b8cac3a56720ec4e66a9",
+    "solver_environment_and_dict_fix_retained": true
+  }
+}

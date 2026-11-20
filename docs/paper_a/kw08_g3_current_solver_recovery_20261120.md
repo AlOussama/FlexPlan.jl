@@ -101,8 +101,8 @@ startet den Ganzzahllauf. Ein Lizenz- oder Kleintest-PASS ersetzt dieses
 Ergebnisgate nicht. Für den Wochenfall wird ausschließlich Gurobi verwendet;
 frühere Lösungen werden nicht als Startwerte übernommen.
 
-Tatsächliche Code-/Lauf-SHAs, Ergebnisse und Ergebnis-QA werden nach dem Lauf
-ergänzt. Die bestehenden Full37-Jahres-, SCI02-, Gate-J-, F3-, AC- und
+Tatsächliche Code-/Lauf-SHAs, Ergebnisse und Ergebnis-QA sind im Abschlussindex
+gebunden. Die bestehenden Full37-Jahres-, SCI02-, Gate-J-, F3-, AC- und
 Dynamikgrenzen bleiben erhalten.
 
 ## Tatsächlicher Gurobi-Punkt und gebündelte numerische Nachkorrektur
@@ -117,7 +117,8 @@ physikalischen Bedingungen und Bounds. Quellen und RE-Exposition stimmen
 weiter bis 1,36e-12 pu. Die unabhängige physische Prüfung findet unter
 anderem 0,0194447 MWh SOC-Abweichung und 0,0081721 MW nodale Bilanzabweichung.
 Es liegt kein zulässiger Studienpunkt vor; sein roher Kostenwert wird nicht
-als Ergebnis oder Kostenuntergrenze verwendet. Bound und Gap sind null.
+als Ergebnis oder Kostenuntergrenze verwendet. Bound und Gap sind nicht
+verfügbar (`null` im JSON-Receipt).
 
 Originalvektor und Koordinaten sind bytegleich zum früher verworfenen
 NUMERIC_RECOVERY-Punkt. Dessen tatsächlicher nativer Logheader lautet
@@ -137,7 +138,7 @@ Ressourcen: Peak Private 3.742.691.328 Bytes, Prozesswandzeit 435,641 s,
 keine Ressourcenguards, maximale Monitoringlücke 0,282 s. Die verbleibende
 Blockade dieses Punkts ist numerisch. Dies ist kein Infeasibility-Nachweis.
 
-Genau ein gebündelter technischer Nachkorrekturversuch ergänzt für G3 mit
+Genau ein gebündelter technischer Nachkorrekturversuch ergänzte für G3 mit
 Gurobi `ScaleFlag=2` und `Aggregate=0`. Die beobachtete lineare Matrixspanne
 ist etwa 8e-8 bis 3e3, der größte RHS etwa 5e7. Geometrische Skalierung und
 deaktivierte Aggregation sind entsprechende Optionen der
@@ -147,7 +148,64 @@ der Parameterwahl abgeleitet. Alle Gleichungen, Datensätze, Variablen,
 Zielfunktionskoeffizienten, Prüf- und Feasibility-Toleranzen bleiben erhalten.
 Die 37 vorhandenen gezielten LP-/MIP-/Kegel-/Kostenassertions bestehen auch
 mit diesen beiden Attributen (17,1 s). G1/G2 und der MOSEK-Pfad werden nicht
-geändert. Der frische Nachkorrekturlauf wird separat unter
+geändert. Der Nachkorrekturlauf wurde separat unter
 `E:/ResearchResults/FlexPlan_UC_GSCR/TECH_FULL37_KW08_RE70_G3_GUROBI_NUMERIC_20261120_03`
 ausgeführt; MISOCP bleibt von zwei tatsächlichen positiven Ergebnis-QAs
 abhängig.
+
+## Abschließende unabhängige Nachprüfung
+
+Auch der einzelne Nachkorrekturlauf unter
+`f81c6c52125556c7301c7e359568555d614ebdcc` wird unabhängig verworfen.
+Gurobi endet nach 432,463 s mit Status 13. Der neue Originalpunkt besitzt
+61.616 Verletzungen über 1e-6, davon 3.646 Boundverletzungen. Die maximale
+Originalabweichung 0,0068429547 entsteht an der Kopplung
+`n_active(gen207) <= n_inst(gen207)` in Snapshot 12; sie ist kein pauschaler
+MW- oder pu-Wert. Auch 243 G3-Knotenbudgetzeilen in 55 Stunden sind verletzt.
+Die 8.736 RSOC-Polynome und ihre Endpunkte bestehen; daraus folgt allein
+keine vollständige G3-Zulässigkeit.
+
+Der unabhängige physische Replay ergibt unter anderem 0,00358729 MWh
+SOC-Abweichung, 0,01031468 MW nodale Bilanzabweichung, 0,02068355 MW
+Verletzung der neuen RE-Dispatchhülle und 0,00684295 verletzte Blockkopplung.
+Die Quellen-/Expositions-/B-/M-Rekonstruktion stimmt weiterhin bis etwa
+1,36e-12 pu. Das Daten- und Modellabbild ist damit von der unzulässigen
+numerischen Lösung getrennt zu bewerten. Der neue Vektor ist vollständig
+(328.867 Originalvariablen) und unterscheidet sich vom ersten Punkt.
+
+Mathematisch-ökonomischer konsolidierter Negativreceipt:
+`8ee63ecfa1abb3355f9b6b3e52595dcd2d51fad9b17c8cea0e9bcdd74c8d730f`.
+Physischer Negativreceipt:
+`259d4d63e37bf030b9911f601040bb9d28e03c1fff5194b79dc85f0f53d9c27e`.
+Gemeinsames SHA-gebundenes Gate:
+`526ad273e64b58cd502cc2a2560292dfbd9af60358343ac87f932a264e9e8213`,
+**NEGATIVE**. MISOCP bleibt **NOT_EXECUTED**. Es existieren weder akzeptierte
+G3-Studienkosten noch eine berichtsfähige G3-Kostenuntergrenze oder ein Gap.
+Dies ist kein Nachweis mathematischer Modellinfeasibilität.
+
+Der Nachkorrekturlauf endet ohne Ressourcenguard: Peak Private
+3.743.215.616 Bytes, Prozesswandzeit 663,735 s, beobachtetes natives Fenster
+432,614 s und maximale Monitoringlücke 0,282 s. Das 7.200-s-Limit war nicht
+erreicht. Mehr freier Speicher hat den Ressourcenblocker beseitigt; die
+verbleibende Sperre ist die numerische Originalzulässigkeit.
+
+Die zwei erfolglosen experimentellen Attribute und ihre Testsetter werden
+nach der abgeschlossenen unabhängigen Laufbindung gezielt zurückgenommen.
+Der Default-Runner und der bestehende native G3-Test sind wieder exakt
+gleich dem geprüften Dict-Importstand `97b11ee9`. Aktuelle Solverumgebung,
+aktives Julia-1.11-Lockfile, Dict-Fix und sämtliche Laufartefakte bleiben
+erhalten. Die Experimente werden nicht als neue Defaultparametrierung
+übernommen. Es wurden keine weiteren Parameterläufe gestartet.
+
+Der eine verbleibende technische Befund ist die numerische Behandlung
+dieses festen G3-Modells in Gurobi. Ein weiterer Implementierungsschritt
+benötigt eine spezifizierte, mathematisch äquivalente Konditionierung und
+dieselbe unabhängige Nachrechnung in Originaleinheiten. Das bestehende
+numerische Findingledger wird referenziert; kein zusätzlicher Gegenstand
+wird als neuer Daten-, Rechte- oder wissenschaftlicher Parameterbefund
+erfunden.
+
+Der [kompakte Abschlussindex](receipts/kw08_g3_gurobi_closeout_20261120.json)
+bindet Code, Fall, Systemänderung, Tests, beide tatsächlich geprüften Punkte
+und sämtliche neuen unabhängigen Receipts. Alle Originaldaten und großen
+Ausgaben bleiben lokal; der Producer-Q4-Hunk ist unverändert.
