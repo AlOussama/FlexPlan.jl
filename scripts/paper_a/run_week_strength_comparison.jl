@@ -108,6 +108,7 @@ function normalized_parent_spec(data)
         spec["variant"]["hours"]=8760 # restore the parent metadata for the lineage comparison
         spec["technical_week"]["operation_factor"]=8760/840
         pop!(spec,"strength_register_sha256",nothing)
+        pop!(spec,"strength_parameters_sha256",nothing)
     end
     spec["variant_sha256"]=FP._paper_a_full37_variant_digest(spec["variant"])
     return spec
@@ -158,6 +159,9 @@ if phase=="prepare"
     end
     spec["variant_sha256"]=FP._paper_a_full37_variant_digest(spec["variant"])
     data["paper_a_extension"]["full37_specification"]=spec
+    if criterion in ("M1","M2")
+        spec["strength_parameters_sha256"]=FP._paper_a_week_parameter_digest(data,selected_formulation(data))
+    end
     for sn in values(data["nw"]);sn["paper_a_extension"]["full37_specification"]=spec;end
     FP._paper_a_advance_profile_binding!(data,binding)
     FP.prepare_paper_a_data!(data)
@@ -167,7 +171,8 @@ if phase=="prepare"
     writejson(joinpath(case_dir,"receipt.json"),Dict("parent_sha256"=>source_sha,"case_sha256"=>sha_file(case_path),
         "profile_sha256"=>FP.paper_a_profile_identity(data),"consumer_commit"=>pin,"criterion"=>criterion,
         "QREF_sha256"=>qref_sha,"quota_pct"=>70,"hours"=>168,"contract_sha256"=>(reviewed_week ? sha_file(contract_path) : nothing),
-        "changed_fields"=>(reviewed_week ? ["variant.formulation","variant.hours","variant_sha256","technical_week.operation_factor","strength_register_sha256_if_applicable"] : ["variant.formulation","variant_sha256"])))
+        "changed_fields"=>(reviewed_week ? vcat(["variant.formulation","variant.hours","variant_sha256","technical_week.operation_factor"],
+            criterion in ("M1","M2") ? ["strength_register_sha256","strength_parameters_sha256"] : String[]) : ["variant.formulation","variant_sha256"])))
 else
     mkpath(out)
     model=JuMP.Model();JuMP.set_string_names_on_creation(model,false)
@@ -179,7 +184,7 @@ else
     JuMP.@constraint(model,w.quota>=0.70*w.demand)
     original_objective=investment+annual_factor*(w.gen+w.storage+w.events)
     JuMP.@objective(model,Min,original_objective)
-    objective_divisor=criterion=="G3" ? (binary_million_cost ? 2.0^20 : 8192.) : 1.
+    objective_divisor=criterion in ("G0","G3") ? (binary_million_cost ? 2.0^20 : 8192.) : 1.
     discrete=filter(v->JuMP.is_integer(v)||JuMP.is_binary(v),JuMP.all_variables(model))
     before_domains=WeekStrengthAdmission.inventory(JuMP.backend(model);continuous=false)
     mode=="relaxed" && JuMP.relax_integrality(model)
@@ -235,6 +240,13 @@ else
         catch e
             profile["status"]="OPTIMIZE_NOT_CALLED";profile["reason"]=sprint(showerror,e)
         end
+    elseif criterion=="G0"
+        conditioned,meta=N.condition_objective(original_objective;divisor=objective_divisor)
+        meta["multiplier"]==1 || error("Unexpected SDP objective multiplier")
+        profile["objective_conditioning"]=meta
+        profile["objective_backend_divisor"]=objective_divisor
+        JuMP.set_objective_function(model,conditioned)
+        profile["status"]="PROFILE_READY"
     else
         profile["status"]="PROFILE_READY"
     end
@@ -364,24 +376,28 @@ else
             checks=Dict{String,Any}()
             study_formulation=selected_formulation(pm.data)
             for t in 1:168
-                rec=FP.PaperADiagnostics.reconstruct(pm.data,point,t;renewable_projects=projects)
-                sn=point["snapshots"][string(t)]
-                metrics=FP.PaperADiagnostics.evaluate(FP.PaperADiagnostics.matrix(rec["B"]),rec["p"],1.;
-                    r=FP._paper_a_full37(pm.data)["g2_r"],W=criterion=="M2" ? study_formulation.W : Matrix{Float64}(FP.I,length(rec["p"]),length(rec["p"])),
-                    Bmin=criterion=="M1" ? pm.ext[:paper_a_certificates][t].Bmin : nothing,witness=get(sn,"witness",nothing))
-                checks[string(t)]=Dict("reconstruction"=>rec,"metrics"=>metrics)
+                try
+                    rec=FP.PaperADiagnostics.reconstruct(pm.data,point,t;renewable_projects=projects)
+                    sn=point["snapshots"][string(t)]
+                    metrics=FP.PaperADiagnostics.evaluate(FP.PaperADiagnostics.matrix(rec["B"]),rec["p"],1.;
+                        r=FP._paper_a_full37(pm.data)["g2_r"],W=criterion=="M2" ? study_formulation.W : Matrix{Float64}(FP.I,length(rec["p"]),length(rec["p"])),
+                        Bmin=criterion=="M1" ? pm.ext[:paper_a_certificates][t].Bmin : nothing,witness=get(sn,"witness",nothing))
+                    checks[string(t)]=Dict("reconstruction"=>rec,"metrics"=>metrics)
+                catch err
+                    err isa ArgumentError || rethrow()
+                    checks[string(t)]=Dict("status"=>"domain_invalid","reason"=>sprint(showerror,err))
+                end
             end
+            result["diagnostic_domain_errors"]=[k for (k,v) in checks if get(v,"status",nothing)=="domain_invalid"]
             writejson(joinpath(out,"strength_reconstruction.json"),checks)
             residuals=JuMP.primal_feasibility_report(model;atol=1e-6)
             CSV.write(joinpath(out,"primal_violations.csv"),[(;constraint=string(c),violation=r) for (c,r) in residuals])
             int_error=mode=="integer" ? maximum(abs(v(x)-round(v(x))) for x in discrete) : nothing
             original_check=criterion in ("G0","G3") ? N.primal_check(model) : Dict("status"=>isempty(residuals) ? "passed" : "failed","tolerance"=>1e-6)
             if criterion=="G3"
-                legacy_poly=0.
-                for cert in values(pm.ext[:paper_a_certificates]),k in eachindex(cert.edges)
-                    y=JuMP.value.(JuMP.constraint_object(cert.cones[k]).func)
-                    legacy_poly=max(legacy_poly,(sqrt(2.)*y[3])^2-2*(2*y[1])*y[2])
-                end
+                legacy_poly=maximum((let y=JuMP.value.(JuMP.constraint_object(cone).func)
+                    (sqrt(2.)*y[3])^2-2*(2*y[1])*y[2]
+                end for cert in values(pm.ext[:paper_a_certificates]) for cone in cert.cones);init=0.)
                 original_check["historical_raw_cone_polynomial_violation"]=legacy_poly
                 legacy_poly>N.PRIMAL_TOLERANCE && (original_check["status"]="failed_original_primal_check")
             end

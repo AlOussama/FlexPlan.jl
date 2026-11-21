@@ -140,10 +140,53 @@ function finite_spectrum(B,p;tol=DEFAULT_TOL)
     isempty(a) && return Dict("status"=>"undefined_no_positive_exposure","gamma"=>nothing)
     C=B[a,a];X=zeros(length(z),length(a));rr=0.
     if !isempty(z)
-        F=eigen(Symmetric(B[z,z]));minimum(F.values)<-tol && return Dict("status"=>"domain_invalid_zero_block","gamma"=>nothing)
-        D=Diagonal([v>tol ? 1/v : 0. for v in F.values]);pinvC=F.vectors*D*F.vectors'
-        X=pinvC*B[z,a];rr=norm(B[z,z]*X-B[z,a],Inf)
-        rr>tol*max(1.,norm(B,Inf)) && return Dict("status"=>"domain_invalid_range_condition","gamma"=>nothing,"range_residual"=>rr)
+        block=B[z,z];rhs=B[z,a]
+        lo=eigmin(Symmetric(block))
+        if lo>tol*opnorm(block,Inf)
+            X=Symmetric(block)\rhs
+        else
+            # Near the PSD/rank boundary the stored binary entries define
+            # exact rationals. A free null coordinate can be fixed to zero
+            # after verifying its whole row and transformed coupling.
+            U=Rational{BigInt}.(block);Y=Rational{BigInt}.(rhs)
+            for k in axes(U,1)
+                tail=k+1:size(U,1)
+                pivot=U[k,k]
+                if pivot<0 || (iszero(pivot) && any(!iszero,U[k,tail]))
+                    return Dict("status"=>"domain_invalid_zero_block","gamma"=>nothing)
+                elseif iszero(pivot)
+                    any(!iszero,Y[k,:]) && return Dict("status"=>"domain_invalid_range_condition","gamma"=>nothing)
+                else
+                    multipliers=U[tail,k]/pivot
+                    U[tail,tail]-=multipliers*transpose(U[k,tail])
+                    Y[tail,:]-=multipliers*transpose(Y[k,:])
+                end
+            end
+            exact=zeros(Rational{BigInt},size(Y))
+            for k in reverse(axes(U,1))
+                iszero(U[k,k]) && continue
+                tail=k+1:size(U,1)
+                exact[k,:]=(Y[k,:]-transpose(exact[tail,:])*U[k,tail])/U[k,k]
+            end
+            free=findall(iszero,diag(U))
+            if !isempty(free)
+                basis=zeros(Rational{BigInt},size(U,1),length(free))
+                for (column,k) in enumerate(free)
+                    basis[k,column]=1
+                end
+                for k in reverse(axes(U,1))
+                    iszero(U[k,k]) && continue
+                    tail=k+1:size(U,1)
+                    basis[k,:]=-transpose(basis[tail,:])*U[k,tail]/U[k,k]
+                end
+                # Keep the Moore–Penrose lift used for participation weights.
+                exact-=basis*((transpose(basis)*basis)\(transpose(basis)*exact))
+            end
+            X=Float64.(exact)
+        end
+        rr=norm(block*X-rhs,Inf)
+        range_scale=max(norm(B[z,a],Inf),opnorm(B[z,z],Inf)*norm(X,Inf))
+        rr>tol*range_scale && return Dict("status"=>"domain_invalid_range_condition","gamma"=>nothing,"range_residual"=>rr)
         C-=B[a,z]*X
     end
     D=Diagonal(1 ./sqrt.(p[a]));H=Symmetric(D*C*D);F=eigen(H);g=minimum(F.values)
@@ -258,7 +301,7 @@ function evaluate(B,p,alpha; r=ones(length(p)),W=Matrix{Float64}(I,length(p),len
         m["B.G3"]=undefined("not_executed_missing_witness")
         for k in ("status","valid","edges","q","edges_complete","cone_product_slacks","node_budget","minimum_q","reconstruction_residual");m["B.G3_$k"]=undefined("not_executed_missing_witness");end
     else
-        g=verify_g3(M,witness;tol=etol)
+        g=verify_g3(M,witness;tol)
         g["edges"]=witness["edges"];g["q"]=witness["q"]
         m["B.G3"]=entry(g["valid"];unit="boolean",status=g["status"])
         for (k,v) in g;put("B.G3_$k",v;status=g["status"]);end
@@ -269,12 +312,13 @@ function evaluate(B,p,alpha; r=ones(length(p)),W=Matrix{Float64}(I,length(p),len
         for key in invkeys;m["C.$key"]=undefined(reason);end
     else
         Z=B\Matrix{Float64}(I,n,n);y=B\p
-        ztol=tol*max(1.,opnorm(Z,Inf));positive=minimum(Z)>=-ztol
+        ztol=tol*opnorm(Z,Inf)
+        positive=minimum(Z)>=0 || (off<=0 && minimum(Z)>=-ztol)
         put("C.Z",rows(Z));put("C.Z_diag",diag(Z));put("C.inverse_min",minimum(Z));put("C.solve_residual",norm(B*y-p,Inf));put("C.equivalent_strength",1 ./diag(Z))
         put("C.Zp",y);put("C.rho_diag",[p[i]>0 ? 1/(Z[i,i]*p[i]) : nothing for i in 1:n];status=any(==(0.),p) ? "valid_with_undefined_zero_denominators" : "valid")
-        put("C.rho_Zp",[y[i]>etol ? 1/y[i] : nothing for i in 1:n];status=any(y.<=etol) ? "valid_with_undefined_zero_denominators" : "valid")
+        put("C.rho_Zp",[y[i]>0 ? 1/y[i] : nothing for i in 1:n];status=any(y.<=0) ? "valid_with_undefined_zero_denominators" : "valid")
         put("C.MIIF",rows(Z ./diag(Z)))
-        for (k,v) in (("M0_slack",alpha>0 ? 1/alpha .-y : nothing),("M0",alpha>0 ? maximum(y)<=1/alpha+etol : nothing))
+        for (k,v) in (("M0_slack",alpha>0 ? 1/alpha .-y : nothing),("M0",alpha>0 ? alpha*maximum(y)<=1+tol : nothing))
             put("C.$k",positive && alpha>0 ? v : nothing;status=!positive ? "domain_invalid_inverse_sign" : alpha==0 ? "undefined_alpha_zero" : "valid")
         end
         if Bmin===nothing

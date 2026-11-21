@@ -13,9 +13,27 @@ const D145=FP.PaperADiagnostics
     asym=[0. -1.;0. 0.]
     @test_throws ArgumentError FP.add_paper_a_constraints!(m,asym,zeros(2),asym,FP.ExactPSDGSCR();alpha=1.)
     @test D145.finite_spectrum(asym,ones(2))["gamma"]===nothing
+    @test D145.finite_spectrum([1e9 -.1;-.1 0.],[1.,0.];tol=1e-9)["status"]=="domain_invalid_range_condition"
+    @test D145.finite_spectrum([1. 0.;0. -1e-12],[1.,0.];tol=1e-9)["status"]=="domain_invalid_zero_block"
+    singular=D145.finite_spectrum([2. -1. 1.;-1. 1. -1.;1. -1. 1.],[1.,0.,0.])
+    @test singular["gamma"]≈1
+    @test singular["participation"]≈[2/3,1/6,1/6]
+    for scale in (1.,1e8)
+        check=D145.evaluate(reshape([scale],1,1),[1.001scale],1.;tol=1e-9)
+        @test !check["C.M0"]["value"]
+        @test only(check["C.rho_Zp"]["value"])≈1/1.001
+    end
+    @test isnothing(D145.evaluate(1e10*[1. .8;.8 1.],fill(1e10,2),1.;tol=1e-9)["C.M0"]["value"])
     @test D145.evaluate([0. 1.;1. 0.],zeros(2),1.)["B.G1"]["value"]===nothing
     @test_throws ArgumentError FP.InverseBoundGSCR([1. -0.1;0. 1.];provenance="invalid")
     @test_throws ArgumentError FP.InteractionGSCR([1. Inf;0. 1.];provenance="invalid")
+    net=Dict("bus_to_region"=>Dict("1"=>"A","2"=>"B"),"retained_physical_buses"=>["1","2"])
+    order_fixture=Dict("paper_a_network"=>net)
+    W=[1. 0.5;0.25 1.]
+    d1=FP._paper_a_week_parameter_digest(order_fixture,FP.InteractionGSCR(W;provenance="same"))
+    @test d1!=FP._paper_a_week_parameter_digest(order_fixture,FP.InteractionGSCR(transpose(W);provenance="same"))
+    reverse!(net["retained_physical_buses"])
+    @test d1!=FP._paper_a_week_parameter_digest(order_fixture,FP.InteractionGSCR(W;provenance="same"))
     @test !D145.verify_g3(B,Dict("edges"=>[],"q"=>[]))["valid"]
     @test !D145.verify_g3(B,Dict("edges"=>[[1,2]],"q"=>[[3.,1.]]))["valid"]
     @test !MOI.supports_constraint(Gurobi.Optimizer(), MOI.VectorAffineFunction{Float64}, MOI.PositiveSemidefiniteConeTriangle)
@@ -60,5 +78,21 @@ const D145=FP.PaperADiagnostics
         raw=MOI.Utilities.UniversalFallback(MOI.Utilities.Model{Float64}())
         MOI.add_constraint(raw,MOI.VectorOfVariables(MOI.add_variables(raw,2)),set)
         @test_throws ErrorException WeekStrengthAdmission.inventory(raw;continuous=true)
+    end
+end
+
+@testset "Historical ratio proxy, fixed and piecewise" begin
+    for (boxes,d0,relaxed,expected) in (([(1.,2.)],1.5,false,1.),
+            ([(1.,1.),(2.,2.)],2.,false,.5), ([(1.,1.),(2.,2.)],1.5,true,.5))
+        model=Model(Gurobi.Optimizer);set_silent(model)
+        @variable(model,P==1)
+        @variable(model,d==d0)
+        burden=FP.paper_a_ratio_majorant!(model,P,d,boxes;Pmax=2.)
+        relaxed && relax_integrality(model)
+        @objective(model,Min,burden)
+        optimize!(model)
+        @test termination_status(model)==MOI.OPTIMAL
+        @test objective_value(model)≈expected atol=1e-7
+        @test (objective_value(model)+1e-7 >= 1/d0)==!relaxed
     end
 end

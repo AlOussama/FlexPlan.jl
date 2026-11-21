@@ -2,6 +2,38 @@
 G0/G3 are conic; integer support is a property of the selected optimizer.
 """
 abstract type AbstractPaperAFormulation <: AbstractGSCRFormulation end
+
+"""Build the historical EXP ratio majorant for a supplied physical interval register.
+
+The returned expression replaces P/d in a nonnegative weighted proxy. A single
+interval gives the fixed-denominator bound. With several intervals the guarantee
+holds at integer selections; relaxing the selection gives an outer relaxation.
+"""
+function paper_a_ratio_majorant!(model,P,d,intervals;Pmax)
+    isfinite(Pmax) && Pmax>=0 && !isempty(intervals) &&
+        all(pair->length(pair)==2 && all(isfinite,pair) && 0<first(pair)<=last(pair),intervals) ||
+        throw(ArgumentError("ratio proxy requires finite physical bounds and a positive denominator"))
+    if length(intervals)==1
+        L,U=only(intervals)
+        JuMP.@constraint(model,0<=P<=Pmax)
+        JuMP.@constraint(model,L<=d<=U)
+        return P/L
+    end
+    K=eachindex(intervals)
+    x=JuMP.@variable(model,[K],binary=true)
+    part=JuMP.@variable(model,[K],lower_bound=0.)
+    denom=JuMP.@variable(model,[K])
+    JuMP.@constraint(model,sum(x)==1)
+    JuMP.@constraint(model,sum(part)==P)
+    JuMP.@constraint(model,sum(denom)==d)
+    for k in K
+        L,U=intervals[k]
+        JuMP.@constraint(model,part[k]<=Pmax*x[k])
+        JuMP.@constraint(model,denom[k]>=L*x[k])
+        JuMP.@constraint(model,denom[k]<=U*x[k])
+    end
+    return sum(part[k]/first(intervals[k]) for k in K)
+end
 struct ExactPSDGSCR <: AbstractPaperAFormulation end
 struct ExactEdgeSOCGSCR <: AbstractPaperAFormulation end
 

@@ -26,6 +26,12 @@ const _PAPER_A_FULL37_ROSTER_SHA = Dict(
 _paper_a_full37_lines_sha(lines)=bytes2hex(SHA.sha256(join(lines,'\n')))
 
 _paper_a_full37(data)=get(get(data,"paper_a_extension",Dict()),"full37_specification",nothing)
+function _paper_a_week_parameter_digest(data,f)
+    net=data["paper_a_network"]
+    regions=[net["bus_to_region"][b] for b in net["retained_physical_buses"]]
+    matrix=f isa InteractionGSCR ? f.W : f.Bmin
+    return _paper_a_canonical_digest(Dict("regions"=>regions,"matrix"=>PaperADiagnostics.rows(matrix)))
+end
 
 """Recognize the separately identified KW8 variant and verify every physical hour."""
 function _paper_a_kw08(data)
@@ -407,7 +413,8 @@ function _paper_a_validate_full37_template(pm,template)
         f.r==get(spec,"g2_r",nothing) && f.provenance==get(spec,"g2_r_sha256",nothing) ||
             throw(ArgumentError("Full37 G2 template must use the bound ordered vector and provenance"))
     elseif id in ("M1","M2")
-        _paper_a_kw08(pm.data) && f.provenance==spec["strength_register_sha256"] ||
+        _paper_a_kw08(pm.data) && f.provenance==spec["strength_register_sha256"] &&
+            _paper_a_week_parameter_digest(pm.data,f)==get(spec,"strength_parameters_sha256",nothing) ||
             throw(ArgumentError("KW8 strength register provenance mismatch"))
     end
     for nw in nw_ids(pm), (key,formulation) in pm.ext[:uc_gscr_block_formulations][nw]
