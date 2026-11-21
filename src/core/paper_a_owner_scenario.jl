@@ -342,7 +342,7 @@ function _paper_a_validate_owner_case(data,binding)
             throw(ArgumentError("Owner scenario chronology was cropped"))
     end
     if !synthetic
-        if segment===nothing
+        if segment===nothing && !_paper_a_kw08(data)
             length(temporal)==8760 && dt==1 &&
                 tryparse(Dates.DateTime,replace(first(temporal)["snapshot_id"],' '=>'T'))==Dates.DateTime(2013,1,1) ||
                 throw(ArgumentError("Owner scenario requires the full hourly 2013 chronology"))

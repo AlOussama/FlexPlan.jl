@@ -26,6 +26,23 @@ const _PAPER_A_FULL37_ROSTER_SHA = Dict(
 _paper_a_full37_lines_sha(lines)=bytes2hex(SHA.sha256(join(lines,'\n')))
 
 _paper_a_full37(data)=get(get(data,"paper_a_extension",Dict()),"full37_specification",nothing)
+
+"""Recognize the separately identified KW8 variant and verify every physical hour."""
+function _paper_a_kw08(data)
+    spec=_paper_a_full37(data)
+    spec===nothing && return false
+    get(get(spec,"variant",Dict()),"hours",nothing)==168 || return false
+    week=get(spec,"technical_week",Dict())
+    start=Dates.DateTime(2013,2,18)
+    temporal=data["paper_a_temporal"]
+    length(temporal)==168 && get(week,"kind",nothing)=="technical_independent_week_2013_v1" &&
+        week["iso_week"]==8 && week["hours"]==168 && week["source_first"]==1153 &&
+        week["source_last"]==1320 && week["operation_factor"]==8760/168 && week["investment_factor"]==1 &&
+        week["first"]==string(start) && week["last"]==string(start+Dates.Hour(167)) &&
+        all(replace(t["snapshot_id"],' '=>'T')==string(start+Dates.Hour(i-1)) && t["delta_t_h"]==1
+            for (i,t) in enumerate(temporal)) || throw(ArgumentError("invalid KW8 chronology or weights"))
+    return true
+end
 _paper_a_full37_mode(dev)=get(get(dev,"paper_a_full37_online",Dict()),"mode",nothing)
 _paper_a_full37_minimum(dev)=dev["paper_a_full37_online"]["strength_minimum_pu"]
 
@@ -204,15 +221,17 @@ function _paper_a_validate_full37(data,binding)
     owner!==nothing && owner["phs_mode"]=="MAIN" && _paper_a_carrier_uc(data) ||
         throw(ArgumentError("Full37 requires the main PHS and carrier UC scenario"))
     v=get(spec,"variant",nothing)
+    week168=_paper_a_kw08(data)
     v isa AbstractDict && get(v,"battery_mode",nothing) in ("GFL_ONLY","GFM_ONLY","MIXED") &&
-        get(v,"formulation",nothing) in ("G0","G1","G2","G3") &&
+        (get(v,"formulation",nothing) in ("G0","G1","G2","G3") ||
+         (week168 && v["formulation"] in ("M1","M2") && _paper_a_sha256_string(get(spec,"strength_register_sha256",nothing)))) &&
         PaperARegional.number(v,"alpha") in (0.5,1,2) &&
         all(get(v,k,nothing)==owner[k] for k in ("bess_duration_h","bess_gfm_premium","dc_construction_mode")) &&
         (v["battery_mode"]!="GFL_ONLY" || iszero(v["bess_gfm_premium"])) &&
-        get(v,"hours",nothing)==8760 && get(spec,"variant_sha256",nothing)==_paper_a_full37_variant_digest(v) ||
+        (week168 || get(v,"hours",nothing)==8760) && get(spec,"variant_sha256",nothing)==_paper_a_full37_variant_digest(v) ||
         throw(ArgumentError("Full37 variant identity or owner scenario mismatch"))
     synthetic || (data["paper_a_extension"]["dataset_kind"]=="full37_frozen_study" &&
-        length(snapshots)==8760 && data["baseMVA"]==100) ||
+        (week168 ? length(snapshots)==168 : length(snapshots)==8760) && data["baseMVA"]==100) ||
         throw(ArgumentError("Full37 requires 8760 snapshots on the 100 MVA case base"))
     if !synthetic || v["formulation"]=="G2" || haskey(spec,"g2_r")
         _paper_a_validate_full37_g2(spec,data["paper_a_network"]["retained_physical_buses"],synthetic)
@@ -381,11 +400,15 @@ function _paper_a_validate_full37_template(pm,template)
         throw(ArgumentError("Full37 carbon cost belongs to the approved generation price"))
     f=template.gscr_formulation
     id=f isa ExactPSDGSCR ? "G0" : f isa GershgorinGSCR ? "G1" :
-        f isa FixedScalingGSCR ? "G2" : f isa ExactEdgeSOCGSCR ? "G3" : nothing
+        f isa FixedScalingGSCR ? "G2" : f isa ExactEdgeSOCGSCR ? "G3" :
+        f isa InverseBoundGSCR ? "M1" : f isa InteractionGSCR ? "M2" : nothing
     id==spec["variant"]["formulation"] || throw(ArgumentError("Full37 template formulation mismatch"))
     if id=="G2"
         f.r==get(spec,"g2_r",nothing) && f.provenance==get(spec,"g2_r_sha256",nothing) ||
             throw(ArgumentError("Full37 G2 template must use the bound ordered vector and provenance"))
+    elseif id in ("M1","M2")
+        _paper_a_kw08(pm.data) && f.provenance==spec["strength_register_sha256"] ||
+            throw(ArgumentError("KW8 strength register provenance mismatch"))
     end
     for nw in nw_ids(pm), (key,formulation) in pm.ext[:uc_gscr_block_formulations][nw]
         table,id=key

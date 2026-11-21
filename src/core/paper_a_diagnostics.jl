@@ -133,6 +133,8 @@ end
 """Finite positive-support generalized spectrum, with PSD and projector range
 checks on the entire zero-exposure block (T004/T006). No epsilon exposure."""
 function finite_spectrum(B,p;tol=DEFAULT_TOL)
+    size(B)==(length(p),length(p)) && all(isfinite,B) && all(isfinite,p) && issymmetric(B) ||
+        return Dict("status"=>"domain_invalid_matrix","gamma"=>nothing)
     n=length(p); a=findall(>(0.),p);z=findall(==(0.),p)
     any(<(0.),p) && return Dict("status"=>"domain_invalid","gamma"=>nothing)
     isempty(a) && return Dict("status"=>"undefined_no_positive_exposure","gamma"=>nothing)
@@ -154,9 +156,12 @@ function finite_spectrum(B,p;tol=DEFAULT_TOL)
 end
 
 function verify_g3(M,witness;tol=DEFAULT_TOL)
+    issymmetric(M) && all(isfinite,M) && all(M[i,j]<=0 for i in axes(M,1) for j in i+1:size(M,1)) ||
+        return Dict("status"=>"domain_invalid_symmetric_z","valid"=>false)
     n=size(M,1);expected=Set((i,j) for i in 1:n for j in i+1:n if M[i,j]!=0)
     e=[(Int(e[1]),Int(e[2])) for e in witness["edges"]]
-    complete=length(e)==length(unique(e)) && Set(e)==expected
+    complete=length(witness["q"])==length(e)==length(unique(e)) && Set(e)==expected &&
+        all(pair->length(pair)==2 && all(isfinite,pair),witness["q"])
     complete || return Dict("status"=>"domain_invalid_edge_coverage","valid"=>false)
     R=zeros(n,n);used=zeros(n);cones=Float64[];qmin=Inf
     for (k,(i,j)) in enumerate(e)
@@ -195,6 +200,8 @@ function closed_sdd_witness(M;tol=DEFAULT_TOL)
 end
 
 function inverse_updates(A,Delta;order=1,tol=DEFAULT_TOL)
+    order isa Integer && order>=0 && size(A)==size(Delta) && issymmetric(A) && issymmetric(Delta) &&
+        all(isfinite,A) && all(isfinite,Delta) || throw(ArgumentError("invalid inverse update domain"))
     n=size(A,1);Id=Matrix{Float64}(I,n,n)
     minimum(eigvals(Symmetric(A)))>tol && minimum(eigvals(Symmetric(A+Delta)))>tol || return Dict("status"=>"domain_invalid_inverse")
     Z=A\Id;direct=(A+Delta)\Id
@@ -211,13 +218,13 @@ end
 function evaluate(B,p,alpha; r=ones(length(p)),W=Matrix{Float64}(I,length(p),length(p)),Bmin=nothing,witness=nothing,tol=DEFAULT_TOL)
     B=matrix(B);p=Float64.(p);n=length(p)
     size(B)==(n,n) && all(isfinite,B) && all(isfinite,p) && isfinite(alpha) && alpha>=0 || throw(ArgumentError("invalid matrices/alpha"))
-    norm(B-B',Inf)<=tol && minimum(p)>=-tol || throw(ArgumentError("asymmetric B or negative exposure"))
+    issymmetric(B) && minimum(p)>=-tol || throw(ArgumentError("asymmetric B or negative exposure"))
     exposure_roundoff=max(0.,-minimum(p))
     # Solver feasibility roundoff is not positive epsilon exposure: preserve
     # exact zeros and record the removed negative roundoff explicitly.
     p=max.(0.,p)
     length(r)==n && minimum(r)>0 && all(isfinite,r) || throw(ArgumentError("invalid fixed r"))
-    W=matrix(W);size(W)==(n,n) && minimum(W)>=0 && all(diag(W).==1) || throw(ArgumentError("invalid W"))
+    W=matrix(W);size(W)==(n,n) && all(isfinite,W) && minimum(W)>=0 && all(diag(W).==1) || throw(ArgumentError("invalid W"))
     M=B-alpha*Diagonal(p);eB=eigvals(Symmetric(B));eM=eigvals(Symmetric(M));scale=max(1.,opnorm(B,Inf));etol=tol*scale
     sym=norm(B-B',Inf);off=maximum([B[i,j] for i in 1:n,j in 1:n if i!=j];init=0.)
     spectrum=finite_spectrum(B,p;tol)
@@ -237,6 +244,11 @@ function evaluate(B,p,alpha; r=ones(length(p)),W=Matrix{Float64}(I,length(p),len
     put("B.G1_binding",abs.(M*ones(n)).<=etol;unit="boolean");put("B.G2_binding",abs.(M*r).<=etol;unit="boolean")
     put("B.G1_false_rejection",minimum(eM)>=-etol && minimum(M*ones(n)) < -etol;unit="boolean")
     put("C.Wp",W*p);put("C.M2_rows",B*ones(n)-alpha*W*p);put("C.M2",minimum(B*ones(n)-alpha*W*p)>=-etol;unit="boolean")
+    if off>0
+        for k in ("B.G1","B.G2","B.G1_false_rejection","C.M2")
+            m[k]=undefined("domain_invalid_non_Z")
+        end
+    end
     # The rank-one matrix test remains defined on singular B; only its
     # impedance-ratio equivalence needs an ordinary inverse.
     local_e=[eigmin(Symmetric(B-alpha*p[i]*(Matrix{Float64}(I,n,n)[:,i]*Matrix{Float64}(I,n,n)[:,i]'))) for i in 1:n]
@@ -268,7 +280,8 @@ function evaluate(B,p,alpha; r=ones(length(p)),W=Matrix{Float64}(I,length(p),len
         if Bmin===nothing
             for k in ("M1_upper_burden","M1_order_violation","M1_lower_violation","M1");m["C.$k"]=undefined("not_executed_missing_Bmin");end
         else
-            A=matrix(Bmin);valid=size(A)==size(B)&&isposdef(Symmetric(A))&&maximum([A[i,j] for i in 1:n,j in 1:n if i!=j];init=0.)<=tol
+            A=matrix(Bmin);valid=size(A)==size(B) && issymmetric(A) && isposdef(Symmetric(A)) &&
+                all(A[i,j]==B[i,j] && A[i,j]<=0 for i in 1:n for j in i+1:n)
             valid || throw(ArgumentError("invalid M1 minimum matrix"))
             Zub=A\Matrix{Float64}(I,n,n);lower=max(0.,maximum(A-B));order=max(0.,maximum(Z-Zub))
             put("C.M1_lower_violation",lower);put("C.M1_order_violation",order)

@@ -17,7 +17,7 @@ struct InverseBoundGSCR <: AbstractPaperAFormulation
     Bmin::Matrix{Float64}
     provenance::String
     function InverseBoundGSCR(Bmin;provenance)
-        B=Matrix{Float64}(Bmin); PaperARegional.symmetric_z(B)
+        B=Matrix{Float64}(Bmin); PaperARegional.symmetric_z(B;tol=0.)
         isposdef(Symmetric(B)) && minimum(B\Matrix{Float64}(I,size(B)...))>=-1e-10 && !isempty(provenance) || throw(ArgumentError("M1 needs a nonsingular M-matrix and provenance"))
         new(B,String(provenance))
     end
@@ -118,8 +118,19 @@ end
 fixtures. No import, UC, cost, or physical coefficient calculation occurs here."""
 function add_paper_a_constraints!(model,B,p,M,f::AbstractPaperAFormulation;alpha)
     n=length(p); size(B)==size(M)==(n,n) || throw(DimensionMismatch("B/S/M"))
+    if f isa Union{FixedScalingGSCR,InteractionGSCR}
+        X=f isa FixedScalingGSCR ? M : B
+        for i in 1:n,j in i+1:n
+            a=JuMP.AffExpr(0.)+X[i,j]
+            isempty(a.terms) && isfinite(a.constant) && a.constant<=0 &&
+                JuMP.isequal_canonical(a,JuMP.AffExpr(0.)+X[j,i]) ||
+                throw(ArgumentError("row certificate requires fixed symmetric Z offdiagonals"))
+        end
+    end
     if f isa ExactPSDGSCR
         affine=[JuMP.AffExpr(0.)+M[i,j] for i in 1:n,j in 1:n]
+        all(JuMP.isequal_canonical(affine[i,j],affine[j,i]) for i in 1:n for j in i+1:n) ||
+            throw(ArgumentError("G0 requires a symmetric affine matrix"))
         return (kind="G0",psd=JuMP.@constraint(model,Symmetric(affine) in JuMP.PSDCone()))
     elseif f isa FixedScalingGSCR
         length(f.r)==n || throw(DimensionMismatch("G2 r"))
@@ -132,11 +143,11 @@ function add_paper_a_constraints!(model,B,p,M,f::AbstractPaperAFormulation;alpha
             a=M[i,j]; b=M[j,i]
             av=a isa Number ? a : (isempty(a.terms) ? a.constant : throw(ArgumentError("G3 variable offdiagonal unsupported")))
             bv=b isa Number ? b : (isempty(b.terms) ? b.constant : throw(ArgumentError("G3 variable offdiagonal unsupported")))
-            av==bv || throw(ArgumentError("G3 asymmetric edge"))
+            isfinite(av) && av==bv && av<=0 || throw(ArgumentError("G3 requires finite symmetric Z edges"))
             av!=0 && push!(edges,(i,j))
         end
         q=JuMP.@variable(model,[1:length(edges),1:2],lower_bound=0,base_name="g3_q")
-        cones=[JuMP.@constraint(model,[q[k,1],q[k,2],sqrt(2.)*M[i,j]] in JuMP.RotatedSecondOrderCone()) for (k,(i,j)) in enumerate(edges)]
+        cones=[JuMP.@constraint(model,[q[k,1]/2,q[k,2],M[i,j]] in JuMP.RotatedSecondOrderCone()) for (k,(i,j)) in enumerate(edges)]
         residue=[M[i,i]-sum((i==a ? q[k,1] : q[k,2]) for (k,(a,b)) in enumerate(edges) if i==a||i==b;init=0.) for i in 1:n]
         rows=[JuMP.@constraint(model,residue[i]>=0) for i in 1:n]
         return (kind="G3",edges=edges,q=q,cones=cones,residue=residue,rows=rows)
@@ -154,6 +165,7 @@ function add_paper_a_constraints!(model,B,p,M,f::AbstractPaperAFormulation;alpha
         # Independent physical stamps can differ by final-bit roundoff. Bind
         # the minimum to the model's IDENTICAL passive entries, rather than
         # introduce empty constant inequalities such as -1e-13 >= 0.
+        PaperARegional.symmetric_z(A;tol=0.)
         isposdef(Symmetric(A)) || throw(ArgumentError("canonical M1 minimum is not PD"))
         Zub=A\Matrix{Float64}(I,n,n)
         lower=[JuMP.@constraint(model,B[i,i]>=A[i,i]) for i in 1:n]

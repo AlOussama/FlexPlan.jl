@@ -241,7 +241,7 @@ function extract(pm)
             else
                 violation=0.;complement=0.
                 for (k,(i,j)) in enumerate(cert.edges)
-                    z=JuMP.dual(cert.cones[k]);v=[JuMP.value(cert.q[k,1]),JuMP.value(cert.q[k,2]),sqrt(2.)*JuMP.value(x.M[i,j])]
+                    z=JuMP.dual(cert.cones[k]);v=JuMP.value.(JuMP.constraint_object(cert.cones[k]).func)
                     violation=max(violation,-z[1],-z[2],z[3]^2-2z[1]*z[2]);complement=max(complement,abs(dot(v,z)))
                 end
                 dual=Dict("status"=>"valid","dual_cone_violation"=>violation,"complementarity_residual"=>complement)

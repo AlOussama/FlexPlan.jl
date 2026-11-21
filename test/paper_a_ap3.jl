@@ -97,7 +97,8 @@ end
     @test_throws ArgumentError _FP.InteractionGSCR([1. -.1;0. 1.];provenance="fixture")
     @test_throws ArgumentError _FP.InteractionGSCR(ones(2,2)*2;provenance="fixture")
     @test_throws ArgumentError _FP.InverseBoundGSCR([1. -1.;-1. 1.];provenance="fixture")
-    bad=AP3D.evaluate(B,[.6,.6],1.;Bmin=2B)
+    @test_throws ArgumentError AP3D.evaluate(B,[.6,.6],1.;Bmin=2B)
+    bad=AP3D.evaluate(B,[.6,.6],1.;Bmin=B+I)
     @test bad["C.M1"]["status"]=="domain_invalid_unenforced_Bmin"
     @test maximum((2B)\[.6,.6])<1 && maximum(B\[.6,.6])>1 # false M1 without enforced bound
     for f in (_FP.ExactPSDGSCR(),_FP.ExactEdgeSOCGSCR())
@@ -106,8 +107,7 @@ end
     end
     m,c=_ap3_conic(ones(3,3),zeros(3),0.,_FP.ExactPSDGSCR())
     @test JuMP.termination_status(m)==JuMP.MOI.OPTIMAL
-    m,c=_ap3_conic(ones(3,3),zeros(3),0.,_FP.ExactEdgeSOCGSCR())
-    @test JuMP.termination_status(m)==JuMP.MOI.INFEASIBLE
+    @test_throws ArgumentError _ap3_conic(ones(3,3),zeros(3),0.,_FP.ExactEdgeSOCGSCR())
     u=AP3D.inverse_updates(B,Diagonal([.1,0.]);order=2)
     @test u["woodbury_residual"]<1e-12 && u["exact_remainder_residual"]<1e-12
     @test u["actual_error"]<=u["remainder_bound"] && !u["one_sided_safety_certified"]

@@ -68,7 +68,7 @@ function scaled_copy(original; protected=Set{VariableRef}(), objective_divisor=8
             for endpoint in f[1:2]
                 endpoint isa GenericAffExpr && endpoint.constant!=0. && error("Offset RSOC endpoint")
                 terms=endpoint isa VariableRef ? [(1.,endpoint)] : collect(linear_terms(endpoint))
-                length(terms)==1 && only(terms)[1]==1. || error("Noncanonical original RSOC endpoint")
+                length(terms)==1 && only(terms)[1] in (0.5,1.) || error("Noncanonical original RSOC endpoint")
                 v=only(terms)[2]
                 v in protected && error("Discrete G3 cone endpoint")
                 exponents[v]=column_exponent(abs(c))
