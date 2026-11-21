@@ -51,4 +51,25 @@ function psd_sizes(model)
     end
     return dims
 end
+
+"""Read every mapped fixed-edge cone and node budget back from the attached MOSEK task."""
+function native_strength_rows(pm,copy,native)
+    m=copy.model
+    idx=Dict(index(v)=>optimizer_index(v) for v in all_variables(m))
+    ncone=nrows=0
+    for cert in values(pm.ext[:paper_a_certificates])
+        for original in Iterators.flatten((cert.cones,cert.rows))
+            mapped=copy.constraints[original]
+            ci=optimizer_index(mapped)
+            object=constraint_object(mapped)
+            expected=MOI.Utilities.map_indices(v->idx[v],JuMP.moi_function(object.func))
+            actual=MOI.get(native,MOI.ConstraintFunction(),ci)
+            isapprox(actual,expected;rtol=0,atol=0) &&
+                MOI.get(native,MOI.ConstraintSet(),ci)==object.set || error("Native G3 strength row differs at $ci")
+        end
+        ncone+=length(cert.cones)
+        nrows+=length(cert.rows)
+    end
+    return Dict("native_RSOC_exact_readbacks"=>ncone,"native_node_row_exact_readbacks"=>nrows)
+end
 end

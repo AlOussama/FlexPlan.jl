@@ -60,7 +60,9 @@ include("AP3Pipeline.jl")
 include("WeekStrengthAdmission.jl")
 const N=AP3Pipeline.NativeG3Solver
 const equivalent_conditioning=get(ENV,"PAPER_A_G3_EQUIVALENT_CONDITIONING","0")=="1"
-equivalent_conditioning && (criterion!="G3" || native_backend!=:gurobi) && error("Conditioning is qualified only for G3/Gurobi")
+equivalent_conditioning && (criterion!="G3" ||
+    (native_backend==:mosek && (!reviewed_week || mode!="relaxed" || get(ENV,"PAPER_A_G3_BINARY_MILLION_COST","0")=="1"))) &&
+    error("Conditioning requires G3; MOSEK requires the reviewed continuous 8192-EUR route")
 const binary_million_cost=get(ENV,"PAPER_A_G3_BINARY_MILLION_COST","0")=="1"
 binary_million_cost && !equivalent_conditioning && error("Binary-million cost coordinate requires qualified G3/Gurobi conditioning")
 equivalent_conditioning && include("G3EquivalentConditioning.jl")
@@ -285,6 +287,18 @@ else
             profile["native_variables"]=JuMP.MOI.get(attached,JuMP.MOI.NumberOfVariables())
             profile["native_domains"]=WeekStrengthAdmission.inventory(attached;continuous=mode=="relaxed" && !(criterion=="G3" && native_backend==:gurobi))
             profile["native_objective"]=WeekStrengthAdmission.native_cost(solver_model,attached)
+            if equivalent_conditioning && native_backend==:mosek
+                profile["native_strength_readback"]=WeekStrengthAdmission.native_strength_rows(pm,conditioned_copy,attached)
+                map_path=joinpath(out,"constraint_mapping.csv")
+                open(map_path,"w") do io
+                    println(io,"function_type,set_type,original_index,scaled_index,row_exponent")
+                    for (ci,mapped) in conditioned_copy.constraints
+                        i=JuMP.index(ci)
+                        println(io,typeof(i).parameters[1],',',typeof(i).parameters[2],',',i.value,',',JuMP.index(mapped).value,',',conditioned_copy.rows[ci])
+                    end
+                end
+                profile["constraint_mapping_sha256"]=sha_file(map_path)
+            end
             if criterion=="G0"
                 for source in (JuMP.backend(model),attached)
                     WeekStrengthAdmission.psd_sizes(source)==fill(37,168) || error("Expected 168 full 37-bus PSD cones")
