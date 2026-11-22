@@ -216,6 +216,28 @@ else
         profile["exposure_attachment_complete"]=!pm.ext[:paper_a_strength_pending] && length(pm.ext[:paper_a_certificates])==168 && length(w.projects)==74
         profile["exposure_attachment_complete"] || error("Incomplete week attachment")
     end
+    portfolio_hint = nothing
+    if haskey(ENV, "PAPER_A_M2_HINT_ROOT")
+        reviewed_week && criterion=="M2" && mode=="integer" && native_backend==:gurobi && phase=="admit_solve" ||
+            error("Portfolio hint requires the reviewed M2 MILP live route")
+        include("WeekPortfolioStart.jl")
+        hint_root = ENV["PAPER_A_M2_HINT_ROOT"]
+        hint_file = joinpath(hint_root, "QA_R", "M2_LP_CAPACITY_HINT.json")
+        hint_digest = sha_file(hint_file)
+        hint_digest=="2b57f13ec4851c6dfa0fb10091bb12a4e9bbcd97e0bf3d497f149da1056ec67a" || error("M2 LP hint changed")
+        seed = JSON.parsefile(hint_file)
+        lp_review = joinpath(hint_root,"QA_R","M2_P5.json")
+        seed["lp_p5_sha256"]==sha_file(lp_review) && seed["case_sha256"]==sha_file(case_path) &&
+            seed["contract_sha256"]==sha_file(contract_path) || error("M2 portfolio source or target mismatch")
+        installed = fp.var(pm,1,:n_block)
+        blocks = Dict(repr((key,))=>installed[key] for key in axes(installed,1))
+        projects = Dict(p.name=>p.installed for p in w.projects)
+        portfolio_hint = WeekPortfolioStart.capacity_start!(model, blocks, projects,
+            values(fp.con(pm,1)[:paper_a_expansion_limits]), seed)
+        profile["portfolio_start"] = Dict("hint_sha256"=>hint_digest, "lp_p5_sha256"=>seed["lp_p5_sha256"],
+            "use_ceiling"=>portfolio_hint.use_ceiling, "cleared"=>portfolio_hint.cleared,
+            "explicit"=>length(portfolio_hint.starts))
+    end
     conditioned_copy=nothing
     if criterion=="G3"
         if native_backend==:gurobi
@@ -287,6 +309,12 @@ else
             profile["native_variables"]=JuMP.MOI.get(attached,JuMP.MOI.NumberOfVariables())
             profile["native_domains"]=WeekStrengthAdmission.inventory(attached;continuous=mode=="relaxed" && !(criterion=="G3" && native_backend==:gurobi))
             profile["native_objective"]=WeekStrengthAdmission.native_cost(solver_model,attached)
+            if portfolio_hint !== nothing
+                profile["portfolio_start"]["native_explicit"] = WeekPortfolioStart.verify_capacity_start(attached, portfolio_hint.starts)
+                profile["portfolio_start"]["columns"] = [Dict("kind"=>kind, "key"=>key, "original"=>JuMP.index(v).value,
+                    "native"=>Int(Gurobi.c_column(attached,JuMP.optimizer_index(v)))+1, "value"=>portfolio_hint.starts[v])
+                    for (kind, group) in (("block",blocks),("renewable",projects)) for (key,v) in group if haskey(portfolio_hint.starts,v)]
+            end
             if equivalent_conditioning && native_backend==:mosek
                 profile["native_strength_readback"]=WeekStrengthAdmission.native_strength_rows(pm,conditioned_copy,attached)
                 map_path=joinpath(out,"constraint_mapping.csv")
@@ -340,7 +368,7 @@ else
             "result_count"=>JuMP.result_count(model),"solve_time_s"=>JuMP.solve_time(model),"bound_certification"=>"numerical_only_not_rigorous_currency_bound",
             "best_bound_EUR2025"=>currency_bound,"native_objective_cost_divisor"=>objective_divisor,
             "native_cost_coordinate"=>"original_EUR2025_divided_by_native_objective_cost_divisor",
-            "native_bridge_validation"=>bridge,"native_solver_attributes"=>native,"warm_start_from_other_run"=>false))
+            "native_bridge_validation"=>bridge,"native_solver_attributes"=>native,"warm_start_from_other_run"=>(portfolio_hint !== nothing)))
         point_status=JuMP.primal_status(model)
         if point_status in (JuMP.MOI.FEASIBLE_POINT,JuMP.MOI.NEARLY_FEASIBLE_POINT,JuMP.MOI.UNKNOWN_RESULT_STATUS,JuMP.MOI.INFEASIBLE_POINT) && JuMP.has_values(model)
             v=JuMP.value;capex=v(investment);op=Dict("generation"=>v(w.gen),"storage"=>v(w.storage),"startup_shutdown"=>v(w.events))

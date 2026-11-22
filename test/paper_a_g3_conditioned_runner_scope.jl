@@ -4,7 +4,7 @@ using Test
 @testset "Noninteractive actual runner try-scope and fail-closed routing" begin
     for binary_million in (false,true)
     repo=normpath(joinpath(@__DIR__,".."))
-    runner=read(joinpath(repo,"scripts/paper_a/run_week_strength_comparison.jl"),String)
+    runner=replace(read(joinpath(repo,"scripts/paper_a/run_week_strength_comparison.jl"),String),"\r\n"=>"\n")
     start="    conditioned_copy=nothing\n    if criterion==\"G3\"\n"
     stop="    if phase==\"profile\""
     @test length(findall(start,runner))==length(findall(stop,runner))==1
