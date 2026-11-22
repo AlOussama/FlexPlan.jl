@@ -1,0 +1,339 @@
+{
+  "Repository": "AlOussama/FlexPlan.jl",
+  "Branch": "audit/local-remote/FlexPlan.jl-20261122T161908Z",
+  "Snapshots": [
+    {
+      "CheckedUtc": "2026-11-22T16:27:18.3666258Z",
+      "BaseSHA": "991d0e99627b9bd57b3df476c66141ae6bb5163d",
+      "CheckoutSHA": "dbecc1f2d26db134ac7a817c6ce2b5d0ba05882a",
+      "CommitsWithoutRemoteProof": 6,
+      "LocalChanges": 5,
+      "UnverifiedFiles": 0,
+      "ExactDuplicateGroups": 0,
+      "BranchComparisons": [
+        {
+          "Tip": "80b38b5923b6e3354c398620032ec0614a8e21eb",
+          "Basis": "80b38b5923b6e3354c398620032ec0614a8e21eb",
+          "Ahead": "0",
+          "Behind": "0",
+          "Relation": "IDENTICAL"
+        },
+        {
+          "Tip": "6c67462f8107f29ebdd9d4d109a8e8994805a91f",
+          "Basis": "6c67462f8107f29ebdd9d4d109a8e8994805a91f",
+          "Ahead": "0",
+          "Behind": "0",
+          "Relation": "IDENTICAL"
+        },
+        {
+          "Tip": "15ba10c193a562a48cb0e1dcc6fa12d922ac0613",
+          "Basis": "15ba10c193a562a48cb0e1dcc6fa12d922ac0613",
+          "Ahead": "0",
+          "Behind": "0",
+          "Relation": "IDENTICAL"
+        },
+        {
+          "Tip": "b9b389397ff7078f712ccd692846b1e5ae19fb64",
+          "Basis": "b9b389397ff7078f712ccd692846b1e5ae19fb64",
+          "Ahead": "0",
+          "Behind": "0",
+          "Relation": "IDENTICAL"
+        },
+        {
+          "Tip": "01ac87c53432b1aec4a02a086e28f821673f2336",
+          "Basis": "58af8e217fe0b20a96ec82a55eba853a53d60f58",
+          "Ahead": "3",
+          "Behind": "0",
+          "Relation": "LOCAL_AHEAD"
+        },
+        {
+          "Tip": "dbecc1f2d26db134ac7a817c6ce2b5d0ba05882a",
+          "Basis": "dbecc1f2d26db134ac7a817c6ce2b5d0ba05882a",
+          "Ahead": "0",
+          "Behind": "0",
+          "Relation": "IDENTICAL"
+        },
+        {
+          "Tip": "629ce223f4df99e7f8ac50b6b576625f65f4d672",
+          "Basis": "991d0e99627b9bd57b3df476c66141ae6bb5163d",
+          "Ahead": "0",
+          "Behind": "40",
+          "Relation": "REMOTE_AHEAD"
+        },
+        {
+          "Tip": "02c0fcc788914be926f5be651846331e9fe1288a",
+          "Basis": "991d0e99627b9bd57b3df476c66141ae6bb5163d",
+          "Ahead": "0",
+          "Behind": "41",
+          "Relation": "REMOTE_AHEAD"
+        },
+        {
+          "Tip": "cc072be5f5365e2156b9752c0d41a11f3826079c",
+          "Basis": "991d0e99627b9bd57b3df476c66141ae6bb5163d",
+          "Ahead": "0",
+          "Behind": "20",
+          "Relation": "REMOTE_AHEAD"
+        },
+        {
+          "Tip": "233009388deff7a6ec1f259e2ac0239a9451f579",
+          "Basis": "233009388deff7a6ec1f259e2ac0239a9451f579",
+          "Ahead": "0",
+          "Behind": "0",
+          "Relation": "IDENTICAL"
+        },
+        {
+          "Tip": "3abd545e13a8d79830e7bb48086ea37d05b407f6",
+          "Basis": "3abd545e13a8d79830e7bb48086ea37d05b407f6",
+          "Ahead": "0",
+          "Behind": "0",
+          "Relation": "IDENTICAL"
+        },
+        {
+          "Tip": "458b18745fd5160141f85eb7222a7933c7df15c0",
+          "Basis": "991d0e99627b9bd57b3df476c66141ae6bb5163d",
+          "Ahead": "0",
+          "Behind": "60",
+          "Relation": "REMOTE_AHEAD"
+        },
+        {
+          "Tip": "401fe06ef3948eaacd7e2e2aedac23bdde385c8e",
+          "Basis": "991d0e99627b9bd57b3df476c66141ae6bb5163d",
+          "Ahead": "0",
+          "Behind": "55",
+          "Relation": "REMOTE_AHEAD"
+        },
+        {
+          "Tip": "044c23f1b1fa5d287ce0ba22858a8542c49c9c7d",
+          "Basis": "991d0e99627b9bd57b3df476c66141ae6bb5163d",
+          "Ahead": "0",
+          "Behind": "47",
+          "Relation": "REMOTE_AHEAD"
+        },
+        {
+          "Tip": "248883c86f5c5329ee97c97a9d2e6f9f7f894836",
+          "Basis": "248883c86f5c5329ee97c97a9d2e6f9f7f894836",
+          "Ahead": "0",
+          "Behind": "0",
+          "Relation": "IDENTICAL"
+        },
+        {
+          "Tip": "f5c11ba76684c142eb292a58223820416039a74b",
+          "Basis": "f5c11ba76684c142eb292a58223820416039a74b",
+          "Ahead": "0",
+          "Behind": "0",
+          "Relation": "IDENTICAL"
+        },
+        {
+          "Tip": "75a4177d82b33074303e727cb90d12cea016b485",
+          "Basis": "991d0e99627b9bd57b3df476c66141ae6bb5163d",
+          "Ahead": "0",
+          "Behind": "49",
+          "Relation": "REMOTE_AHEAD"
+        },
+        {
+          "Tip": "7bb6e92fd312509ab496dfde8197aedbf62198d2",
+          "Basis": "7bb6e92fd312509ab496dfde8197aedbf62198d2",
+          "Ahead": "0",
+          "Behind": "0",
+          "Relation": "IDENTICAL"
+        },
+        {
+          "Tip": "b2ae25b9b95f62062c9a4f3c0d53a176db568d1d",
+          "Basis": "991d0e99627b9bd57b3df476c66141ae6bb5163d",
+          "Ahead": "0",
+          "Behind": "21",
+          "Relation": "REMOTE_AHEAD"
+        },
+        {
+          "Tip": "f882fe5f432460002674c9f9c611269db4abdade",
+          "Basis": "f882fe5f432460002674c9f9c611269db4abdade",
+          "Ahead": "0",
+          "Behind": "0",
+          "Relation": "IDENTICAL"
+        },
+        {
+          "Tip": "04e68780bf42405ca501549c8bbd8a28f44cb6f2",
+          "Basis": "04e68780bf42405ca501549c8bbd8a28f44cb6f2",
+          "Ahead": "0",
+          "Behind": "0",
+          "Relation": "IDENTICAL"
+        },
+        {
+          "Tip": "5ab906bba54f02d55f00aa2205d259c2189c29d4",
+          "Basis": "5ab906bba54f02d55f00aa2205d259c2189c29d4",
+          "Ahead": "0",
+          "Behind": "0",
+          "Relation": "IDENTICAL"
+        },
+        {
+          "Tip": "45a20688455e869194f735f7a6f0ea1f256681c9",
+          "Basis": "45a20688455e869194f735f7a6f0ea1f256681c9",
+          "Ahead": "0",
+          "Behind": "0",
+          "Relation": "IDENTICAL"
+        },
+        {
+          "Tip": "7935db8eb11b36bf42e5616b8b74f626c557d726",
+          "Basis": "7935db8eb11b36bf42e5616b8b74f626c557d726",
+          "Ahead": "0",
+          "Behind": "0",
+          "Relation": "IDENTICAL"
+        },
+        {
+          "Tip": "dc19f5221877b9e8f6e7b843525d924fa13e42d6",
+          "Basis": "dc19f5221877b9e8f6e7b843525d924fa13e42d6",
+          "Ahead": "0",
+          "Behind": "0",
+          "Relation": "IDENTICAL"
+        },
+        {
+          "Tip": "4144055427e79bc12c5717fd450ead0fcc7f7ddf",
+          "Basis": "4144055427e79bc12c5717fd450ead0fcc7f7ddf",
+          "Ahead": "0",
+          "Behind": "0",
+          "Relation": "IDENTICAL"
+        },
+        {
+          "Tip": "a05ed25d68bce3ba046c73352f2ef0c128e40ef0",
+          "Basis": "991d0e99627b9bd57b3df476c66141ae6bb5163d",
+          "Ahead": "0",
+          "Behind": "51",
+          "Relation": "REMOTE_AHEAD"
+        },
+        {
+          "Tip": "aa41cfe48605ce32971eac3b81ef0b526e25b36d",
+          "Basis": "aa41cfe48605ce32971eac3b81ef0b526e25b36d",
+          "Ahead": "0",
+          "Behind": "0",
+          "Relation": "IDENTICAL"
+        },
+        {
+          "Tip": "0acc3f368c9144a52c198e898a091aa32da040b3",
+          "Basis": "0acc3f368c9144a52c198e898a091aa32da040b3",
+          "Ahead": "0",
+          "Behind": "0",
+          "Relation": "IDENTICAL"
+        },
+        {
+          "Tip": "2fcb2cc27fc13bc7cedd2fbe83ac1a11e9741a62",
+          "Basis": "991d0e99627b9bd57b3df476c66141ae6bb5163d",
+          "Ahead": "0",
+          "Behind": "70",
+          "Relation": "REMOTE_AHEAD"
+        },
+        {
+          "Tip": "f0792ee91c1bb3ab83c6b8cbee8bf4329572b87d",
+          "Basis": "f0792ee91c1bb3ab83c6b8cbee8bf4329572b87d",
+          "Ahead": "0",
+          "Behind": "0",
+          "Relation": "IDENTICAL"
+        },
+        {
+          "Tip": "9c1f3dbeebb276c5c012e962faca4ff00f9b3e14",
+          "Basis": "991d0e99627b9bd57b3df476c66141ae6bb5163d",
+          "Ahead": "0",
+          "Behind": "36",
+          "Relation": "REMOTE_AHEAD"
+        },
+        {
+          "Tip": "e49b64216f82eefda77d6997ed68ed2d12c8ae78",
+          "Basis": "e49b64216f82eefda77d6997ed68ed2d12c8ae78",
+          "Ahead": "0",
+          "Behind": "0",
+          "Relation": "IDENTICAL"
+        },
+        {
+          "Tip": "1147873bf553667aec5cd7eb0e9c6f7e471b370c",
+          "Basis": "1147873bf553667aec5cd7eb0e9c6f7e471b370c",
+          "Ahead": "0",
+          "Behind": "0",
+          "Relation": "IDENTICAL"
+        },
+        {
+          "Tip": "0ca85adad5b6bcdff5a3ce8df54f5b8ac8eb8568",
+          "Basis": "0ca85adad5b6bcdff5a3ce8df54f5b8ac8eb8568",
+          "Ahead": "0",
+          "Behind": "0",
+          "Relation": "IDENTICAL"
+        },
+        {
+          "Tip": "14ce1738d8e674c858bc0d1e21068c3ae6ad48dc",
+          "Basis": "991d0e99627b9bd57b3df476c66141ae6bb5163d",
+          "Ahead": "0",
+          "Behind": "37",
+          "Relation": "REMOTE_AHEAD"
+        },
+        {
+          "Tip": "871e4ad6d898fa15cba2954eeb7457cc84f896bf",
+          "Basis": "991d0e99627b9bd57b3df476c66141ae6bb5163d",
+          "Ahead": "0",
+          "Behind": "45",
+          "Relation": "REMOTE_AHEAD"
+        },
+        {
+          "Tip": "725de2e6c1cea21f63902474f72ec614b2358356",
+          "Basis": "adf1a974741eb5393a91bef46e8274a68aac1c66",
+          "Ahead": "0",
+          "Behind": "4",
+          "Relation": "REMOTE_AHEAD"
+        },
+        {
+          "Tip": "485b637cc1998a327206c5929434bd26c6f0be16",
+          "Basis": "485b637cc1998a327206c5929434bd26c6f0be16",
+          "Ahead": "0",
+          "Behind": "0",
+          "Relation": "IDENTICAL"
+        },
+        {
+          "Tip": "e992edc88d39fa0eb2d72e2490e157441223f568",
+          "Basis": "e992edc88d39fa0eb2d72e2490e157441223f568",
+          "Ahead": "0",
+          "Behind": "0",
+          "Relation": "IDENTICAL"
+        },
+        {
+          "Tip": "6c67462f8107f29ebdd9d4d109a8e8994805a91f",
+          "Basis": "991d0e99627b9bd57b3df476c66141ae6bb5163d",
+          "Ahead": "0",
+          "Behind": "2",
+          "Relation": "REMOTE_AHEAD"
+        },
+        {
+          "Tip": "9c1f3dbeebb276c5c012e962faca4ff00f9b3e14",
+          "Basis": "991d0e99627b9bd57b3df476c66141ae6bb5163d",
+          "Ahead": "0",
+          "Behind": "36",
+          "Relation": "REMOTE_AHEAD"
+        },
+        {
+          "Tip": "50f88d5d30194afbbd188c96e3eab795b7a7de49",
+          "Basis": "50f88d5d30194afbbd188c96e3eab795b7a7de49",
+          "Ahead": "0",
+          "Behind": "0",
+          "Relation": "IDENTICAL"
+        },
+        {
+          "Tip": "871e4ad6d898fa15cba2954eeb7457cc84f896bf",
+          "Basis": "991d0e99627b9bd57b3df476c66141ae6bb5163d",
+          "Ahead": "0",
+          "Behind": "45",
+          "Relation": "REMOTE_AHEAD"
+        },
+        {
+          "Tip": "871e4ad6d898fa15cba2954eeb7457cc84f896bf",
+          "Basis": "991d0e99627b9bd57b3df476c66141ae6bb5163d",
+          "Ahead": "0",
+          "Behind": "45",
+          "Relation": "REMOTE_AHEAD"
+        },
+        {
+          "Tip": "2fcb2cc27fc13bc7cedd2fbe83ac1a11e9741a62",
+          "Basis": "991d0e99627b9bd57b3df476c66141ae6bb5163d",
+          "Ahead": "0",
+          "Behind": "70",
+          "Relation": "REMOTE_AHEAD"
+        }
+      ]
+    }
+  ]
+}
