@@ -1,0 +1,87 @@
+{
+  "reviewer": "/root/qa_r",
+  "status": "INDEPENDENT_REPLAY_REPRODUCED_19_SCIENTIFIC_ARTIFACTS_BYTE_FOR_BYTE",
+  "input_roots": "unchanged primary archives; destination changed to empty directory",
+  "root_acceptance_sha256": "c710c38d9c511ca6a4c2ef693b6dd729333018c5a85dba15685c3c61e215b8bc",
+  "portable_acceptance_sha256": "eac9ef1531a79386f97849a151e9243f208f51abe1eec8f71c9938fa5344e3d2",
+  "difference_scope": "The acceptance envelope records the actual output directory and independently captured logs; scientific CSVs, sparse row metrics, full primal replay, identity proof and 14 per-case receipts are byte-identical.",
+  "actual_argv": [
+    "C:\\ProgramData\\anaconda3\\python.exe",
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\PAPER_A_BUNDLE_20261123_GOLD01\\02_replay_bundle.py",
+    "--input-root",
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR",
+    "--producer-root",
+    "D:\\Projekte\\Code\\pypsatomatpowerx",
+    "--output-root",
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\PAPER_A_BUNDLE_20261123_GOLD01\\F2_PORTABLE_REPLAY",
+    "--intake",
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\PAPER_A_BUNDLE_20261123_GOLD01\\00_INPUT_AND_RUNTIME_INTAKE.json"
+  ],
+  "entry_sha256": "cc551234932e534d914217bd67b0825522beed234ca4b26b26951ed258c96ac7",
+  "actual_command_receipt_sha256": "d6d8becf882078cf74d0cc3693d16617c7fdd2d135ffcf5255e88defff087d9c",
+  "outer_log_sha256": "ceee3ee9dfa51c8cddeb492418446c2c386a4825491fc0bb437365ec45e115b5",
+  "exit": 0,
+  "stage_records": [
+    {
+      "command": [
+        "C:\\ProgramData\\anaconda3\\python.exe",
+        "E:\\ResearchResults\\FlexPlan_UC_GSCR\\PAPER_A_BUNDLE_20261123_GOLD01\\02_reproduce.py"
+      ],
+      "script_sha256": "ea0db7d34fd1f288070d4035456ec48a60b65d99e1eb678346bab1b14748e660",
+      "exit": 0,
+      "log": "02_replay_final.log",
+      "log_sha256": "a749f0e00344f827070ec02c1dc2dcea4791af2104da3d878d0e41b626461fb5"
+    },
+    {
+      "command": [
+        "C:\\ProgramData\\anaconda3\\python.exe",
+        "E:\\ResearchResults\\FlexPlan_UC_GSCR\\PAPER_A_BUNDLE_20261123_GOLD01\\02_replay_original_rows.py"
+      ],
+      "script_sha256": "3051138d071ce5dc1b6148e245383b29cc3ae9a733cf96b9daa38188832a70dd",
+      "exit": 0,
+      "log": "02_original_rows.log",
+      "log_sha256": "358c05d7ec7c0cb300c08d4420f30359fd32d4641d7643dbf63ac819a59075a7"
+    },
+    {
+      "command": [
+        "C:\\ProgramData\\anaconda3\\python.exe",
+        "E:\\ResearchResults\\FlexPlan_UC_GSCR\\PAPER_A_BUNDLE_20261123_GOLD01\\02_replay_legacy_coordinates.py"
+      ],
+      "script_sha256": "c99f2ddbcb23eecdc6cb75882a083f15106f2b9ab98b3bea5a10a942ee2419e6",
+      "exit": 0,
+      "log": "02_re50_coordinates.log",
+      "log_sha256": "a46880d2b05b1ff646d1403af7221854e1d2dee46c5342bc03b9ff5575a4b1cd"
+    },
+    {
+      "command": [
+        "C:\\ProgramData\\anaconda3\\python.exe",
+        "E:\\ResearchResults\\FlexPlan_UC_GSCR\\PAPER_A_BUNDLE_20261123_GOLD01\\02_freeze.py"
+      ],
+      "script_sha256": "e574b0bb64264029b1b891212043157231b2de1be3beb2ecf82e0269f3c7dafb",
+      "exit": 0,
+      "log": "02_freeze.log",
+      "log_sha256": "0d7b3935ed171be33e714fc9f578d887aac92cf8d9695de21d49b596c0382d55"
+    }
+  ],
+  "same_outputs_sha256": {
+    "02_FINAL_WEEK168_RESULT_MATRIX.csv": "254be423a26749ee4704b1d51f1f5d2ebc341a52d44547b8962743decd634bd5",
+    "02_OBJECTIVE_AND_SOLVER_BOUNDS.csv": "a1d1d588d3c9c12a6b450788befa3deadd0264b26663c15c70f8a9de543768fa",
+    "02_ORIGINAL_PRIMAL_REPLAY.json": "edd5011541387b4dacda4e6ecde826060c80be3c0af92d204942cfb0a2f8a4fd",
+    "02_COMPLETE_ALGEBRAIC_ROWS.json": "d16a6d66042437e16fb605756495007dccc3538b0e28f628910dbe2a0bf63f2f",
+    "02_RE50_LP_COORDINATE_PROOF.json": "164ccf6d8bf3ab86571b918b9ad2d04a2f6ed16e95eeb21c228c12f4e23795aa",
+    "02_final_rows/WK08-50-BASE-LP.json": "c4a1516d0fb2de194e7d39140258dc2f8a50553ce9b78ab2e1ae8b10bc2b115c",
+    "02_final_rows/WK08-50-BASE-MILP.json": "fdf3ea4078e149ab6cf8a2e3f00b05c32beb605cbb8b209c271d7472e488c814",
+    "02_final_rows/WK08-50-G1-LP.json": "45cabff787440b5b4e9cb27271262bee0189d329a026bb8c3e64c00b964ff595",
+    "02_final_rows/WK08-50-G1-MILP.json": "b8c5f4d95b2fd1c4e187dddb0abf16d0b0b62d01903576da20848c8e418b7efd",
+    "02_final_rows/WK08-60-BASE-LP.json": "b1d462b721cc26d792816c9b50c631eb5ffdb550122cdd43d45893ebefe67623",
+    "02_final_rows/WK08-60-BASE-MILP.json": "e5fd3a6faba1977a9d8c06b2f99bf01e6386df4f938db3ec42e4856588404350",
+    "02_final_rows/WK08-60-G1-LP.json": "0b8cb9503dbed51248f67b995ffa8cd104880258059a41c2d73cef7ebe3a9110",
+    "02_final_rows/WK08-60-G1-MILP.json": "82a16acf770505806701ae00f0b09e29dfb2bbdd914224e71712197480c5acdd",
+    "02_final_rows/WK08-70-BASE-LP.json": "299a583b17e669cab29472888e58f1c36446e7032ba06e6da33ee0ce8eb1e78f",
+    "02_final_rows/WK08-70-BASE-MILP.json": "f1bac6bad9cea98280b13890b620d990f78f1825a62c9f9a2245918dce0cf405",
+    "02_final_rows/WK08-70-G1-LP.json": "600f52f0ebbd57c8b120771a94d4c5f1786bd031e0f92751d259b87f33fcefd7",
+    "02_final_rows/WK08-70-G1-MILP.json": "8f1997e7de49e5d4c264d70dbeef74193f217cd2d7456e75b0a7c2a66c50c494",
+    "02_final_rows/WK08-70-G2-LP.json": "863e13167af7171ad0a6be3d931390c0ccd64258bbaf5b7d159f8101424fd607",
+    "02_final_rows/WK08-70-G2-MILP.json": "6d940836fbdc783eb2a221c99279f31b48315ee6669915b697b843b97a8f012a"
+  }
+}

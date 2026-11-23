@@ -1,0 +1,55 @@
+{
+  "reviewer": "/root/math_r",
+  "executed": [
+    "C:\\ProgramData\\anaconda3\\python.exe",
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\PAPER_A_BUNDLE_20261123_GOLD01\\05_rebuild_in_memory.py"
+  ],
+  "matplotlib": "3.10.8",
+  "numpy": "2.3.5",
+  "inspection": {
+    "04_qualified_extensions.tex": {
+      "kind": "TeX",
+      "identical": true,
+      "original": "bdad385ff5e276beccffce60bd6588a995b5405f695f6316b930468f2042a3ea"
+    },
+    "04_numerical_limits.tex": {
+      "kind": "TeX",
+      "identical": true,
+      "original": "01c7e169088d8a7cb392a6547f068a6df4049bf3d63aabd8fc155af6ac94728b"
+    },
+    "04_fig_cost.pdf": {
+      "kind": "PDF",
+      "generated": "4388b226928ebeb5d4e2e8696b9cbdc89cfc0bd1182833df7086837e32f53519",
+      "original": "4388b226928ebeb5d4e2e8696b9cbdc89cfc0bd1182833df7086837e32f53519",
+      "identical": true
+    },
+    "04_fig_portfolio.pdf": {
+      "kind": "PDF",
+      "generated": "0e5837628eda6381e3b0597eb2328115baf4839f4b4a3cdd811b5845a1efef89",
+      "original": "0e5837628eda6381e3b0597eb2328115baf4839f4b4a3cdd811b5845a1efef89",
+      "identical": true
+    },
+    "04_fig_diagnostics.pdf": {
+      "kind": "PDF",
+      "generated": "71caf640d8f5ccb2260208fe4f8a067b613e1ba4aa58621f8ee558889c8c3db9",
+      "original": "71caf640d8f5ccb2260208fe4f8a067b613e1ba4aa58621f8ee558889c8c3db9",
+      "identical": true
+    },
+    "04_results.tex": {
+      "kind": "TeX",
+      "identical": true,
+      "original": "33456339d607ed528669aa5d02b844b40518df1f7ed2b3d2bce35bd8e04a6d12"
+    },
+    "04_result_abstract.tex": {
+      "kind": "TeX",
+      "identical": true,
+      "original": "6b71a22f9734b51bc1064eab6dc1528904c388a74bf8b8717d158d127828e07d"
+    },
+    "04_result_conclusion.tex": {
+      "kind": "TeX",
+      "identical": true,
+      "original": "ef47c59286bad487b2a7a502bfcabf39c1805a1d686d5d8a94492ac97b592d93"
+    }
+  },
+  "exit": 0
+}

@@ -1,0 +1,58 @@
+{
+  "stages": [
+    {
+      "command": [
+        "C:\\ProgramData\\anaconda3\\python.exe",
+        "E:\\ResearchResults\\FlexPlan_UC_GSCR\\PAPER_A_BUNDLE_20261123_GOLD01\\02_reproduce.py"
+      ],
+      "script_sha256": "ea0db7d34fd1f288070d4035456ec48a60b65d99e1eb678346bab1b14748e660",
+      "exit": 0,
+      "log": "02_replay_final.log",
+      "log_sha256": "a749f0e00344f827070ec02c1dc2dcea4791af2104da3d878d0e41b626461fb5"
+    },
+    {
+      "command": [
+        "C:\\ProgramData\\anaconda3\\python.exe",
+        "E:\\ResearchResults\\FlexPlan_UC_GSCR\\PAPER_A_BUNDLE_20261123_GOLD01\\02_replay_original_rows.py"
+      ],
+      "script_sha256": "3051138d071ce5dc1b6148e245383b29cc3ae9a733cf96b9daa38188832a70dd",
+      "exit": 0,
+      "log": "02_original_rows.log",
+      "log_sha256": "358c05d7ec7c0cb300c08d4420f30359fd32d4641d7643dbf63ac819a59075a7"
+    },
+    {
+      "command": [
+        "C:\\ProgramData\\anaconda3\\python.exe",
+        "E:\\ResearchResults\\FlexPlan_UC_GSCR\\PAPER_A_BUNDLE_20261123_GOLD01\\02_replay_legacy_coordinates.py"
+      ],
+      "script_sha256": "c99f2ddbcb23eecdc6cb75882a083f15106f2b9ab98b3bea5a10a942ee2419e6",
+      "exit": 0,
+      "log": "02_re50_coordinates.log",
+      "log_sha256": "a46880d2b05b1ff646d1403af7221854e1d2dee46c5342bc03b9ff5575a4b1cd"
+    },
+    {
+      "command": [
+        "C:\\ProgramData\\anaconda3\\python.exe",
+        "E:\\ResearchResults\\FlexPlan_UC_GSCR\\PAPER_A_BUNDLE_20261123_GOLD01\\02_freeze.py"
+      ],
+      "script_sha256": "e574b0bb64264029b1b891212043157231b2de1be3beb2ecf82e0269f3c7dafb",
+      "exit": 0,
+      "log": "02_freeze.log",
+      "log_sha256": "0d7b3935ed171be33e714fc9f578d887aac92cf8d9695de21d49b596c0382d55"
+    }
+  ],
+  "entry_sha256": "cc551234932e534d914217bd67b0825522beed234ca4b26b26951ed258c96ac7",
+  "entry_argv": [
+    "C:\\ProgramData\\anaconda3\\python.exe",
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\PAPER_A_BUNDLE_20261123_GOLD01\\02_replay_bundle.py",
+    "--input-root",
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR",
+    "--producer-root",
+    "D:\\Projekte\\Code\\pypsatomatpowerx",
+    "--output-root",
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\PAPER_A_BUNDLE_20261123_GOLD01\\F2_PORTABLE_REPLAY",
+    "--intake",
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\PAPER_A_BUNDLE_20261123_GOLD01\\00_INPUT_AND_RUNTIME_INTAKE.json"
+  ],
+  "exit": 0
+}

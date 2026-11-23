@@ -1,0 +1,276 @@
+{
+  "reviewer": "/root/math_r in F4-R role",
+  "independent_code_sha256": "8efe6646b960ee94d21266d55659ed5ce462e0381a333c0f0660672c0b718b5f",
+  "command": [
+    "C:\\Users\\User\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\PAPER_A_BUNDLE_20261123_GOLD01\\05_original_publication_sample.py"
+  ],
+  "input_sha256": {
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_20261118_01\\CASES\\G2\\case.json": "c154322ea868313405ac7be70c541ad87839bbb070ac2fa556f18c1d2547e2d5",
+    "D:\\Projekte\\Code\\pypsatomatpowerx\\data\\elec_s_37_csv\\generators.csv": "20441d5bd67103b90838e728affa0da332e5112dcce532c8119eb5e50116abb8",
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DEV01_20261109_01\\public-cost\\paper_a_2040_cost_bridge_candidate.csv": "ec344ecd4c191595b054f5d66474b82f8079069ee6fa2ef0c7e1223de436d8e5"
+  },
+  "original_cases": {
+    "WK08-50-G1-LP": {
+      "case_id": "WK08-50-G1-LP",
+      "original_primal_sha256": "2932b243dbaff38436246e60c00a5392c8890d5185521e797d2c0982ffd8e7bf",
+      "coordinate_sha256": "53a661620069eabfd5ddc82af78afdc98916d215bd2cc0dba991488bc38808ed",
+      "native_summary_sha256": "af9a4b7d6adea33e15a93f1126b7f01b2ebe3d7677085d1f9181255140d0966a",
+      "solver_LB": 98619706096.27141,
+      "raw_native_primal": 98619706096.27141,
+      "case_time_cost_divisor": 1,
+      "incumbent_gap_or_LP_gap": 0.0,
+      "raw_MW_and_EUR": {
+        "capex": 62062737888.896385,
+        "GFM_BESS": 30682.728491191945,
+        "GFL_BESS": 7270.789612969066,
+        "onwind": 343419.99354964937,
+        "solar": 438061.45360175817
+      },
+      "original_columns": 311395
+    },
+    "WK08-50-BASE-LP": {
+      "case_id": "WK08-50-BASE-LP",
+      "original_primal_sha256": "65872fb327c0f0c0efc2c0b58fb0e934cbb9cd59080bfc091e7ceea1e5491501",
+      "coordinate_sha256": "53a661620069eabfd5ddc82af78afdc98916d215bd2cc0dba991488bc38808ed",
+      "native_summary_sha256": "5780e2c18d64eb1fa9661cd7d8203f14576d2918f7a7d03b2d5ff83a03022ab8",
+      "solver_LB": 97551528966.55267,
+      "raw_native_primal": 97551528966.55267,
+      "case_time_cost_divisor": 1,
+      "incumbent_gap_or_LP_gap": 0.0,
+      "raw_MW_and_EUR": {
+        "capex": 60351397208.73977,
+        "GFM_BESS": 0.0,
+        "GFL_BESS": 16970.307946503628,
+        "onwind": 343300.5947669466,
+        "solar": 436277.4569871213
+      },
+      "original_columns": 311395
+    },
+    "WK08-50-G1-MILP": {
+      "case_id": "WK08-50-G1-MILP",
+      "original_primal_sha256": "3f87e6836e8a7465486a09e28ebeeef104f0e72e96992ba67e19ac28f0205fa4",
+      "coordinate_sha256": "d7ba8f8a9e4e3c97d96b4265cb64ae871eed6864186ac49d6205d2fb9281bd14",
+      "native_summary_sha256": "3c6fa3e6458905019d4fbfb42e2cd01b45bae8cf36acb6757d146cb31a19098e",
+      "solver_LB": 98619706096.27202,
+      "raw_native_primal": 98998127117.23671,
+      "case_time_cost_divisor": 1,
+      "incumbent_gap_or_LP_gap": 0.0038225068694133276,
+      "raw_MW_and_EUR": {
+        "capex": 62455556241.64873,
+        "GFM_BESS": 33525.0,
+        "GFL_BESS": 7300.0,
+        "onwind": 341283.18242722296,
+        "solar": 442799.9457664621
+      },
+      "original_columns": 311395
+    },
+    "WK08-50-BASE-MILP": {
+      "case_id": "WK08-50-BASE-MILP",
+      "original_primal_sha256": "dff7a6defb4c2f56b65a5f9f074f8a68d9b894e3ea8dde20031a91454b869927",
+      "coordinate_sha256": "d7ba8f8a9e4e3c97d96b4265cb64ae871eed6864186ac49d6205d2fb9281bd14",
+      "native_summary_sha256": "a86ab36f6e7786daed002e2d636b68f1531224dd6fc95e0e51c7445cb407a28f",
+      "solver_LB": 97551528966.55356,
+      "raw_native_primal": 97566598150.30035,
+      "case_time_cost_divisor": 1,
+      "incumbent_gap_or_LP_gap": 0.00015445023227705172,
+      "raw_MW_and_EUR": {
+        "capex": 60393267353.898224,
+        "GFM_BESS": 0.0,
+        "GFL_BESS": 16975.0,
+        "onwind": 344307.19870843255,
+        "solar": 434410.5928517995
+      },
+      "original_columns": 311395
+    },
+    "WK08-60-G1-MILP": {
+      "case_id": "WK08-60-G1-MILP",
+      "original_primal_sha256": "1d1ff09be1a3b1ed6ddb70f863ecc7a2f23940248208ff5bc873aa8bf00446cb",
+      "coordinate_sha256": "d7ba8f8a9e4e3c97d96b4265cb64ae871eed6864186ac49d6205d2fb9281bd14",
+      "native_summary_sha256": "044c4cc363e77716656e5a6216b303ac08ebf2ca1b8d53a11426775b048335fd",
+      "solver_LB": 111395759439.43794,
+      "raw_native_primal": 111814150707.29868,
+      "case_time_cost_divisor": 1,
+      "incumbent_gap_or_LP_gap": 0.0037418454213007093,
+      "raw_MW_and_EUR": {
+        "capex": 87244212316.91217,
+        "GFM_BESS": 62800.0,
+        "GFL_BESS": 38175.0,
+        "onwind": 452695.6982031403,
+        "solar": 628293.0139765519
+      },
+      "original_columns": 311395
+    },
+    "WK08-60-BASE-MILP": {
+      "case_id": "WK08-60-BASE-MILP",
+      "original_primal_sha256": "62183c5f63dde92b3dc409e2384b091d6d7b3a4e1d4ff67eb1e1783964b822d0",
+      "coordinate_sha256": "d7ba8f8a9e4e3c97d96b4265cb64ae871eed6864186ac49d6205d2fb9281bd14",
+      "native_summary_sha256": "860f85405558f0d76d986b2c08e59bf2368c763b138ebdce26393aca62012611",
+      "solver_LB": 109730971329.91548,
+      "raw_native_primal": 109743617288.29477,
+      "case_time_cost_divisor": 1,
+      "incumbent_gap_or_LP_gap": 0.00011523183481429252,
+      "raw_MW_and_EUR": {
+        "capex": 84711422839.4563,
+        "GFM_BESS": 0.0,
+        "GFL_BESS": 76325.0,
+        "onwind": 459831.30376907624,
+        "solar": 602437.2225633392
+      },
+      "original_columns": 311395
+    },
+    "WK08-60-G1-LP": {
+      "case_id": "WK08-60-G1-LP",
+      "original_primal_sha256": "170bcfe655d9da12584fae934ba88ad7b27d3595bbdc38b868f92f7332270739",
+      "coordinate_sha256": "d7ba8f8a9e4e3c97d96b4265cb64ae871eed6864186ac49d6205d2fb9281bd14",
+      "native_summary_sha256": "42c448d1863004952b5ef039db57ca7051cd7823d9caa69abfc196b79eed0c92",
+      "solver_LB": 111395759439.43652,
+      "raw_native_primal": 111395759439.43652,
+      "case_time_cost_divisor": 1,
+      "incumbent_gap_or_LP_gap": 0.0,
+      "raw_MW_and_EUR": {
+        "capex": 86782272331.9315,
+        "GFM_BESS": 56094.18278073496,
+        "GFL_BESS": 37270.31646538624,
+        "onwind": 457061.80395976355,
+        "solar": 620166.6454635042
+      },
+      "original_columns": 311395
+    },
+    "WK08-60-BASE-LP": {
+      "case_id": "WK08-60-BASE-LP",
+      "original_primal_sha256": "119562e4c80358a4fc0d351fa1535233fcb5d1fe81a1bdab54e0039724f97101",
+      "coordinate_sha256": "d7ba8f8a9e4e3c97d96b4265cb64ae871eed6864186ac49d6205d2fb9281bd14",
+      "native_summary_sha256": "e0aef6d632484ae9a77a3bba3982b26e53b86a062139ea90e4aa5f2b89cddb5a",
+      "solver_LB": 109730971329.91434,
+      "raw_native_primal": 109730971329.91434,
+      "case_time_cost_divisor": 1,
+      "incumbent_gap_or_LP_gap": 0.0,
+      "raw_MW_and_EUR": {
+        "capex": 84708983068.99423,
+        "GFM_BESS": 0.0,
+        "GFL_BESS": 76297.82247323151,
+        "onwind": 459515.01334207656,
+        "solar": 603455.0242596356
+      },
+      "original_columns": 311395
+    },
+    "WK08-70-G1-MILP": {
+      "case_id": "WK08-70-G1-MILP",
+      "original_primal_sha256": "fb14d1c4b279f857cbb6d42273f74c58c566ef0f7ec6875e2179f756f1693aa5",
+      "coordinate_sha256": "d7ba8f8a9e4e3c97d96b4265cb64ae871eed6864186ac49d6205d2fb9281bd14",
+      "native_summary_sha256": "5923a336458cbb05e7c6739468c00a4e80900d0ce71eb5f209ee62963a0659af",
+      "solver_LB": 127348376448.75867,
+      "raw_native_primal": 127818618545.37363,
+      "case_time_cost_divisor": 1,
+      "incumbent_gap_or_LP_gap": 0.0036789796507465072,
+      "raw_MW_and_EUR": {
+        "capex": 111598590415.4346,
+        "GFM_BESS": 104575.0,
+        "GFL_BESS": 58875.0,
+        "onwind": 587424.0427000469,
+        "solar": 726052.7116451459
+      },
+      "original_columns": 311395
+    },
+    "WK08-70-BASE-MILP": {
+      "case_id": "WK08-70-BASE-MILP",
+      "original_primal_sha256": "dec5fe556c634d92f6da06841dd315ca5eb773b42c59f11c6d14383bc0ce6244",
+      "coordinate_sha256": "d7ba8f8a9e4e3c97d96b4265cb64ae871eed6864186ac49d6205d2fb9281bd14",
+      "native_summary_sha256": "2a84f411dac4e27dfef0ddcf53ccd9b4df859381451992ad8c38e911cb21b96a",
+      "solver_LB": 124989733337.15735,
+      "raw_native_primal": 125055972701.08368,
+      "case_time_cost_divisor": 1,
+      "incumbent_gap_or_LP_gap": 0.0005296777314639733,
+      "raw_MW_and_EUR": {
+        "capex": 108352825554.0054,
+        "GFM_BESS": 0.0,
+        "GFL_BESS": 141800.0,
+        "onwind": 583958.1114946161,
+        "solar": 718922.7283523587
+      },
+      "original_columns": 311395
+    },
+    "WK08-70-G1-LP": {
+      "case_id": "WK08-70-G1-LP",
+      "original_primal_sha256": "39c98de34476a2608582914781eb57c495f89c4e9c7abfc329956ee4bae11761",
+      "coordinate_sha256": "d7ba8f8a9e4e3c97d96b4265cb64ae871eed6864186ac49d6205d2fb9281bd14",
+      "native_summary_sha256": "107cb3b315673159897bd04ed246b0045c35ef44d6b7c61211061badc28206fa",
+      "solver_LB": 127348376448.75821,
+      "raw_native_primal": 127348376448.75821,
+      "case_time_cost_divisor": 1,
+      "incumbent_gap_or_LP_gap": 0.0,
+      "raw_MW_and_EUR": {
+        "capex": 111232096756.64642,
+        "GFM_BESS": 101288.68176482126,
+        "GFL_BESS": 57676.64240561282,
+        "onwind": 588959.4605484416,
+        "solar": 719818.1103522244
+      },
+      "original_columns": 311395
+    },
+    "WK08-70-BASE-LP": {
+      "case_id": "WK08-70-BASE-LP",
+      "original_primal_sha256": "0fd2886aa420a261cf988a7c45d9d10d84957f585eaeddebd4a40a4cc4cbd1dd",
+      "coordinate_sha256": "d7ba8f8a9e4e3c97d96b4265cb64ae871eed6864186ac49d6205d2fb9281bd14",
+      "native_summary_sha256": "401aa57d445f0082635d07945e88de2b16da9b5be0aa0ce9d6b4a33cf1c4e9cc",
+      "solver_LB": 124989733337.156,
+      "raw_native_primal": 124989733337.156,
+      "case_time_cost_divisor": 1,
+      "incumbent_gap_or_LP_gap": 0.0,
+      "raw_MW_and_EUR": {
+        "capex": 108292792450.57051,
+        "GFM_BESS": 0.0,
+        "GFL_BESS": 141758.09321047665,
+        "onwind": 583441.7095320068,
+        "solar": 719221.2993529636
+      },
+      "original_columns": 311395
+    },
+    "WK08-70-G2-LP": {
+      "case_id": "WK08-70-G2-LP",
+      "original_primal_sha256": "4321523ab4432f82031048f344ad2d8b55545e4de7e13eedfea24f7d9ceac9d3",
+      "coordinate_sha256": "0a08ecf3d8945a2652377eda992a5f1f53b723197c889cf1eefe048fb25c4994",
+      "native_summary_sha256": "87a3b3bb94ccc04927157aec06a4a967adfb384ba6719fc32bd5bf1cafb6ae20",
+      "solver_LB": 127408221525.42139,
+      "raw_native_primal": 127408221525.42139,
+      "case_time_cost_divisor": 1,
+      "incumbent_gap_or_LP_gap": 0.0,
+      "raw_MW_and_EUR": {
+        "capex": 111294375109.89827,
+        "GFM_BESS": 102089.70683652525,
+        "GFL_BESS": 57164.69139421631,
+        "onwind": 589728.7389109852,
+        "solar": 718399.0084131575
+      },
+      "original_columns": 311395
+    },
+    "WK08-70-G2-MILP": {
+      "case_id": "WK08-70-G2-MILP",
+      "original_primal_sha256": "3e3a7b4863a29adaf60ba2b446b03529aa12cedef2d9aec924095d6cca80c33f",
+      "coordinate_sha256": "0a08ecf3d8945a2652377eda992a5f1f53b723197c889cf1eefe048fb25c4994",
+      "native_summary_sha256": "6c39b0526942a10461523ff05b116bf09b07abb6e703f67ee6f0df943fd0dc88",
+      "solver_LB": 127408221525.4212,
+      "raw_native_primal": 127449599028.6701,
+      "case_time_cost_divisor": 1.0,
+      "incumbent_gap_or_LP_gap": 0.00032465777505143336,
+      "raw_MW_and_EUR": {
+        "capex": 111340588724.01581,
+        "GFM_BESS": 102450.0,
+        "GFL_BESS": 57225.0,
+        "storage": 0.0,
+        "event": 28515084.287620842,
+        "generation": 280424839.36329055,
+        "re": 49741206.27171395,
+        "onwind": 589728.7389109852,
+        "solar": 718399.0084286081
+      },
+      "original_columns": 311395,
+      "replayed_J": 127449599028.67047,
+      "replayed_load": 71058866.10244864,
+      "raw_week_opex": 308939923.6509114,
+      "absolute_EUR_error": 0.0003662109375
+    }
+  },
+  "exit": 0
+}

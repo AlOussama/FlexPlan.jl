@@ -1,0 +1,151 @@
+{
+  "reviewer": "/root/math_r in independent F4-R role",
+  "verdict": "F4_GO_VARIANT_A",
+  "p0_findings_open_for_retained_claims": 0,
+  "submitted": false,
+  "owner_ratification": "Reserved for S-GOV; F4 is independent technical publication acceptance of these hashes only.",
+  "created_utc": "2026-11-23T23:47:02.382916+00:00",
+  "publication_git": {
+    "repository": "AlOussama/research-map",
+    "commit": "7d568b6ce3b821bba05812b61ca8ccc5240aacec",
+    "parent": "72bbcab3455fc04a8acad514607c97ebcb2a1030",
+    "path": "papers/paper-a-week168/",
+    "files_sha256": {
+      "04_PAPER_A.tex": "bbaa282070e791c3b220753ac90acf2aff96d9a5c49b99ed2154992594638d11",
+      "04_PAPER_A.pdf": "0be9f0253454a6d73a1f1e6ee904c2adc135dd55b0e9d561da4e3e4801126687",
+      "04_references.bib": "49e61e1d17f4da5778da6f4ac35a6162668b39ede6d53f18e2a48d8cacb52134",
+      "04_build_results.py": "540b264fe14d2a3db85670a7c01d632bdaf3bc3928b2f25a39ff12b3e9f05061",
+      "04_g3_table.py": "99d597bc1438a1cf29269ab98b87656a2aed0a8d1107b7e54ee5ab50f1c14898",
+      "04_fig_cost.pdf": "4388b226928ebeb5d4e2e8696b9cbdc89cfc0bd1182833df7086837e32f53519",
+      "04_fig_portfolio.pdf": "0e5837628eda6381e3b0597eb2328115baf4839f4b4a3cdd811b5845a1efef89",
+      "04_fig_diagnostics.pdf": "71caf640d8f5ccb2260208fe4f8a067b613e1ba4aa58621f8ee558889c8c3db9",
+      "04_reviewed_points.csv": "254be423a26749ee4704b1d51f1f5d2ebc341a52d44547b8962743decd634bd5",
+      "04_reviewed_bounds.csv": "a1d1d588d3c9c12a6b450788befa3deadd0264b26663c15c70f8a9de543768fa",
+      "04_additional_methods.csv": "5fbcf0b726d9274755a63f44775256c78185802c158d3b3739fc71275a5d5dce",
+      "04_g3_attempts.csv": "758f41066c48b02c80a98282bffdc91a44f3dc7ff07d6703413e95f26028d5bd",
+      "04_results.tex": "33456339d607ed528669aa5d02b844b40518df1f7ed2b3d2bce35bd8e04a6d12",
+      "04_numerical_limits.tex": "01c7e169088d8a7cb392a6547f068a6df4049bf3d63aabd8fc155af6ac94728b",
+      "04_qualified_extensions.tex": "bdad385ff5e276beccffce60bd6588a995b5405f695f6316b930468f2042a3ea",
+      "04_result_abstract.tex": "6b71a22f9734b51bc1064eab6dc1528904c388a74bf8b8717d158d127828e07d",
+      "04_result_conclusion.tex": "ef47c59286bad487b2a7a502bfcabf39c1805a1d686d5d8a94492ac97b592d93",
+      "04_PAPER_CLAIM_TO_EVIDENCE.csv": "42e57b3feea06a79156e601e362499e7aabb49b2047ff323fead4a60c606931a",
+      "04_REPRODUCIBILITY_AND_LIMITATIONS.md": "4cb4ab1ab9507394b4df8424398dd6cfb4498cf99ab741e90482c91a66982c57",
+      "04_BUILD.log": "40bc4ed1684653114e14cf756d95c86c2aac9205658b81ab9a3c996efcdef1b1",
+      "04_PAPER_A.log": "b0b8c7a770740755bb31758d2e2eb3ba0e2821b18fcaaa97b04f405c3a3ace0b"
+    }
+  },
+  "scientific_model_pin": "dbecc1f2d26db134ac7a817c6ce2b5d0ba05882a",
+  "consumer_replay_code": "605f4784dc3e0337b7471162e74da6e2221db191",
+  "consumer_evidence_pin": "027aee0ce2cff7b424ebea05858fc2fc310078b9",
+  "producer_pin": "becec6d63c0fbf2b8a160c41f87631f5270046b9",
+  "frozen_core_evidence_sha256": {
+    "00_INPUT_AND_RUNTIME_INTAKE.json": "ac50620ce72ea5fcda5793d9a4a1896861d1e646c07f51219ddaa28360199049",
+    "01_FORMULATION_AND_CODE_DIFFERENTIAL_REVIEW.md": "6e18efd006ab5a22d9df49946cac1cb4ee0731f364ece01f95c37ed84998fa66",
+    "01_FORMULATION_COVERAGE.csv": "f061af493f6a6eebdf29bc3cce486a600bac0a1b46853c86629d11addcdb5c1d",
+    "01_OPEN_MATERIAL_FINDINGS.json": "1ffb848591000705da7c85a91c0e599679d1898795a004c90b99978ab9306c1d",
+    "02_FINAL_WEEK168_RESULT_MATRIX.csv": "254be423a26749ee4704b1d51f1f5d2ebc341a52d44547b8962743decd634bd5",
+    "02_OBJECTIVE_AND_SOLVER_BOUNDS.csv": "a1d1d588d3c9c12a6b450788befa3deadd0264b26663c15c70f8a9de543768fa",
+    "02_ORIGINAL_PRIMAL_REPLAY.json": "edd5011541387b4dacda4e6ecde826060c80be3c0af92d204942cfb0a2f8a4fd",
+    "02_INDEPENDENT_ACCEPTANCE.json": "c710c38d9c511ca6a4c2ef693b6dd729333018c5a85dba15685c3c61e215b8bc",
+    "03_METHOD_STATUS_MATRIX.csv": "b1dc39f640777239f19778b3f11115d67ce1125bac3477feb92a46279723c24b",
+    "03_SYNTHETIC_NATIVE_TESTS.json": "1d887e8f45fe05085c9552bdf0df03c30c368e59f346e9e4f13d04382f994c5e",
+    "03_QUALIFIED_REAL_METHOD_RESULTS.csv": "5fbcf0b726d9274755a63f44775256c78185802c158d3b3739fc71275a5d5dce",
+    "03_GATED_SOLVER_NEGATIVES.json": "bfc35b6da6a6932b586d06829c3f9ef0d1676651774806d8fc5d67002daf386c"
+  },
+  "review_artifact_sha256": {
+    "00_INDEPENDENT_INTAKE_HASHCHECK.json": "87de9183c445da3ba8ba890f6d01ac94b9bd18ceefaac8be14b6f1a3eaae9a78",
+    "01_PHYSICAL_DOMAIN_AND_EVENT_REPLAY.json": "9959991b4e3f184869c2cc9dcaff770a9bc2662423ecb3c17eda1728930cf94a",
+    "01_INDEPENDENT_EVENT_CENSUS.json": "9f9bb2f2f43c726133c69655e3a8183e82c3c17461b15bba299f5f2af2f322b5",
+    "01_FRESH_RATIONAL_ORACLE.json": "e2e1f1bbd877303996dda32053bfabbe056de0083caffc514bb33856791f4554",
+    "02_COMPLETE_ALGEBRAIC_ROWS.json": "d16a6d66042437e16fb605756495007dccc3538b0e28f628910dbe2a0bf63f2f",
+    "02_RE50_LP_COORDINATE_PROOF.json": "164ccf6d8bf3ab86571b918b9ad2d04a2f6ed16e95eeb21c228c12f4e23795aa",
+    "05_ORIGINAL_PUBLICATION_SAMPLES.json": "7dbd516ff81aed83836c1e071f2c09469b01f73172e2364cb64fb7215cd01eaa",
+    "05_IN_MEMORY_FIGURE_AND_TABLE_REPLAY.json": "160936620d6e79e138ab86996df0db38945239a297cb9c2e8ccc5d9b08a76db7",
+    "05_REVIEW_PDF_CONTACT.png": "710cee770459368a405c247ed010aa5911928bf8d0f05bac34d1ef351b4892f4",
+    "05_original_publication_sample.py": "8efe6646b960ee94d21266d55659ed5ce462e0381a333c0f0660672c0b718b5f",
+    "05_rebuild_in_memory.py": "d7a7ab6dbf913983831d4c0cc63d8f8266d833db5320fe2b8e531a8fafa550b6",
+    "05_render_review_pdf.py": "754bf7ac694ebf141f54fdb6e0d68b44ce3fac8b3d34ea7fc3c500bc9a309796",
+    "05_publication_audit.py": "44f3dc8ef1d192ec4cffd02537ad2cf650ff82bff84d4a27c599eb43ce7595e5"
+  },
+  "publication_manifest_sha256": "6ca37b4da5da5067d57c4a9dc580049f0169a53e74170e21ca808cc6952b7bde",
+  "checked_claims": 18,
+  "checked_canonical_families": 23,
+  "checked_source_case_count": 14,
+  "annual_integer_optimum_difference_billion_EUR_from_numeric_bounds": {
+    "50": [
+      "1.05310794597152",
+      "1.44659815068327"
+    ],
+    "60": [
+      "1.65214215114296",
+      "2.08317937738352"
+    ],
+    "70": [
+      "2.2924037476747",
+      "2.8288852082164"
+    ]
+  },
+  "G2_full_cost_and_quota_replay": {
+    "case_id": "WK08-70-G2-MILP",
+    "original_primal_sha256": "3e3a7b4863a29adaf60ba2b446b03529aa12cedef2d9aec924095d6cca80c33f",
+    "coordinate_sha256": "0a08ecf3d8945a2652377eda992a5f1f53b723197c889cf1eefe048fb25c4994",
+    "native_summary_sha256": "6c39b0526942a10461523ff05b116bf09b07abb6e703f67ee6f0df943fd0dc88",
+    "solver_LB": 127408221525.4212,
+    "raw_native_primal": 127449599028.6701,
+    "case_time_cost_divisor": 1.0,
+    "incumbent_gap_or_LP_gap": 0.00032465777505143336,
+    "raw_MW_and_EUR": {
+      "capex": 111340588724.01581,
+      "GFM_BESS": 102450.0,
+      "GFL_BESS": 57225.0,
+      "storage": 0.0,
+      "event": 28515084.287620842,
+      "generation": 280424839.36329055,
+      "re": 49741206.27171395,
+      "onwind": 589728.7389109852,
+      "solar": 718399.0084286081
+    },
+    "original_columns": 311395,
+    "replayed_J": 127449599028.67047,
+    "replayed_load": 71058866.10244864,
+    "raw_week_opex": 308939923.6509114,
+    "absolute_EUR_error": 0.0003662109375
+  },
+  "figures_bytes_replayed": 3,
+  "generated_latex_fragments_replayed": 5,
+  "PDF_pages_visually_inspected": 8,
+  "reference_checks": {
+    "cached_publisher_deposits": 7,
+    "publisher_Wang_contrast": "https://epjournal.csee.org.cn/en/article/doi/10.16081/j.epae.202512014/",
+    "resolvable_bibliography_keys": 8
+  },
+  "commands": [
+    [
+      "C:\\Users\\User\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+      "E:\\ResearchResults\\FlexPlan_UC_GSCR\\PAPER_A_BUNDLE_20261123_GOLD01\\05_publication_audit.py"
+    ],
+    [
+      "C:\\ProgramData\\anaconda3\\python.exe",
+      "E:\\ResearchResults\\FlexPlan_UC_GSCR\\PAPER_A_BUNDLE_20261123_GOLD01\\05_rebuild_in_memory.py"
+    ],
+    [
+      "C:\\Users\\User\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+      "E:\\ResearchResults\\FlexPlan_UC_GSCR\\PAPER_A_BUNDLE_20261123_GOLD01\\05_original_publication_sample.py"
+    ],
+    [
+      "python",
+      "05_render_review_pdf.py"
+    ],
+    [
+      "git",
+      "show",
+      "7d568b6ce3b821bba05812b61ca8ccc5240aacec:papers/paper-a-week168/<each publication file>"
+    ],
+    [
+      "git",
+      "show",
+      "027aee0ce2cff7b424ebea05858fc2fc310078b9:docs/paper_a/gold_week168/<each F1/F2/F3 evidence file>"
+    ]
+  ],
+  "exit": 0
+}

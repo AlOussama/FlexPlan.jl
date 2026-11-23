@@ -1,0 +1,166 @@
+{
+  "reviewer": "/root/qa_r",
+  "script_sha256": "121fa2a09d18745b59bd34de8c193efdb3877e17018903acadc90d56b02ba236",
+  "input_snapshot_csv_sha256": "1dbf7e7d9522f6e43223b21a9e3a4a9a1c9314ef4866897a632c26512d95ddd4",
+  "case_shas": [
+    "c03dfc3cd78d68e0aeb8fb6875a3875e71db5d2c2efd8d680ba1904f95a79cfe",
+    "c154322ea868313405ac7be70c541ad87839bbb070ac2fa556f18c1d2547e2d5"
+  ],
+  "chronology": "All original case time indices 1..168 agree exactly with consecutive 2013-02-18 00:00 to 2013-02-24 23:00 and source snapshots [1152:1320].",
+  "rows": {
+    "WK08-50-BASE-LP": {
+      "min_RE_dispatch_MW": 0.0,
+      "positive_net_RE_delta_MWh": 0.0,
+      "max_portfolio_addition_delta_MW": 0.0,
+      "absolute_exposure_negativity_pu": 0.0,
+      "source_hashes": {
+        "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE50_GFM_FROZEN_E_20261118_01\\without_gscr\\relaxed_crossover\\period_1\\dispatch.csv": "80f96e67a005d5c1b44ccdddd89cac2dc200a5fb645df5b60bfbed9271575ed9",
+        "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE50_GFM_FROZEN_E_20261118_01\\without_gscr\\relaxed_crossover\\block_expansion.csv": "e1e5d027482b940c59716e558a1183af7972769201f56e01414858ae1c1b925b",
+        "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE50_GFM_FROZEN_E_20261118_01\\without_gscr\\relaxed_crossover\\renewable_expansion.csv": "d911949c7d147442178a992e69879ec4e9dd746bd96a5e40622fc3b1aa5a760d"
+      }
+    },
+    "WK08-50-BASE-MILP": {
+      "min_RE_dispatch_MW": 0.0,
+      "positive_net_RE_delta_MWh": 0.0,
+      "max_portfolio_addition_delta_MW": 5.820766091346741e-11,
+      "absolute_exposure_negativity_pu": 0.0,
+      "source_hashes": {
+        "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE50_GFM_FROZEN_E_MIP_20261118_01\\without_gscr\\integer\\period_1\\dispatch.csv": "85bb8d38aaf43b9eff48d1b2c163e1a55cee51646582e747ee13b2a711b50018",
+        "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE50_GFM_FROZEN_E_MIP_20261118_01\\without_gscr\\integer\\block_expansion.csv": "02a034159153b3c73af0c2645a3d3a6da67c11bcc8d4f299b21b9bc0245357be",
+        "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE50_GFM_FROZEN_E_MIP_20261118_01\\without_gscr\\integer\\renewable_expansion.csv": "43fd5f102386009399af2ae4869b130e8f1f707c6fe991be38a5a12786a3debf"
+      }
+    },
+    "WK08-50-G1-LP": {
+      "min_RE_dispatch_MW": 0.0,
+      "positive_net_RE_delta_MWh": 0.0,
+      "max_portfolio_addition_delta_MW": 9.094947017729282e-13,
+      "absolute_exposure_negativity_pu": 0.0,
+      "source_hashes": {
+        "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE50_GFM_FROZEN_E_20261118_01\\with_gscr\\relaxed_crossover\\period_1\\dispatch.csv": "b2c96b8e938166a86605461a3ccde9a5120d563d7169b62b10a0177e5f8291c7",
+        "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE50_GFM_FROZEN_E_20261118_01\\with_gscr\\relaxed_crossover\\block_expansion.csv": "0b93e6a785ceb87f251de2fad0b6c93b37870530c37d465b3e12c640ceb4d64b",
+        "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE50_GFM_FROZEN_E_20261118_01\\with_gscr\\relaxed_crossover\\renewable_expansion.csv": "842dfa65388369818d62e3715fc3179992bc1d9f192e19a549e6ce9c172bafbd"
+      }
+    },
+    "WK08-50-G1-MILP": {
+      "min_RE_dispatch_MW": 0.0,
+      "positive_net_RE_delta_MWh": 0.0,
+      "max_portfolio_addition_delta_MW": 5.820766091346741e-11,
+      "absolute_exposure_negativity_pu": 0.0,
+      "source_hashes": {
+        "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE50_GFM_FROZEN_E_MIP_20261118_01\\with_gscr\\integer\\period_1\\dispatch.csv": "18edfe15d8d70d7c34865f57923aa9da1724b1106fab4d9948bd1faa81d46153",
+        "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE50_GFM_FROZEN_E_MIP_20261118_01\\with_gscr\\integer\\block_expansion.csv": "ba9eff1de20ecbc61619db85513d2c17d62efff4144fc7b0c17130c435192346",
+        "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE50_GFM_FROZEN_E_MIP_20261118_01\\with_gscr\\integer\\renewable_expansion.csv": "0f368dec7d2b3d81eb8b855c8988008ab75242729fd63eb543a624778f773ed7"
+      }
+    },
+    "WK08-60-BASE-LP": {
+      "min_RE_dispatch_MW": 0.0,
+      "positive_net_RE_delta_MWh": 0.0,
+      "max_portfolio_addition_delta_MW": 5.820766091346741e-11,
+      "absolute_exposure_negativity_pu": 0.0,
+      "source_hashes": {
+        "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01\\quota_60\\relaxed\\without_gscr\\relaxed_crossover\\period_1\\dispatch.csv": "2c5ff292064e3120d279535d33f2acfb7f4c5a893321226ab7aa822bc3325859",
+        "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01\\quota_60\\relaxed\\without_gscr\\relaxed_crossover\\block_expansion.csv": "f35f162b89714e21d9750ac0eade70e4f8bd1fe9f2babd630828d9da454688ef",
+        "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01\\quota_60\\relaxed\\without_gscr\\relaxed_crossover\\renewable_expansion.csv": "3114f0732073ca0f6acb5abbe00de108bc7db98b4e4cf5af7030fef77c312d67"
+      }
+    },
+    "WK08-60-BASE-MILP": {
+      "min_RE_dispatch_MW": 0.0,
+      "positive_net_RE_delta_MWh": 0.0,
+      "max_portfolio_addition_delta_MW": 5.820766091346741e-11,
+      "absolute_exposure_negativity_pu": 0.0,
+      "source_hashes": {
+        "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01\\quota_60\\integer\\without_gscr\\integer\\period_1\\dispatch.csv": "e928c21eb6ff77cfc9dcf7119737752b39fa1840fed5241e67023086aca3f0c5",
+        "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01\\quota_60\\integer\\without_gscr\\integer\\block_expansion.csv": "53f229d0afef31b0611c4692b4cb082c9334b9cf5cbc256e265fca6583d13824",
+        "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01\\quota_60\\integer\\without_gscr\\integer\\renewable_expansion.csv": "7b6950636c0ef2c211e89cb6b505ba3dd2e747ad3012fd3f2bf540623712405a"
+      }
+    },
+    "WK08-60-G1-LP": {
+      "min_RE_dispatch_MW": 0.0,
+      "positive_net_RE_delta_MWh": 0.0,
+      "max_portfolio_addition_delta_MW": 1.1641532182693481e-10,
+      "absolute_exposure_negativity_pu": 0.0,
+      "source_hashes": {
+        "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01\\quota_60\\relaxed\\with_gscr\\relaxed_crossover\\period_1\\dispatch.csv": "7a6911a3e4bae5f40ec99ea95428e917baef68e2c93069751852f0d6b84f67e5",
+        "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01\\quota_60\\relaxed\\with_gscr\\relaxed_crossover\\block_expansion.csv": "fa2fe06a6d57de8da8591edb0c91a334abf36351fa199642b01bba3e1fc95ae3",
+        "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01\\quota_60\\relaxed\\with_gscr\\relaxed_crossover\\renewable_expansion.csv": "30aff89042132afd05907c3d3ae900114d872fc415233dc9301f16b12f7c8902"
+      }
+    },
+    "WK08-60-G1-MILP": {
+      "min_RE_dispatch_MW": 0.0,
+      "positive_net_RE_delta_MWh": 0.0,
+      "max_portfolio_addition_delta_MW": 1.1641532182693481e-10,
+      "absolute_exposure_negativity_pu": 0.0,
+      "source_hashes": {
+        "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01\\quota_60\\integer\\with_gscr\\integer\\period_1\\dispatch.csv": "406531b4650dedeca2ffc523172e1734de93c46131222532920dd6ec89ca58f9",
+        "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01\\quota_60\\integer\\with_gscr\\integer\\block_expansion.csv": "f845123826597ba4ca5104a222003b24847eb777fe49ea3293e2f45a21b1e467",
+        "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01\\quota_60\\integer\\with_gscr\\integer\\renewable_expansion.csv": "a02d90ca34933fb2f8015cc016c8bc1d56cdafaa3511dd40897a873b982c4a33"
+      }
+    },
+    "WK08-70-BASE-LP": {
+      "min_RE_dispatch_MW": 0.0,
+      "positive_net_RE_delta_MWh": 0.0,
+      "max_portfolio_addition_delta_MW": 1.1641532182693481e-10,
+      "absolute_exposure_negativity_pu": 0.0,
+      "source_hashes": {
+        "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01\\quota_70\\relaxed\\without_gscr\\relaxed_crossover\\period_1\\dispatch.csv": "4346041ec81db8471f606a8013d762bf78e9a7bf17c7a3f00484cd36e382d44f",
+        "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01\\quota_70\\relaxed\\without_gscr\\relaxed_crossover\\block_expansion.csv": "2b87772cef736720040d51ec0478f2c6a86f62d7622ade162f923e0bd32b0ab6",
+        "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01\\quota_70\\relaxed\\without_gscr\\relaxed_crossover\\renewable_expansion.csv": "0c499ef2fe4a438f6d9eae2d4f360b065d558d7a01877b73afd8a971249e274e"
+      }
+    },
+    "WK08-70-BASE-MILP": {
+      "min_RE_dispatch_MW": 0.0,
+      "positive_net_RE_delta_MWh": 0.0,
+      "max_portfolio_addition_delta_MW": 0.0,
+      "absolute_exposure_negativity_pu": 0.0,
+      "source_hashes": {
+        "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01\\quota_70\\integer\\without_gscr\\integer\\period_1\\dispatch.csv": "d013021776e076a6b4a0196915a7d543c5118c61b35bd39cffb062c11284a5fe",
+        "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01\\quota_70\\integer\\without_gscr\\integer\\block_expansion.csv": "de3148d1824d7a21a17eb1884faa2f6a07b4a26d51669b9afb5ffe651dca3317",
+        "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01\\quota_70\\integer\\without_gscr\\integer\\renewable_expansion.csv": "6dd0e6745cf7c287efc63ea0a5a2e8aa95e72275e92a847416d52d516126ec6a"
+      }
+    },
+    "WK08-70-G1-LP": {
+      "min_RE_dispatch_MW": 0.0,
+      "positive_net_RE_delta_MWh": 0.0,
+      "max_portfolio_addition_delta_MW": 4.3655745685100555e-11,
+      "absolute_exposure_negativity_pu": 0.0,
+      "source_hashes": {
+        "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01\\quota_70\\relaxed\\with_gscr\\relaxed_crossover\\period_1\\dispatch.csv": "3b2d00185c4a0eab1d1f272d80cba361b2c1bb9f4dd1a11b44a7e691d2ab51e5",
+        "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01\\quota_70\\relaxed\\with_gscr\\relaxed_crossover\\block_expansion.csv": "07cabe4860811f5e76b81754055d90461db6d5feeb797ddec8c5ace8633741d9",
+        "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01\\quota_70\\relaxed\\with_gscr\\relaxed_crossover\\renewable_expansion.csv": "17857466a8b4d46a31e30bab63623a5ee2bf11dfaa3410dd9b0d7e63ad6e8092"
+      }
+    },
+    "WK08-70-G1-MILP": {
+      "min_RE_dispatch_MW": 0.0,
+      "positive_net_RE_delta_MWh": 0.0,
+      "max_portfolio_addition_delta_MW": 2.3283064365386963e-10,
+      "absolute_exposure_negativity_pu": 0.0,
+      "source_hashes": {
+        "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01\\quota_70\\integer\\with_gscr\\integer\\period_1\\dispatch.csv": "de8fde7bde08c157da5f161253ced66e62d55aa310d41cbdd9f86df9e280559b",
+        "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01\\quota_70\\integer\\with_gscr\\integer\\block_expansion.csv": "79aa1973a466de791af4a637aef23c5cf6d34c421e6541107e5a9a06291512de",
+        "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01\\quota_70\\integer\\with_gscr\\integer\\renewable_expansion.csv": "5d5df94532e59994230d9a91af1537e39d4a204b1cd462c53846bcc2c3d274fa"
+      }
+    },
+    "WK08-70-G2-LP": {
+      "min_RE_dispatch_MW": 0.0,
+      "positive_net_RE_delta_MWh": 0.0,
+      "max_portfolio_addition_delta_MW": 1.1641532182693481e-10,
+      "absolute_exposure_negativity_pu": 0.0,
+      "source_hashes": {
+        "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_20261118_01\\G2\\relaxed\\dispatch.csv": "115938b175a3c738e210e6d4923aa74f8523cda4c955dd7a4c90fc29659df581",
+        "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_20261118_01\\G2\\relaxed\\block_expansion.csv": "7eae5981f4df1e0fbf4ab4f607a525b69789d167b18df4d6888f4576d4c8108a",
+        "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_20261118_01\\G2\\relaxed\\renewable_expansion.csv": "1494084f3a55d9164a1ae6e42c667c07722f0da32ec07b7c3777855fb4bbe3f2"
+      }
+    },
+    "WK08-70-G2-MILP": {
+      "min_RE_dispatch_MW": 0.0,
+      "positive_net_RE_delta_MWh": 0.0,
+      "max_portfolio_addition_delta_MW": 0.0,
+      "absolute_exposure_negativity_pu": 0.0,
+      "source_hashes": {
+        "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_SEQUENTIAL_CONDITIONED_20261120_01\\03_G2_MILP\\G2\\integer\\dispatch.csv": "a43c8026e832e0513d928af1532463b48c06fe2bddf3ef7aee1b7a40d6a1bbda",
+        "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_SEQUENTIAL_CONDITIONED_20261120_01\\03_G2_MILP\\G2\\integer\\block_expansion.csv": "1fd99e8c623482bf565123db4acaae8b29f58739766cdd14758a1d16e4dbc568",
+        "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_SEQUENTIAL_CONDITIONED_20261120_01\\03_G2_MILP\\G2\\integer\\renewable_expansion.csv": "ec3286e25e047eb011844a21238e774f6f70bf688cbfc3bc557a664c6f011001"
+      }
+    }
+  }
+}
