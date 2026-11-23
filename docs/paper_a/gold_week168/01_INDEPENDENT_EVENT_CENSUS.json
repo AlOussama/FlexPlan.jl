@@ -1,0 +1,286 @@
+{
+  "reviewer": "/root/math_r",
+  "script": "168be6e372c726363b25c9adf1d3f708efc8d8fcea6d480bca661d13dbc62c45",
+  "cases": {
+    "TECH_FULL37_KW08_RE50_GFM_FROZEN_E_20261118_01\\with_gscr\\relaxed_crossover": {
+      "pairs": 18312,
+      "positive_both_by_block_threshold": {
+        "1e-08": 0,
+        "1e-07": 0,
+        "1e-06": 0
+      },
+      "maxmin_and_location": [
+        0.0,
+        [
+          168,
+          "((:gen, 95),)"
+        ],
+        0.0,
+        0.0
+      ],
+      "primal_sha256": "2932b243dbaff38436246e60c00a5392c8890d5185521e797d2c0982ffd8e7bf",
+      "coordinate_sha256": "53a661620069eabfd5ddc82af78afdc98916d215bd2cc0dba991488bc38808ed",
+      "summary_sha256": "af9a4b7d6adea33e15a93f1126b7f01b2ebe3d7677085d1f9181255140d0966a"
+    },
+    "TECH_FULL37_KW08_RE50_GFM_FROZEN_E_20261118_01\\without_gscr\\relaxed_crossover": {
+      "pairs": 18312,
+      "positive_both_by_block_threshold": {
+        "1e-08": 0,
+        "1e-07": 0,
+        "1e-06": 0
+      },
+      "maxmin_and_location": [
+        0.0,
+        [
+          168,
+          "((:gen, 95),)"
+        ],
+        0.0,
+        0.0
+      ],
+      "primal_sha256": "65872fb327c0f0c0efc2c0b58fb0e934cbb9cd59080bfc091e7ceea1e5491501",
+      "coordinate_sha256": "53a661620069eabfd5ddc82af78afdc98916d215bd2cc0dba991488bc38808ed",
+      "summary_sha256": "5780e2c18d64eb1fa9661cd7d8203f14576d2918f7a7d03b2d5ff83a03022ab8"
+    },
+    "TECH_FULL37_KW08_RE50_GFM_FROZEN_E_MIP_20261118_01\\with_gscr\\integer": {
+      "pairs": 18312,
+      "positive_both_by_block_threshold": {
+        "1e-08": 0,
+        "1e-07": 0,
+        "1e-06": 0
+      },
+      "maxmin_and_location": [
+        0.0,
+        [
+          168,
+          "((:gen, 95),)"
+        ],
+        0.0,
+        0.0
+      ],
+      "primal_sha256": "3f87e6836e8a7465486a09e28ebeeef104f0e72e96992ba67e19ac28f0205fa4",
+      "coordinate_sha256": "d7ba8f8a9e4e3c97d96b4265cb64ae871eed6864186ac49d6205d2fb9281bd14",
+      "summary_sha256": "3c6fa3e6458905019d4fbfb42e2cd01b45bae8cf36acb6757d146cb31a19098e"
+    },
+    "TECH_FULL37_KW08_RE50_GFM_FROZEN_E_MIP_20261118_01\\without_gscr\\integer": {
+      "pairs": 18312,
+      "positive_both_by_block_threshold": {
+        "1e-08": 3,
+        "1e-07": 3,
+        "1e-06": 3
+      },
+      "maxmin_and_location": [
+        1.0,
+        [
+          130,
+          "((:gen, 110),)"
+        ],
+        12.0,
+        1.0
+      ],
+      "primal_sha256": "dff7a6defb4c2f56b65a5f9f074f8a68d9b894e3ea8dde20031a91454b869927",
+      "coordinate_sha256": "d7ba8f8a9e4e3c97d96b4265cb64ae871eed6864186ac49d6205d2fb9281bd14",
+      "summary_sha256": "a86ab36f6e7786daed002e2d636b68f1531224dd6fc95e0e51c7445cb407a28f"
+    },
+    "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01\\quota_60\\integer\\with_gscr\\integer": {
+      "pairs": 18312,
+      "positive_both_by_block_threshold": {
+        "1e-08": 0,
+        "1e-07": 0,
+        "1e-06": 0
+      },
+      "maxmin_and_location": [
+        -0.0,
+        [
+          168,
+          "((:gen, 95),)"
+        ],
+        -0.0,
+        -0.0
+      ],
+      "primal_sha256": "1d1ff09be1a3b1ed6ddb70f863ecc7a2f23940248208ff5bc873aa8bf00446cb",
+      "coordinate_sha256": "d7ba8f8a9e4e3c97d96b4265cb64ae871eed6864186ac49d6205d2fb9281bd14",
+      "summary_sha256": "044c4cc363e77716656e5a6216b303ac08ebf2ca1b8d53a11426775b048335fd"
+    },
+    "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01\\quota_60\\integer\\without_gscr\\integer": {
+      "pairs": 18312,
+      "positive_both_by_block_threshold": {
+        "1e-08": 1,
+        "1e-07": 1,
+        "1e-06": 1
+      },
+      "maxmin_and_location": [
+        1.0,
+        [
+          40,
+          "((:gen, 110),)"
+        ],
+        12.0,
+        1.0
+      ],
+      "primal_sha256": "62183c5f63dde92b3dc409e2384b091d6d7b3a4e1d4ff67eb1e1783964b822d0",
+      "coordinate_sha256": "d7ba8f8a9e4e3c97d96b4265cb64ae871eed6864186ac49d6205d2fb9281bd14",
+      "summary_sha256": "860f85405558f0d76d986b2c08e59bf2368c763b138ebdce26393aca62012611"
+    },
+    "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01\\quota_60\\relaxed\\with_gscr\\relaxed_crossover": {
+      "pairs": 18312,
+      "positive_both_by_block_threshold": {
+        "1e-08": 0,
+        "1e-07": 0,
+        "1e-06": 0
+      },
+      "maxmin_and_location": [
+        0.0,
+        [
+          168,
+          "((:gen, 95),)"
+        ],
+        0.0,
+        0.0
+      ],
+      "primal_sha256": "170bcfe655d9da12584fae934ba88ad7b27d3595bbdc38b868f92f7332270739",
+      "coordinate_sha256": "d7ba8f8a9e4e3c97d96b4265cb64ae871eed6864186ac49d6205d2fb9281bd14",
+      "summary_sha256": "42c448d1863004952b5ef039db57ca7051cd7823d9caa69abfc196b79eed0c92"
+    },
+    "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01\\quota_60\\relaxed\\without_gscr\\relaxed_crossover": {
+      "pairs": 18312,
+      "positive_both_by_block_threshold": {
+        "1e-08": 0,
+        "1e-07": 0,
+        "1e-06": 0
+      },
+      "maxmin_and_location": [
+        0.0,
+        [
+          168,
+          "((:gen, 95),)"
+        ],
+        0.0,
+        0.0
+      ],
+      "primal_sha256": "119562e4c80358a4fc0d351fa1535233fcb5d1fe81a1bdab54e0039724f97101",
+      "coordinate_sha256": "d7ba8f8a9e4e3c97d96b4265cb64ae871eed6864186ac49d6205d2fb9281bd14",
+      "summary_sha256": "e0aef6d632484ae9a77a3bba3982b26e53b86a062139ea90e4aa5f2b89cddb5a"
+    },
+    "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01\\quota_70\\integer\\with_gscr\\integer": {
+      "pairs": 18312,
+      "positive_both_by_block_threshold": {
+        "1e-08": 0,
+        "1e-07": 0,
+        "1e-06": 0
+      },
+      "maxmin_and_location": [
+        -0.0,
+        [
+          168,
+          "((:gen, 95),)"
+        ],
+        -0.0,
+        -0.0
+      ],
+      "primal_sha256": "fb14d1c4b279f857cbb6d42273f74c58c566ef0f7ec6875e2179f756f1693aa5",
+      "coordinate_sha256": "d7ba8f8a9e4e3c97d96b4265cb64ae871eed6864186ac49d6205d2fb9281bd14",
+      "summary_sha256": "5923a336458cbb05e7c6739468c00a4e80900d0ce71eb5f209ee62963a0659af"
+    },
+    "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01\\quota_70\\integer\\without_gscr\\integer": {
+      "pairs": 18312,
+      "positive_both_by_block_threshold": {
+        "1e-08": 0,
+        "1e-07": 0,
+        "1e-06": 0
+      },
+      "maxmin_and_location": [
+        -0.0,
+        [
+          168,
+          "((:gen, 95),)"
+        ],
+        -0.0,
+        -0.0
+      ],
+      "primal_sha256": "dec5fe556c634d92f6da06841dd315ca5eb773b42c59f11c6d14383bc0ce6244",
+      "coordinate_sha256": "d7ba8f8a9e4e3c97d96b4265cb64ae871eed6864186ac49d6205d2fb9281bd14",
+      "summary_sha256": "2a84f411dac4e27dfef0ddcf53ccd9b4df859381451992ad8c38e911cb21b96a"
+    },
+    "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01\\quota_70\\relaxed\\with_gscr\\relaxed_crossover": {
+      "pairs": 18312,
+      "positive_both_by_block_threshold": {
+        "1e-08": 0,
+        "1e-07": 0,
+        "1e-06": 0
+      },
+      "maxmin_and_location": [
+        0.0,
+        [
+          168,
+          "((:gen, 95),)"
+        ],
+        0.0,
+        0.0
+      ],
+      "primal_sha256": "39c98de34476a2608582914781eb57c495f89c4e9c7abfc329956ee4bae11761",
+      "coordinate_sha256": "d7ba8f8a9e4e3c97d96b4265cb64ae871eed6864186ac49d6205d2fb9281bd14",
+      "summary_sha256": "107cb3b315673159897bd04ed246b0045c35ef44d6b7c61211061badc28206fa"
+    },
+    "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01\\quota_70\\relaxed\\without_gscr\\relaxed_crossover": {
+      "pairs": 18312,
+      "positive_both_by_block_threshold": {
+        "1e-08": 0,
+        "1e-07": 0,
+        "1e-06": 0
+      },
+      "maxmin_and_location": [
+        0.0,
+        [
+          168,
+          "((:gen, 95),)"
+        ],
+        0.0,
+        0.0
+      ],
+      "primal_sha256": "0fd2886aa420a261cf988a7c45d9d10d84957f585eaeddebd4a40a4cc4cbd1dd",
+      "coordinate_sha256": "d7ba8f8a9e4e3c97d96b4265cb64ae871eed6864186ac49d6205d2fb9281bd14",
+      "summary_sha256": "401aa57d445f0082635d07945e88de2b16da9b5be0aa0ce9d6b4a33cf1c4e9cc"
+    },
+    "TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_20261118_01\\G2\\relaxed": {
+      "pairs": 18312,
+      "positive_both_by_block_threshold": {
+        "1e-08": 0,
+        "1e-07": 0,
+        "1e-06": 0
+      },
+      "maxmin_and_location": [
+        0.0,
+        [
+          168,
+          "((:gen, 95),)"
+        ],
+        0.0,
+        0.0
+      ],
+      "primal_sha256": "4321523ab4432f82031048f344ad2d8b55545e4de7e13eedfea24f7d9ceac9d3",
+      "coordinate_sha256": "0a08ecf3d8945a2652377eda992a5f1f53b723197c889cf1eefe048fb25c4994",
+      "summary_sha256": "87a3b3bb94ccc04927157aec06a4a967adfb384ba6719fc32bd5bf1cafb6ae20"
+    },
+    "TECH_FULL37_KW08_RE70_SEQUENTIAL_CONDITIONED_20261120_01\\03_G2_MILP\\G2\\integer": {
+      "pairs": 18312,
+      "positive_both_by_block_threshold": {
+        "1e-08": 0,
+        "1e-07": 0,
+        "1e-06": 0
+      },
+      "maxmin_and_location": [
+        -0.0,
+        [
+          168,
+          "((:gen, 95),)"
+        ],
+        -0.0,
+        -0.0
+      ],
+      "primal_sha256": "3e3a7b4863a29adaf60ba2b446b03529aa12cedef2d9aec924095d6cca80c33f",
+      "coordinate_sha256": "0a08ecf3d8945a2652377eda992a5f1f53b723197c889cf1eefe048fb25c4994",
+      "summary_sha256": "6c39b0526942a10461523ff05b116bf09b07abb6e703f67ee6f0df943fd0dc88"
+    }
+  }
+}

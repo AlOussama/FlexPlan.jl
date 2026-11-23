@@ -1,0 +1,53 @@
+{
+  "reviewer": "/root/qa_r",
+  "original_source": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_FIVE_WEEKS_RE50_20261115_01\\run_common.jl",
+  "source_sha256": "40eb3f9d55289f031ba2f6ed965b9bb4beee5a5b7dda408cd4b8390cab435d9b",
+  "source_lines": [
+    179,
+    189
+  ],
+  "source_excerpt": [
+    "        installed=get!(capital,name) do",
+    "            JuMP.@variable(model,lower_bound=0.,upper_bound=limit-exist,base_name=\"add_MW[$name]\")",
+    "        end",
+    "        JuMP.add_to_expression!(cap,price.cost_inv_per_mw,installed)",
+    "        gen=JuMP.@variable(model,[t=1:168],lower_bound=0.,base_name=\"new_gen_pu[$(current_week[][\"iso_week\"]),$name]\")",
+    "        push!(projects,(;name,bus,carrier,exist,limit,availability,price,installed,gen))",
+    "        for t in 1:168",
+    "            JuMP.@constraint(model,gen[t]<=availability[t]/base*installed)",
+    "            JuMP.add_to_expression!(inc,price.marginal_cost_EUR_per_MWh*base,gen[t])",
+    "            JuMP.add_to_expression!(quota,base,gen[t])",
+    "            push!(get!(kcl_sources,(t,buses[bus]),JuMP.VariableRef[]),gen[t])"
+  ],
+  "replay_sha256": "c99f2ddbcb23eecdc6cb75882a083f15106f2b9ab98b3bea5a10a942ee2419e6",
+  "rows": {
+    "with_gscr": {
+      "originally_labelled": 298963,
+      "recovered_count": 12432,
+      "formula": "i(dispatch[name,t])=i(its own exported capacity[name])+t",
+      "later_full_key_and_index_equality": true,
+      "max_dispatch_delta_MW": 0.0,
+      "source_sha256": {
+        "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE50_GFM_FROZEN_E_20261118_01\\with_gscr\\relaxed_crossover\\variable_coordinates.csv": "53a661620069eabfd5ddc82af78afdc98916d215bd2cc0dba991488bc38808ed",
+        "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE50_GFM_FROZEN_E_20261118_01\\with_gscr\\relaxed_crossover\\full_primal.csv": "2932b243dbaff38436246e60c00a5392c8890d5185521e797d2c0982ffd8e7bf",
+        "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01\\quota_60\\relaxed\\with_gscr\\relaxed_crossover\\variable_coordinates.csv": "d7ba8f8a9e4e3c97d96b4265cb64ae871eed6864186ac49d6205d2fb9281bd14",
+        "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE50_GFM_FROZEN_E_20261118_01\\with_gscr\\relaxed_crossover\\period_1\\dispatch.csv": "b2c96b8e938166a86605461a3ccde9a5120d563d7169b62b10a0177e5f8291c7",
+        "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE50_GFM_FROZEN_E_20261118_01\\with_gscr\\relaxed_crossover\\run_summary.json": "af9a4b7d6adea33e15a93f1126b7f01b2ebe3d7677085d1f9181255140d0966a"
+      }
+    },
+    "without_gscr": {
+      "originally_labelled": 298963,
+      "recovered_count": 12432,
+      "formula": "i(dispatch[name,t])=i(its own exported capacity[name])+t",
+      "later_full_key_and_index_equality": true,
+      "max_dispatch_delta_MW": 0.0,
+      "source_sha256": {
+        "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE50_GFM_FROZEN_E_20261118_01\\without_gscr\\relaxed_crossover\\variable_coordinates.csv": "53a661620069eabfd5ddc82af78afdc98916d215bd2cc0dba991488bc38808ed",
+        "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE50_GFM_FROZEN_E_20261118_01\\without_gscr\\relaxed_crossover\\full_primal.csv": "65872fb327c0f0c0efc2c0b58fb0e934cbb9cd59080bfc091e7ceea1e5491501",
+        "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01\\quota_60\\relaxed\\without_gscr\\relaxed_crossover\\variable_coordinates.csv": "d7ba8f8a9e4e3c97d96b4265cb64ae871eed6864186ac49d6205d2fb9281bd14",
+        "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE50_GFM_FROZEN_E_20261118_01\\without_gscr\\relaxed_crossover\\period_1\\dispatch.csv": "80f96e67a005d5c1b44ccdddd89cac2dc200a5fb645df5b60bfbed9271575ed9",
+        "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE50_GFM_FROZEN_E_20261118_01\\without_gscr\\relaxed_crossover\\run_summary.json": "5780e2c18d64eb1fa9661cd7d8203f14576d2918f7a7d03b2d5ff83a03022ab8"
+      }
+    }
+  }
+}

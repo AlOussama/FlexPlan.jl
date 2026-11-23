@@ -1,0 +1,172 @@
+{
+  "reviewed_model_commit": "dbecc1f2d26db134ac7a817c6ce2b5d0ba05882a",
+  "new_run": {
+    "performed_by": "/root",
+    "command": "julia-1.11.5 --startup-file=no --threads=1 --project=. <SGOV145>/P3_suite.jl paper_a_sgov145.jl paper_a_week_mosek_conditioning.jl paper_a_week_portfolio_start.jl",
+    "driver": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\SGOV145_20261121_01\\P3_suite.jl",
+      "sha256": "39577b26cfca9120679cf31ff4a33d7f31df8be9dfd84125ecbc0841c7d06dff",
+      "bytes": 497
+    },
+    "log": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\PAPER_A_BUNDLE_20261123_GOLD01\\03_GOLD_targeted_native.log",
+      "sha256": "f7f22c3420c509c6b2d1ac059bc6af252bc7c9d8d04d2b0db5b85cf84e0b0923",
+      "bytes": 2034
+    },
+    "exit_code": 0,
+    "assertions": [
+      "SGOV145 matrix and native domain contracts |   51     51  1m28.4s",
+      "Historical ratio proxy, fixed and piecewise |    9      9  2.2s",
+      "MOSEK native signed G3 dyadic readback |    7      7  8.4s",
+      "Accepted LP portfolio hint preserves the integer model |   18     18  1.1s"
+    ],
+    "test_files": [
+      {
+        "path": "D:\\Projekte\\Code\\FlexPlan_UC_GSCR\\test\\paper_a_sgov145.jl",
+        "sha256": "3a3a047de8b8c9d27ef6d50c3ad8326bcab953720fddc4635e4b2fbea5436fed",
+        "bytes": 5404
+      },
+      {
+        "path": "D:\\Projekte\\Code\\FlexPlan_UC_GSCR\\test\\paper_a_week_mosek_conditioning.jl",
+        "sha256": "0838227de8cda46e0da6d33fa3694c48ef19b94f6f9691894dd57d46d6ad811d",
+        "bytes": 1255
+      },
+      {
+        "path": "D:\\Projekte\\Code\\FlexPlan_UC_GSCR\\test\\paper_a_week_portfolio_start.jl",
+        "sha256": "23fbd513d384bad0ef5cc859c0e63c07b050355e2e81bda7d6f257bcab805774",
+        "bytes": 2094
+      }
+    ]
+  },
+  "historical_controls": {
+    "P3_native_preliminary": {
+      "command": "C:\\Users\\User\\.julia\\juliaup\\julia-1.11.5+0.x64.w64.mingw32\\bin\\julia.exe --startup-file=no --project=. --threads=1 test/paper_a_sgov145.jl",
+      "exit_code": 0,
+      "log_sha256": "123a1dee034de9d4833582e993151a4956cb755b0814c38344572ff68ceb5c12",
+      "assertions": 31,
+      "scope": "preliminary; superseded by suite"
+    },
+    "suite": {
+      "command": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\SGOV145_20261121_01\\P3_suite.jl paper_a_sgov145.jl paper_a_added_gfl_mosek.jl paper_a_mosek_zeroone_bounds.jl paper_a_g3_equivalent_conditioning.jl paper_a_g3_conditioned_runner_scope.jl run_paper_a_ap3.jl",
+      "julia_flags": "--startup-file=no --threads=1 --project=.",
+      "code_sha": "0754707e7947ea71e917abe9ae33ddd01684a3a7",
+      "exit_code": 0,
+      "driver_sha256": "39577b26cfca9120679cf31ff4a33d7f31df8be9dfd84125ecbc0841c7d06dff",
+      "log_name": "P3_suite_01.log",
+      "log_sha256": "26a0bb968a1a5992d1e966b09f5a99527472380178559a6d4302b63da24f6d5a",
+      "tests": [
+        "paper_a_sgov145.jl",
+        "paper_a_added_gfl_mosek.jl",
+        "paper_a_mosek_zeroone_bounds.jl",
+        "paper_a_g3_equivalent_conditioning.jl",
+        "paper_a_g3_conditioned_runner_scope.jl",
+        "run_paper_a_ap3.jl"
+      ],
+      "summaries": [
+        "SGOV145 matrix and native domain contracts |   40     40  1m49.2s",
+        "Existing native MOSEK G3 class and cost coordinates |   22     22  27.1s",
+        "Native MOSEK binary bounds with existing G3 cones |   18     18  1.6s",
+        "Invertible G3 conditioning and original result projection |  116    116  29.3s",
+        "Noninteractive actual runner try-scope and fail-closed routing |   30     30  25.1s",
+        "AP3 complete integer conic reference in existing planning model |   23     23  1m54.8s",
+        "AP3 frozen mathematics, conic and domain regressions |   58     58  21.2s",
+        "AP3 integrated AP2 common physical model |   20     20  9.1s"
+      ]
+    },
+    "math_r": {
+      "reviewer": "/root/math_r",
+      "command": "C:/ProgramData/anaconda3/python.exe E:\\ResearchResults\\FlexPlan_UC_GSCR\\SGOV145_20261121_01\\MATH_R_ORACLE.py",
+      "exit_code": 0,
+      "script_sha256": "091ee78bb2eebddd6ee5aecced32a2e0f63c0a5e57db7129d47e47f039b7e077",
+      "log_sha256": "61b29ab2511f814343408ae8464ca02052a2694f6938d3377140aa24ca10e525"
+    },
+    "qa_r": {
+      "reviewer": "/root/qa_r",
+      "command": "C:/ProgramData/anaconda3/python.exe E:\\ResearchResults\\FlexPlan_UC_GSCR\\SGOV145_20261121_01\\QA_R\\qa_oracle.py",
+      "exit_code": 0,
+      "script_sha256": "34a98995b91f8f2a5c7b8f9705f79be7bf2688537917d54e387fba2b67c0a828",
+      "log_sha256": "22baade7619a1ad951ca84b9510895efb72d67482dd7527702ca5176384b5b59"
+    },
+    "qualified_delta": {
+      "driver": "P3_suite.jl",
+      "command": "julia-1.11.5 --startup-file=no --threads=1 --project=. P3_suite.jl paper_a_sgov145.jl paper_a_added_gfl_native_g3.jl paper_a_native_g3_solver.jl run_paper_a_ap3.jl",
+      "exit_code": 0,
+      "code_sha": "784241f08a7c64f46e5151f3437fcc5c5db0da6f",
+      "log_sha256": "084fb45b82bf1d4fb00665624bb1c8cb009d964876d71a55127fee146fd3448c",
+      "tests": [
+        "paper_a_sgov145.jl",
+        "paper_a_added_gfl_native_g3.jl",
+        "paper_a_native_g3_solver.jl",
+        "run_paper_a_ap3.jl"
+      ],
+      "summaries": [
+        "SGOV145 matrix and native domain contracts |   51     51  1m37.4s",
+        "Historical ratio proxy, fixed and piecewise |    9      9  2.3s",
+        "Added GFL exact RSOC profile and original witness |   37     37  17.4s",
+        "Native G3 finite-domain numerical guards |   34     34  29.2s",
+        "AP3 complete integer conic reference in existing planning model |   23     23  1m14.9s",
+        "AP3 frozen mathematics, conic and domain regressions |   58     58  12.7s",
+        "AP3 integrated AP2 common physical model |   20     20  7.1s"
+      ]
+    },
+    "independent": {
+      "MATH_R_CODE_REAUDIT_0754707.json": "7c120b137d366550f02d4aad53bc17f87ce1f176e2667ba329ec1df2746ccc89",
+      "MATH_R_CODE_REAUDIT_784241f.json": "fe26051b2d27b66d15bb25a6a02c1ae6a2915a87c765671aeb0db484c0cf9fe5",
+      "MATH_R_DIAGNOSTIC_UNITS_784241f.log": "d2638801bc198c8ab4ae28f6094f5890ac51de6f3a6e71a10decb879607e5872",
+      "MATH_R_SCHUR_EXHAUSTIVE_784241f_REPLAY.log": "46d5e6ed740c79ddb78a698379af7713b9fe3d6d3d523ff5f5debb997dc56e3c",
+      "MATH_R_DYADIC_MOSEK.log": "83e50786b33102146b43ced29e36da13b643bdcaf02e4cd81ae9b0f567ffd210",
+      "QA_R\\QA_CODE_REAUDIT_0754707.json": "1dd94dbf6dfc107ce16874475539d20fef93db0af245b2de7a7eddc1af63827a",
+      "QA_R\\QA_CODE_REAUDIT_784241f.json": "af6dfbbba532a0d184e067d027a061c9760ca478185af2e38626ea817d087a52",
+      "MATH_R_HISTORICAL_G2_IMPACT.json": "2ee87ed70a8a9c0bd53c12c9f67944f586ef46e21b2e5d435f0ef666b18f7fe7"
+    },
+    "G3_corrected_conditioning": {
+      "command": "julia.exe --startup-file=no --threads=1 --project=. P3_suite.jl paper_a_week_mosek_conditioning.jl paper_a_g3_conditioned_runner_scope.jl",
+      "code_sha": "fdf7d564bc28370e66ff7e55250db604a2ed5721",
+      "exit_code": 0,
+      "summaries": [
+        "MOSEK native signed G3 dyadic readback |    7      7  19.9s",
+        "Noninteractive actual runner try-scope and fail-closed routing |   30     30  10.4s"
+      ],
+      "driver_sha256": "39577b26cfca9120679cf31ff4a33d7f31df8be9dfd84125ecbc0841c7d06dff",
+      "log_sha256": "ef65f68bb4702e366d45bbaeb5bbf879cdcdc36cdc5efd5a579c87a90693b576",
+      "review": {
+        "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\SGOV145_20261121_01\\QA_R\\QA_CODE_REAUDIT_fdf7d56.json",
+        "sha256": "08450764370c5bf98fd951f85c733fd6c55eba5d27db1711bf3f7ba7b3fdc8bd"
+      }
+    },
+    "corrected_M2_portfolio_start": {
+      "commit": "dbecc1f2d26db134ac7a817c6ce2b5d0ba05882a",
+      "command": "julia.exe --startup-file=no --threads=1 --project=. P3_suite.jl paper_a_week_portfolio_start.jl paper_a_g3_conditioned_runner_scope.jl",
+      "exit_code": 0,
+      "tests_passed": [
+        18,
+        30
+      ],
+      "log": {
+        "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\SGOV145_20261121_01\\P3_M2_HINT\\qualified_delta_final.log",
+        "sha256": "5f3a9369a78aac4f344db4c85dc5709cd6d6bc25738c156a09daf3a56ac1843a"
+      },
+      "prior_failed_harness": {
+        "log": {
+          "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\SGOV145_20261121_01\\P3_M2_HINT\\qualified_delta.log",
+          "sha256": "f41266e92d8d277ef5fe38004e371c9c61be2cd4e13071467254ca2b709081c4"
+        },
+        "exit_code": 1,
+        "cause": "Historical source-fragment fixture assumed only LF while the accepted candidate used CRLF. Test now normalizes line endings. The first 18 native portfolio assertions also passed in the failed combined invocation."
+      },
+      "independent_math": {
+        "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\SGOV145_20261121_01\\MATH_R_M2_HINT_SOURCE.json",
+        "sha256": "8e195f79d820b99c06fd463d3b5bf30618572ff79149f0a1258c6c34310a5685"
+      },
+      "independent_expected_columns": {
+        "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\SGOV145_20261121_01\\QA_R\\M2_LP_PORTFOLIO_START_EXPECTED.json",
+        "sha256": "eb9507d611e360fcffcb2dcfebec3003c943ff0e9725714328b50eb03b149e30"
+      },
+      "accepted_lp_hint": {
+        "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\SGOV145_20261121_01\\QA_R\\M2_LP_CAPACITY_HINT_SOURCE.json",
+        "sha256": "86596354f6e7bb2fa768fcf1fdf3b65dc0232443f0e1e79d0f0caa1e125eb62d"
+      }
+    }
+  },
+  "review_scope": "Compact 21/21 and 20/20 historical GOLD oracles overlap; those historical author runs are not counted as new controls. Independent rational checks, exhaustive Schur and offline weekly readbacks are distinct."
+}

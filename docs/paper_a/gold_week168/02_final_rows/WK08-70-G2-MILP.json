@@ -1,0 +1,378 @@
+{
+  "reviewer": "/root/qa_r",
+  "method": "G2",
+  "quota_pct": 70,
+  "mode": "integer",
+  "case_sha256": "c154322ea868313405ac7be70c541ad87839bbb070ac2fa556f18c1d2547e2d5",
+  "source_hashes": {
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_20261118_01\\CASES\\G2\\case.json": "c154322ea868313405ac7be70c541ad87839bbb070ac2fa556f18c1d2547e2d5",
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_SEQUENTIAL_CONDITIONED_20261120_01\\03_G2_MILP\\G2\\integer\\full_primal.csv": "3e3a7b4863a29adaf60ba2b446b03529aa12cedef2d9aec924095d6cca80c33f",
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_SEQUENTIAL_CONDITIONED_20261120_01\\03_G2_MILP\\G2\\integer\\variable_coordinates.csv": "0a08ecf3d8945a2652377eda992a5f1f53b723197c889cf1eefe048fb25c4994",
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DEV01_20261109_01\\public-cost\\paper_a_2040_cost_bridge_candidate.csv": "ec344ecd4c191595b054f5d66474b82f8079069ee6fa2ef0c7e1223de436d8e5",
+    "D:\\Projekte\\Code\\pypsatomatpowerx\\data\\elec_s_37_csv\\generators.csv": "20441d5bd67103b90838e728affa0da332e5112dcce532c8119eb5e50116abb8",
+    "D:\\Projekte\\Code\\pypsatomatpowerx\\data\\elec_s_37_csv\\generators-p_max_pu.csv": "45336cff93e75ffc9a1a5aae2bc3e8ad8f7054b2f8bcb267d25607c73cc45f46",
+    "D:\\Projekte\\Code\\pypsatomatpowerx\\data\\elec_s_37_csv\\snapshots.csv": "1dbf7e7d9522f6e43223b21a9e3a4a9a1c9314ef4866897a632c26512d95ddd4",
+    "D:\\Projekte\\Code\\pypsatomatpowerx\\data\\elec_s_37_csv\\loads-p_set.csv": "dbf71d0d672e7eb26af8403f2a6ea098e3c6bdc797fd4c17095e62afaddd4275"
+  },
+  "original_point_dimensions": 311395,
+  "discrete_domains": 111401,
+  "counts": {
+    "original_bound": 1,
+    "integer_residual_blocks": 1,
+    "new_project_bounds_MW": 74,
+    "ref_angle_rad": 1176,
+    "new_dispatch_envelope_MW": 12432,
+    "DCP_Ohm_MW": 8736,
+    "DCP_angle_rad": 8736,
+    "branch_thermal_MW": 8736,
+    "DC_loss_MW": 7224,
+    "DC_rating_MW": 7224,
+    "install_online_blocks": 59304,
+    "source_stamp_pu": 36288,
+    "gen_power_MW": 43512,
+    "UC_transition_blocks": 18312,
+    "UC_start_stop_bounds_blocks": 18312,
+    "UC_window_start_blocks": 18312,
+    "UC_window_stop_blocks": 18312,
+    "credit_online_blocks": 11760,
+    "selective_SYN_dispatch_MW": 8400,
+    "storage_internal_power_MW": 20328,
+    "spill_MW": 20328,
+    "SOC_recurrence_MWh": 20328,
+    "SOC_rating_MWh": 20328,
+    "PHS_mode_blocks": 3360,
+    "PHS_minimum_turbine_MW": 3360,
+    "storage_power_MW": 15792,
+    "native_hydro_power_MW": 4536,
+    "nodal_balance_MW": 6216,
+    "original_KCL_MW": 6216,
+    "exposure_nonnegative_pu": 168,
+    "G2_row_pu": 168,
+    "inverse_negative_diagnostic": 168,
+    "joint_expansion_MW": 74,
+    "weekly_quota_MWh": 1
+  },
+  "maxima": {
+    "original_bound": {
+      "abs": 1.0125802418770036e-09,
+      "t": 0,
+      "id": "",
+      "dimensioned_threshold": 1e-06,
+      "normalized_to_threshold": 0.0010125802418770036
+    },
+    "integer_residual_blocks": {
+      "abs": 0.0,
+      "t": 0,
+      "id": "",
+      "dimensioned_threshold": 1e-06,
+      "normalized_to_threshold": 0.0
+    },
+    "new_project_bounds_MW": {
+      "abs": 0.0,
+      "t": 0,
+      "id": "AL1 0 onwind",
+      "dimensioned_threshold": 9.999999999999999e-05,
+      "normalized_to_threshold": 0.0
+    },
+    "ref_angle_rad": {
+      "abs": 0.0,
+      "t": 1,
+      "id": "1",
+      "dimensioned_threshold": 1e-06,
+      "normalized_to_threshold": 0.0
+    },
+    "new_dispatch_envelope_MW": {
+      "abs": 2.62188223132398e-07,
+      "t": 153,
+      "id": "RO1 0 solar",
+      "dimensioned_threshold": 9.999999999999999e-05,
+      "normalized_to_threshold": 0.0026218822313239802
+    },
+    "DCP_Ohm_MW": {
+      "abs": 3.174949370077229e-08,
+      "t": 152,
+      "id": "34",
+      "dimensioned_threshold": 9.999999999999999e-05,
+      "normalized_to_threshold": 0.00031749493700772296
+    },
+    "DCP_angle_rad": {
+      "abs": 8.060219158778636e-13,
+      "t": 168,
+      "id": "28",
+      "dimensioned_threshold": 1e-06,
+      "normalized_to_threshold": 8.060219158778636e-07
+    },
+    "branch_thermal_MW": {
+      "abs": 3.4368895285297185e-08,
+      "t": 95,
+      "id": "45",
+      "dimensioned_threshold": 9.999999999999999e-05,
+      "normalized_to_threshold": 0.0003436889528529719
+    },
+    "DC_loss_MW": {
+      "abs": 4.547473508864641e-13,
+      "t": 76,
+      "id": "25",
+      "dimensioned_threshold": 9.999999999999999e-05,
+      "normalized_to_threshold": 4.547473508864641e-09
+    },
+    "DC_rating_MW": {
+      "abs": 4.547473508864641e-13,
+      "t": 76,
+      "id": "25",
+      "dimensioned_threshold": 9.999999999999999e-05,
+      "normalized_to_threshold": 4.547473508864641e-09
+    },
+    "install_online_blocks": {
+      "abs": 0.0,
+      "t": 1,
+      "id": "('gen', '1')",
+      "dimensioned_threshold": 1e-06,
+      "normalized_to_threshold": 0.0
+    },
+    "source_stamp_pu": {
+      "abs": 0.0,
+      "t": 1,
+      "id": "('gen', '1')",
+      "dimensioned_threshold": 1e-06,
+      "normalized_to_threshold": 0.0
+    },
+    "gen_power_MW": {
+      "abs": 9.378487675348879e-08,
+      "t": 163,
+      "id": "('gen', '258')",
+      "dimensioned_threshold": 9.999999999999999e-05,
+      "normalized_to_threshold": 0.000937848767534888
+    },
+    "UC_transition_blocks": {
+      "abs": 0.0,
+      "t": 1,
+      "id": "('gen', '1')",
+      "dimensioned_threshold": 1e-06,
+      "normalized_to_threshold": 0.0
+    },
+    "UC_start_stop_bounds_blocks": {
+      "abs": 0.0,
+      "t": 1,
+      "id": "('gen', '1')",
+      "dimensioned_threshold": 1e-06,
+      "normalized_to_threshold": 0.0
+    },
+    "UC_window_start_blocks": {
+      "abs": 0.0,
+      "t": 1,
+      "id": "('gen', '1')",
+      "dimensioned_threshold": 1e-06,
+      "normalized_to_threshold": 0.0
+    },
+    "UC_window_stop_blocks": {
+      "abs": 0.0,
+      "t": 1,
+      "id": "('gen', '1')",
+      "dimensioned_threshold": 1e-06,
+      "normalized_to_threshold": 0.0
+    },
+    "credit_online_blocks": {
+      "abs": 0.0,
+      "t": 1,
+      "id": "('gen', '168')",
+      "dimensioned_threshold": 1e-06,
+      "normalized_to_threshold": 0.0
+    },
+    "selective_SYN_dispatch_MW": {
+      "abs": 9.378481991006993e-08,
+      "t": 163,
+      "id": "('gen', '258')",
+      "dimensioned_threshold": 9.999999999999999e-05,
+      "normalized_to_threshold": 0.0009378481991006994
+    },
+    "storage_internal_power_MW": {
+      "abs": 1.7751744962879457e-07,
+      "t": 152,
+      "id": "('storage', '111')",
+      "dimensioned_threshold": 9.999999999999999e-05,
+      "normalized_to_threshold": 0.0017751744962879459
+    },
+    "spill_MW": {
+      "abs": 2.842170943040401e-14,
+      "t": 20,
+      "id": "('storage', '15')",
+      "dimensioned_threshold": 9.999999999999999e-05,
+      "normalized_to_threshold": 2.842170943040401e-10
+    },
+    "SOC_recurrence_MWh": {
+      "abs": 5.022233970919388e-07,
+      "t": 25,
+      "id": "('storage', '95')",
+      "dimensioned_threshold": 9.999999999999999e-05,
+      "normalized_to_threshold": 0.005022233970919388
+    },
+    "SOC_rating_MWh": {
+      "abs": 1.8189894035458565e-12,
+      "t": 15,
+      "id": "('storage', '21')",
+      "dimensioned_threshold": 9.999999999999999e-05,
+      "normalized_to_threshold": 1.8189894035458565e-08
+    },
+    "PHS_mode_blocks": {
+      "abs": 0.0,
+      "t": 1,
+      "id": "('storage', '32')",
+      "dimensioned_threshold": 1e-06,
+      "normalized_to_threshold": 0.0
+    },
+    "PHS_minimum_turbine_MW": {
+      "abs": 2.0755010154971387e-08,
+      "t": 14,
+      "id": "('storage', '25')",
+      "dimensioned_threshold": 9.999999999999999e-05,
+      "normalized_to_threshold": 0.0002075501015497139
+    },
+    "storage_power_MW": {
+      "abs": 4.951743903802708e-09,
+      "t": 152,
+      "id": "('storage', '16')",
+      "dimensioned_threshold": 9.999999999999999e-05,
+      "normalized_to_threshold": 4.9517439038027085e-05
+    },
+    "native_hydro_power_MW": {
+      "abs": 9.792347555048764e-08,
+      "t": 110,
+      "id": "('storage', '45')",
+      "dimensioned_threshold": 9.999999999999999e-05,
+      "normalized_to_threshold": 0.0009792347555048764
+    },
+    "nodal_balance_MW": {
+      "abs": 5.125373547798517e-07,
+      "t": 25,
+      "id": "11",
+      "dimensioned_threshold": 9.999999999999999e-05,
+      "normalized_to_threshold": 0.005125373547798518
+    },
+    "original_KCL_MW": {
+      "abs": 5.125373547798517e-07,
+      "t": 25,
+      "id": "11",
+      "dimensioned_threshold": 9.999999999999999e-05,
+      "normalized_to_threshold": 0.005125373547798518
+    },
+    "exposure_nonnegative_pu": {
+      "abs": 0.0,
+      "t": 1,
+      "id": "",
+      "dimensioned_threshold": 1e-06,
+      "normalized_to_threshold": 0.0
+    },
+    "G2_row_pu": {
+      "abs": 0.0,
+      "t": 1,
+      "id": "",
+      "dimensioned_threshold": 1e-06,
+      "normalized_to_threshold": 0.0
+    },
+    "inverse_negative_diagnostic": {
+      "abs": 0.0,
+      "t": 1,
+      "id": "",
+      "dimensioned_threshold": 1e-06,
+      "normalized_to_threshold": 0.0
+    },
+    "joint_expansion_MW": {
+      "abs": 0.0,
+      "t": 1,
+      "id": "('AL1 0', 'gas')",
+      "dimensioned_threshold": 9.999999999999999e-05,
+      "normalized_to_threshold": 0.0
+    },
+    "weekly_quota_MWh": {
+      "abs": 9.685754776000977e-08,
+      "t": 0,
+      "id": "",
+      "dimensioned_threshold": 9.999999999999999e-05,
+      "normalized_to_threshold": 0.0009685754776000978
+    }
+  },
+  "failed": [],
+  "physical_point_accepted": true,
+  "cost_replay": {
+    "CAPEX": 111340588724.01581,
+    "RE": 49741206.27171395,
+    "OPEX_gen": 280424839.36329055,
+    "load": 71058866.10244864,
+    "OPEX_event": 28515084.287620842,
+    "OPEX_storage": 0.0,
+    "raw_week_OPEX": 308939923.6509114,
+    "annualized_week_OPEX": 16109010304.654667,
+    "annualized_total": 127449599028.67047,
+    "renewable_share_pct": 69.99999999999986
+  },
+  "code": "a6eadd1bf3d534765cbd26c6599d975489d955ed",
+  "coordinate_recovery_count": 0,
+  "coordinate_recovery_max_MW": 0.0,
+  "portfolio_MW": {
+    "wind_added_MW": 589728.7389109852,
+    "PV_added_MW": 718399.0084286081,
+    "wind_baseline_MW": 205789.5696666552,
+    "PV_baseline_MW": 152969.72121180454,
+    "GFL_BESS_baseline_MW": 0.0,
+    "GFL_BESS_added_MW": 57225.0,
+    "GFM_BESS_baseline_MW": 0.0,
+    "GFM_BESS_added_MW": 102450.0,
+    "wind_total_MW": 795518.3085776404,
+    "PV_total_MW": 871368.7296404126,
+    "GFL_BESS_total_MW": 57225.0,
+    "GFM_BESS_total_MW": 102450.0
+  },
+  "margins": {
+    "G1": {
+      "min": -69.34988859720201,
+      "defined_hours": 168,
+      "failed_hours": 116
+    },
+    "G2": {
+      "min": 7.635877746636766e-05,
+      "defined_hours": 168,
+      "failed_hours": 0
+    },
+    "G0": {
+      "min": 0.003245970988582476,
+      "defined_hours": 168,
+      "failed_hours": 0
+    },
+    "B_min": {
+      "min": 6.421989668845212,
+      "defined_hours": 168,
+      "failed_hours": 0
+    },
+    "M0": {
+      "min": -0.025910511753826526,
+      "defined_hours": 168,
+      "failed_hours": 10
+    }
+  },
+  "source_credit_weekly_pu_hours": {
+    "SYN": 776334.9020056255,
+    "GFM": 1147325.2674732527
+  },
+  "exposure_weekly_pu_hours": {
+    "native_online": 485463.6261014635,
+    "new_availability": 393787.0764232796
+  },
+  "overlap_events": [],
+  "potential_event_pairs": 18312,
+  "simultaneous_positive_SU_SD": 0,
+  "units": "original native coordinates; M0=1-max(B^-1p), G0=min eig(M), G1=min(M1), G2=min(Mr); diagnostics 1e-6; 100 MVA MW/MWh residual conversions",
+  "original_B0_network": {
+    "nodes": 37,
+    "edges": 52,
+    "islands": 7,
+    "eliminated": 0,
+    "fixed_shunts": 0,
+    "active_GFM_source_counting": "each device credit enters one diagonal term once; no GFM in passive network"
+  },
+  "oracle_sha256": "09af8780bb52c06435066869df87dae55e31c975914c35adcfc10951a066a106",
+  "row_id": "WK08-70-G2-MILP",
+  "folder": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_SEQUENTIAL_CONDITIONED_20261120_01\\03_G2_MILP\\G2\\integer",
+  "summary_sha256": "6c39b0526942a10461523ff05b116bf09b07abb6e703f67ee6f0df943fd0dc88",
+  "solver_log_sha256": "6627d1b7e9c4aace12878dbc69ad93582a0adcf09d4c7df3792aa4c2890fc05b"
+}

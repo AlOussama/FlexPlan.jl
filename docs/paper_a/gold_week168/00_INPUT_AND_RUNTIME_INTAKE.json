@@ -1,0 +1,1593 @@
+{
+  "reviewer": "/root ORCH",
+  "designation": "GOLD Variant A",
+  "storage": {
+    "root": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\PAPER_A_BUNDLE_20261123_GOLD01",
+    "checked_write": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\PAPER_A_BUNDLE_20261123_GOLD01\\ORCH_STORAGE_PROBE.txt",
+      "sha256": "15e3f7504e6c4e435386d8ac0b14b4daeffd75c5261b341b7e93e37ab64542f2",
+      "bytes": 31
+    },
+    "free_bytes": 52244721664
+  },
+  "repos": {
+    "consumer": {
+      "local_path": "D:\\Projekte\\Code\\FlexPlan_UC_GSCR",
+      "head": "dbecc1f2d26db134ac7a817c6ce2b5d0ba05882a",
+      "branch": "codex/paper-a-q5-digest-139",
+      "status": [
+        "## codex/paper-a-q5-digest-139...origin/codex/paper-a-q5-digest-139",
+        "?? _Projekte_Code_FlexPlan_UC_GSCR.log",
+        "?? scripts/archive/",
+        "?? scripts/paper_a/__pycache__/",
+        "?? scripts/paper_a/replay_gold_manifest.py"
+      ],
+      "worktrees": [
+        "D:/Projekte/Code/FlexPlan_UC_GSCR  dbecc1f [codex/paper-a-q5-digest-139]"
+      ],
+      "upstream": "origin/codex/paper-a-q5-digest-139",
+      "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "recent": [
+        "dbecc1f Bind M2 integer portfolio hints to the independently accepted LP point",
+        "fdf7d56 Verify original-to-native G3 MOSEK strength row transformation",
+        "784241f Resolve singular Schur and burden scale checks and bind ordered week proxies",
+        "0754707 Bind reviewed KW8 strength formulations, physical chronology and native admission"
+      ],
+      "remotes": [
+        "origin\thttps://github.com/AlOussama/FlexPlan.jl.git (fetch)",
+        "origin\thttps://github.com/AlOussama/FlexPlan.jl.git (push)",
+        "upstream\thttps://github.com/Electa-Git/FlexPlan.jl.git (fetch)",
+        "upstream\thttps://github.com/Electa-Git/FlexPlan.jl.git (push)"
+      ]
+    },
+    "producer": {
+      "local_path": "D:\\Projekte\\Code\\pypsatomatpowerx",
+      "head": "becec6d63c0fbf2b8a160c41f87631f5270046b9",
+      "branch": "codex/paper-a-q5-memory-139",
+      "status": [
+        "## codex/paper-a-q5-memory-139",
+        " M src/block_gscr_converter.jl",
+        "?? docs/data_ssot/",
+        "?? scripts/archive/"
+      ],
+      "worktrees": [
+        "D:/Projekte/Code/pypsatomatpowerx  becec6d [codex/paper-a-q5-memory-139]"
+      ],
+      "upstream": "",
+      "diff_sha256": "56e116eb31589a19fe981dac46cc7f707bc603caedb57a1f5ff6183d740fefa8",
+      "recent": [
+        "becec6d Share equal Full37 export rows without changing the AP1 schema",
+        "1552bc7 Model Full37 reservoirs without blocks and set oil minimum",
+        "e02a143 Apply Full37 generator bound precedence",
+        "89db6f5 Bind Full37 AP1 exports to the frozen owner case"
+      ],
+      "remotes": [
+        "origin\thttps://github.com/AlOussama/PyPSA2MatpowerX.git (fetch)",
+        "origin\thttps://github.com/AlOussama/PyPSA2MatpowerX.git (push)"
+      ]
+    },
+    "science": {
+      "local_path": "D:\\Projekte\\research-map",
+      "head": "2564c49bdc32c7508d2acfc9fe543d4887561484",
+      "branch": "main",
+      "status": [
+        "## main...origin/main [behind 62]"
+      ],
+      "worktrees": [
+        "D:/Projekte/research-map  2564c49b [main]"
+      ],
+      "upstream": "origin/main",
+      "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "recent": [
+        "2564c49b chore(c2a): normalize post-freeze documentation metadata",
+        "a22def86 docs(c2a): record scientific formulation freeze",
+        "c10d29dc docs(c2a): add narrow Track B freeze confirmation",
+        "2c2fce76 docs(c2a): correct CG-02 channel classification"
+      ],
+      "remotes": [
+        "origin\thttps://github.com/AlOussama/research-map.git (fetch)",
+        "origin\thttps://github.com/AlOussama/research-map.git (push)"
+      ]
+    }
+  },
+  "paper_source": "672a61c95525bf1d7a03cf745a754a15a23ce78b",
+  "governance": [
+    {
+      "ref": "34f88b8b02e1bd5428e4c1fff7cd9bd956964e2d",
+      "path": "gold-review-consolidated-01/01_summary/EXECUTIVE_SCIENTIFIC_VERDICT.md",
+      "blob": "4a4b45b2cba2b81eb5d73dc7560506a8f4de88dd",
+      "sha256": "ee1f90c608d95739e6973a09361b5ce456077a45adbfc78d1b845c7a56142732",
+      "bytes": 5219
+    },
+    {
+      "ref": "34f88b8b02e1bd5428e4c1fff7cd9bd956964e2d",
+      "path": "gold-review-consolidated-01/01_summary/GOLD_STANDARD_CONSOLIDATED_PROJECT_REVIEW_AND_PAPER_FINALIZATION_REPORT.md",
+      "blob": "1226938eed61383311ff8c8b9c0b325e6c14e09e",
+      "sha256": "021870acf9a7c74e6f7c925abdbb1183d51eb52fe62e1c928eb09245f271c664",
+      "bytes": 20064
+    },
+    {
+      "ref": "34f88b8b02e1bd5428e4c1fff7cd9bd956964e2d",
+      "path": "gold-review-consolidated-01/02_science/MATHEMATICAL_STATUS_AND_CORRECTION_CONTRACT.md",
+      "blob": "18b148c78f8b6f154acdf910d7b3c8990ae8cc50",
+      "sha256": "d8df4ce6714f54463dc78bb6841d2e0abcf94faadd43b0fb520b75b56bc4b1c7",
+      "bytes": 6636
+    },
+    {
+      "ref": "34f88b8b02e1bd5428e4c1fff7cd9bd956964e2d",
+      "path": "gold-review-consolidated-01/03_state_and_code/IMPLEMENTATION_TEST_AND_SCOPE_DIFF.md",
+      "blob": "dbe78ca6cb43e48be85995dfaef0506f525bb10a",
+      "sha256": "cea1864d8462a1782e7332c5cdad53ef9be621b1528fff9f8969c471ac107c46",
+      "bytes": 4571
+    },
+    {
+      "ref": "34f88b8b02e1bd5428e4c1fff7cd9bd956964e2d",
+      "path": "gold-review-consolidated-01/03_state_and_code/UNIFIED_EQUATION_TO_CODE_AND_QA.csv",
+      "blob": "13e653bf967689e04c438ca759135025552ef960",
+      "sha256": "4593d9b15bd1a16c419d9b3e9fe133dd643c098ce4390849e10c2610d1ac1152",
+      "bytes": 13352
+    },
+    {
+      "ref": "34f88b8b02e1bd5428e4c1fff7cd9bd956964e2d",
+      "path": "gold-review-consolidated-01/04_results/RESULTS_AND_ECONOMIC_BOUNDS_INTERPRETATION.md",
+      "blob": "b2f15375741bf8fe97acfb3f14b6558009028634",
+      "sha256": "0e692042e95e4356171ca9987c0b8d1386c59b1242e12f3345e4b25371519497",
+      "bytes": 5460
+    },
+    {
+      "ref": "34f88b8b02e1bd5428e4c1fff7cd9bd956964e2d",
+      "path": "gold-review-consolidated-01/04_results/UNIFIED_NUMERICAL_RESULTS_AND_CERTIFICATES.csv",
+      "blob": "a32f424d4945b0dbabd893eb3f9d677929c62532",
+      "sha256": "cdcebae9e0256319dea43a66ff0885e8a1a56f235d3dcf67cd172ebbf8b43b15",
+      "bytes": 13335
+    },
+    {
+      "ref": "34f88b8b02e1bd5428e4c1fff7cd9bd956964e2d",
+      "path": "gold-review-consolidated-01/05_paper/PAPER_A_ONE_BUNDLE_FINALIZATION_PLAN.md",
+      "blob": "8db690f75033885d60c997e4e59a14734d1d5bae",
+      "sha256": "19306aac7346e5ca4e5869b6b9db20ba960e74c1ccf3e2526eb07772c45cb21a",
+      "bytes": 4089
+    },
+    {
+      "ref": "34f88b8b02e1bd5428e4c1fff7cd9bd956964e2d",
+      "path": "gold-review-consolidated-01/05_paper/UNIFIED_CLAIM_TO_EVIDENCE.csv",
+      "blob": "851bde3c7f6cd6695c265707d1f8fbc55745260c",
+      "sha256": "457268b68a5930f66579198ad3abab1d86401da83e2c1bb146f5798d0f66ba82",
+      "bytes": 3189
+    },
+    {
+      "ref": "34f88b8b02e1bd5428e4c1fff7cd9bd956964e2d",
+      "path": "gold-review-consolidated-01/06_findings/CANONICAL_OPEN_FINDINGS_AND_DECISIONS.md",
+      "blob": "f129095d28b8a360385df0e34df0b1f086639e13",
+      "sha256": "9a70b99b6400b0d41756edb376e2317447a8c465cff4eb29dff12fa564a21940",
+      "bytes": 4805
+    },
+    {
+      "ref": "34f88b8b02e1bd5428e4c1fff7cd9bd956964e2d",
+      "path": "gold-review-consolidated-01/07_reproduce/PROVENANCE_AND_FINAL_QA_CONTRACT.md",
+      "blob": "defcd96bf69ffbf4938e74563d02696a701fa043",
+      "sha256": "d385cbcf83fd8832157405458c335fa2988770f8e7b463528c125fe31e2faa39",
+      "bytes": 3511
+    },
+    {
+      "ref": "34f88b8b02e1bd5428e4c1fff7cd9bd956964e2d",
+      "path": "gold-review-consolidated-01/07_reproduce/SOURCE_AND_DELTA_REGISTER.json",
+      "blob": "964567772188b2ea89081909c369286da7c9ffc7",
+      "sha256": "9a370bda41fd843deba9c5b5256ea4ecf9383fcc56ae5fa84c4dddcaae17f0ce",
+      "bytes": 4031
+    },
+    {
+      "ref": "34f88b8b02e1bd5428e4c1fff7cd9bd956964e2d",
+      "path": "gold-review-consolidated-01/README.md",
+      "blob": "de47a06d2519068ec7760be25bfd04d559e9b3fa",
+      "sha256": "8148a098a5b3eb0460e67328ef1c75726e41a49890e7efb6ccea081ffc05224d",
+      "bytes": 3586
+    },
+    {
+      "ref": "72bbcab3455fc04a8acad514607c97ebcb2a1030",
+      "path": "handoffs/SGOV_PAPER_A_ACTIVE_GATE_REGISTER.csv",
+      "blob": "1705798c3c8f892c65dace5f7d7c573e8bfc0f91",
+      "sha256": "8ad5a527b377ac531679d8be6c6f119b99d678b8531150e4eab8558db9f95b95",
+      "bytes": 13514
+    },
+    {
+      "ref": "72bbcab3455fc04a8acad514607c97ebcb2a1030",
+      "path": "handoffs/SGOV_PAPER_A_GOLD_ADOPTION_AND_ORCH_DISPATCH_RECEIPT.md",
+      "blob": "073080f2ee5bd96777e8d28b952ee4991d26039e",
+      "sha256": "0b599a778d6a1ee0350a39da5d4b2e103027960effc8b126a8f4091e868b243b",
+      "bytes": 20462
+    },
+    {
+      "ref": "34f88b8b02e1bd5428e4c1fff7cd9bd956964e2d",
+      "path": "handoffs/PAPER_A_SINGLE_BUNDLED_CLOSEOUT_20261123.md",
+      "blob": "1c0c5f3a5b4bbebff5761a1616166c97a5d1a23a",
+      "sha256": "74532901f7c75957e5f6e8fd47099a3852fa1aedf748e0a50125872e073092eb",
+      "bytes": 22473
+    },
+    {
+      "ref": "b8d254257998fed3d50ed6e3433a4b80d7c12602",
+      "path": "gold-review-01/README.md",
+      "blob": "b63799e83980e48980eeb323b31befbf99bceb23",
+      "sha256": "ab199265ac295fae43502898a0086ade1cb6bb01060772abc8b92091162e02ee",
+      "bytes": 5312
+    },
+    {
+      "ref": "b8d254257998fed3d50ed6e3433a4b80d7c12602",
+      "path": "handoffs/GOLD_REVIEW_01_RETURN.md",
+      "blob": "3e73ace5e4a09144d62292bf42b637a4269acb2b",
+      "sha256": "3f68b3bbeefa7a04db69003fa4d03e960fe620494ffe12f0f6a1c9655897218c",
+      "bytes": 7775
+    },
+    {
+      "ref": "4334b03b59d4f3392e806ee838847578bad4830e",
+      "path": "gold-review-01-gpt6/README.md",
+      "blob": "752f509e2e9c30486c4ed692c2eab54aab15da48",
+      "sha256": "8c313ea45e597f24777e71334ca05df7beb8c77a5168d458c9972ea04dd4e7db",
+      "bytes": 2424
+    },
+    {
+      "ref": "4334b03b59d4f3392e806ee838847578bad4830e",
+      "path": "handoffs/GOLD_REVIEW_01_RETURN_GPT6.md",
+      "blob": "e066ca0a5954eb8e936ca80382f2809b9c237a8e",
+      "sha256": "f85d5da6d7d183d68fcd44a6860b076c08f42abe3de7dce448aac6c0bff0b8f9",
+      "bytes": 4217
+    },
+    {
+      "ref": "d6740f017a1f50be9737c9aff342751bd6fb8eac",
+      "path": "handoffs/SGOV145.md",
+      "blob": "7b273a8d45f028d06553fb9dfcc9210e68ccaf4d",
+      "sha256": "f9952ff01eab733dbce6cdda7b45c97da6df006062e09aa99675aa4ac10a3193",
+      "bytes": 26270
+    },
+    {
+      "ref": "d6740f017a1f50be9737c9aff342751bd6fb8eac",
+      "path": "handoffs/SGOV145_math_erratum.md",
+      "blob": "da414b80fa7d52a0025cf18c416d6decb210057a",
+      "sha256": "7b8173020edd70615c1472eaff4a83cefbbfb2ad80d207f624ca942118d800e6",
+      "bytes": 3956
+    },
+    {
+      "ref": "57f9ea9230e22c4d7397af791737d7b0deef5c59",
+      "path": "docs/reports/C2_constraints/C2A_voltage_stability/paper_a/science_release/2026-10-24__a3-5-ratified-original-byte-archive.md",
+      "blob": "fba4802ecabade61a752833a71106a5bda4ce78f",
+      "sha256": "e716e4ab067c1fd40567a8b020b5537bf9b3cac24afa0952222457e99361375e",
+      "bytes": 7988
+    },
+    {
+      "path": "docs/reports/C2_constraints/C2A_voltage_stability/paper_a/governance/dispatch/2026-11-07__post_t01_targeted_next_macros/126_SGOV_NOV14_PROJECT_MATHEMATICAL_SCIENCE_CODE_COVERAGE_AND_REMAINING_FORMULATIONS_REVIEW.md",
+      "ref": "d6740f017a1f50be9737c9aff342751bd6fb8eac",
+      "blob": "f19ce7e258c5241543c396140e490cf24219f98b",
+      "sha256": "e9a50ddbfd0ca4853c526be6253106e0c91185d15964defed4c0adc9de5f82af",
+      "bytes": 23239
+    },
+    {
+      "path": "docs/reports/C2_constraints/C2A_voltage_stability/paper_a/governance/dispatch/2026-11-07__post_t01_targeted_next_macros/135_SGOV_SCI_SCA_EXT_132_AND_AC_PQ_133_INDEPENDENT_RETURN_CONSOLIDATION_20261114.md",
+      "ref": "d6740f017a1f50be9737c9aff342751bd6fb8eac",
+      "blob": "c8aa6dd6490a4e519c4364df4d2e1dddb265e6ea",
+      "sha256": "069fb699040971861f3dc8bedefd9f387dd470d453331a6598f2e01d163327ae",
+      "bytes": 18594
+    },
+    {
+      "path": "docs/reports/C2_constraints/C2A_voltage_stability/paper_a/governance/dispatch/2026-11-07__post_t01_targeted_next_macros/141_SGOV_KW08_G2_MILP_ACCEPTANCE_AND_BOUNDED_MOSEK_G3_DECISION_20261121.md",
+      "ref": "d6740f017a1f50be9737c9aff342751bd6fb8eac",
+      "blob": "32cb91f3e7101fd7ae6c743ad7dbb843e27c6b1a",
+      "sha256": "3da9378149171f27d37d39bd397e0bbe9d5931ff3899027f1b29cd4057c30ddc",
+      "bytes": 9296
+    },
+    {
+      "path": "docs/reports/C2_constraints/C2A_voltage_stability/paper_a/governance/dispatch/2026-11-07__post_t01_targeted_next_macros/143_SGOV_OWNER_WEEK_ONLY_DUAL_SOLVER_ALL_SCA_FORMULATIONS_AND_RELAXATION_MACRO_20261121.md",
+      "ref": "d6740f017a1f50be9737c9aff342751bd6fb8eac",
+      "blob": "62e7777b6483fa43a1c832bada0ab54252f3dcca",
+      "sha256": "ef565373626845d7ce8f80ca201724aebe9ecd60c4dff1b0738950247020fe96",
+      "bytes": 17964
+    }
+  ],
+  "core": [
+    {
+      "case_id": "G1-50-relaxed",
+      "solver": "Gurobi",
+      "scope": "KW08/2013 168h",
+      "consumer": "89897ee8b0caa8a54533b0fb03fa61b6adb1bd88",
+      "producer": "becec6d63c0fbf2b8a160c41f87631f5270046b9",
+      "scientific_input_manifest_sha256": "ec4986d4de0853f6a8188c0add991a139d014c247adee6cb960fae29416a4e9a",
+      "active_case_sha256": "c03dfc3cd78d68e0aeb8fb6875a3875e71db5d2c2efd8d680ba1904f95a79cfe",
+      "input_profile_sha256": "13a242fc5f3e2f8f651d6d0dec2ec8d5cb8fb41e8c543b2daf03beb7879c26c2",
+      "archived_solver_model_profile": null,
+      "parent_case_sha256": "f4b66af21fe59240eaa236698cf371458ce1cc22cdd3c25d9af9aafa92c4939d",
+      "run_summary": {
+        "relative_path": "TECH_FULL37_KW08_RE50_GFM_FROZEN_E_20261118_01/with_gscr/relaxed_crossover/run_summary.json",
+        "sha256": "af9a4b7d6adea33e15a93f1126b7f01b2ebe3d7677085d1f9181255140d0966a",
+        "bytes": 3237
+      },
+      "objects": [
+        "TECH_FULL37_KW08_RE50_GFM_FROZEN_E_20261118_01/with_gscr/relaxed_crossover/run_summary.json",
+        "TECH_FULL37_KW08_RE50_GFM_FROZEN_E_20261118_01/with_gscr/relaxed_crossover/full_primal.csv",
+        "TECH_FULL37_KW08_RE50_GFM_FROZEN_E_20261118_01/with_gscr/relaxed_crossover/variable_coordinates.csv",
+        "TECH_FULL37_KW08_RE50_GFM_FROZEN_E_20261118_01/with_gscr/relaxed_crossover/gurobi.log",
+        "TECH_FULL37_KW08_RE50_GFM_FROZEN_E_20261118_01/with_gscr/relaxed_crossover/block_expansion.csv",
+        "TECH_FULL37_KW08_RE50_GFM_FROZEN_E_20261118_01/with_gscr/relaxed_crossover/renewable_expansion.csv",
+        "TECH_FULL37_KW08_RE50_GFM_FROZEN_E_20261118_01/with_gscr/relaxed_crossover/complete_candidate_receipt.json",
+        "TECH_FULL37_KW08_RE50_GFM_FROZEN_E_20261118_01/with_gscr/relaxed_crossover/g1_all_bus_hours.csv",
+        "TECH_FULL37_KW08_RE50_GFM_FROZEN_E_20261118_01/with_gscr/relaxed_crossover/period_1/dispatch.csv"
+      ],
+      "historical_acceptance": [
+        "TECH_FULL37_KW08_RE50_GFM_FROZEN_E_20261118_01/independent_lp_result_review.json"
+      ]
+    },
+    {
+      "case_id": "BASE-50-relaxed",
+      "solver": "Gurobi",
+      "scope": "KW08/2013 168h",
+      "consumer": "89897ee8b0caa8a54533b0fb03fa61b6adb1bd88",
+      "producer": "becec6d63c0fbf2b8a160c41f87631f5270046b9",
+      "scientific_input_manifest_sha256": "ec4986d4de0853f6a8188c0add991a139d014c247adee6cb960fae29416a4e9a",
+      "active_case_sha256": "c03dfc3cd78d68e0aeb8fb6875a3875e71db5d2c2efd8d680ba1904f95a79cfe",
+      "input_profile_sha256": "13a242fc5f3e2f8f651d6d0dec2ec8d5cb8fb41e8c543b2daf03beb7879c26c2",
+      "archived_solver_model_profile": null,
+      "parent_case_sha256": "f4b66af21fe59240eaa236698cf371458ce1cc22cdd3c25d9af9aafa92c4939d",
+      "run_summary": {
+        "relative_path": "TECH_FULL37_KW08_RE50_GFM_FROZEN_E_20261118_01/without_gscr/relaxed_crossover/run_summary.json",
+        "sha256": "5780e2c18d64eb1fa9661cd7d8203f14576d2918f7a7d03b2d5ff83a03022ab8",
+        "bytes": 3229
+      },
+      "objects": [
+        "TECH_FULL37_KW08_RE50_GFM_FROZEN_E_20261118_01/without_gscr/relaxed_crossover/run_summary.json",
+        "TECH_FULL37_KW08_RE50_GFM_FROZEN_E_20261118_01/without_gscr/relaxed_crossover/full_primal.csv",
+        "TECH_FULL37_KW08_RE50_GFM_FROZEN_E_20261118_01/without_gscr/relaxed_crossover/variable_coordinates.csv",
+        "TECH_FULL37_KW08_RE50_GFM_FROZEN_E_20261118_01/without_gscr/relaxed_crossover/gurobi.log",
+        "TECH_FULL37_KW08_RE50_GFM_FROZEN_E_20261118_01/without_gscr/relaxed_crossover/block_expansion.csv",
+        "TECH_FULL37_KW08_RE50_GFM_FROZEN_E_20261118_01/without_gscr/relaxed_crossover/renewable_expansion.csv",
+        "TECH_FULL37_KW08_RE50_GFM_FROZEN_E_20261118_01/without_gscr/relaxed_crossover/complete_candidate_receipt.json",
+        "TECH_FULL37_KW08_RE50_GFM_FROZEN_E_20261118_01/without_gscr/relaxed_crossover/g1_all_bus_hours.csv",
+        "TECH_FULL37_KW08_RE50_GFM_FROZEN_E_20261118_01/without_gscr/relaxed_crossover/period_1/dispatch.csv"
+      ],
+      "historical_acceptance": [
+        "TECH_FULL37_KW08_RE50_GFM_FROZEN_E_20261118_01/independent_lp_result_review.json"
+      ]
+    },
+    {
+      "case_id": "G1-50-integer",
+      "solver": "Gurobi",
+      "scope": "KW08/2013 168h",
+      "consumer": "d11f3f3e8376768d97e08f339990c6bb489e6ce5",
+      "producer": "becec6d63c0fbf2b8a160c41f87631f5270046b9",
+      "scientific_input_manifest_sha256": "ec4986d4de0853f6a8188c0add991a139d014c247adee6cb960fae29416a4e9a",
+      "active_case_sha256": "c03dfc3cd78d68e0aeb8fb6875a3875e71db5d2c2efd8d680ba1904f95a79cfe",
+      "input_profile_sha256": "13a242fc5f3e2f8f651d6d0dec2ec8d5cb8fb41e8c543b2daf03beb7879c26c2",
+      "archived_solver_model_profile": null,
+      "parent_case_sha256": "f4b66af21fe59240eaa236698cf371458ce1cc22cdd3c25d9af9aafa92c4939d",
+      "run_summary": {
+        "relative_path": "TECH_FULL37_KW08_RE50_GFM_FROZEN_E_MIP_20261118_01/with_gscr/integer/run_summary.json",
+        "sha256": "3c6fa3e6458905019d4fbfb42e2cd01b45bae8cf36acb6757d146cb31a19098e",
+        "bytes": 3396
+      },
+      "objects": [
+        "TECH_FULL37_KW08_RE50_GFM_FROZEN_E_MIP_20261118_01/with_gscr/integer/run_summary.json",
+        "TECH_FULL37_KW08_RE50_GFM_FROZEN_E_MIP_20261118_01/with_gscr/integer/full_primal.csv",
+        "TECH_FULL37_KW08_RE50_GFM_FROZEN_E_MIP_20261118_01/with_gscr/integer/variable_coordinates.csv",
+        "TECH_FULL37_KW08_RE50_GFM_FROZEN_E_MIP_20261118_01/with_gscr/integer/gurobi.log",
+        "TECH_FULL37_KW08_RE50_GFM_FROZEN_E_MIP_20261118_01/with_gscr/integer/block_expansion.csv",
+        "TECH_FULL37_KW08_RE50_GFM_FROZEN_E_MIP_20261118_01/with_gscr/integer/renewable_expansion.csv",
+        "TECH_FULL37_KW08_RE50_GFM_FROZEN_E_MIP_20261118_01/with_gscr/integer/complete_candidate_receipt.json",
+        "TECH_FULL37_KW08_RE50_GFM_FROZEN_E_MIP_20261118_01/with_gscr/integer/g1_all_bus_hours.csv",
+        "TECH_FULL37_KW08_RE50_GFM_FROZEN_E_MIP_20261118_01/with_gscr/integer/period_1/dispatch.csv"
+      ],
+      "historical_acceptance": [
+        "TECH_FULL37_KW08_RE50_GFM_FROZEN_E_MIP_20261118_01/independent_result_review.json",
+        "TECH_FULL37_KW08_RE50_GFM_FROZEN_E_MIP_20261118_01/independent_with_gscr_result_review.json"
+      ]
+    },
+    {
+      "case_id": "BASE-50-integer",
+      "solver": "Gurobi",
+      "scope": "KW08/2013 168h",
+      "consumer": "d11f3f3e8376768d97e08f339990c6bb489e6ce5",
+      "producer": "becec6d63c0fbf2b8a160c41f87631f5270046b9",
+      "scientific_input_manifest_sha256": "ec4986d4de0853f6a8188c0add991a139d014c247adee6cb960fae29416a4e9a",
+      "active_case_sha256": "c03dfc3cd78d68e0aeb8fb6875a3875e71db5d2c2efd8d680ba1904f95a79cfe",
+      "input_profile_sha256": "13a242fc5f3e2f8f651d6d0dec2ec8d5cb8fb41e8c543b2daf03beb7879c26c2",
+      "archived_solver_model_profile": null,
+      "parent_case_sha256": "f4b66af21fe59240eaa236698cf371458ce1cc22cdd3c25d9af9aafa92c4939d",
+      "run_summary": {
+        "relative_path": "TECH_FULL37_KW08_RE50_GFM_FROZEN_E_MIP_20261118_01/without_gscr/integer/run_summary.json",
+        "sha256": "a86ab36f6e7786daed002e2d636b68f1531224dd6fc95e0e51c7445cb407a28f",
+        "bytes": 3396
+      },
+      "objects": [
+        "TECH_FULL37_KW08_RE50_GFM_FROZEN_E_MIP_20261118_01/without_gscr/integer/run_summary.json",
+        "TECH_FULL37_KW08_RE50_GFM_FROZEN_E_MIP_20261118_01/without_gscr/integer/full_primal.csv",
+        "TECH_FULL37_KW08_RE50_GFM_FROZEN_E_MIP_20261118_01/without_gscr/integer/variable_coordinates.csv",
+        "TECH_FULL37_KW08_RE50_GFM_FROZEN_E_MIP_20261118_01/without_gscr/integer/gurobi.log",
+        "TECH_FULL37_KW08_RE50_GFM_FROZEN_E_MIP_20261118_01/without_gscr/integer/block_expansion.csv",
+        "TECH_FULL37_KW08_RE50_GFM_FROZEN_E_MIP_20261118_01/without_gscr/integer/renewable_expansion.csv",
+        "TECH_FULL37_KW08_RE50_GFM_FROZEN_E_MIP_20261118_01/without_gscr/integer/complete_candidate_receipt.json",
+        "TECH_FULL37_KW08_RE50_GFM_FROZEN_E_MIP_20261118_01/without_gscr/integer/g1_all_bus_hours.csv",
+        "TECH_FULL37_KW08_RE50_GFM_FROZEN_E_MIP_20261118_01/without_gscr/integer/period_1/dispatch.csv"
+      ],
+      "historical_acceptance": [
+        "TECH_FULL37_KW08_RE50_GFM_FROZEN_E_MIP_20261118_01/independent_result_review.json",
+        "TECH_FULL37_KW08_RE50_GFM_FROZEN_E_MIP_20261118_01/independent_with_gscr_result_review.json"
+      ]
+    },
+    {
+      "case_id": "G1-60-integer",
+      "solver": "Gurobi",
+      "scope": "KW08/2013 168h",
+      "consumer": "1edcc857036cec3703a581f2704a51dbcc886586",
+      "producer": "becec6d63c0fbf2b8a160c41f87631f5270046b9",
+      "scientific_input_manifest_sha256": "ec4986d4de0853f6a8188c0add991a139d014c247adee6cb960fae29416a4e9a",
+      "active_case_sha256": "c03dfc3cd78d68e0aeb8fb6875a3875e71db5d2c2efd8d680ba1904f95a79cfe",
+      "input_profile_sha256": "13a242fc5f3e2f8f651d6d0dec2ec8d5cb8fb41e8c543b2daf03beb7879c26c2",
+      "archived_solver_model_profile": null,
+      "parent_case_sha256": "f4b66af21fe59240eaa236698cf371458ce1cc22cdd3c25d9af9aafa92c4939d",
+      "run_summary": {
+        "relative_path": "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_60/integer/with_gscr/integer/run_summary.json",
+        "sha256": "044c4cc363e77716656e5a6216b303ac08ebf2ca1b8d53a11426775b048335fd",
+        "bytes": 3406
+      },
+      "objects": [
+        "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_60/integer/with_gscr/integer/run_summary.json",
+        "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_60/integer/with_gscr/integer/full_primal.csv",
+        "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_60/integer/with_gscr/integer/variable_coordinates.csv",
+        "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_60/integer/with_gscr/integer/gurobi.log",
+        "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_60/integer/with_gscr/integer/block_expansion.csv",
+        "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_60/integer/with_gscr/integer/renewable_expansion.csv",
+        "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_60/integer/with_gscr/integer/complete_candidate_receipt.json",
+        "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_60/integer/with_gscr/integer/g1_all_bus_hours.csv",
+        "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_60/integer/with_gscr/integer/period_1/dispatch.csv"
+      ],
+      "historical_acceptance": [
+        "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_60/integer/independent_result_review.json",
+        "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_60/integer/independent_with_gscr_result_review.json"
+      ]
+    },
+    {
+      "case_id": "BASE-60-integer",
+      "solver": "Gurobi",
+      "scope": "KW08/2013 168h",
+      "consumer": "1edcc857036cec3703a581f2704a51dbcc886586",
+      "producer": "becec6d63c0fbf2b8a160c41f87631f5270046b9",
+      "scientific_input_manifest_sha256": "ec4986d4de0853f6a8188c0add991a139d014c247adee6cb960fae29416a4e9a",
+      "active_case_sha256": "c03dfc3cd78d68e0aeb8fb6875a3875e71db5d2c2efd8d680ba1904f95a79cfe",
+      "input_profile_sha256": "13a242fc5f3e2f8f651d6d0dec2ec8d5cb8fb41e8c543b2daf03beb7879c26c2",
+      "archived_solver_model_profile": null,
+      "parent_case_sha256": "f4b66af21fe59240eaa236698cf371458ce1cc22cdd3c25d9af9aafa92c4939d",
+      "run_summary": {
+        "relative_path": "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_60/integer/without_gscr/integer/run_summary.json",
+        "sha256": "860f85405558f0d76d986b2c08e59bf2368c763b138ebdce26393aca62012611",
+        "bytes": 3408
+      },
+      "objects": [
+        "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_60/integer/without_gscr/integer/run_summary.json",
+        "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_60/integer/without_gscr/integer/full_primal.csv",
+        "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_60/integer/without_gscr/integer/variable_coordinates.csv",
+        "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_60/integer/without_gscr/integer/gurobi.log",
+        "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_60/integer/without_gscr/integer/block_expansion.csv",
+        "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_60/integer/without_gscr/integer/renewable_expansion.csv",
+        "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_60/integer/without_gscr/integer/complete_candidate_receipt.json",
+        "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_60/integer/without_gscr/integer/g1_all_bus_hours.csv",
+        "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_60/integer/without_gscr/integer/period_1/dispatch.csv"
+      ],
+      "historical_acceptance": [
+        "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_60/integer/independent_result_review.json",
+        "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_60/integer/independent_with_gscr_result_review.json"
+      ]
+    },
+    {
+      "case_id": "G1-60-relaxed",
+      "solver": "Gurobi",
+      "scope": "KW08/2013 168h",
+      "consumer": "1edcc857036cec3703a581f2704a51dbcc886586",
+      "producer": "becec6d63c0fbf2b8a160c41f87631f5270046b9",
+      "scientific_input_manifest_sha256": "ec4986d4de0853f6a8188c0add991a139d014c247adee6cb960fae29416a4e9a",
+      "active_case_sha256": "c03dfc3cd78d68e0aeb8fb6875a3875e71db5d2c2efd8d680ba1904f95a79cfe",
+      "input_profile_sha256": "13a242fc5f3e2f8f651d6d0dec2ec8d5cb8fb41e8c543b2daf03beb7879c26c2",
+      "archived_solver_model_profile": null,
+      "parent_case_sha256": "f4b66af21fe59240eaa236698cf371458ce1cc22cdd3c25d9af9aafa92c4939d",
+      "run_summary": {
+        "relative_path": "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_60/relaxed/with_gscr/relaxed_crossover/run_summary.json",
+        "sha256": "42c448d1863004952b5ef039db57ca7051cd7823d9caa69abfc196b79eed0c92",
+        "bytes": 3357
+      },
+      "objects": [
+        "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_60/relaxed/with_gscr/relaxed_crossover/run_summary.json",
+        "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_60/relaxed/with_gscr/relaxed_crossover/full_primal.csv",
+        "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_60/relaxed/with_gscr/relaxed_crossover/variable_coordinates.csv",
+        "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_60/relaxed/with_gscr/relaxed_crossover/gurobi.log",
+        "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_60/relaxed/with_gscr/relaxed_crossover/block_expansion.csv",
+        "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_60/relaxed/with_gscr/relaxed_crossover/renewable_expansion.csv",
+        "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_60/relaxed/with_gscr/relaxed_crossover/complete_candidate_receipt.json",
+        "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_60/relaxed/with_gscr/relaxed_crossover/g1_all_bus_hours.csv",
+        "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_60/relaxed/with_gscr/relaxed_crossover/period_1/dispatch.csv"
+      ],
+      "historical_acceptance": [
+        "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_60/relaxed/independent_result_review.json"
+      ]
+    },
+    {
+      "case_id": "BASE-60-relaxed",
+      "solver": "Gurobi",
+      "scope": "KW08/2013 168h",
+      "consumer": "1edcc857036cec3703a581f2704a51dbcc886586",
+      "producer": "becec6d63c0fbf2b8a160c41f87631f5270046b9",
+      "scientific_input_manifest_sha256": "ec4986d4de0853f6a8188c0add991a139d014c247adee6cb960fae29416a4e9a",
+      "active_case_sha256": "c03dfc3cd78d68e0aeb8fb6875a3875e71db5d2c2efd8d680ba1904f95a79cfe",
+      "input_profile_sha256": "13a242fc5f3e2f8f651d6d0dec2ec8d5cb8fb41e8c543b2daf03beb7879c26c2",
+      "archived_solver_model_profile": null,
+      "parent_case_sha256": "f4b66af21fe59240eaa236698cf371458ce1cc22cdd3c25d9af9aafa92c4939d",
+      "run_summary": {
+        "relative_path": "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_60/relaxed/without_gscr/relaxed_crossover/run_summary.json",
+        "sha256": "e0aef6d632484ae9a77a3bba3982b26e53b86a062139ea90e4aa5f2b89cddb5a",
+        "bytes": 3377
+      },
+      "objects": [
+        "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_60/relaxed/without_gscr/relaxed_crossover/run_summary.json",
+        "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_60/relaxed/without_gscr/relaxed_crossover/full_primal.csv",
+        "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_60/relaxed/without_gscr/relaxed_crossover/variable_coordinates.csv",
+        "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_60/relaxed/without_gscr/relaxed_crossover/gurobi.log",
+        "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_60/relaxed/without_gscr/relaxed_crossover/block_expansion.csv",
+        "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_60/relaxed/without_gscr/relaxed_crossover/renewable_expansion.csv",
+        "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_60/relaxed/without_gscr/relaxed_crossover/complete_candidate_receipt.json",
+        "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_60/relaxed/without_gscr/relaxed_crossover/g1_all_bus_hours.csv",
+        "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_60/relaxed/without_gscr/relaxed_crossover/period_1/dispatch.csv"
+      ],
+      "historical_acceptance": [
+        "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_60/relaxed/independent_result_review.json"
+      ]
+    },
+    {
+      "case_id": "G1-70-integer",
+      "solver": "Gurobi",
+      "scope": "KW08/2013 168h",
+      "consumer": "1edcc857036cec3703a581f2704a51dbcc886586",
+      "producer": "becec6d63c0fbf2b8a160c41f87631f5270046b9",
+      "scientific_input_manifest_sha256": "ec4986d4de0853f6a8188c0add991a139d014c247adee6cb960fae29416a4e9a",
+      "active_case_sha256": "c03dfc3cd78d68e0aeb8fb6875a3875e71db5d2c2efd8d680ba1904f95a79cfe",
+      "input_profile_sha256": "13a242fc5f3e2f8f651d6d0dec2ec8d5cb8fb41e8c543b2daf03beb7879c26c2",
+      "archived_solver_model_profile": null,
+      "parent_case_sha256": "f4b66af21fe59240eaa236698cf371458ce1cc22cdd3c25d9af9aafa92c4939d",
+      "run_summary": {
+        "relative_path": "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_70/integer/with_gscr/integer/run_summary.json",
+        "sha256": "5923a336458cbb05e7c6739468c00a4e80900d0ce71eb5f209ee62963a0659af",
+        "bytes": 3408
+      },
+      "objects": [
+        "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_70/integer/with_gscr/integer/run_summary.json",
+        "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_70/integer/with_gscr/integer/full_primal.csv",
+        "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_70/integer/with_gscr/integer/variable_coordinates.csv",
+        "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_70/integer/with_gscr/integer/gurobi.log",
+        "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_70/integer/with_gscr/integer/block_expansion.csv",
+        "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_70/integer/with_gscr/integer/renewable_expansion.csv",
+        "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_70/integer/with_gscr/integer/complete_candidate_receipt.json",
+        "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_70/integer/with_gscr/integer/g1_all_bus_hours.csv",
+        "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_70/integer/with_gscr/integer/period_1/dispatch.csv"
+      ],
+      "historical_acceptance": [
+        "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_70/integer/independent_result_review.json",
+        "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_70/integer/independent_with_gscr_result_review.json"
+      ]
+    },
+    {
+      "case_id": "BASE-70-integer",
+      "solver": "Gurobi",
+      "scope": "KW08/2013 168h",
+      "consumer": "1edcc857036cec3703a581f2704a51dbcc886586",
+      "producer": "becec6d63c0fbf2b8a160c41f87631f5270046b9",
+      "scientific_input_manifest_sha256": "ec4986d4de0853f6a8188c0add991a139d014c247adee6cb960fae29416a4e9a",
+      "active_case_sha256": "c03dfc3cd78d68e0aeb8fb6875a3875e71db5d2c2efd8d680ba1904f95a79cfe",
+      "input_profile_sha256": "13a242fc5f3e2f8f651d6d0dec2ec8d5cb8fb41e8c543b2daf03beb7879c26c2",
+      "archived_solver_model_profile": null,
+      "parent_case_sha256": "f4b66af21fe59240eaa236698cf371458ce1cc22cdd3c25d9af9aafa92c4939d",
+      "run_summary": {
+        "relative_path": "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_70/integer/without_gscr/integer/run_summary.json",
+        "sha256": "2a84f411dac4e27dfef0ddcf53ccd9b4df859381451992ad8c38e911cb21b96a",
+        "bytes": 3406
+      },
+      "objects": [
+        "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_70/integer/without_gscr/integer/run_summary.json",
+        "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_70/integer/without_gscr/integer/full_primal.csv",
+        "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_70/integer/without_gscr/integer/variable_coordinates.csv",
+        "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_70/integer/without_gscr/integer/gurobi.log",
+        "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_70/integer/without_gscr/integer/block_expansion.csv",
+        "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_70/integer/without_gscr/integer/renewable_expansion.csv",
+        "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_70/integer/without_gscr/integer/complete_candidate_receipt.json",
+        "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_70/integer/without_gscr/integer/g1_all_bus_hours.csv",
+        "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_70/integer/without_gscr/integer/period_1/dispatch.csv"
+      ],
+      "historical_acceptance": [
+        "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_70/integer/independent_result_review.json",
+        "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_70/integer/independent_with_gscr_result_review.json"
+      ]
+    },
+    {
+      "case_id": "G1-70-relaxed",
+      "solver": "Gurobi",
+      "scope": "KW08/2013 168h",
+      "consumer": "1edcc857036cec3703a581f2704a51dbcc886586",
+      "producer": "becec6d63c0fbf2b8a160c41f87631f5270046b9",
+      "scientific_input_manifest_sha256": "ec4986d4de0853f6a8188c0add991a139d014c247adee6cb960fae29416a4e9a",
+      "active_case_sha256": "c03dfc3cd78d68e0aeb8fb6875a3875e71db5d2c2efd8d680ba1904f95a79cfe",
+      "input_profile_sha256": "13a242fc5f3e2f8f651d6d0dec2ec8d5cb8fb41e8c543b2daf03beb7879c26c2",
+      "archived_solver_model_profile": null,
+      "parent_case_sha256": "f4b66af21fe59240eaa236698cf371458ce1cc22cdd3c25d9af9aafa92c4939d",
+      "run_summary": {
+        "relative_path": "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_70/relaxed/with_gscr/relaxed_crossover/run_summary.json",
+        "sha256": "107cb3b315673159897bd04ed246b0045c35ef44d6b7c61211061badc28206fa",
+        "bytes": 3377
+      },
+      "objects": [
+        "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_70/relaxed/with_gscr/relaxed_crossover/run_summary.json",
+        "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_70/relaxed/with_gscr/relaxed_crossover/full_primal.csv",
+        "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_70/relaxed/with_gscr/relaxed_crossover/variable_coordinates.csv",
+        "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_70/relaxed/with_gscr/relaxed_crossover/gurobi.log",
+        "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_70/relaxed/with_gscr/relaxed_crossover/block_expansion.csv",
+        "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_70/relaxed/with_gscr/relaxed_crossover/renewable_expansion.csv",
+        "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_70/relaxed/with_gscr/relaxed_crossover/complete_candidate_receipt.json",
+        "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_70/relaxed/with_gscr/relaxed_crossover/g1_all_bus_hours.csv",
+        "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_70/relaxed/with_gscr/relaxed_crossover/period_1/dispatch.csv"
+      ],
+      "historical_acceptance": [
+        "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_70/relaxed/independent_result_review.json"
+      ]
+    },
+    {
+      "case_id": "BASE-70-relaxed",
+      "solver": "Gurobi",
+      "scope": "KW08/2013 168h",
+      "consumer": "1edcc857036cec3703a581f2704a51dbcc886586",
+      "producer": "becec6d63c0fbf2b8a160c41f87631f5270046b9",
+      "scientific_input_manifest_sha256": "ec4986d4de0853f6a8188c0add991a139d014c247adee6cb960fae29416a4e9a",
+      "active_case_sha256": "c03dfc3cd78d68e0aeb8fb6875a3875e71db5d2c2efd8d680ba1904f95a79cfe",
+      "input_profile_sha256": "13a242fc5f3e2f8f651d6d0dec2ec8d5cb8fb41e8c543b2daf03beb7879c26c2",
+      "archived_solver_model_profile": null,
+      "parent_case_sha256": "f4b66af21fe59240eaa236698cf371458ce1cc22cdd3c25d9af9aafa92c4939d",
+      "run_summary": {
+        "relative_path": "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_70/relaxed/without_gscr/relaxed_crossover/run_summary.json",
+        "sha256": "401aa57d445f0082635d07945e88de2b16da9b5be0aa0ce9d6b4a33cf1c4e9cc",
+        "bytes": 3368
+      },
+      "objects": [
+        "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_70/relaxed/without_gscr/relaxed_crossover/run_summary.json",
+        "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_70/relaxed/without_gscr/relaxed_crossover/full_primal.csv",
+        "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_70/relaxed/without_gscr/relaxed_crossover/variable_coordinates.csv",
+        "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_70/relaxed/without_gscr/relaxed_crossover/gurobi.log",
+        "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_70/relaxed/without_gscr/relaxed_crossover/block_expansion.csv",
+        "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_70/relaxed/without_gscr/relaxed_crossover/renewable_expansion.csv",
+        "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_70/relaxed/without_gscr/relaxed_crossover/complete_candidate_receipt.json",
+        "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_70/relaxed/without_gscr/relaxed_crossover/g1_all_bus_hours.csv",
+        "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_70/relaxed/without_gscr/relaxed_crossover/period_1/dispatch.csv"
+      ],
+      "historical_acceptance": [
+        "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_70/relaxed/independent_result_review.json"
+      ]
+    },
+    {
+      "case_id": "G2-70-integer",
+      "solver": "Gurobi",
+      "scope": "KW08/2013 168h",
+      "consumer": "a6eadd1bf3d534765cbd26c6599d975489d955ed",
+      "producer": "becec6d63c0fbf2b8a160c41f87631f5270046b9",
+      "scientific_input_manifest_sha256": "ec4986d4de0853f6a8188c0add991a139d014c247adee6cb960fae29416a4e9a",
+      "active_case_sha256": "c154322ea868313405ac7be70c541ad87839bbb070ac2fa556f18c1d2547e2d5",
+      "input_profile_sha256": "223f15ae0f78021846ef636e2db975a29607aa8524be18d9bf3ed9ca0e46d787",
+      "archived_solver_model_profile": {
+        "relative_path": "TECH_FULL37_KW08_RE70_SEQUENTIAL_CONDITIONED_20261120_01/03_G2_MILP/G2/integer/profile.json",
+        "sha256": "ede315108e08dfa2e7e8d42f9441ceb749809b01e272fce16f39f7d09d8e8e1d",
+        "bytes": 2222
+      },
+      "parent_case_sha256": null,
+      "run_summary": {
+        "relative_path": "TECH_FULL37_KW08_RE70_SEQUENTIAL_CONDITIONED_20261120_01/03_G2_MILP/G2/integer/run_summary.json",
+        "sha256": "6c39b0526942a10461523ff05b116bf09b07abb6e703f67ee6f0df943fd0dc88",
+        "bytes": 3963
+      },
+      "objects": [
+        "TECH_FULL37_KW08_RE70_SEQUENTIAL_CONDITIONED_20261120_01/03_G2_MILP/G2/integer/run_summary.json",
+        "TECH_FULL37_KW08_RE70_SEQUENTIAL_CONDITIONED_20261120_01/03_G2_MILP/G2/integer/full_primal.csv",
+        "TECH_FULL37_KW08_RE70_SEQUENTIAL_CONDITIONED_20261120_01/03_G2_MILP/G2/integer/variable_coordinates.csv",
+        "TECH_FULL37_KW08_RE70_SEQUENTIAL_CONDITIONED_20261120_01/03_G2_MILP/G2/integer/gurobi.log",
+        "TECH_FULL37_KW08_RE70_SEQUENTIAL_CONDITIONED_20261120_01/03_G2_MILP/G2/integer/block_expansion.csv",
+        "TECH_FULL37_KW08_RE70_SEQUENTIAL_CONDITIONED_20261120_01/03_G2_MILP/G2/integer/renewable_expansion.csv",
+        "TECH_FULL37_KW08_RE70_SEQUENTIAL_CONDITIONED_20261120_01/03_G2_MILP/G2/integer/physical_point.json",
+        "TECH_FULL37_KW08_RE70_SEQUENTIAL_CONDITIONED_20261120_01/03_G2_MILP/G2/integer/strength_reconstruction.json",
+        "TECH_FULL37_KW08_RE70_SEQUENTIAL_CONDITIONED_20261120_01/03_G2_MILP/G2/integer/dispatch.csv"
+      ],
+      "historical_acceptance": [
+        "TECH_FULL37_KW08_RE70_SEQUENTIAL_CONDITIONED_20261120_01/03_G2_MILP/INDEPENDENT_REVIEW/independent_G2_MILP_original_point_cost_gap_gate.json"
+      ]
+    },
+    {
+      "case_id": "G2-70-relaxed",
+      "solver": "Gurobi",
+      "scope": "KW08/2013 168h",
+      "consumer": "c842bbd7db0eaf03c5804db6ba73c6f6ebb07f63",
+      "producer": "becec6d63c0fbf2b8a160c41f87631f5270046b9",
+      "scientific_input_manifest_sha256": "ec4986d4de0853f6a8188c0add991a139d014c247adee6cb960fae29416a4e9a",
+      "active_case_sha256": "c154322ea868313405ac7be70c541ad87839bbb070ac2fa556f18c1d2547e2d5",
+      "input_profile_sha256": "223f15ae0f78021846ef636e2db975a29607aa8524be18d9bf3ed9ca0e46d787",
+      "archived_solver_model_profile": {
+        "relative_path": "TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_20261118_01/G2/relaxed/profile.json",
+        "sha256": "ba7550c3208ea14f1190b7c2a5b2b5751c39d8ef926031b22acf450eb246fed7",
+        "bytes": 898
+      },
+      "parent_case_sha256": null,
+      "run_summary": {
+        "relative_path": "TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_20261118_01/G2/relaxed/run_summary.json",
+        "sha256": "87a3b3bb94ccc04927157aec06a4a967adfb384ba6719fc32bd5bf1cafb6ae20",
+        "bytes": 2359
+      },
+      "objects": [
+        "TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_20261118_01/G2/relaxed/run_summary.json",
+        "TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_20261118_01/G2/relaxed/full_primal.csv",
+        "TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_20261118_01/G2/relaxed/variable_coordinates.csv",
+        "TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_20261118_01/G2/relaxed/gurobi.log",
+        "TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_20261118_01/G2/relaxed/block_expansion.csv",
+        "TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_20261118_01/G2/relaxed/renewable_expansion.csv",
+        "TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_20261118_01/G2/relaxed/physical_point.json",
+        "TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_20261118_01/G2/relaxed/strength_reconstruction.json",
+        "TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_20261118_01/G2/relaxed/dispatch.csv"
+      ],
+      "historical_acceptance": [
+        "TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_20261118_01/INDEPENDENT_REVIEW/mathematical_candidate_review_G2_relaxed_c842bbd.json"
+      ]
+    }
+  ],
+  "archive_objects": [
+    {
+      "relative_path": "TECH_FULL37_KW08_RE50_GFM_FROZEN_E_20261118_01/independent_lp_result_review.json",
+      "sha256": "98f1d2c3a567cf4a2570a8f59ff7c8466bb0f74bebc96688872bbe3acce7b026",
+      "bytes": 9845
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE50_GFM_FROZEN_E_20261118_01/with_gscr/relaxed_crossover/run_summary.json",
+      "sha256": "af9a4b7d6adea33e15a93f1126b7f01b2ebe3d7677085d1f9181255140d0966a",
+      "bytes": 3237
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE50_GFM_FROZEN_E_20261118_01/with_gscr/relaxed_crossover/full_primal.csv",
+      "sha256": "2932b243dbaff38436246e60c00a5392c8890d5185521e797d2c0982ffd8e7bf",
+      "bytes": 7568530
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE50_GFM_FROZEN_E_20261118_01/with_gscr/relaxed_crossover/variable_coordinates.csv",
+      "sha256": "53a661620069eabfd5ddc82af78afdc98916d215bd2cc0dba991488bc38808ed",
+      "bytes": 11412154
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE50_GFM_FROZEN_E_20261118_01/with_gscr/relaxed_crossover/gurobi.log",
+      "sha256": "e384c307e58594ffcd552fa4ddf8b33123ca9b12b2c00c64a628e5549640589e",
+      "bytes": 9396
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE50_GFM_FROZEN_E_20261118_01/with_gscr/relaxed_crossover/block_expansion.csv",
+      "sha256": "0b93e6a785ceb87f251de2fad0b6c93b37870530c37d465b3e12c640ceb4d64b",
+      "bytes": 16209
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE50_GFM_FROZEN_E_20261118_01/with_gscr/relaxed_crossover/renewable_expansion.csv",
+      "sha256": "842dfa65388369818d62e3715fc3179992bc1d9f192e19a549e6ce9c172bafbd",
+      "bytes": 5999
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE50_GFM_FROZEN_E_20261118_01/with_gscr/relaxed_crossover/complete_candidate_receipt.json",
+      "sha256": "e37eceb56954254df6db171758881c4e1c2715870b09e31085f569b0f5fb2222",
+      "bytes": 1773
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE50_GFM_FROZEN_E_20261118_01/with_gscr/relaxed_crossover/g1_all_bus_hours.csv",
+      "sha256": "525eea3260c552d79f2ca39cf5d0e1d4183fda814cc0491e00dcbeb6c1cb58fb",
+      "bytes": 398713
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE50_GFM_FROZEN_E_20261118_01/with_gscr/relaxed_crossover/period_1/dispatch.csv",
+      "sha256": "b2c96b8e938166a86605461a3ccde9a5120d563d7169b62b10a0177e5f8291c7",
+      "bytes": 4947655
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE50_GFM_FROZEN_E_20261118_01/without_gscr/relaxed_crossover/run_summary.json",
+      "sha256": "5780e2c18d64eb1fa9661cd7d8203f14576d2918f7a7d03b2d5ff83a03022ab8",
+      "bytes": 3229
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE50_GFM_FROZEN_E_20261118_01/without_gscr/relaxed_crossover/full_primal.csv",
+      "sha256": "65872fb327c0f0c0efc2c0b58fb0e934cbb9cd59080bfc091e7ceea1e5491501",
+      "bytes": 7381195
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE50_GFM_FROZEN_E_20261118_01/without_gscr/relaxed_crossover/variable_coordinates.csv",
+      "sha256": "53a661620069eabfd5ddc82af78afdc98916d215bd2cc0dba991488bc38808ed",
+      "bytes": 11412154
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE50_GFM_FROZEN_E_20261118_01/without_gscr/relaxed_crossover/gurobi.log",
+      "sha256": "970bb56408c4cb1610f0976df0eb8ded5d97711055839a25c0f3a8c576186946",
+      "bytes": 8963
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE50_GFM_FROZEN_E_20261118_01/without_gscr/relaxed_crossover/block_expansion.csv",
+      "sha256": "e1e5d027482b940c59716e558a1183af7972769201f56e01414858ae1c1b925b",
+      "bytes": 15759
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE50_GFM_FROZEN_E_20261118_01/without_gscr/relaxed_crossover/renewable_expansion.csv",
+      "sha256": "d911949c7d147442178a992e69879ec4e9dd746bd96a5e40622fc3b1aa5a760d",
+      "bytes": 5983
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE50_GFM_FROZEN_E_20261118_01/without_gscr/relaxed_crossover/complete_candidate_receipt.json",
+      "sha256": "6adb0bfbb500fe2661c45a808c0971382e1b9a0bd0cc74a3316dcdf341e980e1",
+      "bytes": 1767
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE50_GFM_FROZEN_E_20261118_01/without_gscr/relaxed_crossover/g1_all_bus_hours.csv",
+      "sha256": "98610f088b4da2232ef70586b332d3117a7fe2312f4bb360bbc3d856d1f6ec55",
+      "bytes": 407210
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE50_GFM_FROZEN_E_20261118_01/without_gscr/relaxed_crossover/period_1/dispatch.csv",
+      "sha256": "80f96e67a005d5c1b44ccdddd89cac2dc200a5fb645df5b60bfbed9271575ed9",
+      "bytes": 4920587
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE50_GFM_FROZEN_E_MIP_20261118_01/independent_result_review.json",
+      "sha256": "82d75f5b9e65cfa91170b0412612bd49a395d53381486aa4183a22d16fbde987",
+      "bytes": 12599
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE50_GFM_FROZEN_E_MIP_20261118_01/independent_with_gscr_result_review.json",
+      "sha256": "bb3de4df74110deedb7aebc888a9e4f68176c35bffc7631fad99538899a95615",
+      "bytes": 7128
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE50_GFM_FROZEN_E_MIP_20261118_01/with_gscr/integer/run_summary.json",
+      "sha256": "3c6fa3e6458905019d4fbfb42e2cd01b45bae8cf36acb6757d146cb31a19098e",
+      "bytes": 3396
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE50_GFM_FROZEN_E_MIP_20261118_01/with_gscr/integer/full_primal.csv",
+      "sha256": "3f87e6836e8a7465486a09e28ebeeef104f0e72e96992ba67e19ac28f0205fa4",
+      "bytes": 11061052
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE50_GFM_FROZEN_E_MIP_20261118_01/with_gscr/integer/variable_coordinates.csv",
+      "sha256": "d7ba8f8a9e4e3c97d96b4265cb64ae871eed6864186ac49d6205d2fb9281bd14",
+      "bytes": 11982250
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE50_GFM_FROZEN_E_MIP_20261118_01/with_gscr/integer/gurobi.log",
+      "sha256": "5acf860e394e8d8e148785ffaeea153460f7c3579e0614f2bd7261f78e2a3800",
+      "bytes": 13793
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE50_GFM_FROZEN_E_MIP_20261118_01/with_gscr/integer/block_expansion.csv",
+      "sha256": "ba9eff1de20ecbc61619db85513d2c17d62efff4144fc7b0c17130c435192346",
+      "bytes": 16144
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE50_GFM_FROZEN_E_MIP_20261118_01/with_gscr/integer/renewable_expansion.csv",
+      "sha256": "0f368dec7d2b3d81eb8b855c8988008ab75242729fd63eb543a624778f773ed7",
+      "bytes": 5973
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE50_GFM_FROZEN_E_MIP_20261118_01/with_gscr/integer/complete_candidate_receipt.json",
+      "sha256": "cadf5a91a85f6f366263a5d178f78c4bddf3907d5f84b22173027ede7186050d",
+      "bytes": 1936
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE50_GFM_FROZEN_E_MIP_20261118_01/with_gscr/integer/g1_all_bus_hours.csv",
+      "sha256": "7f2dcf32461ff21ecd3f5d758163018a218264179db19374ecf4c3df7fbe25e9",
+      "bytes": 404470
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE50_GFM_FROZEN_E_MIP_20261118_01/with_gscr/integer/period_1/dispatch.csv",
+      "sha256": "18edfe15d8d70d7c34865f57923aa9da1724b1106fab4d9948bd1faa81d46153",
+      "bytes": 4935481
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE50_GFM_FROZEN_E_MIP_20261118_01/without_gscr/integer/run_summary.json",
+      "sha256": "a86ab36f6e7786daed002e2d636b68f1531224dd6fc95e0e51c7445cb407a28f",
+      "bytes": 3396
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE50_GFM_FROZEN_E_MIP_20261118_01/without_gscr/integer/full_primal.csv",
+      "sha256": "dff7a6defb4c2f56b65a5f9f074f8a68d9b894e3ea8dde20031a91454b869927",
+      "bytes": 10983613
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE50_GFM_FROZEN_E_MIP_20261118_01/without_gscr/integer/variable_coordinates.csv",
+      "sha256": "d7ba8f8a9e4e3c97d96b4265cb64ae871eed6864186ac49d6205d2fb9281bd14",
+      "bytes": 11982250
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE50_GFM_FROZEN_E_MIP_20261118_01/without_gscr/integer/gurobi.log",
+      "sha256": "a6f225a5113621e968b4976999d3ba9d69f9fa801b95d2c342f9749e49c6c5bc",
+      "bytes": 17525
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE50_GFM_FROZEN_E_MIP_20261118_01/without_gscr/integer/block_expansion.csv",
+      "sha256": "02a034159153b3c73af0c2645a3d3a6da67c11bcc8d4f299b21b9bc0245357be",
+      "bytes": 15856
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE50_GFM_FROZEN_E_MIP_20261118_01/without_gscr/integer/renewable_expansion.csv",
+      "sha256": "43fd5f102386009399af2ae4869b130e8f1f707c6fe991be38a5a12786a3debf",
+      "bytes": 6030
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE50_GFM_FROZEN_E_MIP_20261118_01/without_gscr/integer/complete_candidate_receipt.json",
+      "sha256": "93cd52e658e23e55aa7619b6e15ed7e7d81b163ce1511b38697ef113e026390a",
+      "bytes": 1934
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE50_GFM_FROZEN_E_MIP_20261118_01/without_gscr/integer/g1_all_bus_hours.csv",
+      "sha256": "07c6c1e60ebaa841425d5c073d6f839d8443dc1a7fae3f3daf2b99bcd4b9c32d",
+      "bytes": 406298
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE50_GFM_FROZEN_E_MIP_20261118_01/without_gscr/integer/period_1/dispatch.csv",
+      "sha256": "85bb8d38aaf43b9eff48d1b2c163e1a55cee51646582e747ee13b2a711b50018",
+      "bytes": 4924698
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_60/integer/independent_result_review.json",
+      "sha256": "16d63b1a9732052e1411a02287adea9c79aae9ca145e0e3eee793f2335900753",
+      "bytes": 12613
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_60/integer/independent_with_gscr_result_review.json",
+      "sha256": "2def902ea92ff82e3486af9c3ae4f367008750c6982625c46fe7dadf37b214c0",
+      "bytes": 7130
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_60/integer/with_gscr/integer/run_summary.json",
+      "sha256": "044c4cc363e77716656e5a6216b303ac08ebf2ca1b8d53a11426775b048335fd",
+      "bytes": 3406
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_60/integer/with_gscr/integer/full_primal.csv",
+      "sha256": "1d1ff09be1a3b1ed6ddb70f863ecc7a2f23940248208ff5bc873aa8bf00446cb",
+      "bytes": 11064280
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_60/integer/with_gscr/integer/variable_coordinates.csv",
+      "sha256": "d7ba8f8a9e4e3c97d96b4265cb64ae871eed6864186ac49d6205d2fb9281bd14",
+      "bytes": 11982250
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_60/integer/with_gscr/integer/gurobi.log",
+      "sha256": "0dcedd5b76f9d6ce9253cc6fc5b93c725f899360e279cd0e5ef76536166f5922",
+      "bytes": 13600
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_60/integer/with_gscr/integer/block_expansion.csv",
+      "sha256": "f845123826597ba4ca5104a222003b24847eb777fe49ea3293e2f45a21b1e467",
+      "bytes": 16177
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_60/integer/with_gscr/integer/renewable_expansion.csv",
+      "sha256": "a02d90ca34933fb2f8015cc016c8bc1d56cdafaa3511dd40897a873b982c4a33",
+      "bytes": 6095
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_60/integer/with_gscr/integer/complete_candidate_receipt.json",
+      "sha256": "e10939f00fa075c0f999c8ae6b4b5cd578667a3906913e4923b681f4bebad689",
+      "bytes": 1938
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_60/integer/with_gscr/integer/g1_all_bus_hours.csv",
+      "sha256": "4779dd01c049a2d3387c48d2d08504b4c3d383f37335bf5fea76f75d708458c6",
+      "bytes": 405986
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_60/integer/with_gscr/integer/period_1/dispatch.csv",
+      "sha256": "406531b4650dedeca2ffc523172e1734de93c46131222532920dd6ec89ca58f9",
+      "bytes": 4930803
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_60/integer/without_gscr/integer/run_summary.json",
+      "sha256": "860f85405558f0d76d986b2c08e59bf2368c763b138ebdce26393aca62012611",
+      "bytes": 3408
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_60/integer/without_gscr/integer/full_primal.csv",
+      "sha256": "62183c5f63dde92b3dc409e2384b091d6d7b3a4e1d4ff67eb1e1783964b822d0",
+      "bytes": 11015741
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_60/integer/without_gscr/integer/variable_coordinates.csv",
+      "sha256": "d7ba8f8a9e4e3c97d96b4265cb64ae871eed6864186ac49d6205d2fb9281bd14",
+      "bytes": 11982250
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_60/integer/without_gscr/integer/gurobi.log",
+      "sha256": "ef7cfca7bddae8ec22d698fd99d6a969a96ba628fcb772de86f4937e8a25299a",
+      "bytes": 12912
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_60/integer/without_gscr/integer/block_expansion.csv",
+      "sha256": "53f229d0afef31b0611c4692b4cb082c9334b9cf5cbc256e265fca6583d13824",
+      "bytes": 15951
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_60/integer/without_gscr/integer/renewable_expansion.csv",
+      "sha256": "7b6950636c0ef2c211e89cb6b505ba3dd2e747ad3012fd3f2bf540623712405a",
+      "bytes": 6094
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_60/integer/without_gscr/integer/complete_candidate_receipt.json",
+      "sha256": "af2cce3b2c1007bc80d2109bc0d6a3aea2285a64e3e2e4b5c950eec87e77773a",
+      "bytes": 1936
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_60/integer/without_gscr/integer/g1_all_bus_hours.csv",
+      "sha256": "afc9ee88e067dacc313d0da29b3982aba246daed98f30a32fd65ea33b7e99f3d",
+      "bytes": 406055
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_60/integer/without_gscr/integer/period_1/dispatch.csv",
+      "sha256": "e928c21eb6ff77cfc9dcf7119737752b39fa1840fed5241e67023086aca3f0c5",
+      "bytes": 4931842
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_60/relaxed/independent_result_review.json",
+      "sha256": "0bcce35812babb0dfcc3957913efbae1a2b99f3d9cd3daf00029358cdb339333",
+      "bytes": 11726
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_60/relaxed/with_gscr/relaxed_crossover/run_summary.json",
+      "sha256": "42c448d1863004952b5ef039db57ca7051cd7823d9caa69abfc196b79eed0c92",
+      "bytes": 3357
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_60/relaxed/with_gscr/relaxed_crossover/full_primal.csv",
+      "sha256": "170bcfe655d9da12584fae934ba88ad7b27d3595bbdc38b868f92f7332270739",
+      "bytes": 11321375
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_60/relaxed/with_gscr/relaxed_crossover/variable_coordinates.csv",
+      "sha256": "d7ba8f8a9e4e3c97d96b4265cb64ae871eed6864186ac49d6205d2fb9281bd14",
+      "bytes": 11982250
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_60/relaxed/with_gscr/relaxed_crossover/gurobi.log",
+      "sha256": "1d6ade548bfaa20579d0164d5a8d84bec4ce1272b9012325a2dbb57270dfba3e",
+      "bytes": 9001
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_60/relaxed/with_gscr/relaxed_crossover/block_expansion.csv",
+      "sha256": "fa2fe06a6d57de8da8591edb0c91a334abf36351fa199642b01bba3e1fc95ae3",
+      "bytes": 16364
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_60/relaxed/with_gscr/relaxed_crossover/renewable_expansion.csv",
+      "sha256": "30aff89042132afd05907c3d3ae900114d872fc415233dc9301f16b12f7c8902",
+      "bytes": 6159
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_60/relaxed/with_gscr/relaxed_crossover/complete_candidate_receipt.json",
+      "sha256": "77f82108e699481917d976c7e86595afb738746cd2a519ffc1d896ad16088546",
+      "bytes": 1911
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_60/relaxed/with_gscr/relaxed_crossover/g1_all_bus_hours.csv",
+      "sha256": "57cf1c55029dd5aeba7279d6d20a35779e6719cb3ec870d745f728fb4d90bf53",
+      "bytes": 399565
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_60/relaxed/with_gscr/relaxed_crossover/period_1/dispatch.csv",
+      "sha256": "7a6911a3e4bae5f40ec99ea95428e917baef68e2c93069751852f0d6b84f67e5",
+      "bytes": 4940363
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_60/relaxed/without_gscr/relaxed_crossover/run_summary.json",
+      "sha256": "e0aef6d632484ae9a77a3bba3982b26e53b86a062139ea90e4aa5f2b89cddb5a",
+      "bytes": 3377
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_60/relaxed/without_gscr/relaxed_crossover/full_primal.csv",
+      "sha256": "119562e4c80358a4fc0d351fa1535233fcb5d1fe81a1bdab54e0039724f97101",
+      "bytes": 11142060
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_60/relaxed/without_gscr/relaxed_crossover/variable_coordinates.csv",
+      "sha256": "d7ba8f8a9e4e3c97d96b4265cb64ae871eed6864186ac49d6205d2fb9281bd14",
+      "bytes": 11982250
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_60/relaxed/without_gscr/relaxed_crossover/gurobi.log",
+      "sha256": "70cc4058a2e6d60b17e995aeffe317731b91e78f9d099777703ab541b56cde36",
+      "bytes": 8110
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_60/relaxed/without_gscr/relaxed_crossover/block_expansion.csv",
+      "sha256": "f35f162b89714e21d9750ac0eade70e4f8bd1fe9f2babd630828d9da454688ef",
+      "bytes": 15940
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_60/relaxed/without_gscr/relaxed_crossover/renewable_expansion.csv",
+      "sha256": "3114f0732073ca0f6acb5abbe00de108bc7db98b4e4cf5af7030fef77c312d67",
+      "bytes": 6101
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_60/relaxed/without_gscr/relaxed_crossover/complete_candidate_receipt.json",
+      "sha256": "e3eb1be5c95a0cf13d94f89b034e83eb9dfadce5561bd989d43680c77fe144a2",
+      "bytes": 1909
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_60/relaxed/without_gscr/relaxed_crossover/g1_all_bus_hours.csv",
+      "sha256": "03fc02d33ff5e7f57f7dd59dc767a8da09e9e54d6f75bf029612543a286be2ce",
+      "bytes": 406451
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_60/relaxed/without_gscr/relaxed_crossover/period_1/dispatch.csv",
+      "sha256": "2c5ff292064e3120d279535d33f2acfb7f4c5a893321226ab7aa822bc3325859",
+      "bytes": 4914623
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_70/integer/independent_result_review.json",
+      "sha256": "a420186466f44b8f85a48ace151aeedb22c6af6e1d06720a421a5d1c275843a6",
+      "bytes": 12655
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_70/integer/independent_with_gscr_result_review.json",
+      "sha256": "a2e28e42129b0a50ec80bc5a00f7f43fc2dac2023c08e7a8196010301ab9b87e",
+      "bytes": 7129
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_70/integer/with_gscr/integer/run_summary.json",
+      "sha256": "5923a336458cbb05e7c6739468c00a4e80900d0ce71eb5f209ee62963a0659af",
+      "bytes": 3408
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_70/integer/with_gscr/integer/full_primal.csv",
+      "sha256": "fb14d1c4b279f857cbb6d42273f74c58c566ef0f7ec6875e2179f756f1693aa5",
+      "bytes": 11074090
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_70/integer/with_gscr/integer/variable_coordinates.csv",
+      "sha256": "d7ba8f8a9e4e3c97d96b4265cb64ae871eed6864186ac49d6205d2fb9281bd14",
+      "bytes": 11982250
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_70/integer/with_gscr/integer/gurobi.log",
+      "sha256": "ee0b383e3c9f1fcc90313f5805a2c32da72a474f6818b5ed8bf7cda517ed7df4",
+      "bytes": 14173
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_70/integer/with_gscr/integer/block_expansion.csv",
+      "sha256": "79aa1973a466de791af4a637aef23c5cf6d34c421e6541107e5a9a06291512de",
+      "bytes": 16192
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_70/integer/with_gscr/integer/renewable_expansion.csv",
+      "sha256": "5d5df94532e59994230d9a91af1537e39d4a204b1cd462c53846bcc2c3d274fa",
+      "bytes": 6226
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_70/integer/with_gscr/integer/complete_candidate_receipt.json",
+      "sha256": "79ebae71723c0d880aededac2234d104c80ab5df6f681efb9fc5fdec911e67f8",
+      "bytes": 1939
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_70/integer/with_gscr/integer/g1_all_bus_hours.csv",
+      "sha256": "adc284f26187f8c15256fd002d4001579b85f560ad9242c848cc86f53cee33a4",
+      "bytes": 406402
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_70/integer/with_gscr/integer/period_1/dispatch.csv",
+      "sha256": "de8fde7bde08c157da5f161253ced66e62d55aa310d41cbdd9f86df9e280559b",
+      "bytes": 4931014
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_70/integer/without_gscr/integer/run_summary.json",
+      "sha256": "2a84f411dac4e27dfef0ddcf53ccd9b4df859381451992ad8c38e911cb21b96a",
+      "bytes": 3406
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_70/integer/without_gscr/integer/full_primal.csv",
+      "sha256": "dec5fe556c634d92f6da06841dd315ca5eb773b42c59f11c6d14383bc0ce6244",
+      "bytes": 10979569
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_70/integer/without_gscr/integer/variable_coordinates.csv",
+      "sha256": "d7ba8f8a9e4e3c97d96b4265cb64ae871eed6864186ac49d6205d2fb9281bd14",
+      "bytes": 11982250
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_70/integer/without_gscr/integer/gurobi.log",
+      "sha256": "2ec05a026b1afd4cd6c880a6abfcfa6a187175e8a72c556caa81add4feef594c",
+      "bytes": 10725
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_70/integer/without_gscr/integer/block_expansion.csv",
+      "sha256": "de3148d1824d7a21a17eb1884faa2f6a07b4a26d51669b9afb5ffe651dca3317",
+      "bytes": 15966
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_70/integer/without_gscr/integer/renewable_expansion.csv",
+      "sha256": "6dd0e6745cf7c287efc63ea0a5a2e8aa95e72275e92a847416d52d516126ec6a",
+      "bytes": 6107
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_70/integer/without_gscr/integer/complete_candidate_receipt.json",
+      "sha256": "f7f7c9e4d38ebd89277971d31a88439c40f6384c261d5f675b64dd09e9e2db2e",
+      "bytes": 1936
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_70/integer/without_gscr/integer/g1_all_bus_hours.csv",
+      "sha256": "c53d98dde0e34a4f921382af90a1b9af86a2d38b75de8c8a74be1f220b784e02",
+      "bytes": 406025
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_70/integer/without_gscr/integer/period_1/dispatch.csv",
+      "sha256": "d013021776e076a6b4a0196915a7d543c5118c61b35bd39cffb062c11284a5fe",
+      "bytes": 4898082
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_70/relaxed/independent_result_review.json",
+      "sha256": "fd2401b8b9a27e93426500baaaec98f41169549351944c82c0dc5314c197e8a1",
+      "bytes": 11723
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_70/relaxed/with_gscr/relaxed_crossover/run_summary.json",
+      "sha256": "107cb3b315673159897bd04ed246b0045c35ef44d6b7c61211061badc28206fa",
+      "bytes": 3377
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_70/relaxed/with_gscr/relaxed_crossover/full_primal.csv",
+      "sha256": "39c98de34476a2608582914781eb57c495f89c4e9c7abfc329956ee4bae11761",
+      "bytes": 11307155
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_70/relaxed/with_gscr/relaxed_crossover/variable_coordinates.csv",
+      "sha256": "d7ba8f8a9e4e3c97d96b4265cb64ae871eed6864186ac49d6205d2fb9281bd14",
+      "bytes": 11982250
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_70/relaxed/with_gscr/relaxed_crossover/gurobi.log",
+      "sha256": "dc0c4cef54cbf343dc1a61602565b188cbde0311f4e67d6e850cab8509f65072",
+      "bytes": 8815
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_70/relaxed/with_gscr/relaxed_crossover/block_expansion.csv",
+      "sha256": "07cabe4860811f5e76b81754055d90461db6d5feeb797ddec8c5ace8633741d9",
+      "bytes": 16394
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_70/relaxed/with_gscr/relaxed_crossover/renewable_expansion.csv",
+      "sha256": "17857466a8b4d46a31e30bab63623a5ee2bf11dfaa3410dd9b0d7e63ad6e8092",
+      "bytes": 6159
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_70/relaxed/with_gscr/relaxed_crossover/complete_candidate_receipt.json",
+      "sha256": "e1c427147c52e613b569a5752ac6ae51469e131b53d6c4067f4f0fa49b36230c",
+      "bytes": 1912
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_70/relaxed/with_gscr/relaxed_crossover/g1_all_bus_hours.csv",
+      "sha256": "4be70202341b7b5803f45afa731c1a31f70e5b07f92616f5047107712cdf7343",
+      "bytes": 401240
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_70/relaxed/with_gscr/relaxed_crossover/period_1/dispatch.csv",
+      "sha256": "3b2d00185c4a0eab1d1f272d80cba361b2c1bb9f4dd1a11b44a7e691d2ab51e5",
+      "bytes": 4927611
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_70/relaxed/without_gscr/relaxed_crossover/run_summary.json",
+      "sha256": "401aa57d445f0082635d07945e88de2b16da9b5be0aa0ce9d6b4a33cf1c4e9cc",
+      "bytes": 3368
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_70/relaxed/without_gscr/relaxed_crossover/full_primal.csv",
+      "sha256": "0fd2886aa420a261cf988a7c45d9d10d84957f585eaeddebd4a40a4cc4cbd1dd",
+      "bytes": 11128600
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_70/relaxed/without_gscr/relaxed_crossover/variable_coordinates.csv",
+      "sha256": "d7ba8f8a9e4e3c97d96b4265cb64ae871eed6864186ac49d6205d2fb9281bd14",
+      "bytes": 11982250
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_70/relaxed/without_gscr/relaxed_crossover/gurobi.log",
+      "sha256": "5f04984da138429172367105b1cd590eb35811e584dad8d3ea5ebb198fea785c",
+      "bytes": 8189
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_70/relaxed/without_gscr/relaxed_crossover/block_expansion.csv",
+      "sha256": "2b87772cef736720040d51ec0478f2c6a86f62d7622ade162f923e0bd32b0ab6",
+      "bytes": 15943
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_70/relaxed/without_gscr/relaxed_crossover/renewable_expansion.csv",
+      "sha256": "0c499ef2fe4a438f6d9eae2d4f360b065d558d7a01877b73afd8a971249e274e",
+      "bytes": 6101
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_70/relaxed/without_gscr/relaxed_crossover/complete_candidate_receipt.json",
+      "sha256": "e6e61cbb2dbf5f6bffcc80fec455a3888ce28ceb656e31206685d287f715379c",
+      "bytes": 1906
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_70/relaxed/without_gscr/relaxed_crossover/g1_all_bus_hours.csv",
+      "sha256": "ecab6a44e963c583dc79ea3d3f4b2f6aaece05c9eec72fec1d7938f19d098756",
+      "bytes": 407494
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01/quota_70/relaxed/without_gscr/relaxed_crossover/period_1/dispatch.csv",
+      "sha256": "4346041ec81db8471f606a8013d762bf78e9a7bf17c7a3f00484cd36e382d44f",
+      "bytes": 4901040
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE70_SEQUENTIAL_CONDITIONED_20261120_01/03_G2_MILP/G2/integer/profile.json",
+      "sha256": "ede315108e08dfa2e7e8d42f9441ceb749809b01e272fce16f39f7d09d8e8e1d",
+      "bytes": 2222
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE70_SEQUENTIAL_CONDITIONED_20261120_01/03_G2_MILP/INDEPENDENT_REVIEW/independent_G2_MILP_original_point_cost_gap_gate.json",
+      "sha256": "dd1af5ee5f3cc1951587314b2919389b6955833d37893d979f7dc82064bc1dac",
+      "bytes": 6053
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE70_SEQUENTIAL_CONDITIONED_20261120_01/03_G2_MILP/G2/integer/run_summary.json",
+      "sha256": "6c39b0526942a10461523ff05b116bf09b07abb6e703f67ee6f0df943fd0dc88",
+      "bytes": 3963
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE70_SEQUENTIAL_CONDITIONED_20261120_01/03_G2_MILP/G2/integer/full_primal.csv",
+      "sha256": "3e3a7b4863a29adaf60ba2b446b03529aa12cedef2d9aec924095d6cca80c33f",
+      "bytes": 11072674
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE70_SEQUENTIAL_CONDITIONED_20261120_01/03_G2_MILP/G2/integer/variable_coordinates.csv",
+      "sha256": "0a08ecf3d8945a2652377eda992a5f1f53b723197c889cf1eefe048fb25c4994",
+      "bytes": 11207467
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE70_SEQUENTIAL_CONDITIONED_20261120_01/03_G2_MILP/G2/integer/gurobi.log",
+      "sha256": "6627d1b7e9c4aace12878dbc69ad93582a0adcf09d4c7df3792aa4c2890fc05b",
+      "bytes": 15499
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE70_SEQUENTIAL_CONDITIONED_20261120_01/03_G2_MILP/G2/integer/block_expansion.csv",
+      "sha256": "1fd99e8c623482bf565123db4acaae8b29f58739766cdd14758a1d16e4dbc568",
+      "bytes": 16041
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE70_SEQUENTIAL_CONDITIONED_20261120_01/03_G2_MILP/G2/integer/renewable_expansion.csv",
+      "sha256": "ec3286e25e047eb011844a21238e774f6f70bf688cbfc3bc557a664c6f011001",
+      "bytes": 6168
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE70_SEQUENTIAL_CONDITIONED_20261120_01/03_G2_MILP/G2/integer/physical_point.json",
+      "sha256": "1cca3e082a8e58d62a4c153eb36eb47280e3913854139ccd8fd36670b9faab75",
+      "bytes": 23649493
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE70_SEQUENTIAL_CONDITIONED_20261120_01/03_G2_MILP/G2/integer/strength_reconstruction.json",
+      "sha256": "d3ab27eef9a2861bf57c0530c56f659f8c4e5ae6bf9dcbea7795dc314fd5a4f7",
+      "bytes": 72609937
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE70_SEQUENTIAL_CONDITIONED_20261120_01/03_G2_MILP/G2/integer/dispatch.csv",
+      "sha256": "a43c8026e832e0513d928af1532463b48c06fe2bddf3ef7aee1b7a40d6a1bbda",
+      "bytes": 4932863
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_20261118_01/G2/relaxed/profile.json",
+      "sha256": "ba7550c3208ea14f1190b7c2a5b2b5751c39d8ef926031b22acf450eb246fed7",
+      "bytes": 898
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_20261118_01/INDEPENDENT_REVIEW/mathematical_candidate_review_G2_relaxed_c842bbd.json",
+      "sha256": "76a0ef859ac44d7465369549d10fb9fe7517b937fa6dd99f1077335e53880af3",
+      "bytes": 340023
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_20261118_01/G2/relaxed/run_summary.json",
+      "sha256": "87a3b3bb94ccc04927157aec06a4a967adfb384ba6719fc32bd5bf1cafb6ae20",
+      "bytes": 2359
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_20261118_01/G2/relaxed/full_primal.csv",
+      "sha256": "4321523ab4432f82031048f344ad2d8b55545e4de7e13eedfea24f7d9ceac9d3",
+      "bytes": 11313167
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_20261118_01/G2/relaxed/variable_coordinates.csv",
+      "sha256": "0a08ecf3d8945a2652377eda992a5f1f53b723197c889cf1eefe048fb25c4994",
+      "bytes": 11207467
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_20261118_01/G2/relaxed/gurobi.log",
+      "sha256": "2e2ebf0b3f0ee0bb5df1fd2c545b29225dfa7db1cfd307badbd4b8cda646844c",
+      "bytes": 9006
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_20261118_01/G2/relaxed/block_expansion.csv",
+      "sha256": "7eae5981f4df1e0fbf4ab4f607a525b69789d167b18df4d6888f4576d4c8108a",
+      "bytes": 16427
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_20261118_01/G2/relaxed/renewable_expansion.csv",
+      "sha256": "1494084f3a55d9164a1ae6e42c667c07722f0da32ec07b7c3777855fb4bbe3f2",
+      "bytes": 6163
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_20261118_01/G2/relaxed/physical_point.json",
+      "sha256": "44e9e8f0fc3aa8f5b238a264a2a136abd7cac7b9fad1a8f81beca570c125caf2",
+      "bytes": 23821578
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_20261118_01/G2/relaxed/strength_reconstruction.json",
+      "sha256": "5655c08cba6c04ea2d06c9aab0b08edf19746f420e84a596b76492ebeb81ba3b",
+      "bytes": 73092455
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_20261118_01/G2/relaxed/dispatch.csv",
+      "sha256": "115938b175a3c738e210e6d4923aa74f8523cda4c955dd7a4c90fc29659df581",
+      "bytes": 4927591
+    },
+    {
+      "relative_path": "TECH_FULL37_FIVE_WEEKS_RE50_20261115_01/AP1_EXPORT/week_8/case.json",
+      "sha256": "f4b66af21fe59240eaa236698cf371458ce1cc22cdd3c25d9af9aafa92c4939d",
+      "bytes": 163938702
+    },
+    {
+      "relative_path": "TECH_FULL37_840H_RE50_GFM_FROZEN_E_20261117_01/AP2_SOURCE_VARIANTS/week_8/derived_case.json",
+      "sha256": "c03dfc3cd78d68e0aeb8fb6875a3875e71db5d2c2efd8d680ba1904f95a79cfe",
+      "bytes": 171432763
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_20261118_01/CASES/G2/case.json",
+      "sha256": "c154322ea868313405ac7be70c541ad87839bbb070ac2fa556f18c1d2547e2d5",
+      "bytes": 171432763
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_20261118_01/CASES/G2/receipt.json",
+      "sha256": "846bacb0a0287ddf8a8fcbefd29d52b4226d195544dd1b68922817fe4b6a35d2",
+      "bytes": 544
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_20261118_01/CASES/G3/case.json",
+      "sha256": "1ceb274ab48bf2e4f90783fa881d394c79fb216d311c6bde197c6fe77dbbb15d",
+      "bytes": 171432763
+    },
+    {
+      "relative_path": "TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_20261118_01/CASES/G3/receipt.json",
+      "sha256": "4e8940bdfa364c31ec799e4a31397b955b3eae70a5c2d7615633095fa260a139",
+      "bytes": 544
+    },
+    {
+      "relative_path": "SGOV145_20261121_01/QA_R/G0_P5.json",
+      "sha256": "77227538c8526686097b5ae9f7d73778afe6b3850b0ca8ed18ac5f59d266dfd3",
+      "bytes": 2733
+    },
+    {
+      "relative_path": "SGOV145_20261121_01/QA_R/G3_P5.json",
+      "sha256": "c21d3f09e6f01b8f2d1042f1a161662757f3d2a6e7f90b274c7ade424a189bc8",
+      "bytes": 11601
+    },
+    {
+      "relative_path": "SGOV145_20261121_01/QA_R/G3_RETRY_P5.json",
+      "sha256": "4e09ba0f76f75266127b05dd225b3a9bc9582fa6378b4804dd3eaa4e29441453",
+      "bytes": 5392
+    },
+    {
+      "relative_path": "SGOV145_20261121_01/QA_R/M2_P5.json",
+      "sha256": "bfbbed5575b5c34077ae29307715838d3f1ff5702ec7bead0443628443a4825d",
+      "bytes": 4529
+    },
+    {
+      "relative_path": "SGOV145_20261121_01/QA_R/M2_INTEGER_P5.json",
+      "sha256": "713876444811e5c5e3fc4ed0f7be78554366a0898232d85c2c6224b300265e60",
+      "bytes": 2381
+    },
+    {
+      "relative_path": "SGOV145_20261121_01/QA_R/M2_RETRY_INTEGER_P5.json",
+      "sha256": "7f4f81a4315c1d444ee8f9e1c0a8c645600505c057b7bc3fcb821db59730cf17",
+      "bytes": 2527
+    },
+    {
+      "relative_path": "SGOV145_20261121_01/QA_R/G0_TRANSFERRED_G2_WITNESS.json",
+      "sha256": "d4f0781555f448063ab9646a27c35daa820e416ee213d03d77e7c30da61f46e7",
+      "bytes": 11958
+    },
+    {
+      "relative_path": "SGOV145_20261121_01/QA_R/G3_TRANSFERRED_G2_WITNESS_FINAL.json",
+      "sha256": "61f2b631021bcd1b8aa2e34289eccfbea8c0b0f2ad1cf351b0784ca56e4e103a",
+      "bytes": 19184
+    },
+    {
+      "relative_path": "SGOV145_20261121_01/M2_REGISTER.json",
+      "sha256": "345e88b5e298dd7bed84197524bd0e45ccdc99a39dff2d43723efa986678093b",
+      "bytes": 30833
+    },
+    {
+      "relative_path": "SGOV145_20261121_01/FORMULATION_CONTRACT.md",
+      "sha256": "bd64e7e7f1bd1ed554d92fb32d3c1dccd5cd9dbe1a87011893cc3a4fc633733c",
+      "bytes": 14541
+    },
+    {
+      "relative_path": "SGOV145_20261121_01/TESTS.json",
+      "sha256": "e7d239942230369c57caaab23a7d4cf08d59d123a617059849afaacdd72a31b3",
+      "bytes": 7456
+    },
+    {
+      "relative_path": "SGOV145_20261121_01/FINDINGS.json",
+      "sha256": "0c04dcafa345abdf11ea87080f305c226681f437c088a5d895fb4b31128eadfa",
+      "bytes": 17111
+    }
+  ],
+  "Q4": {
+    "file": {
+      "path": "D:\\Projekte\\Code\\pypsatomatpowerx\\src\\block_gscr_converter.jl",
+      "sha256": "aceb4661c9fe3c92e41acf44a52250af2549a46c437a162e46f319453dfa1314",
+      "bytes": 186786
+    },
+    "git_diff_sha256": "56e116eb31589a19fe981dac46cc7f707bc603caedb57a1f5ff6183d740fefa8"
+  },
+  "runtime": {
+    "lockfile": {
+      "path": "D:\\Projekte\\Code\\FlexPlan_UC_GSCR\\Manifest-v1.11.toml",
+      "sha256": "89e4a3323bd8991280d7cac72b9f5fa4941765934201a70fc301b1097d3caa83",
+      "bytes": 59558
+    },
+    "accepted_sgov_runtime": {
+      "Pkg_mutations": false,
+      "active_project": "D:\\Projekte\\Code\\FlexPlan_UC_GSCR\\Project.toml",
+      "created_utc": "2026-11-21T21:43:12.743",
+      "historical_manifest_v1_10_sha256": "076a4ec39a45a89bc19f16fc5e8704033b1db04f472499eb3e8836af585b027f",
+      "license_smokes": {
+        "Gurobi": {
+          "license_smoke_passed": true,
+          "objective": 0.5,
+          "primal_status": "FEASIBLE_POINT",
+          "termination_status": "OPTIMAL"
+        },
+        "MOSEK": {
+          "license_smoke_passed": true,
+          "objective": 0.5,
+          "primal_status": "FEASIBLE_POINT",
+          "termination_status": "OPTIMAL"
+        }
+      },
+      "loaded_paths": {
+        "Gurobi": "C:\\Users\\User\\.julia\\packages\\Gurobi\\hs8RH\\src\\Gurobi.jl",
+        "Mosek": "C:\\Users\\User\\.julia\\packages\\Mosek\\wZpyc\\src\\Mosek.jl",
+        "MosekTools": "C:\\Users\\User\\.julia\\packages\\MosekTools\\iOqst\\src\\MosekTools.jl"
+      },
+      "manifest_sha256": "89e4a3323bd8991280d7cac72b9f5fa4941765934201a70fc301b1097d3caa83",
+      "project_sha256": "30efd0627fd65a4ef11944e75b669bed0279c1b10ff72f802c66a0da86ceb25e",
+      "scientific_model_solved": false,
+      "versions": {
+        "Gurobi": "1.9.3",
+        "Gurobi_jll_manifest": "13.0.3",
+        "Gurobi_library": "13.0.3",
+        "JuMP": "1.32.1",
+        "Julia": "1.11.5",
+        "MOSEK_library": "11.2.6",
+        "MathOptInterface": "1.54.0",
+        "Mosek": "11.2.1",
+        "MosekTools": "0.15.11"
+      }
+    },
+    "host_machine": "AMD64",
+    "logical_cpus": 12,
+    "OS": "Windows-11-10.0.26300-SP0",
+    "machine_check": {
+      "cpu_logical": 12,
+      "cpu_physical": 6,
+      "RAM_bytes": 33528926208,
+      "architecture": "AMD64",
+      "python": "3.12.12 | packaged by Anaconda, Inc. | (main, Oct 21 2025, 20:05:38) [MSC v.1929 64 bit (AMD64)]",
+      "processor": "AMD64 Family 23 Model 96 Stepping 1, AuthenticAMD",
+      "fresh_native_control_log_sha256": "f7f22c3420c509c6b2d1ac059bc6af252bc7c9d8d04d2b0db5b85cf84e0b0923",
+      "fresh_native_controls_exit": 0
+    }
+  },
+  "historical_G3_case": "1ceb274ab48bf2e4f90783fa881d394c79fb216d311c6bde197c6fe77dbbb15d",
+  "active_G2_case": "c154322ea868313405ac7be70c541ad87839bbb070ac2fa556f18c1d2547e2d5",
+  "status": "14 original vector sets inventoried; independent result status is in Gate 2",
+  "replay": "python scripts/paper_a/replay_gold_manifest.py --input-root <original-results-root> --manifest 00_INPUT_AND_RUNTIME_INTAKE.json"
+}

@@ -1,0 +1,438 @@
+{
+  "reviewer": "/root/qa_r",
+  "role": "independent sparse original-row replay",
+  "source_hashes": {
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_G3_GUROBI_DICT_20261120_02\\G3\\relaxed\\variable_coordinates.csv": "8f7836c76ec6c7f6b41ca39bf349ee19d738f412a1abaada0994c81598f0fc24",
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\G3_NUMERIC_01_EQUIVALENT_CONDITIONING_20261120_01\\ANALYSIS\\original_and_scaled_constraints.jsonl": "dfe21bd9f7ad4e771689d58c01711a7ab14be70bf15c5c97c9f5cc171f0a96fd",
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE50_GFM_FROZEN_E_20261118_01\\without_gscr\\relaxed_crossover\\full_primal.csv": "65872fb327c0f0c0efc2c0b58fb0e934cbb9cd59080bfc091e7ceea1e5491501",
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE50_GFM_FROZEN_E_20261118_01\\without_gscr\\relaxed_crossover\\variable_coordinates.csv": "53a661620069eabfd5ddc82af78afdc98916d215bd2cc0dba991488bc38808ed",
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01\\quota_60\\relaxed\\without_gscr\\relaxed_crossover\\variable_coordinates.csv": "d7ba8f8a9e4e3c97d96b4265cb64ae871eed6864186ac49d6205d2fb9281bd14",
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE50_GFM_FROZEN_E_MIP_20261118_01\\without_gscr\\integer\\full_primal.csv": "dff7a6defb4c2f56b65a5f9f074f8a68d9b894e3ea8dde20031a91454b869927",
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE50_GFM_FROZEN_E_MIP_20261118_01\\without_gscr\\integer\\variable_coordinates.csv": "d7ba8f8a9e4e3c97d96b4265cb64ae871eed6864186ac49d6205d2fb9281bd14",
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE50_GFM_FROZEN_E_20261118_01\\with_gscr\\relaxed_crossover\\full_primal.csv": "2932b243dbaff38436246e60c00a5392c8890d5185521e797d2c0982ffd8e7bf",
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE50_GFM_FROZEN_E_20261118_01\\with_gscr\\relaxed_crossover\\variable_coordinates.csv": "53a661620069eabfd5ddc82af78afdc98916d215bd2cc0dba991488bc38808ed",
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01\\quota_60\\relaxed\\with_gscr\\relaxed_crossover\\variable_coordinates.csv": "d7ba8f8a9e4e3c97d96b4265cb64ae871eed6864186ac49d6205d2fb9281bd14",
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE50_GFM_FROZEN_E_MIP_20261118_01\\with_gscr\\integer\\full_primal.csv": "3f87e6836e8a7465486a09e28ebeeef104f0e72e96992ba67e19ac28f0205fa4",
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE50_GFM_FROZEN_E_MIP_20261118_01\\with_gscr\\integer\\variable_coordinates.csv": "d7ba8f8a9e4e3c97d96b4265cb64ae871eed6864186ac49d6205d2fb9281bd14",
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01\\quota_60\\relaxed\\without_gscr\\relaxed_crossover\\full_primal.csv": "119562e4c80358a4fc0d351fa1535233fcb5d1fe81a1bdab54e0039724f97101",
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01\\quota_60\\integer\\without_gscr\\integer\\full_primal.csv": "62183c5f63dde92b3dc409e2384b091d6d7b3a4e1d4ff67eb1e1783964b822d0",
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01\\quota_60\\integer\\without_gscr\\integer\\variable_coordinates.csv": "d7ba8f8a9e4e3c97d96b4265cb64ae871eed6864186ac49d6205d2fb9281bd14",
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01\\quota_60\\relaxed\\with_gscr\\relaxed_crossover\\full_primal.csv": "170bcfe655d9da12584fae934ba88ad7b27d3595bbdc38b868f92f7332270739",
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01\\quota_60\\integer\\with_gscr\\integer\\full_primal.csv": "1d1ff09be1a3b1ed6ddb70f863ecc7a2f23940248208ff5bc873aa8bf00446cb",
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01\\quota_60\\integer\\with_gscr\\integer\\variable_coordinates.csv": "d7ba8f8a9e4e3c97d96b4265cb64ae871eed6864186ac49d6205d2fb9281bd14",
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01\\quota_70\\relaxed\\without_gscr\\relaxed_crossover\\full_primal.csv": "0fd2886aa420a261cf988a7c45d9d10d84957f585eaeddebd4a40a4cc4cbd1dd",
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01\\quota_70\\relaxed\\without_gscr\\relaxed_crossover\\variable_coordinates.csv": "d7ba8f8a9e4e3c97d96b4265cb64ae871eed6864186ac49d6205d2fb9281bd14",
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01\\quota_70\\integer\\without_gscr\\integer\\full_primal.csv": "dec5fe556c634d92f6da06841dd315ca5eb773b42c59f11c6d14383bc0ce6244",
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01\\quota_70\\integer\\without_gscr\\integer\\variable_coordinates.csv": "d7ba8f8a9e4e3c97d96b4265cb64ae871eed6864186ac49d6205d2fb9281bd14",
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01\\quota_70\\relaxed\\with_gscr\\relaxed_crossover\\full_primal.csv": "39c98de34476a2608582914781eb57c495f89c4e9c7abfc329956ee4bae11761",
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01\\quota_70\\relaxed\\with_gscr\\relaxed_crossover\\variable_coordinates.csv": "d7ba8f8a9e4e3c97d96b4265cb64ae871eed6864186ac49d6205d2fb9281bd14",
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01\\quota_70\\integer\\with_gscr\\integer\\full_primal.csv": "fb14d1c4b279f857cbb6d42273f74c58c566ef0f7ec6875e2179f756f1693aa5",
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01\\quota_70\\integer\\with_gscr\\integer\\variable_coordinates.csv": "d7ba8f8a9e4e3c97d96b4265cb64ae871eed6864186ac49d6205d2fb9281bd14",
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_20261118_01\\G2\\relaxed\\full_primal.csv": "4321523ab4432f82031048f344ad2d8b55545e4de7e13eedfea24f7d9ceac9d3",
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_20261118_01\\G2\\relaxed\\variable_coordinates.csv": "0a08ecf3d8945a2652377eda992a5f1f53b723197c889cf1eefe048fb25c4994",
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_SEQUENTIAL_CONDITIONED_20261120_01\\03_G2_MILP\\G2\\integer\\full_primal.csv": "3e3a7b4863a29adaf60ba2b446b03529aa12cedef2d9aec924095d6cca80c33f",
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_SEQUENTIAL_CONDITIONED_20261120_01\\03_G2_MILP\\G2\\integer\\variable_coordinates.csv": "0a08ecf3d8945a2652377eda992a5f1f53b723197c889cf1eefe048fb25c4994",
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_RESTART_20261119_01\\G3\\relaxed\\full_primal.csv": "f23922fe42358f3cb42c4a867b62ea68dfbc5177de3e89dcabb8a48bad460730",
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_RESTART_20261119_01\\G3\\relaxed\\variable_coordinates.csv": "8f7836c76ec6c7f6b41ca39bf349ee19d738f412a1abaada0994c81598f0fc24",
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_SEQUENTIAL_CONDITIONED_20261120_01\\01_G3_SOCP\\G3\\relaxed\\full_primal.csv": "3e5fde3fb1b26f8f6c308404e5bacc1175af35782a80090f950e70c220d8d4da",
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_SEQUENTIAL_CONDITIONED_20261120_01\\01_G3_SOCP\\G3\\relaxed\\variable_coordinates.csv": "8f7836c76ec6c7f6b41ca39bf349ee19d738f412a1abaada0994c81598f0fc24",
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_SEQUENTIAL_CONDITIONED_20261120_01\\02_G3_SOCP_BINARY_MILLION\\G3\\relaxed\\full_primal.csv": "9bee92a47bf7f4e7eea901260d1d8a8c8684fdee0e244d6d3a261e8941a590c7",
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_SEQUENTIAL_CONDITIONED_20261120_01\\02_G3_SOCP_BINARY_MILLION\\G3\\relaxed\\variable_coordinates.csv": "8f7836c76ec6c7f6b41ca39bf349ee19d738f412a1abaada0994c81598f0fc24",
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_SEQUENTIAL_CONDITIONED_20261120_01\\03_G2_MILP\\INDEPENDENT_REVIEW\\G2_MILP_plus_G3_witness_reference_original_values.csv": "eba484530019e8ada2ab21e9132c7d990e671d9395b7ca8970d8b6a4504eb9fc"
+  },
+  "case_ids": [
+    "WK08-50-BASE-LP",
+    "WK08-50-BASE-MILP",
+    "WK08-50-G1-LP",
+    "WK08-50-G1-MILP",
+    "WK08-60-BASE-LP",
+    "WK08-60-BASE-MILP",
+    "WK08-60-G1-LP",
+    "WK08-60-G1-MILP",
+    "WK08-70-BASE-LP",
+    "WK08-70-BASE-MILP",
+    "WK08-70-G1-LP",
+    "WK08-70-G1-MILP",
+    "WK08-70-G2-LP",
+    "WK08-70-G2-MILP",
+    "G3-19",
+    "G3-20-A",
+    "G3-20-B",
+    "G2-G3-WITNESS"
+  ],
+  "results": {
+    "WK08-50-BASE-LP": {
+      "all_algebraic_rows_evaluated": 723833,
+      "max_abs_original_row": 2.682209014892578e-07,
+      "exception_row": [
+        "MathOptInterface.GreaterThan{Float64}",
+        69889
+      ],
+      "violations_over_original_tolerance": 0,
+      "tolerance": 1e-06,
+      "max_rsoc_polynomial": null,
+      "max_by_row_family": {
+        "common": 9.234355502485414e-10,
+        "quota": 2.682209014892578e-07
+      },
+      "coordinate_binding": {
+        "bijective_map": 311395,
+        "permuted_original_indices": 1680
+      },
+      "scope": "Common native-model coefficient dump plus original quota; active G1/G2 mathematical rows and integrality separately tested from primary case."
+    },
+    "WK08-50-BASE-MILP": {
+      "all_algebraic_rows_evaluated": 723833,
+      "max_abs_original_row": 9.685754776000977e-08,
+      "exception_row": [
+        "MathOptInterface.GreaterThan{Float64}",
+        69889
+      ],
+      "violations_over_original_tolerance": 0,
+      "tolerance": 1e-06,
+      "max_rsoc_polynomial": null,
+      "max_by_row_family": {
+        "common": 5.547889259105432e-09,
+        "quota": 9.685754776000977e-08
+      },
+      "coordinate_binding": {
+        "bijective_map": 311395,
+        "permuted_original_indices": 1680
+      },
+      "scope": "Common native-model coefficient dump plus original quota; active G1/G2 mathematical rows and integrality separately tested from primary case."
+    },
+    "WK08-50-G1-LP": {
+      "all_algebraic_rows_evaluated": 723833,
+      "max_abs_original_row": 2.3096799850463867e-07,
+      "exception_row": [
+        "MathOptInterface.GreaterThan{Float64}",
+        69889
+      ],
+      "violations_over_original_tolerance": 0,
+      "tolerance": 1e-06,
+      "max_rsoc_polynomial": null,
+      "max_by_row_family": {
+        "common": 4.65398386495508e-10,
+        "quota": 2.3096799850463867e-07
+      },
+      "coordinate_binding": {
+        "bijective_map": 311395,
+        "permuted_original_indices": 1680
+      },
+      "scope": "Common native-model coefficient dump plus original quota; active G1/G2 mathematical rows and integrality separately tested from primary case."
+    },
+    "WK08-50-G1-MILP": {
+      "all_algebraic_rows_evaluated": 723833,
+      "max_abs_original_row": 2.2351741790771484e-07,
+      "exception_row": [
+        "MathOptInterface.GreaterThan{Float64}",
+        69889
+      ],
+      "violations_over_original_tolerance": 0,
+      "tolerance": 1e-06,
+      "max_rsoc_polynomial": null,
+      "max_by_row_family": {
+        "common": 6.687679909855859e-09,
+        "quota": 2.2351741790771484e-07
+      },
+      "coordinate_binding": {
+        "bijective_map": 311395,
+        "permuted_original_indices": 1680
+      },
+      "scope": "Common native-model coefficient dump plus original quota; active G1/G2 mathematical rows and integrality separately tested from primary case."
+    },
+    "WK08-60-BASE-LP": {
+      "all_algebraic_rows_evaluated": 723833,
+      "max_abs_original_row": 3.725290298461914e-08,
+      "exception_row": [
+        "MathOptInterface.GreaterThan{Float64}",
+        69889
+      ],
+      "violations_over_original_tolerance": 0,
+      "tolerance": 1e-06,
+      "max_rsoc_polynomial": null,
+      "max_by_row_family": {
+        "common": 7.560831960518044e-10,
+        "quota": 3.725290298461914e-08
+      },
+      "coordinate_binding": {
+        "bijective_map": 311395,
+        "permuted_original_indices": 1680
+      },
+      "scope": "Common native-model coefficient dump plus original quota; active G1/G2 mathematical rows and integrality separately tested from primary case."
+    },
+    "WK08-60-BASE-MILP": {
+      "all_algebraic_rows_evaluated": 723833,
+      "max_abs_original_row": 3.325908437545877e-10,
+      "exception_row": [
+        "MathOptInterface.EqualTo{Float64}",
+        20959
+      ],
+      "violations_over_original_tolerance": 0,
+      "tolerance": 1e-06,
+      "max_rsoc_polynomial": null,
+      "max_by_row_family": {
+        "common": 3.325908437545877e-10,
+        "quota": 0.0
+      },
+      "coordinate_binding": {
+        "bijective_map": 311395,
+        "permuted_original_indices": 1680
+      },
+      "scope": "Common native-model coefficient dump plus original quota; active G1/G2 mathematical rows and integrality separately tested from primary case."
+    },
+    "WK08-60-G1-LP": {
+      "all_algebraic_rows_evaluated": 723833,
+      "max_abs_original_row": 1.4156103134155273e-07,
+      "exception_row": [
+        "MathOptInterface.GreaterThan{Float64}",
+        69889
+      ],
+      "violations_over_original_tolerance": 0,
+      "tolerance": 1e-06,
+      "max_rsoc_polynomial": null,
+      "max_by_row_family": {
+        "common": 2.62581068000145e-10,
+        "quota": 1.4156103134155273e-07
+      },
+      "coordinate_binding": {
+        "bijective_map": 311395,
+        "permuted_original_indices": 1680
+      },
+      "scope": "Common native-model coefficient dump plus original quota; active G1/G2 mathematical rows and integrality separately tested from primary case."
+    },
+    "WK08-60-G1-MILP": {
+      "all_algebraic_rows_evaluated": 723833,
+      "max_abs_original_row": 1.043081283569336e-07,
+      "exception_row": [
+        "MathOptInterface.GreaterThan{Float64}",
+        69889
+      ],
+      "violations_over_original_tolerance": 0,
+      "tolerance": 1e-06,
+      "max_rsoc_polynomial": null,
+      "max_by_row_family": {
+        "common": 1.3639986917723945e-09,
+        "quota": 1.043081283569336e-07
+      },
+      "coordinate_binding": {
+        "bijective_map": 311395,
+        "permuted_original_indices": 1680
+      },
+      "scope": "Common native-model coefficient dump plus original quota; active G1/G2 mathematical rows and integrality separately tested from primary case."
+    },
+    "WK08-70-BASE-LP": {
+      "all_algebraic_rows_evaluated": 723833,
+      "max_abs_original_row": 4.544854164123535e-07,
+      "exception_row": [
+        "MathOptInterface.GreaterThan{Float64}",
+        69889
+      ],
+      "violations_over_original_tolerance": 0,
+      "tolerance": 1e-06,
+      "max_rsoc_polynomial": null,
+      "max_by_row_family": {
+        "common": 5.136300273989036e-10,
+        "quota": 4.544854164123535e-07
+      },
+      "coordinate_binding": {
+        "bijective_map": 311395,
+        "permuted_original_indices": 1680
+      },
+      "scope": "Common native-model coefficient dump plus original quota; active G1/G2 mathematical rows and integrality separately tested from primary case."
+    },
+    "WK08-70-BASE-MILP": {
+      "all_algebraic_rows_evaluated": 723833,
+      "max_abs_original_row": 3.512354851409327e-10,
+      "exception_row": [
+        "MathOptInterface.EqualTo{Float64}",
+        57659
+      ],
+      "violations_over_original_tolerance": 0,
+      "tolerance": 1e-06,
+      "max_rsoc_polynomial": null,
+      "max_by_row_family": {
+        "common": 3.512354851409327e-10,
+        "quota": 0.0
+      },
+      "coordinate_binding": {
+        "bijective_map": 311395,
+        "permuted_original_indices": 1680
+      },
+      "scope": "Common native-model coefficient dump plus original quota; active G1/G2 mathematical rows and integrality separately tested from primary case."
+    },
+    "WK08-70-G1-LP": {
+      "all_algebraic_rows_evaluated": 723833,
+      "max_abs_original_row": 3.2782554626464844e-07,
+      "exception_row": [
+        "MathOptInterface.GreaterThan{Float64}",
+        69889
+      ],
+      "violations_over_original_tolerance": 0,
+      "tolerance": 1e-06,
+      "max_rsoc_polynomial": null,
+      "max_by_row_family": {
+        "common": 3.4719960240181535e-10,
+        "quota": 3.2782554626464844e-07
+      },
+      "coordinate_binding": {
+        "bijective_map": 311395,
+        "permuted_original_indices": 1680
+      },
+      "scope": "Common native-model coefficient dump plus original quota; active G1/G2 mathematical rows and integrality separately tested from primary case."
+    },
+    "WK08-70-G1-MILP": {
+      "all_algebraic_rows_evaluated": 723833,
+      "max_abs_original_row": 8.195638656616211e-08,
+      "exception_row": [
+        "MathOptInterface.GreaterThan{Float64}",
+        69889
+      ],
+      "violations_over_original_tolerance": 0,
+      "tolerance": 1e-06,
+      "max_rsoc_polynomial": null,
+      "max_by_row_family": {
+        "common": 4.297362465877086e-11,
+        "quota": 8.195638656616211e-08
+      },
+      "coordinate_binding": {
+        "bijective_map": 311395,
+        "permuted_original_indices": 1680
+      },
+      "scope": "Common native-model coefficient dump plus original quota; active G1/G2 mathematical rows and integrality separately tested from primary case."
+    },
+    "WK08-70-G2-LP": {
+      "all_algebraic_rows_evaluated": 723833,
+      "max_abs_original_row": 4.3958425521850586e-07,
+      "exception_row": [
+        "MathOptInterface.GreaterThan{Float64}",
+        69889
+      ],
+      "violations_over_original_tolerance": 0,
+      "tolerance": 1e-06,
+      "max_rsoc_polynomial": null,
+      "max_by_row_family": {
+        "common": 1.4772409961949506e-09,
+        "quota": 4.3958425521850586e-07
+      },
+      "coordinate_binding": {
+        "bijective_map": 311395,
+        "permuted_original_indices": 0
+      },
+      "scope": "Common native-model coefficient dump plus original quota; active G1/G2 mathematical rows and integrality separately tested from primary case."
+    },
+    "WK08-70-G2-MILP": {
+      "all_algebraic_rows_evaluated": 723833,
+      "max_abs_original_row": 8.940696716308594e-08,
+      "exception_row": [
+        "MathOptInterface.GreaterThan{Float64}",
+        69889
+      ],
+      "violations_over_original_tolerance": 0,
+      "tolerance": 1e-06,
+      "max_rsoc_polynomial": null,
+      "max_by_row_family": {
+        "common": 5.125373903069885e-09,
+        "quota": 8.940696716308594e-08
+      },
+      "coordinate_binding": {
+        "bijective_map": 311395,
+        "permuted_original_indices": 0
+      },
+      "scope": "Common native-model coefficient dump plus original quota; active G1/G2 mathematical rows and integrality separately tested from primary case."
+    },
+    "G3-19": {
+      "all_algebraic_rows_evaluated": 756257,
+      "max_abs_original_row": 0.007862104994337926,
+      "exception_row": [
+        "MathOptInterface.EqualTo{Float64}",
+        79387
+      ],
+      "violations_over_original_tolerance": 6531,
+      "tolerance": 1e-07,
+      "max_rsoc_polynomial": 0.005417822538220207,
+      "max_by_row_family": {
+        "common": 0.007862104994337926,
+        "G3_node": 0.003238428325687437,
+        "quota": 0.0,
+        "G3_cone": 1.932154955671731e-06,
+        "G3_q_bound": 0.0
+      },
+      "coordinate_binding": {
+        "bijective_map": 328867,
+        "permuted_original_indices": 0
+      },
+      "scope": "All 756257 native G3 row distances including bounds and cones."
+    },
+    "G3-20-A": {
+      "all_algebraic_rows_evaluated": 756257,
+      "max_abs_original_row": 1.633704148673587e-05,
+      "exception_row": [
+        "MathOptInterface.EqualTo{Float64}",
+        23626
+      ],
+      "violations_over_original_tolerance": 723,
+      "tolerance": 1e-07,
+      "max_rsoc_polynomial": 0.0,
+      "max_by_row_family": {
+        "common": 1.633704148673587e-05,
+        "G3_node": 9.243478871212574e-09,
+        "quota": 0.0,
+        "G3_cone": 0.0,
+        "G3_q_bound": 0.0
+      },
+      "coordinate_binding": {
+        "bijective_map": 328867,
+        "permuted_original_indices": 0
+      },
+      "scope": "All 756257 native G3 row distances including bounds and cones."
+    },
+    "G3-20-B": {
+      "all_algebraic_rows_evaluated": 756257,
+      "max_abs_original_row": 0.002469585084128312,
+      "exception_row": [
+        "MathOptInterface.EqualTo{Float64}",
+        55249
+      ],
+      "violations_over_original_tolerance": 4633,
+      "tolerance": 1e-07,
+      "max_rsoc_polynomial": 0.0,
+      "max_by_row_family": {
+        "common": 0.002469585084128312,
+        "G3_node": 0.0,
+        "quota": 0.0,
+        "G3_cone": 0.0,
+        "G3_q_bound": 0.0
+      },
+      "coordinate_binding": {
+        "bijective_map": 328867,
+        "permuted_original_indices": 0
+      },
+      "scope": "All 756257 native G3 row distances including bounds and cones."
+    },
+    "G2-G3-WITNESS": {
+      "all_algebraic_rows_evaluated": 756257,
+      "max_abs_original_row": 8.940696716308594e-08,
+      "exception_row": [
+        "MathOptInterface.GreaterThan{Float64}",
+        69889
+      ],
+      "violations_over_original_tolerance": 0,
+      "tolerance": 1e-07,
+      "max_rsoc_polynomial": 1.4551915228366852e-11,
+      "max_by_row_family": {
+        "common": 5.125373903069885e-09,
+        "G3_node": 0.0,
+        "quota": 8.940696716308594e-08,
+        "G3_cone": 8.038873388460928e-14,
+        "G3_q_bound": 0.0
+      },
+      "coordinate_binding": "archived full 328867-vector witness",
+      "scope": "All 756257 native G3 row distances including bounds and cones."
+    }
+  },
+  "script_sha256": "3051138d071ce5dc1b6148e245383b29cc3ae9a733cf96b9daa38188832a70dd",
+  "source_identity_from": "Historical G3 dump; independent 1-1 physical coordinate remap, nonstrength rows determined by complete typed node span, q bounds and cone domains. 3 isolated bus rows per hour are included in G3 strength rows. Solver not called.",
+  "nonstrength_rows": 723833,
+  "total_g3_rows": 756257
+}

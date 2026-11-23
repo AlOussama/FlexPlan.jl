@@ -1,0 +1,332 @@
+{
+  "negative_runs": [
+    {
+      "method": "G3",
+      "mode": "relaxed",
+      "state": "NUMERICAL_REJECT",
+      "origin": "historical_native_Gurobi",
+      "code": "b8b4c67dbda948606f744913f7eb796e342b5211",
+      "case_sha256": "1ceb274ab48bf2e4f90783fa881d394c79fb216d311c6bde197c6fe77dbbb15d",
+      "profile_sha256": "19759293a85c7ad42953aed7487a6699a973b9024630fd79b90907e58ac83738",
+      "qa_file": "independent_relaxed_gate.json",
+      "qa_sha256": "4cf808d0b091e4ef6a7bc19f942c15a75f8722a16fc422b73b692d0dd5915f75",
+      "live_profile_sha256": null,
+      "raw_sha256": null,
+      "seconds": 298.86100006103516,
+      "objective_EUR2025": null,
+      "qualified_numerical_bound_EUR2025": null,
+      "claim": "Original-point violations at fixed 1e-7 tolerance",
+      "QA": {
+        "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_SEQUENTIAL_CONDITIONED_20261120_01\\01_G3_SOCP\\INDEPENDENT_REVIEW\\independent_relaxed_gate.json",
+        "sha256": "4cf808d0b091e4ef6a7bc19f942c15a75f8722a16fc422b73b692d0dd5915f75",
+        "bytes": 11138
+      },
+      "original_check": {
+        "interpretation": "numerical_original_model_check_not_exact_feasibility",
+        "maximum_constraint_distance": 1.633704148673587e-05,
+        "maximum_polynomial_RSOC_violation": 0.0,
+        "status": "failed_original_primal_check",
+        "tolerance": 1e-07
+      },
+      "native_status": null,
+      "integer_gap": null,
+      "proves_infeasibility": false
+    },
+    {
+      "method": "G3",
+      "mode": "relaxed",
+      "state": "NUMERICAL_REJECT",
+      "origin": "historical_native_Gurobi",
+      "code": "f2675487486532d2823a6ad24179b279a09149c0",
+      "case_sha256": "1ceb274ab48bf2e4f90783fa881d394c79fb216d311c6bde197c6fe77dbbb15d",
+      "profile_sha256": "9d7e729577f4de71af1699662feb6715009a7963710ad655caa8fb53259d3a5f",
+      "qa_file": "independent_relaxed_gate.json",
+      "qa_sha256": "2415b64fb60179fa1b6607f9a688b8c064a4d8d98287d873ad8b7bda126de25c",
+      "live_profile_sha256": null,
+      "raw_sha256": null,
+      "seconds": 254.52999997138977,
+      "objective_EUR2025": null,
+      "qualified_numerical_bound_EUR2025": null,
+      "claim": "Original-point violations at fixed 1e-7 tolerance",
+      "QA": {
+        "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_SEQUENTIAL_CONDITIONED_20261120_01\\02_G3_SOCP_BINARY_MILLION\\INDEPENDENT_REVIEW\\independent_relaxed_gate.json",
+        "sha256": "2415b64fb60179fa1b6607f9a688b8c064a4d8d98287d873ad8b7bda126de25c",
+        "bytes": 4988
+      },
+      "original_check": {
+        "interpretation": "numerical_original_model_check_not_exact_feasibility",
+        "maximum_constraint_distance": 0.002469585084128312,
+        "maximum_polynomial_RSOC_violation": 0.0,
+        "status": "failed_original_primal_check",
+        "tolerance": 1e-07
+      },
+      "native_status": null,
+      "integer_gap": null,
+      "proves_infeasibility": false
+    },
+    {
+      "method": "G3",
+      "mode": "relaxed",
+      "state": "NUMERICAL_REJECT",
+      "origin": "new_native_MOSEK",
+      "code": "0754707e7947ea71e917abe9ae33ddd01684a3a7",
+      "case_sha256": "94f0ea55ceb66522422ce2b0c8a899af13ef82e645755e01ec7135139135e653",
+      "profile_sha256": "4a22bced3c4370d2f99263b56287ec243e21b1d2f342131a623a9a411219c1d9",
+      "qa_file": "G3_P5.json",
+      "qa_sha256": "c21d3f09e6f01b8f2d1042f1a161662757f3d2a6e7f90b274c7ade424a189bc8",
+      "live_profile_sha256": "2b83a99a812e20519691ca589912b8539f350c583d184ad14934d321327a7344",
+      "raw_sha256": "72f8fe1c6e3a942eb52c3c3671fd2d4a2e59589fa25200e576c42e67f9412857",
+      "seconds": 95.6157366,
+      "objective_EUR2025": null,
+      "qualified_numerical_bound_EUR2025": null,
+      "claim": "Original 1e-7 control violated; SLOW_PROGRESS with a rejected vector",
+      "QA": {
+        "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\SGOV145_20261121_01\\QA_R\\G3_P5.json",
+        "sha256": "c21d3f09e6f01b8f2d1042f1a161662757f3d2a6e7f90b274c7ade424a189bc8",
+        "bytes": 11601
+      },
+      "original_check": null,
+      "native_status": null,
+      "integer_gap": null,
+      "proves_infeasibility": false
+    },
+    {
+      "method": "G0",
+      "mode": "relaxed",
+      "state": "NUMERICAL_REJECT",
+      "origin": "new_native_MOSEK",
+      "code": "784241f08a7c64f46e5151f3437fcc5c5db0da6f",
+      "case_sha256": "97d434a352a2012d6a3696d2d65587efff35aeff194c9734e4cb79f446d94fc5",
+      "profile_sha256": "7777f959282e02661fa8a8320ec1c225b02ebca086367e67c28e38ab13ed47ee",
+      "qa_file": "G0_P5.json",
+      "qa_sha256": "77227538c8526686097b5ae9f7d73778afe6b3850b0ca8ed18ac5f59d266dfd3",
+      "live_profile_sha256": "57dfb3aa56f2796bc7d843493623e2ae41644f01c847b222e501bf100fd2f2c8",
+      "raw_sha256": null,
+      "seconds": 307.7563081,
+      "objective_EUR2025": null,
+      "qualified_numerical_bound_EUR2025": null,
+      "claim": "SLOW_PROGRESS; no returned primal, original dual ray unqualified",
+      "QA": {
+        "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\SGOV145_20261121_01\\QA_R\\G0_P5.json",
+        "sha256": "77227538c8526686097b5ae9f7d73778afe6b3850b0ca8ed18ac5f59d266dfd3",
+        "bytes": 2733
+      },
+      "original_check": null,
+      "native_status": "SLOW_PROGRESS",
+      "integer_gap": null,
+      "proves_infeasibility": false
+    },
+    {
+      "method": "G3",
+      "mode": "relaxed",
+      "state": "NUMERICAL_REJECT",
+      "origin": "new_native_MOSEK",
+      "code": "fdf7d564bc28370e66ff7e55250db604a2ed5721",
+      "case_sha256": "94f0ea55ceb66522422ce2b0c8a899af13ef82e645755e01ec7135139135e653",
+      "profile_sha256": "4a22bced3c4370d2f99263b56287ec243e21b1d2f342131a623a9a411219c1d9",
+      "qa_file": "G3_RETRY_P5.json",
+      "qa_sha256": "4e09ba0f76f75266127b05dd225b3a9bc9582fa6378b4804dd3eaa4e29441453",
+      "live_profile_sha256": "eae2b98f07835e2ae43cf332529c8722ce20bc2a34496c3ba730afe6efb7cbe1",
+      "raw_sha256": "e2e538c2ad0bee3b38c660fd80911c3ffd3be7901dcb191d314d3ee01d39df97",
+      "seconds": 197.6179023,
+      "objective_EUR2025": null,
+      "qualified_numerical_bound_EUR2025": null,
+      "claim": "Dyadic backmap exact for all 328867 values. 22 original check categories failed.",
+      "QA": {
+        "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\SGOV145_20261121_01\\QA_R\\G3_RETRY_P5.json",
+        "sha256": "4e09ba0f76f75266127b05dd225b3a9bc9582fa6378b4804dd3eaa4e29441453",
+        "bytes": 5392
+      },
+      "original_check": {
+        "historical_raw_cone_polynomial_violation": 2.5910005206242204e-05,
+        "interpretation": "numerical_original_model_check_not_exact_feasibility",
+        "maximum_constraint_distance": 0.010130666196346283,
+        "maximum_polynomial_RSOC_violation": 1.2954995327163488e-05,
+        "status": "failed_original_primal_check",
+        "tolerance": 1e-07
+      },
+      "native_status": "SLOW_PROGRESS",
+      "integer_gap": null,
+      "proves_infeasibility": false
+    },
+    {
+      "method": "M2",
+      "mode": "integer",
+      "state": "TIME_LIMIT_NO_INTEGER_PRIMAL",
+      "origin": "new_native_Gurobi",
+      "code": "fdf7d564bc28370e66ff7e55250db604a2ed5721",
+      "case_sha256": "9a3ade9dda737d39f7bea9b100463ee3b3b7606b671eaaca4e553c79ad63e02b",
+      "profile_sha256": "2d5e2eebf0fc7983ad77ee6f802b6d2f2c04b880ac79a97406eb3ec86cea7bcc",
+      "qa_file": "M2_INTEGER_P5.json",
+      "qa_sha256": "713876444811e5c5e3fc4ed0f7be78554366a0898232d85c2c6224b300265e60",
+      "live_profile_sha256": "f7b051ee4848467c7d3b6a9320cf94a533cd539d6e7f7dd977d9b9fca4708e56",
+      "raw_sha256": null,
+      "seconds": 6900.184000015259,
+      "objective_EUR2025": null,
+      "qualified_numerical_bound_EUR2025": null,
+      "claim": "Time limit; no original integer primal, cost, or gap. Native tree bound is diagnostic in QA receipt.",
+      "QA": {
+        "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\SGOV145_20261121_01\\QA_R\\M2_INTEGER_P5.json",
+        "sha256": "713876444811e5c5e3fc4ed0f7be78554366a0898232d85c2c6224b300265e60",
+        "bytes": 2381
+      },
+      "original_check": null,
+      "native_status": 9,
+      "integer_gap": null,
+      "proves_infeasibility": false
+    },
+    {
+      "method": "M2",
+      "mode": "integer",
+      "state": "TIME_LIMIT_NO_INTEGER_PRIMAL",
+      "origin": "new_native_Gurobi",
+      "code": "dbecc1f2d26db134ac7a817c6ce2b5d0ba05882a",
+      "case_sha256": "9a3ade9dda737d39f7bea9b100463ee3b3b7606b671eaaca4e553c79ad63e02b",
+      "profile_sha256": "2d5e2eebf0fc7983ad77ee6f802b6d2f2c04b880ac79a97406eb3ec86cea7bcc",
+      "qa_file": "M2_RETRY_INTEGER_P5.json",
+      "qa_sha256": "7f4f81a4315c1d444ee8f9e1c0a8c645600505c057b7bc3fcb821db59730cf17",
+      "live_profile_sha256": "0c237758266bb441d660ccd3dcc931194c89490de6960b1acc4b6d171bef558e",
+      "raw_sha256": null,
+      "seconds": 1800.3029999732971,
+      "objective_EUR2025": null,
+      "qualified_numerical_bound_EUR2025": null,
+      "claim": "M2 second native MILP with independent LP capacity-only start and 1800 s solver limit.",
+      "QA": {
+        "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\SGOV145_20261121_01\\QA_R\\M2_RETRY_INTEGER_P5.json",
+        "sha256": "7f4f81a4315c1d444ee8f9e1c0a8c645600505c057b7bc3fcb821db59730cf17",
+        "bytes": 2527
+      },
+      "original_check": null,
+      "native_status": 9,
+      "integer_gap": null,
+      "proves_infeasibility": false
+    },
+    {
+      "method": "G3",
+      "mode": "relaxed",
+      "state": "NUMERIC_REJECTED",
+      "origin": "historical_native_Gurobi",
+      "summary": {
+        "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_G3_GUROBI_DICT_20261120_02\\G3\\relaxed\\run_summary.json",
+        "sha256": "44175b4175a1b9e57c1b48dbe0af910e13ff2869d9c77c39292bb8b67fdc3609",
+        "bytes": 2624291
+      },
+      "original_check": {
+        "interpretation": "numerical_original_model_check_not_exact_feasibility",
+        "maximum_constraint_distance": 0.00019444730678230826,
+        "maximum_polynomial_RSOC_violation": 0.0,
+        "status": "failed_original_primal_check",
+        "tolerance": 1e-07
+      },
+      "code": "97b11ee9ac9dfba387e1b8cac3a56720ec4e66a9",
+      "case_sha256": "1ceb274ab48bf2e4f90783fa881d394c79fb216d311c6bde197c6fe77dbbb15d",
+      "QA": {
+        "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_G3_GUROBI_DICT_20261120_02\\INDEPENDENT_REVIEW\\independent_relaxed_gate.json",
+        "sha256": "4be4d3da7773017aa8737ede4d3c5b63ae93550c047db087a41f0aabae44cbae",
+        "bytes": 1511
+      },
+      "accepted_cost": null,
+      "accepted_bound": null,
+      "proves_infeasibility": false
+    },
+    {
+      "method": "G3",
+      "mode": "relaxed",
+      "state": "NUMERIC_REJECTED",
+      "origin": "historical_native_Gurobi",
+      "summary": {
+        "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_G3_GUROBI_NUMERIC_20261120_03\\G3\\relaxed\\run_summary.json",
+        "sha256": "9211be678e789f1800db16d627fa68c5baa0c9268420722af7658f1db791a36f",
+        "bytes": 2624333
+      },
+      "original_check": {
+        "interpretation": "numerical_original_model_check_not_exact_feasibility",
+        "maximum_constraint_distance": 0.0068429547437589555,
+        "maximum_polynomial_RSOC_violation": 0.0,
+        "status": "failed_original_primal_check",
+        "tolerance": 1e-07
+      },
+      "code": "f81c6c52125556c7301c7e359568555d614ebdcc",
+      "case_sha256": "1ceb274ab48bf2e4f90783fa881d394c79fb216d311c6bde197c6fe77dbbb15d",
+      "QA": {
+        "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_G3_GUROBI_NUMERIC_20261120_03\\INDEPENDENT_REVIEW\\independent_relaxed_gate.json",
+        "sha256": "526ad273e64b58cd502cc2a2560292dfbd9af60358343ac87f932a264e9e8213",
+        "bytes": 1550
+      },
+      "accepted_cost": null,
+      "accepted_bound": null,
+      "proves_infeasibility": false
+    },
+    {
+      "method": "G3",
+      "mode": "relaxed",
+      "state": "NUMERIC_REJECTED",
+      "origin": "historical_native_Gurobi",
+      "summary": {
+        "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_NUMERIC_RECOVERY_20261119_01\\G3\\relaxed\\run_summary.json",
+        "sha256": "7c57a4f8b4fa0606777cd1ce5188806a854fbf177d93bb30620ce12adee7ba14",
+        "bytes": 2624284
+      },
+      "original_check": {
+        "maximum_polynomial_RSOC_violation": 0.0,
+        "interpretation": "numerical_original_model_check_not_exact_feasibility",
+        "status": "failed_original_primal_check",
+        "maximum_constraint_distance": 0.00019444730678230826,
+        "tolerance": 1e-07
+      },
+      "code": "8e046881296dfad5a93d86968a85ea3541d1ca7a",
+      "case_sha256": "1ceb274ab48bf2e4f90783fa881d394c79fb216d311c6bde197c6fe77dbbb15d",
+      "QA": {
+        "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_NUMERIC_RECOVERY_20261119_01\\INDEPENDENT_REVIEW\\independent_relaxed_gate.json",
+        "sha256": "57aa73024acf0a86553d4d8d3d898c4be8fa198473e4f83ef398695d706c70da",
+        "bytes": 1146
+      },
+      "accepted_cost": null,
+      "accepted_bound": null,
+      "proves_infeasibility": false
+    },
+    {
+      "method": "G3",
+      "mode": "relaxed",
+      "state": "NUMERIC_REJECTED",
+      "origin": "historical_native_Gurobi",
+      "summary": {
+        "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_RESTART_20261119_01\\G3\\relaxed\\run_summary.json",
+        "sha256": "c8d2e8b3f25d4326308b6407e65f534e5b89605159874e25e7280afdeada5d73",
+        "bytes": 2623927
+      },
+      "original_check": {
+        "maximum_polynomial_RSOC_violation": 0.005417822538220207,
+        "interpretation": "numerical_original_model_check_not_exact_feasibility",
+        "status": "failed_original_primal_check",
+        "maximum_constraint_distance": 0.007862104994337926,
+        "tolerance": 1e-07
+      },
+      "code": "c842bbd7db0eaf03c5804db6ba73c6f6ebb07f63",
+      "case_sha256": "1ceb274ab48bf2e4f90783fa881d394c79fb216d311c6bde197c6fe77dbbb15d",
+      "QA": null,
+      "accepted_cost": null,
+      "accepted_bound": null,
+      "proves_infeasibility": false
+    }
+  ],
+  "MISOCP": "MISOCP_NOT_EXECUTED; neither corrected native MOSEK SOCP primal met the 1e-7 original audit",
+  "G0_transfer": {
+    "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\SGOV145_20261121_01\\QA_R\\G0_TRANSFERRED_G2_WITNESS.json",
+    "sha256": "d4f0781555f448063ab9646a27c35daa820e416ee213d03d77e7c30da61f46e7",
+    "bytes": 11958
+  },
+  "G3_transfer": {
+    "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\SGOV145_20261121_01\\QA_R\\G3_TRANSFERRED_G2_WITNESS_FINAL.json",
+    "sha256": "61f2b631021bcd1b8aa2e34289eccfbea8c0b0f2ad1cf351b0784ca56e4e103a",
+    "bytes": 19184
+  },
+  "comparison": {
+    "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\SGOV145_20261121_01\\MATH_R_M2_TRANSFER_FINAL.json",
+    "sha256": "68685e7885415ba863447cb5d6a46b7b99f264f950a6f7db61f4002a6e043f51",
+    "bytes": 1783
+  },
+  "M1": "NO_REAL_BMIN",
+  "M2": "Nontrivial ex ante W is available and preserved",
+  "no_new_week_optimization_in_GOLD": true
+}

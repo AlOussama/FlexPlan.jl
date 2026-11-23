@@ -1,0 +1,24 @@
+{
+  "ref": "d6740f017a1f50be9737c9aff342751bd6fb8eac",
+  "path": "docs/reports/C2_constraints/C2A_voltage_stability/paper_a/governance/dispatch/2026-11-07__post_t01_targeted_next_macros/144_ACTIVE_GATE_OVERLAY_WEEK168_ALL_SCA_DUAL_SOLVER_RELAXATIONS_YEAR_DEFERRED_20261121.json",
+  "git_blob": "b94dab14e2a3558c8b93e0f2b2ec6c16b38d2e02",
+  "sha256": "24110208af4b3eef5da188dfd9743bcfe0ba0fd5c00b747b9988e61cd729e145",
+  "scope": "Historical week-only overlay; active GOLD register at 72bbcab3455fc04a8acad514607c97ebcb2a1030 is decisive.",
+  "source_status": null,
+  "read_keys": [
+    "schema",
+    "date",
+    "authority",
+    "scope_precedence",
+    "decision_document",
+    "superseded_planning_dependencies",
+    "preserved_validity_requirements",
+    "evidence",
+    "week_case",
+    "scientific_methods",
+    "backend_policy",
+    "relaxation_policy",
+    "execution",
+    "year"
+  ]
+}

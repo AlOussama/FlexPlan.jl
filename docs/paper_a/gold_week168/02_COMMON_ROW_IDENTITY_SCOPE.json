@@ -1,0 +1,60 @@
+{
+  "reviewer": "/root/qa_r",
+  "canonical_nonstrength_case_digest": "083578abccd857159e732372ee5cbf2c4ecb8bca3a6776d08a04df211ff97772",
+  "owner_builder_sha256": "40eb3f9d55289f031ba2f6ed965b9bb4beee5a5b7dda408cd4b8390cab435d9b",
+  "scope": "Actual parent, G2 and G3 archived case inputs coincide after masking strength-family selector metadata. BASE and G1 reuse parent c03dfc3 unchanged. The archived original G3 algebra is used as a countercheck for shared physical rows after semantic variable reindexing, exclusion of every G3-specific row/bound, and explicit quota substitution. This does not assert existence of per-run native coefficient dumps for 12 old BASE/G1 jobs. Independent per-case physical equation, source and cost replays plus separately archived solver outputs anchor acceptance for each.",
+  "covered_g1_archived_margins": [
+    [
+      "WK08-50-G1-LP",
+      6216,
+      0.0
+    ],
+    [
+      "WK08-50-G1-MILP",
+      6216,
+      1.4210854715202004e-14
+    ],
+    [
+      "WK08-60-G1-LP",
+      6216,
+      1.4210854715202004e-14
+    ],
+    [
+      "WK08-60-G1-MILP",
+      6216,
+      1.4210854715202004e-14
+    ],
+    [
+      "WK08-70-G1-LP",
+      6216,
+      1.4210854715202004e-14
+    ],
+    [
+      "WK08-70-G1-MILP",
+      6216,
+      2.2737367544323206e-13
+    ]
+  ],
+  "G2_own_archived_model_profiles": [
+    "ba7550c3208ea14f1190b7c2a5b2b5751c39d8ef926031b22acf450eb246fed7",
+    "ede315108e08dfa2e7e8d42f9441ceb749809b01e272fce16f39f7d09d8e8e1d"
+  ],
+  "algebraic_dump_G3_own_sha256": "dfe21bd9f7ad4e771689d58c01711a7ab14be70bf15c5c97c9f5cc171f0a96fd",
+  "replay_sha256": "40630fe56ca111c65fc1b7ecb60b9766a66920df7c8acd1492c67998ad1ae951",
+  "source_sha256": {
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_20261118_01\\INDEPENDENT_REVIEW\\actual_parent_G1_byte_baseline.json": "7afa2b3fd14c553774cc10ed83f89c01c5a2f718dced14c04ceb290f2c3a140b",
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01\\independent_quota_delta_review.json": "ffd4f7b709e0c62d04a7e0303a53c61aa580318441200efea2809ee0551d072a",
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_20261118_01\\INDEPENDENT_REVIEW\\actual_case_byte_review_G2_c842bbd.json": "5d5d68660ce4ac262ff0b30a832c90040f189d8706688125eaaca6b443055d01",
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_20261118_01\\CASES\\G2\\case.json": "c154322ea868313405ac7be70c541ad87839bbb070ac2fa556f18c1d2547e2d5",
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_20261118_01\\INDEPENDENT_REVIEW\\actual_case_byte_review_G3_c842bbd.json": "820ad34af748afaa8be6275683eb2154bf59a35308677adfb6211cf66e9095f9",
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_20261118_01\\CASES\\G3\\case.json": "1ceb274ab48bf2e4f90783fa881d394c79fb216d311c6bde197c6fe77dbbb15d",
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_FIVE_WEEKS_RE50_20261115_01\\run_common.jl": "40eb3f9d55289f031ba2f6ed965b9bb4beee5a5b7dda408cd4b8390cab435d9b",
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE50_GFM_FROZEN_E_20261118_01\\with_gscr\\relaxed_crossover\\g1_all_bus_hours.csv": "525eea3260c552d79f2ca39cf5d0e1d4183fda814cc0491e00dcbeb6c1cb58fb",
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE50_GFM_FROZEN_E_MIP_20261118_01\\with_gscr\\integer\\g1_all_bus_hours.csv": "7f2dcf32461ff21ecd3f5d758163018a218264179db19374ecf4c3df7fbe25e9",
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01\\quota_60\\relaxed\\with_gscr\\relaxed_crossover\\g1_all_bus_hours.csv": "57cf1c55029dd5aeba7279d6d20a35779e6719cb3ec870d745f728fb4d90bf53",
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01\\quota_60\\integer\\with_gscr\\integer\\g1_all_bus_hours.csv": "4779dd01c049a2d3387c48d2d08504b4c3d383f37335bf5fea76f75d708458c6",
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01\\quota_70\\relaxed\\with_gscr\\relaxed_crossover\\g1_all_bus_hours.csv": "4be70202341b7b5803f45afa731c1a31f70e5b07f92616f5047107712cdf7343",
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE60_70_FROZEN_E_20261118_01\\quota_70\\integer\\with_gscr\\integer\\g1_all_bus_hours.csv": "adc284f26187f8c15256fd002d4001579b85f560ad9242c848cc86f53cee33a4"
+  },
+  "core_receipt_sha256": "c710c38d9c511ca6a4c2ef693b6dd729333018c5a85dba15685c3c61e215b8bc"
+}

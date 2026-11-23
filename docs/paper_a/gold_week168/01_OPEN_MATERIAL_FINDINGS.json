@@ -1,0 +1,68 @@
+{
+  "reviewer": "/root/math_r",
+  "gate": "GATE1=PASS",
+  "open_material_model_corrections": 0,
+  "source_anchors": "01_FORMULATION_COVERAGE.csv (current function,line,file SHA-256 for each family key)",
+  "findings": [
+    {
+      "id": "K-P0-02",
+      "old": "All incremental GFL nameplate, uniform total dispatch, or energy quota used interchangeably",
+      "defect": "Frozen KW8 coefficient for new wind/PV is hourly resource availability times incremental capacity; native GFL uses online block participation.",
+      "correction": "Publish composite p and separate energy quota; no model change.",
+      "proof_test": "Independent restamp from native raw availability + all original n_a/capacity coordinates, 12 historical G1 slack exports and both G2 original rows.",
+      "family": "GFL_EXPOSURE",
+      "impact": "14 Variant A points, all paper exposure text",
+      "disposition": "CLOSED_BY_MATH_AND_TEXT_SCOPE"
+    },
+    {
+      "id": "K-P1-01",
+      "old": "Thermal block SU and SD are hard-exclusive",
+      "defect": "Equality only fixes su−sd. Positive pairs observed in four original rows.",
+      "correction": "Aggregate-UC disclosure; retain original gapped incumbent costs and distinguish cancellable amount.",
+      "proof_test": "Subtract min(su,sd) from both. Existing transition preserved, capacities and both min-time windows relax. 256368 original pairs examined at three thresholds.",
+      "family": "THERMAL_UC",
+      "impact": "BASE integer 50 and 60, all claims of hard mutual exclusion",
+      "disposition": "CLOSED_OPTIMAL_VALUE_NEUTRAL_NO_CODE_PATCH"
+    },
+    {
+      "id": "K-P0-02/INVERSE",
+      "old": "Classify every BASE hour as M0 pass/fail without a domain check",
+      "defect": "Inverse SPD Z conditions fail in 996 of the 1008 BASE hours.",
+      "correction": "Use undefined/out-of-domain separately; only the 12 eligible BASE-50-LP hours have interpretable M0 failures.",
+      "proof_test": "Original B(t) eigenvalues, inverse signs and residual, hourly in F1 independent replay.",
+      "family": "M0_INVERSE",
+      "impact": "All BASE diagnostics, legends and any G0↔G3 or M0 claim",
+      "disposition": "CLOSED_CONDITIONAL_DOMAIN"
+    },
+    {
+      "id": "K-P1-04/RATIO",
+      "old": "rho≤P/l bounds a RHS proxy from above",
+      "defect": "rho can be zero when P=d=l=1.",
+      "correction": "Enforce valid interval and direct positive-weight P/l substitution, with integer interval binding for disjunction; no exact-M0 claim.",
+      "proof_test": "Current ratio tester and 46-case independent exact oracle include wrong direction and decision-bound checks.",
+      "family": "EXP_APPROX",
+      "impact": "Generic EXP only",
+      "disposition": "CLOSED_SCOPED_TO_GENERIC_PROXY"
+    },
+    {
+      "id": "K-P1-04/BMIN",
+      "old": "Use a shifted passive B0 as a physical all-state lower reference",
+      "defect": "Smallest B0 eigenvalue −27.0671555093; no contract enforces sufficient minimum source credit per decision in every island.",
+      "correction": "Generic SPD-floor M1 only; real M1 data ineligible.",
+      "proof_test": "52 primitive stamps and 37×37 Y agreement, negative floor test in current suite.",
+      "family": "M1_FIXED_Z",
+      "impact": "Real M1 week, no Variant A dependency",
+      "disposition": "DATA_NOT_ELIGIBLE"
+    },
+    {
+      "id": "K-P1-02",
+      "old": "Direct rejected G3 or G2-derived q witness supplies optimized G3 lower cost or infeasibility",
+      "defect": "Rejected solver vectors fail original coordinates; transferred feasibility supplies at most one upper bound.",
+      "correction": "Only symmetric Z full-edge identity and separate verified transferred feasibility; retain explicit native negative ledger.",
+      "proof_test": "Full-edge budgets and signed RSOC proof; 03 native evidence and historical witness.",
+      "family": "G3_EDGE_SOC",
+      "impact": "G0/G3 cost, plot labels, theory",
+      "disposition": "CLOSED_BY_CLAIM_RESTRICTION"
+    }
+  ]
+}
