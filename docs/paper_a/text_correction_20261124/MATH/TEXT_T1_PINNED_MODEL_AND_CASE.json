@@ -1,0 +1,343 @@
+[
+  {
+    "family": "NET_YBUS_ISLANDS",
+    "locators": [
+      {
+        "locator": "src/core/paper_a_regional.jl:146@ac3d30bc095822d0a6b569f862ae60b285b69838f3b538db9c772b7d6ba46062",
+        "original_code_line": "function network_reference(net::AbstractDict, buses::AbstractDict, base::Real;tol=1e-9, diagnostic_only=false,"
+      }
+    ],
+    "case_contract": "Y recalc and seven physical AC islands; grounding provenance remains a planning assumption.",
+    "source_pin": "dbecc1f2d26db134ac7a817c6ce2b5d0ba05882a"
+  },
+  {
+    "family": "NET_SCHUR",
+    "locators": [
+      {
+        "locator": "src/core/paper_a_regional.jl:12@ac3d30bc095822d0a6b569f862ae60b285b69838f3b538db9c772b7d6ba46062",
+        "original_code_line": "function reduced_strength(L::AbstractMatrix{<:Real}, retained::AbstractVector{<:Integer},"
+      }
+    ],
+    "case_contract": "All 14 cases B0=L exactly as a coordinate operation.",
+    "source_pin": "dbecc1f2d26db134ac7a817c6ce2b5d0ba05882a"
+  },
+  {
+    "family": "SOURCE_STRENGTH",
+    "locators": [
+      {
+        "locator": "src/core/paper_a_regional.jl:30@ac3d30bc095822d0a6b569f862ae60b285b69838f3b538db9c772b7d6ba46062",
+        "original_code_line": "function source_b_block(S_block_MVA::Real,S_base_MVA::Real,x_src::Real)"
+      },
+      {
+        "locator": "src/core/paper_a_integration.jl:492@b3b49d0aed08ca6420435cf7f5a2d7c72afee6e0783016ce61446afa47f1bdf3",
+        "original_code_line": "function _paper_a_online_expressions!(pm,nw)"
+      }
+    ],
+    "case_contract": "179 SYN, 137 GFL, 37 GFM block devices. (No source strength for GFL.) Positive sequence frozen-internal-voltage proxy.",
+    "source_pin": "dbecc1f2d26db134ac7a817c6ce2b5d0ba05882a"
+  },
+  {
+    "family": "GFL_EXPOSURE",
+    "locators": [
+      {
+        "locator": "src/core/paper_a_integration.jl:492@b3b49d0aed08ca6420435cf7f5a2d7c72afee6e0783016ce61446afa47f1bdf3",
+        "original_code_line": "function _paper_a_online_expressions!(pm,nw)"
+      },
+      {
+        "locator": "src/core/paper_a_formulations.jl:102@a609843bac631237b5f9317ea1d1a79674cd80c4e866deca2573cb7a5fd6ab11",
+        "original_code_line": "function finalize_paper_a_strength!(pm;additional_gfl)"
+      },
+      {
+        "locator": "scripts/paper_a/run_week_strength_comparison.jl:47@c842370d2b65266e64e4d764ceb88cb8fa065bed54acb74cfbaecb52b88a7b49",
+        "original_code_line": "        JuMP.add_to_expression!(extra[t][region],p.availability[t]/base,p.installed)"
+      }
+    ],
+    "case_contract": "Physical replay uses native asset labels and original wind/PV availability bytes; compares 12\u00d76216 archived G1 slacks and active G2 original rows.",
+    "source_pin": "dbecc1f2d26db134ac7a817c6ce2b5d0ba05882a"
+  },
+  {
+    "family": "BLOCK_INVESTMENT",
+    "locators": [
+      {
+        "locator": "src/core/block_variable.jl:49@622c17028c4e1e1a55e2bc0caea8a60c98026f460b9d59baf7ec50976585c394",
+        "original_code_line": "function variable_installed_blocks(pm::_PM.AbstractPowerModel; nw::Int=_PM.nw_id_default, relax::Bool=false, report::Bool=true)"
+      },
+      {
+        "locator": "src/core/paper_a_integration.jl:107@b3b49d0aed08ca6420435cf7f5a2d7c72afee6e0783016ce61446afa47f1bdf3",
+        "original_code_line": "function _paper_a_limit_expansion!(pm, nw, peaks, groups)"
+      }
+    ],
+    "case_contract": "Integer count for MILPs, relaxed counts continuous. F2 original investment bounds.",
+    "source_pin": "dbecc1f2d26db134ac7a817c6ce2b5d0ba05882a"
+  },
+  {
+    "family": "BLOCK_DISPATCH",
+    "locators": [
+      {
+        "locator": "src/core/constraint.jl:123@ff21cd867cda73acfb5de213670e756ce82379eaa5559074a566a9e8b91eb9bd",
+        "original_code_line": "function constraint_uc_gscr_block_active_dispatch_bounds(pm::_PM.AbstractPowerModel, n::Int, device_key::Tuple{Symbol,Any}, p_min_pu, p_max_pu, p_block_max)"
+      },
+      {
+        "locator": "src/prob/uc_gscr_block_integration.jl:190@cc5faa2f1c4e9ca3057a268a3873749edf0e581ac555308a5650fc5c9b818f75",
+        "original_code_line": "        constraint_uc_gscr_block_dispatch(pm; nw=n)"
+      }
+    ],
+    "case_contract": "Applicable P/Q and carrier-specific DCP rows distinguished; F2 reconstructs active rows.",
+    "source_pin": "dbecc1f2d26db134ac7a817c6ce2b5d0ba05882a"
+  },
+  {
+    "family": "THERMAL_UC",
+    "locators": [
+      {
+        "locator": "src/core/block_variable.jl:293@622c17028c4e1e1a55e2bc0caea8a60c98026f460b9d59baf7ec50976585c394",
+        "original_code_line": "function constraint_block_count_transitions(pm::_PM.AbstractPowerModel; nw::Int=_PM.nw_id_default)"
+      },
+      {
+        "locator": "src/core/block_variable.jl:361@622c17028c4e1e1a55e2bc0caea8a60c98026f460b9d59baf7ec50976585c394",
+        "original_code_line": "function constraint_block_minimum_up_time(pm::_PM.AbstractPowerModel; nw::Int=_PM.nw_id_default)"
+      },
+      {
+        "locator": "src/core/block_variable.jl:400@622c17028c4e1e1a55e2bc0caea8a60c98026f460b9d59baf7ec50976585c394",
+        "original_code_line": "function constraint_block_minimum_down_time(pm::_PM.AbstractPowerModel; nw::Int=_PM.nw_id_default)"
+      }
+    ],
+    "case_contract": "256368 original thermal hour pairs. Four simultaneous pairs, all in two BASE integer incumbents.",
+    "source_pin": "dbecc1f2d26db134ac7a817c6ce2b5d0ba05882a"
+  },
+  {
+    "family": "UC_EVENT_COST",
+    "locators": [
+      {
+        "locator": "src/core/objective.jl:332@d066eab61a701ad147b5e7c1ccf5e5c7c64327714dbb1d36efe7635494c3ac23",
+        "original_code_line": "function calc_uc_gscr_block_startup_shutdown_cost(pm::_PM.AbstractPowerModel)"
+      },
+      {
+        "locator": "src/core/paper_a_regional.jl:277@ac3d30bc095822d0a6b569f862ae60b285b69838f3b538db9c772b7d6ba46062",
+        "original_code_line": "function dispatch_event_weights(delta_t_h::Real,repetitions::Real,"
+      }
+    ],
+    "case_contract": "Independent projected-event cost materiality, separate original cost/bound ledger in F2.",
+    "source_pin": "dbecc1f2d26db134ac7a817c6ce2b5d0ba05882a"
+  },
+  {
+    "family": "STORAGE_HYDRO",
+    "locators": [
+      {
+        "locator": "src/core/storage.jl:332@ac2a44aed9f74407b69dc5f589b927d418dab5ea76559662dbd43baad5396dfa",
+        "original_code_line": "function constraint_storage_state(pm::_PM.AbstractPowerModel, i::Int; nw::Int=_PM.nw_id_default)"
+      },
+      {
+        "locator": "src/core/paper_a_integration.jl:278@b3b49d0aed08ca6420435cf7f5a2d7c72afee6e0783016ce61446afa47f1bdf3",
+        "original_code_line": "function _paper_a_validate_native_storage(data)"
+      }
+    ],
+    "case_contract": "Reservoir and PHS are separate; use real storage conditions in F2, no universally imposed closure.",
+    "source_pin": "dbecc1f2d26db134ac7a817c6ce2b5d0ba05882a"
+  },
+  {
+    "family": "RE_QUOTA",
+    "locators": [
+      {
+        "locator": "scripts/paper_a/run_week_strength_comparison.jl:186@c842370d2b65266e64e4d764ceb88cb8fa065bed54acb74cfbaecb52b88a7b49",
+        "original_code_line": "    JuMP.@constraint(model,w.quota>=0.70*w.demand)"
+      },
+      {
+        "locator": "src/core/paper_a_full37.jl:37@2c64d8cd8876973989ed5acbd014c7fd1e2ec221386fef1717b344d5ef3cbcd6",
+        "original_code_line": "function _paper_a_kw08(data)"
+      }
+    ],
+    "case_contract": "Week energy, not nameplate/availability/year mix; 168 consecutive original snapshots.",
+    "source_pin": "dbecc1f2d26db134ac7a817c6ce2b5d0ba05882a"
+  },
+  {
+    "family": "COST_TOTAL",
+    "locators": [
+      {
+        "locator": "src/core/objective.jl:284@d066eab61a701ad147b5e7c1ccf5e5c7c64327714dbb1d36efe7635494c3ac23",
+        "original_code_line": "function calc_uc_gscr_block_investment_cost(pm::_PM.AbstractPowerModel)"
+      },
+      {
+        "locator": "scripts/paper_a/run_week_strength_comparison.jl:187@c842370d2b65266e64e4d764ceb88cb8fa065bed54acb74cfbaecb52b88a7b49",
+        "original_code_line": "    original_objective=investment+annual_factor*(w.gen+w.storage+w.events)"
+      }
+    ],
+    "case_contract": "Retain native bounded-gapped incumbent cost, label hypothetical event cancellations separately.",
+    "source_pin": "dbecc1f2d26db134ac7a817c6ce2b5d0ba05882a"
+  },
+  {
+    "family": "DCP_BALANCE",
+    "locators": [
+      {
+        "locator": "src/prob/uc_gscr_block_integration.jl:306@cc5faa2f1c4e9ca3057a268a3873749edf0e581ac555308a5650fc5c9b818f75",
+        "original_code_line": "function constraint_uc_gscr_block_bus_active_balance(pm::_PM.AbstractActivePowerModel; nw::Int=_PM.nw_id_default)"
+      },
+      {
+        "locator": "src/core/paper_a_integration.jl:538@b3b49d0aed08ca6420435cf7f5a2d7c72afee6e0783016ce61446afa47f1bdf3",
+        "original_code_line": "function _paper_a_candidate_storage_balance(pm,nw,i)"
+      }
+    ],
+    "case_contract": "Seven AC connectivity islands; DC transfers affect dispatch, not passive positive-sequence strength.",
+    "source_pin": "dbecc1f2d26db134ac7a817c6ce2b5d0ba05882a"
+  },
+  {
+    "family": "G0_PSD",
+    "locators": [
+      {
+        "locator": "src/core/paper_a_formulations.jl:162@a609843bac631237b5f9317ea1d1a79674cd80c4e866deca2573cb7a5fd6ab11",
+        "original_code_line": "    if f isa ExactPSDGSCR"
+      },
+      {
+        "locator": "scripts/paper_a/WeekStrengthAdmission.jl:27@a82fcf34fb08c59a94247a3b10efb5144905c4c5f4b763cf30adc093d81a2824",
+        "original_code_line": "function native_cost(model,native)"
+      }
+    ],
+    "case_contract": "Exact matrix criterion; transferred G2 feasibility and direct SDP numerical rejection separately.",
+    "source_pin": "dbecc1f2d26db134ac7a817c6ce2b5d0ba05882a"
+  },
+  {
+    "family": "G1",
+    "locators": [
+      {
+        "locator": "src/core/paper_a_integration.jl:526@b3b49d0aed08ca6420435cf7f5a2d7c72afee6e0783016ce61446afa47f1bdf3",
+        "original_code_line": "function _paper_a_g1!(pm,nw)"
+      },
+      {
+        "locator": "src/core/paper_a_diagnostics.jl:261@03cdedd4f8c6c63e0cfedfe0f31331bb7549236b5ae5d2ce7c49df454e2b912c",
+        "original_code_line": "function evaluate(B,p,alpha; r=ones(length(p)),W=Matrix{Float64}(I,length(p),length(p)),Bmin=nothing,witness=nothing,tol=DEFAULT_TOL)"
+      }
+    ],
+    "case_contract": "G1 active and matrix/inverse domain throughout 6\u00d7168 hours.",
+    "source_pin": "dbecc1f2d26db134ac7a817c6ce2b5d0ba05882a"
+  },
+  {
+    "family": "G2",
+    "locators": [
+      {
+        "locator": "src/core/paper_a_formulations.jl:40@a609843bac631237b5f9317ea1d1a79674cd80c4e866deca2573cb7a5fd6ab11",
+        "original_code_line": "struct FixedScalingGSCR <: AbstractPaperAFormulation"
+      },
+      {
+        "locator": "src/core/paper_a_formulations.jl:168@a609843bac631237b5f9317ea1d1a79674cd80c4e866deca2573cb7a5fd6ab11",
+        "original_code_line": "        length(f.r)==n || throw(DimensionMismatch(\"G2 r\"))"
+      }
+    ],
+    "case_contract": "No general order G1 versus fixed-r G2. Active G2 row passes both cases.",
+    "source_pin": "dbecc1f2d26db134ac7a817c6ce2b5d0ba05882a"
+  },
+  {
+    "family": "G3_EDGE_SOC",
+    "locators": [
+      {
+        "locator": "src/core/paper_a_formulations.jl:170@a609843bac631237b5f9317ea1d1a79674cd80c4e866deca2573cb7a5fd6ab11",
+        "original_code_line": "    elseif f isa ExactEdgeSOCGSCR"
+      },
+      {
+        "locator": "scripts/paper_a/WeekStrengthAdmission.jl:56@a82fcf34fb08c59a94247a3b10efb5144905c4c5f4b763cf30adc093d81a2824",
+        "original_code_line": "function native_strength_rows(pm,copy,native)"
+      }
+    ],
+    "case_contract": "[q1/2,q2,Mij]\u2208Qrot or [q1,q2,\u221a2 Mij] in real arithmetic; native Float64/recovered physical checks separately.",
+    "source_pin": "dbecc1f2d26db134ac7a817c6ce2b5d0ba05882a"
+  },
+  {
+    "family": "M0_INVERSE",
+    "locators": [
+      {
+        "locator": "src/core/paper_a_diagnostics.jl:261@03cdedd4f8c6c63e0cfedfe0f31331bb7549236b5ae5d2ce7c49df454e2b912c",
+        "original_code_line": "function evaluate(B,p,alpha; r=ones(length(p)),W=Matrix{Float64}(I,length(p),length(p)),Bmin=nothing,witness=nothing,tol=DEFAULT_TOL)"
+      }
+    ],
+    "case_contract": "In G2 LP 18/168 M0 negatives, in G2 integer 10/168; out-of-domain BASE hours never given inverse acceptance.",
+    "source_pin": "dbecc1f2d26db134ac7a817c6ce2b5d0ba05882a"
+  },
+  {
+    "family": "M1_FIXED_Z",
+    "locators": [
+      {
+        "locator": "src/core/paper_a_formulations.jl:186@a609843bac631237b5f9317ea1d1a79674cd80c4e866deca2573cb7a5fd6ab11",
+        "original_code_line": "    elseif f isa InverseBoundGSCR"
+      },
+      {
+        "locator": "src/core/paper_a_full37.jl:29@2c64d8cd8876973989ed5acbd014c7fd1e2ec221386fef1717b344d5ef3cbcd6",
+        "original_code_line": "function _paper_a_week_parameter_digest(data,f)"
+      }
+    ],
+    "case_contract": "Baseline passive min eigenvalue negative; no enforceable all-state SPD floor.",
+    "source_pin": "dbecc1f2d26db134ac7a817c6ce2b5d0ba05882a"
+  },
+  {
+    "family": "M2_FIXED_W",
+    "locators": [
+      {
+        "locator": "src/core/paper_a_formulations.jl:206@a609843bac631237b5f9317ea1d1a79674cd80c4e866deca2573cb7a5fd6ab11",
+        "original_code_line": "    elseif f isa InteractionGSCR"
+      },
+      {
+        "locator": "src/core/paper_a_full37.jl:29@2c64d8cd8876973989ed5acbd014c7fd1e2ec221386fef1717b344d5ef3cbcd6",
+        "original_code_line": "function _paper_a_week_parameter_digest(data,f)"
+      }
+    ],
+    "case_contract": "Nontrivial frozen historical G2 reference, separately qualified M2 LP; mixed-integer point absent.",
+    "source_pin": "dbecc1f2d26db134ac7a817c6ce2b5d0ba05882a"
+  },
+  {
+    "family": "SINGULAR_EXPOSURE",
+    "locators": [
+      {
+        "locator": "src/core/paper_a_diagnostics.jl:135@03cdedd4f8c6c63e0cfedfe0f31331bb7549236b5ae5d2ce7c49df454e2b912c",
+        "original_code_line": "function finite_spectrum(B,p;tol=DEFAULT_TOL)"
+      }
+    ],
+    "case_contract": "Exact rational elimination at rank ambiguity on stored floats and canonical pseudoinverse lift.",
+    "source_pin": "dbecc1f2d26db134ac7a817c6ce2b5d0ba05882a"
+  },
+  {
+    "family": "EXP_APPROX",
+    "locators": [
+      {
+        "locator": "src/core/paper_a_formulations.jl:12@a609843bac631237b5f9317ea1d1a79674cd80c4e866deca2573cb7a5fd6ab11",
+        "original_code_line": "function paper_a_ratio_majorant!(model,P,d,intervals;Pmax)"
+      },
+      {
+        "locator": "src/core/paper_a_diagnostics.jl:245@03cdedd4f8c6c63e0cfedfe0f31331bb7549236b5ae5d2ce7c49df454e2b912c",
+        "original_code_line": "function inverse_updates(A,Delta;order=1,tol=DEFAULT_TOL)"
+      }
+    ],
+    "case_contract": "Exact Woodbury identity for fixed evaluated inputs; approximate B-interaction proxy is not M0.",
+    "source_pin": "dbecc1f2d26db134ac7a817c6ce2b5d0ba05882a"
+  },
+  {
+    "family": "MOI_RELAX_SOLVER",
+    "locators": [
+      {
+        "locator": "scripts/paper_a/WeekStrengthAdmission.jl:7@a82fcf34fb08c59a94247a3b10efb5144905c4c5f4b763cf30adc093d81a2824",
+        "original_code_line": "function inventory(model; continuous)"
+      },
+      {
+        "locator": "scripts/paper_a/WeekStrengthAdmission.jl:27@a82fcf34fb08c59a94247a3b10efb5144905c4c5f4b763cf30adc093d81a2824",
+        "original_code_line": "function native_cost(model,native)"
+      },
+      {
+        "locator": "scripts/paper_a/run_week_strength_comparison.jl:192@c842370d2b65266e64e4d764ceb88cb8fa065bed54acb74cfbaecb52b88a7b49",
+        "original_code_line": "    mode==\"relaxed\" && JuMP.relax_integrality(model)"
+      }
+    ],
+    "case_contract": "LP, MILP, SOCP, SDP remain distinct; continuous fractional points have no discrete investment interpretation.",
+    "source_pin": "dbecc1f2d26db134ac7a817c6ce2b5d0ba05882a"
+  },
+  {
+    "family": "ORIGINAL_RESULT",
+    "locators": [
+      {
+        "locator": "scripts/paper_a/run_week_strength_comparison.jl:375@c842370d2b65266e64e4d764ceb88cb8fa065bed54acb74cfbaecb52b88a7b49",
+        "original_code_line": "            open(joinpath(out,\"full_primal.csv\"),\"w\") do io"
+      },
+      {
+        "locator": "scripts/paper_a/run_week_strength_comparison.jl:187@c842370d2b65266e64e4d764ceb88cb8fa065bed54acb74cfbaecb52b88a7b49",
+        "original_code_line": "    original_objective=investment+annual_factor*(w.gen+w.storage+w.events)"
+      }
+    ],
+    "case_contract": "F2 acceptance required for economic claims. Replays use each original profile separately.",
+    "source_pin": "dbecc1f2d26db134ac7a817c6ce2b5d0ba05882a"
+  }
+]

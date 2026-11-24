@@ -1,0 +1,75 @@
+{
+  "reviewer": "/root/math_r",
+  "scope": "T1 targeted falsification, secondary independent cross-model calculation",
+  "source_tex_sha256": "13aa094907af31e491acedb3bb528212f4ab359466d4f8569972329215e5b7dc",
+  "oracle_sha256": "35c5a022f30e2e795c9a4e8adca4de7b13e90943d60f2e521541fb74b4f2fe05",
+  "script_sha256": "c80712867ff523b0a2d98498600719b8ab92bdf50917fd905ff42a963a1df3a8",
+  "mutations": [
+    {
+      "before": "p=(1/4,2/3)",
+      "after": "p=(1/2,4/3)",
+      "mutated_tex_sha256": "3ec57bde321aecf5815363b1013363635fe201e72acc7d4318197233e806b3f6",
+      "oracle_exit": 1,
+      "failed_assertions": [
+        "PRINTED_G0_not_M0",
+        "EXPECTED_explicit_normalized_example_stage_gate",
+        "PRINTED_normalized_eigensystem",
+        "PRINTED_both_inverse_burden_vectors",
+        "PRINTED_normalized_M",
+        "PRINTED_spectrum_and_determinant",
+        "PROOF_G2_not_M0"
+      ]
+    },
+    {
+      "before": "r=(1,2)",
+      "after": "r=(2,1)",
+      "mutated_tex_sha256": "173ffd7fa646dceb4799e3df0de0abbd7d00cdad6a2c72b0ac761d9991574393",
+      "oracle_exit": 1,
+      "failed_assertions": [
+        "PRINTED_row_witnesses_found",
+        "PRINTED_G1_G2_nonnesting",
+        "PRINTED_Ma_scaled_row",
+        "PRINTED_Mb_scaled_row"
+      ]
+    },
+    {
+      "before": "Zp=(7/9,19/18)",
+      "after": "Zp=(6/9,19/18)",
+      "mutated_tex_sha256": "ac305e9e5fb912e7b02645f2d61a4a490b8956436da623c79a55e236cec43fc5",
+      "oracle_exit": 1,
+      "failed_assertions": [
+        "PRINTED_both_inverse_burden_vectors"
+      ]
+    },
+    {
+      "before": "and $13/12$",
+      "after": "and $13/24$",
+      "mutated_tex_sha256": "7055e6ef7041740def7044dbb3d1504801050cd2a19306bece052f0f5f1f4ade",
+      "oracle_exit": 1,
+      "failed_assertions": [
+        "PRINTED_spectrum_and_determinant"
+      ]
+    },
+    {
+      "before": "M_a r=(-1,1)",
+      "after": "M_a r=(1,1)",
+      "mutated_tex_sha256": "041c1ae93549e25f4ee14eb98126883e1923f57dc33a2009912266325fef091c",
+      "oracle_exit": 1,
+      "failed_assertions": [
+        "PRINTED_Ma_scaled_row"
+      ]
+    }
+  ],
+  "source_method_csv_sha256": "5fbcf0b726d9274755a63f44775256c78185802c158d3b3739fc71275a5d5dce",
+  "source_extension_sha256": "a805b1a593f51fc562a0e9adc1a7587beb7b212f83cd7b9f7ee78b029d7c2a84",
+  "M2_native_lower_EUR": "128108716784.26059",
+  "G3_upper_witness_EUR": "127449599028.67047",
+  "difference_million_EUR": "659.11775559012",
+  "M2_case_sha256": "9a3ade9dda737d39f7bea9b100463ee3b3b7606b671eaaca4e553c79ad63e02b",
+  "G3_case_sha256": "94f0ea55ceb66522422ce2b0c8a899af13ef82e645755e01ec7135139135e653",
+  "printed_outward_billion_bounds": [
+    "127.449600",
+    "128.108716"
+  ],
+  "printed_descriptive_million": "659.12"
+}

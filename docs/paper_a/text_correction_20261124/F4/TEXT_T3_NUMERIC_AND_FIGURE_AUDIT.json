@@ -1,0 +1,1309 @@
+{
+  "cohort": {
+    "WK08-50-BASE-LP": {
+      "status": "OPTIMAL",
+      "version": "12.0.3",
+      "case_sha": "c03dfc3cd78d68e0aeb8fb6875a3875e71db5d2c2efd8d680ba1904f95a79cfe",
+      "primal": "65872fb327c0f0c0efc2c0b58fb0e934cbb9cd59080bfc091e7ceea1e5491501",
+      "qa": "c4a1516d0fb2de194e7d39140258dc2f8a50553ce9b78ab2e1ae8b10bc2b115c",
+      "dimension": 311395
+    },
+    "WK08-50-BASE-MILP": {
+      "status": "OPTIMAL",
+      "version": "12.0.3",
+      "case_sha": "c03dfc3cd78d68e0aeb8fb6875a3875e71db5d2c2efd8d680ba1904f95a79cfe",
+      "primal": "dff7a6defb4c2f56b65a5f9f074f8a68d9b894e3ea8dde20031a91454b869927",
+      "qa": "fdf3ea4078e149ab6cf8a2e3f00b05c32beb605cbb8b209c271d7472e488c814",
+      "dimension": 311395
+    },
+    "WK08-50-G1-LP": {
+      "status": "OPTIMAL",
+      "version": "12.0.3",
+      "case_sha": "c03dfc3cd78d68e0aeb8fb6875a3875e71db5d2c2efd8d680ba1904f95a79cfe",
+      "primal": "2932b243dbaff38436246e60c00a5392c8890d5185521e797d2c0982ffd8e7bf",
+      "qa": "45cabff787440b5b4e9cb27271262bee0189d329a026bb8c3e64c00b964ff595",
+      "dimension": 311395
+    },
+    "WK08-50-G1-MILP": {
+      "status": "OPTIMAL",
+      "version": "12.0.3",
+      "case_sha": "c03dfc3cd78d68e0aeb8fb6875a3875e71db5d2c2efd8d680ba1904f95a79cfe",
+      "primal": "3f87e6836e8a7465486a09e28ebeeef104f0e72e96992ba67e19ac28f0205fa4",
+      "qa": "b8c5f4d95b2fd1c4e187dddb0abf16d0b0b62d01903576da20848c8e418b7efd",
+      "dimension": 311395
+    },
+    "WK08-60-BASE-LP": {
+      "status": "OPTIMAL",
+      "version": "12.0.3",
+      "case_sha": "c03dfc3cd78d68e0aeb8fb6875a3875e71db5d2c2efd8d680ba1904f95a79cfe",
+      "primal": "119562e4c80358a4fc0d351fa1535233fcb5d1fe81a1bdab54e0039724f97101",
+      "qa": "b1d462b721cc26d792816c9b50c631eb5ffdb550122cdd43d45893ebefe67623",
+      "dimension": 311395
+    },
+    "WK08-60-BASE-MILP": {
+      "status": "OPTIMAL",
+      "version": "12.0.3",
+      "case_sha": "c03dfc3cd78d68e0aeb8fb6875a3875e71db5d2c2efd8d680ba1904f95a79cfe",
+      "primal": "62183c5f63dde92b3dc409e2384b091d6d7b3a4e1d4ff67eb1e1783964b822d0",
+      "qa": "e5fd3a6faba1977a9d8c06b2f99bf01e6386df4f938db3ec42e4856588404350",
+      "dimension": 311395
+    },
+    "WK08-60-G1-LP": {
+      "status": "OPTIMAL",
+      "version": "12.0.3",
+      "case_sha": "c03dfc3cd78d68e0aeb8fb6875a3875e71db5d2c2efd8d680ba1904f95a79cfe",
+      "primal": "170bcfe655d9da12584fae934ba88ad7b27d3595bbdc38b868f92f7332270739",
+      "qa": "0b8cb9503dbed51248f67b995ffa8cd104880258059a41c2d73cef7ebe3a9110",
+      "dimension": 311395
+    },
+    "WK08-60-G1-MILP": {
+      "status": "OPTIMAL",
+      "version": "12.0.3",
+      "case_sha": "c03dfc3cd78d68e0aeb8fb6875a3875e71db5d2c2efd8d680ba1904f95a79cfe",
+      "primal": "1d1ff09be1a3b1ed6ddb70f863ecc7a2f23940248208ff5bc873aa8bf00446cb",
+      "qa": "82a16acf770505806701ae00f0b09e29dfb2bbdd914224e71712197480c5acdd",
+      "dimension": 311395
+    },
+    "WK08-70-BASE-LP": {
+      "status": "OPTIMAL",
+      "version": "12.0.3",
+      "case_sha": "c03dfc3cd78d68e0aeb8fb6875a3875e71db5d2c2efd8d680ba1904f95a79cfe",
+      "primal": "0fd2886aa420a261cf988a7c45d9d10d84957f585eaeddebd4a40a4cc4cbd1dd",
+      "qa": "299a583b17e669cab29472888e58f1c36446e7032ba06e6da33ee0ce8eb1e78f",
+      "dimension": 311395
+    },
+    "WK08-70-BASE-MILP": {
+      "status": "OPTIMAL",
+      "version": "12.0.3",
+      "case_sha": "c03dfc3cd78d68e0aeb8fb6875a3875e71db5d2c2efd8d680ba1904f95a79cfe",
+      "primal": "dec5fe556c634d92f6da06841dd315ca5eb773b42c59f11c6d14383bc0ce6244",
+      "qa": "f1bac6bad9cea98280b13890b620d990f78f1825a62c9f9a2245918dce0cf405",
+      "dimension": 311395
+    },
+    "WK08-70-G1-LP": {
+      "status": "OPTIMAL",
+      "version": "12.0.3",
+      "case_sha": "c03dfc3cd78d68e0aeb8fb6875a3875e71db5d2c2efd8d680ba1904f95a79cfe",
+      "primal": "39c98de34476a2608582914781eb57c495f89c4e9c7abfc329956ee4bae11761",
+      "qa": "600f52f0ebbd57c8b120771a94d4c5f1786bd031e0f92751d259b87f33fcefd7",
+      "dimension": 311395
+    },
+    "WK08-70-G1-MILP": {
+      "status": "OPTIMAL",
+      "version": "12.0.3",
+      "case_sha": "c03dfc3cd78d68e0aeb8fb6875a3875e71db5d2c2efd8d680ba1904f95a79cfe",
+      "primal": "fb14d1c4b279f857cbb6d42273f74c58c566ef0f7ec6875e2179f756f1693aa5",
+      "qa": "8f1997e7de49e5d4c264d70dbeef74193f217cd2d7456e75b0a7c2a66c50c494",
+      "dimension": 311395
+    },
+    "WK08-70-G2-LP": {
+      "status": "OPTIMAL",
+      "version": "12.0.3",
+      "case_sha": "c154322ea868313405ac7be70c541ad87839bbb070ac2fa556f18c1d2547e2d5",
+      "primal": "4321523ab4432f82031048f344ad2d8b55545e4de7e13eedfea24f7d9ceac9d3",
+      "qa": "863e13167af7171ad0a6be3d931390c0ccd64258bbaf5b7d159f8101424fd607",
+      "dimension": 311395
+    },
+    "WK08-70-G2-MILP": {
+      "status": "OPTIMAL",
+      "version": "13.0.3",
+      "case_sha": "c154322ea868313405ac7be70c541ad87839bbb070ac2fa556f18c1d2547e2d5",
+      "primal": "3e3a7b4863a29adaf60ba2b446b03529aa12cedef2d9aec924095d6cca80c33f",
+      "qa": "6d940836fbdc783eb2a221c99279f31b48315ee6669915b697b843b97a8f012a",
+      "dimension": 311395
+    }
+  },
+  "printed_rows": {
+    "50BASE": [
+      "97.5515",
+      "97.5515",
+      "97.5666",
+      "0.015"
+    ],
+    "50G1": [
+      "98.6197",
+      "98.6197",
+      "98.9982",
+      "0.382"
+    ],
+    "60BASE": [
+      "109.7309",
+      "109.7309",
+      "109.7437",
+      "0.012"
+    ],
+    "60G1": [
+      "111.3957",
+      "111.3957",
+      "111.8142",
+      "0.374"
+    ],
+    "70BASE": [
+      "124.9897",
+      "124.9897",
+      "125.0560",
+      "0.053"
+    ],
+    "70G1": [
+      "127.3483",
+      "127.3483",
+      "127.8187",
+      "0.368"
+    ],
+    "70G2": [
+      "127.4082",
+      "127.4082",
+      "127.4496",
+      "0.032"
+    ]
+  },
+  "charts": {},
+  "G3_attempts": [
+    {
+      "code": "b8b4c67dbda948606f744913f7eb796e342b5211",
+      "case": "1ceb274ab48bf2e4f90783fa881d394c79fb216d311c6bde197c6fe77dbbb15d",
+      "evidence": {
+        "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_SEQUENTIAL_CONDITIONED_20261120_01\\01_G3_SOCP\\INDEPENDENT_REVIEW\\independent_relaxed_gate.json",
+        "sha256": "4cf808d0b091e4ef6a7bc19f942c15a75f8722a16fc422b73b692d0dd5915f75",
+        "bytes": 11138
+      },
+      "original_check": {
+        "interpretation": "numerical_original_model_check_not_exact_feasibility",
+        "maximum_constraint_distance": 1.633704148673587e-05,
+        "maximum_polynomial_RSOC_violation": 0.0,
+        "status": "failed_original_primal_check",
+        "tolerance": 1e-07
+      }
+    },
+    {
+      "code": "f2675487486532d2823a6ad24179b279a09149c0",
+      "case": "1ceb274ab48bf2e4f90783fa881d394c79fb216d311c6bde197c6fe77dbbb15d",
+      "evidence": {
+        "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_SEQUENTIAL_CONDITIONED_20261120_01\\02_G3_SOCP_BINARY_MILLION\\INDEPENDENT_REVIEW\\independent_relaxed_gate.json",
+        "sha256": "2415b64fb60179fa1b6607f9a688b8c064a4d8d98287d873ad8b7bda126de25c",
+        "bytes": 4988
+      },
+      "original_check": {
+        "interpretation": "numerical_original_model_check_not_exact_feasibility",
+        "maximum_constraint_distance": 0.002469585084128312,
+        "maximum_polynomial_RSOC_violation": 0.0,
+        "status": "failed_original_primal_check",
+        "tolerance": 1e-07
+      }
+    },
+    {
+      "code": "0754707e7947ea71e917abe9ae33ddd01684a3a7",
+      "case": "94f0ea55ceb66522422ce2b0c8a899af13ef82e645755e01ec7135139135e653",
+      "evidence": {
+        "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\SGOV145_20261121_01\\QA_R\\G3_P5.json",
+        "sha256": "c21d3f09e6f01b8f2d1042f1a161662757f3d2a6e7f90b274c7ade424a189bc8",
+        "bytes": 11601
+      },
+      "original_check": {}
+    },
+    {
+      "code": "fdf7d564bc28370e66ff7e55250db604a2ed5721",
+      "case": "94f0ea55ceb66522422ce2b0c8a899af13ef82e645755e01ec7135139135e653",
+      "evidence": {
+        "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\SGOV145_20261121_01\\QA_R\\G3_RETRY_P5.json",
+        "sha256": "4e09ba0f76f75266127b05dd225b3a9bc9582fa6378b4804dd3eaa4e29441453",
+        "bytes": 5392
+      },
+      "original_check": {
+        "historical_raw_cone_polynomial_violation": 2.5910005206242204e-05,
+        "interpretation": "numerical_original_model_check_not_exact_feasibility",
+        "maximum_constraint_distance": 0.010130666196346283,
+        "maximum_polynomial_RSOC_violation": 1.2954995327163488e-05,
+        "status": "failed_original_primal_check",
+        "tolerance": 1e-07
+      }
+    },
+    {
+      "code": "97b11ee9ac9dfba387e1b8cac3a56720ec4e66a9",
+      "case": "1ceb274ab48bf2e4f90783fa881d394c79fb216d311c6bde197c6fe77dbbb15d",
+      "evidence": {
+        "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_G3_GUROBI_DICT_20261120_02\\INDEPENDENT_REVIEW\\independent_relaxed_gate.json",
+        "sha256": "4be4d3da7773017aa8737ede4d3c5b63ae93550c047db087a41f0aabae44cbae",
+        "bytes": 1511
+      },
+      "original_check": {
+        "interpretation": "numerical_original_model_check_not_exact_feasibility",
+        "maximum_constraint_distance": 0.00019444730678230826,
+        "maximum_polynomial_RSOC_violation": 0.0,
+        "status": "failed_original_primal_check",
+        "tolerance": 1e-07
+      }
+    },
+    {
+      "code": "f81c6c52125556c7301c7e359568555d614ebdcc",
+      "case": "1ceb274ab48bf2e4f90783fa881d394c79fb216d311c6bde197c6fe77dbbb15d",
+      "evidence": {
+        "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_G3_GUROBI_NUMERIC_20261120_03\\INDEPENDENT_REVIEW\\independent_relaxed_gate.json",
+        "sha256": "526ad273e64b58cd502cc2a2560292dfbd9af60358343ac87f932a264e9e8213",
+        "bytes": 1550
+      },
+      "original_check": {
+        "interpretation": "numerical_original_model_check_not_exact_feasibility",
+        "maximum_constraint_distance": 0.0068429547437589555,
+        "maximum_polynomial_RSOC_violation": 0.0,
+        "status": "failed_original_primal_check",
+        "tolerance": 1e-07
+      }
+    },
+    {
+      "code": "8e046881296dfad5a93d86968a85ea3541d1ca7a",
+      "case": "1ceb274ab48bf2e4f90783fa881d394c79fb216d311c6bde197c6fe77dbbb15d",
+      "evidence": {
+        "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_NUMERIC_RECOVERY_20261119_01\\INDEPENDENT_REVIEW\\independent_relaxed_gate.json",
+        "sha256": "57aa73024acf0a86553d4d8d3d898c4be8fa198473e4f83ef398695d706c70da",
+        "bytes": 1146
+      },
+      "original_check": {
+        "maximum_polynomial_RSOC_violation": 0.0,
+        "interpretation": "numerical_original_model_check_not_exact_feasibility",
+        "status": "failed_original_primal_check",
+        "maximum_constraint_distance": 0.00019444730678230826,
+        "tolerance": 1e-07
+      }
+    },
+    {
+      "code": "c842bbd7db0eaf03c5804db6ba73c6f6ebb07f63",
+      "case": "1ceb274ab48bf2e4f90783fa881d394c79fb216d311c6bde197c6fe77dbbb15d",
+      "evidence": {
+        "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_RESTART_20261119_01\\G3\\relaxed\\run_summary.json",
+        "sha256": "c8d2e8b3f25d4326308b6407e65f534e5b89605159874e25e7280afdeada5d73",
+        "bytes": 2623927
+      },
+      "original_check": {
+        "maximum_polynomial_RSOC_violation": 0.005417822538220207,
+        "interpretation": "numerical_original_model_check_not_exact_feasibility",
+        "status": "failed_original_primal_check",
+        "maximum_constraint_distance": 0.007862104994337926,
+        "tolerance": 1e-07
+      }
+    }
+  ],
+  "extra_bounds": {
+    "UB": "127449599028.67047",
+    "LB": "128108716784.26059",
+    "EUR_difference": "659117755.59012"
+  },
+  "chart_artist_values": {
+    "04_fig_cost.pdf": [
+      [
+        50,
+        "BASE",
+        97.55152896655356,
+        97.5665981503005,
+        97.55152896655267
+      ],
+      [
+        50,
+        "G1",
+        98.61970609627201,
+        98.99812711723683,
+        98.61970609627141
+      ],
+      [
+        60,
+        "BASE",
+        109.73097132991548,
+        109.74361728829498,
+        109.73097132991434
+      ],
+      [
+        60,
+        "G1",
+        111.39575943943794,
+        111.81415070729899,
+        111.39575943943652
+      ],
+      [
+        70,
+        "BASE",
+        124.98973333715735,
+        125.05597270108397,
+        124.98973333715601
+      ],
+      [
+        70,
+        "G1",
+        127.34837644875867,
+        127.81861854537375,
+        127.3483764487582
+      ],
+      [
+        70,
+        "G2",
+        127.4082215254212,
+        127.44959902867048,
+        127.40822152542138
+      ]
+    ],
+    "04_fig_portfolio.pdf": [
+      [
+        50,
+        "BASE",
+        "GFL_BESS",
+        16.975
+      ],
+      [
+        50,
+        "G1",
+        "GFL_BESS",
+        7.3
+      ],
+      [
+        60,
+        "BASE",
+        "GFL_BESS",
+        76.325
+      ],
+      [
+        60,
+        "G1",
+        "GFL_BESS",
+        38.175
+      ],
+      [
+        70,
+        "BASE",
+        "GFL_BESS",
+        141.8
+      ],
+      [
+        70,
+        "G1",
+        "GFL_BESS",
+        58.875
+      ],
+      [
+        70,
+        "G2",
+        "GFL_BESS",
+        57.225
+      ],
+      [
+        50,
+        "BASE",
+        "GFM_BESS",
+        0.0
+      ],
+      [
+        50,
+        "G1",
+        "GFM_BESS",
+        33.525
+      ],
+      [
+        60,
+        "BASE",
+        "GFM_BESS",
+        0.0
+      ],
+      [
+        60,
+        "G1",
+        "GFM_BESS",
+        62.8
+      ],
+      [
+        70,
+        "BASE",
+        "GFM_BESS",
+        0.0
+      ],
+      [
+        70,
+        "G1",
+        "GFM_BESS",
+        104.575
+      ],
+      [
+        70,
+        "G2",
+        "GFM_BESS",
+        102.45
+      ],
+      [
+        50,
+        "BASE",
+        "wind",
+        344.30719870843257
+      ],
+      [
+        50,
+        "G1",
+        "wind",
+        341.283182427223
+      ],
+      [
+        60,
+        "BASE",
+        "wind",
+        459.83130376907616
+      ],
+      [
+        60,
+        "G1",
+        "wind",
+        452.69569820314035
+      ],
+      [
+        70,
+        "BASE",
+        "wind",
+        583.9581114946161
+      ],
+      [
+        70,
+        "G1",
+        "wind",
+        587.4240427000472
+      ],
+      [
+        70,
+        "G2",
+        "wind",
+        589.7287389109852
+      ],
+      [
+        50,
+        "BASE",
+        "PV",
+        434.41059285179955
+      ],
+      [
+        50,
+        "G1",
+        "PV",
+        442.79994576646214
+      ],
+      [
+        60,
+        "BASE",
+        "PV",
+        602.4372225633392
+      ],
+      [
+        60,
+        "G1",
+        "PV",
+        628.2930139765521
+      ],
+      [
+        70,
+        "BASE",
+        "PV",
+        718.9227283523587
+      ],
+      [
+        70,
+        "G1",
+        "PV",
+        726.0527116451459
+      ],
+      [
+        70,
+        "G2",
+        "PV",
+        718.3990084286081
+      ]
+    ],
+    "04_fig_diagnostics.pdf": [
+      [
+        50,
+        "BASE",
+        "LP",
+        "G1",
+        168,
+        168,
+        "168"
+      ],
+      [
+        50,
+        "BASE",
+        "LP",
+        "G2",
+        168,
+        168,
+        "168"
+      ],
+      [
+        50,
+        "BASE",
+        "LP",
+        "G0",
+        168,
+        168,
+        "168"
+      ],
+      [
+        50,
+        "BASE",
+        "LP",
+        "M0",
+        12,
+        12,
+        "12/12"
+      ],
+      [
+        50,
+        "BASE",
+        "MILP",
+        "G1",
+        168,
+        168,
+        "168"
+      ],
+      [
+        50,
+        "BASE",
+        "MILP",
+        "G2",
+        168,
+        168,
+        "168"
+      ],
+      [
+        50,
+        "BASE",
+        "MILP",
+        "G0",
+        168,
+        168,
+        "168"
+      ],
+      [
+        50,
+        "BASE",
+        "MILP",
+        "M0",
+        0,
+        0,
+        "n/a"
+      ],
+      [
+        50,
+        "G1",
+        "LP",
+        "G1",
+        0,
+        168,
+        "0"
+      ],
+      [
+        50,
+        "G1",
+        "LP",
+        "G2",
+        168,
+        168,
+        "168"
+      ],
+      [
+        50,
+        "G1",
+        "LP",
+        "G0",
+        0,
+        168,
+        "0"
+      ],
+      [
+        50,
+        "G1",
+        "LP",
+        "M0",
+        0,
+        168,
+        "0/168"
+      ],
+      [
+        50,
+        "G1",
+        "MILP",
+        "G1",
+        0,
+        168,
+        "0"
+      ],
+      [
+        50,
+        "G1",
+        "MILP",
+        "G2",
+        168,
+        168,
+        "168"
+      ],
+      [
+        50,
+        "G1",
+        "MILP",
+        "G0",
+        0,
+        168,
+        "0"
+      ],
+      [
+        50,
+        "G1",
+        "MILP",
+        "M0",
+        0,
+        168,
+        "0/168"
+      ],
+      [
+        60,
+        "BASE",
+        "LP",
+        "G1",
+        168,
+        168,
+        "168"
+      ],
+      [
+        60,
+        "BASE",
+        "LP",
+        "G2",
+        168,
+        168,
+        "168"
+      ],
+      [
+        60,
+        "BASE",
+        "LP",
+        "G0",
+        168,
+        168,
+        "168"
+      ],
+      [
+        60,
+        "BASE",
+        "LP",
+        "M0",
+        0,
+        0,
+        "n/a"
+      ],
+      [
+        60,
+        "BASE",
+        "MILP",
+        "G1",
+        168,
+        168,
+        "168"
+      ],
+      [
+        60,
+        "BASE",
+        "MILP",
+        "G2",
+        168,
+        168,
+        "168"
+      ],
+      [
+        60,
+        "BASE",
+        "MILP",
+        "G0",
+        168,
+        168,
+        "168"
+      ],
+      [
+        60,
+        "BASE",
+        "MILP",
+        "M0",
+        0,
+        0,
+        "n/a"
+      ],
+      [
+        60,
+        "G1",
+        "LP",
+        "G1",
+        0,
+        168,
+        "0"
+      ],
+      [
+        60,
+        "G1",
+        "LP",
+        "G2",
+        168,
+        168,
+        "168"
+      ],
+      [
+        60,
+        "G1",
+        "LP",
+        "G0",
+        0,
+        168,
+        "0"
+      ],
+      [
+        60,
+        "G1",
+        "LP",
+        "M0",
+        0,
+        168,
+        "0/168"
+      ],
+      [
+        60,
+        "G1",
+        "MILP",
+        "G1",
+        0,
+        168,
+        "0"
+      ],
+      [
+        60,
+        "G1",
+        "MILP",
+        "G2",
+        168,
+        168,
+        "168"
+      ],
+      [
+        60,
+        "G1",
+        "MILP",
+        "G0",
+        0,
+        168,
+        "0"
+      ],
+      [
+        60,
+        "G1",
+        "MILP",
+        "M0",
+        0,
+        168,
+        "0/168"
+      ],
+      [
+        70,
+        "BASE",
+        "LP",
+        "G1",
+        168,
+        168,
+        "168"
+      ],
+      [
+        70,
+        "BASE",
+        "LP",
+        "G2",
+        168,
+        168,
+        "168"
+      ],
+      [
+        70,
+        "BASE",
+        "LP",
+        "G0",
+        168,
+        168,
+        "168"
+      ],
+      [
+        70,
+        "BASE",
+        "LP",
+        "M0",
+        0,
+        0,
+        "n/a"
+      ],
+      [
+        70,
+        "BASE",
+        "MILP",
+        "G1",
+        168,
+        168,
+        "168"
+      ],
+      [
+        70,
+        "BASE",
+        "MILP",
+        "G2",
+        168,
+        168,
+        "168"
+      ],
+      [
+        70,
+        "BASE",
+        "MILP",
+        "G0",
+        168,
+        168,
+        "168"
+      ],
+      [
+        70,
+        "BASE",
+        "MILP",
+        "M0",
+        0,
+        0,
+        "n/a"
+      ],
+      [
+        70,
+        "G1",
+        "LP",
+        "G1",
+        0,
+        168,
+        "0"
+      ],
+      [
+        70,
+        "G1",
+        "LP",
+        "G2",
+        168,
+        168,
+        "168"
+      ],
+      [
+        70,
+        "G1",
+        "LP",
+        "G0",
+        0,
+        168,
+        "0"
+      ],
+      [
+        70,
+        "G1",
+        "LP",
+        "M0",
+        0,
+        168,
+        "0/168"
+      ],
+      [
+        70,
+        "G1",
+        "MILP",
+        "G1",
+        0,
+        168,
+        "0"
+      ],
+      [
+        70,
+        "G1",
+        "MILP",
+        "G2",
+        168,
+        168,
+        "168"
+      ],
+      [
+        70,
+        "G1",
+        "MILP",
+        "G0",
+        0,
+        168,
+        "0"
+      ],
+      [
+        70,
+        "G1",
+        "MILP",
+        "M0",
+        0,
+        168,
+        "0/168"
+      ],
+      [
+        70,
+        "G2",
+        "LP",
+        "G1",
+        81,
+        168,
+        "81"
+      ],
+      [
+        70,
+        "G2",
+        "LP",
+        "G2",
+        0,
+        168,
+        "0"
+      ],
+      [
+        70,
+        "G2",
+        "LP",
+        "G0",
+        0,
+        168,
+        "0"
+      ],
+      [
+        70,
+        "G2",
+        "LP",
+        "M0",
+        18,
+        168,
+        "18/168"
+      ],
+      [
+        70,
+        "G2",
+        "MILP",
+        "G1",
+        116,
+        168,
+        "116"
+      ],
+      [
+        70,
+        "G2",
+        "MILP",
+        "G2",
+        0,
+        168,
+        "0"
+      ],
+      [
+        70,
+        "G2",
+        "MILP",
+        "G0",
+        0,
+        168,
+        "0"
+      ],
+      [
+        70,
+        "G2",
+        "MILP",
+        "M0",
+        10,
+        168,
+        "10/168"
+      ]
+    ]
+  },
+  "bibliography": {
+    "ZhaoUC": {
+      "fields": [
+        "author",
+        "doi",
+        "eid",
+        "journal",
+        "publisher",
+        "title",
+        "volume",
+        "year"
+      ],
+      "origin": "https://api.crossref.org/works/10.1016/j.ijepes.2026.112233",
+      "primary_response_sha256": "bcccc709b529ea4120091d04896f7f089f5ecf4ce736bc4658c6190dbaef7e19",
+      "metadata": "VERIFIED"
+    },
+    "YuanDispatch": {
+      "fields": [
+        "author",
+        "doi",
+        "eid",
+        "journal",
+        "publisher",
+        "title",
+        "volume",
+        "year"
+      ],
+      "origin": "https://api.crossref.org/works/10.1016/j.ijepes.2026.112195",
+      "primary_response_sha256": "9db5683d2fc1ad2c63c8de97bbcdf4741e3b72024536284314319ab2f8b76f89",
+      "metadata": "VERIFIED"
+    },
+    "LiuStorage": {
+      "fields": [
+        "author",
+        "doi",
+        "journal",
+        "number",
+        "pages",
+        "publisher",
+        "title",
+        "volume",
+        "year"
+      ],
+      "origin": "https://api.crossref.org/works/10.1109/tste.2024.3494259",
+      "primary_response_sha256": "c4a7d44efd965549c4cc30dfc8351675a504ade6817e9517c7ce98a782583447",
+      "metadata": "VERIFIED"
+    },
+    "LinUC": {
+      "fields": [
+        "author",
+        "doi",
+        "journal",
+        "number",
+        "pages",
+        "publisher",
+        "title",
+        "volume",
+        "year"
+      ],
+      "origin": "https://api.crossref.org/works/10.1109/tpwrs.2023.3347508",
+      "primary_response_sha256": "f49042a5b2fd7c54cd02d7673a5202b996ccb4690402510f985a102d1a9d70d6",
+      "metadata": "VERIFIED"
+    },
+    "Ahmadi": {
+      "fields": [
+        "author",
+        "doi",
+        "journal",
+        "number",
+        "pages",
+        "publisher",
+        "title",
+        "volume",
+        "year"
+      ],
+      "origin": "https://api.crossref.org/works/10.1137/18m118935x",
+      "primary_response_sha256": "dca3f039fee521287c677407e5a22ba4184b251d1caa93e2a75cc88a7cb530f9",
+      "metadata": "VERIFIED"
+    },
+    "Berman": {
+      "fields": [
+        "author",
+        "doi",
+        "publisher",
+        "title",
+        "year"
+      ],
+      "origin": "https://api.crossref.org/works/10.1137/1.9781611971262",
+      "primary_response_sha256": "f1bbf72153449381507e9e922a18bd3931314886e9b6a1341f9bbfcbf6ee1dca",
+      "metadata": "VERIFIED"
+    },
+    "GFM2025": {
+      "fields": [
+        "author",
+        "booktitle",
+        "doi",
+        "pages",
+        "publisher",
+        "title",
+        "year"
+      ],
+      "origin": "https://api.crossref.org/works/10.1109/pesgm52009.2025.11225041",
+      "primary_response_sha256": "3289cd5fadd024d69f9ff269579493b7fcbb373fea8275a8ec634a5346b835f2",
+      "metadata": "VERIFIED"
+    },
+    "WangRE": {
+      "fields": [
+        "author",
+        "doi",
+        "journal",
+        "number",
+        "pages",
+        "title",
+        "volume",
+        "year"
+      ],
+      "origin": "https://epjournal.csee.org.cn/en/article/doi/10.16081/j.epae.202512014/",
+      "primary_response_sha256": "ba750547054b24c8cc8bcc0bf411eca093c77086dd4eb8ad213797f7783ade57",
+      "metadata": "VERIFIED"
+    },
+    "Gershgorin1931": {
+      "source": "https://www.mathnet.ru/eng/im5235",
+      "facsimile": "https://www.mathnet.ru/links/7f59ed90e00ae4067c31ea881fb3e645/im5235.pdf",
+      "readback_sha256": "6692d31bdd002416582c329539f52b8560f2f87ae427e1407af2aa5e437d0e85",
+      "theorem": "Satz II, p. 751",
+      "metadata": "VERIFIED"
+    }
+  },
+  "regenerated_byte_identical": {
+    "04_fig_cost.pdf": "4388b226928ebeb5d4e2e8696b9cbdc89cfc0bd1182833df7086837e32f53519",
+    "04_fig_diagnostics.pdf": "212031d8afcd8961ff1e2cfc08816a81bc08e4372391c0ccd7fc2d1b1537b446",
+    "04_fig_portfolio.pdf": "0e5837628eda6381e3b0597eb2328115baf4839f4b4a3cdd811b5845a1efef89",
+    "04_numerical_limits.tex": "288a010c24d83e28129be1fd1d5372547615fe43f6480d8a5e3481eaab746c52",
+    "04_qualified_extensions.tex": "a805b1a593f51fc562a0e9adc1a7587beb7b212f83cd7b9f7ee78b029d7c2a84",
+    "04_result_abstract.tex": "5f8e0912f8bff9d58a2499ec3af125b56575c2bae34775969993f85bed87c92f",
+    "04_result_conclusion.tex": "ef47c59286bad487b2a7a502bfcabf39c1805a1d686d5d8a94492ac97b592d93",
+    "04_results.tex": "927c639bbe244fe5b2222e7e1695a8f857705d2677a6b86e1eb3508225cb34c0"
+  },
+  "render": {
+    "committed_pdf": "d65f359195175d3be149ad1e9b924c11f913575b8eeac353b02845c0be992018",
+    "rebuilt_pdf": "d65f359195175d3be149ad1e9b924c11f913575b8eeac353b02845c0be992018",
+    "pages": [
+      {
+        "page": 1,
+        "render_sha256": "088652c02f2d453e64015da11a4e103e488850d59f62689452ce2bad1de50799",
+        "text_sha256": "7f7e9897450179d6ba96ac2372eb8a436639e3674afa3f1eee46a8644bd9f84b",
+        "pixels": [
+          983,
+          1390
+        ],
+        "visible_chars": 4055,
+        "first_line": "System-strength certificates and investment",
+        "fresh_pixelwise_equal": true
+      },
+      {
+        "page": 2,
+        "render_sha256": "dbaed52275efd525709f86977f06bbf506a40d92832c19ecc6d946e6137f4ad5",
+        "text_sha256": "16e4e8bb8b08f1f8c6f0843c1d1f21c73a93859014e929695157eaf6066ac5d6",
+        "pixels": [
+          983,
+          1390
+        ],
+        "visible_chars": 4095,
+        "first_line": "strength. A battery obeys power and energy ratings, charging and discharging efficiencies, and the",
+        "fresh_pixelwise_equal": true
+      },
+      {
+        "page": 3,
+        "render_sha256": "81fac77b3a4c3a9acf8c072420fa57b1d55c6dadd9e5790c7f8e4ed1cb3f7086",
+        "text_sha256": "a02f5b28c525f8f59fbc635fb87fbaf95418f9b6f81a822425a1107b7f46e6e0",
+        "pixels": [
+          983,
+          1390
+        ],
+        "visible_chars": 4595,
+        "first_line": "be indefinite. Its definiteness cannot be inferred from a DCP angle choice. An arbitrary numerical",
+        "fresh_pixelwise_equal": true
+      },
+      {
+        "page": 4,
+        "render_sha256": "8131d82127ad6d38c328ef35c28ae7016afb5b6aaccde117685fcf2f3a988a93",
+        "text_sha256": "5e74f35949aca17da3e2660e3f7d43446f2074c8b9b58d9469a9bc06d60457a5",
+        "pixels": [
+          983,
+          1390
+        ],
+        "visible_chars": 4218,
+        "first_line": "3.1 The inverse test and its domain",
+        "fresh_pixelwise_equal": true
+      },
+      {
+        "page": 5,
+        "render_sha256": "7ed9584a733e047436e8c129244a1dfd2e368f409c670b50cd60affeb987c3de",
+        "text_sha256": "a4eefe92ad8305a538e6b74c757b107d24d723d296bbbee5ef83e0828e996b79",
+        "pixels": [
+          983,
+          1390
+        ],
+        "visible_chars": 3007,
+        "first_line": "Table 1: Matched annual-equivalent numerical bounds (billion EUR, 2025). LP is the relaxation\u2019s checked",
+        "fresh_pixelwise_equal": true
+      },
+      {
+        "page": 6,
+        "render_sha256": "99fafd41f1baa8f556045c8b42505b6400121ea37e81d71f2041a22b028fa489",
+        "text_sha256": "dba5d0f3ac0b0912cac3af2f2a291d8068f9ea7ec968e6e9a7603591f2b1aa61",
+        "pixels": [
+          983,
+          1390
+        ],
+        "visible_chars": 2024,
+        "first_line": "0 20 40 60 80 100 120 140",
+        "fresh_pixelwise_equal": true
+      },
+      {
+        "page": 7,
+        "render_sha256": "eda55696933bb7969f35dbcb9c010933f1299c82e451e352e7f03316c55f3599",
+        "text_sha256": "d229077e5364a79b8cc071d947998d987086daa7e549daf025630cbce6144a19",
+        "pixels": [
+          983,
+          1390
+        ],
+        "visible_chars": 4016,
+        "first_line": "Table 2: Direct G3 continuous candidates on two registered 70% cases (case hashes abbreviated). Re\u0002ported distances are maxima in original model coordinates, compared with 10\u22127",
+        "fresh_pixelwise_equal": true
+      },
+      {
+        "page": 8,
+        "render_sha256": "1ab841bf9bf25d8197094b8b3497bf109ebe50ec51dfc9baa5dc58629ab9e3a8",
+        "text_sha256": "279c82422174a3e2f46a6ebf55893073a623836767868746684d8bb26cc8e4f7",
+        "pixels": [
+          983,
+          1390
+        ],
+        "visible_chars": 3615,
+        "first_line": "the original allocation order and cross-checked it against the separately saved physical dispatch. For",
+        "fresh_pixelwise_equal": true
+      }
+    ],
+    "fonts_embedded": {
+      "/IHAIZV+LMRoman12-Bold-Identity-H": true,
+      "/BZIVMZ+LMRoman12-Regular-Identity-H": true,
+      "/IXFAWU+LMRoman9-Bold-Identity-H": true,
+      "/TQTHRL+LMRoman9-Regular-Identity-H": true,
+      "/YEUUOC+LMRoman10-Regular-Identity-H": true,
+      "/DDIEWW+CMMI10": true,
+      "/FKPJSN+CMSY10": true,
+      "/PVTTLK+CMR10": true,
+      "/JAGKKY+CMMI7": true,
+      "/NOMARO+CMR7": true,
+      "/KPXLOM+CMSY7": true,
+      "/UTACNV+CMEX10": true,
+      "/FZDNHS+CMMI5": true,
+      "/DZGKAF+CMR5": true,
+      "/AKHCZK+LMRoman10-Italic-Identity-H": true,
+      "/GJMHKB+CMSY5": true,
+      "/VDVGTR+LMRoman10-Bold-Identity-H": true,
+      "/NITCSQ+CMBX10": true,
+      "/CAFSZL+LMMono9-Regular-Identity-H": true
+    }
+  },
+  "refs": [
+    "eq:burden",
+    "pr:edge",
+    "pr:row",
+    "fig:cost",
+    "tab:bounds",
+    "fig:port",
+    "fig:diag",
+    "tab:g3"
+  ],
+  "labels": [
+    "sec:model",
+    "eq:burden",
+    "eq:quota",
+    "eq:cost",
+    "sec:cert",
+    "eq:mat",
+    "pr:row",
+    "pr:edge",
+    "eq:g3",
+    "sec:results",
+    "tab:bounds",
+    "fig:cost",
+    "fig:port",
+    "fig:diag",
+    "tab:g3"
+  ],
+  "warning_lines": []
+}

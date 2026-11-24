@@ -1,0 +1,15 @@
+{
+  "reviewer": "/root/qa_r",
+  "commit": "13bdd1b59764ae7df64c236deee7f887e77fae66",
+  "pdf_sha256": "d65f359195175d3be149ad1e9b924c11f913575b8eeac353b02845c0be992018",
+  "page_notes": {
+    "1": "Title, author, annual-equivalent abstract, citations and introduction align within the text area. The notation key distinguishes PSD from componentwise order.",
+    "2": "UC windows, exposure, quota and cost displays have visible sub/superscripts and equation numbers (1)–(3); charge/discharge signs and the 8760/168 factor are legible.",
+    "3": "Matrix definitions, nonnested row examples, both propositions, Gershgorin disc identity and the factor-two rotated cone display are legible. The right-edge proof markers fit the column.",
+    "4": "The two explicit B,p pairs and normalized M are separate and readable; determinant, eigenvalues, inverse row margins and alpha/rho signs are visible. The weekly results start beneath the design section.",
+    "5": "Bound table has seven distinct rows with readable precision and units. The three cost panels, different y-scales, triangle/tick caption and portfolio text fit. No column or tick label clips.",
+    "6": "The paired battery and wind/PV bars have separate legible legends and GW axes. In the 14-by-four heatmap, five gray n/a cells remain distinct from zero; the colorbar, numeric labels and G0 caption are legible. Direct-solve limitation text is readable.",
+    "7": "The G3 table separates two short case hashes and shows the MOSEK disposition. Residuals fit within the table. The limitations, conclusion, archive appendix and 12.0.3/13.0.3 exception are legible.",
+    "8": "The appendix finishes above nine citations. The original Gerschgorin title, issue 6, pages 749–754 and Satz II p. 751 appear in reference [3]. Original page ranges, DOI text and article numbers fit without collisions."
+  }
+}

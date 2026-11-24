@@ -1,0 +1,13 @@
+{
+  "reviewer": "/root/qa_r",
+  "archive": "https://www.mathnet.ru/eng/im5235",
+  "facsimile": "https://www.mathnet.ru/links/7f59ed90e00ae4067c31ea881fb3e645/im5235.pdf",
+  "title": "Über die Abgrenzung der Eigenwerte einer Matrix",
+  "author": "S. Gerschgorin",
+  "year": 1931,
+  "issue": 6,
+  "pages": "749-754",
+  "venue": "Bulletin de l’Académie des Sciences de l’URSS. Classe des sciences mathématiques et naturelles",
+  "verification": "Read MathNet English bibliographic record and original German facsimile, Satz II on p. 751. Centres are a_ii and radii are the sum of off-diagonal magnitudes. This implies the printed lower row-disc endpoints for the real symmetric Z-matrix RMR. DOI not asserted.",
+  "source_extract_mode": "MathNet web rendering; network fallback for local download. This digest covers this readback, not publisher PDF bytes."
+}

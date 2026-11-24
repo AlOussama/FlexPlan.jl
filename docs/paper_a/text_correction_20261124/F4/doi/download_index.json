@@ -1,0 +1,920 @@
+{
+  "ZhaoUC": {
+    "url": "https://api.crossref.org/works/10.1016/j.ijepes.2026.112233",
+    "sha256": "bcccc709b529ea4120091d04896f7f089f5ecf4ce736bc4658c6190dbaef7e19",
+    "file": "ZhaoUC.json",
+    "metadata": {
+      "DOI": "10.1016/j.ijepes.2026.112233",
+      "title": [
+        "Short-circuit ratio-constrained unit commitment for HVDC sending-end grids: A combinatorial encoding-based MILP formulation"
+      ],
+      "container-title": [
+        "International Journal of Electrical Power &amp; Energy Systems"
+      ],
+      "author": [
+        {
+          "ORCID": "https://orcid.org/0009-0008-1401-6560",
+          "authenticated-orcid": false,
+          "given": "Yuhong",
+          "family": "Zhao",
+          "sequence": "first",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Chen",
+          "family": "Chen",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Chao",
+          "family": "Liu",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Mengjie",
+          "family": "Teng",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0003-4480-7394",
+          "authenticated-orcid": false,
+          "given": "Zhao",
+          "family": "Xu",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Zhaohong",
+          "family": "Bie",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        }
+      ],
+      "volume": "182",
+      "issue": null,
+      "page": "112233",
+      "article-number": "112233",
+      "published": {
+        "date-parts": [
+          [
+            2026,
+            9
+          ]
+        ]
+      },
+      "published-print": {
+        "date-parts": [
+          [
+            2026,
+            9
+          ]
+        ]
+      },
+      "published-online": null,
+      "publisher": "Elsevier BV",
+      "edition-number": null,
+      "resource": {
+        "primary": {
+          "URL": "https://linkinghub.elsevier.com/retrieve/pii/S0142061526006757"
+        }
+      }
+    }
+  },
+  "YuanDispatch": {
+    "url": "https://api.crossref.org/works/10.1016/j.ijepes.2026.112195",
+    "sha256": "9db5683d2fc1ad2c63c8de97bbcdf4741e3b72024536284314319ab2f8b76f89",
+    "file": "YuanDispatch.json",
+    "metadata": {
+      "DOI": "10.1016/j.ijepes.2026.112195",
+      "title": [
+        "Coordinated dispatch of converter-interfaced resources with grid-forming support in load-center power systems under coupled nodal frequency-security and system-strength constraints"
+      ],
+      "container-title": [
+        "International Journal of Electrical Power &amp; Energy Systems"
+      ],
+      "author": [
+        {
+          "given": "Chaoyang",
+          "family": "Yuan",
+          "sequence": "first",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Xian",
+          "family": "Xu",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Yuanshi",
+          "family": "Zhang",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Yurong",
+          "family": "Wang",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Xin",
+          "family": "Zhao",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Hui",
+          "family": "Chen",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Zheng",
+          "family": "Wang",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Shengzhi",
+          "family": "Duan",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        }
+      ],
+      "volume": "182",
+      "issue": null,
+      "page": "112195",
+      "article-number": "112195",
+      "published": {
+        "date-parts": [
+          [
+            2026,
+            9
+          ]
+        ]
+      },
+      "published-print": {
+        "date-parts": [
+          [
+            2026,
+            9
+          ]
+        ]
+      },
+      "published-online": null,
+      "publisher": "Elsevier BV",
+      "edition-number": null,
+      "resource": {
+        "primary": {
+          "URL": "https://linkinghub.elsevier.com/retrieve/pii/S014206152600637X"
+        }
+      }
+    }
+  },
+  "LiuStorage": {
+    "url": "https://api.crossref.org/works/10.1109/tste.2024.3494259",
+    "sha256": "c4a7d44efd965549c4cc30dfc8351675a504ade6817e9517c7ce98a782583447",
+    "file": "LiuStorage.json",
+    "metadata": {
+      "DOI": "10.1109/tste.2024.3494259",
+      "title": [
+        "System Strength Constrained Grid-Forming Energy Storage Planning in Renewable Power Systems"
+      ],
+      "container-title": [
+        "IEEE Transactions on Sustainable Energy"
+      ],
+      "author": [
+        {
+          "ORCID": "https://orcid.org/0000-0002-1370-4467",
+          "authenticated-orcid": false,
+          "given": "Yun",
+          "family": "Liu",
+          "sequence": "first",
+          "affiliation": [
+            {
+              "name": "School of Electric Power Engineering, South China University of Technology, Guangzhou, China"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0002-8281-8257",
+          "authenticated-orcid": false,
+          "given": "Yue",
+          "family": "Chen",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "School of Electric Power Engineering, South China University of Technology, Guangzhou, China"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0001-5327-1371",
+          "authenticated-orcid": false,
+          "given": "Huanhai",
+          "family": "Xin",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "College of Electrical Engineering, Zhejiang University, Hangzhou, China"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Jingzhe",
+          "family": "Tu",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "China Electric Power Research Institute, Beijing, China"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Lin",
+          "family": "Zhang",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "State Grid Shaanxi Electric Power Economic Technology Research Institute, Xian, China"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Meiyi",
+          "family": "Song",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "State Grid Shaanxi Electric Power Economic Technology Research Institute, Xian, China"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0001-5681-1361",
+          "authenticated-orcid": false,
+          "given": "Jizhong",
+          "family": "Zhu",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "School of Electric Power Engineering, South China University of Technology, Guangzhou, China"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        }
+      ],
+      "volume": "16",
+      "issue": "2",
+      "page": "981-994",
+      "article-number": null,
+      "published": {
+        "date-parts": [
+          [
+            2025,
+            4
+          ]
+        ]
+      },
+      "published-print": {
+        "date-parts": [
+          [
+            2025,
+            4
+          ]
+        ]
+      },
+      "published-online": null,
+      "publisher": "Institute of Electrical and Electronics Engineers (IEEE)",
+      "edition-number": null,
+      "resource": {
+        "primary": {
+          "URL": "https://ieeexplore.ieee.org/document/10747388/"
+        }
+      }
+    }
+  },
+  "LinUC": {
+    "url": "https://api.crossref.org/works/10.1109/tpwrs.2023.3347508",
+    "sha256": "f49042a5b2fd7c54cd02d7673a5202b996ccb4690402510f985a102d1a9d70d6",
+    "file": "LinUC.json",
+    "metadata": {
+      "DOI": "10.1109/tpwrs.2023.3347508",
+      "title": [
+        "Short-Circuit Ratio and Short-Term Voltage Security Constrained Unit Commitment in High Wind Power-Penetrated Power Systems"
+      ],
+      "container-title": [
+        "IEEE Transactions on Power Systems"
+      ],
+      "author": [
+        {
+          "ORCID": "https://orcid.org/0009-0002-5158-933X",
+          "authenticated-orcid": false,
+          "given": "Yinhong",
+          "family": "Lin",
+          "sequence": "first",
+          "affiliation": [
+            {
+              "name": "State Key Laboratory of Power Systems, Department of Electrical Engineering, Tsinghua University, Beijing, China"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0002-4517-4210",
+          "authenticated-orcid": false,
+          "given": "Bin",
+          "family": "Wang",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "State Key Laboratory of Power Systems, Department of Electrical Engineering, Tsinghua University, Beijing, China"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0003-1435-5796",
+          "authenticated-orcid": false,
+          "given": "Qinglai",
+          "family": "Guo",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "State Key Laboratory of Power Systems, Department of Electrical Engineering, Tsinghua University, Beijing, China"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0001-5403-7042",
+          "authenticated-orcid": false,
+          "given": "Haotian",
+          "family": "Zhao",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "State Key Laboratory of Power Systems, Department of Electrical Engineering, Tsinghua University, Beijing, China"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0002-5465-9818",
+          "authenticated-orcid": false,
+          "given": "Hongbin",
+          "family": "Sun",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "State Key Laboratory of Power Systems, Department of Electrical Engineering, Tsinghua University, Beijing, China"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        }
+      ],
+      "volume": "39",
+      "issue": "4",
+      "page": "5631-5644",
+      "article-number": null,
+      "published": {
+        "date-parts": [
+          [
+            2024,
+            7
+          ]
+        ]
+      },
+      "published-print": {
+        "date-parts": [
+          [
+            2024,
+            7
+          ]
+        ]
+      },
+      "published-online": null,
+      "publisher": "Institute of Electrical and Electronics Engineers (IEEE)",
+      "edition-number": null,
+      "resource": {
+        "primary": {
+          "URL": "https://ieeexplore.ieee.org/document/10375115/"
+        }
+      }
+    }
+  },
+  "Ahmadi": {
+    "url": "https://api.crossref.org/works/10.1137/18m118935x",
+    "sha256": "dca3f039fee521287c677407e5a22ba4184b251d1caa93e2a75cc88a7cb530f9",
+    "file": "Ahmadi.json",
+    "metadata": {
+      "DOI": "10.1137/18m118935x",
+      "title": [
+        "DSOS and SDSOS Optimization: More Tractable Alternatives to Sum of Squares and Semidefinite Optimization"
+      ],
+      "container-title": [
+        "SIAM Journal on Applied Algebra and Geometry"
+      ],
+      "author": [
+        {
+          "ORCID": "https://orcid.org/0000-0003-1590-7281",
+          "authenticated-orcid": true,
+          "given": "Amir Ali",
+          "family": "Ahmadi",
+          "sequence": "first",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Anirudha",
+          "family": "Majumdar",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        }
+      ],
+      "volume": "3",
+      "issue": "2",
+      "page": "193-230",
+      "article-number": null,
+      "published": {
+        "date-parts": [
+          [
+            2019,
+            1
+          ]
+        ]
+      },
+      "published-print": {
+        "date-parts": [
+          [
+            2019,
+            1
+          ]
+        ]
+      },
+      "published-online": {
+        "date-parts": [
+          [
+            2019,
+            4,
+            16
+          ]
+        ]
+      },
+      "publisher": "Society for Industrial & Applied Mathematics (SIAM)",
+      "edition-number": null,
+      "resource": {
+        "primary": {
+          "URL": "https://epubs.siam.org/doi/10.1137/18M118935X"
+        }
+      }
+    }
+  },
+  "Berman": {
+    "url": "https://api.crossref.org/works/10.1137/1.9781611971262",
+    "sha256": "f1bbf72153449381507e9e922a18bd3931314886e9b6a1341f9bbfcbf6ee1dca",
+    "file": "Berman.json",
+    "metadata": {
+      "DOI": "10.1137/1.9781611971262",
+      "title": [
+        "Nonnegative Matrices in the Mathematical Sciences"
+      ],
+      "container-title": [],
+      "author": [
+        {
+          "given": "Abraham",
+          "family": "Berman",
+          "sequence": "first",
+          "affiliation": [
+            {
+              "name": "Technion-Israel Institute of Technology",
+              "place": [
+                "Israel"
+              ]
+            },
+            {
+              "name": "Wake Forest University"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Robert J.",
+          "family": "Plemmons",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Technion-Israel Institute of Technology",
+              "place": [
+                "Israel"
+              ]
+            },
+            {
+              "name": "Wake Forest University"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        }
+      ],
+      "volume": null,
+      "issue": null,
+      "page": null,
+      "article-number": null,
+      "published": {
+        "date-parts": [
+          [
+            1994,
+            1,
+            1
+          ]
+        ]
+      },
+      "published-print": {
+        "date-parts": [
+          [
+            1994,
+            1,
+            1
+          ]
+        ]
+      },
+      "published-online": {
+        "date-parts": [
+          [
+            2012,
+            5,
+            25
+          ]
+        ]
+      },
+      "publisher": "Society for Industrial and Applied Mathematics",
+      "edition-number": null,
+      "resource": {
+        "primary": {
+          "URL": "https://epubs.siam.org/doi/book/10.1137/1.9781611971262"
+        }
+      }
+    }
+  },
+  "GFM2025": {
+    "url": "https://api.crossref.org/works/10.1109/pesgm52009.2025.11225041",
+    "sha256": "3289cd5fadd024d69f9ff269579493b7fcbb373fea8275a8ec634a5346b835f2",
+    "file": "GFM2025.json",
+    "metadata": {
+      "DOI": "10.1109/pesgm52009.2025.11225041",
+      "title": [
+        "gSCR-Constrained Grid-Forming Energy Storage Planning For 100% Renewable Energy Systems"
+      ],
+      "container-title": [
+        "2025 IEEE Power &amp;amp; Energy Society General Meeting (PESGM)"
+      ],
+      "author": [
+        {
+          "given": "Ziyue",
+          "family": "Li",
+          "sequence": "first",
+          "affiliation": [
+            {
+              "name": "Tsinghua University,Department of Electrical Engineering,Beijing,China"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Jiaxin",
+          "family": "Wang",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Tsinghua University,Department of Electrical Engineering,Beijing,China"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Zhuoyuan",
+          "family": "Yong",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Tsinghua University,Department of Electrical Engineering,Beijing,China"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Haiwang",
+          "family": "Zhong",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Tsinghua University,Department of Electrical Engineering,Beijing,China"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Yingjun",
+          "family": "Zhuo",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Southern Power Grid Research Institute Co., Ltd,China"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Siyu",
+          "family": "Lu",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Southern Power Grid Research Institute Co., Ltd,China"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        }
+      ],
+      "volume": null,
+      "issue": null,
+      "page": "1-5",
+      "article-number": null,
+      "published": {
+        "date-parts": [
+          [
+            2025,
+            7,
+            27
+          ]
+        ]
+      },
+      "published-print": {
+        "date-parts": [
+          [
+            2025,
+            7,
+            27
+          ]
+        ]
+      },
+      "published-online": null,
+      "publisher": "IEEE",
+      "edition-number": null,
+      "resource": {
+        "primary": {
+          "URL": "https://ieeexplore.ieee.org/document/11225041/"
+        }
+      }
+    }
+  },
+  "WangRE": {
+    "url": "https://epjournal.csee.org.cn/en/article/doi/10.16081/j.epae.202512014/",
+    "sha256": "ba750547054b24c8cc8bcc0bf411eca093c77086dd4eb8ad213797f7783ade57",
+    "file": "WangRE.html",
+    "metadata": {
+      "citation_title": [
+        "Research on connection location and capacity optimization of renewable energy stations considering system strength constraints"
+      ],
+      "citation_author": [
+        "WANG Yixin",
+        "SUN Jian",
+        "GAO Yiying",
+        "HU Diangang",
+        "MA Xiping",
+        "XIN Huanhai"
+      ],
+      "citation_journal_title": [
+        ""
+      ],
+      "citation_volume": [
+        "46"
+      ],
+      "citation_issue": [
+        "3"
+      ],
+      "citation_firstpage": [
+        "132"
+      ],
+      "citation_lastpage": [
+        "138"
+      ],
+      "citation_date": [
+        "2026-02-11"
+      ],
+      "citation_doi": [
+        "10.16081/j.epae.202512014"
+      ],
+      "abstract_topic": true,
+      "date_online_published": [
+        "2025-12-22",
+        "2026-03-10"
+      ]
+    }
+  }
+}

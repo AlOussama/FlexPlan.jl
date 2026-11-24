@@ -1,0 +1,193 @@
+{
+  "T1_findings": {
+    "MATH-01": {
+      "status": "CORRECTED",
+      "priority": "P0",
+      "old_evidence": "8f4af5fbe512e9f2bf9f466cee4655b9a8d35ca710ce8c782398bd6da8fb35e3",
+      "observed": "p=(1/4,2/3); 13/12; Zp=(7/9,19/18)",
+      "independent_basis": "Two original and two normalized matrices bound to actual printed examples; exact determinant, signed spectrum, both inverse burdens and printed node products and independently rejected mixed scale."
+    },
+    "MATH-02": {
+      "status": "CORRECTED",
+      "priority": "P1",
+      "old_evidence": "8f4af5fbe512e9f2bf9f466cee4655b9a8d35ca710ce8c782398bd6da8fb35e3",
+      "observed": "as an infimum; unbounded below; range condition; (I-DD^\\dagger)C^\\top=0",
+      "independent_basis": "D pseudoinverse test and nonzero cross term in null(D) yield a linear descent direction; a negative unexposed eigenvector permits quadratic descent regardless of cross term. On the range, completing the square gives an exposed SPD-denominator compact quotient."
+    },
+    "MATH-03": {
+      "status": "CORRECTED",
+      "priority": "P1",
+      "old_evidence": "9959991b4e3f184869c2cc9dcaff770a9bc2662423ecb3c17eda1728930cf94a",
+      "observed": "L_{\\rm series}\\one=0; line-charging terms remain",
+      "independent_basis": "Series stamp [[y,-y],[-y,y]] has vanishing row sums. The two half-charging terms are diagonal. The original physical replay includes each independently."
+    },
+    "MATH-04": {
+      "status": "CORRECTED",
+      "priority": "P1",
+      "old_evidence": "9959991b4e3f184869c2cc9dcaff770a9bc2662423ecb3c17eda1728930cf94a",
+      "observed": "a^{\\rm conn}_{kt} n^{\\rm inst}_k; thermal units with event variables; n_{k,0}",
+      "independent_basis": "Observed 18,312 eligible thermal-hour transitions per case divided by 168 gives 109 eligible records. Matched original vectors and event ledger confirm bounds and earlier initial-state case rule."
+    },
+    "MATH-05": {
+      "status": "CORRECTED",
+      "priority": "P1",
+      "old_evidence": "8f4af5fbe512e9f2bf9f466cee4655b9a8d35ca710ce8c782398bd6da8fb35e3",
+      "observed": "symmetric positive-definite Z-matrix; Z=B^{-1}\\ge0; p\\ge0; \\alpha>0; same regional order and power base",
+      "independent_basis": "Nonnegative Z preserves order in G1 to M0. Row sums of nonnegative alpha ZS bound spectral radius. Positive B congruence completes the deduction to G0."
+    },
+    "MATH-06": {
+      "status": "CORRECTED",
+      "priority": "P1",
+      "old_evidence": "9959991b4e3f184869c2cc9dcaff770a9bc2662423ecb3c17eda1728930cf94a",
+      "observed": "G0 uses the minimum eigenvalue of the full hourly matrix",
+      "independent_basis": "Observed fourteen diagnostic profiles agree with minimum-eigenvalue G0. Five BASE M0 records have no defined hours and are masked in actual plotting objects."
+    },
+    "MATH-07": {
+      "status": "CORRECTED",
+      "priority": "P2",
+      "old_evidence": "8f4af5fbe512e9f2bf9f466cee4655b9a8d35ca710ce8c782398bd6da8fb35e3",
+      "observed": "positive semidefiniteness of a symmetric stiffness matrix",
+      "independent_basis": "Explicit kernel and zero determinant include equality boundary of positive semidefiniteness."
+    },
+    "MATH-08": {
+      "status": "CORRECTED",
+      "priority": "P2",
+      "old_evidence": "8f4af5fbe512e9f2bf9f466cee4655b9a8d35ca710ce8c782398bd6da8fb35e3",
+      "observed": "row certificates add linear constraints; generally; theoretical noninclusion",
+      "independent_basis": "Direct matrix multiplication yields [0,0],[-1,1],[1,-1/2],[0,0]. The two LP-affine row sets are nonnested without establishing specific portfolio order."
+    },
+    "MATH-09": {
+      "status": "CORRECTED",
+      "priority": "P2",
+      "old_evidence": "9959991b4e3f184869c2cc9dcaff770a9bc2662423ecb3c17eda1728930cf94a",
+      "observed": "25 MVA rating; synchronous-source ratings follow their own equipment records",
+      "independent_basis": "Primary source coefficient reconstruction is case- and device-specific. Corrected text applies 25 MVA only to the registered GFM converter unit."
+    },
+    "MATH-10": {
+      "status": "CORRECTED",
+      "priority": "P1",
+      "old_evidence": "8f4af5fbe512e9f2bf9f466cee4655b9a8d35ca710ce8c782398bd6da8fb35e3",
+      "observed": "fixed before M2 optimization; earlier G2 integer; membership in the selected interval; fractional interval selection",
+      "independent_basis": "Hash-bound M2 register and LP QA identify earlier G2 h1. Algebra gives Wp>=p and P/d<=P/ell inside a selected interval. A zero free epigraph surrogate provides an explicit failure."
+    },
+    "MATH-11": {
+      "status": "CORRECTED",
+      "priority": "P1",
+      "old_evidence": "5fbcf0b726d9274755a63f44775256c78185802c158d3b3739fc71275a5d5dce",
+      "observed": "cross-model comparison; no within-model optimality gap; different case hashes",
+      "independent_basis": "Decimal difference of M2 relaxation LB and the independently evaluated G3 witness UB reproduced from registered method rows. G0/G3/M2 case hashes differ."
+    },
+    "W01": {
+      "status": "CORRECTED",
+      "priority": "P1",
+      "old_evidence": "254be423a26749ee4704b1d51f1f5d2ebc341a52d44547b8962743decd634bd5",
+      "observed": "\\title{\\bfseries System-strength certificates and investment portfolios; within",
+      "independent_basis": "Title identifies compared portfolios and the single weekly model; portfolio uniqueness is expressly unresolved."
+    },
+    "W02": {
+      "status": "CORRECTED",
+      "priority": "P2",
+      "old_evidence": "bbaa282070e791c3b220753ac90acf2aff96d9a5c49b99ed2154992594638d11",
+      "observed": "We index retained regions; per-unit base; LP denotes",
+      "independent_basis": "All indices, per-unit variables, physical versus financial units and PSD order defined at first use. Rendered symbol check completed."
+    },
+    "W03": {
+      "status": "CORRECTED",
+      "priority": "P1",
+      "old_evidence": "254be423a26749ee4704b1d51f1f5d2ebc341a52d44547b8962743decd634bd5",
+      "observed": "Gray n/a cells; no hour met the inverse-domain",
+      "independent_basis": "Five undefined M0 cells use a masked pixel, neutral palette and n/a label; numerical zero on a defined domain has a separate field and fill."
+    },
+    "W04": {
+      "status": "CORRECTED",
+      "priority": "P2",
+      "old_evidence": "254be423a26749ee4704b1d51f1f5d2ebc341a52d44547b8962743decd634bd5",
+      "observed": "technology-region-hour records; 62,388.70; 21,391.15",
+      "independent_basis": "Grouped event records and positive avoided raw charges independently counted on all 14 portfolios."
+    },
+    "W05": {
+      "status": "CORRECTED",
+      "priority": "P2",
+      "old_evidence": "4640826801d456bee667a80b2aef70e5f9c0f95c3194a2f1c55476d50be3d143",
+      "observed": "Article 112233; Article 112195; 981--994; 5631--5644",
+      "independent_basis": "Eight complete independent DOI responses, article IDs, page intervals, in-issue publication dates, and complete ordered authors matched."
+    },
+    "W06": {
+      "status": "CORRECTED",
+      "priority": "P2",
+      "old_evidence": "4cb4ab1ab9507394b4df8424398dd6cfb4498cf99ab741e90482c91a66982c57",
+      "observed": "Matplotlib; private; original",
+      "independent_basis": "Source-only fresh run regenerated figures/text. Private source networks and hourly dispatches are outside the public figure data."
+    },
+    "W07": {
+      "status": "CORRECTED",
+      "priority": "P1",
+      "old_evidence": "a1d1d588d3c9c12a6b450788befa3deadd0264b26663c15c70f8a9de543768fa",
+      "observed": "numerical lower and upper estimates; 2.29 to 2.83; 2025, annual-equivalent",
+      "independent_basis": "Unrounded opposite endpoints generated three intervals and the outward-rounded abstract interval on the annual-equivalent coordinate."
+    },
+    "W08": {
+      "status": "CORRECTED",
+      "priority": "P2",
+      "old_evidence": "42e57b3feea06a79156e601e362499e7aabb49b2047ff323fead4a60c606931a",
+      "observed": "445 granular final entries plus legacy IDs",
+      "independent_basis": "Granular publication ledger checked against independently exported final text, and each baseline legacy ID and its hash links retained."
+    },
+    "D01": {
+      "status": "CORRECTED",
+      "priority": "P1",
+      "old_evidence": "61724b3e476d7a61e29434907b06f58af6febfa8e65861e345ca15de6fde034d",
+      "observed": "Gurobi 12.0.3 lieferte 13 Kernpunkte; 70-%-G2-MILP-Punkt stammt aus Gurobi 13.0.3",
+      "independent_basis": "Checked every original version from F2 evidence and corrected handoff, appendix and explicit 70% exception."
+    },
+    "D02": {
+      "status": "CORRECTED",
+      "priority": "P1",
+      "old_evidence": "a1d1d588d3c9c12a6b450788befa3deadd0264b26663c15c70f8a9de543768fa",
+      "observed": "Decimal outward rounding exact on 28 cells of independently read consumer Git object a4c19e962e9f59f5b40cf05f8d0cee2f24a52a78",
+      "independent_basis": "All 14 Git-bound consumer rows independently parsed and 28 endpoints independently converted from EUR2025 with Decimal outward rounding."
+    },
+    "D03": {
+      "status": "CORRECTED",
+      "priority": "P1",
+      "old_evidence": "61724b3e476d7a61e29434907b06f58af6febfa8e65861e345ca15de6fde034d",
+      "observed": "upper bound of 127.449600; lower bound of 128.108716; approximately 659.12",
+      "independent_basis": "Both incomparable-bound-type endpoints rounded outward, independently evaluated continuous relaxation and feasible vector receive distinct labels."
+    },
+    "D04": {
+      "status": "CORRECTED",
+      "priority": "P1",
+      "old_evidence": "a1d1d588d3c9c12a6b450788befa3deadd0264b26663c15c70f8a9de543768fa",
+      "observed": "opposite endpoints in the unrounded source rows",
+      "independent_basis": "Three displayed premium intervals recomputed from unrounded original operands with directed rounding."
+    },
+    "D05": {
+      "status": "CORRECTED",
+      "priority": "P1",
+      "old_evidence": "61724b3e476d7a61e29434907b06f58af6febfa8e65861e345ca15de6fde034d",
+      "observed": "Native integer lower bound; independently reconstructed incumbent upper bound",
+      "independent_basis": "Exact matplotlib series and legend marker semantics independently compared to seven LP/MILP intervals for all panels."
+    },
+    "D06": {
+      "status": "CORRECTED",
+      "priority": "P1",
+      "old_evidence": "61724b3e476d7a61e29434907b06f58af6febfa8e65861e345ca15de6fde034d",
+      "observed": "two registered; original model coordinates; different constraint coordinates; \\texttt{94f0ea55}; \\texttt{1ceb274a}; Slow progress, point rejected",
+      "independent_basis": "All eight ledger cases and source digest bindings independently checked, with no invented scalar for first MOSEK attempt."
+    },
+    "D07": {
+      "status": "CORRECTED",
+      "priority": "P1",
+      "old_evidence": "99d597bc1438a1cf29269ab98b87656a2aed0a8d1107b7e54ee5ab50f1c14898",
+      "observed": "Unknown revision with empty original distance rejected with Unrecorded G3 attempt without original-model distance: ffffffffffffffffffffffffffffffffffffffff",
+      "independent_basis": "Fault injection using unregistered all-f revision with blank distance throws ValueError instead of printing a fictitious result."
+    }
+  },
+  "additional_F4_finding": {
+    "id": "F4-01",
+    "status": "CORRECTED",
+    "location": "Proposition 1 and bibliography",
+    "first_candidate": "0ec9a3e93d03848334ce8c1e1499cf9da24f1ab4",
+    "test": "published 1931 source and Satz II p. 751, exact symbolic disc endpoints of RMR, independent vector/raster read of corrected proposition and ninth reference"
+  }
+}

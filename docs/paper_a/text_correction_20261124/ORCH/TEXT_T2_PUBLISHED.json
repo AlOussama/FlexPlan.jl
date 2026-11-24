@@ -1,0 +1,159 @@
+{
+  "branch": "docs/s-gov-project-consolidation-20261024",
+  "commit": "13bdd1b59764ae7df64c236deee7f887e77fae66",
+  "parent": "0ec9a3e93d03848334ce8c1e1499cf9da24f1ab4",
+  "tree": "c7eb6d3ba69a4bd8e1244d89d39998864a4dbee2",
+  "remote_parity": true,
+  "unchanged_checkout": "2564c49bdc32c7508d2acfc9fe543d4887561484",
+  "actual_diff": [
+    "M\tpapers/paper-a-week168/04_BUILD.log",
+    "M\tpapers/paper-a-week168/04_PAPER_A.log",
+    "M\tpapers/paper-a-week168/04_PAPER_A.pdf",
+    "M\tpapers/paper-a-week168/04_PAPER_A.tex",
+    "M\tpapers/paper-a-week168/04_PAPER_CLAIM_TO_EVIDENCE.csv",
+    "M\tpapers/paper-a-week168/04_references.bib",
+    "M\tpapers/paper-a-week168/TEXT_T2_BIBLIOGRAPHIC_SOURCES.json",
+    "M\tpapers/paper-a-week168/TEXT_T2_BUILD.log",
+    "M\tpapers/paper-a-week168/TEXT_T2_CHANGELOG_AND_ISSUE_RESOLUTION.md",
+    "M\tpapers/paper-a-week168/TEXT_T2_CLAIM_TO_EVIDENCE.csv",
+    "M\tpapers/paper-a-week168/TEXT_T2_FREEZE_CANDIDATE.json",
+    "M\tpapers/paper-a-week168/TEXT_T2_MATH_ORACLE_RESULTS.json"
+  ],
+  "files": {
+    "papers/paper-a-week168/04_BUILD.log": {
+      "sha256": "15b977abed655d463c8bc3347173b24456d037339f2299ec0aecd6c3699f1d89",
+      "git_blob": "881d4515c469fbbca4fc7f6c2769edc83ee81a95",
+      "bytes": 795
+    },
+    "papers/paper-a-week168/04_PAPER_A.log": {
+      "sha256": "264709be362a6b4642630789af440b072bd863864156febb61f84793e361f7de",
+      "git_blob": "ec798a3b27c3a01253268549972337e5e721d2fc",
+      "bytes": 15034
+    },
+    "papers/paper-a-week168/04_PAPER_A.pdf": {
+      "sha256": "d65f359195175d3be149ad1e9b924c11f913575b8eeac353b02845c0be992018",
+      "git_blob": "bfc0a04c20373ede5fa7a07980ac5b55e3cd74bd",
+      "bytes": 148904
+    },
+    "papers/paper-a-week168/04_PAPER_A.tex": {
+      "sha256": "941de1a3715d9b4a462419cec92368de69e037660c661d71ef15520c71502a31",
+      "git_blob": "6a794c717e7d88bb23d69ee754f820596bada83d",
+      "bytes": 21957
+    },
+    "papers/paper-a-week168/04_PAPER_CLAIM_TO_EVIDENCE.csv": {
+      "sha256": "1d44d655764af5358eb1a0ca25ac275aa78a217a4605d5ac8c4915d2d901c6fe",
+      "git_blob": "d5f97ff1a06f45d4fef1efe4117e21263292350c",
+      "bytes": 8032
+    },
+    "papers/paper-a-week168/04_REPRODUCIBILITY_AND_LIMITATIONS.md": {
+      "sha256": "acc3a9793132fb9dac423a3ddc7c13138b0c8dae3b6b25cda7703bd935f0da0b",
+      "git_blob": "5d6a41dfc832a84e2ade554b0d606794bb541c9b",
+      "bytes": 8142
+    },
+    "papers/paper-a-week168/04_additional_methods.csv": {
+      "sha256": "5fbcf0b726d9274755a63f44775256c78185802c158d3b3739fc71275a5d5dce",
+      "git_blob": "6fab5cc3ce62c5d2bd3d18428bb0d02741dc3963",
+      "bytes": 5179
+    },
+    "papers/paper-a-week168/04_build_results.py": {
+      "sha256": "bac47ef439214c5b63fdda3aa5adf999492ac53c6ba1c4a2dd5456b32754f90d",
+      "git_blob": "a48ff643455e65a345212d8dfb0606bbc4289868",
+      "bytes": 12720
+    },
+    "papers/paper-a-week168/04_fig_cost.pdf": {
+      "sha256": "4388b226928ebeb5d4e2e8696b9cbdc89cfc0bd1182833df7086837e32f53519",
+      "git_blob": "cf79b4483f26ca3cbf49a5b3a68292904c6e4fcf",
+      "bytes": 11522
+    },
+    "papers/paper-a-week168/04_fig_diagnostics.pdf": {
+      "sha256": "212031d8afcd8961ff1e2cfc08816a81bc08e4372391c0ccd7fc2d1b1537b446",
+      "git_blob": "ccceaa3d45d603677fe5eb68dfbc859a5e1fa643",
+      "bytes": 15537
+    },
+    "papers/paper-a-week168/04_fig_portfolio.pdf": {
+      "sha256": "0e5837628eda6381e3b0597eb2328115baf4839f4b4a3cdd811b5845a1efef89",
+      "git_blob": "9507122f56e7972ec50984eeb8e924ef2de4b2ad",
+      "bytes": 13215
+    },
+    "papers/paper-a-week168/04_g3_attempts.csv": {
+      "sha256": "758f41066c48b02c80a98282bffdc91a44f3dc7ff07d6703413e95f26028d5bd",
+      "git_blob": "67cc7fd08b151c435ea1abcd554336189563e297",
+      "bytes": 2019
+    },
+    "papers/paper-a-week168/04_g3_table.py": {
+      "sha256": "f117e823c939f3d0a8e4e4ab0ae7ba5e496fac345f7a2b639240a8d59e1cc3e9",
+      "git_blob": "5940bf570b014fb67b682ed83e9ebcea5f23aba8",
+      "bytes": 4144
+    },
+    "papers/paper-a-week168/04_numerical_limits.tex": {
+      "sha256": "288a010c24d83e28129be1fd1d5372547615fe43f6480d8a5e3481eaab746c52",
+      "git_blob": "487cb777725b6dba35667bf0a0784cc22a493af8",
+      "bytes": 1777
+    },
+    "papers/paper-a-week168/04_qualified_extensions.tex": {
+      "sha256": "a805b1a593f51fc562a0e9adc1a7587beb7b212f83cd7b9f7ee78b029d7c2a84",
+      "git_blob": "8e5e6c26f4723986cb83d16fb651c17b44a678b5",
+      "bytes": 881
+    },
+    "papers/paper-a-week168/04_references.bib": {
+      "sha256": "c9280b649a79d258448dd441fe48c906a0dc2529772206dbc37e73546d7b0541",
+      "git_blob": "dce481b217a36792ca39822e60a8adbfc8a53d2c",
+      "bytes": 4749
+    },
+    "papers/paper-a-week168/04_result_abstract.tex": {
+      "sha256": "5f8e0912f8bff9d58a2499ec3af125b56575c2bae34775969993f85bed87c92f",
+      "git_blob": "1f10e8580b95e05e3dd745ebab89810ae85a14c6",
+      "bytes": 255
+    },
+    "papers/paper-a-week168/04_result_conclusion.tex": {
+      "sha256": "ef47c59286bad487b2a7a502bfcabf39c1805a1d686d5d8a94492ac97b592d93",
+      "git_blob": "5182b8161233009454477ed5bd995f4388ff4a36",
+      "bytes": 233
+    },
+    "papers/paper-a-week168/04_results.tex": {
+      "sha256": "927c639bbe244fe5b2222e7e1695a8f857705d2677a6b86e1eb3508225cb34c0",
+      "git_blob": "bf7209783c0be34a7c3bf962b378e1cdcc31dffe",
+      "bytes": 4695
+    },
+    "papers/paper-a-week168/04_reviewed_bounds.csv": {
+      "sha256": "a1d1d588d3c9c12a6b450788befa3deadd0264b26663c15c70f8a9de543768fa",
+      "git_blob": "ef875889e55684df124116b2be259779ff6e0497",
+      "bytes": 4200
+    },
+    "papers/paper-a-week168/04_reviewed_points.csv": {
+      "sha256": "254be423a26749ee4704b1d51f1f5d2ebc341a52d44547b8962743decd634bd5",
+      "git_blob": "03b6791dcd235e40cab4a224bd5737e12a87a6d2",
+      "bytes": 16073
+    },
+    "papers/paper-a-week168/TEXT_T2_BIBLIOGRAPHIC_SOURCES.json": {
+      "sha256": "896f2a07823090617d519f851411e582a7a757607312513af0840ea1ea204976",
+      "git_blob": "04715b6791e25d2fb9c36654c9f6c3fe3501e92d",
+      "bytes": 25088
+    },
+    "papers/paper-a-week168/TEXT_T2_BUILD.log": {
+      "sha256": "15b977abed655d463c8bc3347173b24456d037339f2299ec0aecd6c3699f1d89",
+      "git_blob": "881d4515c469fbbca4fc7f6c2769edc83ee81a95",
+      "bytes": 795
+    },
+    "papers/paper-a-week168/TEXT_T2_CHANGELOG_AND_ISSUE_RESOLUTION.md": {
+      "sha256": "272b3b464851fd28e787595403d8912beb2188cfb0ad354462d9111ad253bdc3",
+      "git_blob": "6cbb9a7643d875fcfa1f9c462ea4c7ef5f8460df",
+      "bytes": 8561
+    },
+    "papers/paper-a-week168/TEXT_T2_CLAIM_TO_EVIDENCE.csv": {
+      "sha256": "c227dce3f1a2567f349ea7334b54c387334a72b23e5b555d19fff3fc8b0db448",
+      "git_blob": "14a86447615c698d245c11cc236e800362337e9d",
+      "bytes": 402709
+    },
+    "papers/paper-a-week168/TEXT_T2_MATH_ORACLE_RESULTS.json": {
+      "sha256": "5c99f1c9953ea9d916091749d7da0d0338f201685b41f9373a50b1195fb593f5",
+      "git_blob": "784dc3383111a5c0e4463aa5b8dbaf2c9bbf8fa7",
+      "bytes": 20241
+    },
+    "papers/paper-a-week168/TEXT_T2_FREEZE_CANDIDATE.json": {
+      "sha256": "495faa638426144205fb8c77ed1a90bbe4a9c6f3557b312115429573fbb57225",
+      "git_blob": "ba2978a7d71be3f906ebf7df354b0a9ad81a6213",
+      "bytes": 11210
+    }
+  }
+}

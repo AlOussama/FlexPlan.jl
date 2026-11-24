@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "E:\ResearchResults\FlexPlan_UC_GSCR\PAPER_A_TEXT_CORRECTION_20261124_01\F4\f4_publication_audit.py", line 136, in <module>
+    run(a.parse_args())
+  File "E:\ResearchResults\FlexPlan_UC_GSCR\PAPER_A_TEXT_CORRECTION_20261124_01\F4\f4_publication_audit.py", line 119, in run
+    txt=cmd([a.tectonic,'--only-cached','--keep-logs','--keep-intermediates','04_PAPER_A.tex'],build,'tectonic')
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\ResearchResults\FlexPlan_UC_GSCR\PAPER_A_TEXT_CORRECTION_20261124_01\F4\f4_publication_audit.py", line 33, in cmd
+    if cp.returncode:raise RuntimeError((argv,cp.returncode,cp.stdout[-2400:]))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: ([WindowsPath('C:/Program Files/WindowsApps/OpenAI.CodexPrimaryRuntime.v26-1119-907-0_26.1119.907.0_x64__3k8sg7r9htsxt/dependencies/native/tectonic/tectonic.exe'), '--only-cached', '--keep-logs', '--keep-intermediates', '04_PAPER_A.tex'], 1, b'note: using only cached resource files\nnote: Running TeX ...\nnote: Running BibTeX on 04_PAPER_A.aux ...\nnote: Rerunning TeX because bibtex was run ...\nnote: Rerunning TeX because "04_PAPER_A.aux" changed ...\nnote: Running xdvipdfmx ...\nwarning: Tectonic unable to generate PK font "cmsy5.pfb" (dpi 600) on-the-fly\nwarning: Could not locate a virtual/physical font for TFM "cmsy5".\nwarning: >> This font is mapped to a physical font "cmsy5.pfb".\nwarning: >> Please check if kpathsea library can find this font: cmsy5.pfb\nnote: Writing `04_PAPER_A.log` (14.681640625 KiB)\nnote: Writing `04_PAPER_A.blg` (200 B)\nerror: something bad happened inside xdvipdfmx; its output follows:\n\n===============================================================================\n\n===============================================================================\nerror: the xdvipdfmx engine had an unrecoverable error\ncaused by: Cannot proceed without .vf or "physical" font for PDF output...\n')

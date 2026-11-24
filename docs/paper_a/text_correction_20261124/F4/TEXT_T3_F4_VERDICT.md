@@ -1,0 +1,3 @@
+# F4_PASS — 13bdd1b59764ae7df64c236deee7f887e77fae66
+
+The final published files in TEXT_T3_FINAL_PUBLICATION_MANIFEST.json passed TEXT_MATH, TEXT_RESULTS, TEXT_SCOPE, TEXT_BUILD and F4_INDEPENDENT. The independent reviewer, /root/qa_r, verified the 445 final granular entries and 8 rendered pages, closed 26 T1 findings and the additional Gershgorin attribution, and found zero open P0 findings for the retained claims. No optimizer was run. The pass binds these exact Git blobs and the PDF SHA-256 d65f359195175d3be149ad1e9b924c11f913575b8eeac353b02845c0be992018. S-GOV ratification is pending. SUBMISSION_READY=false.

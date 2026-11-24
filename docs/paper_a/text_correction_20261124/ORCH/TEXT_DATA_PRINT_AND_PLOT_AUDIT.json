@@ -1,0 +1,836 @@
+{
+  "reviewer": "/root DATA-R",
+  "source_sha256": {
+    "04_results.tex": "927c639bbe244fe5b2222e7e1695a8f857705d2677a6b86e1eb3508225cb34c0",
+    "04_result_abstract.tex": "5f8e0912f8bff9d58a2499ec3af125b56575c2bae34775969993f85bed87c92f",
+    "04_result_conclusion.tex": "ef47c59286bad487b2a7a502bfcabf39c1805a1d686d5d8a94492ac97b592d93",
+    "04_build_results.py": "bac47ef439214c5b63fdda3aa5adf999492ac53c6ba1c4a2dd5456b32754f90d"
+  },
+  "code_sha256": "302e3e3794795ee7bb2cb9d572c8919478cbf74e4446bd099564185dc862dbce",
+  "checked_figure_pdf_sha256": {
+    "04_fig_cost.pdf": "4388b226928ebeb5d4e2e8696b9cbdc89cfc0bd1182833df7086837e32f53519",
+    "04_fig_portfolio.pdf": "0e5837628eda6381e3b0597eb2328115baf4839f4b4a3cdd811b5845a1efef89",
+    "04_fig_diagnostics.pdf": "212031d8afcd8961ff1e2cfc08816a81bc08e4372391c0ccd7fc2d1b1537b446"
+  },
+  "checks": [
+    {
+      "subject": "abstract printed 2.29",
+      "expected": true
+    },
+    {
+      "subject": "abstract printed 2.83",
+      "expected": true
+    },
+    {
+      "subject": "abstract printed 116",
+      "expected": true
+    },
+    {
+      "subject": "conclusion printed 369.0",
+      "expected": true
+    },
+    {
+      "subject": "conclusion printed 116",
+      "expected": true
+    },
+    {
+      "subject": "conclusion printed 168",
+      "expected": true
+    },
+    {
+      "subject": "70% G2 cost and quota prose",
+      "expected": [
+        "111.341",
+        "308.94",
+        "16.109",
+        "70.000"
+      ]
+    },
+    {
+      "subject": "portfolio prose pair count",
+      "expected": 6
+    },
+    {
+      "subject": "BASE GFL_BESS prose rounding",
+      "expected": true
+    },
+    {
+      "subject": "BASE GFM_BESS prose rounding",
+      "expected": true
+    },
+    {
+      "subject": "G1 GFL_BESS prose rounding",
+      "expected": true
+    },
+    {
+      "subject": "G1 GFM_BESS prose rounding",
+      "expected": true
+    },
+    {
+      "subject": "G2 GFL_BESS prose rounding",
+      "expected": true
+    },
+    {
+      "subject": "G2 GFM_BESS prose rounding",
+      "expected": true
+    },
+    {
+      "subject": "BASE wind prose rounding",
+      "expected": true
+    },
+    {
+      "subject": "BASE PV prose rounding",
+      "expected": true
+    },
+    {
+      "subject": "G1 wind prose rounding",
+      "expected": true
+    },
+    {
+      "subject": "G1 PV prose rounding",
+      "expected": true
+    },
+    {
+      "subject": "G2 wind prose rounding",
+      "expected": true
+    },
+    {
+      "subject": "G2 PV prose rounding",
+      "expected": true
+    },
+    {
+      "subject": "thermal overlap counts",
+      "expected": [
+        "3",
+        "1"
+      ]
+    },
+    {
+      "subject": "50% weekly reducible event charge",
+      "expected": true
+    },
+    {
+      "subject": "60% weekly reducible event charge",
+      "expected": true
+    },
+    {
+      "subject": "G2 M0 defined/failed, inactive G1 failed",
+      "expected": [
+        "116",
+        "10",
+        "168"
+      ]
+    },
+    {
+      "subject": "G2 active fails",
+      "expected": "0"
+    },
+    {
+      "subject": "BASE eligible source rows",
+      "expected": [
+        "WK08-50-BASE-LP"
+      ]
+    },
+    {
+      "subject": "BASE defined/failed prose",
+      "expected": [
+        "12",
+        "12"
+      ]
+    },
+    {
+      "subject": "quota 50 x labels",
+      "expected": [
+        "BASE",
+        "G1"
+      ]
+    },
+    {
+      "subject": "BASE/50 cost artist 0",
+      "expected": [
+        97.55152896655356,
+        97.5665981503005
+      ]
+    },
+    {
+      "subject": "BASE/50 cost artist 1",
+      "expected": [
+        97.55152896655356
+      ]
+    },
+    {
+      "subject": "BASE/50 cost artist 2",
+      "expected": [
+        97.5665981503005
+      ]
+    },
+    {
+      "subject": "BASE/50 cost artist 3",
+      "expected": [
+        97.55152896655267
+      ]
+    },
+    {
+      "subject": "G1/50 cost artist 0",
+      "expected": [
+        98.61970609627201,
+        98.99812711723683
+      ]
+    },
+    {
+      "subject": "G1/50 cost artist 1",
+      "expected": [
+        98.61970609627201
+      ]
+    },
+    {
+      "subject": "G1/50 cost artist 2",
+      "expected": [
+        98.99812711723683
+      ]
+    },
+    {
+      "subject": "G1/50 cost artist 3",
+      "expected": [
+        98.61970609627141
+      ]
+    },
+    {
+      "subject": "quota 60 x labels",
+      "expected": [
+        "BASE",
+        "G1"
+      ]
+    },
+    {
+      "subject": "BASE/60 cost artist 0",
+      "expected": [
+        109.73097132991548,
+        109.74361728829498
+      ]
+    },
+    {
+      "subject": "BASE/60 cost artist 1",
+      "expected": [
+        109.73097132991548
+      ]
+    },
+    {
+      "subject": "BASE/60 cost artist 2",
+      "expected": [
+        109.74361728829498
+      ]
+    },
+    {
+      "subject": "BASE/60 cost artist 3",
+      "expected": [
+        109.73097132991434
+      ]
+    },
+    {
+      "subject": "G1/60 cost artist 0",
+      "expected": [
+        111.39575943943794,
+        111.81415070729899
+      ]
+    },
+    {
+      "subject": "G1/60 cost artist 1",
+      "expected": [
+        111.39575943943794
+      ]
+    },
+    {
+      "subject": "G1/60 cost artist 2",
+      "expected": [
+        111.81415070729899
+      ]
+    },
+    {
+      "subject": "G1/60 cost artist 3",
+      "expected": [
+        111.39575943943652
+      ]
+    },
+    {
+      "subject": "quota 70 x labels",
+      "expected": [
+        "BASE",
+        "G1",
+        "G2"
+      ]
+    },
+    {
+      "subject": "BASE/70 cost artist 0",
+      "expected": [
+        124.98973333715735,
+        125.05597270108397
+      ]
+    },
+    {
+      "subject": "BASE/70 cost artist 1",
+      "expected": [
+        124.98973333715735
+      ]
+    },
+    {
+      "subject": "BASE/70 cost artist 2",
+      "expected": [
+        125.05597270108397
+      ]
+    },
+    {
+      "subject": "BASE/70 cost artist 3",
+      "expected": [
+        124.98973333715601
+      ]
+    },
+    {
+      "subject": "G1/70 cost artist 0",
+      "expected": [
+        127.34837644875867,
+        127.81861854537375
+      ]
+    },
+    {
+      "subject": "G1/70 cost artist 1",
+      "expected": [
+        127.34837644875867
+      ]
+    },
+    {
+      "subject": "G1/70 cost artist 2",
+      "expected": [
+        127.81861854537375
+      ]
+    },
+    {
+      "subject": "G1/70 cost artist 3",
+      "expected": [
+        127.3483764487582
+      ]
+    },
+    {
+      "subject": "G2/70 cost artist 0",
+      "expected": [
+        127.4082215254212,
+        127.44959902867048
+      ]
+    },
+    {
+      "subject": "G2/70 cost artist 1",
+      "expected": [
+        127.4082215254212
+      ]
+    },
+    {
+      "subject": "G2/70 cost artist 2",
+      "expected": [
+        127.44959902867048
+      ]
+    },
+    {
+      "subject": "G2/70 cost artist 3",
+      "expected": [
+        127.40822152542138
+      ]
+    },
+    {
+      "subject": "GW bars GFL_BESS",
+      "expected": [
+        16.975,
+        7.3,
+        76.325,
+        38.175,
+        141.8,
+        58.875,
+        57.225
+      ]
+    },
+    {
+      "subject": "GW bars GFM_BESS",
+      "expected": [
+        0.0,
+        33.525,
+        0.0,
+        62.8,
+        0.0,
+        104.575,
+        102.45
+      ]
+    },
+    {
+      "subject": "GW bars wind",
+      "expected": [
+        344.30719870843257,
+        341.283182427223,
+        459.83130376907616,
+        452.69569820314035,
+        583.9581114946161,
+        587.4240427000472,
+        589.7287389109852
+      ]
+    },
+    {
+      "subject": "GW bars PV",
+      "expected": [
+        434.41059285179955,
+        442.79994576646214,
+        602.4372225633392,
+        628.2930139765521,
+        718.9227283523587,
+        726.0527116451459,
+        718.3990084286081
+      ]
+    },
+    {
+      "subject": "BASE 50 LP G1 cell annotation",
+      "expected": "168"
+    },
+    {
+      "subject": "BASE 50 LP G1 cell color value",
+      "expected": 168
+    },
+    {
+      "subject": "BASE 50 LP G2 cell annotation",
+      "expected": "168"
+    },
+    {
+      "subject": "BASE 50 LP G2 cell color value",
+      "expected": 168
+    },
+    {
+      "subject": "BASE 50 LP G0 cell annotation",
+      "expected": "168"
+    },
+    {
+      "subject": "BASE 50 LP G0 cell color value",
+      "expected": 168
+    },
+    {
+      "subject": "BASE 50 LP M0 cell annotation",
+      "expected": "12/12"
+    },
+    {
+      "subject": "BASE 50 LP M0 cell color value",
+      "expected": 12
+    },
+    {
+      "subject": "BASE 50 MILP G1 cell annotation",
+      "expected": "168"
+    },
+    {
+      "subject": "BASE 50 MILP G1 cell color value",
+      "expected": 168
+    },
+    {
+      "subject": "BASE 50 MILP G2 cell annotation",
+      "expected": "168"
+    },
+    {
+      "subject": "BASE 50 MILP G2 cell color value",
+      "expected": 168
+    },
+    {
+      "subject": "BASE 50 MILP G0 cell annotation",
+      "expected": "168"
+    },
+    {
+      "subject": "BASE 50 MILP G0 cell color value",
+      "expected": 168
+    },
+    {
+      "subject": "BASE 50 MILP M0 cell annotation",
+      "expected": "n/a"
+    },
+    {
+      "subject": "BASE 50 MILP M0 masked",
+      "expected": true
+    },
+    {
+      "subject": "G1 50 LP G1 cell annotation",
+      "expected": "0"
+    },
+    {
+      "subject": "G1 50 LP G1 cell color value",
+      "expected": 0
+    },
+    {
+      "subject": "G1 50 LP G2 cell annotation",
+      "expected": "168"
+    },
+    {
+      "subject": "G1 50 LP G2 cell color value",
+      "expected": 168
+    },
+    {
+      "subject": "G1 50 LP G0 cell annotation",
+      "expected": "0"
+    },
+    {
+      "subject": "G1 50 LP G0 cell color value",
+      "expected": 0
+    },
+    {
+      "subject": "G1 50 LP M0 cell annotation",
+      "expected": "0/168"
+    },
+    {
+      "subject": "G1 50 LP M0 cell color value",
+      "expected": 0
+    },
+    {
+      "subject": "G1 50 MILP G1 cell annotation",
+      "expected": "0"
+    },
+    {
+      "subject": "G1 50 MILP G1 cell color value",
+      "expected": 0
+    },
+    {
+      "subject": "G1 50 MILP G2 cell annotation",
+      "expected": "168"
+    },
+    {
+      "subject": "G1 50 MILP G2 cell color value",
+      "expected": 168
+    },
+    {
+      "subject": "G1 50 MILP G0 cell annotation",
+      "expected": "0"
+    },
+    {
+      "subject": "G1 50 MILP G0 cell color value",
+      "expected": 0
+    },
+    {
+      "subject": "G1 50 MILP M0 cell annotation",
+      "expected": "0/168"
+    },
+    {
+      "subject": "G1 50 MILP M0 cell color value",
+      "expected": 0
+    },
+    {
+      "subject": "BASE 60 LP G1 cell annotation",
+      "expected": "168"
+    },
+    {
+      "subject": "BASE 60 LP G1 cell color value",
+      "expected": 168
+    },
+    {
+      "subject": "BASE 60 LP G2 cell annotation",
+      "expected": "168"
+    },
+    {
+      "subject": "BASE 60 LP G2 cell color value",
+      "expected": 168
+    },
+    {
+      "subject": "BASE 60 LP G0 cell annotation",
+      "expected": "168"
+    },
+    {
+      "subject": "BASE 60 LP G0 cell color value",
+      "expected": 168
+    },
+    {
+      "subject": "BASE 60 LP M0 cell annotation",
+      "expected": "n/a"
+    },
+    {
+      "subject": "BASE 60 LP M0 masked",
+      "expected": true
+    },
+    {
+      "subject": "BASE 60 MILP G1 cell annotation",
+      "expected": "168"
+    },
+    {
+      "subject": "BASE 60 MILP G1 cell color value",
+      "expected": 168
+    },
+    {
+      "subject": "BASE 60 MILP G2 cell annotation",
+      "expected": "168"
+    },
+    {
+      "subject": "BASE 60 MILP G2 cell color value",
+      "expected": 168
+    },
+    {
+      "subject": "BASE 60 MILP G0 cell annotation",
+      "expected": "168"
+    },
+    {
+      "subject": "BASE 60 MILP G0 cell color value",
+      "expected": 168
+    },
+    {
+      "subject": "BASE 60 MILP M0 cell annotation",
+      "expected": "n/a"
+    },
+    {
+      "subject": "BASE 60 MILP M0 masked",
+      "expected": true
+    },
+    {
+      "subject": "G1 60 LP G1 cell annotation",
+      "expected": "0"
+    },
+    {
+      "subject": "G1 60 LP G1 cell color value",
+      "expected": 0
+    },
+    {
+      "subject": "G1 60 LP G2 cell annotation",
+      "expected": "168"
+    },
+    {
+      "subject": "G1 60 LP G2 cell color value",
+      "expected": 168
+    },
+    {
+      "subject": "G1 60 LP G0 cell annotation",
+      "expected": "0"
+    },
+    {
+      "subject": "G1 60 LP G0 cell color value",
+      "expected": 0
+    },
+    {
+      "subject": "G1 60 LP M0 cell annotation",
+      "expected": "0/168"
+    },
+    {
+      "subject": "G1 60 LP M0 cell color value",
+      "expected": 0
+    },
+    {
+      "subject": "G1 60 MILP G1 cell annotation",
+      "expected": "0"
+    },
+    {
+      "subject": "G1 60 MILP G1 cell color value",
+      "expected": 0
+    },
+    {
+      "subject": "G1 60 MILP G2 cell annotation",
+      "expected": "168"
+    },
+    {
+      "subject": "G1 60 MILP G2 cell color value",
+      "expected": 168
+    },
+    {
+      "subject": "G1 60 MILP G0 cell annotation",
+      "expected": "0"
+    },
+    {
+      "subject": "G1 60 MILP G0 cell color value",
+      "expected": 0
+    },
+    {
+      "subject": "G1 60 MILP M0 cell annotation",
+      "expected": "0/168"
+    },
+    {
+      "subject": "G1 60 MILP M0 cell color value",
+      "expected": 0
+    },
+    {
+      "subject": "BASE 70 LP G1 cell annotation",
+      "expected": "168"
+    },
+    {
+      "subject": "BASE 70 LP G1 cell color value",
+      "expected": 168
+    },
+    {
+      "subject": "BASE 70 LP G2 cell annotation",
+      "expected": "168"
+    },
+    {
+      "subject": "BASE 70 LP G2 cell color value",
+      "expected": 168
+    },
+    {
+      "subject": "BASE 70 LP G0 cell annotation",
+      "expected": "168"
+    },
+    {
+      "subject": "BASE 70 LP G0 cell color value",
+      "expected": 168
+    },
+    {
+      "subject": "BASE 70 LP M0 cell annotation",
+      "expected": "n/a"
+    },
+    {
+      "subject": "BASE 70 LP M0 masked",
+      "expected": true
+    },
+    {
+      "subject": "BASE 70 MILP G1 cell annotation",
+      "expected": "168"
+    },
+    {
+      "subject": "BASE 70 MILP G1 cell color value",
+      "expected": 168
+    },
+    {
+      "subject": "BASE 70 MILP G2 cell annotation",
+      "expected": "168"
+    },
+    {
+      "subject": "BASE 70 MILP G2 cell color value",
+      "expected": 168
+    },
+    {
+      "subject": "BASE 70 MILP G0 cell annotation",
+      "expected": "168"
+    },
+    {
+      "subject": "BASE 70 MILP G0 cell color value",
+      "expected": 168
+    },
+    {
+      "subject": "BASE 70 MILP M0 cell annotation",
+      "expected": "n/a"
+    },
+    {
+      "subject": "BASE 70 MILP M0 masked",
+      "expected": true
+    },
+    {
+      "subject": "G1 70 LP G1 cell annotation",
+      "expected": "0"
+    },
+    {
+      "subject": "G1 70 LP G1 cell color value",
+      "expected": 0
+    },
+    {
+      "subject": "G1 70 LP G2 cell annotation",
+      "expected": "168"
+    },
+    {
+      "subject": "G1 70 LP G2 cell color value",
+      "expected": 168
+    },
+    {
+      "subject": "G1 70 LP G0 cell annotation",
+      "expected": "0"
+    },
+    {
+      "subject": "G1 70 LP G0 cell color value",
+      "expected": 0
+    },
+    {
+      "subject": "G1 70 LP M0 cell annotation",
+      "expected": "0/168"
+    },
+    {
+      "subject": "G1 70 LP M0 cell color value",
+      "expected": 0
+    },
+    {
+      "subject": "G1 70 MILP G1 cell annotation",
+      "expected": "0"
+    },
+    {
+      "subject": "G1 70 MILP G1 cell color value",
+      "expected": 0
+    },
+    {
+      "subject": "G1 70 MILP G2 cell annotation",
+      "expected": "168"
+    },
+    {
+      "subject": "G1 70 MILP G2 cell color value",
+      "expected": 168
+    },
+    {
+      "subject": "G1 70 MILP G0 cell annotation",
+      "expected": "0"
+    },
+    {
+      "subject": "G1 70 MILP G0 cell color value",
+      "expected": 0
+    },
+    {
+      "subject": "G1 70 MILP M0 cell annotation",
+      "expected": "0/168"
+    },
+    {
+      "subject": "G1 70 MILP M0 cell color value",
+      "expected": 0
+    },
+    {
+      "subject": "G2 70 LP G1 cell annotation",
+      "expected": "81"
+    },
+    {
+      "subject": "G2 70 LP G1 cell color value",
+      "expected": 81
+    },
+    {
+      "subject": "G2 70 LP G2 cell annotation",
+      "expected": "0"
+    },
+    {
+      "subject": "G2 70 LP G2 cell color value",
+      "expected": 0
+    },
+    {
+      "subject": "G2 70 LP G0 cell annotation",
+      "expected": "0"
+    },
+    {
+      "subject": "G2 70 LP G0 cell color value",
+      "expected": 0
+    },
+    {
+      "subject": "G2 70 LP M0 cell annotation",
+      "expected": "18/168"
+    },
+    {
+      "subject": "G2 70 LP M0 cell color value",
+      "expected": 18
+    },
+    {
+      "subject": "G2 70 MILP G1 cell annotation",
+      "expected": "116"
+    },
+    {
+      "subject": "G2 70 MILP G1 cell color value",
+      "expected": 116
+    },
+    {
+      "subject": "G2 70 MILP G2 cell annotation",
+      "expected": "0"
+    },
+    {
+      "subject": "G2 70 MILP G2 cell color value",
+      "expected": 0
+    },
+    {
+      "subject": "G2 70 MILP G0 cell annotation",
+      "expected": "0"
+    },
+    {
+      "subject": "G2 70 MILP G0 cell color value",
+      "expected": 0
+    },
+    {
+      "subject": "G2 70 MILP M0 cell annotation",
+      "expected": "10/168"
+    },
+    {
+      "subject": "G2 70 MILP M0 cell color value",
+      "expected": 10
+    }
+  ],
+  "exit": 0
+}

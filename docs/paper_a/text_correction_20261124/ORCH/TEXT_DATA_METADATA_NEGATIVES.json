@@ -1,0 +1,232 @@
+{
+  "reviewer": "/root DATA-R",
+  "old_commit": "703c630999b9532ac96f62045a55227ab18d16ca",
+  "corrected_commit": "a4c19e962e9f59f5b40cf05f8d0cee2f24a52a78",
+  "old_sha256": "40a49c42b5500a3b1d6e3c0728ba3323eef1ca52c0225b81825581f79cd46ada",
+  "new_sha256": "a096c90bc69536884d76fe8ce43944e10ea5820344de569d94157656bfd600ad",
+  "solver_provenance_contradiction_fixed": true,
+  "display_cells": [
+    {
+      "row_id": "WK08-50-BASE-LP",
+      "field": "numeric_lb_EUR2025",
+      "baseline": "97,551529",
+      "corrected": "97,551528",
+      "exact_billion": "97.55152896655267"
+    },
+    {
+      "row_id": "WK08-50-BASE-LP",
+      "field": "numeric_ub_EUR2025",
+      "baseline": "97,551529",
+      "corrected": "97,551529",
+      "exact_billion": "97.55152896655472"
+    },
+    {
+      "row_id": "WK08-50-BASE-MILP",
+      "field": "numeric_lb_EUR2025",
+      "baseline": "97,551529",
+      "corrected": "97,551528",
+      "exact_billion": "97.55152896655356"
+    },
+    {
+      "row_id": "WK08-50-BASE-MILP",
+      "field": "numeric_ub_EUR2025",
+      "baseline": "97,566598",
+      "corrected": "97,566599",
+      "exact_billion": "97.5665981503005"
+    },
+    {
+      "row_id": "WK08-50-G1-LP",
+      "field": "numeric_lb_EUR2025",
+      "baseline": "98,619706",
+      "corrected": "98,619706",
+      "exact_billion": "98.61970609627141"
+    },
+    {
+      "row_id": "WK08-50-G1-LP",
+      "field": "numeric_ub_EUR2025",
+      "baseline": "98,619706",
+      "corrected": "98,619707",
+      "exact_billion": "98.61970609627434"
+    },
+    {
+      "row_id": "WK08-50-G1-MILP",
+      "field": "numeric_lb_EUR2025",
+      "baseline": "98,619706",
+      "corrected": "98,619706",
+      "exact_billion": "98.61970609627202"
+    },
+    {
+      "row_id": "WK08-50-G1-MILP",
+      "field": "numeric_ub_EUR2025",
+      "baseline": "98,998127",
+      "corrected": "98,998128",
+      "exact_billion": "98.99812711723683"
+    },
+    {
+      "row_id": "WK08-60-BASE-LP",
+      "field": "numeric_lb_EUR2025",
+      "baseline": "109,730971",
+      "corrected": "109,730971",
+      "exact_billion": "109.73097132991434"
+    },
+    {
+      "row_id": "WK08-60-BASE-LP",
+      "field": "numeric_ub_EUR2025",
+      "baseline": "109,730971",
+      "corrected": "109,730972",
+      "exact_billion": "109.73097132991551"
+    },
+    {
+      "row_id": "WK08-60-BASE-MILP",
+      "field": "numeric_lb_EUR2025",
+      "baseline": "109,730971",
+      "corrected": "109,730971",
+      "exact_billion": "109.73097132991548"
+    },
+    {
+      "row_id": "WK08-60-BASE-MILP",
+      "field": "numeric_ub_EUR2025",
+      "baseline": "109,743617",
+      "corrected": "109,743618",
+      "exact_billion": "109.74361728829498"
+    },
+    {
+      "row_id": "WK08-60-G1-LP",
+      "field": "numeric_lb_EUR2025",
+      "baseline": "111,395759",
+      "corrected": "111,395759",
+      "exact_billion": "111.39575943943652"
+    },
+    {
+      "row_id": "WK08-60-G1-LP",
+      "field": "numeric_ub_EUR2025",
+      "baseline": "111,395759",
+      "corrected": "111,395760",
+      "exact_billion": "111.3957594394385"
+    },
+    {
+      "row_id": "WK08-60-G1-MILP",
+      "field": "numeric_lb_EUR2025",
+      "baseline": "111,395759",
+      "corrected": "111,395759",
+      "exact_billion": "111.39575943943794"
+    },
+    {
+      "row_id": "WK08-60-G1-MILP",
+      "field": "numeric_ub_EUR2025",
+      "baseline": "111,814151",
+      "corrected": "111,814151",
+      "exact_billion": "111.814150707299"
+    },
+    {
+      "row_id": "WK08-70-BASE-LP",
+      "field": "numeric_lb_EUR2025",
+      "baseline": "124,989733",
+      "corrected": "124,989733",
+      "exact_billion": "124.989733337156"
+    },
+    {
+      "row_id": "WK08-70-BASE-LP",
+      "field": "numeric_ub_EUR2025",
+      "baseline": "124,989733",
+      "corrected": "124,989734",
+      "exact_billion": "124.98973333715738"
+    },
+    {
+      "row_id": "WK08-70-BASE-MILP",
+      "field": "numeric_lb_EUR2025",
+      "baseline": "124,989733",
+      "corrected": "124,989733",
+      "exact_billion": "124.98973333715735"
+    },
+    {
+      "row_id": "WK08-70-BASE-MILP",
+      "field": "numeric_ub_EUR2025",
+      "baseline": "125,055973",
+      "corrected": "125,055973",
+      "exact_billion": "125.05597270108397"
+    },
+    {
+      "row_id": "WK08-70-G1-LP",
+      "field": "numeric_lb_EUR2025",
+      "baseline": "127,348376",
+      "corrected": "127,348376",
+      "exact_billion": "127.34837644875821"
+    },
+    {
+      "row_id": "WK08-70-G1-LP",
+      "field": "numeric_ub_EUR2025",
+      "baseline": "127,348376",
+      "corrected": "127,348377",
+      "exact_billion": "127.34837644876027"
+    },
+    {
+      "row_id": "WK08-70-G1-MILP",
+      "field": "numeric_lb_EUR2025",
+      "baseline": "127,348376",
+      "corrected": "127,348376",
+      "exact_billion": "127.34837644875867"
+    },
+    {
+      "row_id": "WK08-70-G1-MILP",
+      "field": "numeric_ub_EUR2025",
+      "baseline": "127,818619",
+      "corrected": "127,818619",
+      "exact_billion": "127.81861854537375"
+    },
+    {
+      "row_id": "WK08-70-G2-LP",
+      "field": "numeric_lb_EUR2025",
+      "baseline": "127,408222",
+      "corrected": "127,408221",
+      "exact_billion": "127.40822152542139"
+    },
+    {
+      "row_id": "WK08-70-G2-LP",
+      "field": "numeric_ub_EUR2025",
+      "baseline": "127,408222",
+      "corrected": "127,408222",
+      "exact_billion": "127.40822152542322"
+    },
+    {
+      "row_id": "WK08-70-G2-MILP",
+      "field": "numeric_lb_EUR2025",
+      "baseline": "127,408222",
+      "corrected": "127,408221",
+      "exact_billion": "127.4082215254212"
+    },
+    {
+      "row_id": "WK08-70-G2-MILP",
+      "field": "numeric_ub_EUR2025",
+      "baseline": "127,449599",
+      "corrected": "127,449600",
+      "exact_billion": "127.44959902867047"
+    }
+  ],
+  "baseline_inward_cells": 13,
+  "corrected_inward_cells": 0,
+  "negative_controls": [
+    {
+      "generator_sha256": "99d597bc1438a1cf29269ab98b87656a2aed0a8d1107b7e54ee5ab50f1c14898",
+      "test": "unknown revision without numerical field",
+      "rejected": false
+    },
+    {
+      "generator_sha256": "99d597bc1438a1cf29269ab98b87656a2aed0a8d1107b7e54ee5ab50f1c14898",
+      "test": "abbreviated revision collision",
+      "rejected": false
+    },
+    {
+      "generator_sha256": "cf42efd9bbd2c18a90c6d911b3101052644dd416d8c7b8e96a02fa82bf125f1f",
+      "test": "unknown revision without numerical field",
+      "rejected": true
+    },
+    {
+      "generator_sha256": "cf42efd9bbd2c18a90c6d911b3101052644dd416d8c7b8e96a02fa82bf125f1f",
+      "test": "abbreviated revision collision",
+      "rejected": true
+    }
+  ],
+  "script_sha256": "42fe4e8d24586ddd188e5a0614d0ad2f6ed7c5f71a6c8e910c863dbff867cb2c",
+  "exit": 0
+}

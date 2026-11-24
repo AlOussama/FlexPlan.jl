@@ -1,0 +1,15 @@
+{
+  "changed_F2_solver_version": "rejected",
+  "observed_mutated_SHA": "9f635ac4af3d36fd4eb285825c9c74085535ad4485ece4fb9030efa843f8e9f4",
+  "expected_F2_SHA": "254be423a26749ee4704b1d51f1f5d2ebc341a52d44547b8962743decd634bd5",
+  "stale_publication_pdf_SHA": "rejected",
+  "old_pdf_sha256": "0be9f0253454a6d73a1f1e6ee904c2adc135dd55b0e9d561da4e3e4801126687",
+  "actual_pdf": "d65f359195175d3be149ad1e9b924c11f913575b8eeac353b02845c0be992018",
+  "unknown_G3_row": {
+    "status": "CORRECTED",
+    "priority": "P1",
+    "old_evidence": "99d597bc1438a1cf29269ab98b87656a2aed0a8d1107b7e54ee5ab50f1c14898",
+    "observed": "Unknown revision with empty original distance rejected with Unrecorded G3 attempt without original-model distance: ffffffffffffffffffffffffffffffffffffffff",
+    "independent_basis": "Fault injection using unregistered all-f revision with blank distance throws ValueError instead of printing a fictitious result."
+  }
+}

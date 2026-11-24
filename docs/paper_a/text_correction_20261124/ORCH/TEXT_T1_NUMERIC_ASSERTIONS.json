@@ -1,0 +1,3853 @@
+{
+  "reviewer": "/root (DATA-R, independent of PAPER-W)",
+  "script_sha256": "bef49f5237fd9e587b95b241145e917c768ffbf52d78fefe12ebe0288c1bf055",
+  "f2_receipt_sha256": "c710c38d9c511ca6a4c2ef693b6dd729333018c5a85dba15685c3c61e215b8bc",
+  "f2_model_optimizations": 0,
+  "checks": [
+    {
+      "assertion": "04_reviewed_points.csv",
+      "checked": "254be423a26749ee4704b1d51f1f5d2ebc341a52d44547b8962743decd634bd5"
+    },
+    {
+      "assertion": "04_reviewed_bounds.csv",
+      "checked": "a1d1d588d3c9c12a6b450788befa3deadd0264b26663c15c70f8a9de543768fa"
+    },
+    {
+      "assertion": "04_additional_methods.csv",
+      "checked": "5fbcf0b726d9274755a63f44775256c78185802c158d3b3739fc71275a5d5dce"
+    },
+    {
+      "assertion": "WK08-50-BASE-LP:F2_receipt",
+      "checked": "c4a1516d0fb2de194e7d39140258dc2f8a50553ce9b78ab2e1ae8b10bc2b115c"
+    },
+    {
+      "assertion": "WK08-50-BASE-LP:native_version",
+      "checked": {
+        "version": "12.0.3",
+        "native_log_sha256": "970bb56408c4cb1610f0976df0eb8ded5d97711055839a25c0f3a8c576186946"
+      }
+    },
+    {
+      "assertion": "WK08-50-BASE-LP:CAPEX_EUR2025",
+      "checked": "60351397208.73977"
+    },
+    {
+      "assertion": "WK08-50-BASE-LP:actual_RE_MWh",
+      "checked": "35529433.051224045"
+    },
+    {
+      "assertion": "WK08-50-BASE-LP:actual_load_MWh",
+      "checked": "71058866.10244864"
+    },
+    {
+      "assertion": "WK08-50-BASE-LP:raw_week_dispatch_OPEX_EUR2025",
+      "checked": "676251101.5793791"
+    },
+    {
+      "assertion": "WK08-50-BASE-LP:raw_week_startup_shutdown_OPEX_EUR2025",
+      "checked": "37176082.81707207"
+    },
+    {
+      "assertion": "WK08-50-BASE-LP:raw_week_storage_OPEX_EUR2025",
+      "checked": "0.0"
+    },
+    {
+      "assertion": "WK08-50-BASE-LP:raw_week_OPEX_EUR2025",
+      "checked": "713427184.3964511"
+    },
+    {
+      "assertion": "WK08-50-BASE-LP:annualized_week_OPEX_EUR2025",
+      "checked": "37200131757.81496"
+    },
+    {
+      "assertion": "WK08-50-BASE-LP:annualized_total_EUR2025",
+      "checked": "97551528966.55472"
+    },
+    {
+      "assertion": "WK08-50-BASE-LP:actual_RE_share_pct",
+      "checked": "49.99999999999961"
+    },
+    {
+      "assertion": "WK08-50-BASE-LP:wind_added_MW",
+      "checked": "343300.5947669466"
+    },
+    {
+      "assertion": "WK08-50-BASE-LP:PV_added_MW",
+      "checked": "436277.4569871213"
+    },
+    {
+      "assertion": "WK08-50-BASE-LP:wind_baseline_MW",
+      "checked": "205789.5696666552"
+    },
+    {
+      "assertion": "WK08-50-BASE-LP:PV_baseline_MW",
+      "checked": "152969.72121180454"
+    },
+    {
+      "assertion": "WK08-50-BASE-LP:GFL_BESS_baseline_MW",
+      "checked": "0.0"
+    },
+    {
+      "assertion": "WK08-50-BASE-LP:GFL_BESS_added_MW",
+      "checked": "16970.307946503628"
+    },
+    {
+      "assertion": "WK08-50-BASE-LP:GFM_BESS_baseline_MW",
+      "checked": "0.0"
+    },
+    {
+      "assertion": "WK08-50-BASE-LP:GFM_BESS_added_MW",
+      "checked": "0.0"
+    },
+    {
+      "assertion": "WK08-50-BASE-LP:wind_total_MW",
+      "checked": "549090.1644336018"
+    },
+    {
+      "assertion": "WK08-50-BASE-LP:PV_total_MW",
+      "checked": "589247.1781989259"
+    },
+    {
+      "assertion": "WK08-50-BASE-LP:GFL_BESS_total_MW",
+      "checked": "16970.307946503628"
+    },
+    {
+      "assertion": "WK08-50-BASE-LP:GFM_BESS_total_MW",
+      "checked": "0.0"
+    },
+    {
+      "assertion": "WK08-50-BASE-LP:G1_failed_hours",
+      "checked": 168
+    },
+    {
+      "assertion": "WK08-50-BASE-LP:G1_defined_hours",
+      "checked": 168
+    },
+    {
+      "assertion": "WK08-50-BASE-LP:G2_failed_hours",
+      "checked": 168
+    },
+    {
+      "assertion": "WK08-50-BASE-LP:G2_defined_hours",
+      "checked": 168
+    },
+    {
+      "assertion": "WK08-50-BASE-LP:G0_failed_hours",
+      "checked": 168
+    },
+    {
+      "assertion": "WK08-50-BASE-LP:G0_defined_hours",
+      "checked": 168
+    },
+    {
+      "assertion": "WK08-50-BASE-LP:B_min_failed_hours",
+      "checked": 112
+    },
+    {
+      "assertion": "WK08-50-BASE-LP:B_min_defined_hours",
+      "checked": 168
+    },
+    {
+      "assertion": "WK08-50-BASE-LP:M0_failed_hours",
+      "checked": 12
+    },
+    {
+      "assertion": "WK08-50-BASE-LP:M0_defined_hours",
+      "checked": 12
+    },
+    {
+      "assertion": "WK08-50-BASE-LP:hours_G1",
+      "checked": [
+        "168",
+        "0"
+      ]
+    },
+    {
+      "assertion": "WK08-50-BASE-LP:hours_G2",
+      "checked": [
+        "168",
+        "0"
+      ]
+    },
+    {
+      "assertion": "WK08-50-BASE-LP:hours_G0",
+      "checked": [
+        "168",
+        "0"
+      ]
+    },
+    {
+      "assertion": "WK08-50-BASE-LP:hours_M0",
+      "checked": [
+        "12",
+        "156"
+      ]
+    },
+    {
+      "assertion": "WK08-50-BASE-LP:annual_coordinate",
+      "checked": "97551528966.55472"
+    },
+    {
+      "assertion": "WK08-50-BASE-LP:native_UB",
+      "checked": [
+        "97551528966.55267",
+        "97551528966.55472"
+      ]
+    },
+    {
+      "assertion": "WK08-50-BASE-LP:events",
+      "checked": [
+        0,
+        "0.0"
+      ]
+    },
+    {
+      "assertion": "WK08-50-BASE-MILP:F2_receipt",
+      "checked": "fdf3ea4078e149ab6cf8a2e3f00b05c32beb605cbb8b209c271d7472e488c814"
+    },
+    {
+      "assertion": "WK08-50-BASE-MILP:native_version",
+      "checked": {
+        "version": "12.0.3",
+        "native_log_sha256": "a6f225a5113621e968b4976999d3ba9d69f9fa801b95d2c342f9749e49c6c5bc"
+      }
+    },
+    {
+      "assertion": "WK08-50-BASE-MILP:CAPEX_EUR2025",
+      "checked": "60393267353.898224"
+    },
+    {
+      "assertion": "WK08-50-BASE-MILP:actual_RE_MWh",
+      "checked": "35529433.05122422"
+    },
+    {
+      "assertion": "WK08-50-BASE-MILP:actual_load_MWh",
+      "checked": "71058866.10244864"
+    },
+    {
+      "assertion": "WK08-50-BASE-MILP:raw_week_dispatch_OPEX_EUR2025",
+      "checked": "675637921.539546"
+    },
+    {
+      "assertion": "WK08-50-BASE-MILP:raw_week_startup_shutdown_OPEX_EUR2025",
+      "checked": "37275271.816114426"
+    },
+    {
+      "assertion": "WK08-50-BASE-MILP:raw_week_storage_OPEX_EUR2025",
+      "checked": "0.0"
+    },
+    {
+      "assertion": "WK08-50-BASE-MILP:raw_week_OPEX_EUR2025",
+      "checked": "712913193.3556604"
+    },
+    {
+      "assertion": "WK08-50-BASE-MILP:annualized_week_OPEX_EUR2025",
+      "checked": "37173330796.40229"
+    },
+    {
+      "assertion": "WK08-50-BASE-MILP:annualized_total_EUR2025",
+      "checked": "97566598150.3005"
+    },
+    {
+      "assertion": "WK08-50-BASE-MILP:actual_RE_share_pct",
+      "checked": "49.99999999999985"
+    },
+    {
+      "assertion": "WK08-50-BASE-MILP:wind_added_MW",
+      "checked": "344307.19870843255"
+    },
+    {
+      "assertion": "WK08-50-BASE-MILP:PV_added_MW",
+      "checked": "434410.59285179956"
+    },
+    {
+      "assertion": "WK08-50-BASE-MILP:wind_baseline_MW",
+      "checked": "205789.5696666552"
+    },
+    {
+      "assertion": "WK08-50-BASE-MILP:PV_baseline_MW",
+      "checked": "152969.72121180454"
+    },
+    {
+      "assertion": "WK08-50-BASE-MILP:GFL_BESS_baseline_MW",
+      "checked": "0.0"
+    },
+    {
+      "assertion": "WK08-50-BASE-MILP:GFL_BESS_added_MW",
+      "checked": "16975.0"
+    },
+    {
+      "assertion": "WK08-50-BASE-MILP:GFM_BESS_baseline_MW",
+      "checked": "0.0"
+    },
+    {
+      "assertion": "WK08-50-BASE-MILP:GFM_BESS_added_MW",
+      "checked": "0.0"
+    },
+    {
+      "assertion": "WK08-50-BASE-MILP:wind_total_MW",
+      "checked": "550096.7683750878"
+    },
+    {
+      "assertion": "WK08-50-BASE-MILP:PV_total_MW",
+      "checked": "587380.3140636041"
+    },
+    {
+      "assertion": "WK08-50-BASE-MILP:GFL_BESS_total_MW",
+      "checked": "16975.0"
+    },
+    {
+      "assertion": "WK08-50-BASE-MILP:GFM_BESS_total_MW",
+      "checked": "0.0"
+    },
+    {
+      "assertion": "WK08-50-BASE-MILP:G1_failed_hours",
+      "checked": 168
+    },
+    {
+      "assertion": "WK08-50-BASE-MILP:G1_defined_hours",
+      "checked": 168
+    },
+    {
+      "assertion": "WK08-50-BASE-MILP:G2_failed_hours",
+      "checked": 168
+    },
+    {
+      "assertion": "WK08-50-BASE-MILP:G2_defined_hours",
+      "checked": 168
+    },
+    {
+      "assertion": "WK08-50-BASE-MILP:G0_failed_hours",
+      "checked": 168
+    },
+    {
+      "assertion": "WK08-50-BASE-MILP:G0_defined_hours",
+      "checked": 168
+    },
+    {
+      "assertion": "WK08-50-BASE-MILP:B_min_failed_hours",
+      "checked": 113
+    },
+    {
+      "assertion": "WK08-50-BASE-MILP:B_min_defined_hours",
+      "checked": 168
+    },
+    {
+      "assertion": "WK08-50-BASE-MILP:hours_G1",
+      "checked": [
+        "168",
+        "0"
+      ]
+    },
+    {
+      "assertion": "WK08-50-BASE-MILP:hours_G2",
+      "checked": [
+        "168",
+        "0"
+      ]
+    },
+    {
+      "assertion": "WK08-50-BASE-MILP:hours_G0",
+      "checked": [
+        "168",
+        "0"
+      ]
+    },
+    {
+      "assertion": "WK08-50-BASE-MILP:hours_M0",
+      "checked": [
+        "0",
+        "168"
+      ]
+    },
+    {
+      "assertion": "WK08-50-BASE-MILP:annual_coordinate",
+      "checked": "97566598150.3005"
+    },
+    {
+      "assertion": "WK08-50-BASE-MILP:native_UB",
+      "checked": [
+        "97551528966.55356",
+        "97566598150.3005"
+      ]
+    },
+    {
+      "assertion": "WK08-50-BASE-MILP:events",
+      "checked": [
+        3,
+        "62388.69577781139"
+      ]
+    },
+    {
+      "assertion": "WK08-50-G1-LP:F2_receipt",
+      "checked": "45cabff787440b5b4e9cb27271262bee0189d329a026bb8c3e64c00b964ff595"
+    },
+    {
+      "assertion": "WK08-50-G1-LP:native_version",
+      "checked": {
+        "version": "12.0.3",
+        "native_log_sha256": "e384c307e58594ffcd552fa4ddf8b33123ca9b12b2c00c64a628e5549640589e"
+      }
+    },
+    {
+      "assertion": "WK08-50-G1-LP:CAPEX_EUR2025",
+      "checked": "62062737888.896385"
+    },
+    {
+      "assertion": "WK08-50-G1-LP:actual_RE_MWh",
+      "checked": "35529433.05122408"
+    },
+    {
+      "assertion": "WK08-50-G1-LP:actual_load_MWh",
+      "checked": "71058866.10244864"
+    },
+    {
+      "assertion": "WK08-50-G1-LP:raw_week_dispatch_OPEX_EUR2025",
+      "checked": "668184821.0657521"
+    },
+    {
+      "assertion": "WK08-50-G1-LP:raw_week_startup_shutdown_OPEX_EUR2025",
+      "checked": "32907719.897660594"
+    },
+    {
+      "assertion": "WK08-50-G1-LP:raw_week_storage_OPEX_EUR2025",
+      "checked": "0.0"
+    },
+    {
+      "assertion": "WK08-50-G1-LP:raw_week_OPEX_EUR2025",
+      "checked": "701092540.9634128"
+    },
+    {
+      "assertion": "WK08-50-G1-LP:annualized_week_OPEX_EUR2025",
+      "checked": "36556968207.37795"
+    },
+    {
+      "assertion": "WK08-50-G1-LP:annualized_total_EUR2025",
+      "checked": "98619706096.27434"
+    },
+    {
+      "assertion": "WK08-50-G1-LP:actual_RE_share_pct",
+      "checked": "49.999999999999666"
+    },
+    {
+      "assertion": "WK08-50-G1-LP:wind_added_MW",
+      "checked": "343419.99354964937"
+    },
+    {
+      "assertion": "WK08-50-G1-LP:PV_added_MW",
+      "checked": "438061.45360175817"
+    },
+    {
+      "assertion": "WK08-50-G1-LP:wind_baseline_MW",
+      "checked": "205789.5696666552"
+    },
+    {
+      "assertion": "WK08-50-G1-LP:PV_baseline_MW",
+      "checked": "152969.72121180454"
+    },
+    {
+      "assertion": "WK08-50-G1-LP:GFL_BESS_baseline_MW",
+      "checked": "0.0"
+    },
+    {
+      "assertion": "WK08-50-G1-LP:GFL_BESS_added_MW",
+      "checked": "7270.789612969067"
+    },
+    {
+      "assertion": "WK08-50-G1-LP:GFM_BESS_baseline_MW",
+      "checked": "0.0"
+    },
+    {
+      "assertion": "WK08-50-G1-LP:GFM_BESS_added_MW",
+      "checked": "30682.728491191945"
+    },
+    {
+      "assertion": "WK08-50-G1-LP:wind_total_MW",
+      "checked": "549209.5632163046"
+    },
+    {
+      "assertion": "WK08-50-G1-LP:PV_total_MW",
+      "checked": "591031.1748135628"
+    },
+    {
+      "assertion": "WK08-50-G1-LP:GFL_BESS_total_MW",
+      "checked": "7270.789612969067"
+    },
+    {
+      "assertion": "WK08-50-G1-LP:GFM_BESS_total_MW",
+      "checked": "30682.728491191945"
+    },
+    {
+      "assertion": "WK08-50-G1-LP:G1_failed_hours",
+      "checked": 0
+    },
+    {
+      "assertion": "WK08-50-G1-LP:G1_defined_hours",
+      "checked": 168
+    },
+    {
+      "assertion": "WK08-50-G1-LP:G2_failed_hours",
+      "checked": 168
+    },
+    {
+      "assertion": "WK08-50-G1-LP:G2_defined_hours",
+      "checked": 168
+    },
+    {
+      "assertion": "WK08-50-G1-LP:G0_failed_hours",
+      "checked": 0
+    },
+    {
+      "assertion": "WK08-50-G1-LP:G0_defined_hours",
+      "checked": 168
+    },
+    {
+      "assertion": "WK08-50-G1-LP:B_min_failed_hours",
+      "checked": 0
+    },
+    {
+      "assertion": "WK08-50-G1-LP:B_min_defined_hours",
+      "checked": 168
+    },
+    {
+      "assertion": "WK08-50-G1-LP:M0_failed_hours",
+      "checked": 0
+    },
+    {
+      "assertion": "WK08-50-G1-LP:M0_defined_hours",
+      "checked": 168
+    },
+    {
+      "assertion": "WK08-50-G1-LP:hours_G1",
+      "checked": [
+        "168",
+        "0"
+      ]
+    },
+    {
+      "assertion": "WK08-50-G1-LP:hours_G2",
+      "checked": [
+        "168",
+        "0"
+      ]
+    },
+    {
+      "assertion": "WK08-50-G1-LP:hours_G0",
+      "checked": [
+        "168",
+        "0"
+      ]
+    },
+    {
+      "assertion": "WK08-50-G1-LP:hours_M0",
+      "checked": [
+        "168",
+        "0"
+      ]
+    },
+    {
+      "assertion": "WK08-50-G1-LP:annual_coordinate",
+      "checked": "98619706096.27434"
+    },
+    {
+      "assertion": "WK08-50-G1-LP:native_UB",
+      "checked": [
+        "98619706096.27141",
+        "98619706096.27434"
+      ]
+    },
+    {
+      "assertion": "WK08-50-G1-LP:events",
+      "checked": [
+        0,
+        "0.0"
+      ]
+    },
+    {
+      "assertion": "WK08-50-G1-MILP:F2_receipt",
+      "checked": "b8c5f4d95b2fd1c4e187dddb0abf16d0b0b62d01903576da20848c8e418b7efd"
+    },
+    {
+      "assertion": "WK08-50-G1-MILP:native_version",
+      "checked": {
+        "version": "12.0.3",
+        "native_log_sha256": "5acf860e394e8d8e148785ffaeea153460f7c3579e0614f2bd7261f78e2a3800"
+      }
+    },
+    {
+      "assertion": "WK08-50-G1-MILP:CAPEX_EUR2025",
+      "checked": "62455556241.64873"
+    },
+    {
+      "assertion": "WK08-50-G1-MILP:actual_RE_MWh",
+      "checked": "35529433.05122409"
+    },
+    {
+      "assertion": "WK08-50-G1-MILP:actual_load_MWh",
+      "checked": "71058866.10244864"
+    },
+    {
+      "assertion": "WK08-50-G1-MILP:raw_week_dispatch_OPEX_EUR2025",
+      "checked": "667372946.3669384"
+    },
+    {
+      "assertion": "WK08-50-G1-MILP:raw_week_startup_shutdown_OPEX_EUR2025",
+      "checked": "33443481.384066433"
+    },
+    {
+      "assertion": "WK08-50-G1-MILP:raw_week_storage_OPEX_EUR2025",
+      "checked": "0.0"
+    },
+    {
+      "assertion": "WK08-50-G1-MILP:raw_week_OPEX_EUR2025",
+      "checked": "700816427.7510048"
+    },
+    {
+      "assertion": "WK08-50-G1-MILP:annualized_week_OPEX_EUR2025",
+      "checked": "36542570875.588104"
+    },
+    {
+      "assertion": "WK08-50-G1-MILP:annualized_total_EUR2025",
+      "checked": "98998127117.23683"
+    },
+    {
+      "assertion": "WK08-50-G1-MILP:actual_RE_share_pct",
+      "checked": "49.99999999999967"
+    },
+    {
+      "assertion": "WK08-50-G1-MILP:wind_added_MW",
+      "checked": "341283.18242722296"
+    },
+    {
+      "assertion": "WK08-50-G1-MILP:PV_added_MW",
+      "checked": "442799.94576646213"
+    },
+    {
+      "assertion": "WK08-50-G1-MILP:wind_baseline_MW",
+      "checked": "205789.5696666552"
+    },
+    {
+      "assertion": "WK08-50-G1-MILP:PV_baseline_MW",
+      "checked": "152969.72121180454"
+    },
+    {
+      "assertion": "WK08-50-G1-MILP:GFL_BESS_baseline_MW",
+      "checked": "0.0"
+    },
+    {
+      "assertion": "WK08-50-G1-MILP:GFL_BESS_added_MW",
+      "checked": "7300.0"
+    },
+    {
+      "assertion": "WK08-50-G1-MILP:GFM_BESS_baseline_MW",
+      "checked": "0.0"
+    },
+    {
+      "assertion": "WK08-50-G1-MILP:GFM_BESS_added_MW",
+      "checked": "33525.0"
+    },
+    {
+      "assertion": "WK08-50-G1-MILP:wind_total_MW",
+      "checked": "547072.7520938781"
+    },
+    {
+      "assertion": "WK08-50-G1-MILP:PV_total_MW",
+      "checked": "595769.6669782667"
+    },
+    {
+      "assertion": "WK08-50-G1-MILP:GFL_BESS_total_MW",
+      "checked": "7300.0"
+    },
+    {
+      "assertion": "WK08-50-G1-MILP:GFM_BESS_total_MW",
+      "checked": "33525.0"
+    },
+    {
+      "assertion": "WK08-50-G1-MILP:G1_failed_hours",
+      "checked": 0
+    },
+    {
+      "assertion": "WK08-50-G1-MILP:G1_defined_hours",
+      "checked": 168
+    },
+    {
+      "assertion": "WK08-50-G1-MILP:G2_failed_hours",
+      "checked": 168
+    },
+    {
+      "assertion": "WK08-50-G1-MILP:G2_defined_hours",
+      "checked": 168
+    },
+    {
+      "assertion": "WK08-50-G1-MILP:G0_failed_hours",
+      "checked": 0
+    },
+    {
+      "assertion": "WK08-50-G1-MILP:G0_defined_hours",
+      "checked": 168
+    },
+    {
+      "assertion": "WK08-50-G1-MILP:B_min_failed_hours",
+      "checked": 0
+    },
+    {
+      "assertion": "WK08-50-G1-MILP:B_min_defined_hours",
+      "checked": 168
+    },
+    {
+      "assertion": "WK08-50-G1-MILP:M0_failed_hours",
+      "checked": 0
+    },
+    {
+      "assertion": "WK08-50-G1-MILP:M0_defined_hours",
+      "checked": 168
+    },
+    {
+      "assertion": "WK08-50-G1-MILP:hours_G1",
+      "checked": [
+        "168",
+        "0"
+      ]
+    },
+    {
+      "assertion": "WK08-50-G1-MILP:hours_G2",
+      "checked": [
+        "168",
+        "0"
+      ]
+    },
+    {
+      "assertion": "WK08-50-G1-MILP:hours_G0",
+      "checked": [
+        "168",
+        "0"
+      ]
+    },
+    {
+      "assertion": "WK08-50-G1-MILP:hours_M0",
+      "checked": [
+        "168",
+        "0"
+      ]
+    },
+    {
+      "assertion": "WK08-50-G1-MILP:annual_coordinate",
+      "checked": "98998127117.23683"
+    },
+    {
+      "assertion": "WK08-50-G1-MILP:native_UB",
+      "checked": [
+        "98619706096.27202",
+        "98998127117.23683"
+      ]
+    },
+    {
+      "assertion": "WK08-50-G1-MILP:events",
+      "checked": [
+        0,
+        "0.0"
+      ]
+    },
+    {
+      "assertion": "WK08-60-BASE-LP:F2_receipt",
+      "checked": "b1d462b721cc26d792816c9b50c631eb5ffdb550122cdd43d45893ebefe67623"
+    },
+    {
+      "assertion": "WK08-60-BASE-LP:native_version",
+      "checked": {
+        "version": "12.0.3",
+        "native_log_sha256": "70cc4058a2e6d60b17e995aeffe317731b91e78f9d099777703ab541b56cde36"
+      }
+    },
+    {
+      "assertion": "WK08-60-BASE-LP:CAPEX_EUR2025",
+      "checked": "84708983068.99423"
+    },
+    {
+      "assertion": "WK08-60-BASE-LP:actual_RE_MWh",
+      "checked": "42635319.66146914"
+    },
+    {
+      "assertion": "WK08-60-BASE-LP:actual_load_MWh",
+      "checked": "71058866.10244864"
+    },
+    {
+      "assertion": "WK08-60-BASE-LP:raw_week_dispatch_OPEX_EUR2025",
+      "checked": "448496763.9868167"
+    },
+    {
+      "assertion": "WK08-60-BASE-LP:raw_week_startup_shutdown_OPEX_EUR2025",
+      "checked": "31376983.482906543"
+    },
+    {
+      "assertion": "WK08-60-BASE-LP:raw_week_storage_OPEX_EUR2025",
+      "checked": "0.0"
+    },
+    {
+      "assertion": "WK08-60-BASE-LP:raw_week_OPEX_EUR2025",
+      "checked": "479873747.4697232"
+    },
+    {
+      "assertion": "WK08-60-BASE-LP:annualized_week_OPEX_EUR2025",
+      "checked": "25021988260.921284"
+    },
+    {
+      "assertion": "WK08-60-BASE-LP:annualized_total_EUR2025",
+      "checked": "109730971329.91551"
+    },
+    {
+      "assertion": "WK08-60-BASE-LP:actual_RE_share_pct",
+      "checked": "59.999999999999936"
+    },
+    {
+      "assertion": "WK08-60-BASE-LP:wind_added_MW",
+      "checked": "459515.0133420765"
+    },
+    {
+      "assertion": "WK08-60-BASE-LP:PV_added_MW",
+      "checked": "603455.0242596356"
+    },
+    {
+      "assertion": "WK08-60-BASE-LP:wind_baseline_MW",
+      "checked": "205789.5696666552"
+    },
+    {
+      "assertion": "WK08-60-BASE-LP:PV_baseline_MW",
+      "checked": "152969.72121180454"
+    },
+    {
+      "assertion": "WK08-60-BASE-LP:GFL_BESS_baseline_MW",
+      "checked": "0.0"
+    },
+    {
+      "assertion": "WK08-60-BASE-LP:GFL_BESS_added_MW",
+      "checked": "76297.82247323153"
+    },
+    {
+      "assertion": "WK08-60-BASE-LP:GFM_BESS_baseline_MW",
+      "checked": "0.0"
+    },
+    {
+      "assertion": "WK08-60-BASE-LP:GFM_BESS_added_MW",
+      "checked": "0.0"
+    },
+    {
+      "assertion": "WK08-60-BASE-LP:wind_total_MW",
+      "checked": "665304.5830087317"
+    },
+    {
+      "assertion": "WK08-60-BASE-LP:PV_total_MW",
+      "checked": "756424.7454714401"
+    },
+    {
+      "assertion": "WK08-60-BASE-LP:GFL_BESS_total_MW",
+      "checked": "76297.82247323153"
+    },
+    {
+      "assertion": "WK08-60-BASE-LP:GFM_BESS_total_MW",
+      "checked": "0.0"
+    },
+    {
+      "assertion": "WK08-60-BASE-LP:G1_failed_hours",
+      "checked": 168
+    },
+    {
+      "assertion": "WK08-60-BASE-LP:G1_defined_hours",
+      "checked": 168
+    },
+    {
+      "assertion": "WK08-60-BASE-LP:G2_failed_hours",
+      "checked": 168
+    },
+    {
+      "assertion": "WK08-60-BASE-LP:G2_defined_hours",
+      "checked": 168
+    },
+    {
+      "assertion": "WK08-60-BASE-LP:G0_failed_hours",
+      "checked": 168
+    },
+    {
+      "assertion": "WK08-60-BASE-LP:G0_defined_hours",
+      "checked": 168
+    },
+    {
+      "assertion": "WK08-60-BASE-LP:B_min_failed_hours",
+      "checked": 130
+    },
+    {
+      "assertion": "WK08-60-BASE-LP:B_min_defined_hours",
+      "checked": 168
+    },
+    {
+      "assertion": "WK08-60-BASE-LP:hours_G1",
+      "checked": [
+        "168",
+        "0"
+      ]
+    },
+    {
+      "assertion": "WK08-60-BASE-LP:hours_G2",
+      "checked": [
+        "168",
+        "0"
+      ]
+    },
+    {
+      "assertion": "WK08-60-BASE-LP:hours_G0",
+      "checked": [
+        "168",
+        "0"
+      ]
+    },
+    {
+      "assertion": "WK08-60-BASE-LP:hours_M0",
+      "checked": [
+        "0",
+        "168"
+      ]
+    },
+    {
+      "assertion": "WK08-60-BASE-LP:annual_coordinate",
+      "checked": "109730971329.91551"
+    },
+    {
+      "assertion": "WK08-60-BASE-LP:native_UB",
+      "checked": [
+        "109730971329.91434",
+        "109730971329.91551"
+      ]
+    },
+    {
+      "assertion": "WK08-60-BASE-LP:events",
+      "checked": [
+        0,
+        "0.0"
+      ]
+    },
+    {
+      "assertion": "WK08-60-BASE-MILP:F2_receipt",
+      "checked": "e5fd3a6faba1977a9d8c06b2f99bf01e6386df4f938db3ec42e4856588404350"
+    },
+    {
+      "assertion": "WK08-60-BASE-MILP:native_version",
+      "checked": {
+        "version": "12.0.3",
+        "native_log_sha256": "ef7cfca7bddae8ec22d698fd99d6a969a96ba628fcb772de86f4937e8a25299a"
+      }
+    },
+    {
+      "assertion": "WK08-60-BASE-MILP:CAPEX_EUR2025",
+      "checked": "84711422839.4563"
+    },
+    {
+      "assertion": "WK08-60-BASE-MILP:actual_RE_MWh",
+      "checked": "42635319.66146918"
+    },
+    {
+      "assertion": "WK08-60-BASE-MILP:actual_load_MWh",
+      "checked": "71058866.10244864"
+    },
+    {
+      "assertion": "WK08-60-BASE-MILP:raw_week_dispatch_OPEX_EUR2025",
+      "checked": "448698075.10240364"
+    },
+    {
+      "assertion": "WK08-60-BASE-MILP:raw_week_startup_shutdown_OPEX_EUR2025",
+      "checked": "31371407.47806427"
+    },
+    {
+      "assertion": "WK08-60-BASE-MILP:raw_week_storage_OPEX_EUR2025",
+      "checked": "0.0"
+    },
+    {
+      "assertion": "WK08-60-BASE-MILP:raw_week_OPEX_EUR2025",
+      "checked": "480069482.58046794"
+    },
+    {
+      "assertion": "WK08-60-BASE-MILP:annualized_week_OPEX_EUR2025",
+      "checked": "25032194448.838684"
+    },
+    {
+      "assertion": "WK08-60-BASE-MILP:annualized_total_EUR2025",
+      "checked": "109743617288.29498"
+    },
+    {
+      "assertion": "WK08-60-BASE-MILP:actual_RE_share_pct",
+      "checked": "59.99999999999999"
+    },
+    {
+      "assertion": "WK08-60-BASE-MILP:wind_added_MW",
+      "checked": "459831.3037690762"
+    },
+    {
+      "assertion": "WK08-60-BASE-MILP:PV_added_MW",
+      "checked": "602437.2225633392"
+    },
+    {
+      "assertion": "WK08-60-BASE-MILP:wind_baseline_MW",
+      "checked": "205789.5696666552"
+    },
+    {
+      "assertion": "WK08-60-BASE-MILP:PV_baseline_MW",
+      "checked": "152969.72121180454"
+    },
+    {
+      "assertion": "WK08-60-BASE-MILP:GFL_BESS_baseline_MW",
+      "checked": "0.0"
+    },
+    {
+      "assertion": "WK08-60-BASE-MILP:GFL_BESS_added_MW",
+      "checked": "76325.0"
+    },
+    {
+      "assertion": "WK08-60-BASE-MILP:GFM_BESS_baseline_MW",
+      "checked": "0.0"
+    },
+    {
+      "assertion": "WK08-60-BASE-MILP:GFM_BESS_added_MW",
+      "checked": "0.0"
+    },
+    {
+      "assertion": "WK08-60-BASE-MILP:wind_total_MW",
+      "checked": "665620.8734357314"
+    },
+    {
+      "assertion": "WK08-60-BASE-MILP:PV_total_MW",
+      "checked": "755406.9437751437"
+    },
+    {
+      "assertion": "WK08-60-BASE-MILP:GFL_BESS_total_MW",
+      "checked": "76325.0"
+    },
+    {
+      "assertion": "WK08-60-BASE-MILP:GFM_BESS_total_MW",
+      "checked": "0.0"
+    },
+    {
+      "assertion": "WK08-60-BASE-MILP:G1_failed_hours",
+      "checked": 168
+    },
+    {
+      "assertion": "WK08-60-BASE-MILP:G1_defined_hours",
+      "checked": 168
+    },
+    {
+      "assertion": "WK08-60-BASE-MILP:G2_failed_hours",
+      "checked": 168
+    },
+    {
+      "assertion": "WK08-60-BASE-MILP:G2_defined_hours",
+      "checked": 168
+    },
+    {
+      "assertion": "WK08-60-BASE-MILP:G0_failed_hours",
+      "checked": 168
+    },
+    {
+      "assertion": "WK08-60-BASE-MILP:G0_defined_hours",
+      "checked": 168
+    },
+    {
+      "assertion": "WK08-60-BASE-MILP:B_min_failed_hours",
+      "checked": 128
+    },
+    {
+      "assertion": "WK08-60-BASE-MILP:B_min_defined_hours",
+      "checked": 168
+    },
+    {
+      "assertion": "WK08-60-BASE-MILP:hours_G1",
+      "checked": [
+        "168",
+        "0"
+      ]
+    },
+    {
+      "assertion": "WK08-60-BASE-MILP:hours_G2",
+      "checked": [
+        "168",
+        "0"
+      ]
+    },
+    {
+      "assertion": "WK08-60-BASE-MILP:hours_G0",
+      "checked": [
+        "168",
+        "0"
+      ]
+    },
+    {
+      "assertion": "WK08-60-BASE-MILP:hours_M0",
+      "checked": [
+        "0",
+        "168"
+      ]
+    },
+    {
+      "assertion": "WK08-60-BASE-MILP:annual_coordinate",
+      "checked": "109743617288.29498"
+    },
+    {
+      "assertion": "WK08-60-BASE-MILP:native_UB",
+      "checked": [
+        "109730971329.91548",
+        "109743617288.29498"
+      ]
+    },
+    {
+      "assertion": "WK08-60-BASE-MILP:events",
+      "checked": [
+        1,
+        "21391.145777811384"
+      ]
+    },
+    {
+      "assertion": "WK08-60-G1-LP:F2_receipt",
+      "checked": "0b8cb9503dbed51248f67b995ffa8cd104880258059a41c2d73cef7ebe3a9110"
+    },
+    {
+      "assertion": "WK08-60-G1-LP:native_version",
+      "checked": {
+        "version": "12.0.3",
+        "native_log_sha256": "1d6ade548bfaa20579d0164d5a8d84bec4ce1272b9012325a2dbb57270dfba3e"
+      }
+    },
+    {
+      "assertion": "WK08-60-G1-LP:CAPEX_EUR2025",
+      "checked": "86782272331.9315"
+    },
+    {
+      "assertion": "WK08-60-G1-LP:actual_RE_MWh",
+      "checked": "42635319.661469035"
+    },
+    {
+      "assertion": "WK08-60-G1-LP:actual_load_MWh",
+      "checked": "71058866.10244864"
+    },
+    {
+      "assertion": "WK08-60-G1-LP:raw_week_dispatch_OPEX_EUR2025",
+      "checked": "443000201.463312"
+    },
+    {
+      "assertion": "WK08-60-G1-LP:raw_week_startup_shutdown_OPEX_EUR2025",
+      "checked": "29039277.310795"
+    },
+    {
+      "assertion": "WK08-60-G1-LP:raw_week_storage_OPEX_EUR2025",
+      "checked": "0.0"
+    },
+    {
+      "assertion": "WK08-60-G1-LP:raw_week_OPEX_EUR2025",
+      "checked": "472039478.774107"
+    },
+    {
+      "assertion": "WK08-60-G1-LP:annualized_week_OPEX_EUR2025",
+      "checked": "24613487107.507008"
+    },
+    {
+      "assertion": "WK08-60-G1-LP:annualized_total_EUR2025",
+      "checked": "111395759439.4385"
+    },
+    {
+      "assertion": "WK08-60-G1-LP:actual_RE_share_pct",
+      "checked": "59.99999999999979"
+    },
+    {
+      "assertion": "WK08-60-G1-LP:wind_added_MW",
+      "checked": "457061.8039597635"
+    },
+    {
+      "assertion": "WK08-60-G1-LP:PV_added_MW",
+      "checked": "620166.6454635041"
+    },
+    {
+      "assertion": "WK08-60-G1-LP:wind_baseline_MW",
+      "checked": "205789.5696666552"
+    },
+    {
+      "assertion": "WK08-60-G1-LP:PV_baseline_MW",
+      "checked": "152969.72121180454"
+    },
+    {
+      "assertion": "WK08-60-G1-LP:GFL_BESS_baseline_MW",
+      "checked": "0.0"
+    },
+    {
+      "assertion": "WK08-60-G1-LP:GFL_BESS_added_MW",
+      "checked": "37270.31646538623"
+    },
+    {
+      "assertion": "WK08-60-G1-LP:GFM_BESS_baseline_MW",
+      "checked": "0.0"
+    },
+    {
+      "assertion": "WK08-60-G1-LP:GFM_BESS_added_MW",
+      "checked": "56094.18278073498"
+    },
+    {
+      "assertion": "WK08-60-G1-LP:wind_total_MW",
+      "checked": "662851.3736264186"
+    },
+    {
+      "assertion": "WK08-60-G1-LP:PV_total_MW",
+      "checked": "773136.3666753087"
+    },
+    {
+      "assertion": "WK08-60-G1-LP:GFL_BESS_total_MW",
+      "checked": "37270.31646538623"
+    },
+    {
+      "assertion": "WK08-60-G1-LP:GFM_BESS_total_MW",
+      "checked": "56094.18278073498"
+    },
+    {
+      "assertion": "WK08-60-G1-LP:G1_failed_hours",
+      "checked": 0
+    },
+    {
+      "assertion": "WK08-60-G1-LP:G1_defined_hours",
+      "checked": 168
+    },
+    {
+      "assertion": "WK08-60-G1-LP:G2_failed_hours",
+      "checked": 168
+    },
+    {
+      "assertion": "WK08-60-G1-LP:G2_defined_hours",
+      "checked": 168
+    },
+    {
+      "assertion": "WK08-60-G1-LP:G0_failed_hours",
+      "checked": 0
+    },
+    {
+      "assertion": "WK08-60-G1-LP:G0_defined_hours",
+      "checked": 168
+    },
+    {
+      "assertion": "WK08-60-G1-LP:B_min_failed_hours",
+      "checked": 0
+    },
+    {
+      "assertion": "WK08-60-G1-LP:B_min_defined_hours",
+      "checked": 168
+    },
+    {
+      "assertion": "WK08-60-G1-LP:M0_failed_hours",
+      "checked": 0
+    },
+    {
+      "assertion": "WK08-60-G1-LP:M0_defined_hours",
+      "checked": 168
+    },
+    {
+      "assertion": "WK08-60-G1-LP:hours_G1",
+      "checked": [
+        "168",
+        "0"
+      ]
+    },
+    {
+      "assertion": "WK08-60-G1-LP:hours_G2",
+      "checked": [
+        "168",
+        "0"
+      ]
+    },
+    {
+      "assertion": "WK08-60-G1-LP:hours_G0",
+      "checked": [
+        "168",
+        "0"
+      ]
+    },
+    {
+      "assertion": "WK08-60-G1-LP:hours_M0",
+      "checked": [
+        "168",
+        "0"
+      ]
+    },
+    {
+      "assertion": "WK08-60-G1-LP:annual_coordinate",
+      "checked": "111395759439.4385"
+    },
+    {
+      "assertion": "WK08-60-G1-LP:native_UB",
+      "checked": [
+        "111395759439.43652",
+        "111395759439.4385"
+      ]
+    },
+    {
+      "assertion": "WK08-60-G1-LP:events",
+      "checked": [
+        0,
+        "0.0"
+      ]
+    },
+    {
+      "assertion": "WK08-60-G1-MILP:F2_receipt",
+      "checked": "82a16acf770505806701ae00f0b09e29dfb2bbdd914224e71712197480c5acdd"
+    },
+    {
+      "assertion": "WK08-60-G1-MILP:native_version",
+      "checked": {
+        "version": "12.0.3",
+        "native_log_sha256": "0dcedd5b76f9d6ce9253cc6fc5b93c725f899360e279cd0e5ef76536166f5922"
+      }
+    },
+    {
+      "assertion": "WK08-60-G1-MILP:CAPEX_EUR2025",
+      "checked": "87244212316.91217"
+    },
+    {
+      "assertion": "WK08-60-G1-MILP:actual_RE_MWh",
+      "checked": "42635319.66146907"
+    },
+    {
+      "assertion": "WK08-60-G1-MILP:actual_load_MWh",
+      "checked": "71058866.10244864"
+    },
+    {
+      "assertion": "WK08-60-G1-MILP:raw_week_dispatch_OPEX_EUR2025",
+      "checked": "442419269.9468119"
+    },
+    {
+      "assertion": "WK08-60-G1-MILP:raw_week_startup_shutdown_OPEX_EUR2025",
+      "checked": "28785027.951017607"
+    },
+    {
+      "assertion": "WK08-60-G1-MILP:raw_week_storage_OPEX_EUR2025",
+      "checked": "0.0"
+    },
+    {
+      "assertion": "WK08-60-G1-MILP:raw_week_OPEX_EUR2025",
+      "checked": "471204297.89782953"
+    },
+    {
+      "assertion": "WK08-60-G1-MILP:annualized_week_OPEX_EUR2025",
+      "checked": "24569938390.386826"
+    },
+    {
+      "assertion": "WK08-60-G1-MILP:annualized_total_EUR2025",
+      "checked": "111814150707.299"
+    },
+    {
+      "assertion": "WK08-60-G1-MILP:actual_RE_share_pct",
+      "checked": "59.999999999999844"
+    },
+    {
+      "assertion": "WK08-60-G1-MILP:wind_added_MW",
+      "checked": "452695.69820314035"
+    },
+    {
+      "assertion": "WK08-60-G1-MILP:PV_added_MW",
+      "checked": "628293.013976552"
+    },
+    {
+      "assertion": "WK08-60-G1-MILP:wind_baseline_MW",
+      "checked": "205789.5696666552"
+    },
+    {
+      "assertion": "WK08-60-G1-MILP:PV_baseline_MW",
+      "checked": "152969.72121180454"
+    },
+    {
+      "assertion": "WK08-60-G1-MILP:GFL_BESS_baseline_MW",
+      "checked": "0.0"
+    },
+    {
+      "assertion": "WK08-60-G1-MILP:GFL_BESS_added_MW",
+      "checked": "38175.0"
+    },
+    {
+      "assertion": "WK08-60-G1-MILP:GFM_BESS_baseline_MW",
+      "checked": "0.0"
+    },
+    {
+      "assertion": "WK08-60-G1-MILP:GFM_BESS_added_MW",
+      "checked": "62800.0"
+    },
+    {
+      "assertion": "WK08-60-G1-MILP:wind_total_MW",
+      "checked": "658485.2678697956"
+    },
+    {
+      "assertion": "WK08-60-G1-MILP:PV_total_MW",
+      "checked": "781262.7351883566"
+    },
+    {
+      "assertion": "WK08-60-G1-MILP:GFL_BESS_total_MW",
+      "checked": "38175.0"
+    },
+    {
+      "assertion": "WK08-60-G1-MILP:GFM_BESS_total_MW",
+      "checked": "62800.0"
+    },
+    {
+      "assertion": "WK08-60-G1-MILP:G1_failed_hours",
+      "checked": 0
+    },
+    {
+      "assertion": "WK08-60-G1-MILP:G1_defined_hours",
+      "checked": 168
+    },
+    {
+      "assertion": "WK08-60-G1-MILP:G2_failed_hours",
+      "checked": 168
+    },
+    {
+      "assertion": "WK08-60-G1-MILP:G2_defined_hours",
+      "checked": 168
+    },
+    {
+      "assertion": "WK08-60-G1-MILP:G0_failed_hours",
+      "checked": 0
+    },
+    {
+      "assertion": "WK08-60-G1-MILP:G0_defined_hours",
+      "checked": 168
+    },
+    {
+      "assertion": "WK08-60-G1-MILP:B_min_failed_hours",
+      "checked": 0
+    },
+    {
+      "assertion": "WK08-60-G1-MILP:B_min_defined_hours",
+      "checked": 168
+    },
+    {
+      "assertion": "WK08-60-G1-MILP:M0_failed_hours",
+      "checked": 0
+    },
+    {
+      "assertion": "WK08-60-G1-MILP:M0_defined_hours",
+      "checked": 168
+    },
+    {
+      "assertion": "WK08-60-G1-MILP:hours_G1",
+      "checked": [
+        "168",
+        "0"
+      ]
+    },
+    {
+      "assertion": "WK08-60-G1-MILP:hours_G2",
+      "checked": [
+        "168",
+        "0"
+      ]
+    },
+    {
+      "assertion": "WK08-60-G1-MILP:hours_G0",
+      "checked": [
+        "168",
+        "0"
+      ]
+    },
+    {
+      "assertion": "WK08-60-G1-MILP:hours_M0",
+      "checked": [
+        "168",
+        "0"
+      ]
+    },
+    {
+      "assertion": "WK08-60-G1-MILP:annual_coordinate",
+      "checked": "111814150707.299"
+    },
+    {
+      "assertion": "WK08-60-G1-MILP:native_UB",
+      "checked": [
+        "111395759439.43794",
+        "111814150707.299"
+      ]
+    },
+    {
+      "assertion": "WK08-60-G1-MILP:events",
+      "checked": [
+        0,
+        "0.0"
+      ]
+    },
+    {
+      "assertion": "WK08-70-BASE-LP:F2_receipt",
+      "checked": "299a583b17e669cab29472888e58f1c36446e7032ba06e6da33ee0ce8eb1e78f"
+    },
+    {
+      "assertion": "WK08-70-BASE-LP:native_version",
+      "checked": {
+        "version": "12.0.3",
+        "native_log_sha256": "5f04984da138429172367105b1cd590eb35811e584dad8d3ea5ebb198fea785c"
+      }
+    },
+    {
+      "assertion": "WK08-70-BASE-LP:CAPEX_EUR2025",
+      "checked": "108292792450.57051"
+    },
+    {
+      "assertion": "WK08-70-BASE-LP:actual_RE_MWh",
+      "checked": "49741206.271713585"
+    },
+    {
+      "assertion": "WK08-70-BASE-LP:actual_load_MWh",
+      "checked": "71058866.10244864"
+    },
+    {
+      "assertion": "WK08-70-BASE-LP:raw_week_dispatch_OPEX_EUR2025",
+      "checked": "287495278.041436"
+    },
+    {
+      "assertion": "WK08-70-BASE-LP:raw_week_startup_shutdown_OPEX_EUR2025",
+      "checked": "32720026.632832654"
+    },
+    {
+      "assertion": "WK08-70-BASE-LP:raw_week_storage_OPEX_EUR2025",
+      "checked": "0.0"
+    },
+    {
+      "assertion": "WK08-70-BASE-LP:raw_week_OPEX_EUR2025",
+      "checked": "320215304.67426866"
+    },
+    {
+      "assertion": "WK08-70-BASE-LP:annualized_week_OPEX_EUR2025",
+      "checked": "16696940886.586864"
+    },
+    {
+      "assertion": "WK08-70-BASE-LP:annualized_total_EUR2025",
+      "checked": "124989733337.15738"
+    },
+    {
+      "assertion": "WK08-70-BASE-LP:actual_RE_share_pct",
+      "checked": "69.99999999999935"
+    },
+    {
+      "assertion": "WK08-70-BASE-LP:wind_added_MW",
+      "checked": "583441.7095320068"
+    },
+    {
+      "assertion": "WK08-70-BASE-LP:PV_added_MW",
+      "checked": "719221.2993529637"
+    },
+    {
+      "assertion": "WK08-70-BASE-LP:wind_baseline_MW",
+      "checked": "205789.5696666552"
+    },
+    {
+      "assertion": "WK08-70-BASE-LP:PV_baseline_MW",
+      "checked": "152969.72121180454"
+    },
+    {
+      "assertion": "WK08-70-BASE-LP:GFL_BESS_baseline_MW",
+      "checked": "0.0"
+    },
+    {
+      "assertion": "WK08-70-BASE-LP:GFL_BESS_added_MW",
+      "checked": "141758.09321047665"
+    },
+    {
+      "assertion": "WK08-70-BASE-LP:GFM_BESS_baseline_MW",
+      "checked": "0.0"
+    },
+    {
+      "assertion": "WK08-70-BASE-LP:GFM_BESS_added_MW",
+      "checked": "0.0"
+    },
+    {
+      "assertion": "WK08-70-BASE-LP:wind_total_MW",
+      "checked": "789231.2791986619"
+    },
+    {
+      "assertion": "WK08-70-BASE-LP:PV_total_MW",
+      "checked": "872191.0205647682"
+    },
+    {
+      "assertion": "WK08-70-BASE-LP:GFL_BESS_total_MW",
+      "checked": "141758.09321047665"
+    },
+    {
+      "assertion": "WK08-70-BASE-LP:GFM_BESS_total_MW",
+      "checked": "0.0"
+    },
+    {
+      "assertion": "WK08-70-BASE-LP:G1_failed_hours",
+      "checked": 168
+    },
+    {
+      "assertion": "WK08-70-BASE-LP:G1_defined_hours",
+      "checked": 168
+    },
+    {
+      "assertion": "WK08-70-BASE-LP:G2_failed_hours",
+      "checked": 168
+    },
+    {
+      "assertion": "WK08-70-BASE-LP:G2_defined_hours",
+      "checked": 168
+    },
+    {
+      "assertion": "WK08-70-BASE-LP:G0_failed_hours",
+      "checked": 168
+    },
+    {
+      "assertion": "WK08-70-BASE-LP:G0_defined_hours",
+      "checked": 168
+    },
+    {
+      "assertion": "WK08-70-BASE-LP:B_min_failed_hours",
+      "checked": 152
+    },
+    {
+      "assertion": "WK08-70-BASE-LP:B_min_defined_hours",
+      "checked": 168
+    },
+    {
+      "assertion": "WK08-70-BASE-LP:hours_G1",
+      "checked": [
+        "168",
+        "0"
+      ]
+    },
+    {
+      "assertion": "WK08-70-BASE-LP:hours_G2",
+      "checked": [
+        "168",
+        "0"
+      ]
+    },
+    {
+      "assertion": "WK08-70-BASE-LP:hours_G0",
+      "checked": [
+        "168",
+        "0"
+      ]
+    },
+    {
+      "assertion": "WK08-70-BASE-LP:hours_M0",
+      "checked": [
+        "0",
+        "168"
+      ]
+    },
+    {
+      "assertion": "WK08-70-BASE-LP:annual_coordinate",
+      "checked": "124989733337.15738"
+    },
+    {
+      "assertion": "WK08-70-BASE-LP:native_UB",
+      "checked": [
+        "124989733337.156",
+        "124989733337.15738"
+      ]
+    },
+    {
+      "assertion": "WK08-70-BASE-LP:events",
+      "checked": [
+        0,
+        "0.0"
+      ]
+    },
+    {
+      "assertion": "WK08-70-BASE-MILP:F2_receipt",
+      "checked": "f1bac6bad9cea98280b13890b620d990f78f1825a62c9f9a2245918dce0cf405"
+    },
+    {
+      "assertion": "WK08-70-BASE-MILP:native_version",
+      "checked": {
+        "version": "12.0.3",
+        "native_log_sha256": "2ec05a026b1afd4cd6c880a6abfcfa6a187175e8a72c556caa81add4feef594c"
+      }
+    },
+    {
+      "assertion": "WK08-70-BASE-MILP:CAPEX_EUR2025",
+      "checked": "108352825554.0054"
+    },
+    {
+      "assertion": "WK08-70-BASE-MILP:actual_RE_MWh",
+      "checked": "49741206.27171405"
+    },
+    {
+      "assertion": "WK08-70-BASE-MILP:actual_load_MWh",
+      "checked": "71058866.10244864"
+    },
+    {
+      "assertion": "WK08-70-BASE-MILP:raw_week_dispatch_OPEX_EUR2025",
+      "checked": "287618991.23382974"
+    },
+    {
+      "assertion": "WK08-70-BASE-MILP:raw_week_startup_shutdown_OPEX_EUR2025",
+      "checked": "32715337.61425242"
+    },
+    {
+      "assertion": "WK08-70-BASE-MILP:raw_week_storage_OPEX_EUR2025",
+      "checked": "0.0"
+    },
+    {
+      "assertion": "WK08-70-BASE-MILP:raw_week_OPEX_EUR2025",
+      "checked": "320334328.8480822"
+    },
+    {
+      "assertion": "WK08-70-BASE-MILP:annualized_week_OPEX_EUR2025",
+      "checked": "16703147147.07857"
+    },
+    {
+      "assertion": "WK08-70-BASE-MILP:annualized_total_EUR2025",
+      "checked": "125055972701.08397"
+    },
+    {
+      "assertion": "WK08-70-BASE-MILP:actual_RE_share_pct",
+      "checked": "70.0"
+    },
+    {
+      "assertion": "WK08-70-BASE-MILP:wind_added_MW",
+      "checked": "583958.1114946161"
+    },
+    {
+      "assertion": "WK08-70-BASE-MILP:PV_added_MW",
+      "checked": "718922.7283523587"
+    },
+    {
+      "assertion": "WK08-70-BASE-MILP:wind_baseline_MW",
+      "checked": "205789.5696666552"
+    },
+    {
+      "assertion": "WK08-70-BASE-MILP:PV_baseline_MW",
+      "checked": "152969.72121180454"
+    },
+    {
+      "assertion": "WK08-70-BASE-MILP:GFL_BESS_baseline_MW",
+      "checked": "0.0"
+    },
+    {
+      "assertion": "WK08-70-BASE-MILP:GFL_BESS_added_MW",
+      "checked": "141800.0"
+    },
+    {
+      "assertion": "WK08-70-BASE-MILP:GFM_BESS_baseline_MW",
+      "checked": "0.0"
+    },
+    {
+      "assertion": "WK08-70-BASE-MILP:GFM_BESS_added_MW",
+      "checked": "0.0"
+    },
+    {
+      "assertion": "WK08-70-BASE-MILP:wind_total_MW",
+      "checked": "789747.6811612714"
+    },
+    {
+      "assertion": "WK08-70-BASE-MILP:PV_total_MW",
+      "checked": "871892.4495641632"
+    },
+    {
+      "assertion": "WK08-70-BASE-MILP:GFL_BESS_total_MW",
+      "checked": "141800.0"
+    },
+    {
+      "assertion": "WK08-70-BASE-MILP:GFM_BESS_total_MW",
+      "checked": "0.0"
+    },
+    {
+      "assertion": "WK08-70-BASE-MILP:G1_failed_hours",
+      "checked": 168
+    },
+    {
+      "assertion": "WK08-70-BASE-MILP:G1_defined_hours",
+      "checked": 168
+    },
+    {
+      "assertion": "WK08-70-BASE-MILP:G2_failed_hours",
+      "checked": 168
+    },
+    {
+      "assertion": "WK08-70-BASE-MILP:G2_defined_hours",
+      "checked": 168
+    },
+    {
+      "assertion": "WK08-70-BASE-MILP:G0_failed_hours",
+      "checked": 168
+    },
+    {
+      "assertion": "WK08-70-BASE-MILP:G0_defined_hours",
+      "checked": 168
+    },
+    {
+      "assertion": "WK08-70-BASE-MILP:B_min_failed_hours",
+      "checked": 145
+    },
+    {
+      "assertion": "WK08-70-BASE-MILP:B_min_defined_hours",
+      "checked": 168
+    },
+    {
+      "assertion": "WK08-70-BASE-MILP:hours_G1",
+      "checked": [
+        "168",
+        "0"
+      ]
+    },
+    {
+      "assertion": "WK08-70-BASE-MILP:hours_G2",
+      "checked": [
+        "168",
+        "0"
+      ]
+    },
+    {
+      "assertion": "WK08-70-BASE-MILP:hours_G0",
+      "checked": [
+        "168",
+        "0"
+      ]
+    },
+    {
+      "assertion": "WK08-70-BASE-MILP:hours_M0",
+      "checked": [
+        "0",
+        "168"
+      ]
+    },
+    {
+      "assertion": "WK08-70-BASE-MILP:annual_coordinate",
+      "checked": "125055972701.08397"
+    },
+    {
+      "assertion": "WK08-70-BASE-MILP:native_UB",
+      "checked": [
+        "124989733337.15735",
+        "125055972701.08397"
+      ]
+    },
+    {
+      "assertion": "WK08-70-BASE-MILP:events",
+      "checked": [
+        0,
+        "0.0"
+      ]
+    },
+    {
+      "assertion": "WK08-70-G1-LP:F2_receipt",
+      "checked": "600f52f0ebbd57c8b120771a94d4c5f1786bd031e0f92751d259b87f33fcefd7"
+    },
+    {
+      "assertion": "WK08-70-G1-LP:native_version",
+      "checked": {
+        "version": "12.0.3",
+        "native_log_sha256": "dc0c4cef54cbf343dc1a61602565b188cbde0311f4e67d6e850cab8509f65072"
+      }
+    },
+    {
+      "assertion": "WK08-70-G1-LP:CAPEX_EUR2025",
+      "checked": "111232096756.64642"
+    },
+    {
+      "assertion": "WK08-70-G1-LP:actual_RE_MWh",
+      "checked": "49741206.27171371"
+    },
+    {
+      "assertion": "WK08-70-G1-LP:actual_load_MWh",
+      "checked": "71058866.10244864"
+    },
+    {
+      "assertion": "WK08-70-G1-LP:raw_week_dispatch_OPEX_EUR2025",
+      "checked": "280185379.9495464"
+    },
+    {
+      "assertion": "WK08-70-G1-LP:raw_week_startup_shutdown_OPEX_EUR2025",
+      "checked": "28893956.611540906"
+    },
+    {
+      "assertion": "WK08-70-G1-LP:raw_week_storage_OPEX_EUR2025",
+      "checked": "0.0"
+    },
+    {
+      "assertion": "WK08-70-G1-LP:raw_week_OPEX_EUR2025",
+      "checked": "309079336.5610873"
+    },
+    {
+      "assertion": "WK08-70-G1-LP:annualized_week_OPEX_EUR2025",
+      "checked": "16116279692.11384"
+    },
+    {
+      "assertion": "WK08-70-G1-LP:annualized_total_EUR2025",
+      "checked": "127348376448.76027"
+    },
+    {
+      "assertion": "WK08-70-G1-LP:actual_RE_share_pct",
+      "checked": "69.99999999999953"
+    },
+    {
+      "assertion": "WK08-70-G1-LP:wind_added_MW",
+      "checked": "588959.4605484416"
+    },
+    {
+      "assertion": "WK08-70-G1-LP:PV_added_MW",
+      "checked": "719818.1103522244"
+    },
+    {
+      "assertion": "WK08-70-G1-LP:wind_baseline_MW",
+      "checked": "205789.5696666552"
+    },
+    {
+      "assertion": "WK08-70-G1-LP:PV_baseline_MW",
+      "checked": "152969.72121180454"
+    },
+    {
+      "assertion": "WK08-70-G1-LP:GFL_BESS_baseline_MW",
+      "checked": "0.0"
+    },
+    {
+      "assertion": "WK08-70-G1-LP:GFL_BESS_added_MW",
+      "checked": "57676.64240561282"
+    },
+    {
+      "assertion": "WK08-70-G1-LP:GFM_BESS_baseline_MW",
+      "checked": "0.0"
+    },
+    {
+      "assertion": "WK08-70-G1-LP:GFM_BESS_added_MW",
+      "checked": "101288.6817648213"
+    },
+    {
+      "assertion": "WK08-70-G1-LP:wind_total_MW",
+      "checked": "794749.0302150969"
+    },
+    {
+      "assertion": "WK08-70-G1-LP:PV_total_MW",
+      "checked": "872787.831564029"
+    },
+    {
+      "assertion": "WK08-70-G1-LP:GFL_BESS_total_MW",
+      "checked": "57676.64240561282"
+    },
+    {
+      "assertion": "WK08-70-G1-LP:GFM_BESS_total_MW",
+      "checked": "101288.6817648213"
+    },
+    {
+      "assertion": "WK08-70-G1-LP:G1_failed_hours",
+      "checked": 0
+    },
+    {
+      "assertion": "WK08-70-G1-LP:G1_defined_hours",
+      "checked": 168
+    },
+    {
+      "assertion": "WK08-70-G1-LP:G2_failed_hours",
+      "checked": 168
+    },
+    {
+      "assertion": "WK08-70-G1-LP:G2_defined_hours",
+      "checked": 168
+    },
+    {
+      "assertion": "WK08-70-G1-LP:G0_failed_hours",
+      "checked": 0
+    },
+    {
+      "assertion": "WK08-70-G1-LP:G0_defined_hours",
+      "checked": 168
+    },
+    {
+      "assertion": "WK08-70-G1-LP:B_min_failed_hours",
+      "checked": 0
+    },
+    {
+      "assertion": "WK08-70-G1-LP:B_min_defined_hours",
+      "checked": 168
+    },
+    {
+      "assertion": "WK08-70-G1-LP:M0_failed_hours",
+      "checked": 0
+    },
+    {
+      "assertion": "WK08-70-G1-LP:M0_defined_hours",
+      "checked": 168
+    },
+    {
+      "assertion": "WK08-70-G1-LP:hours_G1",
+      "checked": [
+        "168",
+        "0"
+      ]
+    },
+    {
+      "assertion": "WK08-70-G1-LP:hours_G2",
+      "checked": [
+        "168",
+        "0"
+      ]
+    },
+    {
+      "assertion": "WK08-70-G1-LP:hours_G0",
+      "checked": [
+        "168",
+        "0"
+      ]
+    },
+    {
+      "assertion": "WK08-70-G1-LP:hours_M0",
+      "checked": [
+        "168",
+        "0"
+      ]
+    },
+    {
+      "assertion": "WK08-70-G1-LP:annual_coordinate",
+      "checked": "127348376448.76027"
+    },
+    {
+      "assertion": "WK08-70-G1-LP:native_UB",
+      "checked": [
+        "127348376448.75821",
+        "127348376448.76027"
+      ]
+    },
+    {
+      "assertion": "WK08-70-G1-LP:events",
+      "checked": [
+        0,
+        "0.0"
+      ]
+    },
+    {
+      "assertion": "WK08-70-G1-MILP:F2_receipt",
+      "checked": "8f1997e7de49e5d4c264d70dbeef74193f217cd2d7456e75b0a7c2a66c50c494"
+    },
+    {
+      "assertion": "WK08-70-G1-MILP:native_version",
+      "checked": {
+        "version": "12.0.3",
+        "native_log_sha256": "ee0b383e3c9f1fcc90313f5805a2c32da72a474f6818b5ed8bf7cda517ed7df4"
+      }
+    },
+    {
+      "assertion": "WK08-70-G1-MILP:CAPEX_EUR2025",
+      "checked": "111598590415.4346"
+    },
+    {
+      "assertion": "WK08-70-G1-MILP:actual_RE_MWh",
+      "checked": "49741206.27171396"
+    },
+    {
+      "assertion": "WK08-70-G1-MILP:actual_load_MWh",
+      "checked": "71058866.10244864"
+    },
+    {
+      "assertion": "WK08-70-G1-MILP:raw_week_dispatch_OPEX_EUR2025",
+      "checked": "282768071.9375946"
+    },
+    {
+      "assertion": "WK08-70-G1-MILP:raw_week_startup_shutdown_OPEX_EUR2025",
+      "checked": "28300960.69137527"
+    },
+    {
+      "assertion": "WK08-70-G1-MILP:raw_week_storage_OPEX_EUR2025",
+      "checked": "0.0"
+    },
+    {
+      "assertion": "WK08-70-G1-MILP:raw_week_OPEX_EUR2025",
+      "checked": "311069032.62896985"
+    },
+    {
+      "assertion": "WK08-70-G1-MILP:annualized_week_OPEX_EUR2025",
+      "checked": "16220028129.939142"
+    },
+    {
+      "assertion": "WK08-70-G1-MILP:annualized_total_EUR2025",
+      "checked": "127818618545.37375"
+    },
+    {
+      "assertion": "WK08-70-G1-MILP:actual_RE_share_pct",
+      "checked": "69.99999999999986"
+    },
+    {
+      "assertion": "WK08-70-G1-MILP:wind_added_MW",
+      "checked": "587424.0427000471"
+    },
+    {
+      "assertion": "WK08-70-G1-MILP:PV_added_MW",
+      "checked": "726052.7116451459"
+    },
+    {
+      "assertion": "WK08-70-G1-MILP:wind_baseline_MW",
+      "checked": "205789.5696666552"
+    },
+    {
+      "assertion": "WK08-70-G1-MILP:PV_baseline_MW",
+      "checked": "152969.72121180454"
+    },
+    {
+      "assertion": "WK08-70-G1-MILP:GFL_BESS_baseline_MW",
+      "checked": "0.0"
+    },
+    {
+      "assertion": "WK08-70-G1-MILP:GFL_BESS_added_MW",
+      "checked": "58875.0"
+    },
+    {
+      "assertion": "WK08-70-G1-MILP:GFM_BESS_baseline_MW",
+      "checked": "0.0"
+    },
+    {
+      "assertion": "WK08-70-G1-MILP:GFM_BESS_added_MW",
+      "checked": "104575.0"
+    },
+    {
+      "assertion": "WK08-70-G1-MILP:wind_total_MW",
+      "checked": "793213.6123667024"
+    },
+    {
+      "assertion": "WK08-70-G1-MILP:PV_total_MW",
+      "checked": "879022.4328569504"
+    },
+    {
+      "assertion": "WK08-70-G1-MILP:GFL_BESS_total_MW",
+      "checked": "58875.0"
+    },
+    {
+      "assertion": "WK08-70-G1-MILP:GFM_BESS_total_MW",
+      "checked": "104575.0"
+    },
+    {
+      "assertion": "WK08-70-G1-MILP:G1_failed_hours",
+      "checked": 0
+    },
+    {
+      "assertion": "WK08-70-G1-MILP:G1_defined_hours",
+      "checked": 168
+    },
+    {
+      "assertion": "WK08-70-G1-MILP:G2_failed_hours",
+      "checked": 168
+    },
+    {
+      "assertion": "WK08-70-G1-MILP:G2_defined_hours",
+      "checked": 168
+    },
+    {
+      "assertion": "WK08-70-G1-MILP:G0_failed_hours",
+      "checked": 0
+    },
+    {
+      "assertion": "WK08-70-G1-MILP:G0_defined_hours",
+      "checked": 168
+    },
+    {
+      "assertion": "WK08-70-G1-MILP:B_min_failed_hours",
+      "checked": 0
+    },
+    {
+      "assertion": "WK08-70-G1-MILP:B_min_defined_hours",
+      "checked": 168
+    },
+    {
+      "assertion": "WK08-70-G1-MILP:M0_failed_hours",
+      "checked": 0
+    },
+    {
+      "assertion": "WK08-70-G1-MILP:M0_defined_hours",
+      "checked": 168
+    },
+    {
+      "assertion": "WK08-70-G1-MILP:hours_G1",
+      "checked": [
+        "168",
+        "0"
+      ]
+    },
+    {
+      "assertion": "WK08-70-G1-MILP:hours_G2",
+      "checked": [
+        "168",
+        "0"
+      ]
+    },
+    {
+      "assertion": "WK08-70-G1-MILP:hours_G0",
+      "checked": [
+        "168",
+        "0"
+      ]
+    },
+    {
+      "assertion": "WK08-70-G1-MILP:hours_M0",
+      "checked": [
+        "168",
+        "0"
+      ]
+    },
+    {
+      "assertion": "WK08-70-G1-MILP:annual_coordinate",
+      "checked": "127818618545.37375"
+    },
+    {
+      "assertion": "WK08-70-G1-MILP:native_UB",
+      "checked": [
+        "127348376448.75867",
+        "127818618545.37375"
+      ]
+    },
+    {
+      "assertion": "WK08-70-G1-MILP:events",
+      "checked": [
+        0,
+        "0.0"
+      ]
+    },
+    {
+      "assertion": "WK08-70-G2-LP:F2_receipt",
+      "checked": "863e13167af7171ad0a6be3d931390c0ccd64258bbaf5b7d159f8101424fd607"
+    },
+    {
+      "assertion": "WK08-70-G2-LP:native_version",
+      "checked": {
+        "version": "12.0.3",
+        "native_log_sha256": "2e2ebf0b3f0ee0bb5df1fd2c545b29225dfa7db1cfd307badbd4b8cda646844c"
+      }
+    },
+    {
+      "assertion": "WK08-70-G2-LP:CAPEX_EUR2025",
+      "checked": "111294375109.89827"
+    },
+    {
+      "assertion": "WK08-70-G2-LP:actual_RE_MWh",
+      "checked": "49741206.2717136"
+    },
+    {
+      "assertion": "WK08-70-G2-LP:actual_load_MWh",
+      "checked": "71058866.10244864"
+    },
+    {
+      "assertion": "WK08-70-G2-LP:raw_week_dispatch_OPEX_EUR2025",
+      "checked": "280272814.3254249"
+    },
+    {
+      "assertion": "WK08-70-G2-LP:raw_week_startup_shutdown_OPEX_EUR2025",
+      "checked": "28759856.657245245"
+    },
+    {
+      "assertion": "WK08-70-G2-LP:raw_week_storage_OPEX_EUR2025",
+      "checked": "0.0"
+    },
+    {
+      "assertion": "WK08-70-G2-LP:raw_week_OPEX_EUR2025",
+      "checked": "309032670.9826701"
+    },
+    {
+      "assertion": "WK08-70-G2-LP:annualized_week_OPEX_EUR2025",
+      "checked": "16113846415.524942"
+    },
+    {
+      "assertion": "WK08-70-G2-LP:annualized_total_EUR2025",
+      "checked": "127408221525.42322"
+    },
+    {
+      "assertion": "WK08-70-G2-LP:actual_RE_share_pct",
+      "checked": "69.99999999999936"
+    },
+    {
+      "assertion": "WK08-70-G2-LP:wind_added_MW",
+      "checked": "589728.7389109852"
+    },
+    {
+      "assertion": "WK08-70-G2-LP:PV_added_MW",
+      "checked": "718399.0084131574"
+    },
+    {
+      "assertion": "WK08-70-G2-LP:wind_baseline_MW",
+      "checked": "205789.5696666552"
+    },
+    {
+      "assertion": "WK08-70-G2-LP:PV_baseline_MW",
+      "checked": "152969.72121180454"
+    },
+    {
+      "assertion": "WK08-70-G2-LP:GFL_BESS_baseline_MW",
+      "checked": "0.0"
+    },
+    {
+      "assertion": "WK08-70-G2-LP:GFL_BESS_added_MW",
+      "checked": "57164.6913942163"
+    },
+    {
+      "assertion": "WK08-70-G2-LP:GFM_BESS_baseline_MW",
+      "checked": "0.0"
+    },
+    {
+      "assertion": "WK08-70-G2-LP:GFM_BESS_added_MW",
+      "checked": "102089.70683652523"
+    },
+    {
+      "assertion": "WK08-70-G2-LP:wind_total_MW",
+      "checked": "795518.3085776404"
+    },
+    {
+      "assertion": "WK08-70-G2-LP:PV_total_MW",
+      "checked": "871368.729624962"
+    },
+    {
+      "assertion": "WK08-70-G2-LP:GFL_BESS_total_MW",
+      "checked": "57164.6913942163"
+    },
+    {
+      "assertion": "WK08-70-G2-LP:GFM_BESS_total_MW",
+      "checked": "102089.70683652523"
+    },
+    {
+      "assertion": "WK08-70-G2-LP:G1_failed_hours",
+      "checked": 81
+    },
+    {
+      "assertion": "WK08-70-G2-LP:G1_defined_hours",
+      "checked": 168
+    },
+    {
+      "assertion": "WK08-70-G2-LP:G2_failed_hours",
+      "checked": 0
+    },
+    {
+      "assertion": "WK08-70-G2-LP:G2_defined_hours",
+      "checked": 168
+    },
+    {
+      "assertion": "WK08-70-G2-LP:G0_failed_hours",
+      "checked": 0
+    },
+    {
+      "assertion": "WK08-70-G2-LP:G0_defined_hours",
+      "checked": 168
+    },
+    {
+      "assertion": "WK08-70-G2-LP:B_min_failed_hours",
+      "checked": 0
+    },
+    {
+      "assertion": "WK08-70-G2-LP:B_min_defined_hours",
+      "checked": 168
+    },
+    {
+      "assertion": "WK08-70-G2-LP:M0_failed_hours",
+      "checked": 18
+    },
+    {
+      "assertion": "WK08-70-G2-LP:M0_defined_hours",
+      "checked": 168
+    },
+    {
+      "assertion": "WK08-70-G2-LP:hours_G1",
+      "checked": [
+        "168",
+        "0"
+      ]
+    },
+    {
+      "assertion": "WK08-70-G2-LP:hours_G2",
+      "checked": [
+        "168",
+        "0"
+      ]
+    },
+    {
+      "assertion": "WK08-70-G2-LP:hours_G0",
+      "checked": [
+        "168",
+        "0"
+      ]
+    },
+    {
+      "assertion": "WK08-70-G2-LP:hours_M0",
+      "checked": [
+        "168",
+        "0"
+      ]
+    },
+    {
+      "assertion": "WK08-70-G2-LP:annual_coordinate",
+      "checked": "127408221525.42322"
+    },
+    {
+      "assertion": "WK08-70-G2-LP:native_UB",
+      "checked": [
+        "127408221525.42139",
+        "127408221525.42322"
+      ]
+    },
+    {
+      "assertion": "WK08-70-G2-LP:events",
+      "checked": [
+        0,
+        "0.0"
+      ]
+    },
+    {
+      "assertion": "WK08-70-G2-MILP:F2_receipt",
+      "checked": "6d940836fbdc783eb2a221c99279f31b48315ee6669915b697b843b97a8f012a"
+    },
+    {
+      "assertion": "WK08-70-G2-MILP:native_version",
+      "checked": {
+        "version": "13.0.3",
+        "native_log_sha256": "6627d1b7e9c4aace12878dbc69ad93582a0adcf09d4c7df3792aa4c2890fc05b"
+      }
+    },
+    {
+      "assertion": "WK08-70-G2-MILP:CAPEX_EUR2025",
+      "checked": "111340588724.01581"
+    },
+    {
+      "assertion": "WK08-70-G2-MILP:actual_RE_MWh",
+      "checked": "49741206.27171395"
+    },
+    {
+      "assertion": "WK08-70-G2-MILP:actual_load_MWh",
+      "checked": "71058866.10244864"
+    },
+    {
+      "assertion": "WK08-70-G2-MILP:raw_week_dispatch_OPEX_EUR2025",
+      "checked": "280424839.36329055"
+    },
+    {
+      "assertion": "WK08-70-G2-MILP:raw_week_startup_shutdown_OPEX_EUR2025",
+      "checked": "28515084.287620842"
+    },
+    {
+      "assertion": "WK08-70-G2-MILP:raw_week_storage_OPEX_EUR2025",
+      "checked": "0.0"
+    },
+    {
+      "assertion": "WK08-70-G2-MILP:raw_week_OPEX_EUR2025",
+      "checked": "308939923.6509114"
+    },
+    {
+      "assertion": "WK08-70-G2-MILP:annualized_week_OPEX_EUR2025",
+      "checked": "16109010304.654667"
+    },
+    {
+      "assertion": "WK08-70-G2-MILP:annualized_total_EUR2025",
+      "checked": "127449599028.67047"
+    },
+    {
+      "assertion": "WK08-70-G2-MILP:actual_RE_share_pct",
+      "checked": "69.99999999999986"
+    },
+    {
+      "assertion": "WK08-70-G2-MILP:wind_added_MW",
+      "checked": "589728.7389109852"
+    },
+    {
+      "assertion": "WK08-70-G2-MILP:PV_added_MW",
+      "checked": "718399.0084286081"
+    },
+    {
+      "assertion": "WK08-70-G2-MILP:wind_baseline_MW",
+      "checked": "205789.5696666552"
+    },
+    {
+      "assertion": "WK08-70-G2-MILP:PV_baseline_MW",
+      "checked": "152969.72121180454"
+    },
+    {
+      "assertion": "WK08-70-G2-MILP:GFL_BESS_baseline_MW",
+      "checked": "0.0"
+    },
+    {
+      "assertion": "WK08-70-G2-MILP:GFL_BESS_added_MW",
+      "checked": "57225.0"
+    },
+    {
+      "assertion": "WK08-70-G2-MILP:GFM_BESS_baseline_MW",
+      "checked": "0.0"
+    },
+    {
+      "assertion": "WK08-70-G2-MILP:GFM_BESS_added_MW",
+      "checked": "102450.0"
+    },
+    {
+      "assertion": "WK08-70-G2-MILP:wind_total_MW",
+      "checked": "795518.3085776404"
+    },
+    {
+      "assertion": "WK08-70-G2-MILP:PV_total_MW",
+      "checked": "871368.7296404126"
+    },
+    {
+      "assertion": "WK08-70-G2-MILP:GFL_BESS_total_MW",
+      "checked": "57225.0"
+    },
+    {
+      "assertion": "WK08-70-G2-MILP:GFM_BESS_total_MW",
+      "checked": "102450.0"
+    },
+    {
+      "assertion": "WK08-70-G2-MILP:G1_failed_hours",
+      "checked": 116
+    },
+    {
+      "assertion": "WK08-70-G2-MILP:G1_defined_hours",
+      "checked": 168
+    },
+    {
+      "assertion": "WK08-70-G2-MILP:G2_failed_hours",
+      "checked": 0
+    },
+    {
+      "assertion": "WK08-70-G2-MILP:G2_defined_hours",
+      "checked": 168
+    },
+    {
+      "assertion": "WK08-70-G2-MILP:G0_failed_hours",
+      "checked": 0
+    },
+    {
+      "assertion": "WK08-70-G2-MILP:G0_defined_hours",
+      "checked": 168
+    },
+    {
+      "assertion": "WK08-70-G2-MILP:B_min_failed_hours",
+      "checked": 0
+    },
+    {
+      "assertion": "WK08-70-G2-MILP:B_min_defined_hours",
+      "checked": 168
+    },
+    {
+      "assertion": "WK08-70-G2-MILP:M0_failed_hours",
+      "checked": 10
+    },
+    {
+      "assertion": "WK08-70-G2-MILP:M0_defined_hours",
+      "checked": 168
+    },
+    {
+      "assertion": "WK08-70-G2-MILP:hours_G1",
+      "checked": [
+        "168",
+        "0"
+      ]
+    },
+    {
+      "assertion": "WK08-70-G2-MILP:hours_G2",
+      "checked": [
+        "168",
+        "0"
+      ]
+    },
+    {
+      "assertion": "WK08-70-G2-MILP:hours_G0",
+      "checked": [
+        "168",
+        "0"
+      ]
+    },
+    {
+      "assertion": "WK08-70-G2-MILP:hours_M0",
+      "checked": [
+        "168",
+        "0"
+      ]
+    },
+    {
+      "assertion": "WK08-70-G2-MILP:annual_coordinate",
+      "checked": "127449599028.67047"
+    },
+    {
+      "assertion": "WK08-70-G2-MILP:native_UB",
+      "checked": [
+        "127408221525.4212",
+        "127449599028.67047"
+      ]
+    },
+    {
+      "assertion": "WK08-70-G2-MILP:events",
+      "checked": [
+        0,
+        "0.0"
+      ]
+    },
+    {
+      "assertion": "version partition",
+      "checked": 14
+    },
+    {
+      "assertion": "paired table row count",
+      "checked": 7
+    },
+    {
+      "assertion": "WK08-50-BASE-printed endpoints",
+      "checked": [
+        "97.5515",
+        "97.5515",
+        "97.5666"
+      ]
+    },
+    {
+      "assertion": "WK08-50-BASE-printed gap",
+      "checked": "0.015"
+    },
+    {
+      "assertion": "WK08-50-G1-printed endpoints",
+      "checked": [
+        "98.6197",
+        "98.6197",
+        "98.9982"
+      ]
+    },
+    {
+      "assertion": "WK08-50-G1-printed gap",
+      "checked": "0.382"
+    },
+    {
+      "assertion": "WK08-60-BASE-printed endpoints",
+      "checked": [
+        "109.7309",
+        "109.7309",
+        "109.7437"
+      ]
+    },
+    {
+      "assertion": "WK08-60-BASE-printed gap",
+      "checked": "0.012"
+    },
+    {
+      "assertion": "WK08-60-G1-printed endpoints",
+      "checked": [
+        "111.3957",
+        "111.3957",
+        "111.8142"
+      ]
+    },
+    {
+      "assertion": "WK08-60-G1-printed gap",
+      "checked": "0.374"
+    },
+    {
+      "assertion": "WK08-70-BASE-printed endpoints",
+      "checked": [
+        "124.9897",
+        "124.9897",
+        "125.0560"
+      ]
+    },
+    {
+      "assertion": "WK08-70-BASE-printed gap",
+      "checked": "0.053"
+    },
+    {
+      "assertion": "WK08-70-G1-printed endpoints",
+      "checked": [
+        "127.3483",
+        "127.3483",
+        "127.8187"
+      ]
+    },
+    {
+      "assertion": "WK08-70-G1-printed gap",
+      "checked": "0.368"
+    },
+    {
+      "assertion": "WK08-70-G2-printed endpoints",
+      "checked": [
+        "127.4082",
+        "127.4082",
+        "127.4496"
+      ]
+    },
+    {
+      "assertion": "WK08-70-G2-printed gap",
+      "checked": "0.032"
+    },
+    {
+      "assertion": "premium 50",
+      "checked": [
+        "1.05310794597152",
+        "1.44659815068327"
+      ]
+    },
+    {
+      "assertion": "narrative endpoints 50",
+      "checked": [
+        "1.05310794597152",
+        "1.44659815068327",
+        "1.053",
+        "1.447"
+      ]
+    },
+    {
+      "assertion": "premium 60",
+      "checked": [
+        "1.65214215114296",
+        "2.08317937738352"
+      ]
+    },
+    {
+      "assertion": "narrative endpoints 60",
+      "checked": [
+        "1.65214215114296",
+        "2.08317937738352",
+        "1.652",
+        "2.084"
+      ]
+    },
+    {
+      "assertion": "premium 70",
+      "checked": [
+        "2.2924037476747",
+        "2.8288852082164"
+      ]
+    },
+    {
+      "assertion": "narrative endpoints 70",
+      "checked": [
+        "2.2924037476747",
+        "2.8288852082164",
+        "2.292",
+        "2.829"
+      ]
+    },
+    {
+      "assertion": "G1/G2 intervals overlap",
+      "checked": "369.01951670328"
+    },
+    {
+      "assertion": "b8b4c67dbda948606f744913f7eb796e342b5211:source",
+      "checked": "4cf808d0b091e4ef6a7bc19f942c15a75f8722a16fc422b73b692d0dd5915f75"
+    },
+    {
+      "assertion": "b8b4c67dbda948606f744913f7eb796e342b5211:distance",
+      "checked": [
+        [
+          "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_SEQUENTIAL_CONDITIONED_20261120_01\\01_G3_SOCP\\INDEPENDENT_REVIEW\\independent_relaxed_gate.json",
+          "4cf808d0b091e4ef6a7bc19f942c15a75f8722a16fc422b73b692d0dd5915f75",
+          "/original_point/max_distance"
+        ],
+        [
+          "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_SEQUENTIAL_CONDITIONED_20261120_01\\01_G3_SOCP\\INDEPENDENT_REVIEW\\independent_relaxed_gate.json",
+          "4cf808d0b091e4ef6a7bc19f942c15a75f8722a16fc422b73b692d0dd5915f75",
+          "/original_point/worst_original_rows/0/distance"
+        ]
+      ]
+    },
+    {
+      "assertion": "f2675487486532d2823a6ad24179b279a09149c0:source",
+      "checked": "2415b64fb60179fa1b6607f9a688b8c064a4d8d98287d873ad8b7bda126de25c"
+    },
+    {
+      "assertion": "f2675487486532d2823a6ad24179b279a09149c0:distance",
+      "checked": [
+        [
+          "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_SEQUENTIAL_CONDITIONED_20261120_01\\02_G3_SOCP_BINARY_MILLION\\INDEPENDENT_REVIEW\\independent_relaxed_gate.json",
+          "2415b64fb60179fa1b6607f9a688b8c064a4d8d98287d873ad8b7bda126de25c",
+          "/original_point/max_distance"
+        ]
+      ]
+    },
+    {
+      "assertion": "0754707e7947ea71e917abe9ae33ddd01684a3a7:source",
+      "checked": "c21d3f09e6f01b8f2d1042f1a161662757f3d2a6e7f90b274c7ade424a189bc8"
+    },
+    {
+      "assertion": "0754707e7947ea71e917abe9ae33ddd01684a3a7:absent_full_distance",
+      "checked": "NUMERICAL_REJECT"
+    },
+    {
+      "assertion": "fdf7d564bc28370e66ff7e55250db604a2ed5721:source",
+      "checked": "4e09ba0f76f75266127b05dd225b3a9bc9582fa6378b4804dd3eaa4e29441453"
+    },
+    {
+      "assertion": "fdf7d564bc28370e66ff7e55250db604a2ed5721:distance",
+      "checked": [
+        [
+          "E:\\ResearchResults\\FlexPlan_UC_GSCR\\SGOV145_20261121_01\\RETRY_G3\\G3\\relaxed\\run_summary.json",
+          "6a929f0713c80f0d6aefad19caa74f11b727394a3b1b7b6cb39d8e2dcb3dca17",
+          "/original_primal_check/maximum_constraint_distance"
+        ]
+      ]
+    },
+    {
+      "assertion": "97b11ee9ac9dfba387e1b8cac3a56720ec4e66a9:source",
+      "checked": "4be4d3da7773017aa8737ede4d3c5b63ae93550c047db087a41f0aabae44cbae"
+    },
+    {
+      "assertion": "97b11ee9ac9dfba387e1b8cac3a56720ec4e66a9:distance",
+      "checked": [
+        [
+          "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_G3_GUROBI_DICT_20261120_02\\G3\\relaxed\\run_summary.json",
+          "44175b4175a1b9e57c1b48dbe0af910e13ff2869d9c77c39292bb8b67fdc3609",
+          "/native_solver_attributes/ConstrVio"
+        ],
+        [
+          "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_G3_GUROBI_DICT_20261120_02\\G3\\relaxed\\run_summary.json",
+          "44175b4175a1b9e57c1b48dbe0af910e13ff2869d9c77c39292bb8b67fdc3609",
+          "/original_primal_check/maximum_constraint_distance"
+        ]
+      ]
+    },
+    {
+      "assertion": "f81c6c52125556c7301c7e359568555d614ebdcc:source",
+      "checked": "526ad273e64b58cd502cc2a2560292dfbd9af60358343ac87f932a264e9e8213"
+    },
+    {
+      "assertion": "f81c6c52125556c7301c7e359568555d614ebdcc:distance",
+      "checked": [
+        [
+          "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_G3_GUROBI_NUMERIC_20261120_03\\G3\\relaxed\\run_summary.json",
+          "9211be678e789f1800db16d627fa68c5baa0c9268420722af7658f1db791a36f",
+          "/native_solver_attributes/ConstrVio"
+        ],
+        [
+          "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_G3_GUROBI_NUMERIC_20261120_03\\G3\\relaxed\\run_summary.json",
+          "9211be678e789f1800db16d627fa68c5baa0c9268420722af7658f1db791a36f",
+          "/original_primal_check/maximum_constraint_distance"
+        ]
+      ]
+    },
+    {
+      "assertion": "8e046881296dfad5a93d86968a85ea3541d1ca7a:source",
+      "checked": "57aa73024acf0a86553d4d8d3d898c4be8fa198473e4f83ef398695d706c70da"
+    },
+    {
+      "assertion": "8e046881296dfad5a93d86968a85ea3541d1ca7a:distance",
+      "checked": [
+        [
+          "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_NUMERIC_RECOVERY_20261119_01\\G3\\relaxed\\run_summary.json",
+          "7c57a4f8b4fa0606777cd1ce5188806a854fbf177d93bb30620ce12adee7ba14",
+          "/native_solver_attributes/ConstrVio"
+        ],
+        [
+          "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_NUMERIC_RECOVERY_20261119_01\\G3\\relaxed\\run_summary.json",
+          "7c57a4f8b4fa0606777cd1ce5188806a854fbf177d93bb30620ce12adee7ba14",
+          "/original_primal_check/maximum_constraint_distance"
+        ]
+      ]
+    },
+    {
+      "assertion": "c842bbd7db0eaf03c5804db6ba73c6f6ebb07f63:source",
+      "checked": "c8d2e8b3f25d4326308b6407e65f534e5b89605159874e25e7280afdeada5d73"
+    },
+    {
+      "assertion": "c842bbd7db0eaf03c5804db6ba73c6f6ebb07f63:distance",
+      "checked": [
+        [
+          "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_RESTART_20261119_01\\G3\\relaxed\\run_summary.json",
+          "c8d2e8b3f25d4326308b6407e65f534e5b89605159874e25e7280afdeada5d73",
+          "/native_solver_attributes/ConstrVio"
+        ],
+        [
+          "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_RESTART_20261119_01\\G3\\relaxed\\run_summary.json",
+          "c8d2e8b3f25d4326308b6407e65f534e5b89605159874e25e7280afdeada5d73",
+          "/original_primal_check/maximum_constraint_distance"
+        ]
+      ]
+    }
+  ],
+  "check_count": 606,
+  "cost_bound_intervals": [
+    [
+      "1.05310794597152",
+      "1.44659815068327",
+      "1.053",
+      "1.447"
+    ],
+    [
+      "1.65214215114296",
+      "2.08317937738352",
+      "1.652",
+      "2.084"
+    ],
+    [
+      "2.2924037476747",
+      "2.8288852082164",
+      "2.292",
+      "2.829"
+    ]
+  ],
+  "events": [
+    [
+      "WK08-50-BASE-MILP",
+      3,
+      "62388.69577781139"
+    ],
+    [
+      "WK08-60-BASE-MILP",
+      1,
+      "21391.145777811384"
+    ]
+  ],
+  "per_case": {
+    "WK08-50-BASE-LP": {
+      "portfolio_GW": {
+        "wind_added_MW": "343.3005947669466",
+        "PV_added_MW": "436.2774569871213",
+        "wind_baseline_MW": "205.7895696666552",
+        "PV_baseline_MW": "152.96972121180454",
+        "GFL_BESS_baseline_MW": "0.0",
+        "GFL_BESS_added_MW": "16.970307946503628",
+        "GFM_BESS_baseline_MW": "0.0",
+        "GFM_BESS_added_MW": "0.0",
+        "wind_total_MW": "549.0901644336018",
+        "PV_total_MW": "589.2471781989259",
+        "GFL_BESS_total_MW": "16.970307946503628",
+        "GFM_BESS_total_MW": "0.0"
+      },
+      "margins": {
+        "G1": {
+          "min": -983.2669080905104,
+          "defined_hours": 168,
+          "failed_hours": 168
+        },
+        "G2": {
+          "min": -1710.8596708817518,
+          "defined_hours": 168,
+          "failed_hours": 168
+        },
+        "G0": {
+          "min": -898.2841812022182,
+          "defined_hours": 168,
+          "failed_hours": 168
+        },
+        "B_min": {
+          "min": -2.4413642848242745,
+          "defined_hours": 168,
+          "failed_hours": 112
+        },
+        "M0": {
+          "min": -349.2724662494188,
+          "defined_hours": 12,
+          "failed_hours": 12
+        }
+      },
+      "quota_pct": "49.99999999999961",
+      "cost": {
+        "CAPEX": 60351397208.73977,
+        "RE": 35529433.051224045,
+        "OPEX_gen": 676251101.5793791,
+        "load": 71058866.10244864,
+        "OPEX_event": 37176082.81707207,
+        "OPEX_storage": 0.0,
+        "raw_week_OPEX": 713427184.3964511,
+        "annualized_week_OPEX": 37200131757.81496,
+        "annualized_total": 97551528966.55472,
+        "renewable_share_pct": 49.99999999999961
+      },
+      "version": "12.0.3",
+      "gap_pct": "0.0"
+    },
+    "WK08-50-BASE-MILP": {
+      "portfolio_GW": {
+        "wind_added_MW": "344.30719870843255",
+        "PV_added_MW": "434.41059285179956",
+        "wind_baseline_MW": "205.7895696666552",
+        "PV_baseline_MW": "152.96972121180454",
+        "GFL_BESS_baseline_MW": "0.0",
+        "GFL_BESS_added_MW": "16.975",
+        "GFM_BESS_baseline_MW": "0.0",
+        "GFM_BESS_added_MW": "0.0",
+        "wind_total_MW": "550.0967683750878",
+        "PV_total_MW": "587.3803140636041",
+        "GFL_BESS_total_MW": "16.975",
+        "GFM_BESS_total_MW": "0.0"
+      },
+      "margins": {
+        "G1": {
+          "min": -982.8028922062939,
+          "defined_hours": 168,
+          "failed_hours": 168
+        },
+        "G2": {
+          "min": -1710.0573912273687,
+          "defined_hours": 168,
+          "failed_hours": 168
+        },
+        "G0": {
+          "min": -897.8154209482736,
+          "defined_hours": 168,
+          "failed_hours": 168
+        },
+        "B_min": {
+          "min": -2.441364284824286,
+          "defined_hours": 168,
+          "failed_hours": 113
+        }
+      },
+      "quota_pct": "49.99999999999985",
+      "cost": {
+        "CAPEX": 60393267353.898224,
+        "RE": 35529433.05122422,
+        "OPEX_gen": 675637921.539546,
+        "load": 71058866.10244864,
+        "OPEX_event": 37275271.816114426,
+        "OPEX_storage": 0.0,
+        "raw_week_OPEX": 712913193.3556604,
+        "annualized_week_OPEX": 37173330796.40229,
+        "annualized_total": 97566598150.3005,
+        "renewable_share_pct": 49.99999999999985
+      },
+      "version": "12.0.3",
+      "gap_pct": "0.01544502322770517200"
+    },
+    "WK08-50-G1-LP": {
+      "portfolio_GW": {
+        "wind_added_MW": "343.41999354964937",
+        "PV_added_MW": "438.06145360175817",
+        "wind_baseline_MW": "205.7895696666552",
+        "PV_baseline_MW": "152.96972121180454",
+        "GFL_BESS_baseline_MW": "0.0",
+        "GFL_BESS_added_MW": "7.270789612969067",
+        "GFM_BESS_baseline_MW": "0.0",
+        "GFM_BESS_added_MW": "30.682728491191945",
+        "wind_total_MW": "549.2095632163046",
+        "PV_total_MW": "591.0311748135628",
+        "GFL_BESS_total_MW": "7.270789612969067",
+        "GFM_BESS_total_MW": "30.682728491191945"
+      },
+      "margins": {
+        "G1": {
+          "min": -2.0179413695586845e-12,
+          "defined_hours": 168,
+          "failed_hours": 0
+        },
+        "G2": {
+          "min": -30.600368345979,
+          "defined_hours": 168,
+          "failed_hours": 168
+        },
+        "G0": {
+          "min": -1.714485405265014e-13,
+          "defined_hours": 168,
+          "failed_hours": 0
+        },
+        "B_min": {
+          "min": 10.059580409743557,
+          "defined_hours": 168,
+          "failed_hours": 0
+        },
+        "M0": {
+          "min": -4.440892098500626e-16,
+          "defined_hours": 168,
+          "failed_hours": 0
+        }
+      },
+      "quota_pct": "49.999999999999666",
+      "cost": {
+        "CAPEX": 62062737888.896385,
+        "RE": 35529433.05122408,
+        "OPEX_gen": 668184821.0657521,
+        "load": 71058866.10244864,
+        "OPEX_event": 32907719.897660594,
+        "OPEX_storage": 0.0,
+        "raw_week_OPEX": 701092540.9634128,
+        "annualized_week_OPEX": 36556968207.37795,
+        "annualized_total": 98619706096.27434,
+        "renewable_share_pct": 49.999999999999666
+      },
+      "version": "12.0.3",
+      "gap_pct": "0.0"
+    },
+    "WK08-50-G1-MILP": {
+      "portfolio_GW": {
+        "wind_added_MW": "341.28318242722296",
+        "PV_added_MW": "442.79994576646213",
+        "wind_baseline_MW": "205.7895696666552",
+        "PV_baseline_MW": "152.96972121180454",
+        "GFL_BESS_baseline_MW": "0.0",
+        "GFL_BESS_added_MW": "7.3",
+        "GFM_BESS_baseline_MW": "0.0",
+        "GFM_BESS_added_MW": "33.525",
+        "wind_total_MW": "547.0727520938781",
+        "PV_total_MW": "595.7696669782667",
+        "GFL_BESS_total_MW": "7.3",
+        "GFM_BESS_total_MW": "33.525"
+      },
+      "margins": {
+        "G1": {
+          "min": -5.684341886080802e-14,
+          "defined_hours": 168,
+          "failed_hours": 0
+        },
+        "G2": {
+          "min": -30.600368345978993,
+          "defined_hours": 168,
+          "failed_hours": 168
+        },
+        "G0": {
+          "min": 3.4044187638594026,
+          "defined_hours": 168,
+          "failed_hours": 0
+        },
+        "B_min": {
+          "min": 14.0720234044678,
+          "defined_hours": 168,
+          "failed_hours": 0
+        },
+        "M0": {
+          "min": 0.010134812126487036,
+          "defined_hours": 168,
+          "failed_hours": 0
+        }
+      },
+      "quota_pct": "49.99999999999967",
+      "cost": {
+        "CAPEX": 62455556241.64873,
+        "RE": 35529433.05122409,
+        "OPEX_gen": 667372946.3669384,
+        "load": 71058866.10244864,
+        "OPEX_event": 33443481.384066433,
+        "OPEX_storage": 0.0,
+        "raw_week_OPEX": 700816427.7510048,
+        "annualized_week_OPEX": 36542570875.588104,
+        "annualized_total": 98998127117.23683,
+        "renewable_share_pct": 49.99999999999967
+      },
+      "version": "12.0.3",
+      "gap_pct": "0.3822506869413327600"
+    },
+    "WK08-60-BASE-LP": {
+      "portfolio_GW": {
+        "wind_added_MW": "459.5150133420765",
+        "PV_added_MW": "603.4550242596356",
+        "wind_baseline_MW": "205.7895696666552",
+        "PV_baseline_MW": "152.96972121180454",
+        "GFL_BESS_baseline_MW": "0.0",
+        "GFL_BESS_added_MW": "76.29782247323153",
+        "GFM_BESS_baseline_MW": "0.0",
+        "GFM_BESS_added_MW": "0.0",
+        "wind_total_MW": "665.3045830087317",
+        "PV_total_MW": "756.4247454714401",
+        "GFL_BESS_total_MW": "76.29782247323153",
+        "GFM_BESS_total_MW": "0.0"
+      },
+      "margins": {
+        "G1": {
+          "min": -1935.6103866448489,
+          "defined_hours": 168,
+          "failed_hours": 168
+        },
+        "G2": {
+          "min": -3357.453726856136,
+          "defined_hours": 168,
+          "failed_hours": 168
+        },
+        "G0": {
+          "min": -1848.6897452172739,
+          "defined_hours": 168,
+          "failed_hours": 168
+        },
+        "B_min": {
+          "min": -2.4413642848241994,
+          "defined_hours": 168,
+          "failed_hours": 130
+        }
+      },
+      "quota_pct": "59.999999999999936",
+      "cost": {
+        "CAPEX": 84708983068.99423,
+        "RE": 42635319.66146914,
+        "OPEX_gen": 448496763.9868167,
+        "load": 71058866.10244864,
+        "OPEX_event": 31376983.482906543,
+        "OPEX_storage": 0.0,
+        "raw_week_OPEX": 479873747.4697232,
+        "annualized_week_OPEX": 25021988260.921284,
+        "annualized_total": 109730971329.91551,
+        "renewable_share_pct": 59.999999999999936
+      },
+      "version": "12.0.3",
+      "gap_pct": "0.0"
+    },
+    "WK08-60-BASE-MILP": {
+      "portfolio_GW": {
+        "wind_added_MW": "459.8313037690762",
+        "PV_added_MW": "602.4372225633392",
+        "wind_baseline_MW": "205.7895696666552",
+        "PV_baseline_MW": "152.96972121180454",
+        "GFL_BESS_baseline_MW": "0.0",
+        "GFL_BESS_added_MW": "76.325",
+        "GFM_BESS_baseline_MW": "0.0",
+        "GFM_BESS_added_MW": "0.0",
+        "wind_total_MW": "665.6208734357314",
+        "PV_total_MW": "755.4069437751437",
+        "GFL_BESS_total_MW": "76.325",
+        "GFM_BESS_total_MW": "0.0"
+      },
+      "margins": {
+        "G1": {
+          "min": -1935.8863899230334,
+          "defined_hours": 168,
+          "failed_hours": 168
+        },
+        "G2": {
+          "min": -3357.9309342582155,
+          "defined_hours": 168,
+          "failed_hours": 168
+        },
+        "G0": {
+          "min": -1848.9657557133573,
+          "defined_hours": 168,
+          "failed_hours": 168
+        },
+        "B_min": {
+          "min": -2.441364284824173,
+          "defined_hours": 168,
+          "failed_hours": 128
+        }
+      },
+      "quota_pct": "59.99999999999999",
+      "cost": {
+        "CAPEX": 84711422839.4563,
+        "RE": 42635319.66146918,
+        "OPEX_gen": 448698075.10240364,
+        "load": 71058866.10244864,
+        "OPEX_event": 31371407.47806427,
+        "OPEX_storage": 0.0,
+        "raw_week_OPEX": 480069482.58046794,
+        "annualized_week_OPEX": 25032194448.838684,
+        "annualized_total": 109743617288.29498,
+        "renewable_share_pct": 59.99999999999999
+      },
+      "version": "12.0.3",
+      "gap_pct": "0.01152318348142925200"
+    },
+    "WK08-60-G1-LP": {
+      "portfolio_GW": {
+        "wind_added_MW": "457.0618039597635",
+        "PV_added_MW": "620.1666454635041",
+        "wind_baseline_MW": "205.7895696666552",
+        "PV_baseline_MW": "152.96972121180454",
+        "GFL_BESS_baseline_MW": "0.0",
+        "GFL_BESS_added_MW": "37.27031646538623",
+        "GFM_BESS_baseline_MW": "0.0",
+        "GFM_BESS_added_MW": "56.09418278073498",
+        "wind_total_MW": "662.8513736264186",
+        "PV_total_MW": "773.1363666753087",
+        "GFL_BESS_total_MW": "37.27031646538623",
+        "GFM_BESS_total_MW": "56.09418278073498"
+      },
+      "margins": {
+        "G1": {
+          "min": -3.254285729781259e-12,
+          "defined_hours": 168,
+          "failed_hours": 0
+        },
+        "G2": {
+          "min": -30.600368345979,
+          "defined_hours": 168,
+          "failed_hours": 168
+        },
+        "G0": {
+          "min": -2.4928292758576417e-13,
+          "defined_hours": 168,
+          "failed_hours": 0
+        },
+        "B_min": {
+          "min": 8.045223658103144,
+          "defined_hours": 168,
+          "failed_hours": 0
+        },
+        "M0": {
+          "min": -4.440892098500626e-16,
+          "defined_hours": 168,
+          "failed_hours": 0
+        }
+      },
+      "quota_pct": "59.99999999999979",
+      "cost": {
+        "CAPEX": 86782272331.9315,
+        "RE": 42635319.661469035,
+        "OPEX_gen": 443000201.463312,
+        "load": 71058866.10244864,
+        "OPEX_event": 29039277.310795,
+        "OPEX_storage": 0.0,
+        "raw_week_OPEX": 472039478.774107,
+        "annualized_week_OPEX": 24613487107.507008,
+        "annualized_total": 111395759439.4385,
+        "renewable_share_pct": 59.99999999999979
+      },
+      "version": "12.0.3",
+      "gap_pct": "0.0"
+    },
+    "WK08-60-G1-MILP": {
+      "portfolio_GW": {
+        "wind_added_MW": "452.69569820314035",
+        "PV_added_MW": "628.293013976552",
+        "wind_baseline_MW": "205.7895696666552",
+        "PV_baseline_MW": "152.96972121180454",
+        "GFL_BESS_baseline_MW": "0.0",
+        "GFL_BESS_added_MW": "38.175",
+        "GFM_BESS_baseline_MW": "0.0",
+        "GFM_BESS_added_MW": "62.8",
+        "wind_total_MW": "658.4852678697956",
+        "PV_total_MW": "781.2627351883566",
+        "GFL_BESS_total_MW": "38.175",
+        "GFM_BESS_total_MW": "62.8"
+      },
+      "margins": {
+        "G1": {
+          "min": -4.263256414560601e-14,
+          "defined_hours": 168,
+          "failed_hours": 0
+        },
+        "G2": {
+          "min": -30.600368345978993,
+          "defined_hours": 168,
+          "failed_hours": 168
+        },
+        "G0": {
+          "min": 7.87844182253914e-14,
+          "defined_hours": 168,
+          "failed_hours": 0
+        },
+        "B_min": {
+          "min": 12.813839745510812,
+          "defined_hours": 168,
+          "failed_hours": 0
+        },
+        "M0": {
+          "min": 0.0,
+          "defined_hours": 168,
+          "failed_hours": 0
+        }
+      },
+      "quota_pct": "59.999999999999844",
+      "cost": {
+        "CAPEX": 87244212316.91217,
+        "RE": 42635319.66146907,
+        "OPEX_gen": 442419269.9468119,
+        "load": 71058866.10244864,
+        "OPEX_event": 28785027.951017607,
+        "OPEX_storage": 0.0,
+        "raw_week_OPEX": 471204297.89782953,
+        "annualized_week_OPEX": 24569938390.386826,
+        "annualized_total": 111814150707.299,
+        "renewable_share_pct": 59.999999999999844
+      },
+      "version": "12.0.3",
+      "gap_pct": "0.3741845421300709300"
+    },
+    "WK08-70-BASE-LP": {
+      "portfolio_GW": {
+        "wind_added_MW": "583.4417095320068",
+        "PV_added_MW": "719.2212993529637",
+        "wind_baseline_MW": "205.7895696666552",
+        "PV_baseline_MW": "152.96972121180454",
+        "GFL_BESS_baseline_MW": "0.0",
+        "GFL_BESS_added_MW": "141.75809321047665",
+        "GFM_BESS_baseline_MW": "0.0",
+        "GFM_BESS_added_MW": "0.0",
+        "wind_total_MW": "789.2312791986619",
+        "PV_total_MW": "872.1910205647682",
+        "GFL_BESS_total_MW": "141.75809321047665",
+        "GFM_BESS_total_MW": "0.0"
+      },
+      "margins": {
+        "G1": {
+          "min": -2628.489315351452,
+          "defined_hours": 168,
+          "failed_hours": 168
+        },
+        "G2": {
+          "min": -4827.088133173415,
+          "defined_hours": 168,
+          "failed_hours": 168
+        },
+        "G0": {
+          "min": -2541.1235276415646,
+          "defined_hours": 168,
+          "failed_hours": 168
+        },
+        "B_min": {
+          "min": -21.467259268425433,
+          "defined_hours": 168,
+          "failed_hours": 152
+        }
+      },
+      "quota_pct": "69.99999999999935",
+      "cost": {
+        "CAPEX": 108292792450.57051,
+        "RE": 49741206.271713585,
+        "OPEX_gen": 287495278.041436,
+        "load": 71058866.10244864,
+        "OPEX_event": 32720026.632832654,
+        "OPEX_storage": 0.0,
+        "raw_week_OPEX": 320215304.67426866,
+        "annualized_week_OPEX": 16696940886.586864,
+        "annualized_total": 124989733337.15738,
+        "renewable_share_pct": 69.99999999999935
+      },
+      "version": "12.0.3",
+      "gap_pct": "0.0"
+    },
+    "WK08-70-BASE-MILP": {
+      "portfolio_GW": {
+        "wind_added_MW": "583.9581114946161",
+        "PV_added_MW": "718.9227283523587",
+        "wind_baseline_MW": "205.7895696666552",
+        "PV_baseline_MW": "152.96972121180454",
+        "GFL_BESS_baseline_MW": "0.0",
+        "GFL_BESS_added_MW": "141.8",
+        "GFM_BESS_baseline_MW": "0.0",
+        "GFM_BESS_added_MW": "0.0",
+        "wind_total_MW": "789.7476811612714",
+        "PV_total_MW": "871.8924495641632",
+        "GFL_BESS_total_MW": "141.8",
+        "GFM_BESS_total_MW": "0.0"
+      },
+      "margins": {
+        "G1": {
+          "min": -2627.204984711953,
+          "defined_hours": 168,
+          "failed_hours": 168
+        },
+        "G2": {
+          "min": -4821.966339181733,
+          "defined_hours": 168,
+          "failed_hours": 168
+        },
+        "G0": {
+          "min": -2539.8410332177164,
+          "defined_hours": 168,
+          "failed_hours": 168
+        },
+        "B_min": {
+          "min": -21.340388378297426,
+          "defined_hours": 168,
+          "failed_hours": 145
+        }
+      },
+      "quota_pct": "70.0",
+      "cost": {
+        "CAPEX": 108352825554.0054,
+        "RE": 49741206.27171405,
+        "OPEX_gen": 287618991.23382974,
+        "load": 71058866.10244864,
+        "OPEX_event": 32715337.61425242,
+        "OPEX_storage": 0.0,
+        "raw_week_OPEX": 320334328.8480822,
+        "annualized_week_OPEX": 16703147147.07857,
+        "annualized_total": 125055972701.08397,
+        "renewable_share_pct": 70.0
+      },
+      "version": "12.0.3",
+      "gap_pct": "0.0529677731463973300"
+    },
+    "WK08-70-G1-LP": {
+      "portfolio_GW": {
+        "wind_added_MW": "588.9594605484416",
+        "PV_added_MW": "719.8181103522244",
+        "wind_baseline_MW": "205.7895696666552",
+        "PV_baseline_MW": "152.96972121180454",
+        "GFL_BESS_baseline_MW": "0.0",
+        "GFL_BESS_added_MW": "57.67664240561282",
+        "GFM_BESS_baseline_MW": "0.0",
+        "GFM_BESS_added_MW": "101.2886817648213",
+        "wind_total_MW": "794.7490302150969",
+        "PV_total_MW": "872.787831564029",
+        "GFL_BESS_total_MW": "57.67664240561282",
+        "GFM_BESS_total_MW": "101.2886817648213"
+      },
+      "margins": {
+        "G1": {
+          "min": -6.200195912242634e-11,
+          "defined_hours": 168,
+          "failed_hours": 0
+        },
+        "G2": {
+          "min": -30.600368345979,
+          "defined_hours": 168,
+          "failed_hours": 168
+        },
+        "G0": {
+          "min": -2.6744894824283607e-13,
+          "defined_hours": 168,
+          "failed_hours": 0
+        },
+        "B_min": {
+          "min": 8.077825997188382,
+          "defined_hours": 168,
+          "failed_hours": 0
+        },
+        "M0": {
+          "min": -4.440892098500626e-16,
+          "defined_hours": 168,
+          "failed_hours": 0
+        }
+      },
+      "quota_pct": "69.99999999999953",
+      "cost": {
+        "CAPEX": 111232096756.64642,
+        "RE": 49741206.27171371,
+        "OPEX_gen": 280185379.9495464,
+        "load": 71058866.10244864,
+        "OPEX_event": 28893956.611540906,
+        "OPEX_storage": 0.0,
+        "raw_week_OPEX": 309079336.5610873,
+        "annualized_week_OPEX": 16116279692.11384,
+        "annualized_total": 127348376448.76027,
+        "renewable_share_pct": 69.99999999999953
+      },
+      "version": "12.0.3",
+      "gap_pct": "0.0"
+    },
+    "WK08-70-G1-MILP": {
+      "portfolio_GW": {
+        "wind_added_MW": "587.4240427000471",
+        "PV_added_MW": "726.0527116451459",
+        "wind_baseline_MW": "205.7895696666552",
+        "PV_baseline_MW": "152.96972121180454",
+        "GFL_BESS_baseline_MW": "0.0",
+        "GFL_BESS_added_MW": "58.875",
+        "GFM_BESS_baseline_MW": "0.0",
+        "GFM_BESS_added_MW": "104.575",
+        "wind_total_MW": "793.2136123667024",
+        "PV_total_MW": "879.0224328569504",
+        "GFL_BESS_total_MW": "58.875",
+        "GFM_BESS_total_MW": "104.575"
+      },
+      "margins": {
+        "G1": {
+          "min": -3.8198777474462986e-11,
+          "defined_hours": 168,
+          "failed_hours": 0
+        },
+        "G2": {
+          "min": -30.600368345979,
+          "defined_hours": 168,
+          "failed_hours": 168
+        },
+        "G0": {
+          "min": -2.365659277300486e-11,
+          "defined_hours": 168,
+          "failed_hours": 0
+        },
+        "B_min": {
+          "min": 9.254903935684217,
+          "defined_hours": 168,
+          "failed_hours": 0
+        },
+        "M0": {
+          "min": -3.6193270602780103e-14,
+          "defined_hours": 168,
+          "failed_hours": 0
+        }
+      },
+      "quota_pct": "69.99999999999986",
+      "cost": {
+        "CAPEX": 111598590415.4346,
+        "RE": 49741206.27171396,
+        "OPEX_gen": 282768071.9375946,
+        "load": 71058866.10244864,
+        "OPEX_event": 28300960.69137527,
+        "OPEX_storage": 0.0,
+        "raw_week_OPEX": 311069032.62896985,
+        "annualized_week_OPEX": 16220028129.939142,
+        "annualized_total": 127818618545.37375,
+        "renewable_share_pct": 69.99999999999986
+      },
+      "version": "12.0.3",
+      "gap_pct": "0.3678979650746507200"
+    },
+    "WK08-70-G2-LP": {
+      "portfolio_GW": {
+        "wind_added_MW": "589.7287389109852",
+        "PV_added_MW": "718.3990084131574",
+        "wind_baseline_MW": "205.7895696666552",
+        "PV_baseline_MW": "152.96972121180454",
+        "GFL_BESS_baseline_MW": "0.0",
+        "GFL_BESS_added_MW": "57.1646913942163",
+        "GFM_BESS_baseline_MW": "0.0",
+        "GFM_BESS_added_MW": "102.08970683652523",
+        "wind_total_MW": "795.5183085776404",
+        "PV_total_MW": "871.368729624962",
+        "GFL_BESS_total_MW": "57.1646913942163",
+        "GFM_BESS_total_MW": "102.08970683652523"
+      },
+      "margins": {
+        "G1": {
+          "min": -69.35568206161358,
+          "defined_hours": 168,
+          "failed_hours": 81
+        },
+        "G2": {
+          "min": -3.914735202670272e-11,
+          "defined_hours": 168,
+          "failed_hours": 0
+        },
+        "G0": {
+          "min": -1.8806153303516656e-13,
+          "defined_hours": 168,
+          "failed_hours": 0
+        },
+        "B_min": {
+          "min": 9.343974242132608,
+          "defined_hours": 168,
+          "failed_hours": 0
+        },
+        "M0": {
+          "min": -0.02413445917383661,
+          "defined_hours": 168,
+          "failed_hours": 18
+        }
+      },
+      "quota_pct": "69.99999999999936",
+      "cost": {
+        "CAPEX": 111294375109.89827,
+        "RE": 49741206.2717136,
+        "OPEX_gen": 280272814.3254249,
+        "load": 71058866.10244864,
+        "OPEX_event": 28759856.657245245,
+        "OPEX_storage": 0.0,
+        "raw_week_OPEX": 309032670.9826701,
+        "annualized_week_OPEX": 16113846415.524942,
+        "annualized_total": 127408221525.42322,
+        "renewable_share_pct": 69.99999999999936
+      },
+      "version": "12.0.3",
+      "gap_pct": "0.0"
+    },
+    "WK08-70-G2-MILP": {
+      "portfolio_GW": {
+        "wind_added_MW": "589.7287389109852",
+        "PV_added_MW": "718.3990084286081",
+        "wind_baseline_MW": "205.7895696666552",
+        "PV_baseline_MW": "152.96972121180454",
+        "GFL_BESS_baseline_MW": "0.0",
+        "GFL_BESS_added_MW": "57.225",
+        "GFM_BESS_baseline_MW": "0.0",
+        "GFM_BESS_added_MW": "102.45",
+        "wind_total_MW": "795.5183085776404",
+        "PV_total_MW": "871.3687296404126",
+        "GFL_BESS_total_MW": "57.225",
+        "GFM_BESS_total_MW": "102.45"
+      },
+      "margins": {
+        "G1": {
+          "min": -69.34988859720201,
+          "defined_hours": 168,
+          "failed_hours": 116
+        },
+        "G2": {
+          "min": 7.635877746636766e-05,
+          "defined_hours": 168,
+          "failed_hours": 0
+        },
+        "G0": {
+          "min": 0.003245970988582476,
+          "defined_hours": 168,
+          "failed_hours": 0
+        },
+        "B_min": {
+          "min": 6.421989668845212,
+          "defined_hours": 168,
+          "failed_hours": 0
+        },
+        "M0": {
+          "min": -0.025910511753826526,
+          "defined_hours": 168,
+          "failed_hours": 10
+        }
+      },
+      "quota_pct": "69.99999999999986",
+      "cost": {
+        "CAPEX": 111340588724.01581,
+        "RE": 49741206.27171395,
+        "OPEX_gen": 280424839.36329055,
+        "load": 71058866.10244864,
+        "OPEX_event": 28515084.287620842,
+        "OPEX_storage": 0.0,
+        "raw_week_OPEX": 308939923.6509114,
+        "annualized_week_OPEX": 16109010304.654667,
+        "annualized_total": 127449599028.67047,
+        "renewable_share_pct": 69.99999999999986
+      },
+      "version": "13.0.3",
+      "gap_pct": "0.03246577750514333600"
+    }
+  },
+  "g3": [
+    {
+      "row": {
+        "solver": "Gurobi",
+        "code": "b8b4c67dbda948606f744913f7eb796e342b5211",
+        "state": "NUMERICAL_REJECT",
+        "distance": "1.633704148673587e-05",
+        "poly_residual": "0.0",
+        "case_sha256": "1ceb274ab48bf2e4f90783fa881d394c79fb216d311c6bde197c6fe77dbbb15d",
+        "evidence_sha256": "4cf808d0b091e4ef6a7bc19f942c15a75f8722a16fc422b73b692d0dd5915f75",
+        "evidence_kind": "independent review"
+      },
+      "original_locations": [
+        [
+          "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_SEQUENTIAL_CONDITIONED_20261120_01\\01_G3_SOCP\\INDEPENDENT_REVIEW\\independent_relaxed_gate.json",
+          "4cf808d0b091e4ef6a7bc19f942c15a75f8722a16fc422b73b692d0dd5915f75",
+          "/original_point/max_distance"
+        ],
+        [
+          "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_SEQUENTIAL_CONDITIONED_20261120_01\\01_G3_SOCP\\INDEPENDENT_REVIEW\\independent_relaxed_gate.json",
+          "4cf808d0b091e4ef6a7bc19f942c15a75f8722a16fc422b73b692d0dd5915f75",
+          "/original_point/worst_original_rows/0/distance"
+        ]
+      ]
+    },
+    {
+      "row": {
+        "solver": "Gurobi",
+        "code": "f2675487486532d2823a6ad24179b279a09149c0",
+        "state": "NUMERICAL_REJECT",
+        "distance": "0.002469585084128312",
+        "poly_residual": "0.0",
+        "case_sha256": "1ceb274ab48bf2e4f90783fa881d394c79fb216d311c6bde197c6fe77dbbb15d",
+        "evidence_sha256": "2415b64fb60179fa1b6607f9a688b8c064a4d8d98287d873ad8b7bda126de25c",
+        "evidence_kind": "independent review"
+      },
+      "original_locations": [
+        [
+          "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_SEQUENTIAL_CONDITIONED_20261120_01\\02_G3_SOCP_BINARY_MILLION\\INDEPENDENT_REVIEW\\independent_relaxed_gate.json",
+          "2415b64fb60179fa1b6607f9a688b8c064a4d8d98287d873ad8b7bda126de25c",
+          "/original_point/max_distance"
+        ]
+      ]
+    },
+    {
+      "row": {
+        "solver": "MOSEK",
+        "code": "0754707e7947ea71e917abe9ae33ddd01684a3a7",
+        "state": "NUMERICAL_REJECT",
+        "distance": "",
+        "poly_residual": "",
+        "case_sha256": "94f0ea55ceb66522422ce2b0c8a899af13ef82e645755e01ec7135139135e653",
+        "evidence_sha256": "c21d3f09e6f01b8f2d1042f1a161662757f3d2a6e7f90b274c7ade424a189bc8",
+        "evidence_kind": "independent review"
+      },
+      "original_locations": []
+    },
+    {
+      "row": {
+        "solver": "MOSEK",
+        "code": "fdf7d564bc28370e66ff7e55250db604a2ed5721",
+        "state": "NUMERICAL_REJECT",
+        "distance": "0.010130666196346283",
+        "poly_residual": "1.2954995327163488e-05",
+        "case_sha256": "94f0ea55ceb66522422ce2b0c8a899af13ef82e645755e01ec7135139135e653",
+        "evidence_sha256": "4e09ba0f76f75266127b05dd225b3a9bc9582fa6378b4804dd3eaa4e29441453",
+        "evidence_kind": "independent review"
+      },
+      "original_locations": [
+        [
+          "E:\\ResearchResults\\FlexPlan_UC_GSCR\\SGOV145_20261121_01\\RETRY_G3\\G3\\relaxed\\run_summary.json",
+          "6a929f0713c80f0d6aefad19caa74f11b727394a3b1b7b6cb39d8e2dcb3dca17",
+          "/original_primal_check/maximum_constraint_distance"
+        ]
+      ]
+    },
+    {
+      "row": {
+        "solver": "Gurobi",
+        "code": "97b11ee9ac9dfba387e1b8cac3a56720ec4e66a9",
+        "state": "NUMERIC_REJECTED",
+        "distance": "0.00019444730678230826",
+        "poly_residual": "0.0",
+        "case_sha256": "1ceb274ab48bf2e4f90783fa881d394c79fb216d311c6bde197c6fe77dbbb15d",
+        "evidence_sha256": "4be4d3da7773017aa8737ede4d3c5b63ae93550c047db087a41f0aabae44cbae",
+        "evidence_kind": "independent review"
+      },
+      "original_locations": [
+        [
+          "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_G3_GUROBI_DICT_20261120_02\\G3\\relaxed\\run_summary.json",
+          "44175b4175a1b9e57c1b48dbe0af910e13ff2869d9c77c39292bb8b67fdc3609",
+          "/native_solver_attributes/ConstrVio"
+        ],
+        [
+          "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_G3_GUROBI_DICT_20261120_02\\G3\\relaxed\\run_summary.json",
+          "44175b4175a1b9e57c1b48dbe0af910e13ff2869d9c77c39292bb8b67fdc3609",
+          "/original_primal_check/maximum_constraint_distance"
+        ]
+      ]
+    },
+    {
+      "row": {
+        "solver": "Gurobi",
+        "code": "f81c6c52125556c7301c7e359568555d614ebdcc",
+        "state": "NUMERIC_REJECTED",
+        "distance": "0.0068429547437589555",
+        "poly_residual": "0.0",
+        "case_sha256": "1ceb274ab48bf2e4f90783fa881d394c79fb216d311c6bde197c6fe77dbbb15d",
+        "evidence_sha256": "526ad273e64b58cd502cc2a2560292dfbd9af60358343ac87f932a264e9e8213",
+        "evidence_kind": "independent review"
+      },
+      "original_locations": [
+        [
+          "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_G3_GUROBI_NUMERIC_20261120_03\\G3\\relaxed\\run_summary.json",
+          "9211be678e789f1800db16d627fa68c5baa0c9268420722af7658f1db791a36f",
+          "/native_solver_attributes/ConstrVio"
+        ],
+        [
+          "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_G3_GUROBI_NUMERIC_20261120_03\\G3\\relaxed\\run_summary.json",
+          "9211be678e789f1800db16d627fa68c5baa0c9268420722af7658f1db791a36f",
+          "/original_primal_check/maximum_constraint_distance"
+        ]
+      ]
+    },
+    {
+      "row": {
+        "solver": "Gurobi",
+        "code": "8e046881296dfad5a93d86968a85ea3541d1ca7a",
+        "state": "NUMERIC_REJECTED",
+        "distance": "0.00019444730678230826",
+        "poly_residual": "0.0",
+        "case_sha256": "1ceb274ab48bf2e4f90783fa881d394c79fb216d311c6bde197c6fe77dbbb15d",
+        "evidence_sha256": "57aa73024acf0a86553d4d8d3d898c4be8fa198473e4f83ef398695d706c70da",
+        "evidence_kind": "independent review"
+      },
+      "original_locations": [
+        [
+          "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_NUMERIC_RECOVERY_20261119_01\\G3\\relaxed\\run_summary.json",
+          "7c57a4f8b4fa0606777cd1ce5188806a854fbf177d93bb30620ce12adee7ba14",
+          "/native_solver_attributes/ConstrVio"
+        ],
+        [
+          "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_NUMERIC_RECOVERY_20261119_01\\G3\\relaxed\\run_summary.json",
+          "7c57a4f8b4fa0606777cd1ce5188806a854fbf177d93bb30620ce12adee7ba14",
+          "/original_primal_check/maximum_constraint_distance"
+        ]
+      ]
+    },
+    {
+      "row": {
+        "solver": "Gurobi",
+        "code": "c842bbd7db0eaf03c5804db6ba73c6f6ebb07f63",
+        "state": "NUMERIC_REJECTED",
+        "distance": "0.007862104994337926",
+        "poly_residual": "0.005417822538220207",
+        "case_sha256": "1ceb274ab48bf2e4f90783fa881d394c79fb216d311c6bde197c6fe77dbbb15d",
+        "evidence_sha256": "c8d2e8b3f25d4326308b6407e65f534e5b89605159874e25e7280afdeada5d73",
+        "evidence_kind": "original summary"
+      },
+      "original_locations": [
+        [
+          "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_RESTART_20261119_01\\G3\\relaxed\\run_summary.json",
+          "c8d2e8b3f25d4326308b6407e65f534e5b89605159874e25e7280afdeada5d73",
+          "/native_solver_attributes/ConstrVio"
+        ],
+        [
+          "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_KW08_RE70_STRENGTH_COMPARISON_RESTART_20261119_01\\G3\\relaxed\\run_summary.json",
+          "c8d2e8b3f25d4326308b6407e65f534e5b89605159874e25e7280afdeada5d73",
+          "/original_primal_check/maximum_constraint_distance"
+        ]
+      ]
+    }
+  ],
+  "extensions": {
+    "witness_ub": "127449599028.67047",
+    "m2_lb": "128108716784.26059",
+    "separation_EUR": "659117755.59012",
+    "suggested_printed_UB": "127.449600",
+    "suggested_printed_LB": "128.108716"
+  },
+  "version_count": {
+    "12.0.3": 13,
+    "13.0.3": 1
+  },
+  "scope": "All aggregate inputs checked against archived receipts, native versions and numerical cells. The final separately executed T3 suite checks the corrected actual prose and figures.",
+  "exit": 0
+}

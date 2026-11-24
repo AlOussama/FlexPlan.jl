@@ -1,0 +1,947 @@
+{
+  "reviewer": "/root/math_r",
+  "scope": "T1/updated T2 mathematical verification only",
+  "tex": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\PAPER_A_TEXT_CORRECTION_20261124_01\\PAPER\\04_PAPER_A.tex",
+  "tex_sha256": "941de1a3715d9b4a462419cec92368de69e037660c661d71ef15520c71502a31",
+  "script_sha256": "74f88033c2f3e1a9f412f054e361af0dcd88fb77a11e93f2ee2cc2a184bd5a26",
+  "original_core_oracle_sha256": "35c5a022f30e2e795c9a4e8adca4de7b13e90943d60f2e521541fb74b4f2fe05",
+  "all_core_tests": [
+    {
+      "id": "TEX_exposure",
+      "passed": true,
+      "computed": {
+        "anchor": "eq:burden",
+        "line": 47
+      }
+    },
+    {
+      "id": "TEX_quota",
+      "passed": true,
+      "computed": {
+        "anchor": "eq:quota",
+        "line": 53
+      }
+    },
+    {
+      "id": "TEX_cost",
+      "passed": true,
+      "computed": {
+        "anchor": "eq:cost",
+        "line": 61
+      }
+    },
+    {
+      "id": "TEX_matrix",
+      "passed": true,
+      "computed": {
+        "anchor": "eq:mat",
+        "line": 70
+      }
+    },
+    {
+      "id": "TEX_edge",
+      "passed": true,
+      "computed": {
+        "anchor": "eq:g3",
+        "line": 92
+      }
+    },
+    {
+      "id": "TEX_row_proposition",
+      "passed": true,
+      "computed": {
+        "anchor": "pr:row",
+        "line": 74
+      }
+    },
+    {
+      "id": "TEX_edge_proposition",
+      "passed": true,
+      "computed": {
+        "anchor": "pr:edge",
+        "line": 87
+      }
+    },
+    {
+      "id": "PRINTED_inverse_examples_count",
+      "passed": true,
+      "computed": 2
+    },
+    {
+      "id": "PRINTED_M0_not_G1",
+      "passed": true,
+      "computed": {
+        "B": [
+          [
+            "2",
+            "-1"
+          ],
+          [
+            "-1",
+            "2"
+          ]
+        ],
+        "p": [
+          [
+            "0"
+          ],
+          [
+            "5/4"
+          ]
+        ],
+        "M": [
+          [
+            "2",
+            "-1"
+          ],
+          [
+            "-1",
+            "3/4"
+          ]
+        ],
+        "det": "1/2",
+        "eigenvalues": [
+          "11/8 - sqrt(89)/8",
+          "sqrt(89)/8 + 11/8"
+        ],
+        "PSD": true,
+        "B_inv_p": [
+          [
+            "5/12"
+          ],
+          [
+            "5/6"
+          ]
+        ],
+        "G1margin": [
+          [
+            "1"
+          ],
+          [
+            "-1/4"
+          ]
+        ],
+        "explicit_B_since_previous_p": true,
+        "source_p": "p=(0,5/4)",
+        "source_B": "B=\\begin{bmatrix}2&-1\\\\-1&2\\end{bmatrix}",
+        "source_line": 105
+      }
+    },
+    {
+      "id": "PRINTED_G0_not_M0",
+      "passed": true,
+      "computed": {
+        "B": [
+          [
+            "1",
+            "-1/2"
+          ],
+          [
+            "-1/2",
+            "1"
+          ]
+        ],
+        "p": [
+          [
+            "1/4"
+          ],
+          [
+            "2/3"
+          ]
+        ],
+        "M": [
+          [
+            "3/4",
+            "-1/2"
+          ],
+          [
+            "-1/2",
+            "1/3"
+          ]
+        ],
+        "det": "0",
+        "eigenvalues": [
+          "13/12",
+          "0"
+        ],
+        "PSD": true,
+        "B_inv_p": [
+          [
+            "7/9"
+          ],
+          [
+            "19/18"
+          ]
+        ],
+        "G1margin": [
+          [
+            "1/4"
+          ],
+          [
+            "-1/6"
+          ]
+        ],
+        "explicit_B_since_previous_p": true,
+        "source_p": "p=(1/4,2/3)",
+        "source_B": "B=\\begin{bmatrix}1&-1/2\\\\-1/2&1\\end{bmatrix}",
+        "source_line": 110
+      }
+    },
+    {
+      "id": "EXPECTED_explicit_normalized_example_stage_gate",
+      "passed": true,
+      "computed": {
+        "observed_explicit_normalized_binding": true,
+        "expected": true
+      }
+    },
+    {
+      "id": "PRINTED_normalized_eigensystem",
+      "passed": true,
+      "computed": [
+        "13/12",
+        "0"
+      ]
+    },
+    {
+      "id": "NEGATIVE_legacy_numerators_with_normalized_matrix",
+      "passed": true,
+      "computed": {
+        "B": [
+          [
+            "1",
+            "-1/2"
+          ],
+          [
+            "-1/2",
+            "1"
+          ]
+        ],
+        "p": [
+          [
+            "1/2"
+          ],
+          [
+            "4/3"
+          ]
+        ],
+        "M": [
+          [
+            "1/2",
+            "-1/2"
+          ],
+          [
+            "-1/2",
+            "-1/3"
+          ]
+        ],
+        "det": "-5/12",
+        "eigenvalues": [
+          "1/12 - sqrt(61)/12",
+          "1/12 + sqrt(61)/12"
+        ],
+        "PSD": false,
+        "B_inv_p": [
+          [
+            "14/9"
+          ],
+          [
+            "19/9"
+          ]
+        ],
+        "G1margin": [
+          [
+            "0"
+          ],
+          [
+            "-5/6"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "PRINTED_row_witnesses_found",
+      "passed": true,
+      "computed": {
+        "r": [
+          [
+            "1"
+          ],
+          [
+            "2"
+          ]
+        ],
+        "matrices": [
+          [
+            [
+              "1",
+              "-1"
+            ],
+            [
+              "-1",
+              "1"
+            ]
+          ],
+          [
+            [
+              "2",
+              "-1"
+            ],
+            [
+              "-1",
+              "1/2"
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "id": "PRINTED_G1_G2_nonnesting",
+      "passed": true,
+      "computed": {
+        "Ma1": [
+          [
+            "0"
+          ],
+          [
+            "0"
+          ]
+        ],
+        "Mar": [
+          [
+            "-1"
+          ],
+          [
+            "1"
+          ]
+        ],
+        "Mb1": [
+          [
+            "1"
+          ],
+          [
+            "-1/2"
+          ]
+        ],
+        "Mbr": [
+          [
+            "0"
+          ],
+          [
+            "0"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "PRINTED_Ma_unit_row",
+      "passed": true,
+      "computed": {
+        "printed": [
+          [
+            [
+              "0"
+            ],
+            [
+              "0"
+            ]
+          ]
+        ],
+        "computed": [
+          [
+            "0"
+          ],
+          [
+            "0"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "PRINTED_Ma_scaled_row",
+      "passed": true,
+      "computed": {
+        "printed": [
+          [
+            [
+              "-1"
+            ],
+            [
+              "1"
+            ]
+          ]
+        ],
+        "computed": [
+          [
+            "-1"
+          ],
+          [
+            "1"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "PRINTED_Mb_unit_row",
+      "passed": true,
+      "computed": {
+        "printed": [
+          [
+            [
+              "1"
+            ],
+            [
+              "-1/2"
+            ]
+          ]
+        ],
+        "computed": [
+          [
+            "1"
+          ],
+          [
+            "-1/2"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "PRINTED_Mb_scaled_row",
+      "passed": true,
+      "computed": {
+        "printed": [
+          [
+            [
+              "0"
+            ],
+            [
+              "0"
+            ]
+          ]
+        ],
+        "computed": [
+          [
+            "0"
+          ],
+          [
+            "0"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "PRINTED_first_inverse_G1_margin",
+      "passed": true,
+      "computed": {
+        "printed": [
+          [
+            [
+              "1"
+            ],
+            [
+              "-1/4"
+            ]
+          ]
+        ],
+        "computed": [
+          [
+            "1"
+          ],
+          [
+            "-1/4"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "PRINTED_both_inverse_burden_vectors",
+      "passed": true,
+      "computed": [
+        [
+          [
+            "5/12"
+          ],
+          [
+            "5/6"
+          ]
+        ],
+        [
+          [
+            "7/9"
+          ],
+          [
+            "19/18"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "PRINTED_normalized_M",
+      "passed": true,
+      "computed": {
+        "printed": [
+          [
+            "3/4",
+            "-1/2"
+          ],
+          [
+            "-1/2",
+            "1/3"
+          ]
+        ],
+        "computed": [
+          [
+            "3/4",
+            "-1/2"
+          ],
+          [
+            "-1/2",
+            "1/3"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "PRINTED_spectrum_and_determinant",
+      "passed": true,
+      "computed": {
+        "printed_eigenvalues": [
+          "0",
+          "13/12"
+        ],
+        "printed_determinant": "0"
+      }
+    },
+    {
+      "id": "PROOF_G2_not_M0",
+      "passed": true,
+      "computed": {
+        "positive_fixed_r": [
+          [
+            "2"
+          ],
+          [
+            "3"
+          ]
+        ],
+        "scaled_rows": [
+          [
+            "0"
+          ],
+          [
+            "0"
+          ]
+        ],
+        "inverse_burden": [
+          [
+            "7/9"
+          ],
+          [
+            "19/18"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "PROOF_row_congruence_symbolic",
+      "passed": true,
+      "computed": "0"
+    },
+    {
+      "id": "PROOF_G3_RSOC_SPD",
+      "passed": true,
+      "computed": {
+        "matrix": [
+          [
+            "2",
+            "-1",
+            "0"
+          ],
+          [
+            "-1",
+            "2",
+            "-1"
+          ],
+          [
+            "0",
+            "-1",
+            "1"
+          ]
+        ],
+        "r": [
+          [
+            "3"
+          ],
+          [
+            "5"
+          ],
+          [
+            "6"
+          ]
+        ],
+        "residual": [
+          "1/3",
+          "1/5",
+          "1/6"
+        ]
+      }
+    },
+    {
+      "id": "PROOF_G3_RSOC_singular_reducible_isolate",
+      "passed": true,
+      "computed": {
+        "matrix": [
+          [
+            "2",
+            "-1",
+            "0",
+            "0"
+          ],
+          [
+            "-1",
+            "1/2",
+            "0",
+            "0"
+          ],
+          [
+            "0",
+            "0",
+            "0",
+            "0"
+          ],
+          [
+            "0",
+            "0",
+            "0",
+            "3"
+          ]
+        ],
+        "r": [
+          [
+            "1"
+          ],
+          [
+            "2"
+          ],
+          [
+            "1"
+          ],
+          [
+            "1"
+          ]
+        ],
+        "residual": [
+          "0",
+          "0",
+          "0",
+          "3"
+        ]
+      }
+    },
+    {
+      "id": "NEGATIVE_omitted_edge_and_node_budget",
+      "passed": true,
+      "computed": {
+        "omitted_coupling": -2,
+        "unit_allocations_product": 1,
+        "required_product": 4,
+        "insufficient_diagonal": "1/2"
+      }
+    },
+    {
+      "id": "NEGATIVE_Z_assumption_essential",
+      "passed": true,
+      "computed": {
+        "Mr": [
+          1,
+          1
+        ],
+        "eigenvalues": [
+          -1,
+          1
+        ]
+      }
+    },
+    {
+      "id": "PROOF_singular_S_Schur_and_range",
+      "passed": true,
+      "computed": {
+        "S": [
+          [
+            "1",
+            "0",
+            "0"
+          ],
+          [
+            "0",
+            "0",
+            "0"
+          ],
+          [
+            "0",
+            "0",
+            "0"
+          ]
+        ],
+        "Schur_B_A": 1,
+        "minimum_quotient": 1,
+        "zero_block_rank": 1
+      }
+    },
+    {
+      "id": "NEGATIVE_positive_denominator_not_finite_infimum",
+      "passed": true,
+      "computed": {
+        "x": [
+          1,
+          "t"
+        ],
+        "q": "1 - 2*t",
+        "q_limit_as_t_increases": "-infinity",
+        "Bzz": 0,
+        "cross": -1
+      }
+    },
+    {
+      "id": "NEGATIVE_negative_Bzz_and_S_zero",
+      "passed": true,
+      "computed": {
+        "Szero_domain": "empty",
+        "Sdiag10_Bdiag2minus1_q": "2-t^2",
+        "G0_with_S0": "test B PSD"
+      }
+    },
+    {
+      "id": "PROOF_M1_order",
+      "passed": true,
+      "computed": {
+        "inverse_difference": [
+          [
+            "13/33",
+            "8/33"
+          ],
+          [
+            "8/33",
+            "10/33"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "PROOF_M2_and_identity",
+      "passed": true,
+      "computed": {
+        "extra_burden": [
+          [
+            "1/3"
+          ],
+          [
+            "1/6"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "NEGATIVE_free_ratio_RHS",
+      "passed": true,
+      "computed": {
+        "P": 3,
+        "d": 4,
+        "ell": 2,
+        "true_ratio": "3/4",
+        "substitution": "3/2",
+        "free_feasible_rho": 0
+      }
+    },
+    {
+      "id": "PHYSICS_series_vs_pi_row_sums",
+      "passed": true,
+      "computed": {
+        "series_rowsums": [
+          [
+            "0"
+          ],
+          [
+            "0"
+          ]
+        ],
+        "pi_rowsums": [
+          [
+            "-1/4"
+          ],
+          [
+            "-1/4"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "PHYSICS_rating_and_pu",
+      "passed": true,
+      "computed": {
+        "example_MVA": 25,
+        "common_MVA": 100,
+        "X_pu": "1/5",
+        "stiffness_pu": "5/4"
+      }
+    },
+    {
+      "id": "PHYSICS_curtailment_vs_quota",
+      "passed": true,
+      "computed": {
+        "availability": "1/2",
+        "new_MW": 40,
+        "p_pu": "1/5",
+        "dispatch_fully_curtailed_MWh": 0
+      }
+    },
+    {
+      "id": "UC_event_cancellation",
+      "passed": true,
+      "computed": {
+        "starts": 3,
+        "stops": 1,
+        "remaining": [
+          2,
+          0
+        ],
+        "event_cost_multiplier": "365/7",
+        "weekly_event_saving_per_unit": "6/5"
+      }
+    },
+    {
+      "id": "BOUNDS_conditional_subtraction",
+      "passed": true,
+      "computed": {
+        "M2_relaxation_LB_minus_G0G3_feasible_UB_using_printed_Bn": "0.659118 billion EUR",
+        "integer_M2_UB": "unavailable"
+      }
+    }
+  ],
+  "core_replay_sha256": "f14c66a450d1ce5165ada9c78783f5ea529c6e4e0582b43a0ec5158793ad275b",
+  "actual_revised_proof": "For $R=\\diag(r)$, $RMR$ is a symmetric Z-matrix whose $i$th row sum is $r_i(Mr)_i$. For $H=RMR$, the leftmost real point of row $i$'s Gershgorin disc is $H_{ii}-\\sum_{j\\ne i}|H_{ij}|=r_i(Mr)_i$: its off-diagonal entries are nonpositive. Every eigenvalue lies in the union of these discs \\cite{Gershgorin1931}. The quadratic form of $H$ is the sum of nonnegative edge terms $-(RMR)_{ij}(x_i-x_j)^2$ and row-sum terms $r_i(Mr)_ix_i^2$. Congruence gives the claim. To see why G1 and G2 need not be nested, take\r\n\\[\r\nr=(1,2)^\\top,\\qquad M_a=\\begin{bmatrix}1&-1\\\\-1&1\\end{bmatrix},\\qquad\r\nM_b=\\begin{bmatrix}2&-1\\\\-1&1/2\\end{bmatrix}.\r\n\\]\r\nHere $M_a\\one=(0,0)^\\top$ and $M_a r=(-1,1)^\\top$, whereas $M_b\\one=(1,-1/2)^\\top$ and $M_b r=(0,0)^\\top$. The first matrix passes only G1, the second only G2. Neither ordering of the two exact optima follows in general.",
+  "printed_claims": {
+    "identity": true,
+    "scale": true,
+    "domain": true,
+    "union": true
+  },
+  "symbolic_residual": "Matrix([[0], [0], [0]])",
+  "signed_edge_variables": "arbitrary nonnegative weights; positive scaling; arbitrary real diagonals",
+  "general_source_proof": "Normalize an eigenvector by an entry of maximal nonzero magnitude. Its row of Hv=lambda*v gives |lambda-Hii| <= sum(j!=i) |Hij|. This chooses at least one disc. H is real symmetric, so its eigenvalues lie on the real line. Hij<=0 implies the left endpoint equals the row sum, ri*(Mr)i. If Mr>=0 every left endpoint is nonnegative; positive congruence transfers H PSD to M PSD.",
+  "exact_disc_examples": [
+    {
+      "M": "Matrix([[2, -1], [-1, 1]])",
+      "r": "Matrix([[1], [2]])",
+      "discs_real_cross_sections": "[(0, 4), (2, 6)]",
+      "exact_eigenvalues": "[3 - sqrt(5), sqrt(5) + 3]"
+    },
+    {
+      "M": "Matrix([[1, -1], [-1, 1]])",
+      "r": "Matrix([[1], [1]])",
+      "discs_real_cross_sections": "[(0, 2), (0, 2)]",
+      "exact_eigenvalues": "[2, 0]"
+    },
+    {
+      "M": "Matrix([[2, 0], [0, 5]])",
+      "r": "Matrix([[1], [1]])",
+      "discs_real_cross_sections": "[(2, 2), (5, 5)]",
+      "exact_eigenvalues": "[2, 5]"
+    }
+  ],
+  "additional_mutations": [
+    {
+      "source": "-\\sum",
+      "replacement": "+\\sum",
+      "rejected": [
+        "identity"
+      ]
+    },
+    {
+      "source": "union",
+      "replacement": "intersection",
+      "rejected": [
+        "union"
+      ]
+    },
+    {
+      "source": "H=RMR",
+      "replacement": "H=RM",
+      "rejected": [
+        "scale"
+      ]
+    },
+    {
+      "source": "r_i(Mr)_i$: its",
+      "replacement": "(Mr)_i$: its",
+      "rejected": [
+        "identity"
+      ]
+    }
+  ],
+  "original_mutations": [
+    {
+      "before": "p=(1/4,2/3)",
+      "after": "p=(1/2,4/3)",
+      "mutated_tex_sha256": "e447394d6e643c8378f229ab434975f58fe00c444daca51de9c1b0b0b1ae1e29",
+      "oracle_exit": 1,
+      "failed_assertions": [
+        "PRINTED_G0_not_M0",
+        "EXPECTED_explicit_normalized_example_stage_gate",
+        "PRINTED_normalized_eigensystem",
+        "PRINTED_both_inverse_burden_vectors",
+        "PRINTED_normalized_M",
+        "PRINTED_spectrum_and_determinant",
+        "PROOF_G2_not_M0"
+      ]
+    },
+    {
+      "before": "r=(1,2)",
+      "after": "r=(2,1)",
+      "mutated_tex_sha256": "90505899255dcecbe2cc28dfa33ecca09b37ffdf1db44fdc44ecafdd66c54c7c",
+      "oracle_exit": 1,
+      "failed_assertions": [
+        "PRINTED_row_witnesses_found",
+        "PRINTED_G1_G2_nonnesting",
+        "PRINTED_Ma_scaled_row",
+        "PRINTED_Mb_scaled_row"
+      ]
+    },
+    {
+      "before": "Zp=(7/9,19/18)",
+      "after": "Zp=(6/9,19/18)",
+      "mutated_tex_sha256": "7ba993eec65eab4932f3d57af7e1f4f1b0b5f9adde8e0c0acdb47a2b70c47cb8",
+      "oracle_exit": 1,
+      "failed_assertions": [
+        "PRINTED_both_inverse_burden_vectors"
+      ]
+    },
+    {
+      "before": "and $13/12$",
+      "after": "and $13/24$",
+      "mutated_tex_sha256": "76f84856b99a1ad419acb33395ee3ad52713a8e3c013e78665b04f8c3165a645",
+      "oracle_exit": 1,
+      "failed_assertions": [
+        "PRINTED_spectrum_and_determinant"
+      ]
+    },
+    {
+      "before": "M_a r=(-1,1)",
+      "after": "M_a r=(1,1)",
+      "mutated_tex_sha256": "78668f66134ea026e19cbdfb67f16b6a3956ce2249927cf73fdc132ee260c1a6",
+      "oracle_exit": 1,
+      "failed_assertions": [
+        "PRINTED_Ma_scaled_row"
+      ]
+    }
+  ],
+  "original_mutation_receipt_sha256": "d2d8620f64e9aa05c14c7a51028236f06256a6290c1318129879493e90582510",
+  "bibliography_sha256": "c9280b649a79d258448dd441fe48c906a0dc2529772206dbc37e73546d7b0541",
+  "metadata": "Gerschgorin (1931), pp. 749\u2013754; proof matched to Satz II as identified by the independent F4 original-scan readback and the publisher catalogue.",
+  "command": [
+    "C:\\ProgramData\\anaconda3\\python.exe",
+    "-B",
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\PAPER_A_TEXT_CORRECTION_20261124_01\\MATH\\TEXT_T1_FINAL_MATH_ORACLES.py"
+  ],
+  "exit": 0
+}

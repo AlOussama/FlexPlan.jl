@@ -1,0 +1,134 @@
+{
+  "reviewer": "/root/qa_r",
+  "commit": "13bdd1b59764ae7df64c236deee7f887e77fae66",
+  "pdf_sha256": "d65f359195175d3be149ad1e9b924c11f913575b8eeac353b02845c0be992018",
+  "page_notes": {
+    "1": "Title, author, annual-equivalent abstract, citations and introduction align within the text area. The notation key distinguishes PSD from componentwise order.",
+    "2": "UC windows, exposure, quota and cost displays have visible sub/superscripts and equation numbers (1)\u2013(3); charge/discharge signs and the 8760/168 factor are legible.",
+    "3": "Matrix definitions, nonnested row examples, both propositions, Gershgorin disc identity and the factor-two rotated cone display are legible. The right-edge proof markers fit the column.",
+    "4": "The two explicit B,p pairs and normalized M are separate and readable; determinant, eigenvalues, inverse row margins and alpha/rho signs are visible. The weekly results start beneath the design section.",
+    "5": "Bound table has seven distinct rows with readable precision and units. The three cost panels, different y-scales, triangle/tick caption and portfolio text fit. No column or tick label clips.",
+    "6": "The paired battery and wind/PV bars have separate legible legends and GW axes. In the 14-by-four heatmap, five gray n/a cells remain distinct from zero; the colorbar, numeric labels and G0 caption are legible. Direct-solve limitation text is readable.",
+    "7": "The G3 table separates two short case hashes and shows the MOSEK disposition. Residuals fit within the table. The limitations, conclusion, archive appendix and 12.0.3/13.0.3 exception are legible.",
+    "8": "The appendix finishes above nine citations. The original Gerschgorin title, issue 6, pages 749\u2013754 and Satz II p. 751 appear in reference [3]. Original page ranges, DOI text and article numbers fit without collisions."
+  },
+  "page_evidence": [
+    {
+      "page": 1,
+      "render_sha256": "088652c02f2d453e64015da11a4e103e488850d59f62689452ce2bad1de50799",
+      "text_sha256": "7f7e9897450179d6ba96ac2372eb8a436639e3674afa3f1eee46a8644bd9f84b",
+      "pixels": [
+        983,
+        1390
+      ],
+      "visible_chars": 4055,
+      "first_line": "System-strength certificates and investment",
+      "fresh_pixelwise_equal": true
+    },
+    {
+      "page": 2,
+      "render_sha256": "dbaed52275efd525709f86977f06bbf506a40d92832c19ecc6d946e6137f4ad5",
+      "text_sha256": "16e4e8bb8b08f1f8c6f0843c1d1f21c73a93859014e929695157eaf6066ac5d6",
+      "pixels": [
+        983,
+        1390
+      ],
+      "visible_chars": 4095,
+      "first_line": "strength. A battery obeys power and energy ratings, charging and discharging efficiencies, and the",
+      "fresh_pixelwise_equal": true
+    },
+    {
+      "page": 3,
+      "render_sha256": "81fac77b3a4c3a9acf8c072420fa57b1d55c6dadd9e5790c7f8e4ed1cb3f7086",
+      "text_sha256": "a02f5b28c525f8f59fbc635fb87fbaf95418f9b6f81a822425a1107b7f46e6e0",
+      "pixels": [
+        983,
+        1390
+      ],
+      "visible_chars": 4595,
+      "first_line": "be indefinite. Its definiteness cannot be inferred from a DCP angle choice. An arbitrary numerical",
+      "fresh_pixelwise_equal": true
+    },
+    {
+      "page": 4,
+      "render_sha256": "8131d82127ad6d38c328ef35c28ae7016afb5b6aaccde117685fcf2f3a988a93",
+      "text_sha256": "5e74f35949aca17da3e2660e3f7d43446f2074c8b9b58d9469a9bc06d60457a5",
+      "pixels": [
+        983,
+        1390
+      ],
+      "visible_chars": 4218,
+      "first_line": "3.1 The inverse test and its domain",
+      "fresh_pixelwise_equal": true
+    },
+    {
+      "page": 5,
+      "render_sha256": "7ed9584a733e047436e8c129244a1dfd2e368f409c670b50cd60affeb987c3de",
+      "text_sha256": "a4eefe92ad8305a538e6b74c757b107d24d723d296bbbee5ef83e0828e996b79",
+      "pixels": [
+        983,
+        1390
+      ],
+      "visible_chars": 3007,
+      "first_line": "Table 1: Matched annual-equivalent numerical bounds (billion EUR, 2025). LP is the relaxation\u2019s checked",
+      "fresh_pixelwise_equal": true
+    },
+    {
+      "page": 6,
+      "render_sha256": "99fafd41f1baa8f556045c8b42505b6400121ea37e81d71f2041a22b028fa489",
+      "text_sha256": "dba5d0f3ac0b0912cac3af2f2a291d8068f9ea7ec968e6e9a7603591f2b1aa61",
+      "pixels": [
+        983,
+        1390
+      ],
+      "visible_chars": 2024,
+      "first_line": "0 20 40 60 80 100 120 140",
+      "fresh_pixelwise_equal": true
+    },
+    {
+      "page": 7,
+      "render_sha256": "eda55696933bb7969f35dbcb9c010933f1299c82e451e352e7f03316c55f3599",
+      "text_sha256": "d229077e5364a79b8cc071d947998d987086daa7e549daf025630cbce6144a19",
+      "pixels": [
+        983,
+        1390
+      ],
+      "visible_chars": 4016,
+      "first_line": "Table 2: Direct G3 continuous candidates on two registered 70% cases (case hashes abbreviated). Re\u0002ported distances are maxima in original model coordinates, compared with 10\u22127",
+      "fresh_pixelwise_equal": true
+    },
+    {
+      "page": 8,
+      "render_sha256": "1ab841bf9bf25d8197094b8b3497bf109ebe50ec51dfc9baa5dc58629ab9e3a8",
+      "text_sha256": "279c82422174a3e2f46a6ebf55893073a623836767868746684d8bb26cc8e4f7",
+      "pixels": [
+        983,
+        1390
+      ],
+      "visible_chars": 3615,
+      "first_line": "the original allocation order and cross-checked it against the separately saved physical dispatch. For",
+      "fresh_pixelwise_equal": true
+    }
+  ],
+  "font_embedding": {
+    "/IHAIZV+LMRoman12-Bold-Identity-H": true,
+    "/BZIVMZ+LMRoman12-Regular-Identity-H": true,
+    "/IXFAWU+LMRoman9-Bold-Identity-H": true,
+    "/TQTHRL+LMRoman9-Regular-Identity-H": true,
+    "/YEUUOC+LMRoman10-Regular-Identity-H": true,
+    "/DDIEWW+CMMI10": true,
+    "/FKPJSN+CMSY10": true,
+    "/PVTTLK+CMR10": true,
+    "/JAGKKY+CMMI7": true,
+    "/NOMARO+CMR7": true,
+    "/KPXLOM+CMSY7": true,
+    "/UTACNV+CMEX10": true,
+    "/FZDNHS+CMMI5": true,
+    "/DZGKAF+CMR5": true,
+    "/AKHCZK+LMRoman10-Italic-Identity-H": true,
+    "/GJMHKB+CMSY5": true,
+    "/VDVGTR+LMRoman10-Bold-Identity-H": true,
+    "/NITCSQ+CMBX10": true,
+    "/CAFSZL+LMMono9-Regular-Identity-H": true
+  }
+}

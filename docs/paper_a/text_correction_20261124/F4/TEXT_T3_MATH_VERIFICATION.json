@@ -1,0 +1,334 @@
+{
+  "parsed_inverse_examples": [
+    {
+      "B": [
+        "2",
+        "-1",
+        "-1",
+        "2"
+      ],
+      "p": [
+        "0",
+        "5/4"
+      ],
+      "det": "1/2",
+      "eigen": {
+        "11/8 - sqrt(89)/8": 1,
+        "sqrt(89)/8 + 11/8": 1
+      },
+      "inverse_p": [
+        "5/12",
+        "5/6"
+      ],
+      "psd": true,
+      "m0": true,
+      "g1": false
+    },
+    {
+      "B": [
+        "1",
+        "-1/2",
+        "-1/2",
+        "1"
+      ],
+      "p": [
+        "1/4",
+        "2/3"
+      ],
+      "det": "0",
+      "eigen": {
+        "13/12": 1,
+        "0": 1
+      },
+      "inverse_p": [
+        "7/9",
+        "19/18"
+      ],
+      "psd": true,
+      "m0": false,
+      "g1": false
+    }
+  ],
+  "mixed_scale_negative": {
+    "B": [
+      "1",
+      "-1/2",
+      "-1/2",
+      "1"
+    ],
+    "p": [
+      "1/2",
+      "4/3"
+    ],
+    "det": "-5/12",
+    "eigen": {
+      "1/12 - sqrt(61)/12": 1,
+      "1/12 + sqrt(61)/12": 1
+    },
+    "inverse_p": [
+      "14/9",
+      "19/9"
+    ],
+    "psd": false,
+    "m0": false,
+    "g1": false
+  },
+  "printed_unit_and_scaled_noninclusions": [
+    [
+      "0",
+      "0"
+    ],
+    [
+      "-1",
+      "1"
+    ],
+    [
+      "1",
+      "-1/2"
+    ],
+    [
+      "0",
+      "0"
+    ]
+  ],
+  "scaled_congruence_form": "0",
+  "printed_RSOC_first_coordinate_multiplier": "1/2",
+  "singular_reducible_SDD_allocation": {
+    "node_remainder": [
+      "0",
+      "0",
+      "0",
+      "3",
+      "2"
+    ],
+    "edges": {
+      "(0, 1)": "2",
+      "(1, 0)": "1/2",
+      "(3, 4)": "1",
+      "(4, 3)": "1"
+    }
+  },
+  "generalized_schur": {
+    "valid_reduced": "1/2",
+    "failed_range": "Matrix([[0], [1]])",
+    "zero_exposure": "S=0, xTSx=0 all x"
+  },
+  "M1_inverse_difference": [
+    "13/42",
+    "11/42",
+    "11/42",
+    "19/42"
+  ],
+  "M2_Wp_minus_p": [
+    "2",
+    "1/2"
+  ],
+  "ratio_counterexample": {
+    "P/d": "3/2",
+    "P/ell": "3",
+    "admissible_rho": 0
+  },
+  "noncommutative_order": {
+    "correct_inverse": [
+      "45/59",
+      "-40/59",
+      "-40/59",
+      "88/59"
+    ],
+    "row_norm": "9/20"
+  },
+  "G2_does_not_imply_inverse_screen": {
+    "r": [
+      "2",
+      "3"
+    ],
+    "Mr": [
+      "0",
+      "0"
+    ],
+    "Zp": [
+      "7/9",
+      "19/18"
+    ]
+  },
+  "unbounded_singular_quotient": {
+    "quadratic": "1 - 2*t",
+    "denominator": 1
+  },
+  "Gershgorin_Z_domain_exact_left_endpoints": [
+    "a*r1**2 - k*r1*r2",
+    "b*r2**2 - k*r1*r2"
+  ],
+  "baseline_exact_git_text": {
+    "parsed_inverse_examples": [
+      {
+        "B": [
+          "2",
+          "-1",
+          "-1",
+          "2"
+        ],
+        "p": [
+          "0",
+          "5/4"
+        ],
+        "det": "1/2",
+        "eigen": {
+          "11/8 - sqrt(89)/8": 1,
+          "sqrt(89)/8 + 11/8": 1
+        },
+        "inverse_p": [
+          "5/12",
+          "5/6"
+        ],
+        "psd": true,
+        "m0": true,
+        "g1": false
+      },
+      {
+        "B": [
+          "2",
+          "-1",
+          "-1",
+          "2"
+        ],
+        "p": [
+          "1/2",
+          "4/3"
+        ],
+        "det": "0",
+        "eigen": {
+          "13/6": 1,
+          "0": 1
+        },
+        "inverse_p": [
+          "7/9",
+          "19/18"
+        ],
+        "psd": true,
+        "m0": false,
+        "g1": false
+      }
+    ],
+    "mixed_scale_negative": {
+      "B": [
+        "1",
+        "-1/2",
+        "-1/2",
+        "1"
+      ],
+      "p": [
+        "1/2",
+        "4/3"
+      ],
+      "det": "-5/12",
+      "eigen": {
+        "1/12 - sqrt(61)/12": 1,
+        "1/12 + sqrt(61)/12": 1
+      },
+      "inverse_p": [
+        "14/9",
+        "19/9"
+      ],
+      "psd": false,
+      "m0": false,
+      "g1": false
+    },
+    "printed_unit_and_scaled_noninclusions": [
+      [
+        "0",
+        "0"
+      ],
+      [
+        "-1",
+        "1"
+      ],
+      [
+        "1",
+        "-1/2"
+      ],
+      [
+        "0",
+        "0"
+      ]
+    ],
+    "scaled_congruence_form": "0",
+    "printed_RSOC_first_coordinate_multiplier": "1/2",
+    "singular_reducible_SDD_allocation": {
+      "node_remainder": [
+        "0",
+        "0",
+        "0",
+        "3",
+        "2"
+      ],
+      "edges": {
+        "(0, 1)": "2",
+        "(1, 0)": "1/2",
+        "(3, 4)": "1",
+        "(4, 3)": "1"
+      }
+    },
+    "generalized_schur": {
+      "valid_reduced": "1/2",
+      "failed_range": "Matrix([[0], [1]])",
+      "zero_exposure": "S=0, xTSx=0 all x"
+    },
+    "M1_inverse_difference": [
+      "13/42",
+      "11/42",
+      "11/42",
+      "19/42"
+    ],
+    "M2_Wp_minus_p": [
+      "2",
+      "1/2"
+    ],
+    "ratio_counterexample": {
+      "P/d": "3/2",
+      "P/ell": "3",
+      "admissible_rho": 0
+    },
+    "noncommutative_order": {
+      "correct_inverse": [
+        "45/59",
+        "-40/59",
+        "-40/59",
+        "88/59"
+      ],
+      "row_norm": "9/20"
+    },
+    "G2_does_not_imply_inverse_screen": {
+      "r": [
+        "2",
+        "3"
+      ],
+      "Mr": [
+        "0",
+        "0"
+      ],
+      "Zp": [
+        "7/9",
+        "19/18"
+      ]
+    },
+    "unbounded_singular_quotient": {
+      "quadratic": "1 - 2*t",
+      "denominator": 1
+    },
+    "Gershgorin_Z_domain_exact_left_endpoints": [
+      "a*r1**2 - k*r1*r2",
+      "b*r2**2 - k*r1*r2"
+    ]
+  },
+  "rejected_text_mutations": [
+    "coordinate_mixed_scale",
+    "incorrect_published_eigenvalue",
+    "wrong_printed_inverse_vector",
+    "wrong_rotated_cone_factor",
+    "wrong_scaled_row_image"
+  ],
+  "reviewer": "/root/qa_r",
+  "paper_sha256": "941de1a3715d9b4a462419cec92368de69e037660c661d71ef15520c71502a31",
+  "code_sha256": "776fba0bb4ece7e956d985999074bcaf0effbb0e1007641ef643c2b57379637c"
+}
