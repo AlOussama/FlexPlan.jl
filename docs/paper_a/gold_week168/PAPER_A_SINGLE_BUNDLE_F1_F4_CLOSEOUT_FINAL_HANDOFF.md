@@ -2,6 +2,8 @@
 
 **Stand 24. November 2026 · PAPER_READY_AFTER_TARGETED_CORRECTIONS · Unabhängiges Urteil F4_GO_VARIANT_A.** Alle vier lokalen Gates sind für Variante A bestanden. Für die beibehaltenen Aussagen bestehen **0 offene P0-Befunde**. Die einzige ausstehende Entscheidung ist die abschließende Ratifikation dieses Stands durch S-GOV. Der Status für die Journaleinreichung bleibt `SUBMISSION_READY=false`. [Journalmanuskript (PDF)](https://github.com/AlOussama/research-map/blob/7d568b6ce3b821bba05812b61ca8ccc5240aacec/papers/paper-a-week168/04_PAPER_A.pdf) · [Unabhängiges F4-Urteil](05_F4_INDEPENDENT_PUBLICATION_VERDICT.md) · [Maschinenlesbarer Abschluss](FINAL_HANDOFF.json)
 
+**Berichtigung vom 24. November 2026.** Der F4-Vermerk oben bezeichnet den historischen Paper-Commit. Die erneute Textprüfung korrigiert die fallweisen Solverversionen und die Rundung der hier angezeigten Kostenschranken. Der historische Commit bewahrt den ursprünglichen Bericht.
+
 ## Fragestellung und wissenschaftliches Ergebnis
 
 Untersucht wurde KW 8/2013, vom 18. Februar 00 Uhr bis 24. Februar 23 Uhr. Alle 14 Fälle verwenden dieselben 168 Stunden. Die Wochenquote bezieht sich auf tatsächlich eingespeiste Wind-/PV-Energie relativ zur Last. Die stündliche Netzstärkeformulierung verwendet die Online-Beteiligung bestehender GFL-Blöcke und die mit der stündlichen Verfügbarkeit gewichtete neue Wind-/PV-Leistung. Die Investitionskosten werden einmal angesetzt, die Betriebskosten der Woche einmal mit 8.760/168 gewichtet. Alle Kostenangaben beziehen sich auf EUR zum Preisstand 2025. [Chronologie und Portfolios](02_CHRONOLOGY_AND_PORTFOLIO_CROSSCHECK.json) · [Vollständige Fallmatrix](02_FINAL_WEEK168_RESULT_MATRIX.csv)
@@ -10,24 +12,24 @@ Für das ganzzahlige Modell erhöht G1 die optimalen annualisierten Kosten gegen
 
 ## F2 · Kosten und Originalpunkte
 
-LB ist die native numerische Solveruntergrenze, UB der am Originalvektor rekonstruierte Zielfunktionswert. CAPEX sowie LB und UB stehen in Mrd. EUR, die ungewichteten Wochenbetriebskosten in Mio. EUR. Der letzte Wert ist der maximale absolute Rest der gemeinsamen Originalzeilen im jeweiligen Modellmaß. Für die Abnahme gelten die dimensionsbezogenen Einzelprüfungen je Zeilenfamilie. Gurobi 12.0.3 lieferte alle 14 Kernpunkte. [Originalresiduen und Einheiten](02_ORIGINAL_PRIMAL_REPLAY.json) · [QA-Abnahme](02_INDEPENDENT_ACCEPTANCE.json)
+LB ist die native numerische Solveruntergrenze, UB der am Originalvektor rekonstruierte Zielfunktionswert. CAPEX sowie LB und UB stehen in Mrd. EUR, die ungewichteten Wochenbetriebskosten in Mio. EUR. Der letzte Wert ist der maximale absolute Rest der gemeinsamen Originalzeilen im jeweiligen Modellmaß. Für die Abnahme gelten die dimensionsbezogenen Einzelprüfungen je Zeilenfamilie. Gurobi 12.0.3 lieferte 13 Kernpunkte. Der 70-%-G2-MILP-Punkt stammt aus Gurobi 13.0.3. Die sichtbaren LB-/UB-Endpunkte sind nach außen gerundet. [Originalresiduen und Einheiten](02_ORIGINAL_PRIMAL_REPLAY.json) · [QA-Abnahme](02_INDEPENDENT_ACCEPTANCE.json)
 
 | Quote | Modell | Typ | CAPEX | OPEX der Woche | LB | UB | Gap [%] | Max. gemeinsamer Rest |
 |---:|---|---|---:|---:|---:|---:|---:|---:|
-| 50 % | BASE | LP | 60,351 | 713,427 | 97,551529 | 97,551529 | 0,000000 | 2.682e-07 |
-| 50 % | BASE | MILP | 60,393 | 712,913 | 97,551529 | 97,566598 | 0,015445 | 9.686e-08 |
-| 50 % | G1 | LP | 62,063 | 701,093 | 98,619706 | 98,619706 | 0,000000 | 2.310e-07 |
-| 50 % | G1 | MILP | 62,456 | 700,816 | 98,619706 | 98,998127 | 0,382251 | 2.235e-07 |
-| 60 % | BASE | LP | 84,709 | 479,874 | 109,730971 | 109,730971 | 0,000000 | 3.725e-08 |
-| 60 % | BASE | MILP | 84,711 | 480,069 | 109,730971 | 109,743617 | 0,011523 | 3.326e-10 |
-| 60 % | G1 | LP | 86,782 | 472,039 | 111,395759 | 111,395759 | 0,000000 | 1.416e-07 |
+| 50 % | BASE | LP | 60,351 | 713,427 | 97,551528 | 97,551529 | 0,000000 | 2.682e-07 |
+| 50 % | BASE | MILP | 60,393 | 712,913 | 97,551528 | 97,566599 | 0,015445 | 9.686e-08 |
+| 50 % | G1 | LP | 62,063 | 701,093 | 98,619706 | 98,619707 | 0,000000 | 2.310e-07 |
+| 50 % | G1 | MILP | 62,456 | 700,816 | 98,619706 | 98,998128 | 0,382251 | 2.235e-07 |
+| 60 % | BASE | LP | 84,709 | 479,874 | 109,730971 | 109,730972 | 0,000000 | 3.725e-08 |
+| 60 % | BASE | MILP | 84,711 | 480,069 | 109,730971 | 109,743618 | 0,011523 | 3.326e-10 |
+| 60 % | G1 | LP | 86,782 | 472,039 | 111,395759 | 111,395760 | 0,000000 | 1.416e-07 |
 | 60 % | G1 | MILP | 87,244 | 471,204 | 111,395759 | 111,814151 | 0,374185 | 1.043e-07 |
-| 70 % | BASE | LP | 108,293 | 320,215 | 124,989733 | 124,989733 | 0,000000 | 4.545e-07 |
+| 70 % | BASE | LP | 108,293 | 320,215 | 124,989733 | 124,989734 | 0,000000 | 4.545e-07 |
 | 70 % | BASE | MILP | 108,353 | 320,334 | 124,989733 | 125,055973 | 0,052968 | 3.512e-10 |
-| 70 % | G1 | LP | 111,232 | 309,079 | 127,348376 | 127,348376 | 0,000000 | 3.278e-07 |
+| 70 % | G1 | LP | 111,232 | 309,079 | 127,348376 | 127,348377 | 0,000000 | 3.278e-07 |
 | 70 % | G1 | MILP | 111,599 | 311,069 | 127,348376 | 127,818619 | 0,367898 | 8.196e-08 |
-| 70 % | G2 | LP | 111,294 | 309,033 | 127,408222 | 127,408222 | 0,000000 | 4.396e-07 |
-| 70 % | G2 | MILP | 111,341 | 308,940 | 127,408222 | 127,449599 | 0,032466 | 8.941e-08 |
+| 70 % | G2 | LP | 111,294 | 309,033 | 127,408221 | 127,408222 | 0,000000 | 4.396e-07 |
+| 70 % | G2 | MILP | 111,341 | 308,940 | 127,408221 | 127,449600 | 0,032466 | 8.941e-08 |
 
 Für jeden Punkt wurden 723.833 gemeinsame Zeilen geprüft. Die zusätzliche Gegenprobe nutzt nach semantischer Umnummerierung und Einsetzen der jeweiligen Quote die archivierten identischen Nichtstärke-Koeffizienten. Für die älteren BASE-/G1-Läufe sind separate native Koeffizientendumps und Laufzeitprofildateien nicht archiviert. Ihre Identität ist über Eingangsprofil, Runner, Log, Vektor und fallspezifische physische Rekonstruktion gebunden. Die beiden frühen 50-%-LPs erforderten die Wiederzuordnung von je 12.432 Dispatch-Koordinaten. Ein frischer Wiederholungslauf reproduzierte 19 wissenschaftliche Dateien byteidentisch. [Herkunft der gemeinsamen Zeilen](02_COMMON_ROW_IDENTITY_SCOPE.json) · [Koordinatenbeleg](02_RE50_LP_COORDINATE_PROOF.json) · [Wiederholungslauf](02_PORTABLE_REPLAY_VERIFIED.json)
 
