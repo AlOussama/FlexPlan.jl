@@ -1,0 +1,214 @@
+# Loaded by run_week_strength_comparison.jl after the authenticated weekly
+# investment, dispatch, cost and G2 routines have been assembled.
+const ac_label = ENV["PAPER_A_AC_FORMULATION"]
+const ac_type = Dict("LPAC"=>PowerModels.LPACCPowerModel,
+                     "SOC-WR"=>PowerModels.SOCWRConicPowerModel,
+                     "QCRM"=>PowerModels.QCRMPowerModel)[ac_label]
+const ac_solver = get(ENV,"PAPER_A_AC_SOLVER","gurobi")
+ac_solver in ("gurobi","ipopt") || error("Unsupported AC solver: $ac_solver")
+const ac_out = joinpath(root, get(ENV,"PAPER_A_AC_ATTEMPT",ac_label))
+const derived_dir = joinpath(root, "AC_CASE")
+const qratio = 0.4
+
+function confirmed_ac_case()
+    file = joinpath(derived_dir, "case.json")
+    if isfile(file)
+        receipt = JSON.parsefile(joinpath(derived_dir,"receipt.json"))
+        sha_file(file)==receipt["case_sha256"]=="66885c9b5d27b21ac1000cf16e8da5d886b7ab50085783957907cebef8a41d3b" &&
+            receipt["parent_sha256"]==sha_file(case_path)=="ae0f61e54e6aadfc1b4f3cde60f185bbe62c764fde84c96146d714c172b9d531" ||
+            error("AC case identity mismatch")
+        data = JSON.parsefile(file;dicttype=Dict{String,Any})
+        data[FP._PAPER_A_PROFILE_KEY] = FP._PaperAProfileBinding("ap2:sha256:"*receipt["case_sha256"],receipt["profile_sha256"])
+        FP.prepare_paper_a_data!(data)
+        return data
+    end
+    data = comparison_case()
+    parent = sha_file(case_path)
+    parent=="ae0f61e54e6aadfc1b4f3cde60f185bbe62c764fde84c96146d714c172b9d531" || error("Wrong prepared G2 input")
+    link_file = source_file(joinpath(get(ENV,"PAPER_A_NATIVE_CSV","D:/Projekte/Code/pypsatomatpowerx/data/elec_s_37_csv"),"links.csv"),
+        "3f08a3e035797c93be3c2186ddaf0d4313dec0b03b23098bd72e703a64315dbc")
+    ratings = Dict(string(link.name)=>Float64(link.p_nom) for link in CSV.File(link_file))
+    base = data["baseMVA"]
+    data["paper_a_ac_terminal_policy"] = "online_q_box"
+    for snapshot in values(data["nw"])
+        snapshot["per_unit"] && snapshot["baseMVA"]==base || error("Expected per-unit input")
+        for load in values(snapshot["load"])
+            iszero(load["qd"]) || error("Existing load Q requires source reconciliation")
+            load["qd"] = load["pd"] * tan(acos(0.98))
+        end
+        for table in ("gen","storage","ne_storage"), dev in values(snapshot[table])
+            if haskey(dev, "source_class")
+                bound = qratio * dev["p_block_max"]
+                dev["q_block_min"],dev["q_block_max"] = -bound,bound
+            else
+                table=="storage" && dev["carrier"]=="hydro" || error("Unmapped AC device")
+                bound = qratio * dev["paper_a_storage_unit"]["p_nom_MW"] / base
+                dev["qmin"],dev["qmax"] = -bound,bound
+            end
+        end
+        length(snapshot["dcline"])==length(ratings)==43 || error("Incomplete HVDC roster")
+        for line in values(snapshot["dcline"])
+            bound = qratio * ratings[line["name"]] / base
+            for (lo,hi) in (("qminf","qmaxf"),("qmint","qmaxt"))
+                line[lo],line[hi] = -bound,bound
+            end
+        end
+    end
+    mkpath(derived_dir)
+    open(file,"w") do io
+        JSON.print(io,Dict(k=>v for (k,v) in data if k!=FP._PAPER_A_PROFILE_KEY))
+    end
+    digest = sha_file(file)
+    profile = FP.paper_a_profile_identity(data)
+    data[FP._PAPER_A_PROFILE_KEY] = FP._PaperAProfileBinding("ap2:sha256:"*digest,profile)
+    writejson(joinpath(derived_dir,"receipt.json"),Dict("case_sha256"=>digest,"profile_sha256"=>profile,
+        "parent_sha256"=>parent,"hvdc_source_sha256"=>sha_file(link_file),"load_pf"=>0.98,"q_over_online_MW"=>qratio,
+        "hours"=>168,"quota_pct"=>70,"branch_fields_changed"=>false))
+    FP.prepare_paper_a_data!(data)
+    return data
+end
+
+function build_ac_week()
+    m=JuMP.Model()
+    JuMP.set_string_names_on_creation(m,false)
+    signed=JSON.parsefile(joinpath(parent_study,"AP1_EXPORT/week_8/case_manifest.json"))
+    pm=build_week(joinpath(parent_study,"AP1_EXPORT/week_8/case.json"),signed["case_sha256"],science,parent_pin,m)
+    input=renewable_inputs(chosen["source_first"]:chosen["source_last"],config)
+    w=add_week!(pm,input,Dict{String,JuMP.VariableRef}())
+    bus_ids=Dict(b["name"]=>id for (id,b) in fp.ref(pm,1,:bus))
+    new_q=Dict{Tuple{Int,String},JuMP.VariableRef}()
+    for project in w.projects, n in 1:168
+        q=JuMP.@variable(m)
+        limit=qratio*project.installed/w.base
+        JuMP.@constraint(m,q<=limit)
+        JuMP.@constraint(m,q>=-limit)
+        JuMP.set_normalized_coefficient(fp.con(pm,n,:uc_gscr_block_bus_reactive_balance,bus_ids[project.bus]),q,-1.)
+        new_q[(n,project.name)]=q
+    end
+    JuMP.@constraint(m,w.quota>=0.70*w.demand)
+    objective=FP.calc_uc_gscr_block_investment_cost(pm)+w.cap+annual_factor*(w.gen+w.storage+w.events)
+    # Exact power-of-two rescaling keeps original EUR2025 accounting.
+    scale=2.0^20
+    JuMP.@objective(m,Min,objective/scale)
+    JuMP.relax_integrality(m)
+    return (;m,pm,w,new_q,objective,scale)
+end
+
+include("week_ac_audit.jl")
+if ac_solver == "ipopt"
+    import Ipopt
+end
+
+function run_ac_week()
+    if get(ENV,"PAPER_A_AC_REPLAY","0") == "1"
+        return replay_ac_week(ac_out,build_ac_week())
+    end
+    ispath(ac_out) && error("Use a fresh output folder")
+    mkpath(ac_out)
+    (;m,pm,w,new_q,objective,scale) = build_ac_week()
+    receipt=JSON.parsefile(joinpath(derived_dir,"receipt.json"))
+    profile=Dict{String,Any}("formulation"=>ac_label,"model_type"=>string(ac_type),"case"=>receipt,
+        "solver"=>ac_solver,"variables"=>JuMP.num_variables(m),"G2_rows"=>length(w.gscr_rows),"added_project_Q_rows"=>2length(new_q),
+        "discrete_after_relaxation"=>count(v->JuMP.is_binary(v)||JuMP.is_integer(v),JuMP.all_variables(m)),
+        "native_network_physics"=>"PowerModels","power_models_version"=>string(pkgversion(PowerModels)),
+        "annualization"=>annual_factor,"objective_divisor"=>scale,"runner_sha256"=>sha_file(@__FILE__),
+        "audit_source_sha256"=>sha_file(joinpath(@__DIR__,"week_ac_audit.jl")),
+        "integration_sha256"=>sha_file(joinpath(dirname(pathof(FP)),"prob","uc_gscr_block_integration.jl")),
+        "network_source_sha256"=>sha_file(joinpath(dirname(pathof(FP)),"prob","paper_a_ac_network.jl")))
+    @assert profile["discrete_after_relaxation"]==0 && length(w.gscr_rows)==6216 && length(new_q)==12432
+    writejson(joinpath(ac_out,"profile.json"),profile)
+    if get(ENV,"PAPER_A_AC_EXPORT_NATIVE","0") == "1"
+        JuMP.set_optimizer(m,Gurobi.Optimizer)
+        export_ac_coordinates(ac_out,(;m,pm,w,new_q,objective,scale))
+        JuMP.MOI.Utilities.attach_optimizer(JuMP.backend(m))
+        native = JuMP.unsafe_backend(m)
+        Gurobi.GRBupdatemodel(native)==0 || error("Native update failed")
+        count_native = Ref{Cint}(0)
+        Gurobi.GRBgetintattr(native,"NumVars",count_native)==0 || error("Native size unavailable")
+        for i in 0:(count_native[]-1)
+            Gurobi.GRBsetstrattrelement(native,"VarName",i,"V$i")==0 || error("Column name failed")
+        end
+        open(joinpath(ac_out,"native_columns.csv"),"w") do io
+            println(io,"index,native")
+            for v in JuMP.all_variables(m)
+                println(io,JuMP.index(v).value,",",Int(Gurobi.c_column(native,JuMP.optimizer_index(v))))
+            end
+        end
+        file = joinpath(ac_out,"native.mps")
+        Gurobi.GRBwrite(native,file)==0 || error("Native MPS write failed")
+        writejson(joinpath(ac_out,"export.json"),Dict("case_sha256"=>receipt["case_sha256"],
+            "native_mps_sha256"=>sha_file(file),"variables"=>count_native[],"demand_MWh"=>w.demand,
+            "solver_library"=>abspath(Gurobi.libgurobi),"solver_version"=>string(Gurobi._GUROBI_VERSION),
+            "base_MVA"=>w.base,"objective_divisor"=>scale,"profile_sha256"=>sha_file(joinpath(ac_out,"profile.json")),
+            "native_columns_sha256"=>sha_file(joinpath(ac_out,"native_columns.csv"))))
+        return
+    end
+    if ac_solver == "ipopt"
+        JuMP.set_optimizer(m,Ipopt.Optimizer)
+        JuMP.add_bridge(m,JuMP.MOI.Bridges.Constraint.SOCtoNonConvexQuadBridge)
+        JuMP.add_bridge(m,JuMP.MOI.Bridges.Constraint.RSOCtoNonConvexQuadBridge)
+        for (k,v) in (("max_wall_time",budget),("tol",1e-8),("constr_viol_tol",1e-8),
+                      ("bound_relax_factor",0.0),("nlp_scaling_min_value",1e-20),("mumps_mem_percent",30))
+            JuMP.set_optimizer_attribute(m,k,v)
+        end
+        if haskey(ENV,"PAPER_A_AC_START_FROM")
+            set_ac_terminal_starts!(ac_out,(;m,pm,w,new_q,objective,scale),
+                joinpath(root,ENV["PAPER_A_AC_START_FROM"]),receipt["case_sha256"])
+            for option in ("bound_push","bound_frac","slack_bound_push","slack_bound_frac")
+                JuMP.set_optimizer_attribute(m,option,1e-8)
+            end
+        end
+    else
+        JuMP.set_optimizer(m,Gurobi.Optimizer)
+        for (k,v) in (("Threads",4),("TimeLimit",budget),("LogFile",joinpath(ac_out,"gurobi.log")),
+                      ("NumericFocus",2),("BarHomogeneous",1),("BarQCPConvTol",1e-7),("Seed",1))
+            JuMP.set_optimizer_attribute(m,k,v)
+        end
+    end
+    JuMP.optimize!(m)
+    result=Dict{String,Any}("formulation"=>ac_label,"case_sha256"=>receipt["case_sha256"],
+        "termination"=>string(JuMP.termination_status(m)),"primal_status"=>string(JuMP.primal_status(m)),
+        "raw_status"=>JuMP.raw_status(m),"seconds"=>JuMP.solve_time(m),"result_count"=>JuMP.result_count(m))
+    writejson(joinpath(ac_out,"outcome.json"),result)
+    if JuMP.has_values(m) && JuMP.primal_status(m) in (JuMP.MOI.FEASIBLE_POINT,JuMP.MOI.NEARLY_FEASIBLE_POINT,JuMP.MOI.UNKNOWN_RESULT_STATUS)
+        val=JuMP.value
+        open(joinpath(ac_out,"primal.csv"),"w") do io
+            println(io,"index,value")
+            for v in JuMP.all_variables(m);println(io,JuMP.index(v).value,",",val(v));end
+        end
+        result["annualized_EUR2025"]=val(objective)
+        result["demand_MWh"]=w.demand
+        result["wind_pv_MWh"]=val(w.quota)
+        result["wind_pv_pct"]=100val(w.quota)/w.demand
+        result["min_G2_margin"]=minimum(val.(w.margins))
+        branch_excess=0.; kcl_residual=0.; qexcess=0.
+        for n in 1:168
+            for (i,b) in fp.ref(pm,n,:branch), (f,t) in ((b["f_bus"],b["t_bus"]),(b["t_bus"],b["f_bus"]))
+                arc=(i,f,t)
+                branch_excess=max(branch_excess,hypot(val(fp.var(pm,n,:p,arc)),val(fp.var(pm,n,:q,arc)))-b["rate_a"])
+            end
+            for k in (:uc_gscr_block_bus_active_balance,:uc_gscr_block_bus_reactive_balance), row in values(fp.con(pm,n,k))
+                kcl_residual=max(kcl_residual,abs(val(JuMP.constraint_object(row).func)-JuMP.normalized_rhs(row)))
+            end
+            for key in FP._uc_gscr_block_all_device_keys(pm,n)
+                q=val(FP._uc_gscr_block_dispatch_variable(pm,n,key,:q))
+                bound=qratio*fp.ref(pm,n,key...)["p_block_max"]*val(fp.var(pm,n,:na_block,key))
+                qexcess=max(qexcess,abs(q)-bound)
+            end
+            for project in w.projects
+                qexcess=max(qexcess,abs(val(new_q[(n,project.name)]))-qratio*val(project.installed)/w.base)
+            end
+            for (i,b) in fp.ref(pm,n,:dcline), (f,t,hi) in ((b["f_bus"],b["t_bus"],"qmaxf"),(b["t_bus"],b["f_bus"],"qmaxt"))
+                qexcess=max(qexcess,abs(val(fp.var(pm,n,:q_dc,(i,f,t))))-b[hi])
+            end
+        end
+        result["max_branch_excess_MVA"]=w.base*branch_excess
+        result["max_bus_residual_pu"]=kcl_residual
+        result["max_q_box_excess_MVAr"]=w.base*qexcess
+        writejson(joinpath(ac_out,"outcome.json"),result)
+        audit_ac_point(ac_out,(;m,pm,w,new_q,objective,scale),val)
+    end
+    report("AC_week_outcome",result)
+end
+
+run_ac_week()

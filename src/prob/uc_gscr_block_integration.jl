@@ -21,8 +21,12 @@ optimization model through
 `solve_model`.
 """
 function uc_gscr_block_integration(data::Dict{String,Any}, model_type::Type, optimizer; template=nothing, kwargs...)
-    require_dim(data, :hour, :scenario, :year)
     build_method = isnothing(template) ? build_uc_gscr_block_integration : ((pm; build_kwargs...) -> build_uc_gscr_block_integration(pm; template, build_kwargs...))
+    return _solve_uc_gscr_network(data, model_type, optimizer, build_method, template; kwargs...)
+end
+
+function _solve_uc_gscr_network(data, model_type, optimizer, build_method, template; kwargs...)
+    require_dim(data, :hour, :scenario, :year)
     return _PM.solve_model(
         data,
         model_type,
@@ -72,8 +76,12 @@ converter expansion components are introduced in this integrated path.
 renewable-capacity workflow can add its balance terms, then call
 `finalize_paper_a_strength!` exactly once before optimization.
 """
-function build_uc_gscr_block_integration(
-    pm::_PM.AbstractActivePowerModel;
+function build_uc_gscr_block_integration(pm::_PM.AbstractActivePowerModel; kwargs...)
+    _build_uc_gscr_network(pm; kwargs...)
+end
+
+function _build_uc_gscr_network(
+    pm;
     objective::Bool=true,
     intertemporal_constraints::Bool=true,
     storage_terminal_policy::Symbol=:relaxed_cyclic,
@@ -105,9 +113,9 @@ function build_uc_gscr_block_integration(
                     _paper_a_identity_mismatch("model reference profiles changed at network $n")
             end
         end
-        pm isa _PM.AbstractDCPModel || throw(ArgumentError("Paper-A operational integration requires a PowerModels DCP model"))
+        _validate_paper_a_operational_network(pm)
         for n in nw_ids(pm)
-            isempty(get(_PM.ref(pm,n),:switch,Dict())) || throw(ArgumentError("Paper-A fixed-topology DCP builder does not support switches"))
+            isempty(get(_PM.ref(pm,n),:switch,Dict())) || throw(ArgumentError("Paper-A fixed-topology builder does not support switches"))
             isempty(get(_PM.ref(pm,n),:link,Dict())) || throw(ArgumentError("AP1 raw links require an explicit operational dcline conversion before model build"))
             for (i, line) in _PM.ref(pm, n, :dcline)
                 _validate_paper_a_dcline_losses(line, n, i;lossless=peaks!==nothing)
@@ -148,7 +156,7 @@ function build_uc_gscr_block_integration(
         expression_gen_curtailment(pm; nw=n)
         _PM.variable_dcline_power(pm; nw=n)
 
-        _PM.variable_storage_power(pm; nw=n)
+        _uc_gscr_storage_variables(pm, n)
         variable_absorbed_energy(pm; nw=n)
         if _has_uc_gscr_candidate_storage(pm, n)
             variable_storage_power_ne_block(pm; nw=n)
@@ -188,6 +196,7 @@ function build_uc_gscr_block_integration(
         constraint_uc_gscr_block_bus_active_balance(pm; nw=n)
 
         constraint_uc_gscr_block_dispatch(pm; nw=n)
+        _uc_gscr_terminal_capabilities(pm, n)
         constraint_uc_gscr_block_storage_bounds(pm; nw=n)
         if !defer_paper_a_strength && _uc_gscr_block_requires_gscr_constraints(pm, n)
             _paper_a_formulation!(pm,n,_uc_gscr_block_gscr_formulation(pm,n))
@@ -196,13 +205,13 @@ function build_uc_gscr_block_integration(
         for i in _PM.ids(pm, :storage, nw=n)
             if !_is_uc_gscr_block_enabled_device(pm, n, :storage, i)
                 constraint_storage_excl_slack(pm, i, nw=n)
-                _PM.constraint_storage_thermal_limit(pm, i, nw=n)
+                _uc_gscr_fixed_storage_rating(pm, n, i)
             end
-            _PM.constraint_storage_losses(pm, i, nw=n)
+            _uc_gscr_storage_losses(pm, n, :storage, i)
         end
         if _has_uc_gscr_candidate_storage(pm, n)
             for i in _PM.ids(pm, :ne_storage, nw=n)
-                constraint_storage_losses_ne(pm, i, nw=n)
+                _uc_gscr_storage_losses(pm, n, :ne_storage, i)
                 constraint_storage_bounds_ne_block(pm, i, nw=n)
             end
         end
@@ -607,7 +616,7 @@ function _validate_uc_gscr_block_storage_architecture!(pm::_PM.AbstractPowerMode
     )
 end
 
-function _relax_standard_bounds_for_block_enabled_devices!(pm::_PM.AbstractActivePowerModel, nw::Int)
+function _relax_standard_bounds_for_block_enabled_devices!(pm::_PM.AbstractPowerModel, nw::Int)
     if !_has_uc_gscr_candidate_storage(pm, nw) && (!haskey(_PM.ref(pm, nw), :gen) || !haskey(_PM.ref(pm, nw), :storage))
         return
     end

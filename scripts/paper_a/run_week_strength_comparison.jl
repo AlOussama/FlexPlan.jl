@@ -1,13 +1,14 @@
 # Reuse the accepted physical/UC/cost workflow; only the strength selector and
 # shared added-GFL attachment differ. Original cases and G1 results stay frozen.
 using SHA, JSON, Dates
-length(ARGS)==5 || error("usage: OUTPUT_ROOT SCIENCE_CASE G0|G2|G3|M1|M2 relaxed|integer prepare|profile|solve|admit_solve")
+length(ARGS)==5 || error("usage: OUTPUT_ROOT SCIENCE_CASE G0|G2|G3|M1|M2 relaxed|integer prepare|profile|solve|admit_solve|ac_compare")
 const root,science=abspath.(ARGS[1:2])
 const criterion,mode,phase=ARGS[3:5]
 const native_backend=Symbol(get(ENV,"PAPER_A_STRENGTH_BACKEND","gurobi"))
 const contract_path=get(ENV,"PAPER_A_WEEK_CONTRACT","")
 const reviewed_week=!isempty(contract_path)
-criterion in ("G0","G2","G3","M1","M2") && mode in ("relaxed","integer") && phase in ("prepare","profile","solve","admit_solve") || error("Unsupported comparison")
+criterion in ("G0","G2","G3","M1","M2") && mode in ("relaxed","integer") && phase in ("prepare","profile","solve","admit_solve","ac_compare") || error("Unsupported comparison")
+phase=="ac_compare" && !(reviewed_week && criterion=="G2" && mode=="relaxed") && error("AC comparison requires the reviewed continuous G2 week")
 native_backend in (:gurobi,:mosek) || error("Unsupported backend")
 criterion=="G0" && (native_backend!=:mosek || mode!="relaxed") && error("G0 requires continuous MOSEK SDP")
 !reviewed_week && (criterion in ("G0","M1","M2") || phase=="admit_solve") && error("Reviewed week contract required")
@@ -55,6 +56,11 @@ if reviewed_week
     common=replace_once(common,"get(declared,\"technical_week\",nothing)==current_week[]","FP._paper_a_kw08(data)")
 end
 certificate_rows(c)=c.kind=="G0" ? (c.psd,) : c.rows
+if phase=="ac_compare"
+    common=replace_once(common,"data = comparison_case()", "data = confirmed_ac_case()")
+    common=replace_once(common,"data,PowerModels.DCPPowerModel,", "data,ac_type,")
+    common=replace_once(common,"pm->FP.build_uc_gscr_block_integration(", "pm->FP.build_paper_a_ac_network(")
+end
 Base.include_string(Main,common,common_path)
 include("AP3Pipeline.jl")
 include("WeekStrengthAdmission.jl")
@@ -144,7 +150,9 @@ function comparison_case()
     return data
 end
 
-if phase=="prepare"
+if phase=="ac_compare"
+    include("week_ac_compare.jl")
+elseif phase=="prepare"
     ispath(case_path) && error("Preserve existing case")
     sha_file(source_case)==source_sha || error("Frozen source bytes changed")
     data=JSON.parsefile(source_case;dicttype=Dict{String,Any})
