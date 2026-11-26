@@ -60,3 +60,17 @@ Das unabhängige Schlussprotokoll umfasst 16 BASE-Versuche und fünf an der voll
 ## Codepfad
 
 Der Wochenrunner scripts/paper_a/week_ac_compare.jl erzeugt das native G2-Modell. export_ac_base.py identifiziert die G2-Zeilen anhand ihrer Koeffizienten und rechten Seiten. solve_ac_native.py löst die exportierte MPS mit der Gurobi-C-API und speichert den vollständigen Primalvektor. Das archivierte Skript [rescale_socwr_angle_rows.py](E:/ResearchResults/FlexPlan_UC_GSCR/KW08_RE70_G2_PQ_20261125_01/BASE_PAIR_20261126/rescale_socwr_angle_rows.py) dokumentiert die binäre Winkelskalierung. Alle Solverdateien liegen im selben Skriptverzeichnis wie der Wochenrunner.
+
+Die versionierte Fassung von `scripts/paper_a/rescale_socwr_angle_rows.py` nimmt Quellverzeichnis und neues Zielverzeichnis als Argumente. Für SOC-WR wird das exportierte native Modell vor dem Solverstart skaliert. LPAC verwendet seinen nativen Export unverändert.
+
+Für die Folgeserie wurden Aggregate=0, ScaleFlag=−1, NumericFocus=2, Seed=1, drei Threads, FeasibilityTol=10⁻⁹ und BarQCPConvTol=10⁻¹⁰ verwendet. Bei einer ergänzenden Nullzielsuche setzt `PAPER_A_AC_COST_CAP_EUR` eine Obergrenze in annualisierten EUR. Die Zusatzzeile verwendet sämtliche Originalkostenkoeffizienten, den Original-Zieloffset und den Divisor 2²⁰. Ein erfolgreicher Punkt zählt erst nach Nachrechnung der ursprünglichen Zeilen. Bei zusätzlich fixierten Spannungen gilt ein negatives Ergebnis ausschließlich für diese Fixierung. Verfügbare native ObjBound- und ObjBoundC-Werte werden in Solver-Zielkoordinaten gespeichert. Für ein Nullziel liefern sie keine Schranke der ursprünglichen Kosten.
+
+## Kostenintervall aus Gurobi-Läufen
+
+Die Programme `gold_outer_cost.py` und `gold_inner_cost.py` erwarten drei Verzeichnisse: ursprünglichen Export, Kostenpunkt mit nativem Primalvektor und neues Ziel. Beide binden die Variablenreihenfolge, den Primalvektor und die MPS über die Export-Hashes. In beiden bleibt die G2-Wochenkopplung im G2-Modell aktiv.
+
+Das äußere LP ersetzt jede Kegelzeile durch eine gültige Stützebene in Richtung des zugehörigen Kostenpunkts. Bei SOC-WR folgt ihre Gültigkeit aus Cauchy–Schwarz: der dyadisch gerundete Normalenvektor hat Norm höchstens eins. Für die LPAC-Kosinuszeile gilt die globale quadratische Tangentenabschätzung. Jede dual zulässige untere Kostenschranke dieses LP gilt auch im originalen Kostenproblem.
+
+Das innere LP beschränkt die Suche auf eine Teilmenge des jeweiligen Kegels. Dazu wird eine inskribierte L1-Kugel am Referenzpunkt ausgerichtet. Die Rotation verwendet einen Householder-Reflektor mit ganzzahligem Zähler. Bei der LPAC-Kosinuszeile wird der quadratische Term auf einem kleinen Winkelintervall durch eine nach oben begrenzende Sekante ersetzt. Ein Punkt aus der restringierten Suche wird an der vollständigen Originalmatrix einschließlich aller quadratischen Zeilen, Kosten, Quoten und Betriebsgrenzen geprüft. Seine nachgerechneten Kosten ergeben eine numerische obere Schranke, sofern er die Abnahmetoleranzen erfüllt.
+
+Für eine Netzformulierung mit den Kostenintervallen [L_BASE, U_BASE] und [L_G2, U_G2] liegt der Mehrpreis im Intervall [max(0, L_G2 − U_BASE), U_G2 − L_BASE]. Die untere Grenze null folgt aus der Teilmengenbeziehung bei identischer Zielfunktion. [Originalmodelle und unabhängige Replays der Folgeserie](E:/ResearchResults/FlexPlan_UC_GSCR/KW08_RE70_G2_PQ_20261125_01/GOLD_PAIR_20261126_01)

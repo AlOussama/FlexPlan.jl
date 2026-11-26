@@ -57,6 +57,11 @@ def solve(source, directory=None):
     call("GRBemptyenv", ct.byref(env))
     try:
         feasibility_only = os.environ.get("PAPER_A_AC_FEASIBILITY_ONLY") == "1"
+        if profile.get("outer_lp") or profile.get("inner_lp"):
+            # Crossover provides a simplex basis after the barrier has located
+            # a near-optimal point in these continuous linear search models.
+            call("GRBsetintparam", env, b"Method", 2)
+            call("GRBsetintparam", env, b"Crossover", 0 if profile.get("outer_lp") else 1)
         dual_reductions = 0 if feasibility_only else int(os.environ.get("PAPER_A_AC_DUAL_REDUCTIONS", 1))
         call("GRBsetintparam", env, b"DualReductions", dual_reductions)
         focus = int(os.environ.get("PAPER_A_AC_NUMERIC_FOCUS", 2 if profile["formulation"] == "LPAC" else 3))
@@ -84,6 +89,14 @@ def solve(source, directory=None):
             costs = np.empty(n, dtype=np.float64)
             call("GRBgetdblattrarray", model, b"Obj", 0, n, ct.c_void_p(costs.ctypes.data))
             constant = real("ObjCon")
+            budget = os.environ.get("PAPER_A_AC_COST_CAP_EUR")
+            if budget is not None:
+                rhs = float(budget) / export["objective_divisor"] - constant
+                indices = np.flatnonzero(costs).astype(np.int32)
+                coefficients = costs[indices]
+                call("GRBaddconstr", model, len(indices), ct.c_void_p(indices.ctypes.data),
+                     ct.c_void_p(coefficients.ctypes.data), ct.c_char(b"<"), ct.c_double(rhs),
+                     b"diagnostic_cost_budget")
             zeros = np.zeros_like(costs)
             call("GRBsetdblattrarray", model, b"Obj", 0, n, ct.c_void_p(zeros.ctypes.data))
             call("GRBsetdblattr", model, b"ObjCon", ct.c_double(0.0))
@@ -98,12 +111,12 @@ def solve(source, directory=None):
         neighborhood = None
         if "PAPER_A_AC_FEASIBILITY_NEAR" in os.environ:
             fix_lpac_voltages = os.environ.get("PAPER_A_AC_FIX_LPAC_VOLTAGES") == "1"
-            assert (feasibility_only or fix_lpac_voltages) and profile.get("strength_method") == "BASE"
+            assert feasibility_only or fix_lpac_voltages
             reference = Path(os.environ["PAPER_A_AC_FEASIBILITY_NEAR"])
             point = reference / "native_primal.npy"
             parent = json.loads((reference / "outcome.json").read_bytes())
             assert parent["case_sha256"] == export["case_sha256"]
-            assert parent["mps_sha256"] in (profile["original_mps_sha256"], export["native_mps_sha256"])
+            assert parent["mps_sha256"] in (profile.get("original_mps_sha256"), export["native_mps_sha256"])
             assert digest(point) == parent["native_primal_sha256"]
             # Restrict original variable bounds around a known G2 point; a
             # feasible witness also satisfies BASE. A negative is local only.
@@ -149,12 +162,49 @@ def solve(source, directory=None):
                 fixed_count = int(np.count_nonzero(fixed))
                 assert fixed_count == 6216 + 8736 + len(angles)
                 target = 0.9999 * center + 0.0001 * cosine
+                if os.environ.get("PAPER_A_AC_INTERIOR_COSINE") == "1":
+                    # A blended approximate anchor may still exceed its
+                    # quadratic cosine envelope after the angles are fixed.
+                    cosine_col = {}
+                    pairs = {}
+                    with mps.open("rb") as stream:
+                        for line in stream:
+                            fields = line.split()
+                            if not line.startswith(b" "):
+                                section = fields[0]
+                                if section == b"QCMATRIX":
+                                    row = fields[1]
+                            elif section == b"COLUMNS" and fields[1].startswith(b"qc"):
+                                assert float(fields[2]) == 1
+                                cosine_col[fields[1]] = positions[int(fields[0][1:])]
+                            elif section == b"QCMATRIX" and fields[0] != fields[1]:
+                                pairs[row] = (positions[int(fields[0][1:])],positions[int(fields[1][1:])],-float(fields[2]))
+                    assert pairs.keys() == cosine_col.keys() and len(pairs) == 8736
+                    for row,(a,b,k) in pairs.items():
+                        col = cosine_col[row]
+                        target[col] = min(target[col],1-k*(target[a]-target[b])**2-1e-12)
                 assert np.all(target[fixed] >= bounds[0][fixed]) and np.all(target[fixed] <= bounds[1][fixed])
                 for attr, original in zip((b"LB", b"UB"), bounds):
                     b = np.where(fixed, target, original)
                     call("GRBsetdblattrarray", model, attr, 0, n, ct.c_void_p(b.ctypes.data))
                 call("GRBupdatemodel", model)
                 neighborhood = dict(reference_sha256=parent["native_primal_sha256"],fixed_voltage_variables=fixed_count,
+                                    reference_weight=0.9999, flat_state_weight=0.0001)
+            if os.environ.get("PAPER_A_AC_FIX_SOC_VOLTAGES") == "1":
+                assert feasibility_only and profile["formulation"] == "SOC-WR"
+                upper_voltage = bounds[1] == 1.05**2
+                w = upper_voltage & (bounds[0] == 0.95**2)
+                wr = upper_voltage & np.isclose(bounds[0], 0.95**2 * np.cos(np.pi/2), rtol=1e-14, atol=0)
+                wi = upper_voltage & (bounds[0] == -(1.05**2))
+                assert tuple(map(np.count_nonzero, (w, wr, wi))) == (6216, 8736, 8736)
+                fixed = w | wr | wi
+                target = 0.9999 * center + 0.0001 * (w | wr)
+                for attr, original in zip((b"LB", b"UB"), bounds):
+                    b = np.where(fixed, target, original)
+                    call("GRBsetdblattrarray", model, attr, 0, n, ct.c_void_p(b.ctypes.data))
+                call("GRBupdatemodel", model)
+                neighborhood = dict(reference_sha256=parent["native_primal_sha256"],
+                                    fixed_voltage_variables=int(np.sum(fixed)),
                                     reference_weight=0.9999, flat_state_weight=0.0001)
         call("GRBoptimize", model)
         status, count = integer("Status"), integer("SolCount")
@@ -167,11 +217,31 @@ def solve(source, directory=None):
                       aggregate=aggregate, strength_method=profile.get("strength_method", "G2"),
                       barrier_tolerance=barrier_tolerance, feasibility_tolerance=feasibility_tolerance)
         result["objective_kind"] = "feasibility_zero" if feasibility_only else "annualized_cost"
+        if profile.get("outer_lp"):
+            result["objective_kind"] = "outer_lp_lower_bound"
+            duals = {}
+            for attr, size in (("Pi",integer("NumConstrs")),("RC",n)):
+                values = np.empty(size,dtype=np.float64)
+                code = lib.GRBgetdblattrarray(model,attr.encode(),0,size,ct.c_void_p(values.ctypes.data))
+                if code == 0 and np.isfinite(values).all():
+                    duals[attr] = values
+            if "Pi" in duals:
+                np.savez_compressed(directory/"lp_duals.npz",**duals)
+                result["dual_archive_sha256"] = digest(directory/"lp_duals.npz")
+        if profile.get("inner_lp"):
+            result["objective_kind"] = "restricted_primal_cost"
         result["dual_reductions"] = dual_reductions
+        if feasibility_only and budget is not None:
+            result["cost_cap_EUR2025"] = float(budget)
+        for attribute in ("ObjBound", "ObjBoundC", "DualVio", "ComplVio"):
+            value = ct.c_double()
+            code = lib.GRBgetdblattr(model, attribute.encode(), ct.byref(value))
+            if code == 0 and np.isfinite(value.value) and abs(value.value) < 1e100:
+                result[attribute] = value.value
         if neighborhood is not None:
             result["restricted_witness_search"] = neighborhood
         if feasibility_only:
-            if status == 3 and neighborhood is None:
+            if status == 3 and neighborhood is None and budget is None:
                 call("GRBcomputeIIS", model)
                 iis = directory / "infeasible.ilp"
                 call("GRBwrite", model, os.fsencode(iis))
