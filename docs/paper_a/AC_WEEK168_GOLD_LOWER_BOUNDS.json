@@ -1,0 +1,98 @@
+{
+  "reviewer": "/root/math_r",
+  "scope": "KW08/2013, original 168-hour RE70 LPAC and SOC-WR continuous BASE and G2 planning QCPs with original native binary64 coefficients. Certificates are lower bounds on their minima in original EUR2025 annual-equivalent units. They do not qualify an incumbent or an AC operating point.",
+  "method": "For the actual exported supporting halfspaces, check the SOC sign/domain and Cauchy bounds or complete the square in the LPAC cosine row; preserve all original non-QC entries and objective. With signs projected on native Pi, calculate b*Pi and exact c\u2212A.T*Pi in dyadic arithmetic, then minimize each residual over mathematically inferred outer-variable bounds. Signed finite endpoints are rounded outward; reported currency is rounded down.",
+  "decimal_boundary": "On LPAC BASE, 644 printed-decimal tangent comparisons can undershoot the literal decimal source inequality by roundoff. The independently certified original is the actual native binary64 MPS. The other three immediate parent-to-outer row tests additionally passed for decimal tokens. Exact positive dyadic SOC line rescaling is verified in native coordinates.",
+  "cases": {
+    "LPAC_BASE": {
+      "original_QCP_SHA256": "4aa116e6185a779b86d354ec5e8bf0b053344d3041f4fd46b15f5a4b09a98d9b",
+      "outer_MPS_SHA256": "127dbbf95cff54bf4e2d37f1501d7a96c8b91d1e200fbdee09db2dcc4c152476",
+      "structural_review": "LPAC_BASE_outer\\independent_outer_formulation_math.json",
+      "structural_review_SHA256": "4fa243ae43a274d965b2e1db27f12dfc75878651a0a9ae553f1c0e21b7a41428",
+      "cost_bound_review": "LPAC_BASE_outer_dual\\independent_outer_cost_bound.json",
+      "cost_bound_review_SHA256": "c3533d6bab730fe6517d9ee973949748990c789da7f8dca1fd3d26a5641de564",
+      "dual_sha256": "7445ff2ddb4421dd92d1288df571e7d20c8203469c8b331302c2b6587c737131",
+      "backend_termination": "OPTIMAL",
+      "sign_projection_count": 647,
+      "nonzero_exact_stationarity_count": 181502,
+      "unbounded_residual_support": 0,
+      "exact_EUR_2025_annual_equivalent_lower_floor": 125908036326,
+      "original_objective_divisor": 1048576.0,
+      "fractional_LB_retained_in_cost_receipt": true,
+      "native_row_domains_checked": {
+        "cosine_with_original_affine_cs": 8736,
+        "thermal_disc": 17472
+      },
+      "literal_decimal_relaxation_test_failures": {
+        "cosine_with_original_affine_cs": 644
+      }
+    },
+    "LPAC_G2": {
+      "original_QCP_SHA256": "804ab7dffa9fe1d6cc32f275d4dc26319e650a63cdf538f0c432c9212b1422c8",
+      "outer_MPS_SHA256": "fe68c805f08bbf38c8af5cbcd4ce36105699e3a52bc5c81788d804b56ae80c9f",
+      "structural_review": "LPAC_G2_outer\\independent_outer_formulation_math.json",
+      "structural_review_SHA256": "efe57905d07458ea7a5c81940f68146cd2363ccbfec03434c58331b0c6a39217",
+      "cost_bound_review": "LPAC_G2_outer\\independent_outer_cost_bound.json",
+      "cost_bound_review_SHA256": "fa5768f2dc5aeb60f7e697b36d5eff1bb98f61dae795d1e334742139811a1285",
+      "dual_sha256": "561e151d9e3be677924b4e8febfe3f9af2f17da41086fc0752b2d80e667bea1f",
+      "backend_termination": "SUBOPTIMAL",
+      "sign_projection_count": 8438,
+      "nonzero_exact_stationarity_count": 383435,
+      "unbounded_residual_support": 0,
+      "exact_EUR_2025_annual_equivalent_lower_floor": 128350606292,
+      "original_objective_divisor": 1048576.0,
+      "fractional_LB_retained_in_cost_receipt": true,
+      "native_row_domains_checked": {
+        "cosine_with_original_affine_cs": 8736,
+        "thermal_disc": 17472
+      },
+      "literal_decimal_relaxation_test_failures": {}
+    },
+    "SOC_BASE": {
+      "original_QCP_SHA256": "01848864794dee9911ce5cf4a40bc4941c002fffe183e84fd565615ddfc15849",
+      "outer_MPS_SHA256": "054a1b543222585e3d2b6385246ca5a0f84f60a32a9f0643d84700edef209590",
+      "structural_review": "SOC_BASE_outer\\independent_outer_formulation_math.json",
+      "structural_review_SHA256": "b43e394a611caf4b2516bd8432d6a910e34043655a4f1e503e74aab7dfb071a3",
+      "cost_bound_review": "SOC_BASE_outer\\independent_outer_cost_bound.json",
+      "cost_bound_review_SHA256": "b0a012d3a90c9a8fae6b49c44fb5072128ecbfe5dd158c0ee875eea77aafba55",
+      "dual_sha256": "b4346a7e8f06352c87240052ca0b33928bfa6e7a925fbd953faf488ea013f6b3",
+      "backend_termination": "SUBOPTIMAL",
+      "sign_projection_count": 198,
+      "nonzero_exact_stationarity_count": 426241,
+      "unbounded_residual_support": 0,
+      "exact_EUR_2025_annual_equivalent_lower_floor": 126073509961,
+      "original_objective_divisor": 1048576.0,
+      "fractional_LB_retained_in_cost_receipt": true,
+      "native_row_domains_checked": {
+        "positive_head_SOC": 26208
+      },
+      "literal_decimal_relaxation_test_failures": {}
+    },
+    "SOC_G2": {
+      "original_QCP_SHA256": "ed6784c5fc46648eafd7baa3ce2cad38f0f3ea8367de256ce43a8a5dd236d8f1",
+      "outer_MPS_SHA256": "fe6ef97c07e62d21a2de1797fb193cd9c78a6d565becdd98bbf181833ff30ff9",
+      "structural_review": "SOC_G2_outer\\independent_outer_formulation_math.json",
+      "structural_review_SHA256": "9aaf562384adc63b211b4829f7f102a2c958d412e5b950acfd7cd55438122c5f",
+      "cost_bound_review": "SOC_G2_outer\\independent_outer_cost_bound.json",
+      "cost_bound_review_SHA256": "a5881f69464207bb449c1f5d48223c7f322b486212f213fa961b0c35370d9f5c",
+      "dual_sha256": "6f5aea3f68736cf3886eb57a85e19f702f121c466948d179cd4433245b549151",
+      "backend_termination": "OPTIMAL",
+      "sign_projection_count": 2638,
+      "nonzero_exact_stationarity_count": 446045,
+      "unbounded_residual_support": 0,
+      "exact_EUR_2025_annual_equivalent_lower_floor": 128548307287,
+      "original_objective_divisor": 1048576.0,
+      "fractional_LB_retained_in_cost_receipt": true,
+      "native_row_domains_checked": {
+        "positive_head_SOC": 26208
+      },
+      "literal_decimal_relaxation_test_failures": {}
+    }
+  },
+  "superseded_simplex_stoppage_sha256": "260aa513a42167f0eb30ecb503f1117eb3d206bdccc4790c40bbaad5a72bfcdc",
+  "review_code": {
+    "independent_outer_math.py": "9ccab74784919ecde0430f8d5bfd4a4448a19f833f3a55df5b64e3b3ac8dbbfa",
+    "independent_outer_dual.py": "5622314397172400e20366eb46d74b4129721c2350bf9752998ee9cf2e6f0e82",
+    "independent_outer_close.py": "579246b3d37bb7c395ab0f86240847954a034119b797110ccdf0949734eddd3a"
+  }
+}

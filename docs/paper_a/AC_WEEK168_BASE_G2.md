@@ -74,3 +74,22 @@ Das äußere LP ersetzt jede Kegelzeile durch eine gültige Stützebene in Richt
 Das innere LP beschränkt die Suche auf eine Teilmenge des jeweiligen Kegels. Dazu wird eine inskribierte L1-Kugel am Referenzpunkt ausgerichtet. Die Rotation verwendet einen Householder-Reflektor mit ganzzahligem Zähler. Bei der LPAC-Kosinuszeile wird der quadratische Term auf einem kleinen Winkelintervall durch eine nach oben begrenzende Sekante ersetzt. Ein Punkt aus der restringierten Suche wird an der vollständigen Originalmatrix einschließlich aller quadratischen Zeilen, Kosten, Quoten und Betriebsgrenzen geprüft. Seine nachgerechneten Kosten ergeben eine numerische obere Schranke, sofern er die Abnahmetoleranzen erfüllt.
 
 Für eine Netzformulierung mit den Kostenintervallen [L_BASE, U_BASE] und [L_G2, U_G2] liegt der Mehrpreis im Intervall [max(0, L_G2 − U_BASE), U_G2 − L_BASE]. Die untere Grenze null folgt aus der Teilmengenbeziehung bei identischer Zielfunktion. [Originalmodelle und unabhängige Replays der Folgeserie](E:/ResearchResults/FlexPlan_UC_GSCR/KW08_RE70_G2_PQ_20261125_01/GOLD_PAIR_20261126_01)
+
+## GOLD-Ergebnis für KW 8/2013
+
+Alle vier Punkte erfüllen die ursprünglichen GOLD-Prüfungen für Knotenbilanzen, Wochenquote und, bei G2, die Netzstärkebedingungen. Kosten in annualisierten EUR 2025, bei kontinuierlich relaxiertem Commitment und Investitionen. Untere Grenzen sind auf volle EUR abgerundet, obere Grenzen aufgerundet.
+
+| Modell | Untergrenze EUR/a | Kostenpunkt EUR/a | Max. P-KCL MW | Max. Q-KCL MVAr | Überschuss zur Wochenquote MWh |
+|---|---:|---:|---:|---:|---:|
+| LPAC BASE | 125.908.036.326 | 125.908.201.990 | 5,55e−11 | 2,40e−11 | 0,0008164 |
+| LPAC G2 | 128.350.606.292 | 128.350.714.491 | 2,10e−8 | 1,95e−11 | 0,0001036 |
+| SOC-WR BASE | 126.073.509.961 | 126.076.996.187 | 5,86e−8 | 4,29e−11 | 0,0000763 |
+| SOC-WR G2 | 128.548.307.287 | 128.555.000.000 | 4,36e−8 | 4,14e−11 | 33,8142883 |
+
+Der LPAC-Mehrpreis beträgt 2.442.404.302 bis 2.442.678.165 EUR/a, der SOC-WR-Mehrpreis 2.471.311.100 bis 2.481.490.039 EUR/a. Die Intervalle kombinieren eine exakte Untergrenze des nativen binary64-Modells und einen zu GOLD-Toleranzen geprüften oberen Kostenpunkt. Der Hochrechnungsfaktor für die Wochenkosten ist 8760/168. Das Ergebnis beschreibt die ausgewählte Woche.
+
+Die vier direkten QCP-Kostenläufe mit den geprüften Gurobi-Einstellungen endeten dreimal SUBOPTIMAL und für SOC-WR BASE mit NUMERIC ohne Punkt. Die beiden SOC-Kostensuchen im inneren LP erreichten nach 7.200 s ihr Zeitlimit. Für die qualifizierten Kostenpunkte wurde das jeweilige Originalmodell vollständig nachgerechnet. Bei LPAC mischt `mix_week_points.py` dem Kostenpunkt aus dem inneren LP den jeweiligen Budgetzeugen mit Gewicht 0,0001 bei, bei SOC-WR BASE dem Crossover-Punkt den BASE-Zulässigkeitszeugen mit Gewicht 1e−8. Das hebt die Wochenquote über 70 %. Der SOC-WR-G2-Zeuge stammt aus einer Nullzielsuche mit Kostenbudget. `replay_gold_candidates.py` hebt 227 wr-Koordinaten um höchstens 1,225e−17 auf die durch die ursprünglichen Winkelzeilen geforderte Untergrenze mit einem Rundungsschritt Sicherheit. Der größte lineare Originalfehler sinkt von 0,20 auf 1,18e−9. Alle 17.472 unskalierten Winkelzeilen erfüllen danach die exakte Vorzeichenprüfung.
+
+Fall-SHA-256 `66885c9b5d27b21ac1000cf16e8da5d886b7ab50085783957907cebef8a41d3b`. Modell- und Solverimplementierung `bea2ef5ec6fd62936405f289ac29f0516532206b`. MATH-R prüfte die äußeren LPs und rechnete die dualen Untergrenzen rational nach. Die Literal-Dezimalinterpretation von 644 LPAC-BASE-Tangenten weicht rundungsbedingt ab. Zertifiziert sind die von Gurobi eingelesenen Binärkoeffizienten. [Modell-SHAs und unabhängige Untergrenzen](AC_WEEK168_GOLD_LOWER_BOUNDS.json)
+
+Primärbelege im oben verlinkten Laufverzeichnis liegen unter `LPAC_BASE_polished/review.json` (SHA-256 `1f88217d21348d4f78a3d7f58b455b1bceec68777b1dd819c98dc24ba5ef8188`), `LPAC_G2_polished/review.json` (`dd128012d8a66c3ecf134336195a72f95ec1cd779e8699eaeac142fe35b20fd4`), `SOC_BASE_mix/independent_outcome_review.json` (`82f38ee378b7f6a47db07834545d7ee621b93048c979b40693adb970c991ba9d`) und `SOC_G2_polished/review.json` (`20b567a2853035d9889da4d71c75d1e65f92025532e5c3c82ecaa5f983f2cda3`). Diese Belege enthalten die Primalvektor-SHAs und nachgerechneten Originalkosten.
