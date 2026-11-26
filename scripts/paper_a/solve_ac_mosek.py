@@ -10,6 +10,44 @@ import numpy as np
 from solve_ac_native import digest
 
 
+def encode_soc_wr(task, destination, mosek):
+    """Recover the original SOC(t,x) from its MPS form t²−sum(x²) ≥ 0, t ≥ 0."""
+    domains = {n: task.appendquadraticconedomain(n) for n in (3, 4)}
+    domain_ids, columns = [], []
+    dimensions = {3: 0, 4: 0}
+    with (destination / "cone_columns.csv").open("x", newline="") as stream:
+        writer = csv.writer(stream)
+        writer.writerow(("row", "first_afe", "dimension", "t", "x", "y", "z_if_present"))
+        for k in range(task.getnumcon()):
+            if not task.getnumqconknz(k):
+                continue
+            _, ii, jj, coefficients = task.getqconk(k)
+            positive = [i for i, v in zip(ii, coefficients) if v == 2.0]
+            negative = [i for i, v in zip(ii, coefficients) if v == -2.0]
+            bound, lower, _ = task.getconbound(k)
+            n = len(ii)
+            if (list(ii) != list(jj) or n not in domains or len(positive) != 1
+                    or len(set(ii)) != n or len(negative) != n - 1
+                    or bound != mosek.boundkey.lo or lower != 0.0 or any(task.getarow(k)[2])):
+                raise ValueError(f"Unsupported SOC row {k}")
+            t = positive[0]
+            kind, lo, _ = task.getvarbound(t)
+            if kind not in (mosek.boundkey.lo, mosek.boundkey.ra, mosek.boundkey.fx) or lo < 0.0:
+                raise ValueError(f"Missing nonnegative leading coordinate at {k}")
+            members = positive + negative
+            writer.writerow((task.getconname(k), len(columns), n, *(task.getvarname(i) for i in members)))
+            columns.extend(members)
+            domain_ids.append(domains[n])
+            dimensions[n] += 1
+            task.putqconk(k, [], [], [])
+    if dimensions != {3: 17472, 4: 8736} or task.getnumafe() != 0:
+        raise ValueError(f"Unexpected native weekly cone layout {dimensions}")
+    task.appendafes(len(columns))
+    task.putafefentrylist(range(len(columns)), columns, [1.0] * len(columns))
+    task.appendaccsseq(domain_ids, len(columns), 0, None)
+    task.writedata(str(destination / "native_cones.task.gz"))
+
+
 def encode_rotated_products(task, destination, mosek, expected_count=8736):
     """Transmit x²+y²≤uv with nonnegative u,v as (u/2,v,x,y) in the rotated cone."""
     rows = []
@@ -81,9 +119,12 @@ def solve(source, target):
             native = np.fromiter((int(task.getvarname(i).removeprefix("V")) for i in range(task.getnumvar())),
                                  dtype=int, count=task.getnumvar())
             assert np.array_equal(np.sort(native), np.arange(len(native)))
-            if os.environ.get("PAPER_A_MOSEK_ROTATED") == "1":
+            if profile["formulation"] == "SOC-WR" and profile.get("strength_method") == "BASE":
+                encode_soc_wr(task, target, mosek)
+            elif os.environ.get("PAPER_A_MOSEK_ROTATED") == "1":
                 assert profile["formulation"] == "QCRM"
                 encode_rotated_products(task, target, mosek)
+            if (target / "native_cones.task.gz").exists():
                 result["native_task_sha256"] = digest(target / "native_cones.task.gz")
                 result["cone_columns_sha256"] = digest(target / "cone_columns.csv")
             result["optimizer_response"] = str(task.optimize())
