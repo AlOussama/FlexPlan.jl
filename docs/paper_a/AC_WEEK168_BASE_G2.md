@@ -1,4 +1,6 @@
 # Gurobi-Zulässigkeitsprüfung und BASE-Kostenvergleich
+
+Die Netzformulierung und die Netzstärkebedingung sind zwei getrennte Studienparameter. BASE gegen G2 misst den Aufpreis der hinreichenden Bedingung mit festem positivem Skalierungsvektor. Für die direkte gSCR-Studie wird pro Stunde G0 mit der ursprünglichen affinen Matrixbedingung verwendet. Ein SDP-Leistungsfluss kann beide PSD-Bedingungen mit demselben SDP-Solver behandeln. Bei SOC-WR oder QCRM kann die PSD-Netzstärkebedingung mit der jeweiligen Leistungsflussrelaxation kombiniert werden. Unter den nachgewiesenen Strukturvoraussetzungen des G3-Kantenzertifikats ist alternativ dessen exakte Kegelform zulässig. Die Eigenwertprüfung erfolgt auf den ursprünglichen gSCR-Matrizen aller 168 Stunden. Der bisherige AC-Wochenrunner ist auf G2 festgelegt. Seine Kostenintervalle gelten für G2.
 KW 8/2013 (18.–24. Februar), 168 gekoppelte Stunden, mindestens 70 % Wind/PV, kontinuierliche UC- und Investitionsrelaxation. Kosten in annualisierten EUR 2025.
 
 ## Zulässigkeit

@@ -37,8 +37,16 @@ function export_ac_coordinates(dir, model)
                     terms(kind,n,id,JuMP.constraint_object(row).func-JuMP.normalized_rhs(row))
                 end
             end
-            for (i,row) in enumerate(pm.ext[:paper_a_certificates][n].rows)
-                terms("G2",n,i,JuMP.constraint_object(row).func-JuMP.normalized_rhs(row))
+            cert=pm.ext[:paper_a_certificates][n]
+            if cert.kind=="G2"
+                for (i,row) in enumerate(cert.rows)
+                    terms("G2",n,i,JuMP.constraint_object(row).func-JuMP.normalized_rhs(row))
+                end
+            else
+                M=FP._paper_a_online_expressions!(pm,n).M
+                for i in axes(M,1), j in i:size(M,2)
+                    terms("M",n,string(i,"_",j),JuMP.AffExpr(0.)+M[i,j])
+                end
             end
         end
     end
@@ -77,6 +85,12 @@ function audit_ac_point(dir, model, val)
     end
     violated = JuMP.primal_feasibility_report(v->val(v),m;atol=1e-8)
     worst = isempty(violated) ? 0.0 : maximum(values(violated))
+    if criterion in ("G0","G3")
+        hourly=[FP.eigmin(FP.Symmetric(val.(FP._paper_a_online_expressions!(model.pm,n).M))) for n in 1:168]
+        writejson(joinpath(dir,"original_strength_eigenvalues.json"),Dict(
+            "criterion"=>criterion,"minimum_eigenvalues"=>hourly,"minimum"=>minimum(hourly),
+            "primal_sha256"=>sha_file(joinpath(dir,"primal.csv"))))
+    end
     writejson(joinpath(dir,"original_model_check.json"),Dict(
         "max_distance_above_1e-8"=>worst,"constraints_above_1e-8"=>length(violated),
         "cost_EUR2025"=>val(objective),"wind_pv_MWh"=>val(w.quota),"demand_MWh"=>w.demand,

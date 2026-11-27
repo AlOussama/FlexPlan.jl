@@ -131,6 +131,8 @@ def solve(source, target):
             sol = mosek.soltype.itr
             status = task.getsolsta(sol)
             result.update(termination=str(status), problem_status=str(task.getprosta(sol)))
+            if status in (mosek.solsta.optimal,mosek.solsta.prim_and_dual_feas,mosek.solsta.dual_feas):
+                result["native_dual_objective_EUR2025"] = task.getdualobj(sol)*receipt["objective_divisor"]
             if status in (mosek.solsta.optimal, mosek.solsta.prim_feas, mosek.solsta.prim_and_dual_feas):
                 point = np.empty(len(native))
                 point[native] = task.getxxslice(sol,0,len(native))

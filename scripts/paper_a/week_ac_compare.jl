@@ -1,27 +1,46 @@
 # Loaded by run_week_strength_comparison.jl after the authenticated weekly
 # investment, dispatch, cost and G2 routines have been assembled.
 const ac_label = ENV["PAPER_A_AC_FORMULATION"]
+criterion!="G2" && pkgversion(PowerModels)!=v"0.21.7" &&
+    error("Use the Julia 1.11 project manifest matching the independently checked AC BASE models (PowerModels 0.21.7)")
 const ac_type = Dict("LPAC"=>PowerModels.LPACCPowerModel,
                      "SOC-WR"=>PowerModels.SOCWRConicPowerModel,
                      "QCRM"=>PowerModels.QCRMPowerModel)[ac_label]
-const ac_solver = get(ENV,"PAPER_A_AC_SOLVER","gurobi")
-ac_solver in ("gurobi","ipopt") || error("Unsupported AC solver: $ac_solver")
-const ac_out = joinpath(root, get(ENV,"PAPER_A_AC_ATTEMPT",ac_label))
-const derived_dir = joinpath(root, "AC_CASE")
+const ac_solver = get(ENV,"PAPER_A_AC_SOLVER",criterion=="G0" ? "mosek" : "gurobi")
+ac_solver in ("gurobi","ipopt","mosek") || error("Unsupported AC solver: $ac_solver")
+criterion=="G0" && ac_solver!="mosek" && error("Direct PSD requires the SDP backend")
+const ac_out = joinpath(root, get(ENV,"PAPER_A_AC_ATTEMPT",criterion=="G2" ? ac_label : ac_label*"_"*criterion))
+const derived_dir = get(ENV,"PAPER_A_AC_CASE_DIR",joinpath(root, "AC_CASE"))
 const qratio = 0.4
 
 function confirmed_ac_case()
     file = joinpath(derived_dir, "case.json")
     if isfile(file)
         receipt = JSON.parsefile(joinpath(derived_dir,"receipt.json"))
+        parent_receipt=JSON.parsefile(joinpath(dirname(case_path),"receipt.json"))
+        parent_receipt["contract_sha256"]==sha_file(contract_path) || error("AC parent contract mismatch")
         sha_file(file)==receipt["case_sha256"]=="66885c9b5d27b21ac1000cf16e8da5d886b7ab50085783957907cebef8a41d3b" &&
             receipt["parent_sha256"]==sha_file(case_path)=="ae0f61e54e6aadfc1b4f3cde60f185bbe62c764fde84c96146d714c172b9d531" ||
             error("AC case identity mismatch")
         data = JSON.parsefile(file;dicttype=Dict{String,Any})
         data[FP._PAPER_A_PROFILE_KEY] = FP._PaperAProfileBinding("ap2:sha256:"*receipt["case_sha256"],receipt["profile_sha256"])
         FP.prepare_paper_a_data!(data)
+        if criterion!="G2"
+            binding=FP._paper_a_profile_binding(data)
+            spec=deepcopy(FP._paper_a_full37(data))
+            spec["variant"]["formulation"]=="G2" || error("Expected confirmed common G2 parent")
+            spec["variant"]["formulation"]=criterion
+            spec["variant_sha256"]=FP._paper_a_full37_variant_digest(spec["variant"])
+            data["paper_a_extension"]["full37_specification"]=spec
+            for sn in values(data["nw"])
+                sn["paper_a_extension"]["full37_specification"]=spec
+            end
+            FP._paper_a_advance_profile_binding!(data,binding)
+            FP.prepare_paper_a_data!(data)
+        end
         return data
     end
+    criterion=="G2" || error("Set PAPER_A_AC_CASE_DIR to the confirmed AC_CASE directory")
     data = comparison_case()
     parent = sha_file(case_path)
     parent=="ae0f61e54e6aadfc1b4f3cde60f185bbe62c764fde84c96146d714c172b9d531" || error("Wrong prepared G2 input")
@@ -95,6 +114,47 @@ function build_ac_week()
 end
 
 include("week_ac_audit.jl")
+function scale_ac_angle_rows!(m)
+    original=JuMP.AffExpr[]
+    for S in (JuMP.MOI.LessThan{Float64},JuMP.MOI.GreaterThan{Float64})
+        for row in JuMP.all_constraints(m,JuMP.AffExpr,S)
+            expr=JuMP.constraint_object(row).func
+            length(expr.terms)==2 && any(c->abs(c)==tan(pi/2),values(expr.terms)) || continue
+            sort(abs.(collect(values(expr.terms))))==[1.,tan(pi/2)] && JuMP.normalized_rhs(row)==0 ||
+                error("Unexpected native angle row")
+            push!(original,S==JuMP.MOI.LessThan{Float64} ? copy(expr) : -expr)
+            for (c,v) in JuMP.linear_terms(expr)
+                scaled=ldexp(c,-26)
+                ldexp(scaled,26)==c || error("Angle scaling failed round trip")
+                JuMP.set_normalized_coefficient(row,v,scaled)
+            end
+        end
+    end
+    length(original)==17472 || error("Incomplete signed angle row inventory")
+    return original
+end
+
+function conify_qcrm_currents!(m)
+    originals=JuMP.QuadExpr[]
+    for row in JuMP.all_constraints(m,JuMP.QuadExpr,JuMP.MOI.LessThan{Float64})
+        expr=JuMP.constraint_object(row).func
+        terms=collect(JuMP.quad_terms(expr))
+        length(terms)==3 || continue
+        cross=[(a,b) for (c,a,b) in terms if a!=b && c == -1]
+        squared=[a for (c,a,b) in terms if a==b && c == 1]
+        length(cross)==1 && length(squared)==2 || continue
+        u,v=only(cross)
+        all(t->JuMP.has_lower_bound(t) && JuMP.lower_bound(t)>=0,(u,v)) &&
+            isempty(expr.aff.terms) && iszero(expr.aff.constant) && iszero(JuMP.normalized_rhs(row)) ||
+            error("QCRM current cone requires nonnegative factors and a zero affine residual")
+        p,q=squared
+        JuMP.@constraint(m,[0.5*u,v,p,q] in JuMP.RotatedSecondOrderCone())
+        push!(originals,expr)
+        JuMP.delete(m,row)
+    end
+    length(originals)==8736 || error("Incomplete QCRM rotated-current conversion")
+    return originals
+end
 if ac_solver == "ipopt"
     import Ipopt
 end
@@ -108,16 +168,22 @@ function run_ac_week()
     (;m,pm,w,new_q,objective,scale) = build_ac_week()
     receipt=JSON.parsefile(joinpath(derived_dir,"receipt.json"))
     profile=Dict{String,Any}("formulation"=>ac_label,"model_type"=>string(ac_type),"case"=>receipt,
-        "solver"=>ac_solver,"variables"=>JuMP.num_variables(m),"G2_rows"=>length(w.gscr_rows),"added_project_Q_rows"=>2length(new_q),
+        "solver"=>ac_solver,"strength_method"=>criterion,"strength_profile_sha256"=>FP.paper_a_profile_identity(pm.data),
+        "variables"=>JuMP.num_variables(m),"G2_rows"=>(criterion=="G2" ? length(w.gscr_rows) : 0),"added_project_Q_rows"=>2length(new_q),
         "discrete_after_relaxation"=>count(v->JuMP.is_binary(v)||JuMP.is_integer(v),JuMP.all_variables(m)),
         "native_network_physics"=>"PowerModels","power_models_version"=>string(pkgversion(PowerModels)),
         "annualization"=>annual_factor,"objective_divisor"=>scale,"runner_sha256"=>sha_file(@__FILE__),
         "audit_source_sha256"=>sha_file(joinpath(@__DIR__,"week_ac_audit.jl")),
         "integration_sha256"=>sha_file(joinpath(dirname(pathof(FP)),"prob","uc_gscr_block_integration.jl")),
         "network_source_sha256"=>sha_file(joinpath(dirname(pathof(FP)),"prob","paper_a_ac_network.jl")))
-    @assert profile["discrete_after_relaxation"]==0 && length(w.gscr_rows)==6216 && length(new_q)==12432
+    certs=pm.ext[:paper_a_certificates]
+    @assert length(certs)==168 && all(c->c.kind==criterion,values(certs))
+    profile["strength_rows"]=length(w.gscr_rows)
+    profile["strength_edge_cones"]=criterion=="G3" ? sum(length(c.cones) for c in values(certs)) : 0
+    @assert profile["discrete_after_relaxation"]==0 && length(w.gscr_rows)==(criterion=="G0" ? 168 : 6216) && length(new_q)==12432
     writejson(joinpath(ac_out,"profile.json"),profile)
     if get(ENV,"PAPER_A_AC_EXPORT_NATIVE","0") == "1"
+        criterion=="G0" && error("PSD blocks require the MOSEK solve path")
         JuMP.set_optimizer(m,Gurobi.Optimizer)
         export_ac_coordinates(ac_out,(;m,pm,w,new_q,objective,scale))
         JuMP.MOI.Utilities.attach_optimizer(JuMP.backend(m))
@@ -143,7 +209,14 @@ function run_ac_week()
             "native_columns_sha256"=>sha_file(joinpath(ac_out,"native_columns.csv"))))
         return
     end
-    if ac_solver == "ipopt"
+    if ac_solver == "mosek"
+        JuMP.set_optimizer(m,N.MosekTools.Optimizer)
+        JuMP.set_optimizer_attribute(m,"MSK_IPAR_NUM_THREADS",2)
+        JuMP.set_optimizer_attribute(m,"MSK_DPAR_OPTIMIZER_MAX_TIME",budget)
+        for parameter in ("MSK_DPAR_INTPNT_CO_TOL_PFEAS","MSK_DPAR_INTPNT_CO_TOL_DFEAS","MSK_DPAR_INTPNT_CO_TOL_REL_GAP")
+            JuMP.set_optimizer_attribute(m,parameter,1e-10)
+        end
+    elseif ac_solver == "ipopt"
         JuMP.set_optimizer(m,Ipopt.Optimizer)
         JuMP.add_bridge(m,JuMP.MOI.Bridges.Constraint.SOCtoNonConvexQuadBridge)
         JuMP.add_bridge(m,JuMP.MOI.Bridges.Constraint.RSOCtoNonConvexQuadBridge)
@@ -165,13 +238,29 @@ function run_ac_week()
             JuMP.set_optimizer_attribute(m,k,v)
         end
     end
+    original_angles=criterion=="G0" && ac_label in ("SOC-WR","QCRM") ? scale_ac_angle_rows!(m) : JuMP.AffExpr[]
+    original_currents=criterion=="G0" && ac_label=="QCRM" ? conify_qcrm_currents!(m) : JuMP.QuadExpr[]
+    if criterion=="G0"
+        JuMP.MOI.Utilities.attach_optimizer(JuMP.backend(m))
+        dims=WeekStrengthAdmission.psd_sizes(JuMP.unsafe_backend(m))
+        dims==fill(37,168) || error("Expected 168 native hourly PSD blocks of order 37")
+        writejson(joinpath(ac_out,"native_psd.json"),Dict("dimensions"=>dims,"case_sha256"=>receipt["case_sha256"],
+            "dyadically_scaled_angle_rows"=>length(original_angles),"angle_exponent"=>-26,
+            "qcrm_rotated_currents"=>length(original_currents)))
+    end
     JuMP.optimize!(m)
-    result=Dict{String,Any}("formulation"=>ac_label,"case_sha256"=>receipt["case_sha256"],
+    result=Dict{String,Any}("formulation"=>ac_label,"strength_method"=>criterion,"case_sha256"=>receipt["case_sha256"],
         "termination"=>string(JuMP.termination_status(m)),"primal_status"=>string(JuMP.primal_status(m)),
         "raw_status"=>JuMP.raw_status(m),"seconds"=>JuMP.solve_time(m),"result_count"=>JuMP.result_count(m))
+    for (label,attribute) in (("native_dual_objective",JuMP.dual_objective_value),("native_objective_bound",JuMP.objective_bound))
+        value=try attribute(m) catch; nothing end
+        value isa Real && isfinite(value) && (result[label*"_EUR2025"]=value*scale)
+    end
     writejson(joinpath(ac_out,"outcome.json"),result)
     if JuMP.has_values(m) && JuMP.primal_status(m) in (JuMP.MOI.FEASIBLE_POINT,JuMP.MOI.NEARLY_FEASIBLE_POINT,JuMP.MOI.UNKNOWN_RESULT_STATUS)
         val=JuMP.value
+        isempty(original_angles) || (result["max_original_angle_violation"]=max(0.,maximum(val.(original_angles))))
+        isempty(original_currents) || (result["max_original_qcrm_current_violation"]=max(0.,maximum(val.(original_currents))))
         open(joinpath(ac_out,"primal.csv"),"w") do io
             println(io,"index,value")
             for v in JuMP.all_variables(m);println(io,JuMP.index(v).value,",",val(v));end
@@ -180,7 +269,13 @@ function run_ac_week()
         result["demand_MWh"]=w.demand
         result["wind_pv_MWh"]=val(w.quota)
         result["wind_pv_pct"]=100val(w.quota)/w.demand
-        result["min_G2_margin"]=minimum(val.(w.margins))
+        if criterion=="G2"
+            result["min_G2_margin"]=minimum(val.(w.margins))
+        else
+            eigenvalues=[FP.eigmin(FP.Symmetric(val.(FP._paper_a_online_expressions!(pm,n).M))) for n in 1:168]
+            result["hourly_min_strength_eigenvalue"]=eigenvalues
+            result["min_strength_eigenvalue"]=minimum(eigenvalues)
+        end
         branch_excess=0.; kcl_residual=0.; qexcess=0.
         for n in 1:168
             for (i,b) in fp.ref(pm,n,:branch), (f,t) in ((b["f_bus"],b["t_bus"]),(b["t_bus"],b["f_bus"]))

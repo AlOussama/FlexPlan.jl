@@ -109,6 +109,35 @@ def solve(source, directory=None):
             positions[int(name[1:])] = col
         assert np.min(positions) >= 0
         neighborhood = None
+        if os.environ.get("PAPER_A_QCRM_FLAT_MAGNITUDES") == "1":
+            # A witness search at nominal voltage magnitudes leaves angles,
+            # flows and both strength variants' original rows active.
+            assert profile["formulation"] == "QCRM"
+            affine_vars = {}
+            squared_vars = {}
+            with mps.open("rb") as stream:
+                for raw in stream:
+                    fields = raw.split()
+                    if not raw.startswith(b" "):
+                        section = fields[0]
+                        if section == b"QCMATRIX":
+                            row = fields[1]
+                    elif section == b"COLUMNS" and fields[1].startswith(b"qc") and float(fields[2]) == 1:
+                        affine_vars[fields[1]] = int(fields[0][1:])
+                    elif section == b"QCMATRIX" and fields[0] == fields[1] and float(fields[2]) == -1:
+                        squared_vars[row] = int(fields[0][1:])
+            assert len(squared_vars) == 6216
+            fixed = positions[[i for row,v in squared_vars.items() for i in (v,affine_vars[row])]]
+            assert len(set(fixed)) == 12432
+            for attr in (b"LB", b"UB"):
+                b = np.empty(n)
+                call("GRBgetdblattrarray", model, attr, 0, n, ct.c_void_p(b.ctypes.data))
+                assert np.all(b[fixed] <= 1) if attr == b"LB" else np.all(b[fixed] >= 1)
+                b[fixed] = 1
+                call("GRBsetdblattrarray", model, attr, 0, n, ct.c_void_p(b.ctypes.data))
+            call("GRBupdatemodel", model)
+            neighborhood = dict(fixed_magnitudes_pu=1, fixed_squared_magnitudes_pu2=1,
+                                fixed_coordinates=len(fixed))
         if "PAPER_A_AC_FEASIBILITY_NEAR" in os.environ:
             fix_lpac_voltages = os.environ.get("PAPER_A_AC_FIX_LPAC_VOLTAGES") == "1"
             assert feasibility_only or fix_lpac_voltages
@@ -217,6 +246,8 @@ def solve(source, directory=None):
                       aggregate=aggregate, strength_method=profile.get("strength_method", "G2"),
                       barrier_tolerance=barrier_tolerance, feasibility_tolerance=feasibility_tolerance)
         result["objective_kind"] = "feasibility_zero" if feasibility_only else "annualized_cost"
+        if neighborhood is not None and not feasibility_only:
+            result["objective_kind"] = "restricted_primal_cost"
         if profile.get("outer_lp"):
             result["objective_kind"] = "outer_lp_lower_bound"
             duals = {}

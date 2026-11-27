@@ -1,0 +1,42 @@
+[
+  {
+    "path": "G0_EIGEN_CUTS_20261127_01/LPAC/adaptive_outer/exact_dual_1.json",
+    "bytes": 1853,
+    "sha256": "caefcba42e6974d56c569879d105d49657759da2ef3ac4e2d92df3474008f172"
+  },
+  {
+    "path": "G0_EIGEN_CUTS_20261127_01/SOC/g0_certified_lower_boxdiag_PM0217.json",
+    "bytes": 2097,
+    "sha256": "45f5257139edb5dc33e9766611b7a4c99c1c646b4effe5f91a0c9d1ae15ddcdf"
+  },
+  {
+    "path": "G0_EIGEN_CUTS_20261127_01/QCRM/g0_certified_lower_boxdiag_PM0217.json",
+    "bytes": 1223,
+    "sha256": "ab09a821f9ae8e7ce649e2ecc32b964df7b42ce1f6495488db1fd7684363931e"
+  },
+  {
+    "path": "G0_EIGEN_CUTS_20261127_01/LPAC/gfm_reclassification/original_primal_review.json",
+    "bytes": 6832,
+    "sha256": "125155277c41d3e0549fb0c5daad416666adc71fd163656775fb367b0054de9c"
+  },
+  {
+    "path": "G0_EIGEN_CUTS_20261127_01/SOC/direct_sdp_pilot_local_polish/independent_original_dyadic.json",
+    "bytes": 6873,
+    "sha256": "6e5f25b1ce03d53930686e20dcf3ee67be2ebaa5418d7f3890186914c68e0e43"
+  },
+  {
+    "path": "QCRM_G0_WITNESS_20261127_01/nominal_g2_cost/independent_original_dyadic.json",
+    "bytes": 6749,
+    "sha256": "2ddbac0a4efae8430175bd17d8d4e9b26d0d60e4abfe544697c087157e84dccd"
+  },
+  {
+    "path": "DIRECT_GSCR_PM0217_01/LPAC_G3_solve/original_gscr_replay.json",
+    "bytes": 8079,
+    "sha256": "816cec9707942dd1cb2077993fda77ac6904c5fb1d04ec80dc7e7d37732b842d"
+  },
+  {
+    "path": "DIRECT_GSCR_PM0217_01/regression.log",
+    "bytes": 3439,
+    "sha256": "3f1286e8033fa06a7869d3fe41e857909d4a371d6bd44b08a0e443dac90afcc0"
+  }
+]
