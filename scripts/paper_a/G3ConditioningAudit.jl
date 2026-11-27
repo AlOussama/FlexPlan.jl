@@ -10,6 +10,7 @@ setdata(s::MOI.LessThan)=Dict("kind"=>"le","rhs"=>s.upper)
 setdata(s::MOI.EqualTo)=Dict("kind"=>"eq","rhs"=>s.value)
 setdata(s::MOI.Interval)=Dict("kind"=>"interval","lower"=>s.lower,"upper"=>s.upper)
 setdata(s::MOI.RotatedSecondOrderCone)=Dict("kind"=>"rsoc","dimension"=>s.dimension)
+setdata(s::MOI.SecondOrderCone)=Dict("kind"=>"soc","dimension"=>s.dimension)
 setdata(s)=Dict("kind"=>string(typeof(s)))
 fdata(v::VariableRef)=Dict("constant"=>0.,"terms"=>[[index(v).value,1.]])
 fdata(f::GenericAffExpr)=Dict("constant"=>f.constant,"terms"=>[[index(v).value,c] for (c,v) in linear_terms(f)])
@@ -34,11 +35,12 @@ function original_point_check(model,point,path)
     CSV.write(path,violations)
     polynomial=0.
     for (F,S) in list_of_constraint_types(model)
-        S <: MOI.RotatedSecondOrderCone || continue
+        S <: Union{MOI.RotatedSecondOrderCone,MOI.SecondOrderCone} || continue
         for ci in all_constraints(model,F,S)
             evaluate(z)=z isa VariableRef ? point_values[z] : z isa Real ? z : JuMP.value(v->point_values[v],z)
             y=evaluate.(constraint_object(ci).func)
-            polynomial=max(polynomial,-y[1],-y[2],sum(abs2,y[3:end])-2*y[1]*y[2])
+            violation=S <: MOI.SecondOrderCone ? max(-y[1],sum(abs2,y[2:end])-y[1]^2) : max(-y[1],-y[2],sum(abs2,y[3:end])-2*y[1]*y[2])
+            polynomial=max(polynomial,violation)
         end
     end
     maximum_distance=maximum(values(residuals);init=0.)
@@ -46,6 +48,7 @@ function original_point_check(model,point,path)
         "violations_over_1e_7"=>count(x->x.violation>1e-7,violations),
         "violations_over_1e_6"=>count(x->x.violation>1e-6,violations),
         "maximum_original_RSOC_polynomial_violation"=>polynomial,
+        "maximum_original_SOC_or_RSOC_polynomial_violation"=>polynomial,
         "point_pass_at_unchanged_1e_7"=>max(maximum_distance,polynomial)<=1e-7,
         "all_original_values"=>length(point_values),"residual_csv_sha256"=>sha(path))
 end

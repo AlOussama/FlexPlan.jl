@@ -307,7 +307,7 @@ else
             N.input_range(solver_model)==profile["conditioned_input_range"] || error("Actual conditioned input range differs from profile; optimize not called")
         end
         JuMP.set_optimizer(solver_model,opt)
-        criterion=="G3" && N.configure_bridges!(solver_model,opt)
+        criterion in ("G0","G3") && N.configure_bridges!(solver_model,opt)
         bridge=criterion=="G3" ? N.prepare_backend!(solver_model,opt) : nothing
         native_backend==:gurobi && JuMP.set_optimizer_attribute(solver_model,"LogFile",joinpath(out,"gurobi.log"))
         if phase=="admit_solve"
@@ -445,11 +445,12 @@ else
             int_error=mode=="integer" ? maximum(abs(v(x)-round(v(x))) for x in discrete) : nothing
             original_check=criterion in ("G0","G3") ? N.primal_check(model) : Dict("status"=>isempty(residuals) ? "passed" : "failed","tolerance"=>1e-6)
             if criterion=="G3"
-                legacy_poly=maximum((let y=JuMP.value.(JuMP.constraint_object(cone).func)
-                    (sqrt(2.)*y[3])^2-2*(2*y[1])*y[2]
+                cone_poly=maximum((let obj=JuMP.constraint_object(cone),y=JuMP.value.(obj.func)
+                    obj.set isa JuMP.MOI.SecondOrderCone ? sum(abs2,y[2:end])-y[1]^2 :
+                        sum(abs2,y[3:end])-2*y[1]*y[2]
                 end for cert in values(pm.ext[:paper_a_certificates]) for cone in cert.cones);init=0.)
-                original_check["historical_raw_cone_polynomial_violation"]=legacy_poly
-                legacy_poly>N.PRIMAL_TOLERANCE && (original_check["status"]="failed_original_primal_check")
+                original_check["raw_cone_polynomial_violation"]=cone_poly
+                cone_poly>N.PRIMAL_TOLERANCE && (original_check["status"]="failed_original_primal_check")
             end
             native_ok=native_backend==:mosek ? JuMP.primal_status(model)==JuMP.MOI.FEASIBLE_POINT :
                 all(get(native,k,nothing) isa Number && native[k]<=1e-6 for k in ("ConstrVio","BoundVio")) &&

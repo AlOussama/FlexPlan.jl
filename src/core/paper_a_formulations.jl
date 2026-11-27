@@ -178,8 +178,13 @@ function add_paper_a_constraints!(model,B,p,M,f::AbstractPaperAFormulation;alpha
             isfinite(av) && av==bv && av<=0 || throw(ArgumentError("G3 requires finite symmetric Z edges"))
             av!=0 && push!(edges,(i,j))
         end
+        all(isfinite(2*(M[i,j] isa Number ? M[i,j] : M[i,j].constant)) for (i,j) in edges) ||
+            throw(ArgumentError("G3 doubled edge constant overflows"))
         q=JuMP.@variable(model,[1:length(edges),1:2],lower_bound=0,base_name="g3_q")
-        cones=[JuMP.@constraint(model,[q[k,1]/2,q[k,2],M[i,j]] in JuMP.RotatedSecondOrderCone()) for (k,(i,j)) in enumerate(edges)]
+        # The standard SOC uses only exact dyadic operations. In particular,
+        # neither an irrational rotation nor a rounded square of Mij is formed:
+        # (q1+q2)^2-(q1-q2)^2-(2*Mij)^2 = 4*(q1*q2-Mij^2).
+        cones=[JuMP.@constraint(model,[q[k,1]+q[k,2],q[k,1]-q[k,2],2*M[i,j]] in JuMP.SecondOrderCone()) for (k,(i,j)) in enumerate(edges)]
         residue=[M[i,i]-sum((i==a ? q[k,1] : q[k,2]) for (k,(a,b)) in enumerate(edges) if i==a||i==b;init=0.) for i in 1:n]
         rows=[JuMP.@constraint(model,residue[i]>=0) for i in 1:n]
         return (kind="G3",edges=edges,q=q,cones=cones,residue=residue,rows=rows)

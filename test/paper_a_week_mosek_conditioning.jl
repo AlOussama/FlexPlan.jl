@@ -15,7 +15,7 @@ include("../scripts/paper_a/WeekStrengthAdmission.jl")
     attached=unsafe_backend(copy.model)
     pm=(;ext=Dict(:paper_a_certificates=>Dict(1=>cert)))
     @test WeekStrengthAdmission.native_strength_rows(pm,copy,attached)==
-        Dict("native_RSOC_exact_readbacks"=>1,"native_node_row_exact_readbacks"=>2)
+        Dict("native_SOC_exact_readbacks"=>1,"native_RSOC_exact_readbacks"=>0,"native_node_row_exact_readbacks"=>2)
     @test copy.exponents[x]!=0
     @test WeekStrengthAdmission.native_cost(copy.model,attached)["constant"]==12
     optimize!(copy.model)

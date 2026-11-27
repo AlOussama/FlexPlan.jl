@@ -56,7 +56,7 @@ end
 function native_strength_rows(pm,copy,native)
     m=copy.model
     idx=Dict(index(v)=>optimizer_index(v) for v in all_variables(m))
-    ncone=nrows=0
+    nsoc=nrsoc=nrows=0
     for cert in values(pm.ext[:paper_a_certificates])
         for original in Iterators.flatten((cert.cones,cert.rows))
             mapped=copy.constraints[original]
@@ -67,9 +67,10 @@ function native_strength_rows(pm,copy,native)
             isapprox(actual,expected;rtol=0,atol=0) &&
                 MOI.get(native,MOI.ConstraintSet(),ci)==object.set || error("Native G3 strength row differs at $ci")
         end
-        ncone+=length(cert.cones)
+        nsoc+=count(c->constraint_object(c).set isa MOI.SecondOrderCone,cert.cones)
+        nrsoc+=count(c->constraint_object(c).set isa MOI.RotatedSecondOrderCone,cert.cones)
         nrows+=length(cert.rows)
     end
-    return Dict("native_RSOC_exact_readbacks"=>ncone,"native_node_row_exact_readbacks"=>nrows)
+    return Dict("native_SOC_exact_readbacks"=>nsoc,"native_RSOC_exact_readbacks"=>nrsoc,"native_node_row_exact_readbacks"=>nrows)
 end
 end

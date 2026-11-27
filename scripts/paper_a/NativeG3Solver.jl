@@ -2,6 +2,8 @@
 module NativeG3Solver
 using JuMP
 import MosekTools, Gurobi
+include("G3NativeReadback.jl")
+native_certificate_readback!(args...;kwargs...)=G3NativeReadback.native_certificate_readback!(args...;kwargs...)
 const MOI = JuMP.MOI
 const MIN_CONSTRAINT_COEFFICIENT = 1e-9
 const MAX_COEFFICIENT = 2.0^40
@@ -41,6 +43,12 @@ is_native(opt) = opt isa MOI.OptimizerWithAttributes && opt.optimizer_constructo
 backend_name(opt) = opt.optimizer_constructor === MosekTools.Optimizer ? "MOSEK" : "Gurobi"
 
 function configure_bridges!(model,opt)
+    if backend_name(opt)=="MOSEK"
+        # Preserve unscaled symmetric PSD entries on shared conic routes.
+        # MOSEK's matrix-variable representation carries offdiagonals through
+        # the native trace convention without a rounded sqrt(2) rotation.
+        remove_bridge(model,MOI.Bridges.Constraint.SetDotScalingBridge)
+    end
     if backend_name(opt)=="Gurobi"
         # Keep the binary-rational RSOC model: the default variable rotation
         # introduces rounded 1/sqrt(2) coefficients. The existing MOI bridge
@@ -53,7 +61,7 @@ function configure_bridges!(model,opt)
 end
 
 function prepare_backend!(model,opt)
-    backend_name(opt)=="Gurobi" || return Dict("status"=>"native_RSOC_supported")
+    backend_name(opt)=="Gurobi" || return Dict("status"=>"native_SOC_and_RSOC_supported")
     MOI.Utilities.attach_optimizer(backend(model))
     native=unsafe_backend(model)
     # MOI's quadratic bridge emits nonnegativity as affine rows. Gurobi's
@@ -68,13 +76,24 @@ function prepare_backend!(model,opt)
     bounds=Dict(MOI.get(native,MOI.ConstraintFunction(),ci)=>ci for ci in
         MOI.get(native,MOI.ListOfConstraintIndices{MOI.VariableIndex,MOI.GreaterThan{Float64}}()))
     ledger=Any[]
+    # Gurobi represents a native SOC using a nonnegative head and diagonal
+    # quadratic coefficients +1,-1,... . The vector-affine bridge retains
+    # each fixed tail through an equality, avoiding a rounded constant square.
+    for ci in MOI.get(native,MOI.ListOfConstraintIndices{MOI.VectorOfVariables,MOI.SecondOrderCone}())
+        f=MOI.get(native,MOI.ConstraintFunction(),ci)
+        push!(ledger,Dict("native_SOC_constraint_index"=>ci.value,
+            "native_SOC_variable_indices"=>[v.value for v in f.variables],
+            "quad_form"=>"head_squared-sum(tail_squared)>=0; head>=0; exact unit coefficients"))
+    end
     for ci in MOI.get(native,MOI.ListOfConstraintIndices{MOI.ScalarQuadraticFunction{Float64},MOI.LessThan{Float64}}())
         f=MOI.get(native,MOI.ConstraintFunction(),ci);s=MOI.get(native,MOI.ConstraintSet(),ci)
         cross=filter(t->t.variable_1!=t.variable_2,f.quadratic_terms)
         diag=filter(t->t.variable_1==t.variable_2,f.quadratic_terms)
+        # Other quadratic constraints can belong to the AC network. Only the
+        # legacy RSOC bridge is qualified and modified by this helper.
         length(cross)==1 && only(cross).coefficient==-2. && !isempty(diag) &&
             all(t->t.coefficient==2.,diag) && isempty(f.affine_terms) && f.constant==0. && s.upper==0. ||
-            throw(NumericalInputError("unverified_native_rotated_quadratic_form"))
+            continue
         ends=(only(cross).variable_1,only(cross).variable_2)
         for v in ends
             v in proved || throw(NumericalInputError("native_RSOC_endpoint_nonnegativity_not_proved"))
@@ -90,7 +109,7 @@ function prepare_backend!(model,opt)
             "nonnegativity_proof"=>"existing_exact_1_times_variable_ge_0_affine_row",
             "quad_form"=>"sum(w_squared)-2*u*v<=0; exact coefficients"))
     end
-    return Dict("status"=>"exact_RSOC_quadratic_bridge_with_proved_redundant_bounds",
+    return Dict("status"=>"native_SOC_and_exact_legacy_RSOC_bridge",
         "cones"=>length(ledger),"ledger"=>ledger,"nonconvex_parameter"=>0)
 end
 
@@ -198,15 +217,17 @@ function primal_check(model)
     residual = maximum(values(primal_feasibility_report(model; atol=0.)); init=0.)
     polynomial=0.
     for (F,S) in list_of_constraint_types(model)
-        S <: MOI.RotatedSecondOrderCone || continue
+        S <: Union{MOI.RotatedSecondOrderCone,MOI.SecondOrderCone} || continue
         for ci in all_constraints(model,F,S)
             y=value.(constraint_object(ci).func)
-            polynomial=max(polynomial,-y[1],-y[2],sum(abs2,y[3:end])-2*y[1]*y[2])
+            violation=S <: MOI.SecondOrderCone ? max(-y[1],sum(abs2,y[2:end])-y[1]^2) : max(-y[1],-y[2],sum(abs2,y[3:end])-2*y[1]*y[2])
+            polynomial=max(polynomial,violation)
         end
     end
     return Dict("status"=>max(residual,polynomial) <= PRIMAL_TOLERANCE ? "passed" : "failed_original_primal_check",
         "maximum_constraint_distance"=>residual, "tolerance"=>PRIMAL_TOLERANCE,
         "maximum_polynomial_RSOC_violation"=>polynomial,
+        "maximum_polynomial_SOC_or_RSOC_violation"=>polynomial,
         "interpretation"=>"numerical_original_model_check_not_exact_feasibility")
 end
 

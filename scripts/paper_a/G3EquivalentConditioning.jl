@@ -60,11 +60,22 @@ function scaled_copy(original; protected=Set{VariableRef}(), objective_divisor=8
     # q has no finite upper bound. Its scale uses only the fixed original edge
     # constant, never a candidate point or an assumed physical capacity.
     for (F,S) in list_of_constraint_types(original)
-        S <: MOI.RotatedSecondOrderCone || continue
+        S <: Union{MOI.RotatedSecondOrderCone,MOI.SecondOrderCone} || continue
         for ci in all_constraints(original,F,S)
             f=constraint_object(ci).func
             length(f)==3 || error("Only fixed-edge three-coordinate RSOC qualified")
             c=f[3] isa Real ? f[3] : isempty(f[3].terms) ? f[3].constant : error("Variable edge constant")
+            if S <: MOI.SecondOrderCone
+                all(z isa GenericAffExpr && z.constant==0. for z in f[1:2]) || error("Offset SOC endpoint")
+                plus=Dict(v=>a for (a,v) in linear_terms(f[1]));minus=Dict(v=>a for (a,v) in linear_terms(f[2]))
+                length(plus)==2 && Set(keys(plus))==Set(keys(minus)) && all(==(1.),values(plus)) &&
+                    sort(collect(values(minus)))==[-1.,1.] || error("Noncanonical original SOC endpoints")
+                for v in keys(plus)
+                    v in protected && error("Discrete G3 cone endpoint")
+                    exponents[v]=column_exponent(abs(c/2))
+                end
+                continue
+            end
             for endpoint in f[1:2]
                 endpoint isa GenericAffExpr && endpoint.constant!=0. && error("Offset RSOC endpoint")
                 terms=endpoint isa VariableRef ? [(1.,endpoint)] : collect(linear_terms(endpoint))
@@ -87,7 +98,7 @@ function scaled_copy(original; protected=Set{VariableRef}(), objective_divisor=8
         elseif f isa GenericAffExpr
             e=row_exponent(coefficient_max(f,exponents))
             new=ScalarConstraint(affine(f,variables,exponents,e),scaled_set(s,e))
-        elseif f isa AbstractVector && s isa MOI.RotatedSecondOrderCone
+        elseif f isa AbstractVector && s isa Union{MOI.RotatedSecondOrderCone,MOI.SecondOrderCone}
             e=row_exponent(maximum(coefficient_max(z,exponents;constants=true) for z in f))
             new=VectorConstraint([affine(z,variables,exponents,e) for z in f],s)
         else

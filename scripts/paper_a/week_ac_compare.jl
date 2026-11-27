@@ -114,7 +114,8 @@ function build_ac_week()
 end
 
 include("week_ac_audit.jl")
-function scale_ac_angle_rows!(m)
+include("NativeStrengthReference.jl")
+function scale_ac_angle_rows!(m;original_snapshot=nothing)
     original=JuMP.AffExpr[]
     for S in (JuMP.MOI.LessThan{Float64},JuMP.MOI.GreaterThan{Float64})
         for row in JuMP.all_constraints(m,JuMP.AffExpr,S)
@@ -123,6 +124,7 @@ function scale_ac_angle_rows!(m)
             sort(abs.(collect(values(expr.terms))))==[1.,tan(pi/2)] && JuMP.normalized_rhs(row)==0 ||
                 error("Unexpected native angle row")
             push!(original,S==JuMP.MOI.LessThan{Float64} ? copy(expr) : -expr)
+            original_snapshot===nothing || preserve_ac_original_constraint!(original_snapshot,row)
             for (c,v) in JuMP.linear_terms(expr)
                 scaled=ldexp(c,-26)
                 ldexp(scaled,26)==c || error("Angle scaling failed round trip")
@@ -134,7 +136,7 @@ function scale_ac_angle_rows!(m)
     return original
 end
 
-function conify_qcrm_currents!(m)
+function conify_qcrm_currents!(m;original_snapshot=nothing)
     originals=JuMP.QuadExpr[]
     for row in JuMP.all_constraints(m,JuMP.QuadExpr,JuMP.MOI.LessThan{Float64})
         expr=JuMP.constraint_object(row).func
@@ -148,6 +150,7 @@ function conify_qcrm_currents!(m)
             isempty(expr.aff.terms) && iszero(expr.aff.constant) && iszero(JuMP.normalized_rhs(row)) ||
             error("QCRM current cone requires nonnegative factors and a zero affine residual")
         p,q=squared
+        original_snapshot===nothing || preserve_ac_original_constraint!(original_snapshot,row)
         JuMP.@constraint(m,[0.5*u,v,p,q] in JuMP.RotatedSecondOrderCone())
         push!(originals,expr)
         JuMP.delete(m,row)
@@ -182,6 +185,7 @@ function run_ac_week()
     profile["strength_edge_cones"]=criterion=="G3" ? sum(length(c.cones) for c in values(certs)) : 0
     @assert profile["discrete_after_relaxation"]==0 && length(w.gscr_rows)==(criterion=="G0" ? 168 : 6216) && length(new_q)==12432
     writejson(joinpath(ac_out,"profile.json"),profile)
+    original_snapshot=freeze_ac_original_model(m)
     if get(ENV,"PAPER_A_AC_EXPORT_NATIVE","0") == "1"
         criterion=="G0" && error("PSD blocks require the MOSEK solve path")
         JuMP.set_optimizer(m,Gurobi.Optimizer)
@@ -211,6 +215,7 @@ function run_ac_week()
     end
     if ac_solver == "mosek"
         JuMP.set_optimizer(m,N.MosekTools.Optimizer)
+        criterion=="G0" && NativeStrengthReference.configure_g0!(m)
         JuMP.set_optimizer_attribute(m,"MSK_IPAR_NUM_THREADS",2)
         JuMP.set_optimizer_attribute(m,"MSK_DPAR_OPTIMIZER_MAX_TIME",budget)
         for parameter in ("MSK_DPAR_INTPNT_CO_TOL_PFEAS","MSK_DPAR_INTPNT_CO_TOL_DFEAS","MSK_DPAR_INTPNT_CO_TOL_REL_GAP")
@@ -233,13 +238,43 @@ function run_ac_week()
         end
     else
         JuMP.set_optimizer(m,Gurobi.Optimizer)
+        criterion=="G3" && N.configure_bridges!(m,N.optimizer(;backend=:gurobi))
+        criterion=="G3" && JuMP.set_optimizer_attribute(m,"NonConvex",0)
         for (k,v) in (("Threads",4),("TimeLimit",budget),("LogFile",joinpath(ac_out,"gurobi.log")),
                       ("NumericFocus",2),("BarHomogeneous",1),("BarQCPConvTol",1e-7),("Seed",1))
             JuMP.set_optimizer_attribute(m,k,v)
         end
     end
-    original_angles=criterion=="G0" && ac_label in ("SOC-WR","QCRM") ? scale_ac_angle_rows!(m) : JuMP.AffExpr[]
-    original_currents=criterion=="G0" && ac_label=="QCRM" ? conify_qcrm_currents!(m) : JuMP.QuadExpr[]
+    original_angles=ac_solver=="mosek" && ac_label in ("SOC-WR","QCRM") ? scale_ac_angle_rows!(m;original_snapshot) : JuMP.AffExpr[]
+    original_currents=ac_solver=="mosek" && ac_label=="QCRM" ? conify_qcrm_currents!(m;original_snapshot) : JuMP.QuadExpr[]
+    if get(ENV,"PAPER_A_AC_REFERENCE_ONLY","0")=="1"
+        profile["optimization_performed"]=false
+        profile["original_audit_snapshot_rows"]=length(original_snapshot.rows)
+        profile["dyadically_scaled_angle_rows"]=length(original_angles)
+        profile["qcrm_converted_current_rows"]=length(original_currents)
+        profile["native_reference_source_sha256"]=sha_file(joinpath(@__DIR__,"NativeStrengthReference.jl"))
+        profile["g3_native_readback_source_sha256"]=sha_file(joinpath(@__DIR__,"G3NativeReadback.jl"))
+        profile["requested_parameters"]=ac_solver=="mosek" ? Dict(
+            "MSK_IPAR_NUM_THREADS"=>2,"MSK_DPAR_OPTIMIZER_MAX_TIME"=>budget,
+            "MSK_DPAR_INTPNT_CO_TOL_PFEAS"=>1e-10,"MSK_DPAR_INTPNT_CO_TOL_DFEAS"=>1e-10,
+            "MSK_DPAR_INTPNT_CO_TOL_REL_GAP"=>1e-10) : Dict(
+            "Threads"=>4,"TimeLimit"=>budget,"NumericFocus"=>2,"BarHomogeneous"=>1,
+            "BarQCPConvTol"=>1e-7,"Seed"=>1,"NonConvex"=>0)
+        writejson(joinpath(ac_out,"profile.json"),profile)
+        export_ac_coordinates(ac_out,(;m,pm,w,new_q,objective,scale))
+        JuMP.MOI.Utilities.attach_optimizer(JuMP.backend(m))
+        if criterion=="G0"
+            matrices=Dict(n=>FP._paper_a_online_expressions!(pm,n).M for n in 1:168)
+            report=NativeStrengthReference.export_g0!(ac_out,m,matrices;metadata=profile)
+            writejson(joinpath(ac_out,"reference_export.json"),report)
+        elseif criterion=="G3"
+            report=N.native_certificate_readback!(ac_out,m,certs)
+            writejson(joinpath(ac_out,"reference_export.json"),report)
+        else
+            error("Reference-only route requires G0 or G3")
+        end
+        return
+    end
     if criterion=="G0"
         JuMP.MOI.Utilities.attach_optimizer(JuMP.backend(m))
         dims=WeekStrengthAdmission.psd_sizes(JuMP.unsafe_backend(m))

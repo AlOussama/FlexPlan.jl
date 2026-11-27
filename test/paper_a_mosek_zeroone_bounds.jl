@@ -12,7 +12,7 @@ const NZ=NativeG3Solver
         @objective(m,Min,z)
         opt=NZ.optimizer(;backend=:mosek)
         set_optimizer(m,opt);set_silent(m);NZ.configure_bridges!(m,opt)
-        @test NZ.prepare_backend!(m,opt)["status"]=="native_RSOC_supported"
+        @test NZ.prepare_backend!(m,opt)["status"]=="native_SOC_and_RSOC_supported"
         @test all(start_value(v)===nothing for v in all_variables(m))
         optimize!(m)
         if feasible

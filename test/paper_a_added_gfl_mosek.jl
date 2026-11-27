@@ -19,7 +19,7 @@ include("../scripts/paper_a/NativeG3Solver.jl")
         opt=N.optimizer(;backend=:mosek)
         set_optimizer(m,opt);set_silent(m)
         N.configure_bridges!(m,opt)
-        @test N.prepare_backend!(m,opt)["status"]=="native_RSOC_supported"
+        @test N.prepare_backend!(m,opt)["status"]=="native_SOC_and_RSOC_supported"
         optimize!(m)
         @test termination_status(m)==MOI.OPTIMAL
         @test primal_status(m)==MOI.FEASIBLE_POINT
