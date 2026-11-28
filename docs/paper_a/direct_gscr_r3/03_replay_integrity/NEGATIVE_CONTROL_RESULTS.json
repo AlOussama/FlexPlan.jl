@@ -1,0 +1,124 @@
+{
+  "source_freeze_commit": "ebaffb57feb3a27f2d7d87b745930664f625f935",
+  "inputs": {
+    "focused_validation": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\03_replay_integrity\\focused_validation.json",
+      "bytes": 1573,
+      "sha256": "d1edf669d33a475e921786b50f25a3a4818811c8ad10ee649e339b42408f972d"
+    },
+    "julia_test_log": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\03_replay_integrity\\julia_focused_final.log",
+      "bytes": 310,
+      "sha256": "5f00e1bab65e653ae9205c1d5e853f4307191ddfcb017e73c245a9bddfd73c36"
+    },
+    "python_test_log": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\03_replay_integrity\\python_focused_final.log",
+      "bytes": 522,
+      "sha256": "5e143c1affce66bea57a2d54d9dd348bd282aaaa62c783e65c01ea29890739a5"
+    }
+  },
+  "python_test_groups": 3,
+  "julia_tests": 12,
+  "result": "PASS",
+  "controls": [
+    {
+      "language": "Python",
+      "control": "missing/changed expected input bytes",
+      "result": "PASS"
+    },
+    {
+      "language": "Python",
+      "control": "missing role",
+      "result": "PASS"
+    },
+    {
+      "language": "Python",
+      "control": "duplicate/index-invalid/native-invalid mapping",
+      "result": "PASS"
+    },
+    {
+      "language": "Python",
+      "control": "full M key missing/duplicate",
+      "result": "PASS"
+    },
+    {
+      "language": "Python",
+      "control": "nonfinite/unknown sparse coordinate",
+      "result": "PASS"
+    },
+    {
+      "language": "Python",
+      "control": "missing nodal coordinates",
+      "result": "PASS"
+    },
+    {
+      "language": "Python",
+      "control": "duplicate/unknown terminal coordinates",
+      "result": "PASS"
+    },
+    {
+      "language": "Julia",
+      "control": "1e-12 solver scaling hides angle residual",
+      "result": "PASS"
+    },
+    {
+      "language": "Julia",
+      "control": "original angle residual remains 1e-3",
+      "result": "PASS"
+    },
+    {
+      "language": "Julia",
+      "control": "deleted original current row remains evaluated",
+      "result": "PASS"
+    },
+    {
+      "language": "Julia",
+      "control": "unpreserved original row deletion fails closed",
+      "result": "PASS"
+    },
+    {
+      "language": "Julia",
+      "control": "explicit expected manifest required",
+      "result": "PASS"
+    },
+    {
+      "language": "Julia",
+      "control": "changed expected audit terms rejected before evaluation",
+      "result": "PASS"
+    },
+    {
+      "language": "Julia",
+      "control": "missing original primal rejected",
+      "result": "PASS"
+    },
+    {
+      "language": "Julia",
+      "control": "duplicate/NaN/unknown/missing primal coordinates rejected",
+      "result": "PASS"
+    },
+    {
+      "language": "Python",
+      "control": "python -O assertion bypass",
+      "result": "PASS_FAIL_CLOSED",
+      "observed": "RuntimeError before imports and evaluation"
+    },
+    {
+      "language": "Python",
+      "control": "same-size original row corruption",
+      "result": "PASS_FAIL_CLOSED"
+    }
+  ],
+  "angle_scaling_control": {
+    "original_residual": 0.001,
+    "solver_row_scaling": 1e-12,
+    "native_report_atol": 1e-08,
+    "native_report_flags_violation": false,
+    "original_report_flags_violation": true
+  },
+  "scope": "Focused tests are actual malformed files/coordinates or original-row mutation controls; not full-week optimization",
+  "supplemental_hash_control": {
+    "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\03_replay_integrity\\SAME_SIZE_SHA_NEGATIVE_CONTROL.json",
+    "bytes": 919,
+    "sha256": "529741f7e6be8883c7f84ba97c2fbecdd2908a1a93cedfff5f72019dc227792a"
+  }
+}

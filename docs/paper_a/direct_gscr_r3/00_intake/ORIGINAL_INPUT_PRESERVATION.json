@@ -1,0 +1,141 @@
+{
+  "status": "PASS",
+  "checked_files": 1251,
+  "unchanged_files": 1238,
+  "checked_unchanged_bytes": 6333591003,
+  "unexpected_changes": [],
+  "authorized_live_source_changes": [
+    {
+      "path": "D:\\Projekte\\Code\\FlexPlan_UC_GSCR\\scripts\\paper_a\\AP3Pipeline.jl",
+      "r2_sha256": "f1d712766ff5615ad8877cbad12ad7216bdecae8b2668c2cac7c3f642beb4337",
+      "new_sha256": "1e40abbb9a1fecfdcf2eee0018add0fe13fc5df7bfc836e2f1826c05c9335125",
+      "original_base_commit_preserved": true,
+      "exact_original_bytes_recoverable_from_base_blob": true,
+      "disposition": "R3_AUTHORIZED_LIVE_SOURCE_CHANGE_NOT_IMMUTABLE_RESULT",
+      "original_byte_restoration": "LF_to_CRLF",
+      "recovered_original_sha256": "f1d712766ff5615ad8877cbad12ad7216bdecae8b2668c2cac7c3f642beb4337"
+    },
+    {
+      "path": "D:\\Projekte\\Code\\FlexPlan_UC_GSCR\\scripts\\paper_a\\G3ConditioningAudit.jl",
+      "r2_sha256": "463a293bd6483a85b4a70a97364c4b16e44910d0d399bc9aaa4c61e15335f422",
+      "new_sha256": "ad19e298feb1f330bfc7ea15f6208f69bc7ad27f64678d68a1a6b40f04d1a66e",
+      "original_base_commit_preserved": true,
+      "exact_original_bytes_recoverable_from_base_blob": true,
+      "disposition": "R3_AUTHORIZED_LIVE_SOURCE_CHANGE_NOT_IMMUTABLE_RESULT",
+      "original_byte_restoration": "Git_blob_bytes",
+      "recovered_original_sha256": "463a293bd6483a85b4a70a97364c4b16e44910d0d399bc9aaa4c61e15335f422"
+    },
+    {
+      "path": "D:\\Projekte\\Code\\FlexPlan_UC_GSCR\\scripts\\paper_a\\G3EquivalentConditioning.jl",
+      "r2_sha256": "4f19d1ec3f1475e9eedad42edaaaa2805681e841eba152677879b4ec1acc7b25",
+      "new_sha256": "7e582e6f4e5dbeceff0408ef8e198ccda6ef87377feb7de0b915119cbd1ed920",
+      "original_base_commit_preserved": true,
+      "exact_original_bytes_recoverable_from_base_blob": true,
+      "disposition": "R3_AUTHORIZED_LIVE_SOURCE_CHANGE_NOT_IMMUTABLE_RESULT",
+      "original_byte_restoration": "Git_blob_bytes",
+      "recovered_original_sha256": "4f19d1ec3f1475e9eedad42edaaaa2805681e841eba152677879b4ec1acc7b25"
+    },
+    {
+      "path": "D:\\Projekte\\Code\\FlexPlan_UC_GSCR\\scripts\\paper_a\\NativeG3Solver.jl",
+      "r2_sha256": "92a596b8b228317f97fdf0e742fafcf76054337a599a978d21cac4595bf82e0c",
+      "new_sha256": "8a0390dba186bc2da5978c56b48d278292b96cd69169dd1ebde38de66d77c299",
+      "original_base_commit_preserved": true,
+      "exact_original_bytes_recoverable_from_base_blob": true,
+      "disposition": "R3_AUTHORIZED_LIVE_SOURCE_CHANGE_NOT_IMMUTABLE_RESULT",
+      "original_byte_restoration": "Git_blob_bytes",
+      "recovered_original_sha256": "92a596b8b228317f97fdf0e742fafcf76054337a599a978d21cac4595bf82e0c"
+    },
+    {
+      "path": "D:\\Projekte\\Code\\FlexPlan_UC_GSCR\\scripts\\paper_a\\replay_direct_ac.py",
+      "r2_sha256": "a8c9475f918882cc8069a7db5b5b924ab6afb58451119e1fcc93667d86cd50ce",
+      "new_sha256": "df3ce7b234b022138a2fafc5c3e41fdd6817a7e93e8b03988e688f3c83f7804a",
+      "original_base_commit_preserved": true,
+      "exact_original_bytes_recoverable_from_base_blob": true,
+      "disposition": "R3_AUTHORIZED_LIVE_SOURCE_CHANGE_NOT_IMMUTABLE_RESULT",
+      "original_byte_restoration": "Git_blob_bytes",
+      "recovered_original_sha256": "a8c9475f918882cc8069a7db5b5b924ab6afb58451119e1fcc93667d86cd50ce"
+    },
+    {
+      "path": "D:\\Projekte\\Code\\FlexPlan_UC_GSCR\\scripts\\paper_a\\run_week_strength_comparison.jl",
+      "r2_sha256": "acac7371bbb906a673ad48107ec5faeb721ef490b2ea3e1de3dce8edfc15494e",
+      "new_sha256": "f0f9f0a2d644cb6a0c4493a1118da2f7af703dd1b8acc4c8e223db4887d2129a",
+      "original_base_commit_preserved": true,
+      "exact_original_bytes_recoverable_from_base_blob": true,
+      "disposition": "R3_AUTHORIZED_LIVE_SOURCE_CHANGE_NOT_IMMUTABLE_RESULT",
+      "original_byte_restoration": "LF_to_CRLF",
+      "recovered_original_sha256": "acac7371bbb906a673ad48107ec5faeb721ef490b2ea3e1de3dce8edfc15494e"
+    },
+    {
+      "path": "D:\\Projekte\\Code\\FlexPlan_UC_GSCR\\scripts\\paper_a\\week_ac_audit.jl",
+      "r2_sha256": "e7e1ca2c1a721841843cbd14cffc691dd518b8f46b524d0ad183db616a02e762",
+      "new_sha256": "c79d6a05d060caf2356de49ec67fefce8ca5b526aabfccd454bbb253e0341ff6",
+      "original_base_commit_preserved": true,
+      "exact_original_bytes_recoverable_from_base_blob": true,
+      "disposition": "R3_AUTHORIZED_LIVE_SOURCE_CHANGE_NOT_IMMUTABLE_RESULT",
+      "original_byte_restoration": "Git_blob_bytes",
+      "recovered_original_sha256": "e7e1ca2c1a721841843cbd14cffc691dd518b8f46b524d0ad183db616a02e762"
+    },
+    {
+      "path": "D:\\Projekte\\Code\\FlexPlan_UC_GSCR\\scripts\\paper_a\\week_ac_compare.jl",
+      "r2_sha256": "9b023e324f03bcb57ce8d3dfd57725153a2aa6645006bf831ec231ec4ac66710",
+      "new_sha256": "6cbb858017a04ac97920a4bc40cb78dcdd78f7d93831f1024799cd009e423c35",
+      "original_base_commit_preserved": true,
+      "exact_original_bytes_recoverable_from_base_blob": true,
+      "disposition": "R3_AUTHORIZED_LIVE_SOURCE_CHANGE_NOT_IMMUTABLE_RESULT",
+      "original_byte_restoration": "Git_blob_bytes",
+      "recovered_original_sha256": "9b023e324f03bcb57ce8d3dfd57725153a2aa6645006bf831ec231ec4ac66710"
+    },
+    {
+      "path": "D:\\Projekte\\Code\\FlexPlan_UC_GSCR\\scripts\\paper_a\\WeekStrengthAdmission.jl",
+      "r2_sha256": "a82fcf34fb08c59a94247a3b10efb5144905c4c5f4b763cf30adc093d81a2824",
+      "new_sha256": "948974429684b88ba6268d2b9524f522a6df48041d9b3bb8672160720248d1e0",
+      "original_base_commit_preserved": true,
+      "exact_original_bytes_recoverable_from_base_blob": true,
+      "disposition": "R3_AUTHORIZED_LIVE_SOURCE_CHANGE_NOT_IMMUTABLE_RESULT",
+      "original_byte_restoration": "Git_blob_bytes",
+      "recovered_original_sha256": "a82fcf34fb08c59a94247a3b10efb5144905c4c5f4b763cf30adc093d81a2824"
+    },
+    {
+      "path": "D:\\Projekte\\Code\\FlexPlan_UC_GSCR\\src\\core\\paper_a_formulations.jl",
+      "r2_sha256": "730ee70f29b5e969d04302c60ab2f8682bc9f2ef068762f7e431d52b83147240",
+      "new_sha256": "cb4d29aeb681cec93a1a98d54d453883232a2fbbc9699ff7de065266f8f45b96",
+      "original_base_commit_preserved": true,
+      "exact_original_bytes_recoverable_from_base_blob": true,
+      "disposition": "R3_AUTHORIZED_LIVE_SOURCE_CHANGE_NOT_IMMUTABLE_RESULT",
+      "original_byte_restoration": "LF_to_CRLF",
+      "recovered_original_sha256": "730ee70f29b5e969d04302c60ab2f8682bc9f2ef068762f7e431d52b83147240"
+    },
+    {
+      "path": "D:\\Projekte\\Code\\FlexPlan_UC_GSCR\\test\\paper_a_added_gfl_mosek.jl",
+      "r2_sha256": "adcf60c4b3a2d748aae9adac8e838629cfa70f00f2a22e42cd31805dbbc18f5d",
+      "new_sha256": "d489235675a4913fe3dfa7333cd462ed2ba6da9c323e9da6ba70c4c911a0ed50",
+      "original_base_commit_preserved": true,
+      "exact_original_bytes_recoverable_from_base_blob": true,
+      "disposition": "R3_AUTHORIZED_LIVE_SOURCE_CHANGE_NOT_IMMUTABLE_RESULT",
+      "original_byte_restoration": "Git_blob_bytes",
+      "recovered_original_sha256": "adcf60c4b3a2d748aae9adac8e838629cfa70f00f2a22e42cd31805dbbc18f5d"
+    },
+    {
+      "path": "D:\\Projekte\\Code\\FlexPlan_UC_GSCR\\test\\paper_a_mosek_zeroone_bounds.jl",
+      "r2_sha256": "9574d0bbd212ef5daae8920d7a812b84dc3a157c58392c1c6e6c52ca00563b44",
+      "new_sha256": "7d32d1c633551996a18b54c2c59e5f4298ccc08233ead4d2a40b704cd8bd7e3f",
+      "original_base_commit_preserved": true,
+      "exact_original_bytes_recoverable_from_base_blob": true,
+      "disposition": "R3_AUTHORIZED_LIVE_SOURCE_CHANGE_NOT_IMMUTABLE_RESULT",
+      "original_byte_restoration": "Git_blob_bytes",
+      "recovered_original_sha256": "9574d0bbd212ef5daae8920d7a812b84dc3a157c58392c1c6e6c52ca00563b44"
+    },
+    {
+      "path": "D:\\Projekte\\Code\\FlexPlan_UC_GSCR\\test\\paper_a_week_mosek_conditioning.jl",
+      "r2_sha256": "0838227de8cda46e0da6d33fa3694c48ef19b94f6f9691894dd57d46d6ad811d",
+      "new_sha256": "35eff7f15083235b3ecf15027a7aeda121bab8ba16a9ccbde185904890b15447",
+      "original_base_commit_preserved": true,
+      "exact_original_bytes_recoverable_from_base_blob": true,
+      "disposition": "R3_AUTHORIZED_LIVE_SOURCE_CHANGE_NOT_IMMUTABLE_RESULT",
+      "original_byte_restoration": "Git_blob_bytes",
+      "recovered_original_sha256": "0838227de8cda46e0da6d33fa3694c48ef19b94f6f9691894dd57d46d6ad811d"
+    }
+  ],
+  "reference_manifest_sha256": "65027dbb1e604fa5c03d10f55be067697a8dfbf272021effc7262b03bb400fd3",
+  "scope": "R2 immutable original results preserved; R3-authorized live checkout source edits explicitly separated"
+}

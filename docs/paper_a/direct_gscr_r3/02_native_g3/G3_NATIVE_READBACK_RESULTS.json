@@ -1,0 +1,126 @@
+{
+  "status": "PASS",
+  "source_commit": "ebaffb57feb3a27f2d7d87b745930664f625f935",
+  "models": [
+    {
+      "formulation": "LPAC",
+      "backend": "gurobi",
+      "directory": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\02_native_g3\\LPAC_gurobi_frozen",
+      "verdict": {
+        "backend": "Gurobi_actual_C_API",
+        "coefficient_identity": "(q1+q2)^2-(q1-q2)^2-(2Mij)^2=4(q1*q2-Mij^2)",
+        "exporter_source_sha256": "e3dc7a3b01114f554f5a63d87aa0d4fb72fbda49cf00cdd80d0d90c8c824a30c",
+        "native_cones_exact": 8736,
+        "native_node_rows_exact": 6216,
+        "native_q_nonnegative_bounds": 17472,
+        "optimization_performed": false,
+        "persisted_native_model": "g3_actual_native.mps",
+        "persisted_native_model_sha256": "37b9b92acc58a46f8796411fef39add327d13fbf15889b1809bfeba65013eb48",
+        "raw_readback_sha256": "1e8edc84678ad064a3d7aaa6e0f4115c0649030bbc2b2ad7612926e6792bc2cd",
+        "readback_elapsed_seconds": 49.0613051,
+        "status": "PASS"
+      },
+      "verdict_sha256": "8940ba1e4985f16fa1e7df1c21774ea8e8f6dbe9bc3a8360adba45a1c0902dbf"
+    },
+    {
+      "formulation": "LPAC",
+      "backend": "mosek",
+      "directory": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\02_native_g3\\LPAC_mosek_frozen",
+      "verdict": {
+        "backend": "MOSEK_actual_Task_API",
+        "coefficient_identity": "(q1+q2)^2-(q1-q2)^2-(2Mij)^2=4(q1*q2-Mij^2)",
+        "exporter_source_sha256": "e3dc7a3b01114f554f5a63d87aa0d4fb72fbda49cf00cdd80d0d90c8c824a30c",
+        "native_cones_exact": 8736,
+        "native_node_rows_exact": 6216,
+        "native_q_nonnegative_bounds": 17472,
+        "optimization_performed": false,
+        "persisted_native_model": "g3_actual_native.task.gz",
+        "persisted_native_model_sha256": "a5da4f8c23bd67bd0dd0ea833db4f5d4f2add10b4e5fcabc53d75c91968b59f6",
+        "raw_readback_sha256": "5ae601286ad1c642001de0677d66ea2b360a8b7e055914dc91246fa21c59f27e",
+        "readback_elapsed_seconds": 4.5035935,
+        "status": "PASS"
+      },
+      "verdict_sha256": "700e7ad5d3547fe49fe9f4f90d96eb95bff9d6ef329f4a7de97bbe0526915651"
+    },
+    {
+      "formulation": "SOC-WR",
+      "backend": "gurobi",
+      "directory": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\02_native_g3\\SOC-WR_gurobi_frozen",
+      "verdict": {
+        "backend": "Gurobi_actual_C_API",
+        "coefficient_identity": "(q1+q2)^2-(q1-q2)^2-(2Mij)^2=4(q1*q2-Mij^2)",
+        "exporter_source_sha256": "e3dc7a3b01114f554f5a63d87aa0d4fb72fbda49cf00cdd80d0d90c8c824a30c",
+        "native_cones_exact": 8736,
+        "native_node_rows_exact": 6216,
+        "native_q_nonnegative_bounds": 17472,
+        "optimization_performed": false,
+        "persisted_native_model": "g3_actual_native.mps",
+        "persisted_native_model_sha256": "00c4fbbed2725002cb44e5d65f49776c02a99bef39ba96875cad3004a5af6443",
+        "raw_readback_sha256": "f9379e56850995821bfe023b102485f490501229e385b265d98a668ae67376d4",
+        "readback_elapsed_seconds": 71.3559411,
+        "status": "PASS"
+      },
+      "verdict_sha256": "e44aac49f8ec7d3f013f48d5dd99529343e57bd38b84560e3a63274d11e0834c"
+    },
+    {
+      "formulation": "SOC-WR",
+      "backend": "mosek",
+      "directory": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\02_native_g3\\SOC-WR_mosek_frozen",
+      "verdict": {
+        "backend": "MOSEK_actual_Task_API",
+        "coefficient_identity": "(q1+q2)^2-(q1-q2)^2-(2Mij)^2=4(q1*q2-Mij^2)",
+        "exporter_source_sha256": "e3dc7a3b01114f554f5a63d87aa0d4fb72fbda49cf00cdd80d0d90c8c824a30c",
+        "native_cones_exact": 8736,
+        "native_node_rows_exact": 6216,
+        "native_q_nonnegative_bounds": 17472,
+        "optimization_performed": false,
+        "persisted_native_model": "g3_actual_native.task.gz",
+        "persisted_native_model_sha256": "7247f0509d22728ca77c5ed675601e9af3fd4701fb63494d610c600306d576bd",
+        "raw_readback_sha256": "761b15b98f53eb43daa7084ee77688db2cd6087e5e1462635f085ca0307740c4",
+        "readback_elapsed_seconds": 2.9883883,
+        "status": "PASS"
+      },
+      "verdict_sha256": "8919bb48a8d205c9cc22279beb914efebce218e4ca34c5f9f98337a28029de9a"
+    },
+    {
+      "formulation": "QCRM",
+      "backend": "gurobi",
+      "directory": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\02_native_g3\\QCRM_gurobi_frozen",
+      "verdict": {
+        "backend": "Gurobi_actual_C_API",
+        "coefficient_identity": "(q1+q2)^2-(q1-q2)^2-(2Mij)^2=4(q1*q2-Mij^2)",
+        "exporter_source_sha256": "e3dc7a3b01114f554f5a63d87aa0d4fb72fbda49cf00cdd80d0d90c8c824a30c",
+        "native_cones_exact": 8736,
+        "native_node_rows_exact": 6216,
+        "native_q_nonnegative_bounds": 17472,
+        "optimization_performed": false,
+        "persisted_native_model": "g3_actual_native.mps",
+        "persisted_native_model_sha256": "69293b436411bfd33db9a7a91a60cc2c596a0965adc66b470e630c47622a258b",
+        "raw_readback_sha256": "527b52c12137ab9cb118f9d2ac41a5646102dc85f4450a19a793dbafea9aca6d",
+        "readback_elapsed_seconds": 47.4154559,
+        "status": "PASS"
+      },
+      "verdict_sha256": "46f5aedf889be158ecd0c8344c34b1ff9b6da052619f0e552176c88707fb5e58"
+    },
+    {
+      "formulation": "QCRM",
+      "backend": "mosek",
+      "directory": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\02_native_g3\\QCRM_mosek_frozen",
+      "verdict": {
+        "backend": "MOSEK_actual_Task_API",
+        "coefficient_identity": "(q1+q2)^2-(q1-q2)^2-(2Mij)^2=4(q1*q2-Mij^2)",
+        "exporter_source_sha256": "e3dc7a3b01114f554f5a63d87aa0d4fb72fbda49cf00cdd80d0d90c8c824a30c",
+        "native_cones_exact": 8736,
+        "native_node_rows_exact": 6216,
+        "native_q_nonnegative_bounds": 17472,
+        "optimization_performed": false,
+        "persisted_native_model": "g3_actual_native.task.gz",
+        "persisted_native_model_sha256": "a3046c17e0962f99648fd9d4cce9d55eb16793308a53eabd876b81f4813a72ef",
+        "raw_readback_sha256": "34fa924b651805aba8a51557b601add1a654d25f88ad2b28bd38b63882ae7adc",
+        "readback_elapsed_seconds": 2.5616175,
+        "status": "PASS"
+      },
+      "verdict_sha256": "f78b066e6a45bc7e189be3ffcc5a9d48eb7a57d1a1ebd353a131b15cfe00694c"
+    }
+  ]
+}

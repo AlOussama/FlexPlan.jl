@@ -1,0 +1,31 @@
+{
+  "specification_status": "SPECIFICATION_READY",
+  "scope": "R3 AP3 F04/F05 and sensitivity-only F07 original point replay",
+  "python_test_command": "C:/ProgramData/anaconda3/python.exe -B -m unittest discover -s test -p test_replay_evidence.py -v",
+  "python_test_groups": 3,
+  "python_result": "PASS",
+  "python_controls": [
+    "missing/changed expected input bytes",
+    "missing role",
+    "duplicate/index-invalid/native-invalid mapping",
+    "full M key missing/duplicate",
+    "nonfinite/unknown sparse coordinate",
+    "missing nodal coordinates",
+    "duplicate/unknown terminal coordinates"
+  ],
+  "julia_test_command": "julia1.11.5 --project=. --startup-file=no test/paper_a_original_audit.jl",
+  "julia_tests": 12,
+  "julia_result": "PASS",
+  "julia_controls": [
+    "1e-12 solver scaling hides angle residual",
+    "original angle residual remains 1e-3",
+    "deleted original current row remains evaluated",
+    "unpreserved original row deletion fails closed",
+    "explicit expected manifest required",
+    "changed expected audit terms rejected before evaluation",
+    "missing original primal rejected",
+    "duplicate/NaN/unknown/missing primal coordinates rejected"
+  ],
+  "qualification": "No optimization performed. Bound archived original-point replay is sensitivity evidence and cannot promote existing LPAC G3 point to GOLD. Corrected-source original variable transfer remains required for a new-model replay.",
+  "optimized_python_guard": "PASS: python -O raises RuntimeError before importing/evaluating inputs"
+}

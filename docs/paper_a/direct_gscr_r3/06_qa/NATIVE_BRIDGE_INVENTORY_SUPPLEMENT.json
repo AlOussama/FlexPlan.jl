@@ -1,0 +1,21 @@
+{
+  "status": "PASS",
+  "scope": "Any positive number of unit-square tails; same global RSOC bridge change inventory only",
+  "optimization_called": false,
+  "models": {
+    "LPAC": {
+      "unit_diagonal_negative_two_product_QC_by_tail_dimension": {},
+      "input_sha256": "1e8edc84678ad064a3d7aaa6e0f4115c0649030bbc2b2ad7612926e6792bc2cd"
+    },
+    "SOC-WR": {
+      "unit_diagonal_negative_two_product_QC_by_tail_dimension": {
+        "2": 8736
+      },
+      "input_sha256": "f9379e56850995821bfe023b102485f490501229e385b265d98a668ae67376d4"
+    },
+    "QCRM": {
+      "unit_diagonal_negative_two_product_QC_by_tail_dimension": {},
+      "input_sha256": "527b52c12137ab9cb118f9d2ac41a5646102dc85f4450a19a793dbafea9aca6d"
+    }
+  }
+}

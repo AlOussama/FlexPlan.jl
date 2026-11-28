@@ -1,0 +1,67 @@
+{
+  "inputs": {
+    "original_audit_terms.csv": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\KW08_RE70_G2_PQ_20261125_01\\DIRECT_GSCR_PM0217_01\\LPAC_G3\\audit_terms.csv",
+      "bytes": 12673554,
+      "sha256": "79f5a819b77e3114de5efc5553a5a00414a8aa770324883281ca0e43c59f310a"
+    },
+    "original_terminal_coordinates.csv": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\KW08_RE70_G2_PQ_20261125_01\\DIRECT_GSCR_PM0217_01\\LPAC_G3\\terminal_coordinates.csv",
+      "bytes": 5355635,
+      "sha256": "a8106d0c844a376f2117c0ea9a0c8acf3737eda4ce988236d925aa42e8b5c072"
+    },
+    "reference_audit_terms.csv": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\KW08_RE70_G2_PQ_20261125_01\\DIRECT_GSCR_PM0217_01\\LPAC_G3\\audit_terms.csv",
+      "bytes": 12673554,
+      "sha256": "79f5a819b77e3114de5efc5553a5a00414a8aa770324883281ca0e43c59f310a"
+    },
+    "reference_terminal_coordinates.csv": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\KW08_RE70_G2_PQ_20261125_01\\DIRECT_GSCR_PM0217_01\\LPAC_G3\\terminal_coordinates.csv",
+      "bytes": 5355635,
+      "sha256": "a8106d0c844a376f2117c0ea9a0c8acf3737eda4ce988236d925aa42e8b5c072"
+    }
+  },
+  "metrics": {
+    "M": {
+      "expressions": 118104,
+      "exactly_equal_expressions": 118104,
+      "coefficient_differences": 0,
+      "unresolved_index_coordinates": 11760,
+      "semantic_status": "EXACT_INDEX_MATCH_WITH_UNRESOLVED_SEMANTICS",
+      "first_differences": []
+    },
+    "cost": {
+      "expressions": 1,
+      "exactly_equal_expressions": 1,
+      "coefficient_differences": 0,
+      "unresolved_index_coordinates": 36772,
+      "semantic_status": "EXACT_INDEX_MATCH_WITH_UNRESOLVED_SEMANTICS",
+      "first_differences": []
+    },
+    "wind_pv": {
+      "expressions": 1,
+      "exactly_equal_expressions": 1,
+      "coefficient_differences": 0,
+      "unresolved_index_coordinates": 0,
+      "semantic_status": "EXACT_SEMANTIC_MATCH",
+      "first_differences": []
+    },
+    "P": {
+      "expressions": 6216,
+      "exactly_equal_expressions": 6216,
+      "coefficient_differences": 0,
+      "unresolved_index_coordinates": 0,
+      "semantic_status": "EXACT_SEMANTIC_MATCH",
+      "first_differences": []
+    },
+    "Q": {
+      "expressions": 6216,
+      "exactly_equal_expressions": 6216,
+      "coefficient_differences": 0,
+      "unresolved_index_coordinates": 0,
+      "semantic_status": "EXACT_SEMANTIC_MATCH",
+      "first_differences": []
+    }
+  },
+  "scope": "Exact sparse source delta audit; no solve, no F02 reconsideration"
+}

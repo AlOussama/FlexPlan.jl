@@ -1,0 +1,3 @@
+# Preservation scope resolution
+
+The first unscoped diagnostic compared all 1251 R2 inventory entries, including the live checkout, under the former read-only policy. Its13 differences are precisely the live source files R3 authorizes to change. PRESERVATION_UNSCOPED_DIAGNOSTIC.json is retained as the original diagnostic. The corrected ORIGINAL_INPUT_PRESERVATION.json reports 1238 byte-identical historical inputs (6333591003 bytes), zero unexpected changes, and all 13 authorized source changes individually. Every original source hash can be reconstructed exactly from the pinned a2cadc4 Git blob with explicitly checked LF/CRLF restoration. Historical archives, points, proofs and manifests were not changed.

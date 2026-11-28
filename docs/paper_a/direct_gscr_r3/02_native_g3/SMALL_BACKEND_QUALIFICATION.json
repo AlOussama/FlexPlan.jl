@@ -1,0 +1,64 @@
+{
+  "mosek_added_gfl": 22,
+  "native_solve_readback_and_negative_controls": 32,
+  "limitation": "Weekly AC qualification is supplied separately by the frozen whole-week native exports. Numerical optimality statuses are not exact feasibility certificates.",
+  "dcp_log_sha256": "e7e2e3802fe95310a7d48c95ff4b145ee837c2e42e7336d66dabfa8636efc762",
+  "mosek_native": {
+    "backend": "MOSEK_actual_Task_API",
+    "coefficient_identity": "(q1+q2)^2-(q1-q2)^2-(2Mij)^2=4(q1*q2-Mij^2)",
+    "exporter_source_sha256": "e3dc7a3b01114f554f5a63d87aa0d4fb72fbda49cf00cdd80d0d90c8c824a30c",
+    "native_cones_exact": 1,
+    "native_coordinate_ledger": [],
+    "native_node_rows_exact": 2,
+    "native_q_nonnegative_bounds": 2,
+    "optimization_performed": false,
+    "persisted_native_model": "g3_actual_native.task.gz",
+    "persisted_native_model_sha256": "5c1266c5344e46e08a251aab561349f97ded19174700ce0c6a46234cdc19b303",
+    "raw_readback_sha256": "ecb2fa51b5a886c798541ea6d23fb31288879e3f61648d40fcb924622bca062b",
+    "readback_elapsed_seconds": 9.0724529,
+    "status": "PASS"
+  },
+  "additional_gfl_regression": 259,
+  "focused_log_sha256": "16e3b6a2b31448c7cd5104cdda1c28f30736d23356c8d203f547571e1b893ca7",
+  "mosek_binary_bounds": 18,
+  "finite_representation": "SOC(qij+qji,qij-qji,2*Mij), qij/qji>=0",
+  "mosek_dyadic_conditioning": 7,
+  "regression_total": 360,
+  "Julia": "1.11.5",
+  "gurobi_native": {
+    "backend": "Gurobi_actual_C_API",
+    "coefficient_identity": "(q1+q2)^2-(q1-q2)^2-(2Mij)^2=4(q1*q2-Mij^2)",
+    "exporter_source_sha256": "e3dc7a3b01114f554f5a63d87aa0d4fb72fbda49cf00cdd80d0d90c8c824a30c",
+    "native_cones_exact": 1,
+    "native_coordinate_ledger": [
+      {
+        "actual_affine_equalities_exact": true,
+        "native_coordinate_columns_zero_based": [
+          3,
+          4,
+          5
+        ],
+        "native_quadratic_row_zero_based": 0
+      }
+    ],
+    "native_node_rows_exact": 2,
+    "native_q_nonnegative_bounds": 2,
+    "optimization_performed": false,
+    "persisted_native_model": "g3_actual_native.mps",
+    "persisted_native_model_sha256": "4d12a7d1531e4215cf3e877c99d080ac19a5a81b73ca3038476d72bb27de7bc3",
+    "raw_readback_sha256": "95661ff8f72e4091c5b8ff47d5aa92e9bad93079e7440cd0e198de20660ddb58",
+    "readback_elapsed_seconds": 6.4193501,
+    "status": "PASS"
+  },
+  "exact_fixtures": 36,
+  "gurobi_added_gfl": 37,
+  "frozen_source_commit": "ebaffb57feb3a27f2d7d87b745930664f625f935",
+  "status": "PASS",
+  "MOSEK": "11.2.6",
+  "dcp_ap3_main": 101,
+  "base_sha": "a2cadc4391a3cac1ae06f9f7fc0ea88a62ef4f7e",
+  "total_tests": 512,
+  "scope": "small_native_G3_qualification_and_existing_DCP_AP3_regressions",
+  "Gurobi": "13.0.3",
+  "focused_total": 152
+}

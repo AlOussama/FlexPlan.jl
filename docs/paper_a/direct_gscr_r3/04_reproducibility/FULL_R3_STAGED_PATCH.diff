@@ -1,0 +1,1785 @@
+diff --git a/audit/r3_independent_native_verify.py b/audit/r3_independent_native_verify.py
+new file mode 100644
+index 0000000..ef9bd8d
+--- /dev/null
++++ b/audit/r3_independent_native_verify.py
+@@ -0,0 +1,144 @@
++"""Independent exact-binary-rational verifier of MOSEK bar PSD readback.
++
++No optimizer is called. Input must be read back from the saved native task,
++with expected affine entries exported independently from the original JuMP PSD.
++"""
++import argparse
++import collections
++from fractions import Fraction
++import hashlib
++import json
++from pathlib import Path
++
++if not __debug__:
++    raise RuntimeError("Exact scientific checks require Python assertion checks enabled")
++
++
++def rational(value):
++    if isinstance(value, str):
++        return Fraction(value) if "/" in value else Fraction(float(value))
++    return Fraction(value)
++
++
++def coefficients(columns, values):
++    assert len(columns) == len(values), "column/value length mismatch"
++    result = collections.defaultdict(Fraction)
++    for column, value in zip(columns, values):
++        result[int(column)] += rational(value)
++    return {column: value for column, value in result.items() if value}
++
++
++def signature(terms, constant):
++    return tuple(sorted(terms.items())), constant
++
++
++def verify(data):
++    assert data["afe_bar_triplet_count"] == 0, "unexpected AFE coupling to PSD bars"
++    assert data["bar_objective_triplet_count"] == 0, "unexpected objective coupling to PSD bars"
++    dimensions = list(map(int, data["bar_dimensions"]))
++    rows = {int(row["row"]): row for row in data["rows"]}
++    assert len(rows) == len(data["rows"]), "duplicate native row id"
++    triplets = data["bar_triplets"]
++    fields = ("row", "bar", "i", "j", "value")
++    assert len({len(triplets[key]) for key in fields}) == 1, "triplet array mismatch"
++    incident = collections.defaultdict(lambda: collections.defaultdict(Fraction))
++    for row, bar, i, j, value in zip(*(triplets[key] for key in fields)):
++        row, bar, i, j = map(int, (row, bar, i, j))
++        assert 1 <= bar <= len(dimensions), "bar id out of range"
++        assert 1 <= i <= dimensions[bar - 1] and 1 <= j <= dimensions[bar - 1], "bar coordinate out of range"
++        incident[row][(bar, min(i, j), max(i, j))] += rational(value)
++    actual = collections.defaultdict(dict)
++    native_columns = {int(item["native_column"]) for item in data["original_variables"]}
++    assert len(native_columns) == len(data["original_variables"]), "original column map not injective"
++    assert len({int(item["jump_index"]) for item in data["original_variables"]}) == len(native_columns), "duplicate original JuMP variable id"
++    for row_id, entries in incident.items():
++        entries = {key: value for key, value in entries.items() if value}
++        assert len(entries) == 1, "PSD linking row has multiple or absent bar entries"
++        (bar, i, j), stored = next(iter(entries.items()))
++        trace_weight = stored * (1 if i == j else 2)
++        assert abs(trace_weight) == 1, "linking bar trace coefficient is not exactly plus/minus one"
++        row = rows[row_id]
++        assert str(row["bound_key"]).upper() in ("MSK_BK_FX", "FX", "FIXED"), "PSD link row not fixed equality"
++        lower, upper = rational(row["lower"]), rational(row["upper"])
++        assert lower == upper, "unequal equality bounds"
++        scalar = coefficients(row["columns"], row["values"])
++        assert set(scalar) <= native_columns, "PSD link contains extra auxiliary scalar variable"
++        # A*x + trace(B*Y) = b; Yij = b/w - A*x/w.
++        reconstructed = signature({column: -value / trace_weight for column, value in scalar.items()}, lower / trace_weight)
++        assert (i, j) not in actual[bar], "multiple native rows for one bar coordinate"
++        actual[bar][i, j] = reconstructed
++    expected = []
++    expected_scalar_terms = 0
++    expected_nonzero_constants = 0
++    for block in data["expected_blocks"]:
++        dimension = int(block["dimension"])
++        entries = {}
++        for entry in block["entries"]:
++            i, j = sorted((int(entry["i"]), int(entry["j"])))
++            assert 1 <= i <= j <= dimension, "expected coordinate outside block"
++            assert (i, j) not in entries, "duplicate expected coordinate"
++            terms = entry["terms"]
++            entries[i, j] = signature(coefficients([t[0] for t in terms], [t[1] for t in terms]), rational(entry["constant"]))
++            expected_scalar_terms += len(entries[i, j][0])
++            expected_nonzero_constants += bool(entries[i, j][1])
++        coordinates = {(i, j) for j in range(1, dimension + 1) for i in range(1, j + 1)}
++        assert set(entries) == coordinates, "expected triangle incomplete"
++        expected.append((block["hour"], dimension, tuple(sorted(entries.items()))))
++    assert len(expected) == len(dimensions), "native/expected PSD block count differs"
++    assert len({hour for hour, _, _ in expected}) == len(expected), "duplicate expected hour"
++    actual_fingerprints = collections.defaultdict(list)
++    for bar, dimension in enumerate(dimensions, 1):
++        coordinates = {(i, j) for j in range(1, dimension + 1) for i in range(1, j + 1)}
++        assert set(actual[bar]) == coordinates, "native bar triangle incomplete or extra"
++        actual_fingerprints[dimension, tuple(sorted(actual[bar].items()))].append(bar)
++    mapping = []
++    for hour, dimension, entries in expected:
++        candidates = actual_fingerprints.get((dimension, entries), [])
++        assert len(candidates) == 1, "full native block fingerprint missing or ambiguous"
++        mapping.append({"hour": hour, "bar": candidates.pop()})
++    assert not any(actual_fingerprints.values()), "extra unmatched native PSD block"
++    return {"status": "PASS", "method": "independent_exact_binary_rational_native_trace_readback",
++            "blocks": len(expected), "positions": sum(d * (d + 1) // 2 for d in dimensions),
++            "dimensions": dict(collections.Counter(dimensions)), "hour_to_bar": mapping,
++            "native_bar_triplets": len(triplets["value"]),
++            "exact_affine_scalar_terms": expected_scalar_terms,
++            "exact_nonzero_constants": expected_nonzero_constants,
++            "exact_link_rows": len(incident),
++            "symmetric_trace_offdiagonal_multiplier": 2,
++            "native_link_trace_weights": "+1_or_-1_exact", "sqrt2_used": False}
++
++
++def main():
++    parser = argparse.ArgumentParser()
++    parser.add_argument("readback", type=Path)
++    parser.add_argument("--expected", type=Path)
++    parser.add_argument("--task", type=Path)
++    parser.add_argument("--output", type=Path)
++    args = parser.parse_args()
++    raw = args.readback.read_bytes()
++    data = json.loads(raw)
++    if args.expected:
++        expected_raw = args.expected.read_bytes()
++        expected_sha = hashlib.sha256(expected_raw).hexdigest()
++        assert data["expected_psd_sha256"] == expected_sha, "expected PSD SHA binding differs"
++        expected = json.loads(expected_raw)
++        assert not set(expected) & set(data), "expected/readback schema overlaps"
++        data.update(expected)
++    if args.task:
++        assert hashlib.sha256(args.task.read_bytes()).hexdigest() == data["native_task_sha256"], "native task SHA binding differs"
++    result = verify(data)
++    if args.expected:
++        result["expected_psd_sha256"] = expected_sha
++    if args.task:
++        result["native_task_sha256"] = data["native_task_sha256"]
++    result["input_sha256"] = hashlib.sha256(raw).hexdigest()
++    result["verifier_sha256"] = hashlib.sha256(Path(__file__).read_bytes()).hexdigest()
++    text = json.dumps(result, indent=2) + "\n"
++    if args.output:
++        args.output.write_text(text, encoding="utf-8")
++    else:
++        print(text, end="")
++
++
++if __name__ == "__main__":
++    main()
+diff --git a/audit/test_r3_independent_native_verify.py b/audit/test_r3_independent_native_verify.py
+new file mode 100644
+index 0000000..dda7112
+--- /dev/null
++++ b/audit/test_r3_independent_native_verify.py
+@@ -0,0 +1,49 @@
++"""Material mutation checks for the independent native PSD verifier."""
++import copy
++from r3_independent_native_verify import verify
++
++
++def fixture():
++    return {
++        "bar_dimensions": [2], "afe_bar_triplet_count": 0,
++        "bar_objective_triplet_count": 0,
++        "original_variables": [{"jump_index": 1, "native_column": 1}],
++        "expected_blocks": [{"hour": 1, "dimension": 2, "entries": [
++            {"i": 1, "j": 1, "constant": .25, "terms": [[1, 2.]]},
++            {"i": 1, "j": 2, "constant": -.1, "terms": []},
++            {"i": 2, "j": 2, "constant": 0., "terms": [[1, 1.]]}]}],
++        "rows": [
++            {"row": 1, "columns": [1], "values": [2.], "bound_key": "MSK_BK_FX", "lower": -.25, "upper": -.25},
++            {"row": 2, "columns": [], "values": [], "bound_key": "MSK_BK_FX", "lower": .1, "upper": .1},
++            {"row": 3, "columns": [1], "values": [-1.], "bound_key": "MSK_BK_FX", "lower": 0., "upper": 0.}],
++        "bar_triplets": {"row": [1, 2, 3], "bar": [1, 1, 1], "i": [1, 2, 2], "j": [1, 1, 2], "value": [-1., -.5, 1.]}}
++
++
++def main():
++    original = fixture()
++    assert verify(original)["positions"] == 3
++    mutations = [
++        ("missing symmetric half", lambda d: d["bar_triplets"]["value"].__setitem__(1, -1.)),
++        ("one ULP wrong constant", lambda d: d["expected_blocks"][0]["entries"][1].__setitem__("constant", -.10000000000000002)),
++        ("inequality instead of equality", lambda d: d["rows"][1].__setitem__("bound_key", "MSK_BK_LO")),
++        ("missing triangle coordinate", lambda d: d["bar_triplets"]["i"].__setitem__(1, 1)),
++        ("one ULP wrong coefficient", lambda d: d["rows"][0]["values"].__setitem__(0, 2.0000000000000004)),
++        ("extra AFE coupling", lambda d: d.__setitem__("afe_bar_triplet_count", 1)),
++        ("extra objective coupling", lambda d: d.__setitem__("bar_objective_triplet_count", 1)),
++        ("extra native block", lambda d: d["bar_dimensions"].append(2)),
++        ("wrong block dimension", lambda d: d["bar_dimensions"].__setitem__(0, 3)),
++        ("extra scalar variable", lambda d: (d["rows"][0]["columns"].append(2), d["rows"][0]["values"].append(1.))),
++    ]
++    for name, mutate in mutations:
++        damaged = copy.deepcopy(original)
++        mutate(damaged)
++        try:
++            verify(damaged)
++        except AssertionError:
++            continue
++        raise AssertionError("material mutation accepted: " + name)
++    print(f"PASS: 1 exact positive, {len(mutations)} material negatives")
++
++
++if __name__ == "__main__":
++    main()
+diff --git a/docs/paper_a/DIRECT_GSCR_R3_METHODS.md b/docs/paper_a/DIRECT_GSCR_R3_METHODS.md
+new file mode 100644
+index 0000000..7910933
+--- /dev/null
++++ b/docs/paper_a/DIRECT_GSCR_R3_METHODS.md
+@@ -0,0 +1,70 @@
++# Direct gSCR R3 implementation and evidence contract
++
++R3 is the owner's `DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3` continuation of the
++independent R2 review at base `a2cadc4391a3cac1ae06f9f7fc0ea88a62ef4f7e`.
++It authorizes the specific implementation repairs below, new model builds and
++native exports without weekly optimization, small fixtures, and publication.
++The archived cases, points, certificates and R1/R2 evidence remain immutable.
++
++## Exact finite native strength transmission
++
++The new weekly G0 MOSEK route removes the default `SetDotScalingBridge`.
++An unscaled symmetric matrix variable Y is constrained PSD and linked to each
++original affine M entry by scalar equalities. This avoids a rounded sqrt(2)
++svec transformation. `NativeStrengthReference.jl` writes a native task, reopens
++that file and reads the actual bar dimensions, bar-A triplets, complete scalar
++linking rows and bounds. It checks the absence of bar terms in AFE rows and in
++the objective. The independent verifier compares all original affine terms and
++constants as exact binary rational numbers: offdiagonal trace coefficients
++are doubled. Every hour has all 703 upper triangle entries, giving 118104
++entries across 168 blocks of order 37 for each network formulation. A newly
++qualified transmission does not prove identity of a missing historical task.
++
++G3 uses the standard SOC `[q1+q2,q1-q2,2*Mij]`, with q1,q2 nonnegative and the
++original node budgets. Its determinant identity is
++`(q1+q2)^2-(q1-q2)^2-(2*Mij)^2 = 4*(q1*q2-Mij^2)`.
++Only exact binary coefficients ±1 and 2 occur. Native affine slack equalities
++retain the fixed last coordinate; it is not squared into a rounded constant.
++`G3NativeReadback.jl` checks the actual Gurobi linear rows, bounds and unit
++diagonal quadratic rows, or actual MOSEK ACC/domain/AFE coordinates and bounds.
++The algebraic theorem for fixed symmetric Z edges is reused from the accepted
++method; R3 does not replace or re-prove that theorem.
++
++## Replay integrity and original constraints
++
++Python replay requires an explicit input manifest frozen in a separate step
++before evaluation. It binds the primal, native model, mapping, every matrix
++and physical ledger, case, evaluator and external physical inputs. Missing,
++changed, duplicate, incomplete or nonfinite inputs fail closed. Replay writes
++to a fresh output directory and checks the manifest again after evaluation.
++The Julia replay entry point likewise requires an explicit manifest and a
++separate output directory.
++
++Before solver transformations, the Julia audit freezes the original constraint
++roster and preserves each changed or deleted original function and set.
++`native_solver_audit.json` reports the transferred solver model;
++`original_model_audit.json` evaluates all original rows, including original
++unscaled angles and deleted QCRM currents. A solver-only or in-place scaled
++audit never issues GOLD acceptance. Every numerical point claim also requires
++the bound original native and physical replay evidence.
++
++## Scientific scope
++
++Historical exact lower-bound certificates and F02's actual outer-LP/QCRM
++projection proof are reused unchanged. Targeted deltas bind the new model to
++those inputs. Numerically qualified points are not rigorously exact feasible
++upper bounds. In particular the LPAC G0 witness retains its numerical PSD
++tolerance qualification (hour 108 approximately -2.237e-10). The old LPAC G3
++point remains `SENSITIVITY_ONLY — NOT_GOLD_UB` unless a separate full original
++GOLD audit passes. No integer-optimality, exact AC-feasibility or dynamical
++stability claim follows from this continuous scenario study.
++
++## Reproduction
++
++Use Julia 1.11.5 with the committed Julia 1.11 manifest. Set E: output and
++depot/temp paths explicitly. `scripts/paper_a/run_r3_native_references.ps1`
++builds and exports the three G0 and six G3 weekly reference models without
++calling `optimize!`. Use a fresh E: output root. The bundle's runtime manifest
++and reproduction commands bind actual versions, commands, source hashes,
++parameters and all evidence paths. Large native files remain on E:; compact
++verdicts and the final handoff are published in the development branch.
+diff --git a/scripts/paper_a/AP3Pipeline.jl b/scripts/paper_a/AP3Pipeline.jl
+index 50ab495..b817ec9 100644
+--- a/scripts/paper_a/AP3Pipeline.jl
++++ b/scripts/paper_a/AP3Pipeline.jl
+@@ -242,7 +242,9 @@ function extract(pm)
+                 violation=0.;complement=0.
+                 for (k,(i,j)) in enumerate(cert.edges)
+                     z=JuMP.dual(cert.cones[k]);v=JuMP.value.(JuMP.constraint_object(cert.cones[k]).func)
+-                    violation=max(violation,-z[1],-z[2],z[3]^2-2z[1]*z[2]);complement=max(complement,abs(dot(v,z)))
++                    set=JuMP.constraint_object(cert.cones[k]).set
++                    cone_violation=set isa JuMP.MOI.SecondOrderCone ? max(-z[1],sum(abs2,z[2:end])-z[1]^2) : max(-z[1],-z[2],z[3]^2-2z[1]*z[2])
++                    violation=max(violation,cone_violation);complement=max(complement,abs(dot(v,z)))
+                 end
+                 dual=Dict("status"=>"valid","dual_cone_violation"=>violation,"complementarity_residual"=>complement)
+             end
+diff --git a/scripts/paper_a/G3ConditioningAudit.jl b/scripts/paper_a/G3ConditioningAudit.jl
+index c2c5a9e..84284c0 100644
+--- a/scripts/paper_a/G3ConditioningAudit.jl
++++ b/scripts/paper_a/G3ConditioningAudit.jl
+@@ -10,6 +10,7 @@ setdata(s::MOI.LessThan)=Dict("kind"=>"le","rhs"=>s.upper)
+ setdata(s::MOI.EqualTo)=Dict("kind"=>"eq","rhs"=>s.value)
+ setdata(s::MOI.Interval)=Dict("kind"=>"interval","lower"=>s.lower,"upper"=>s.upper)
+ setdata(s::MOI.RotatedSecondOrderCone)=Dict("kind"=>"rsoc","dimension"=>s.dimension)
++setdata(s::MOI.SecondOrderCone)=Dict("kind"=>"soc","dimension"=>s.dimension)
+ setdata(s)=Dict("kind"=>string(typeof(s)))
+ fdata(v::VariableRef)=Dict("constant"=>0.,"terms"=>[[index(v).value,1.]])
+ fdata(f::GenericAffExpr)=Dict("constant"=>f.constant,"terms"=>[[index(v).value,c] for (c,v) in linear_terms(f)])
+@@ -34,11 +35,12 @@ function original_point_check(model,point,path)
+     CSV.write(path,violations)
+     polynomial=0.
+     for (F,S) in list_of_constraint_types(model)
+-        S <: MOI.RotatedSecondOrderCone || continue
++        S <: Union{MOI.RotatedSecondOrderCone,MOI.SecondOrderCone} || continue
+         for ci in all_constraints(model,F,S)
+             evaluate(z)=z isa VariableRef ? point_values[z] : z isa Real ? z : JuMP.value(v->point_values[v],z)
+             y=evaluate.(constraint_object(ci).func)
+-            polynomial=max(polynomial,-y[1],-y[2],sum(abs2,y[3:end])-2*y[1]*y[2])
++            violation=S <: MOI.SecondOrderCone ? max(-y[1],sum(abs2,y[2:end])-y[1]^2) : max(-y[1],-y[2],sum(abs2,y[3:end])-2*y[1]*y[2])
++            polynomial=max(polynomial,violation)
+         end
+     end
+     maximum_distance=maximum(values(residuals);init=0.)
+@@ -46,6 +48,7 @@ function original_point_check(model,point,path)
+         "violations_over_1e_7"=>count(x->x.violation>1e-7,violations),
+         "violations_over_1e_6"=>count(x->x.violation>1e-6,violations),
+         "maximum_original_RSOC_polynomial_violation"=>polynomial,
++        "maximum_original_SOC_or_RSOC_polynomial_violation"=>polynomial,
+         "point_pass_at_unchanged_1e_7"=>max(maximum_distance,polynomial)<=1e-7,
+         "all_original_values"=>length(point_values),"residual_csv_sha256"=>sha(path))
+ end
+diff --git a/scripts/paper_a/G3EquivalentConditioning.jl b/scripts/paper_a/G3EquivalentConditioning.jl
+index b60b3b9..3b5d19f 100644
+--- a/scripts/paper_a/G3EquivalentConditioning.jl
++++ b/scripts/paper_a/G3EquivalentConditioning.jl
+@@ -60,11 +60,22 @@ function scaled_copy(original; protected=Set{VariableRef}(), objective_divisor=8
+     # q has no finite upper bound. Its scale uses only the fixed original edge
+     # constant, never a candidate point or an assumed physical capacity.
+     for (F,S) in list_of_constraint_types(original)
+-        S <: MOI.RotatedSecondOrderCone || continue
++        S <: Union{MOI.RotatedSecondOrderCone,MOI.SecondOrderCone} || continue
+         for ci in all_constraints(original,F,S)
+             f=constraint_object(ci).func
+             length(f)==3 || error("Only fixed-edge three-coordinate RSOC qualified")
+             c=f[3] isa Real ? f[3] : isempty(f[3].terms) ? f[3].constant : error("Variable edge constant")
++            if S <: MOI.SecondOrderCone
++                all(z isa GenericAffExpr && z.constant==0. for z in f[1:2]) || error("Offset SOC endpoint")
++                plus=Dict(v=>a for (a,v) in linear_terms(f[1]));minus=Dict(v=>a for (a,v) in linear_terms(f[2]))
++                length(plus)==2 && Set(keys(plus))==Set(keys(minus)) && all(==(1.),values(plus)) &&
++                    sort(collect(values(minus)))==[-1.,1.] || error("Noncanonical original SOC endpoints")
++                for v in keys(plus)
++                    v in protected && error("Discrete G3 cone endpoint")
++                    exponents[v]=column_exponent(abs(c/2))
++                end
++                continue
++            end
+             for endpoint in f[1:2]
+                 endpoint isa GenericAffExpr && endpoint.constant!=0. && error("Offset RSOC endpoint")
+                 terms=endpoint isa VariableRef ? [(1.,endpoint)] : collect(linear_terms(endpoint))
+@@ -87,7 +98,7 @@ function scaled_copy(original; protected=Set{VariableRef}(), objective_divisor=8
+         elseif f isa GenericAffExpr
+             e=row_exponent(coefficient_max(f,exponents))
+             new=ScalarConstraint(affine(f,variables,exponents,e),scaled_set(s,e))
+-        elseif f isa AbstractVector && s isa MOI.RotatedSecondOrderCone
++        elseif f isa AbstractVector && s isa Union{MOI.RotatedSecondOrderCone,MOI.SecondOrderCone}
+             e=row_exponent(maximum(coefficient_max(z,exponents;constants=true) for z in f))
+             new=VectorConstraint([affine(z,variables,exponents,e) for z in f],s)
+         else
+diff --git a/scripts/paper_a/G3NativeReadback.jl b/scripts/paper_a/G3NativeReadback.jl
+new file mode 100644
+index 0000000..b71254e
+--- /dev/null
++++ b/scripts/paper_a/G3NativeReadback.jl
+@@ -0,0 +1,157 @@
++"""Actual native API readback of the exact finite G3 SOC attachment; no solve."""
++module G3NativeReadback
++using JuMP, JSON, SHA
++import Gurobi, MosekTools
++const MOI=JuMP.MOI
++const MSK=MosekTools.Mosek
++key(a,c=0.)=(Tuple(sort(collect(a);by=first)),c==0 ? 0. : c)
++function coefficients(f,col)
++    f isa VariableRef && return Dict(col(f)=>1.),0.
++    f isa Real && return Dict{Int,Float64}(),Float64(f)
++    return Dict(col(v)=>Float64(a) for (a,v) in linear_terms(f) if a!=0),Float64(f.constant)
++end
++function writejson(path,data)
++    open(io->JSON.print(io,data),path,"w")
++    return bytes2hex(sha256(read(path)))
++end
++ok(code)=code==0 ? nothing : error("Native G3 API failure $code")
++
++function gurobi_data(native)
++    ok(Gurobi.GRBupdatemodel(native))
++    intattr(n)=begin a=Ref{Cint}();ok(Gurobi.GRBgetintattr(native,n,a));Int(a[]) end
++    nr=intattr("NumConstrs");nv=intattr("NumVars");nq=intattr("NumQConstrs")
++    darr(n,k)=begin a=zeros(k);k>0 && ok(Gurobi.GRBgetdblattrarray(native,n,0,k,a));a end
++    nz=Ref{Cint}(0);ok(Gurobi.GRBgetconstrs(native,nz,C_NULL,C_NULL,C_NULL,0,nr))
++    starts=zeros(Cint,nr);cols=zeros(Cint,nz[]);vals=zeros(nz[])
++    ok(Gurobi.GRBgetconstrs(native,nz,starts,cols,vals,0,nr))
++    senses=zeros(Cchar,nr);ok(Gurobi.GRBgetcharattrarray(native,"Sense",0,nr,senses))
++    rows=Any[];rhs=darr("RHS",nr)
++    for r in 1:nr
++        slots=Int(starts[r])+1:(r==nr ? length(cols) : Int(starts[r+1]))
++        push!(rows,Dict("index_zero_based"=>r-1,"columns_zero_based"=>cols[slots],"coefficients"=>vals[slots],"rhs"=>rhs[r],"sense"=>string(Char(senses[r]))))
++    end
++    qrows=Any[];qrhs=darr("QCRHS",nq);qsenses=zeros(Cchar,nq)
++    nq>0 && ok(Gurobi.GRBgetcharattrarray(native,"QCSense",0,nq,qsenses))
++    for r in 0:nq-1
++        nl=Ref{Cint}(0);nn=Ref{Cint}(0)
++        ok(Gurobi.GRBgetqconstr(native,r,nl,C_NULL,C_NULL,nn,C_NULL,C_NULL,C_NULL))
++        li=zeros(Cint,nl[]);lv=zeros(nl[]);ii=zeros(Cint,nn[]);jj=zeros(Cint,nn[]);vv=zeros(nn[])
++        ok(Gurobi.GRBgetqconstr(native,r,nl,li,lv,nn,ii,jj,vv))
++        push!(qrows,Dict("index_zero_based"=>r,"linear_columns_zero_based"=>li,"linear_coefficients"=>lv,
++            "quadratic_i_zero_based"=>ii,"quadratic_j_zero_based"=>jj,"quadratic_coefficients"=>vv,"sense"=>string(Char(qsenses[r+1])),"rhs"=>qrhs[r+1]))
++    end
++    return Dict("backend"=>"Gurobi_actual_C_API","linear_rows"=>rows,"quadratic_rows"=>qrows,"lower_bounds"=>darr("LB",nv),"upper_bounds"=>darr("UB",nv))
++end
++
++function native_certificate_readback!(dir,model,certs;copy=nothing)
++    started=time_ns()
++    backend(model) isa MOI.Utilities.CachingOptimizer && MOI.Utilities.state(backend(model))==MOI.Utilities.EMPTY_OPTIMIZER &&
++        MOI.Utilities.attach_optimizer(backend(model))
++    native=unsafe_backend(model);gurobi=native isa Gurobi.Optimizer
++    mapped(c)=copy===nothing ? c : copy.constraints[c]
++    variable(v)=copy===nothing ? v : copy.variables[v]
++    col(v)=gurobi ? Int(Gurobi.c_column(native,optimizer_index(v))) : Int(MosekTools.column(native,optimizer_index(v)).value)
++    certlist=collect(values(certs));raw=gurobi ? gurobi_data(native) : Dict{String,Any}("backend"=>"MOSEK_actual_Task_API","cones"=>Any[],"node_rows"=>Any[],"q_bounds"=>Any[])
++    ledger=Any[];ncones=nrows=nqbound=0
++    if gurobi
++        # Each affine SOC coordinate is retained by a native equality. Build
++        # definitions from actual rows, restricted to native cone auxiliaries.
++        socs=MOI.get(native,MOI.ListOfConstraintIndices{MOI.VectorOfVariables,MOI.SecondOrderCone}())
++        cone_cols=[Int.(Gurobi.c_column.(Ref(native),MOI.get(native,MOI.ConstraintFunction(),ci).variables)) for ci in socs]
++        cone_by_head=Dict(first(cs)=>cs for cs in cone_cols)
++        aux=Set(Iterators.flatten(cone_cols));defs=Dict{Any,Vector{Int}}()
++        for row in raw["linear_rows"]
++            row["sense"]=="=" || continue
++            a=Dict(Int(i)=>v for (i,v) in zip(row["columns_zero_based"],row["coefficients"]) if v!=0)
++            for c in intersect(Set(keys(a)),aux)
++                abs(a[c])==1. || continue
++                others=Dict(i=>-v/a[c] for (i,v) in a if i!=c)
++                push!(get!(defs,key(others,row["rhs"]/a[c]),Int[]),c)
++            end
++        end
++        quad=Dict{Any,Any}()
++        for r in raw["quadratic_rows"]
++            isempty(r["linear_columns_zero_based"]) && r["sense"]==">" && r["rhs"]==0. || continue
++            r["quadratic_i_zero_based"]==r["quadratic_j_zero_based"] || continue
++            a=Dict(Int(i)=>v for (i,v) in zip(r["quadratic_i_zero_based"],r["quadratic_coefficients"]))
++            quad[key(a)]=r["index_zero_based"]
++        end
++        rows=Set((key(Dict(Int(i)=>v for (i,v) in zip(r["columns_zero_based"],r["coefficients"]) if v!=0)),r["sense"],r["rhs"]) for r in raw["linear_rows"])
++        for cert in certlist
++            for cone in cert.cones
++                object=constraint_object(mapped(cone));object.set isa MOI.SecondOrderCone || error("G3 readback requires exact standard SOC")
++                targets=[get(defs,key(coefficients(f,col)...),Int[]) for f in object.func]
++                all(!isempty,targets) || error("Missing actual native SOC affine-coordinate equality")
++                matches=[cone_by_head[c] for c in targets[1] if haskey(cone_by_head,c) &&
++                    all(cone_by_head[c][k] in targets[k] for k in 2:3)]
++                length(matches)==1 || error("Native SOC coordinate match is not unique")
++                cs=only(matches);signature=Dict(cs[1]=>1.,cs[2]=>-1.,cs[3]=>-1.)
++                haskey(quad,key(signature)) || error("Actual native G3 QC differs from exact unit diagonal")
++                raw["lower_bounds"][cs[1]+1]==0. && raw["upper_bounds"][cs[1]+1]==Gurobi.GRB_INFINITY || error("Actual native SOC head bounds differ")
++                push!(ledger,Dict("native_quadratic_row_zero_based"=>quad[key(signature)],"native_coordinate_columns_zero_based"=>cs,"actual_affine_equalities_exact"=>true))
++                ncones+=1
++            end
++            for row in cert.rows
++                o=constraint_object(mapped(row));a,c=coefficients(o.func,col)
++                (key(a),">",o.set.lower-c) in rows || error("Actual native G3 node budget differs")
++                nrows+=1
++            end
++            for q in cert.q
++                column=col(variable(q))+1
++                raw["lower_bounds"][column]==0. && raw["upper_bounds"][column]==Gurobi.GRB_INFINITY || error("Actual native q bounds differ")
++                nqbound+=1
++            end
++        end
++    else
++        task=native.task
++        MSK.getnumbarvar(task)==0 || error("G3 native task unexpectedly contains matrix variables")
++        for cert in certlist
++            for cone in cert.cones
++                mappedcone=mapped(cone);ci=optimizer_index(mappedcone);o=constraint_object(mappedcone)
++                ci isa MOI.ConstraintIndex{MOI.VectorAffineFunction{Float64},MOI.SecondOrderCone} || error("Expected native MOSEK affine SOC ACC")
++                domain=MSK.getaccdomain(task,ci.value)
++                MSK.getdomaintype(task,domain)==MSK.MSK_DOMAIN_QUADRATIC_CONE || error("Actual MOSEK domain is not SOC")
++                afes=MSK.getaccafeidxlist(task,ci.value);b=MSK.getaccb(task,ci.value)
++                length(afes)==3 || error("Actual native G3 SOC dimension differs")
++                actual=Any[]
++                for (k,afe) in enumerate(afes)
++                    nn,cols,vals=MSK.getafefrow(task,afe);a,c=coefficients(o.func[k],col);g=MSK.getafeg(task,afe)
++                    Dict(Int(i)=>v for (i,v) in zip(cols,vals) if v!=0)==a && g==0. && -b[k]==c || error("Actual MOSEK ACC affine coordinate differs")
++                    push!(actual,Dict("afe_index_one_based"=>afe,"columns_one_based"=>cols,"coefficients"=>vals,"afe_g"=>g,"acc_b"=>b[k],"constant"=>-b[k]))
++                end
++                push!(raw["cones"],Dict("acc_index_one_based"=>ci.value,"domain_type"=>"MSK_DOMAIN_QUADRATIC_CONE","coordinates"=>actual))
++                ncones+=1
++            end
++            for row in cert.rows
++                r=mapped(row);ci=optimizer_index(r);ri=MosekTools.row(native,ci);nn,cols,vals=MSK.getarow(task,ri)
++                bk,lo,up=MSK.getconbound(task,ri);o=constraint_object(r);a,c=coefficients(o.func,col)
++                Dict(Int(i)=>v for (i,v) in zip(cols,vals) if v!=0)==a && bk==MSK.MSK_BK_LO && lo==o.set.lower-c || error("Actual MOSEK node row differs")
++                push!(raw["node_rows"],Dict("row_one_based"=>ri,"columns_one_based"=>cols,"coefficients"=>vals,"bound_key"=>"MSK_BK_LO","lower"=>lo,"upper"=>up));nrows+=1
++            end
++            for q in cert.q
++                column=col(variable(q));bk,lo,up=MSK.getvarbound(task,column)
++                bk==MSK.MSK_BK_LO && lo==0. || error("Actual MOSEK q bounds differ")
++                label=bk==MSK.MSK_BK_LO ? "MSK_BK_LO" : bk==MSK.MSK_BK_RA ? "MSK_BK_RA" : "MSK_BK_FX"
++                push!(raw["q_bounds"],Dict("column_one_based"=>column,"bound_key"=>label,"lower"=>lo,"upper"=>up));nqbound+=1
++            end
++        end
++    end
++    nativepath=joinpath(dir,gurobi ? "g3_actual_native.mps" : "g3_actual_native.task.gz")
++    if gurobi
++        code=Gurobi.GRBwrite(native,nativepath)
++        code==0 || error("Gurobi native write $code: "*unsafe_string(Gurobi.GRBgeterrormsg(Gurobi.GRBgetenv(native))))
++    else
++        MSK.writedata(native.task,nativepath)
++    end
++    rawhash=writejson(joinpath(dir,"g3_actual_native_readback.json"),raw)
++    result=Dict("status"=>"PASS","backend"=>raw["backend"],"native_cones_exact"=>ncones,"native_node_rows_exact"=>nrows,
++        "native_q_nonnegative_bounds"=>nqbound,"coefficient_identity"=>"(q1+q2)^2-(q1-q2)^2-(2Mij)^2=4(q1*q2-Mij^2)",
++        "raw_readback_sha256"=>rawhash,"persisted_native_model"=>basename(nativepath),
++        "persisted_native_model_sha256"=>bytes2hex(sha256(read(nativepath))),
++        "exporter_source_sha256"=>bytes2hex(sha256(read(@__FILE__))),
++        "native_coordinate_ledger"=>ledger,"optimization_performed"=>false,
++        "readback_elapsed_seconds"=>(time_ns()-started)/1e9)
++    writejson(joinpath(dir,"g3_actual_native_verdict.json"),result)
++    return result
++end
++end
+diff --git a/scripts/paper_a/NativeG3Solver.jl b/scripts/paper_a/NativeG3Solver.jl
+index 411a2d1..ddafa54 100644
+--- a/scripts/paper_a/NativeG3Solver.jl
++++ b/scripts/paper_a/NativeG3Solver.jl
+@@ -2,6 +2,8 @@
+ module NativeG3Solver
+ using JuMP
+ import MosekTools, Gurobi
++include("G3NativeReadback.jl")
++native_certificate_readback!(args...;kwargs...)=G3NativeReadback.native_certificate_readback!(args...;kwargs...)
+ const MOI = JuMP.MOI
+ const MIN_CONSTRAINT_COEFFICIENT = 1e-9
+ const MAX_COEFFICIENT = 2.0^40
+@@ -41,6 +43,12 @@ is_native(opt) = opt isa MOI.OptimizerWithAttributes && opt.optimizer_constructo
+ backend_name(opt) = opt.optimizer_constructor === MosekTools.Optimizer ? "MOSEK" : "Gurobi"
+ 
+ function configure_bridges!(model,opt)
++    if backend_name(opt)=="MOSEK"
++        # Preserve unscaled symmetric PSD entries on shared conic routes.
++        # MOSEK's matrix-variable representation carries offdiagonals through
++        # the native trace convention without a rounded sqrt(2) rotation.
++        remove_bridge(model,MOI.Bridges.Constraint.SetDotScalingBridge)
++    end
+     if backend_name(opt)=="Gurobi"
+         # Keep the binary-rational RSOC model: the default variable rotation
+         # introduces rounded 1/sqrt(2) coefficients. The existing MOI bridge
+@@ -53,7 +61,7 @@ function configure_bridges!(model,opt)
+ end
+ 
+ function prepare_backend!(model,opt)
+-    backend_name(opt)=="Gurobi" || return Dict("status"=>"native_RSOC_supported")
++    backend_name(opt)=="Gurobi" || return Dict("status"=>"native_SOC_and_RSOC_supported")
+     MOI.Utilities.attach_optimizer(backend(model))
+     native=unsafe_backend(model)
+     # MOI's quadratic bridge emits nonnegativity as affine rows. Gurobi's
+@@ -68,13 +76,24 @@ function prepare_backend!(model,opt)
+     bounds=Dict(MOI.get(native,MOI.ConstraintFunction(),ci)=>ci for ci in
+         MOI.get(native,MOI.ListOfConstraintIndices{MOI.VariableIndex,MOI.GreaterThan{Float64}}()))
+     ledger=Any[]
++    # Gurobi represents a native SOC using a nonnegative head and diagonal
++    # quadratic coefficients +1,-1,... . The vector-affine bridge retains
++    # each fixed tail through an equality, avoiding a rounded constant square.
++    for ci in MOI.get(native,MOI.ListOfConstraintIndices{MOI.VectorOfVariables,MOI.SecondOrderCone}())
++        f=MOI.get(native,MOI.ConstraintFunction(),ci)
++        push!(ledger,Dict("native_SOC_constraint_index"=>ci.value,
++            "native_SOC_variable_indices"=>[v.value for v in f.variables],
++            "quad_form"=>"head_squared-sum(tail_squared)>=0; head>=0; exact unit coefficients"))
++    end
+     for ci in MOI.get(native,MOI.ListOfConstraintIndices{MOI.ScalarQuadraticFunction{Float64},MOI.LessThan{Float64}}())
+         f=MOI.get(native,MOI.ConstraintFunction(),ci);s=MOI.get(native,MOI.ConstraintSet(),ci)
+         cross=filter(t->t.variable_1!=t.variable_2,f.quadratic_terms)
+         diag=filter(t->t.variable_1==t.variable_2,f.quadratic_terms)
++        # Other quadratic constraints can belong to the AC network. Only the
++        # legacy RSOC bridge is qualified and modified by this helper.
+         length(cross)==1 && only(cross).coefficient==-2. && !isempty(diag) &&
+             all(t->t.coefficient==2.,diag) && isempty(f.affine_terms) && f.constant==0. && s.upper==0. ||
+-            throw(NumericalInputError("unverified_native_rotated_quadratic_form"))
++            continue
+         ends=(only(cross).variable_1,only(cross).variable_2)
+         for v in ends
+             v in proved || throw(NumericalInputError("native_RSOC_endpoint_nonnegativity_not_proved"))
+@@ -90,7 +109,7 @@ function prepare_backend!(model,opt)
+             "nonnegativity_proof"=>"existing_exact_1_times_variable_ge_0_affine_row",
+             "quad_form"=>"sum(w_squared)-2*u*v<=0; exact coefficients"))
+     end
+-    return Dict("status"=>"exact_RSOC_quadratic_bridge_with_proved_redundant_bounds",
++    return Dict("status"=>"native_SOC_and_exact_legacy_RSOC_bridge",
+         "cones"=>length(ledger),"ledger"=>ledger,"nonconvex_parameter"=>0)
+ end
+ 
+@@ -198,15 +217,17 @@ function primal_check(model)
+     residual = maximum(values(primal_feasibility_report(model; atol=0.)); init=0.)
+     polynomial=0.
+     for (F,S) in list_of_constraint_types(model)
+-        S <: MOI.RotatedSecondOrderCone || continue
++        S <: Union{MOI.RotatedSecondOrderCone,MOI.SecondOrderCone} || continue
+         for ci in all_constraints(model,F,S)
+             y=value.(constraint_object(ci).func)
+-            polynomial=max(polynomial,-y[1],-y[2],sum(abs2,y[3:end])-2*y[1]*y[2])
++            violation=S <: MOI.SecondOrderCone ? max(-y[1],sum(abs2,y[2:end])-y[1]^2) : max(-y[1],-y[2],sum(abs2,y[3:end])-2*y[1]*y[2])
++            polynomial=max(polynomial,violation)
+         end
+     end
+     return Dict("status"=>max(residual,polynomial) <= PRIMAL_TOLERANCE ? "passed" : "failed_original_primal_check",
+         "maximum_constraint_distance"=>residual, "tolerance"=>PRIMAL_TOLERANCE,
+         "maximum_polynomial_RSOC_violation"=>polynomial,
++        "maximum_polynomial_SOC_or_RSOC_violation"=>polynomial,
+         "interpretation"=>"numerical_original_model_check_not_exact_feasibility")
+ end
+ 
+diff --git a/scripts/paper_a/NativeStrengthReference.jl b/scripts/paper_a/NativeStrengthReference.jl
+new file mode 100644
+index 0000000..d118d3a
+--- /dev/null
++++ b/scripts/paper_a/NativeStrengthReference.jl
+@@ -0,0 +1,78 @@
++"""New native reference transmission evidence. Never calls optimize!."""
++module NativeStrengthReference
++using JuMP, JSON, SHA
++import MosekTools, Mosek, Gurobi
++const MOI=JuMP.MOI
++sha(path)=open(io->bytes2hex(sha256(io)),path)
++writejson(path,obj)=open(io->JSON.print(io,obj),path,"w")
++
++"""Force exact unscaled PSD matrix variables plus scalar equality links.
++The default scaled-PSD bridge contains rounded sqrt(2) coefficients.
++"""
++function configure_g0!(model)
++    remove_bridge(model,MOI.Bridges.Constraint.SetDotScalingBridge)
++    return
++end
++
++function task_readback(task)
++    n,row,bar,i,j,value=Mosek.getbarablocktriplet(task)
++    afebar=Mosek.getafebarfblocktriplet(task)
++    barobj=Mosek.getbarcblocktriplet(task)
++    first(afebar)==0 || error("Unexpected AFE coupling of PSD bar variables")
++    first(barobj)==0 || error("Unexpected objective coupling of PSD bar variables")
++    rows=Any[]
++    for r in sort!(unique(row))
++        _,cols,vals=Mosek.getarow(task,r)
++        key,lo,hi=Mosek.getconbound(task,r)
++        push!(rows,Dict("row"=>r,"columns"=>cols,"values"=>vals,
++            "bound_key"=>key==Mosek.MSK_BK_FX ? "MSK_BK_FX" : sprint(show,key),"lower"=>isfinite(lo) ? lo : nothing,
++            "upper"=>isfinite(hi) ? hi : nothing))
++    end
++    return Dict("bar_dimensions"=>[Mosek.getdimbarvarj(task,k) for k in 1:Mosek.getnumbarvar(task)],
++        "bar_triplets"=>Dict("row"=>row,"bar"=>bar,"i"=>i,"j"=>j,"value"=>value),
++        "rows"=>rows,"bar_triplet_count"=>n,"native_variable_count"=>Mosek.getnumvar(task),
++        "afe_bar_triplet_count"=>first(afebar),"bar_objective_triplet_count"=>first(barobj),
++        "native_row_count"=>Mosek.getnumcon(task),"native_ACC_count"=>Mosek.getnumacc(task))
++end
++
++function export_g0!(dir,model,matrices;metadata=Dict())
++    MOI.Utilities.state(backend(model))==MOI.Utilities.EMPTY_OPTIMIZER &&
++        MOI.Utilities.attach_optimizer(backend(model))
++    native=unsafe_backend(model)
++    native isa MosekTools.Optimizer || error("G0 reference requires MOSEK")
++    columns=Dict{VariableRef,Int}()
++    for v in all_variables(model)
++        idx=MosekTools.mosek_index(native,optimizer_index(v))
++        idx isa MosekTools.ColumnIndex || error("Original scalar mapped to matrix variable")
++        columns[v]=idx.value
++    end
++    blocks=Any[]
++    for (hour,M) in sort!(collect(matrices);by=first)
++        n=size(M,1)
++        entries=Any[]
++        for j in 1:n,i in 1:j
++            f=AffExpr(0.)+M[i,j]
++            push!(entries,Dict("i"=>i,"j"=>j,"constant"=>f.constant,
++                "terms"=>sort!([[columns[v],c] for (c,v) in linear_terms(f)];by=first)))
++        end
++        push!(blocks,Dict("hour"=>hour,"dimension"=>n,"entries"=>entries))
++    end
++    expected=Dict("expected_blocks"=>blocks,
++        "original_variables"=>[Dict("jump_index"=>index(v).value,"native_column"=>columns[v]) for v in all_variables(model)])
++    writejson(joinpath(dir,"expected_psd.json"),expected)
++    path=joinpath(dir,"native.task.gz")
++    Mosek.writedata(native.task,path)
++    # Reopen the actual persisted solver task; do not report cached MOI rows.
++    reopened=Mosek.maketask()
++    Mosek.readdata(reopened,path)
++    actual=task_readback(reopened)
++    actual["native_task_sha256"]=sha(path)
++    actual["expected_psd_sha256"]=sha(joinpath(dir,"expected_psd.json"))
++    actual["metadata"]=metadata
++    writejson(joinpath(dir,"native_psd_readback.json"),actual)
++    return Dict("optimized"=>false,"route"=>"unscaled_bar_variables_scalar_equality_links",
++        "native_task_sha256"=>sha(path),"expected_psd_sha256"=>sha(joinpath(dir,"expected_psd.json")),
++        "native_readback_sha256"=>sha(joinpath(dir,"native_psd_readback.json")),
++        "historical_native_identity"=>"UNVERIFIED")
++end
++end
+diff --git a/scripts/paper_a/WeekStrengthAdmission.jl b/scripts/paper_a/WeekStrengthAdmission.jl
+index 8b5e593..aad9e28 100644
+--- a/scripts/paper_a/WeekStrengthAdmission.jl
++++ b/scripts/paper_a/WeekStrengthAdmission.jl
+@@ -56,7 +56,7 @@ end
+ function native_strength_rows(pm,copy,native)
+     m=copy.model
+     idx=Dict(index(v)=>optimizer_index(v) for v in all_variables(m))
+-    ncone=nrows=0
++    nsoc=nrsoc=nrows=0
+     for cert in values(pm.ext[:paper_a_certificates])
+         for original in Iterators.flatten((cert.cones,cert.rows))
+             mapped=copy.constraints[original]
+@@ -67,9 +67,10 @@ function native_strength_rows(pm,copy,native)
+             isapprox(actual,expected;rtol=0,atol=0) &&
+                 MOI.get(native,MOI.ConstraintSet(),ci)==object.set || error("Native G3 strength row differs at $ci")
+         end
+-        ncone+=length(cert.cones)
++        nsoc+=count(c->constraint_object(c).set isa MOI.SecondOrderCone,cert.cones)
++        nrsoc+=count(c->constraint_object(c).set isa MOI.RotatedSecondOrderCone,cert.cones)
+         nrows+=length(cert.rows)
+     end
+-    return Dict("native_RSOC_exact_readbacks"=>ncone,"native_node_row_exact_readbacks"=>nrows)
++    return Dict("native_SOC_exact_readbacks"=>nsoc,"native_RSOC_exact_readbacks"=>nrsoc,"native_node_row_exact_readbacks"=>nrows)
+ end
+ end
+diff --git a/scripts/paper_a/compare_original_ledgers.py b/scripts/paper_a/compare_original_ledgers.py
+new file mode 100644
+index 0000000..229e7e2
+--- /dev/null
++++ b/scripts/paper_a/compare_original_ledgers.py
+@@ -0,0 +1,82 @@
++"""Targeted source-to-reference delta audit; no optimization or acceptance changes."""
++import argparse
++from collections import defaultdict
++import json
++from pathlib import Path
++
++from replay_evidence import digest, rows, record, EvidenceError
++
++
++def coordinates(path):
++    aliases=defaultdict(set)
++    for row in rows(path):
++        key=(row["type"],row["hour"],row["id"],row["end_bus"])
++        for field in ("p_index","q_index","online_index"):
++            index=int(row[field])
++            if index:
++                aliases[index].add(key+(field,))
++    return {index:tuple(sorted(keys)) for index,keys in aliases.items()}
++
++
++def ledger(path, aliases):
++    expressions=defaultdict(dict)
++    for row in rows(path):
++        key=(row["metric"],int(row["hour"]),row["id"])
++        if key[0] not in ("M","cost","wind_pv","P","Q"):
++            continue
++        index=int(row["index"])
++        # Non-terminal variables retain their explicit index; they are reported
++        # separately and cannot silently acquire a guessed physical identity.
++        coordinate=("constant",) if not index else (("terminal",aliases[index]) if index in aliases else ("unresolved_index",index))
++        if coordinate in expressions[key]:
++            raise EvidenceError("Duplicate sparse coordinate: "+str(key))
++        expressions[key][coordinate]=float(row["coefficient"])
++    return expressions
++
++
++def compare(original, reference):
++    sources={side+"_"+name:record(folder/name) for side,folder in (("original",original),("reference",reference))
++             for name in ("audit_terms.csv","terminal_coordinates.csv")}
++    old=ledger(original/"audit_terms.csv",coordinates(original/"terminal_coordinates.csv"))
++    new=ledger(reference/"audit_terms.csv",coordinates(reference/"terminal_coordinates.csv"))
++    expected={("M",h,f"{i}_{j}") for h in range(1,169) for i in range(1,38) for j in range(i,38)}
++    if {k for k in old if k[0]=="M"}!=expected or {k for k in new if k[0]=="M"}!=expected:
++        raise EvidenceError("Full118104 original matrix key roster missing")
++    result={}
++    for metric in ("M","cost","wind_pv","P","Q"):
++        keys={k for k in old if k[0]==metric}|{k for k in new if k[0]==metric}
++        differences=[]
++        unresolved=set()
++        shared=0
++        for key in sorted(keys):
++            a,b=old.get(key,{}),new.get(key,{})
++            coordinates_all=set(a)|set(b)
++            unresolved.update(c for c in coordinates_all if c[0]=="unresolved_index")
++            if a==b:
++                shared+=1
++            else:
++                for coordinate in sorted(coordinates_all,key=str):
++                    av,bv=a.get(coordinate,0.0),b.get(coordinate,0.0)
++                    if av!=bv:
++                        differences.append(dict(expression=key,coordinate=coordinate,original=av,reference=bv,delta=bv-av))
++        result[metric]=dict(expressions=len(keys),exactly_equal_expressions=shared,
++                            coefficient_differences=len(differences),unresolved_index_coordinates=len(unresolved),
++                            semantic_status="EXACT_SEMANTIC_MATCH" if not differences and not unresolved else
++                            ("EXACT_INDEX_MATCH_WITH_UNRESOLVED_SEMANTICS" if not differences else "DIFFERENT_OR_UNALIGNED"),
++                            first_differences=differences[:20])
++    # Verify bytes stayed fixed throughout the comparison.
++    for entry in sources.values():
++        if digest(entry["path"])!=entry["sha256"]:
++            raise EvidenceError("Input changed during delta audit")
++    return dict(inputs=sources,metrics=result,scope="Exact sparse source delta audit; no solve, no F02 reconsideration")
++
++
++if __name__=="__main__":
++    parser=argparse.ArgumentParser()
++    parser.add_argument("original",type=Path)
++    parser.add_argument("reference",type=Path)
++    parser.add_argument("output",type=Path)
++    args=parser.parse_args()
++    report=compare(args.original,args.reference)
++    with args.output.open("x",encoding="utf-8") as stream:
++        json.dump(report,stream,indent=2,allow_nan=False)
+diff --git a/scripts/paper_a/r3_runtime_inventory.jl b/scripts/paper_a/r3_runtime_inventory.jl
+new file mode 100644
+index 0000000..b85e35a
+--- /dev/null
++++ b/scripts/paper_a/r3_runtime_inventory.jl
+@@ -0,0 +1,16 @@
++using Pkg, JSON, SHA, LinearAlgebra
++import JuMP, Gurobi, Mosek, MosekTools, PowerModels
++length(ARGS)==1 || error("usage: OUTPUT_JSON")
++packages=Dict(string(id)=>Dict("name"=>p.name,"version"=>string(p.version),
++    "tree_hash"=>string(p.tree_hash),"source"=>p.source) for (id,p) in Pkg.dependencies())
++digest(p)=isfile(p) ? bytes2hex(sha256(read(p))) : nothing
++result=Dict("julia_version"=>string(VERSION),"julia_executable"=>joinpath(Sys.BINDIR,Base.julia_exename()),
++    "machine"=>Sys.MACHINE,"threads"=>Threads.nthreads(),"word_size"=>Sys.WORD_SIZE,
++    "blas"=>sprint(show,BLAS.get_config()),"project_path"=>Base.active_project(),
++    "project_sha256"=>digest(Base.active_project()),"Manifest.toml_sha256"=>digest("Manifest.toml"),
++    "Manifest-v1.11.toml_sha256"=>digest("Manifest-v1.11.toml"),"packages"=>packages,
++    "mosek_runtime_version"=>Mosek.getversion(),"gurobi_runtime_version"=>string(Gurobi._GUROBI_VERSION),
++    "gurobi_library"=>abspath(Gurobi.libgurobi),"gurobi_library_sha256"=>digest(abspath(Gurobi.libgurobi)),
++    "mosek_source"=>pathof(Mosek),"mosektools_source"=>pathof(MosekTools),
++    "no_week_optimization"=>true)
++open(io->JSON.print(io,result,2),only(ARGS),"w")
+diff --git a/scripts/paper_a/read_saved_g0_reference.jl b/scripts/paper_a/read_saved_g0_reference.jl
+new file mode 100644
+index 0000000..e1623b5
+--- /dev/null
++++ b/scripts/paper_a/read_saved_g0_reference.jl
+@@ -0,0 +1,20 @@
++# Re-read an already persisted reference task without rebuilding or optimizing.
++include("NativeStrengthReference.jl")
++using .NativeStrengthReference
++const R=NativeStrengthReference
++length(ARGS)==1 || error("usage: REFERENCE_DIRECTORY")
++dir=abspath(only(ARGS))
++taskfile=joinpath(dir,"native.task.gz")
++expected=joinpath(dir,"expected_psd.json")
++task=R.Mosek.maketask()
++R.Mosek.readdata(task,taskfile)
++actual=R.task_readback(task)
++actual["native_task_sha256"]=R.sha(taskfile)
++actual["expected_psd_sha256"]=R.sha(expected)
++R.writejson(joinpath(dir,"native_psd_readback.json"),actual)
++R.writejson(joinpath(dir,"reference_export.json"),Dict("optimized"=>false,
++    "route"=>"unscaled_bar_variables_scalar_equality_links",
++    "native_task_sha256"=>actual["native_task_sha256"],
++    "expected_psd_sha256"=>actual["expected_psd_sha256"],
++    "native_readback_sha256"=>R.sha(joinpath(dir,"native_psd_readback.json")),
++    "historical_native_identity"=>"UNVERIFIED"))
+diff --git a/scripts/paper_a/replay_direct_ac.py b/scripts/paper_a/replay_direct_ac.py
+index b4fa9b6..0536e72 100644
+--- a/scripts/paper_a/replay_direct_ac.py
++++ b/scripts/paper_a/replay_direct_ac.py
+@@ -1,16 +1,67 @@
+ """Replay a weekly G3 native primal in the unscaled MPS and all 168 original PSD matrices."""
++if not __debug__:
++    raise RuntimeError("Original-point replay requires Python assertions enabled; do not use -O")
++
+ import json
+ import sys
++import argparse
++import importlib.util
+ from pathlib import Path
+ 
+ import numpy as np
+ 
+-from solve_ac_native import digest
++from replay_evidence import digest, record, verify_manifest, validate_mapping, validate_ledgers, SCHEMA
++
+ 
++def freeze_manifest(study, model, solved, target):
++    """Freeze expected input bytes without evaluating the point."""
++    sources = dict(case=study/"CONFIRMED_QBOX/AC_CASE/case.json",
++                   original_native_model=model/"native.mps", profile=model/"profile.json",
++                   export_metadata=model/"export.json", mapping=model/"native_columns.csv",
++                   audit_terms=model/"audit_terms.csv", matrix_ledger=model/"audit_terms.csv",
++                   terminal_coordinates=model/"terminal_coordinates.csv",
++                   outcome=solved/"outcome.json", primal=solved/"native_primal.npy",
++                   evaluator=study/"BASE_PAIR_20261126/independent_base_point.py",
++                   replay_program=Path(__file__), integrity_program=Path(__file__).with_name("replay_evidence.py"))
++    scaled=model.with_name(model.name+"_scaled")
++    if scaled.is_dir():
++        for name in ("native.mps","profile.json","native_columns.csv","scaled_angle_rows.csv","transformation_register.json"):
++            if (scaled/name).is_file():
++                sources["solver_"+name]=scaled/name
++    for name in ("lp_duals.npz","native_dual.npy"):
++        if (solved/name).is_file():
++            sources["optional_"+name]=solved/name
++    raw=Path("D:/Projekte/Code/pypsatomatpowerx/data/elec_s_37_csv")
++    for name in ("generators.csv","generators-p_max_pu.csv","snapshots.csv"):
++        sources["physical_"+name]=raw/name
++    sources["physical_dates"]=study.parent/"TECH_FULL37_FIVE_WEEKS_RE50_20261115_01/AP1_EXPORT/week_8/case_manifest.json"
++    sources["gold_criteria"]=study.parent/"PAPER_A_BUNDLE_20261123_GOLD01/02_final_rows/WK08-70-G2-LP.json"
++    manifest=dict(schema=SCHEMA,context=dict(study=str(study),model=str(model),solved=str(solved)),
++                  inputs={key:record(path) for key,path in sources.items()})
++    with target.open("x",encoding="utf-8") as stream:
++        json.dump(manifest,stream,indent=2)
+ 
+-def replay(study, model, solved):
+-    sys.path.insert(0, str(study / "BASE_PAIR_20261126"))
+-    import independent_base_point as qa
++
++def replay(study, model, solved, manifest_path, output):
++    required=("case","original_native_model","profile","export_metadata","mapping","audit_terms",
++              "matrix_ledger","terminal_coordinates","outcome","primal","evaluator","replay_program",
++              "integrity_program","physical_generators.csv","physical_generators-p_max_pu.csv",
++              "physical_snapshots.csv","physical_dates","gold_criteria")
++    manifest, bound = verify_manifest(manifest_path,required)
++    expected=dict(case=study/"CONFIRMED_QBOX/AC_CASE/case.json",original_native_model=model/"native.mps",
++                  profile=model/"profile.json",export_metadata=model/"export.json",mapping=model/"native_columns.csv",
++                  audit_terms=model/"audit_terms.csv",matrix_ledger=model/"audit_terms.csv",
++                  terminal_coordinates=model/"terminal_coordinates.csv",outcome=solved/"outcome.json",
++                  primal=solved/"native_primal.npy",replay_program=Path(__file__),
++                  integrity_program=Path(__file__).with_name("replay_evidence.py"))
++    for role,path in expected.items():
++        if path.resolve()!=bound[role].resolve():
++            raise ValueError("Manifest role/path mismatch: "+role)
++    spec=importlib.util.spec_from_file_location("bound_original_evaluator",bound["evaluator"])
++    qa=importlib.util.module_from_spec(spec)
++    spec.loader.exec_module(qa)
++    if Path(qa.DATES).resolve()!=bound["physical_dates"].resolve() or Path(qa.GOLD).resolve()!=bound["gold_criteria"].resolve() or Path(qa.RAW).resolve()!=bound["physical_generators.csv"].parent.resolve():
++        raise ValueError("Archived evaluator external-input contract mismatch")
+ 
+     result = qa.read(solved / "outcome.json")
+     meta = qa.read(model / "export.json")
+@@ -24,6 +75,8 @@ def replay(study, model, solved):
+     assert profile["G2_rows"] == 0 and profile["strength_edge_cones"] == 8736
+     if result["mps_sha256"] != meta["native_mps_sha256"]:
+         scaled = model.with_name(model.name + "_scaled")
++        assert bound.get("solver_native.mps",Path()).resolve()==(scaled/"native.mps").resolve()
++        assert "solver_scaled_angle_rows.csv" in bound or "solver_transformation_register.json" in bound
+         assert qa.read(scaled / "profile.json")["parent_mps_sha256"] == meta["native_mps_sha256"]
+         assert digest(scaled / "native.mps") == result["mps_sha256"]
+     report = dict(termination=result["termination"], result_count=result["result_count"],
+@@ -31,8 +84,14 @@ def replay(study, model, solved):
+                   outcome_sha256=digest(solved/"outcome.json"), evaluator_sha256=digest(Path(qa.__file__)))
+     if result["result_count"]:
+         assert digest(solved / "native_primal.npy") == result["native_primal_sha256"]
+-        native = np.load(solved / "native_primal.npy")
+-        primal = {int(r["index"]): native[int(r["native"])] for r in qa.rows(model/"native_columns.csv")}
++        native = np.load(solved / "native_primal.npy",allow_pickle=False)
++        assert native.ndim==1 and len(native)==meta["variables"] and np.isfinite(native).all()
++        mapping=validate_mapping(model/"native_columns.csv",len(native))
++        case_data=qa.read(case)
++        assert len(case_data["nw"])==168
++        roster=validate_ledgers(model/"audit_terms.csv",model/"terminal_coordinates.csv",mapping,
++                                bus_ids=case_data["nw"]["1"]["bus"])
++        primal = {index:native[column] for index,column in mapping.items()}
+         primal[0] = 1.
+         values = qa.affine_metrics(model, primal)
+         matrices = np.zeros((168,37,37))
+@@ -46,14 +105,39 @@ def replay(study, model, solved):
+         assert terms == 168*37*38//2
+         eigen = np.linalg.eigvalsh(matrices)[:,0]
+         check = qa.evaluate_native(model/"native.mps", native, meta["objective_divisor"])
+-        physical = qa.physical_metrics(model, qa.read(case), primal, values)
++        physical = qa.physical_metrics(model, case_data, primal, values)
+         assert abs(check["annualized_EUR2025"]-values["cost",0,"0"]) < .02
+         report.update(original_matrix=check,physical=physical,hourly_minimum_eigenvalues=eigen.tolist(),
+                       minimum_eigenvalue=eigen.min(),original_cost_EUR2025=values["cost",0,"0"],
+                       primal_sha256=result["native_primal_sha256"],audit_terms_sha256=digest(model/"audit_terms.csv"))
+-    with (solved/"original_gscr_replay.json").open("x") as stream:
++    verify_manifest(manifest_path,required)
++    report["input_manifest_sha256"]=digest(manifest_path)
++    report["gold_qualified"]=False
++    report["qualification_role"]="Bound original-point sensitivity evidence; acceptance requires frozen GOLD criteria review"
++    report["ledger_roster"]=roster if result["result_count"] else None
++    output.mkdir(exist_ok=False)
++    with (output/"native_solver_audit.json").open("x") as stream:
++        json.dump(dict(termination=result["termination"],result_count=result["result_count"],
++                       gold_qualified=False,audit_role="native solver status only"),stream,indent=2)
++    with (output/"original_model_audit.json").open("x") as stream:
++        json.dump(report,stream,indent=2,allow_nan=False)
++    with (output/"original_gscr_replay.json").open("x") as stream:
+         json.dump(report,stream,indent=2,allow_nan=False)
+ 
+ 
+ if __name__ == "__main__":
+-    replay(*(Path(p).resolve() for p in sys.argv[1:]))
++    parser=argparse.ArgumentParser()
++    parser.add_argument("study",type=Path)
++    parser.add_argument("model",type=Path)
++    parser.add_argument("solved",type=Path)
++    parser.add_argument("--manifest",type=Path,required=True)
++    parser.add_argument("--freeze-manifest",action="store_true")
++    parser.add_argument("--output",type=Path)
++    args=parser.parse_args()
++    study,model,solved=(p.resolve() for p in (args.study,args.model,args.solved))
++    if args.freeze_manifest:
++        freeze_manifest(study,model,solved,args.manifest)
++    else:
++        if args.output is None:
++            parser.error("--output is required for replay")
++        replay(study,model,solved,args.manifest,args.output)
+diff --git a/scripts/paper_a/replay_evidence.py b/scripts/paper_a/replay_evidence.py
+new file mode 100644
+index 0000000..04aa3bd
+--- /dev/null
++++ b/scripts/paper_a/replay_evidence.py
+@@ -0,0 +1,103 @@
++"""Pre-evaluation integrity and coordinate checks for original-point replay."""
++import csv
++import hashlib
++import json
++import math
++from pathlib import Path
++
++SCHEMA = "paper_a_original_replay_inputs/1"
++
++
++class EvidenceError(ValueError):
++    pass
++
++
++def digest(path):
++    with open(path, "rb") as stream:
++        return hashlib.file_digest(stream, "sha256").hexdigest()
++
++
++def read_json(path):
++    return json.loads(Path(path).read_text(encoding="utf-8-sig"))
++
++
++def record(path):
++    path = Path(path).resolve()
++    return dict(path=str(path), bytes=path.stat().st_size, sha256=digest(path))
++
++
++def verify_manifest(path, required):
++    manifest = read_json(path)
++    if manifest.get("schema") != SCHEMA:
++        raise EvidenceError("Unsupported input manifest")
++    entries = manifest["inputs"]
++    if set(required) - set(entries):
++        raise EvidenceError("Missing input roles: " + str(sorted(set(required) - set(entries))))
++    paths = {}
++    for role, entry in entries.items():
++        source = Path(entry["path"])
++        if not source.is_file() or source.stat().st_size != entry["bytes"] or digest(source) != entry["sha256"]:
++            raise EvidenceError("Missing or changed input: " + role)
++        paths[role] = source
++    return manifest, paths
++
++
++def rows(path):
++    with open(path, newline="", encoding="utf-8-sig") as stream:
++        yield from csv.DictReader(stream)
++
++
++def validate_mapping(path, size):
++    mapping = {}
++    natives = set()
++    for row in rows(path):
++        index, native = int(row["index"]), int(row["native"])
++        if index <= 0 or index in mapping or native in natives or not 0 <= native < size:
++            raise EvidenceError("Duplicate or invalid native mapping")
++        mapping[index] = native
++        natives.add(native)
++    if not mapping or set(mapping) != set(range(1, len(mapping) + 1)):
++        raise EvidenceError("Incomplete original coordinate roster")
++    return mapping
++
++
++def validate_ledgers(audit, terminals, mapping, hours=168, regions=37, bus_ids=None):
++    seen, groups, constants, matrix = set(), set(), set(), set()
++    for row in rows(audit):
++        key = (row["metric"], int(row["hour"]), row["id"])
++        index, coefficient = int(row["index"]), float(row["coefficient"])
++        full = key + (index,)
++        if full in seen or not math.isfinite(coefficient) or (index != 0 and index not in mapping):
++            raise EvidenceError("Duplicate, nonfinite or unknown affine coordinate")
++        seen.add(full)
++        groups.add(key)
++        if index == 0:
++            constants.add(key)
++        if key[0] == "M":
++            matrix.add(key)
++    expected = {("M", h, f"{i}_{j}") for h in range(1, hours + 1)
++                for i in range(1, regions + 1) for j in range(i, regions + 1)}
++    if matrix != expected or groups != constants:
++        raise EvidenceError("Missing or unexpected full matrix key or expression constant")
++    if bus_ids is not None:
++        expected_balance={(metric,h,str(bus)) for metric in ("P","Q")
++                          for h in range(1,hours+1) for bus in bus_ids}
++        if {key for key in groups if key[0] in ("P","Q")} != expected_balance:
++            raise EvidenceError("Missing or unexpected nodal balance coordinate")
++        if not {("cost",0,"0"),("wind_pv",0,"0")} <= groups:
++            raise EvidenceError("Missing objective or quota expression")
++    seen_terminals = set()
++    for row in rows(terminals):
++        key = (row["type"], int(row["hour"]), row["id"], row["end_bus"])
++        if key in seen_terminals or not 1 <= key[1] <= hours:
++            raise EvidenceError("Duplicate or invalid terminal key")
++        seen_terminals.add(key)
++        for field in ("p_index", "q_index", "online_index"):
++            index = int(row[field])
++            if (index == 0 and field != "online_index") or (index != 0 and index not in mapping):
++                raise EvidenceError("Unknown terminal coordinate")
++        if not all(math.isfinite(float(row[f])) for f in ("q_factor_pu", "rating_pu")):
++            raise EvidenceError("Nonfinite terminal coefficient")
++    if not seen_terminals:
++        raise EvidenceError("Empty terminal roster")
++    return dict(matrix_positions=len(matrix), affine_terms=len(seen), terminals=len(seen_terminals))
+diff --git a/scripts/paper_a/run_r3_native_references.ps1 b/scripts/paper_a/run_r3_native_references.ps1
+new file mode 100644
+index 0000000..3f42de3
+--- /dev/null
++++ b/scripts/paper_a/run_r3_native_references.ps1
+@@ -0,0 +1,62 @@
++param(
++    [string]$OutputRoot = 'E:/ResearchResults/FlexPlan_UC_GSCR/DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01',
++    [string[]]$Methods = @('G0','G3'),
++    [string[]]$Formulations = @('LPAC','SOC-WR','QCRM'),
++    [string]$ReferenceSuffix = '_frozen'
++)
++$ErrorActionPreference='Stop'
++if(-not ([IO.Path]::GetFullPath($OutputRoot).StartsWith('E:\',[StringComparison]::OrdinalIgnoreCase))) {throw 'Explicit E: output root required'}
++foreach($part in @('00_intake','01_native_g0','02_native_g3','03_replay_integrity','04_reproducibility','05_scientific_results','06_qa','logs','tmp','julia_depot')) {
++    New-Item -ItemType Directory -Path "$OutputRoot/$part" -Force | Out-Null
++}
++$drive=Get-PSDrive E
++if($drive.Free -le 0) {throw 'No free E: capacity'}
++[IO.File]::WriteAllText("$OutputRoot/00_intake/native_reference_write_probe.txt",'R3 explicit E: writer probe')
++$archive='E:/ResearchResults/FlexPlan_UC_GSCR/KW08_RE70_G2_PQ_20261125_01'
++$julia='C:/Users/User/.julia/juliaup/julia-1.11.5+0.x64.w64.mingw32/bin/julia.exe'
++$python='C:/ProgramData/anaconda3/python.exe'
++$env:JULIA_DEPOT_PATH="$OutputRoot/julia_depot;E:/ResearchResults/FlexPlan_UC_GSCR/SCI_GOLD_AC_DIRECT_02_LOCAL_20261127_01/julia_depot;E:/ResearchResults/FlexPlan_UC_GSCR/TECH_FULL37_FIVE_WEEKS_RE50_20261115_01/depot;C:/Users/User/.julia"
++$env:JULIA_PKG_PRECOMPILE_AUTO='0'
++$env:TEMP="$OutputRoot/tmp"
++$env:TMP=$env:TEMP
++$env:PAPER_A_PROXY_CONSUMER_COMMIT=(git rev-parse HEAD)
++$env:PAPER_A_WEEK_CONTRACT='E:/ResearchResults/FlexPlan_UC_GSCR/SGOV145_20261121_01/FORMULATION_CONTRACT.md'
++$env:PAPER_A_STRENGTH_EXISTING_CASE_DIR="$archive/CASES/G2"
++$env:PAPER_A_AC_CASE_DIR="$archive/CONFIRMED_QBOX/AC_CASE"
++$env:PAPER_A_AC_REFERENCE_ONLY='1'
++$env:PAPER_A_AC_EXPORT_NATIVE='0'
++$env:PAPER_A_AC_REPLAY='0'
++$env:PAPER_A_STRENGTH_BACKEND='mosek'
++$env:PAPER_A_STRENGTH_SECONDS='120'
++$science='E:/ResearchResults/FlexPlan_UC_GSCR/ORCH_FULL37_SEQUENTIAL_117_20261113_01/SCI02_POSITIVE_SYN_MINIMUM_04/CASE.json'
++foreach($method in $Methods) {
++    $section=if($method -eq 'G0'){'01_native_g0'}else{'02_native_g3'}
++    $solvers=if($method -eq 'G0'){@('mosek')}else{@('gurobi','mosek')}
++    foreach($form in $Formulations) {
++        foreach($solver in $solvers) {
++            $env:PAPER_A_AC_FORMULATION=$form
++            $env:PAPER_A_AC_SOLVER=$solver
++            $env:PAPER_A_AC_ATTEMPT="$section/${form}_${solver}$ReferenceSuffix"
++            $dir="$OutputRoot/$($env:PAPER_A_AC_ATTEMPT)"
++            if(Test-Path -LiteralPath "$dir/reference_export.json") {continue}
++            if(Test-Path -LiteralPath $dir) {throw "Partial reference exists: $dir; preserve it and choose a fresh output root"}
++            $before=(git rev-parse HEAD)
++            if($before -ne $env:PAPER_A_PROXY_CONSUMER_COMMIT) {throw 'Source commit changed between reference builds'}
++            $dirty=git diff --name-only
++            if($dirty) {throw 'Tracked code must be clean before a frozen reference build'}
++            $started=[DateTime]::UtcNow
++            & $julia --startup-file=no --project=. scripts/paper_a/run_week_strength_comparison.jl $OutputRoot $science $method relaxed ac_compare *> "$OutputRoot/logs/${method}_${form}_${solver}$ReferenceSuffix.log"
++            $exit=$LASTEXITCODE
++            $after=(git rev-parse HEAD)
++            $dirtyAfter=git diff --name-only
++            $receipt=@{source_commit=$before;source_commit_after=$after;tracked_dirty_before=@($dirty);tracked_dirty_after=@($dirtyAfter);started_utc=$started.ToString('o');ended_utc=[DateTime]::UtcNow.ToString('o');exit_code=$exit;method=$method;formulation=$form;backend=$solver;optimization_performed=$false;command=@($julia,'--startup-file=no','--project=.','scripts/paper_a/run_week_strength_comparison.jl',$OutputRoot,$science,$method,'relaxed','ac_compare');environment=@{JULIA_DEPOT_PATH=$env:JULIA_DEPOT_PATH;TEMP=$env:TEMP;PAPER_A_AC_REFERENCE_ONLY='1';PAPER_A_AC_ATTEMPT=$env:PAPER_A_AC_ATTEMPT;PAPER_A_WEEK_CONTRACT=$env:PAPER_A_WEEK_CONTRACT;PAPER_A_STRENGTH_EXISTING_CASE_DIR=$env:PAPER_A_STRENGTH_EXISTING_CASE_DIR;PAPER_A_AC_CASE_DIR=$env:PAPER_A_AC_CASE_DIR}}
++            $receipt | ConvertTo-Json -Depth 8 | Set-Content -LiteralPath "$OutputRoot/04_reproducibility/${method}_${form}_${solver}${ReferenceSuffix}_BUILD_RECEIPT.json" -Encoding UTF8
++            if($exit -ne 0) {throw "Native build failed: $method $form $solver; see log"}
++            if($before -ne $after -or $dirtyAfter) {throw 'Source freeze changed during reference build'}
++            if($method -eq 'G0') {
++                & $python audit/r3_independent_native_verify.py "$dir/native_psd_readback.json" --expected "$dir/expected_psd.json" --task "$dir/native.task.gz" --output "$dir/INDEPENDENT_COEFFICIENT_VERDICT.json"
++                if($LASTEXITCODE -ne 0) {throw "Independent native audit failed: $dir"}
++            }
++        }
++    }
++}
+diff --git a/scripts/paper_a/run_week_strength_comparison.jl b/scripts/paper_a/run_week_strength_comparison.jl
+index 4c34973..9e0b2cc 100644
+--- a/scripts/paper_a/run_week_strength_comparison.jl
++++ b/scripts/paper_a/run_week_strength_comparison.jl
+@@ -307,7 +307,7 @@ else
+             N.input_range(solver_model)==profile["conditioned_input_range"] || error("Actual conditioned input range differs from profile; optimize not called")
+         end
+         JuMP.set_optimizer(solver_model,opt)
+-        criterion=="G3" && N.configure_bridges!(solver_model,opt)
++        criterion in ("G0","G3") && N.configure_bridges!(solver_model,opt)
+         bridge=criterion=="G3" ? N.prepare_backend!(solver_model,opt) : nothing
+         native_backend==:gurobi && JuMP.set_optimizer_attribute(solver_model,"LogFile",joinpath(out,"gurobi.log"))
+         if phase=="admit_solve"
+@@ -445,11 +445,12 @@ else
+             int_error=mode=="integer" ? maximum(abs(v(x)-round(v(x))) for x in discrete) : nothing
+             original_check=criterion in ("G0","G3") ? N.primal_check(model) : Dict("status"=>isempty(residuals) ? "passed" : "failed","tolerance"=>1e-6)
+             if criterion=="G3"
+-                legacy_poly=maximum((let y=JuMP.value.(JuMP.constraint_object(cone).func)
+-                    (sqrt(2.)*y[3])^2-2*(2*y[1])*y[2]
++                cone_poly=maximum((let obj=JuMP.constraint_object(cone),y=JuMP.value.(obj.func)
++                    obj.set isa JuMP.MOI.SecondOrderCone ? sum(abs2,y[2:end])-y[1]^2 :
++                        sum(abs2,y[3:end])-2*y[1]*y[2]
+                 end for cert in values(pm.ext[:paper_a_certificates]) for cone in cert.cones);init=0.)
+-                original_check["historical_raw_cone_polynomial_violation"]=legacy_poly
+-                legacy_poly>N.PRIMAL_TOLERANCE && (original_check["status"]="failed_original_primal_check")
++                original_check["raw_cone_polynomial_violation"]=cone_poly
++                cone_poly>N.PRIMAL_TOLERANCE && (original_check["status"]="failed_original_primal_check")
+             end
+             native_ok=native_backend==:mosek ? JuMP.primal_status(model)==JuMP.MOI.FEASIBLE_POINT :
+                 all(get(native,k,nothing) isa Number && native[k]<=1e-6 for k in ("ConstrVio","BoundVio")) &&
+diff --git a/scripts/paper_a/week_ac_audit.jl b/scripts/paper_a/week_ac_audit.jl
+index e3722e2..35257ec 100644
+--- a/scripts/paper_a/week_ac_audit.jl
++++ b/scripts/paper_a/week_ac_audit.jl
+@@ -1,19 +1,65 @@
+ # The weekly optimizer and the postsolve-only reader share the same JuMP model.
++function verify_ac_replay_manifest(manifest_path,dir)
++    manifest=JSON.parsefile(manifest_path)
++    manifest["schema"]=="paper_a_julia_replay_inputs/1" || error("Unsupported Julia replay manifest")
++    inputs=manifest["inputs"]
++    required=("primal","outcome","audit_terms","terminal_coordinates","case","export_metadata","evaluator_program")
++    for role in required
++        haskey(inputs,role) || error("Missing expected replay input: $role")
++    end
++    for (role,entry) in inputs
++        path=entry["path"]
++        isfile(path) && filesize(path)==entry["bytes"] && sha_file(path)==entry["sha256"] ||
++            error("Missing or changed replay input: $role")
++    end
++    for (role,name) in (("primal","primal.csv"),("outcome","outcome.json"),("audit_terms","audit_terms.csv"),
++                        ("terminal_coordinates","terminal_coordinates.csv"),("export_metadata","export.json"))
++        abspath(inputs[role]["path"])==abspath(joinpath(dir,name)) || error("Replay input role/path mismatch")
++    end
++    abspath(inputs["evaluator_program"]["path"])==abspath(@__FILE__) || error("Unbound Julia evaluator program")
++    metadata=JSON.parsefile(inputs["export_metadata"]["path"])
++    metadata["case_sha256"]==inputs["case"]["sha256"] || error("Replay case identity mismatch")
++    return manifest
++end
++
++function read_ac_replay_point(path,vars)
++    expected=Set(JuMP.index(v).value for v in vars)
++    points=fill(NaN,maximum(expected))
++    seen=Set{Int}()
++    for row in CSV.File(path)
++        row.index in expected && !(row.index in seen) && isfinite(row.value) ||
++            error("Duplicate, unknown or nonfinite primal coordinate")
++        push!(seen,row.index)
++        points[row.index]=row.value
++    end
++    seen==expected || error("Incomplete primal coordinate roster")
++    return points
++end
++
+ function replay_ac_week(dir, model)
++    manifest_path=get(ENV,"PAPER_A_AC_REPLAY_MANIFEST","")
++    output=get(ENV,"PAPER_A_AC_REPLAY_OUTPUT","")
++    isempty(manifest_path) && error("Replay requires explicit expected PAPER_A_AC_REPLAY_MANIFEST")
++    isempty(output) && error("Replay requires separate PAPER_A_AC_REPLAY_OUTPUT")
++    abspath(output)!=abspath(dir) && !ispath(output) || error("Replay output must be a new separate directory")
++    manifest=verify_ac_replay_manifest(manifest_path,dir)
+     path = joinpath(dir,"primal.csv")
+     vars = JuMP.all_variables(model.m)
+-    points = fill(NaN,maximum(JuMP.index(v).value for v in vars))
+-    for row in CSV.File(path)
+-        isnan(points[row.index]) || error("Duplicate primal index")
+-        points[row.index] = row.value
+-    end
+-    all(v -> isfinite(points[JuMP.index(v).value]),vars) || error("Incomplete primal")
++    points = read_ac_replay_point(path,vars)
+     evalpoint(v) = points[JuMP.index(v).value]
+     val(x) = JuMP.value(evalpoint,x)
+     result = JSON.parsefile(joinpath(dir,"outcome.json"))
+     isapprox(val(model.objective),result["annualized_EUR2025"];rtol=2e-12) ||
+         error("Rebuilt primal coordinates fail archived objective check")
+-    audit_ac_point(dir,model,val)
++    verify_ac_replay_manifest(manifest_path,dir)
++    mkpath(output)
++    for name in ("primal.csv","outcome.json","audit_terms.csv","terminal_coordinates.csv","export.json")
++        cp(joinpath(dir,name),joinpath(output,name))
++    end
++    audit_ac_point(output,model,val)
++    verify_ac_replay_manifest(manifest_path,dir)
++    writejson(joinpath(output,"input_binding.json"),Dict("input_manifest_sha256"=>sha_file(manifest_path),
++        "schema"=>manifest["schema"],"gold_qualified"=>false))
+ end
+ 
+ function export_ac_coordinates(dir, model)
+@@ -78,12 +124,58 @@ function export_ac_coordinates(dir, model)
+     end
+ end
+ 
+-function audit_ac_point(dir, model, val)
++"""Capture the original row roster before any solver-only transformation."""
++function freeze_ac_original_model(m)
++    rows=JuMP.all_constraints(m;include_variable_in_set_constraints=true)
++    snapshot = (model=m, rows=rows, rowset=Set(rows),
++                preserved=Dict{Any,Any}())
++    m.ext[:paper_a_original_audit] = snapshot
++    return snapshot
++end
++
++"""Preserve a row before changing its coefficients or deleting it."""
++function preserve_ac_original_constraint!(snapshot, row)
++    row in snapshot.rowset || error("Cannot preserve a non-original row")
++    get!(snapshot.preserved,row) do
++        obj=JuMP.constraint_object(row)
++        f=obj.func isa AbstractVector ? copy.(obj.func) : copy(obj.func)
++        (func=f,set=obj.set)
++    end
++    snapshot.model.ext[:paper_a_solver_transformed] = true
++    return nothing
++end
++
++function original_ac_distances(snapshot,val;atol=1e-8)
++    violated=Dict{Any,Float64}()
++    for row in snapshot.rows
++        obj = if haskey(snapshot.preserved,row)
++            snapshot.preserved[row]
++        else
++            JuMP.is_valid(snapshot.model,row) || error("Original row deleted without preservation")
++            JuMP.constraint_object(row)
++        end
++        x=obj.func isa AbstractVector ? val.(obj.func) : val(obj.func)
++        all(isfinite,x isa Number ? (x,) : x) || error("Nonfinite original row value")
++        d=JuMP.MOI.Utilities.distance_to_set(x,obj.set)
++        isfinite(d) || error("Nonfinite original row distance")
++        d>atol && (violated[row]=d)
++    end
++    return violated
++end
++
++function audit_ac_point(dir, model, val; original_snapshot=get(model.m.ext,:paper_a_original_audit,nothing))
+     (;m,w,objective) = model
+     if !isfile(joinpath(dir,"export.json")) && !isfile(joinpath(dir,"start_receipt.json"))
+         export_ac_coordinates(dir,model)
+     end
+-    violated = JuMP.primal_feasibility_report(v->val(v),m;atol=1e-8)
++    native = JuMP.primal_feasibility_report(v->val(v),m;atol=1e-8)
++    writejson(joinpath(dir,"native_solver_audit.json"),Dict(
++        "audit_role"=>"solver representation only", "gold_qualified"=>false,
++        "max_distance_above_1e-8"=>isempty(native) ? 0.0 : maximum(values(native)),
++        "constraints_above_1e-8"=>length(native)))
++    transformed=get(m.ext,:paper_a_solver_transformed,false)
++    transformed && isnothing(original_snapshot) && error("Original audit requires pre-transformation snapshot")
++    violated = isnothing(original_snapshot) ? native : original_ac_distances(original_snapshot,val)
+     worst = isempty(violated) ? 0.0 : maximum(values(violated))
+     if criterion in ("G0","G3")
+         hourly=[FP.eigmin(FP.Symmetric(val.(FP._paper_a_online_expressions!(model.pm,n).M))) for n in 1:168]
+@@ -91,12 +183,17 @@ function audit_ac_point(dir, model, val)
+             "criterion"=>criterion,"minimum_eigenvalues"=>hourly,"minimum"=>minimum(hourly),
+             "primal_sha256"=>sha_file(joinpath(dir,"primal.csv"))))
+     end
+-    writejson(joinpath(dir,"original_model_check.json"),Dict(
++    check=Dict(
++        "audit_role"=>"original unscaled JuMP algebra; independent bound native replay required",
++        "gold_qualified"=>false,"solver_transformed"=>transformed,
++        "original_rows"=>isnothing(original_snapshot) ? JuMP.num_constraints(m;count_variable_in_set_constraints=true) : length(original_snapshot.rows),
+         "max_distance_above_1e-8"=>worst,"constraints_above_1e-8"=>length(violated),
+         "cost_EUR2025"=>val(objective),"wind_pv_MWh"=>val(w.quota),"demand_MWh"=>w.demand,
+         "primal_sha256"=>sha_file(joinpath(dir,"primal.csv")),
+         "audit_terms_sha256"=>sha_file(joinpath(dir,"audit_terms.csv")),
+-        "terminal_coordinates_sha256"=>sha_file(joinpath(dir,"terminal_coordinates.csv"))))
++        "terminal_coordinates_sha256"=>sha_file(joinpath(dir,"terminal_coordinates.csv")))
++    writejson(joinpath(dir,"original_model_audit.json"),check)
++    writejson(joinpath(dir,"original_model_check.json"),check)
+ end
+ 
+ # Transfer terminal dispatch and online/capacity coordinates by case ID. The
+diff --git a/scripts/paper_a/week_ac_compare.jl b/scripts/paper_a/week_ac_compare.jl
+index 2fc6469..a8d65e9 100644
+--- a/scripts/paper_a/week_ac_compare.jl
++++ b/scripts/paper_a/week_ac_compare.jl
+@@ -114,7 +114,8 @@ function build_ac_week()
+ end
+ 
+ include("week_ac_audit.jl")
+-function scale_ac_angle_rows!(m)
++include("NativeStrengthReference.jl")
++function scale_ac_angle_rows!(m;original_snapshot=nothing)
+     original=JuMP.AffExpr[]
+     for S in (JuMP.MOI.LessThan{Float64},JuMP.MOI.GreaterThan{Float64})
+         for row in JuMP.all_constraints(m,JuMP.AffExpr,S)
+@@ -123,6 +124,7 @@ function scale_ac_angle_rows!(m)
+             sort(abs.(collect(values(expr.terms))))==[1.,tan(pi/2)] && JuMP.normalized_rhs(row)==0 ||
+                 error("Unexpected native angle row")
+             push!(original,S==JuMP.MOI.LessThan{Float64} ? copy(expr) : -expr)
++            original_snapshot===nothing || preserve_ac_original_constraint!(original_snapshot,row)
+             for (c,v) in JuMP.linear_terms(expr)
+                 scaled=ldexp(c,-26)
+                 ldexp(scaled,26)==c || error("Angle scaling failed round trip")
+@@ -134,7 +136,7 @@ function scale_ac_angle_rows!(m)
+     return original
+ end
+ 
+-function conify_qcrm_currents!(m)
++function conify_qcrm_currents!(m;original_snapshot=nothing)
+     originals=JuMP.QuadExpr[]
+     for row in JuMP.all_constraints(m,JuMP.QuadExpr,JuMP.MOI.LessThan{Float64})
+         expr=JuMP.constraint_object(row).func
+@@ -148,6 +150,7 @@ function conify_qcrm_currents!(m)
+             isempty(expr.aff.terms) && iszero(expr.aff.constant) && iszero(JuMP.normalized_rhs(row)) ||
+             error("QCRM current cone requires nonnegative factors and a zero affine residual")
+         p,q=squared
++        original_snapshot===nothing || preserve_ac_original_constraint!(original_snapshot,row)
+         JuMP.@constraint(m,[0.5*u,v,p,q] in JuMP.RotatedSecondOrderCone())
+         push!(originals,expr)
+         JuMP.delete(m,row)
+@@ -182,6 +185,7 @@ function run_ac_week()
+     profile["strength_edge_cones"]=criterion=="G3" ? sum(length(c.cones) for c in values(certs)) : 0
+     @assert profile["discrete_after_relaxation"]==0 && length(w.gscr_rows)==(criterion=="G0" ? 168 : 6216) && length(new_q)==12432
+     writejson(joinpath(ac_out,"profile.json"),profile)
++    original_snapshot=freeze_ac_original_model(m)
+     if get(ENV,"PAPER_A_AC_EXPORT_NATIVE","0") == "1"
+         criterion=="G0" && error("PSD blocks require the MOSEK solve path")
+         JuMP.set_optimizer(m,Gurobi.Optimizer)
+@@ -211,6 +215,7 @@ function run_ac_week()
+     end
+     if ac_solver == "mosek"
+         JuMP.set_optimizer(m,N.MosekTools.Optimizer)
++        criterion=="G0" && NativeStrengthReference.configure_g0!(m)
+         JuMP.set_optimizer_attribute(m,"MSK_IPAR_NUM_THREADS",2)
+         JuMP.set_optimizer_attribute(m,"MSK_DPAR_OPTIMIZER_MAX_TIME",budget)
+         for parameter in ("MSK_DPAR_INTPNT_CO_TOL_PFEAS","MSK_DPAR_INTPNT_CO_TOL_DFEAS","MSK_DPAR_INTPNT_CO_TOL_REL_GAP")
+@@ -233,13 +238,43 @@ function run_ac_week()
+         end
+     else
+         JuMP.set_optimizer(m,Gurobi.Optimizer)
++        criterion=="G3" && N.configure_bridges!(m,N.optimizer(;backend=:gurobi))
++        criterion=="G3" && JuMP.set_optimizer_attribute(m,"NonConvex",0)
+         for (k,v) in (("Threads",4),("TimeLimit",budget),("LogFile",joinpath(ac_out,"gurobi.log")),
+                       ("NumericFocus",2),("BarHomogeneous",1),("BarQCPConvTol",1e-7),("Seed",1))
+             JuMP.set_optimizer_attribute(m,k,v)
+         end
+     end
+-    original_angles=criterion=="G0" && ac_label in ("SOC-WR","QCRM") ? scale_ac_angle_rows!(m) : JuMP.AffExpr[]
+-    original_currents=criterion=="G0" && ac_label=="QCRM" ? conify_qcrm_currents!(m) : JuMP.QuadExpr[]
++    original_angles=ac_solver=="mosek" && ac_label in ("SOC-WR","QCRM") ? scale_ac_angle_rows!(m;original_snapshot) : JuMP.AffExpr[]
++    original_currents=ac_solver=="mosek" && ac_label=="QCRM" ? conify_qcrm_currents!(m;original_snapshot) : JuMP.QuadExpr[]
++    if get(ENV,"PAPER_A_AC_REFERENCE_ONLY","0")=="1"
++        profile["optimization_performed"]=false
++        profile["original_audit_snapshot_rows"]=length(original_snapshot.rows)
++        profile["dyadically_scaled_angle_rows"]=length(original_angles)
++        profile["qcrm_converted_current_rows"]=length(original_currents)
++        profile["native_reference_source_sha256"]=sha_file(joinpath(@__DIR__,"NativeStrengthReference.jl"))
++        profile["g3_native_readback_source_sha256"]=sha_file(joinpath(@__DIR__,"G3NativeReadback.jl"))
++        profile["requested_parameters"]=ac_solver=="mosek" ? Dict(
++            "MSK_IPAR_NUM_THREADS"=>2,"MSK_DPAR_OPTIMIZER_MAX_TIME"=>budget,
++            "MSK_DPAR_INTPNT_CO_TOL_PFEAS"=>1e-10,"MSK_DPAR_INTPNT_CO_TOL_DFEAS"=>1e-10,
++            "MSK_DPAR_INTPNT_CO_TOL_REL_GAP"=>1e-10) : Dict(
++            "Threads"=>4,"TimeLimit"=>budget,"NumericFocus"=>2,"BarHomogeneous"=>1,
++            "BarQCPConvTol"=>1e-7,"Seed"=>1,"NonConvex"=>0)
++        writejson(joinpath(ac_out,"profile.json"),profile)
++        export_ac_coordinates(ac_out,(;m,pm,w,new_q,objective,scale))
++        JuMP.MOI.Utilities.attach_optimizer(JuMP.backend(m))
++        if criterion=="G0"
++            matrices=Dict(n=>FP._paper_a_online_expressions!(pm,n).M for n in 1:168)
++            report=NativeStrengthReference.export_g0!(ac_out,m,matrices;metadata=profile)
++            writejson(joinpath(ac_out,"reference_export.json"),report)
++        elseif criterion=="G3"
++            report=N.native_certificate_readback!(ac_out,m,certs)
++            writejson(joinpath(ac_out,"reference_export.json"),report)
++        else
++            error("Reference-only route requires G0 or G3")
++        end
++        return
++    end
+     if criterion=="G0"
+         JuMP.MOI.Utilities.attach_optimizer(JuMP.backend(m))
+         dims=WeekStrengthAdmission.psd_sizes(JuMP.unsafe_backend(m))
+diff --git a/src/core/paper_a_formulations.jl b/src/core/paper_a_formulations.jl
+index b93d363..2f0aa09 100644
+--- a/src/core/paper_a_formulations.jl
++++ b/src/core/paper_a_formulations.jl
+@@ -178,8 +178,13 @@ function add_paper_a_constraints!(model,B,p,M,f::AbstractPaperAFormulation;alpha
+             isfinite(av) && av==bv && av<=0 || throw(ArgumentError("G3 requires finite symmetric Z edges"))
+             av!=0 && push!(edges,(i,j))
+         end
++        all(isfinite(2*(M[i,j] isa Number ? M[i,j] : M[i,j].constant)) for (i,j) in edges) ||
++            throw(ArgumentError("G3 doubled edge constant overflows"))
+         q=JuMP.@variable(model,[1:length(edges),1:2],lower_bound=0,base_name="g3_q")
+-        cones=[JuMP.@constraint(model,[q[k,1]/2,q[k,2],M[i,j]] in JuMP.RotatedSecondOrderCone()) for (k,(i,j)) in enumerate(edges)]
++        # The standard SOC uses only exact dyadic operations. In particular,
++        # neither an irrational rotation nor a rounded square of Mij is formed:
++        # (q1+q2)^2-(q1-q2)^2-(2*Mij)^2 = 4*(q1*q2-Mij^2).
++        cones=[JuMP.@constraint(model,[q[k,1]+q[k,2],q[k,1]-q[k,2],2*M[i,j]] in JuMP.SecondOrderCone()) for (k,(i,j)) in enumerate(edges)]
+         residue=[M[i,i]-sum((i==a ? q[k,1] : q[k,2]) for (k,(a,b)) in enumerate(edges) if i==a||i==b;init=0.) for i in 1:n]
+         rows=[JuMP.@constraint(model,residue[i]>=0) for i in 1:n]
+         return (kind="G3",edges=edges,q=q,cones=cones,residue=residue,rows=rows)
+diff --git a/test/paper_a_added_gfl_mosek.jl b/test/paper_a_added_gfl_mosek.jl
+index 2bbcdc4..5965a3c 100644
+--- a/test/paper_a_added_gfl_mosek.jl
++++ b/test/paper_a_added_gfl_mosek.jl
+@@ -19,7 +19,7 @@ include("../scripts/paper_a/NativeG3Solver.jl")
+         opt=N.optimizer(;backend=:mosek)
+         set_optimizer(m,opt);set_silent(m)
+         N.configure_bridges!(m,opt)
+-        @test N.prepare_backend!(m,opt)["status"]=="native_RSOC_supported"
++        @test N.prepare_backend!(m,opt)["status"]=="native_SOC_and_RSOC_supported"
+         optimize!(m)
+         @test termination_status(m)==MOI.OPTIMAL
+         @test primal_status(m)==MOI.FEASIBLE_POINT
+diff --git a/test/paper_a_g3_finite_exact.jl b/test/paper_a_g3_finite_exact.jl
+new file mode 100644
+index 0000000..433b901
+--- /dev/null
++++ b/test/paper_a_g3_finite_exact.jl
+@@ -0,0 +1,103 @@
++using Test, JuMP, LinearAlgebra
++import FlexPlan as FP, MosekTools, Gurobi, JSON
++include("../scripts/paper_a/NativeG3Solver.jl")
++
++"Evaluate the stored finite SOC as exact binary rationals, without a solve."
++function exact_g3_point(B,qvalues)
++    m=Model()
++    cert=FP.add_paper_a_constraints!(m,B,zeros(size(B,1)),B,FP.ExactEdgeSOCGSCR();alpha=1.)
++    point=Dict(cert.q[k,j]=>Rational{BigInt}(qvalues[k,j]) for k in axes(qvalues,1),j in 1:2)
++    eval(z)=z isa Real ? Rational{BigInt}(z) : z isa VariableRef ? point[z] :
++        Rational{BigInt}(z.constant)+sum(Rational{BigInt}(a)*point[v] for (a,v) in linear_terms(z);init=big(0)//big(1))
++    valid=all(>=(0),values(point))
++    for (k,(i,j)) in enumerate(cert.edges)
++        object=constraint_object(cert.cones[k]);@test object.set isa MOI.SecondOrderCone
++        y=eval.(object.func)
++        @test y==[point[cert.q[k,1]]+point[cert.q[k,2]],point[cert.q[k,1]]-point[cert.q[k,2]],2Rational{BigInt}(B[i,j])]
++        @test y[1]^2-y[2]^2-y[3]^2==4*(point[cert.q[k,1]]*point[cert.q[k,2]]-Rational{BigInt}(B[i,j])^2)
++        valid &= y[1]>=0 && y[1]^2>=sum(abs2,y[2:end])
++    end
++    valid &= all(eval(r)>=0 for r in cert.residue)
++    return valid,m,cert
++end
++
++@testset "G3 exact finite SOC and boundary fixtures" begin
++    for B in ([2. -1.;-1. 2.],[1. -1.;-1. 1.],[1. -1. 0.;-1. 1. 0.;0. 0. 0.])
++        @test first(exact_g3_point(B,reshape([1.,1.],1,2)))
++    end
++    @test first(exact_g3_point(zeros(2,2),zeros(0,2))) # isolated components
++    @test !first(exact_g3_point([1. -1.;-1. 1.],reshape([1.,prevfloat(1.)],1,2)))
++    @test !first(exact_g3_point([1. -1.;-1. 1.],reshape([-1.,-1.],1,2)))
++    # The archived sqrt(2) rotation under-represents this exact product.
++    a=big(1592262918131443)//big(2251799813685248)
++    @test 2a^2<1
++    @test (big(3)//big(4)+big(3)//big(4))^2>=1 # faulty un-doubled tail would pass
++    @test !first(exact_g3_point([1. -1.;-1. 1.],reshape([0.75,0.75],1,2)))
++    @test !first(exact_g3_point([1. -1.;-1. Float64(2a^2)],reshape([1.,Float64(2a^2)],1,2)))
++    valid,m,c=exact_g3_point([1. -0.3;-0.3 1.],reshape([1.,1.],1,2))
++    @test valid
++    @test constraint_object(only(c.cones)).func[3].constant==2*(-0.3)
++end
++
++@testset "G3 common finite SOC native small solves" begin
++    for solver in (:gurobi,:mosek)
++        m=Model();@variable(m,x>=0)
++        B=[0.3+x -0.3;-0.3 0.3]
++        cert=FP.add_paper_a_constraints!(m,B,zeros(2),B,FP.ExactEdgeSOCGSCR();alpha=1.)
++        @objective(m,Min,x)
++        opt=NativeG3Solver.optimizer(;backend=solver)
++        set_optimizer(m,opt);set_silent(m)
++        solver==:gurobi && set_optimizer_attribute(m,"BarQCPConvTol",1e-10)
++        NativeG3Solver.configure_bridges!(m,opt)
++        info=NativeG3Solver.prepare_backend!(m,opt)
++        if solver==:gurobi
++            @test info["cones"]==1
++            native=unsafe_backend(m)
++            ci=only(MOI.get(native,MOI.ListOfConstraintIndices{MOI.VectorOfVariables,MOI.SecondOrderCone}()))
++            variables=MOI.get(native,MOI.ConstraintFunction(),ci).variables
++            @test length(variables)==3
++            @test Gurobi.GRBupdatemodel(native)==0
++            nl=Ref{Cint}(0);nq=Ref{Cint}(0)
++            @test Gurobi.GRBgetqconstr(native,0,nl,C_NULL,C_NULL,nq,C_NULL,C_NULL,C_NULL)==0
++            li=zeros(Cint,nl[]);lv=zeros(nl[]);qi=zeros(Cint,nq[]);qj=zeros(Cint,nq[]);qv=zeros(nq[])
++            @test Gurobi.GRBgetqconstr(native,0,nl,li,lv,nq,qi,qj,qv)==0
++            @test nl[]==0 && nq[]==3 && qi==qj
++            @test sort(qv)==[-1.,-1.,1.]
++            columns=Int.(Gurobi.c_column.(Ref(native),variables))
++            @test Dict(Int(i)=>v for (i,v) in zip(qi,qv))==Dict(columns[1]=>1.,columns[2]=>-1.,columns[3]=>-1.)
++            head=Int(Gurobi.c_column(native,first(variables)))
++            lb=Ref{Cdouble}(NaN)
++            @test Gurobi.GRBgetdblattrelement(native,"LB",head,lb)==0
++            @test lb[]==0.
++        end
++        if haskey(ENV,"R3_G3_TEST_OUTPUT")
++            dir=joinpath(ENV["R3_G3_TEST_OUTPUT"],string(solver));mkpath(dir)
++            readback=NativeG3Solver.native_certificate_readback!(dir,m,Dict(1=>cert))
++            @test readback["status"]=="PASS" && readback["native_cones_exact"]==1 && readback["native_node_rows_exact"]==2
++            if solver==:gurobi
++                native=unsafe_backend(m)
++                raw=JSON.parsefile(joinpath(dir,"g3_actual_native_readback.json"))
++                tail=only(readback["native_coordinate_ledger"])["native_coordinate_columns_zero_based"][3]
++                row=only(r for r in raw["linear_rows"] if r["sense"]=="=" && r["columns_zero_based"]==[tail])
++                @test Gurobi.GRBsetdblattrelement(native,"RHS",row["index_zero_based"],prevfloat(row["rhs"]))==0
++                @test_throws ErrorException NativeG3Solver.native_certificate_readback!(dir,m,Dict(1=>cert))
++                @test Gurobi.GRBsetdblattrelement(native,"RHS",row["index_zero_based"],row["rhs"])==0
++                qcol=Int(Gurobi.c_column(native,optimizer_index(cert.q[1,1])))
++                @test Gurobi.GRBsetdblattrelement(native,"LB",qcol,-1.)==0
++                @test_throws ErrorException NativeG3Solver.native_certificate_readback!(dir,m,Dict(1=>cert))
++                @test Gurobi.GRBsetdblattrelement(native,"LB",qcol,0.)==0
++                @test Gurobi.GRBsetdblattrelement(native,"LB",qcol,1.)==0
++                @test_throws ErrorException NativeG3Solver.native_certificate_readback!(dir,m,Dict(1=>cert))
++                @test Gurobi.GRBsetdblattrelement(native,"LB",qcol,0.)==0
++                @test Gurobi.GRBsetdblattrelement(native,"UB",qcol,1.)==0
++                @test_throws ErrorException NativeG3Solver.native_certificate_readback!(dir,m,Dict(1=>cert))
++                @test Gurobi.GRBsetdblattrelement(native,"UB",qcol,Gurobi.GRB_INFINITY)==0
++            end
++        end
++        optimize!(m)
++        @test termination_status(m)==MOI.OPTIMAL
++        @test abs(value(x))<1e-7
++        @test NativeG3Solver.primal_check(m)["status"]=="passed"
++        @test all(value(v)>=-1e-7 for v in cert.q)
++    end
++end
+diff --git a/test/paper_a_mosek_zeroone_bounds.jl b/test/paper_a_mosek_zeroone_bounds.jl
+index afa000c..44be9d7 100644
+--- a/test/paper_a_mosek_zeroone_bounds.jl
++++ b/test/paper_a_mosek_zeroone_bounds.jl
+@@ -12,7 +12,7 @@ const NZ=NativeG3Solver
+         @objective(m,Min,z)
+         opt=NZ.optimizer(;backend=:mosek)
+         set_optimizer(m,opt);set_silent(m);NZ.configure_bridges!(m,opt)
+-        @test NZ.prepare_backend!(m,opt)["status"]=="native_RSOC_supported"
++        @test NZ.prepare_backend!(m,opt)["status"]=="native_SOC_and_RSOC_supported"
+         @test all(start_value(v)===nothing for v in all_variables(m))
+         optimize!(m)
+         if feasible
+diff --git a/test/paper_a_original_audit.jl b/test/paper_a_original_audit.jl
+new file mode 100644
+index 0000000..1d4cf3c
+--- /dev/null
++++ b/test/paper_a_original_audit.jl
+@@ -0,0 +1,59 @@
++using Test, JuMP, JSON, SHA, CSV
++sha_file(path)=open(io->bytes2hex(SHA.sha256(io)),path)
++include(joinpath(@__DIR__,"..","scripts","paper_a","week_ac_audit.jl"))
++
++@testset "Original unscaled rows survive solver transformations" begin
++    m=Model()
++    @variable(m, angle)
++    @constraint(m, original_angle, angle <= 0)
++    snapshot=freeze_ac_original_model(m)
++    preserve_ac_original_constraint!(snapshot,original_angle)
++    set_normalized_coefficient(original_angle,angle,1e-12)
++    val(x)=value(_->1e-3,x)
++    @test isempty(primal_feasibility_report(_->1e-3,m;atol=1e-8))
++    @test original_ac_distances(snapshot,val)[original_angle] ≈ 1e-3
++    @testset "Deleted current row remains original" begin
++        @constraint(m, current, angle >= 2)
++        s=freeze_ac_original_model(m)
++        preserve_ac_original_constraint!(s,current)
++        delete(m,current)
++        @test original_ac_distances(s,val)[current] ≈ 1.999
++    end
++    @testset "Unregistered deletion fails closed" begin
++        s=freeze_ac_original_model(m)
++        delete(m,original_angle)
++        @test_throws ErrorException original_ac_distances(s,val)
++    end
++end
++
++@testset "Julia replay requires expected bytes and separate output" begin
++    withenv("PAPER_A_AC_REPLAY_MANIFEST"=>nothing,"PAPER_A_AC_REPLAY_OUTPUT"=>nothing) do
++        @test_throws ErrorException replay_ac_week("missing_input",nothing)
++    end
++    mktempdir() do dir
++        m=Model()
++        @variable(m,x[1:2])
++        pointpath=joinpath(dir,"point.csv")
++        for body in ("1,0\n1,1\n2,0\n","1,NaN\n1,1\n2,0\n","1,0\n3,0\n","1,0\n")
++            write(pointpath,"index,value\n"*body)
++            @test_throws ErrorException read_ac_replay_point(pointpath,x)
++        end
++        paths=Dict("primal"=>"primal.csv","outcome"=>"outcome.json","audit_terms"=>"audit_terms.csv",
++                   "terminal_coordinates"=>"terminal_coordinates.csv","case"=>"case.json","export_metadata"=>"export.json")
++        for name in values(paths)
++            write(joinpath(dir,name),"original")
++        end
++        write(joinpath(dir,"export.json"),JSON.json(Dict("case_sha256"=>sha_file(joinpath(dir,"case.json")))))
++        inputs=Dict(role=>Dict("path"=>joinpath(dir,name),"bytes"=>filesize(joinpath(dir,name)),
++                              "sha256"=>sha_file(joinpath(dir,name))) for (role,name) in paths)
++        evaluator=joinpath(@__DIR__,"..","scripts","paper_a","week_ac_audit.jl")
++        inputs["evaluator_program"]=Dict("path"=>abspath(evaluator),"bytes"=>filesize(evaluator),"sha256"=>sha_file(evaluator))
++        manifest=joinpath(dir,"manifest.json")
++        write(manifest,JSON.json(Dict("schema"=>"paper_a_julia_replay_inputs/1","inputs"=>inputs)))
++        @test verify_ac_replay_manifest(manifest,dir)["schema"]=="paper_a_julia_replay_inputs/1"
++        write(joinpath(dir,"audit_terms.csv"),"tampered")
++        @test_throws ErrorException verify_ac_replay_manifest(manifest,dir)
++        rm(joinpath(dir,"primal.csv"))
++        @test_throws ErrorException verify_ac_replay_manifest(manifest,dir)
++    end
++end
+diff --git a/test/paper_a_week_mosek_conditioning.jl b/test/paper_a_week_mosek_conditioning.jl
+index d501e3d..e428620 100644
+--- a/test/paper_a_week_mosek_conditioning.jl
++++ b/test/paper_a_week_mosek_conditioning.jl
+@@ -15,7 +15,7 @@ include("../scripts/paper_a/WeekStrengthAdmission.jl")
+     attached=unsafe_backend(copy.model)
+     pm=(;ext=Dict(:paper_a_certificates=>Dict(1=>cert)))
+     @test WeekStrengthAdmission.native_strength_rows(pm,copy,attached)==
+-        Dict("native_RSOC_exact_readbacks"=>1,"native_node_row_exact_readbacks"=>2)
++        Dict("native_SOC_exact_readbacks"=>1,"native_RSOC_exact_readbacks"=>0,"native_node_row_exact_readbacks"=>2)
+     @test copy.exponents[x]!=0
+     @test WeekStrengthAdmission.native_cost(copy.model,attached)["constant"]==12
+     optimize!(copy.model)
+diff --git a/test/test_replay_evidence.py b/test/test_replay_evidence.py
+new file mode 100644
+index 0000000..b923ca5
+--- /dev/null
++++ b/test/test_replay_evidence.py
+@@ -0,0 +1,69 @@
++"""Actual malformed input files must fail before the archived evaluator runs."""
++import csv
++import json
++from pathlib import Path
++import sys
++import tempfile
++import unittest
++
++sys.path.insert(0,str(Path(__file__).resolve().parents[1]/"scripts/paper_a"))
++import replay_evidence as e
++
++
++class ReplayEvidenceTests(unittest.TestCase):
++    def setUp(self):
++        self.tmp=tempfile.TemporaryDirectory()
++        self.root=Path(self.tmp.name)
++
++    def tearDown(self):
++        self.tmp.cleanup()
++
++    def table(self,name,fields,rows):
++        path=self.root/name
++        with path.open("w",newline="") as stream:
++            writer=csv.writer(stream)
++            writer.writerow(fields)
++            writer.writerows(rows)
++        return path
++
++    def test_changed_and_missing_expected_bytes(self):
++        source=self.root/"original.mps"
++        source.write_text("original angle row")
++        manifest=self.root/"manifest.json"
++        manifest.write_text(json.dumps(dict(schema=e.SCHEMA,inputs=dict(native=e.record(source)))))
++        e.verify_manifest(manifest,["native"])
++        source.write_text("corrupted angle row")
++        with self.assertRaises(e.EvidenceError): e.verify_manifest(manifest,["native"])
++        source.unlink()
++        with self.assertRaises(e.EvidenceError): e.verify_manifest(manifest,["native"])
++        with self.assertRaises(e.EvidenceError): e.verify_manifest(manifest,["primal"])
++
++    def test_mapping_duplicate_and_out_of_dimension(self):
++        for records in ([[1,0],[1,1]],[[1,0],[2,0]],[[1,2]],[[2,0]]):
++            path=self.table("mapping.csv",["index","native"],records)
++            with self.assertRaises(e.EvidenceError): e.validate_mapping(path,2)
++
++    def test_complete_matrix_and_corrupt_ledger_controls(self):
++        fields=["metric","hour","id","index","coefficient"]
++        records=[["M",1,"1_1",0,1],["M",1,"1_2",0,0],["M",1,"2_2",0,1]]
++        terminal_fields=["type","hour","id","end_bus","p_index","q_index","online_index","q_factor_pu","rating_pu"]
++        terminal=[["branch",1,"1",1,1,2,0,0,1]]
++        t=self.table("terminal.csv",terminal_fields,terminal)
++        a=self.table("audit.csv",fields,records)
++        self.assertEqual(e.validate_ledgers(a,t,{1:0,2:1},1,2)["matrix_positions"],3)
++        with self.assertRaises(e.EvidenceError):
++            e.validate_ledgers(a,t,{1:0,2:1},1,2,bus_ids=[1])
++        balance=records+[[metric,1,"1",0,0] for metric in ("P","Q")]+[[metric,0,"0",0,0] for metric in ("cost","wind_pv")]
++        a=self.table("audit.csv",fields,balance)
++        e.validate_ledgers(a,t,{1:0,2:1},1,2,bus_ids=[1])
++        for bad in (records[:-1],records+[records[0]],records+[["M",1,"1_1",9,1]],records+[["M",1,"1_1",1,"nan"]]):
++            a=self.table("audit.csv",fields,bad)
++            with self.assertRaises(e.EvidenceError): e.validate_ledgers(a,t,{1:0,2:1},1,2)
++        a=self.table("audit.csv",fields,records)
++        for bad in (terminal+terminal,[["branch",1,"1",1,1,9,0,0,1]]):
++            t=self.table("terminal.csv",terminal_fields,bad)
++            with self.assertRaises(e.EvidenceError): e.validate_ledgers(a,t,{1:0,2:1},1,2)
++
++
++if __name__=="__main__":
++    unittest.main()

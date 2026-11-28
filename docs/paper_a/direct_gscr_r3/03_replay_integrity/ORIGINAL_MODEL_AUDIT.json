@@ -1,0 +1,197 @@
+{
+  "source_freeze_commit": "ebaffb57feb3a27f2d7d87b745930664f625f935",
+  "inputs": {
+    "original_point_audit": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\03_replay_integrity\\LPAC_G3_original_guarded\\original_model_audit.json",
+      "bytes": 8437,
+      "sha256": "636d08306f9bed2469acb8f12f75e7bd65e1420bdd3e8b9b97bfefe18e94f49c"
+    },
+    "expected_manifest": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\03_replay_integrity\\LPAC_G3_inputs_guarded.json",
+      "bytes": 5157,
+      "sha256": "5e5e9d32d5a0005ce279f864658d06f832c60aa98f5b08a6a42bbdb7f4706262"
+    },
+    "focused_validation": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\03_replay_integrity\\focused_validation.json",
+      "bytes": 1573,
+      "sha256": "d1edf669d33a475e921786b50f25a3a4818811c8ad10ee649e339b42408f972d"
+    },
+    "julia_test_log": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\03_replay_integrity\\julia_focused_final.log",
+      "bytes": 310,
+      "sha256": "5f00e1bab65e653ae9205c1d5e853f4307191ddfcb017e73c245a9bddfd73c36"
+    },
+    "python_test_log": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\03_replay_integrity\\python_focused_final.log",
+      "bytes": 522,
+      "sha256": "5e143c1affce66bea57a2d54d9dd348bd282aaaa62c783e65c01ea29890739a5"
+    },
+    "python_replay": {
+      "path": "D:\\Projekte\\Code\\FlexPlan_UC_GSCR\\scripts\\paper_a\\replay_direct_ac.py",
+      "bytes": 8809,
+      "sha256": "df3ce7b234b022138a2fafc5c3e41fdd6817a7e93e8b03988e688f3c83f7804a"
+    },
+    "python_integrity": {
+      "path": "D:\\Projekte\\Code\\FlexPlan_UC_GSCR\\scripts\\paper_a\\replay_evidence.py",
+      "bytes": 4248,
+      "sha256": "7b873c5434a358edf19f181f805ead1b6f70b6b636356d11bb3fb251667299af"
+    },
+    "julia_replay": {
+      "path": "D:\\Projekte\\Code\\FlexPlan_UC_GSCR\\scripts\\paper_a\\week_ac_audit.jl",
+      "bytes": 12209,
+      "sha256": "c79d6a05d060caf2356de49ec67fefce8ca5b526aabfccd454bbb253e0341ff6"
+    }
+  },
+  "expected_manifest_matches_audit": true,
+  "qualification": "SENSITIVITY_ONLY_NOT_GOLD_UB",
+  "gold_qualified": false,
+  "original_cost_EUR2025": 127926227129.59442,
+  "original_matrix": {
+    "annualized_EUR2025": 127926227129.59549,
+    "max_linear_constraint_violation": 2.132012753008894e-05,
+    "max_quadratic_constraint_violation": 0.0,
+    "max_bound_violation": 3.552713678800501e-15,
+    "worst_native_row": "R128410",
+    "max_any_constraint_violation": 2.132012753008894e-05
+  },
+  "physical": {
+    "wind_pv_MWh": 49741206.66405208,
+    "demand_MWh": 71058866.10244864,
+    "wind_pv_percent": 70.000000552131,
+    "quota_margin_MWh": 0.39233803004026413,
+    "strict_quota_met": true,
+    "largest_violations": {
+      "branch_end_MVA": {
+        "value": 0,
+        "witness": [
+          37,
+          "51",
+          "22"
+        ]
+      },
+      "dcline_MW": {
+        "value": 0,
+        "witness": [
+          1,
+          "5",
+          "30"
+        ]
+      },
+      "dcline_MVAr": {
+        "value": 3.552713678800501e-13,
+        "witness": [
+          4,
+          "30",
+          "12"
+        ]
+      },
+      "gen_MW": {
+        "value": 0.0011555641550518054,
+        "witness": [
+          156,
+          "101",
+          "0"
+        ]
+      },
+      "gen_MVAr": {
+        "value": 1.7763568394002505e-13,
+        "witness": [
+          25,
+          "83",
+          "0"
+        ]
+      },
+      "storage_MW": {
+        "value": 0,
+        "witness": [
+          139,
+          "101",
+          "0"
+        ]
+      },
+      "storage_MVAr": {
+        "value": 2.6645352591003757e-13,
+        "witness": [
+          8,
+          "36",
+          "0"
+        ]
+      },
+      "fixed_hydro_MW": {
+        "value": 0,
+        "witness": [
+          139,
+          "29",
+          "0"
+        ]
+      },
+      "fixed_hydro_MVAr": {
+        "value": 1.4432899320127035e-13,
+        "witness": [
+          109,
+          "22",
+          "0"
+        ]
+      },
+      "added_MW": {
+        "value": 0,
+        "witness": [
+          1,
+          "AL1 0 solar",
+          "0"
+        ]
+      },
+      "added_MVAr": {
+        "value": 0,
+        "witness": [
+          155,
+          "MK1 0 onwind",
+          "0"
+        ]
+      },
+      "P_KCL_MW": {
+        "value": 0.0021320127444195204,
+        "witness": [
+          159,
+          "15"
+        ]
+      },
+      "Q_KCL_MVAr": {
+        "value": 0.0004250617025241927,
+        "witness": [
+          60,
+          "15"
+        ]
+      }
+    },
+    "coordinate_counts": {
+      "branch_end_MVA": 17472,
+      "dcline_MW": 14448,
+      "dcline_MVAr": 14448,
+      "gen_MW": 43512,
+      "gen_MVAr": 43512,
+      "storage_MW": 15792,
+      "storage_MVAr": 15792,
+      "fixed_hydro_MW": 4536,
+      "fixed_hydro_MVAr": 4536,
+      "added_MW": 12432,
+      "added_MVAr": 12432,
+      "P_KCL_MW": 6216,
+      "Q_KCL_MVAr": 6216
+    }
+  },
+  "minimum_eigenvalue": 0.000103238719020791,
+  "ledger_roster": {
+    "matrix_positions": 118104,
+    "affine_terms": 531700,
+    "terminals": 108192
+  },
+  "validation": {
+    "julia_tests": 12,
+    "julia_result": "PASS",
+    "python_groups": 3,
+    "python_result": "PASS"
+  },
+  "historical_claim_disposition": "UNCHANGED: F02 scoped PASS remains; LPAC G3 point remains non-GOLD; no broad optimization",
+  "limitation": "Archived point checked in its original unscaled model; no point transfer into newly corrected native G3 reference claimed"
+}

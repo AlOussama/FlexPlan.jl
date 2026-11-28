@@ -1,0 +1,42 @@
+{
+  "status": "PASS_ALL_THREE_FROZEN_GUROBI_MPS_ROUNDTRIPS",
+  "optimization_called": false,
+  "completed": [
+    {
+      "formulation": "LPAC",
+      "returncode": 0,
+      "result_file": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\06_qa\\independent_G3_LPAC_gurobi_frozen_MPS_ROUNDTRIP.json",
+      "command": [
+        "C:\\ProgramData\\anaconda3\\python.exe",
+        "-B",
+        "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\06_qa\\independent_gurobi_mps_roundtrip.py",
+        "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\02_native_g3\\LPAC_gurobi_frozen",
+        "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\06_qa\\independent_G3_LPAC_gurobi_frozen_MPS_ROUNDTRIP.json"
+      ]
+    },
+    {
+      "formulation": "SOC-WR",
+      "returncode": 0,
+      "result_file": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\06_qa\\independent_G3_SOC-WR_gurobi_frozen_MPS_ROUNDTRIP.json",
+      "command": [
+        "C:\\ProgramData\\anaconda3\\python.exe",
+        "-B",
+        "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\06_qa\\independent_gurobi_mps_roundtrip.py",
+        "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\02_native_g3\\SOC-WR_gurobi_frozen",
+        "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\06_qa\\independent_G3_SOC-WR_gurobi_frozen_MPS_ROUNDTRIP.json"
+      ]
+    },
+    {
+      "formulation": "QCRM",
+      "returncode": 0,
+      "result_file": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\06_qa\\independent_G3_QCRM_gurobi_frozen_MPS_ROUNDTRIP.json",
+      "command": [
+        "C:\\ProgramData\\anaconda3\\python.exe",
+        "-B",
+        "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\06_qa\\independent_gurobi_mps_roundtrip.py",
+        "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\02_native_g3\\QCRM_gurobi_frozen",
+        "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\06_qa\\independent_G3_QCRM_gurobi_frozen_MPS_ROUNDTRIP.json"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,90 @@
+{
+  "status": "PASS",
+  "source_commit": "ebaffb57feb3a27f2d7d87b745930664f625f935",
+  "scope": "Narrow new-native network-RSOC bridge implication into previously qualified original native SOC/supporting LP; F02 unchanged",
+  "optimization_called": false,
+  "actual_new_voltage_products": 8736,
+  "actual_old_voltage_SOC_domains": 8736,
+  "same_primary_voltage_coordinate_pairs": 8736,
+  "preserved_terminal_hour_starts": 168,
+  "new_endpoint_factor_exact": "1592262918131443/2251799813685248",
+  "determinant_factor_min_exact": "2535301200456458353478625262249/2535301200456458802993406410752",
+  "determinant_factor_max_exact": "2535301200456458353478625262249/2535301200456458802993406410752",
+  "factor_at_most_one": true,
+  "minimum_actual_primary_voltage_lower_bound_exact": "8128997327403745/9007199254740992",
+  "existing_voltage_planes_checked": {
+    "BASE": 8736,
+    "G2": 8736
+  },
+  "maximum_plane_direction_norm_squared_exact": "140737488295117/140737488355328",
+  "all_primary_voltage_bounds_no_wider_than_old_target": true,
+  "bridge_inventory_direct_product_QC_coefficients": {
+    "SOC-WR": {
+      "-2": 8736
+    },
+    "LPAC": {},
+    "QCRM": {
+      "-1": 8736
+    }
+  },
+  "implication_recipe": "Actual new p^2+q^2 <= gamma*w_f*w_t with gamma=2*r^2<=1 and nonnegative voltage factors implies the same identified old native SOC h^2>=t^2+p^2+q^2, h=(w_f+w_t)/2, t=(w_f-w_t)/2. Reapply already accepted exact norm<=1 supporting-plane recipe to actual archived BASE/G2 planes. No new general theorem or full SOC-QCP/QCRM nesting claim.",
+  "LPAC_QCRM_qualification": "No -2 network-RSOC QC inventory in LPAC/QCRM; LPAC has no such products, QCRM retains 8736 original coefficient -1 current products. This same global RSOC bridge change is absent there.",
+  "inputs": {
+    "accepted_R2_proof": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\SCI_GOLD_AC_DIRECT_02_LOCAL_20261127_02\\recovered_original_proofs\\recovered_qcrm_proof_1.py",
+      "sha256": "61bf3bb7924c1204741ad1f02a40747e6d7255c1b27acbcc063e95aea028ef0e",
+      "bytes": 9013
+    },
+    "accepted_R2_SOC_outer_recipe": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\SCI_GOLD_AC_DIRECT_02_LOCAL_20261127_02\\reused_outer_math\\SOC_BASE_outer\\independent_outer_formulation_math.json",
+      "sha256": "83f7b8174b14e37abb43fcadd7430a192fa86c82e87de406f1469755c7d016cb",
+      "bytes": 2113
+    },
+    "old_native_SOC_voltage_target": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\KW08_RE70_G2_PQ_20261125_01\\CONFIRMED_QBOX\\SOC-WR_native\\native.mps",
+      "sha256": "ed6784c5fc46648eafd7baa3ce2cad38f0f3ea8367de256ce43a8a5dd236d8f1",
+      "bytes": 98829797
+    },
+    "new_frozen_SOC_WR_CAPI": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\02_native_g3\\SOC-WR_gurobi_frozen\\g3_actual_native_readback.json",
+      "sha256": "f9379e56850995821bfe023b102485f490501229e385b265d98a668ae67376d4",
+      "bytes": 117399397
+    },
+    "accepted_outer_BASE": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\KW08_RE70_G2_PQ_20261125_01\\GOLD_PAIR_20261126_01\\SOC_BASE_outer\\native.mps",
+      "sha256": "054a1b543222585e3d2b6385246ca5a0f84f60a32a9f0643d84700edef209590",
+      "bytes": 95656639
+    },
+    "accepted_outer_G2": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\KW08_RE70_G2_PQ_20261125_01\\GOLD_PAIR_20261126_01\\SOC_G2_outer\\native.mps",
+      "sha256": "fe6ef97c07e62d21a2de1797fb193cd9c78a6d565becdd98bbf181833ff30ff9",
+      "bytes": 99215905
+    },
+    "new_frozen_LPAC_CAPI": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\02_native_g3\\LPAC_gurobi_frozen\\g3_actual_native_readback.json",
+      "sha256": "1e8edc84678ad064a3d7aaa6e0f4115c0649030bbc2b2ad7612926e6792bc2cd",
+      "bytes": 103987535
+    },
+    "new_frozen_QCRM_CAPI": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\02_native_g3\\QCRM_gurobi_frozen\\g3_actual_native_readback.json",
+      "sha256": "527b52c12137ab9cb118f9d2ac41a5646102dc85f4450a19a793dbafea9aca6d",
+      "bytes": 129688287
+    },
+    "old_SOC_terminal_roster": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\KW08_RE70_G2_PQ_20261125_01\\CONFIRMED_QBOX\\SOC-WR_native\\terminal_coordinates.csv",
+      "sha256": "0bf6123b6db2e2fda57149dc71b0022f01a1327deaa83c516012eac2ed5aff26",
+      "bytes": 5356265
+    },
+    "new_SOC_G3_terminal_roster": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\02_native_g3\\SOC-WR_gurobi_frozen\\terminal_coordinates.csv",
+      "sha256": "201e671ee99f4d5c38a5e447217705f55e9a1cb7f2407dae848f56474dc57eb8",
+      "bytes": 5356265
+    },
+    "saved_SOC_MPS_roundtrip": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\06_qa\\independent_G3_SOC-WR_gurobi_frozen_MPS_ROUNDTRIP.json",
+      "sha256": "6cf896b37e0d030446a7bb10f3fc6259e8f442ece534dd9dbe260e7dda37701d",
+      "bytes": 961
+    }
+  },
+  "qa_program_sha256": "38b25e603351b8b183dee8b9af9c4c02458e24b0b39a18857e5530ba362fb103"
+}

@@ -1,0 +1,172 @@
+{
+  "source_freeze_commit": "ebaffb57feb3a27f2d7d87b745930664f625f935",
+  "completed": 9,
+  "expected": 9,
+  "all_complete": true,
+  "all_completed_exact": true,
+  "comparisons": [
+    {
+      "method": "G0",
+      "formulation": "LPAC",
+      "backend": "mosek",
+      "report": {
+        "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\05_scientific_results\\G0_LPAC_mosek_FROZEN_SOURCE_DELTA.json",
+        "bytes": 2946,
+        "sha256": "79077fa511e42525c497ad15b55fe0fe553aa6dd79dab0cacc5283f2cc00b4cd"
+      },
+      "coefficient_differences": {
+        "M": 0,
+        "cost": 0,
+        "wind_pv": 0,
+        "P": 0,
+        "Q": 0
+      },
+      "all_exact": true
+    },
+    {
+      "method": "G0",
+      "formulation": "QCRM",
+      "backend": "mosek",
+      "report": {
+        "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\05_scientific_results\\G0_QCRM_mosek_FROZEN_SOURCE_DELTA.json",
+        "bytes": 2946,
+        "sha256": "cf98aee21d357016db16793c23481a845a2bacbb33f302f91ef1d57212ef02d6"
+      },
+      "coefficient_differences": {
+        "M": 0,
+        "cost": 0,
+        "wind_pv": 0,
+        "P": 0,
+        "Q": 0
+      },
+      "all_exact": true
+    },
+    {
+      "method": "G0",
+      "formulation": "SOC-WR",
+      "backend": "mosek",
+      "report": {
+        "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\05_scientific_results\\G0_SOC-WR_mosek_FROZEN_SOURCE_DELTA.json",
+        "bytes": 2954,
+        "sha256": "5ca0c493cb857bc63797d3c424a94be70d4cf1c0a53968bd888e4372a5c321fd"
+      },
+      "coefficient_differences": {
+        "M": 0,
+        "cost": 0,
+        "wind_pv": 0,
+        "P": 0,
+        "Q": 0
+      },
+      "all_exact": true
+    },
+    {
+      "method": "G3",
+      "formulation": "LPAC",
+      "backend": "gurobi",
+      "report": {
+        "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\05_scientific_results\\G3_LPAC_gurobi_FROZEN_SOURCE_DELTA.json",
+        "bytes": 2948,
+        "sha256": "49b9d0736f6301070ebac419453846504f04183272cf06c326f9d571e0655c54"
+      },
+      "coefficient_differences": {
+        "M": 0,
+        "cost": 0,
+        "wind_pv": 0,
+        "P": 0,
+        "Q": 0
+      },
+      "all_exact": true
+    },
+    {
+      "method": "G3",
+      "formulation": "LPAC",
+      "backend": "mosek",
+      "report": {
+        "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\05_scientific_results\\G3_LPAC_mosek_FROZEN_SOURCE_DELTA.json",
+        "bytes": 2946,
+        "sha256": "b8284980007be9a1f6ba86ea47a548444b504ff56d6729de8add87a9873320d6"
+      },
+      "coefficient_differences": {
+        "M": 0,
+        "cost": 0,
+        "wind_pv": 0,
+        "P": 0,
+        "Q": 0
+      },
+      "all_exact": true
+    },
+    {
+      "method": "G3",
+      "formulation": "QCRM",
+      "backend": "gurobi",
+      "report": {
+        "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\05_scientific_results\\G3_QCRM_gurobi_FROZEN_SOURCE_DELTA.json",
+        "bytes": 2948,
+        "sha256": "076959ae0a2acd3046c862b493bd33624fcc2808a439ac5582086663ed25b2ce"
+      },
+      "coefficient_differences": {
+        "M": 0,
+        "cost": 0,
+        "wind_pv": 0,
+        "P": 0,
+        "Q": 0
+      },
+      "all_exact": true
+    },
+    {
+      "method": "G3",
+      "formulation": "QCRM",
+      "backend": "mosek",
+      "report": {
+        "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\05_scientific_results\\G3_QCRM_mosek_FROZEN_SOURCE_DELTA.json",
+        "bytes": 2946,
+        "sha256": "c6fd3f7cf17f6144f71bb8fc6dfc98567374bac8d9c2e15b576996a04eab7c0c"
+      },
+      "coefficient_differences": {
+        "M": 0,
+        "cost": 0,
+        "wind_pv": 0,
+        "P": 0,
+        "Q": 0
+      },
+      "all_exact": true
+    },
+    {
+      "method": "G3",
+      "formulation": "SOC-WR",
+      "backend": "gurobi",
+      "report": {
+        "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\05_scientific_results\\G3_SOC-WR_gurobi_FROZEN_SOURCE_DELTA.json",
+        "bytes": 2956,
+        "sha256": "ffd99759d101dea4cab4d76b17a3f46743a8be57fb0016f50b9829aa1695e01d"
+      },
+      "coefficient_differences": {
+        "M": 0,
+        "cost": 0,
+        "wind_pv": 0,
+        "P": 0,
+        "Q": 0
+      },
+      "all_exact": true
+    },
+    {
+      "method": "G3",
+      "formulation": "SOC-WR",
+      "backend": "mosek",
+      "report": {
+        "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\05_scientific_results\\G3_SOC-WR_mosek_FROZEN_SOURCE_DELTA.json",
+        "bytes": 2954,
+        "sha256": "bcded830c44121f6ae65e169039c64effab600e30fb208cd4138aba674b4e8ba"
+      },
+      "coefficient_differences": {
+        "M": 0,
+        "cost": 0,
+        "wind_pv": 0,
+        "P": 0,
+        "Q": 0
+      },
+      "all_exact": true
+    }
+  ],
+  "limitation": "Nonterminal M/cost coordinates retain exact primary JuMP indices; semantic rebinding of unnamed coordinates is not claimed"
+}

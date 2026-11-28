@@ -1,0 +1,22 @@
+{
+  "status": "FAIL",
+  "checked_files": 1251,
+  "checked_bytes": 6333591003,
+  "changed": [
+    "D:\\Projekte\\Code\\FlexPlan_UC_GSCR\\scripts\\paper_a\\AP3Pipeline.jl",
+    "D:\\Projekte\\Code\\FlexPlan_UC_GSCR\\scripts\\paper_a\\G3ConditioningAudit.jl",
+    "D:\\Projekte\\Code\\FlexPlan_UC_GSCR\\scripts\\paper_a\\G3EquivalentConditioning.jl",
+    "D:\\Projekte\\Code\\FlexPlan_UC_GSCR\\scripts\\paper_a\\NativeG3Solver.jl",
+    "D:\\Projekte\\Code\\FlexPlan_UC_GSCR\\scripts\\paper_a\\replay_direct_ac.py",
+    "D:\\Projekte\\Code\\FlexPlan_UC_GSCR\\scripts\\paper_a\\run_week_strength_comparison.jl",
+    "D:\\Projekte\\Code\\FlexPlan_UC_GSCR\\scripts\\paper_a\\week_ac_audit.jl",
+    "D:\\Projekte\\Code\\FlexPlan_UC_GSCR\\scripts\\paper_a\\week_ac_compare.jl",
+    "D:\\Projekte\\Code\\FlexPlan_UC_GSCR\\scripts\\paper_a\\WeekStrengthAdmission.jl",
+    "D:\\Projekte\\Code\\FlexPlan_UC_GSCR\\src\\core\\paper_a_formulations.jl",
+    "D:\\Projekte\\Code\\FlexPlan_UC_GSCR\\test\\paper_a_added_gfl_mosek.jl",
+    "D:\\Projekte\\Code\\FlexPlan_UC_GSCR\\test\\paper_a_mosek_zeroone_bounds.jl",
+    "D:\\Projekte\\Code\\FlexPlan_UC_GSCR\\test\\paper_a_week_mosek_conditioning.jl"
+  ],
+  "reference_manifest_sha256": "65027dbb1e604fa5c03d10f55be067697a8dfbf272021effc7262b03bb400fd3",
+  "scope": "Fresh preservation verification of all R2 inventoried historical originals"
+}

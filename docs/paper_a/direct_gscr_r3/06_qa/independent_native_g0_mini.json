@@ -1,0 +1,26 @@
+{
+  "status": "PASS",
+  "method": "independent_exact_binary_rational_native_trace_readback",
+  "blocks": 1,
+  "positions": 3,
+  "dimensions": {
+    "2": 1
+  },
+  "hour_to_bar": [
+    {
+      "hour": 1,
+      "bar": 1
+    }
+  ],
+  "native_bar_triplets": 3,
+  "exact_affine_scalar_terms": 1,
+  "exact_nonzero_constants": 3,
+  "exact_link_rows": 3,
+  "symmetric_trace_offdiagonal_multiplier": 2,
+  "native_link_trace_weights": "+1_or_-1_exact",
+  "sqrt2_used": false,
+  "expected_psd_sha256": "4a7c569cbd3ddae123aafc9f4fedf31542e7384074c02a0bcd257863d37f623f",
+  "native_task_sha256": "d3afb8f934842d4a2ea4e8b03ab26d20218fcf232e18c8c0745e23978d7ee628",
+  "input_sha256": "1a96c24fb2fbcc1e1a2d9132cb647edf786b26caa260ac85f756643024728fa1",
+  "verifier_sha256": "665cd3a76925fff0dbdb9530b74b8d15c50262cd96bae78745ce0f1860ad8579"
+}

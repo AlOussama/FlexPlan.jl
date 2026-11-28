@@ -1,0 +1,32 @@
+[
+  {
+    "bytes": 10037248,
+    "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_FIVE_WEEKS_RE50_20261115_01\\depot\\compiled\\v1.11\\Mosek\\vS2ln_R4aww.dll",
+    "sha256": "b73bc5296bdbf334bdeae937b4d3911c39f5febba5df3a44c0c78ebcb2997e47"
+  },
+  {
+    "bytes": 22990352,
+    "path": "C:\\Program Files\\Mosek\\11.2\\tools\\platform\\win64x86\\bin\\mosek64_11_2.dll",
+    "sha256": "7d91d851fee843e387e5db4861739d3a13ead39df66d60b7411cb9520368bb3b"
+  },
+  {
+    "bytes": 319616,
+    "path": "C:\\Program Files\\Mosek\\11.2\\tools\\platform\\win64x86\\bin\\tbb12.dll",
+    "sha256": "bd1a76d99bb3e9fe08643a98b11ed1eebcb2b6b7b6da60d01925a52077e9a00a"
+  },
+  {
+    "bytes": 99328,
+    "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_FIVE_WEEKS_RE50_20261115_01\\depot\\compiled\\v1.11\\Gurobi_jll\\0cl5b_R4aww.dll",
+    "sha256": "de737eafd4af647cf0d37f783ebc1ce85688e5642793abf2fc3ceb76e3b019df"
+  },
+  {
+    "bytes": 37960456,
+    "path": "C:\\Users\\User\\.julia\\artifacts\\45eb98d3a5fa560e3bd5365025c14844c15be18d\\gurobi1303\\win64\\bin\\gurobi130.dll",
+    "sha256": "8cb168a8766f157f9c5cac11764ec35c6dd68cf7fd9d9b5f830d3b8d2f82a9fc"
+  },
+  {
+    "bytes": 9516032,
+    "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_FIVE_WEEKS_RE50_20261115_01\\depot\\compiled\\v1.11\\Gurobi\\do9v6_R4aww.dll",
+    "sha256": "fcf33101e2cea487fb1663f00ccfd63fafa9b3cd9da22fc8f497ba5082839245"
+  }
+]

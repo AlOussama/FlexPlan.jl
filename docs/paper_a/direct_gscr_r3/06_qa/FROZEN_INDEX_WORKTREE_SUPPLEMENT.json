@@ -1,0 +1,105 @@
+{
+  "source_freeze": "ebaffb57feb3a27f2d7d87b745930664f625f935",
+  "scope": "Supplemental observed index and worktree state; launcher guard alone checks unstaged changes only",
+  "snapshots": [
+    {
+      "event": "independent_baseline",
+      "utc": "2026-11-27T23:45:27.772499+00:00",
+      "head": "ebaffb57feb3a27f2d7d87b745930664f625f935",
+      "tracked_porcelain": "",
+      "staged_names": "",
+      "unstaged_names": "",
+      "observed_clean": true
+    },
+    {
+      "event": "completed_build:G0_LPAC_mosek_frozen_BUILD_RECEIPT.json",
+      "utc": "2026-11-27T23:53:23.271214+00:00",
+      "head": "ebaffb57feb3a27f2d7d87b745930664f625f935",
+      "tracked_porcelain": "",
+      "staged_names": "",
+      "unstaged_names": "",
+      "observed_clean": true
+    },
+    {
+      "event": "completed_build:G0_SOC-WR_mosek_frozen_BUILD_RECEIPT.json",
+      "utc": "2026-11-28T00:03:03.820677+00:00",
+      "head": "ebaffb57feb3a27f2d7d87b745930664f625f935",
+      "tracked_porcelain": "",
+      "staged_names": "",
+      "unstaged_names": "",
+      "observed_clean": true
+    },
+    {
+      "event": "completed_build:G0_QCRM_mosek_frozen_BUILD_RECEIPT.json",
+      "utc": "2026-11-28T00:12:59.350014+00:00",
+      "head": "ebaffb57feb3a27f2d7d87b745930664f625f935",
+      "tracked_porcelain": "",
+      "staged_names": "",
+      "unstaged_names": "",
+      "observed_clean": true
+    },
+    {
+      "event": "completed_build:G3_LPAC_gurobi_frozen_BUILD_RECEIPT.json",
+      "utc": "2026-11-28T00:22:40.044662+00:00",
+      "head": "ebaffb57feb3a27f2d7d87b745930664f625f935",
+      "tracked_porcelain": "",
+      "staged_names": "",
+      "unstaged_names": "",
+      "observed_clean": true
+    },
+    {
+      "event": "completed_build:G3_LPAC_mosek_frozen_BUILD_RECEIPT.json",
+      "utc": "2026-11-28T00:32:20.576635+00:00",
+      "head": "ebaffb57feb3a27f2d7d87b745930664f625f935",
+      "tracked_porcelain": "",
+      "staged_names": "",
+      "unstaged_names": "",
+      "observed_clean": true
+    },
+    {
+      "event": "completed_build:G3_SOC-WR_gurobi_frozen_BUILD_RECEIPT.json",
+      "utc": "2026-11-28T00:43:16.441277+00:00",
+      "head": "ebaffb57feb3a27f2d7d87b745930664f625f935",
+      "tracked_porcelain": "",
+      "staged_names": "",
+      "unstaged_names": "",
+      "observed_clean": true
+    },
+    {
+      "event": "completed_build:G3_SOC-WR_mosek_frozen_BUILD_RECEIPT.json",
+      "utc": "2026-11-28T00:50:16.885828+00:00",
+      "head": "ebaffb57feb3a27f2d7d87b745930664f625f935",
+      "tracked_porcelain": "",
+      "staged_names": "",
+      "unstaged_names": "",
+      "observed_clean": true
+    },
+    {
+      "event": "completed_build:G3_QCRM_gurobi_frozen_BUILD_RECEIPT.json",
+      "utc": "2026-11-28T00:57:32.372574+00:00",
+      "head": "ebaffb57feb3a27f2d7d87b745930664f625f935",
+      "tracked_porcelain": "",
+      "staged_names": "",
+      "unstaged_names": "",
+      "observed_clean": true
+    },
+    {
+      "event": "completed_build:G3_QCRM_mosek_frozen_BUILD_RECEIPT.json",
+      "utc": "2026-11-28T01:03:47.765956+00:00",
+      "head": "ebaffb57feb3a27f2d7d87b745930664f625f935",
+      "tracked_porcelain": "",
+      "staged_names": "",
+      "unstaged_names": "",
+      "observed_clean": true
+    },
+    {
+      "event": "all_nine_build_receipts_observed",
+      "utc": "2026-11-28T01:03:48.100167+00:00",
+      "head": "ebaffb57feb3a27f2d7d87b745930664f625f935",
+      "tracked_porcelain": "",
+      "staged_names": "",
+      "unstaged_names": "",
+      "observed_clean": true
+    }
+  ]
+}

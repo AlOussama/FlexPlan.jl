@@ -1,0 +1,519 @@
+{
+  "status": "PASS",
+  "source_freeze_commit": "ebaffb57feb3a27f2d7d87b745930664f625f935",
+  "working_directory": "D:\\Projekte\\Code\\FlexPlan_UC_GSCR",
+  "commands": {
+    "g3_focused": {
+      "executed_command": "& 'C:/Users/User/.julia/juliaup/julia-1.11.5+0.x64.w64.mingw32/bin/julia.exe' --project=. --startup-file=no -e 'include(\"test/paper_a_g3_finite_exact.jl\"); include(\"test/paper_a_week_mosek_conditioning.jl\"); include(\"test/paper_a_added_gfl_native_g3.jl\"); include(\"test/paper_a_added_gfl_mosek.jl\"); include(\"test/paper_a_mosek_zeroone_bounds.jl\")' *> 'E:/ResearchResults/FlexPlan_UC_GSCR/DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01/logs/g3_finite_tests_final.log'",
+      "environment": {
+        "JULIA_DEPOT_PATH": "E:/ResearchResults/FlexPlan_UC_GSCR/DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01/julia_depot;E:/ResearchResults/FlexPlan_UC_GSCR/SCI_GOLD_AC_DIRECT_02_LOCAL_20261127_01/julia_depot;E:/ResearchResults/FlexPlan_UC_GSCR/TECH_FULL37_FIVE_WEEKS_RE50_20261115_01/depot;C:/Users/User/.julia",
+        "TEMP": "E:/ResearchResults/FlexPlan_UC_GSCR/DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01/tmp",
+        "TMP": "E:/ResearchResults/FlexPlan_UC_GSCR/DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01/tmp",
+        "R3_G3_TEST_OUTPUT": "E:/ResearchResults/FlexPlan_UC_GSCR/DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01/02_native_g3/small"
+      },
+      "command_provenance": "Exact final command executed by G3 implementation worker"
+    },
+    "dcp_ap3": {
+      "executed_command": "& 'C:/Users/User/.julia/juliaup/julia-1.11.5+0.x64.w64.mingw32/bin/julia.exe' --project=. --startup-file=no -e 'using Test,JuMP; import FlexPlan as _FP, PowerModels as _PM, HiGHS; using FlexPlan.PaperARegional; include(\"test/uc_gscr_block_test_utils.jl\"); include(\"test/paper_a_fixtures.jl\"); include(\"test/paper_a_ap3.jl\"); include(\"test/paper_a_additional_gfl.jl\")' *> 'E:/ResearchResults/FlexPlan_UC_GSCR/DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01/logs/g3_dcp_ap3_regression_final.log'",
+      "environment": {
+        "JULIA_DEPOT_PATH": "E:/ResearchResults/FlexPlan_UC_GSCR/DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01/julia_depot;E:/ResearchResults/FlexPlan_UC_GSCR/SCI_GOLD_AC_DIRECT_02_LOCAL_20261127_01/julia_depot;E:/ResearchResults/FlexPlan_UC_GSCR/TECH_FULL37_FIVE_WEEKS_RE50_20261115_01/depot;C:/Users/User/.julia",
+        "TEMP": "E:/ResearchResults/FlexPlan_UC_GSCR/DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01/tmp",
+        "TMP": "E:/ResearchResults/FlexPlan_UC_GSCR/DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01/tmp"
+      },
+      "command_provenance": "Exact final command executed by G3 implementation worker"
+    },
+    "ac_network": {
+      "reproduction_command": "& 'C:/Users/User/.julia/juliaup/julia-1.11.5+0.x64.w64.mingw32/bin/julia.exe' --project=. --startup-file=no test/paper_a_ac_network.jl *> 'E:/ResearchResults/FlexPlan_UC_GSCR/DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01/logs/ac_network_regression.log'",
+      "environment": {
+        "JULIA_DEPOT_PATH": "E:/ResearchResults/FlexPlan_UC_GSCR/DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01/julia_depot;E:/ResearchResults/FlexPlan_UC_GSCR/SCI_GOLD_AC_DIRECT_02_LOCAL_20261127_01/julia_depot;E:/ResearchResults/FlexPlan_UC_GSCR/TECH_FULL37_FIVE_WEEKS_RE50_20261115_01/depot;C:/Users/User/.julia",
+        "TEMP": "E:/ResearchResults/FlexPlan_UC_GSCR/DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01/tmp",
+        "TMP": "E:/ResearchResults/FlexPlan_UC_GSCR/DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01/tmp"
+      },
+      "command_provenance": "Direct-file reproduction command; parent executed test and supplied log; exact parent shell command not embedded in log"
+    },
+    "original_audit": {
+      "reproduction_command": "& 'C:/Users/User/.julia/juliaup/julia-1.11.5+0.x64.w64.mingw32/bin/julia.exe' --project=. --startup-file=no test/paper_a_original_audit.jl",
+      "environment": {
+        "JULIA_DEPOT_PATH": "E:/ResearchResults/FlexPlan_UC_GSCR/DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01/julia_depot;E:/ResearchResults/FlexPlan_UC_GSCR/SCI_GOLD_AC_DIRECT_02_LOCAL_20261127_01/julia_depot;E:/ResearchResults/FlexPlan_UC_GSCR/TECH_FULL37_FIVE_WEEKS_RE50_20261115_01/depot;C:/Users/User/.julia",
+        "TEMP": "E:/ResearchResults/FlexPlan_UC_GSCR/DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01/tmp",
+        "TMP": "E:/ResearchResults/FlexPlan_UC_GSCR/DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01/tmp"
+      },
+      "command_provenance": "03_replay_integrity/focused_validation.json records julia1.11.5 --project=. --startup-file=no test/paper_a_original_audit.jl"
+    },
+    "python_replay": {
+      "executed_command": "C:/ProgramData/anaconda3/python.exe -B -m unittest discover -s test -p test_replay_evidence.py -v",
+      "environment": {
+        "TEMP": "E:/ResearchResults/FlexPlan_UC_GSCR/DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01/tmp",
+        "TMP": "E:/ResearchResults/FlexPlan_UC_GSCR/DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01/tmp"
+      },
+      "command_provenance": "03_replay_integrity/focused_validation.json"
+    },
+    "native_psd_mutations": {
+      "reproduction_command": "C:/ProgramData/anaconda3/python.exe -B audit/test_r3_independent_native_verify.py",
+      "environment": {
+        "TEMP": "E:/ResearchResults/FlexPlan_UC_GSCR/DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01/tmp",
+        "TMP": "E:/ResearchResults/FlexPlan_UC_GSCR/DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01/tmp"
+      },
+      "command_provenance": "Reproduction command inferred from executable QA script; frozen output receipt independently records 1 exact positive and 10 material negatives"
+    }
+  },
+  "rows": [
+    {
+      "id": "g3_focused",
+      "language": "Julia",
+      "status": "PASS",
+      "passed": 152,
+      "total": 152,
+      "groups": [
+        {
+          "name": "G3 exact finite SOC and boundary fixtures",
+          "passed": 36,
+          "total": 36,
+          "elapsed_as_reported": "4.5s",
+          "status": "PASS"
+        },
+        {
+          "name": "G3 common finite SOC native small solves",
+          "passed": 32,
+          "total": 32,
+          "elapsed_as_reported": "1m07.5s",
+          "status": "PASS"
+        },
+        {
+          "name": "MOSEK native signed G3 dyadic readback",
+          "passed": 7,
+          "total": 7,
+          "elapsed_as_reported": "14.0s",
+          "status": "PASS"
+        },
+        {
+          "name": "Added GFL exact RSOC profile and original witness",
+          "passed": 37,
+          "total": 37,
+          "elapsed_as_reported": "14.0s",
+          "status": "PASS"
+        },
+        {
+          "name": "Existing native MOSEK G3 class and cost coordinates",
+          "passed": 22,
+          "total": 22,
+          "elapsed_as_reported": "2.9s",
+          "status": "PASS"
+        },
+        {
+          "name": "Native MOSEK binary bounds with existing G3 cones",
+          "passed": 18,
+          "total": 18,
+          "elapsed_as_reported": "2.2s",
+          "status": "PASS"
+        }
+      ],
+      "log": {
+        "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\logs\\g3_finite_tests_final.log",
+        "bytes": 2283,
+        "sha256": "16e3b6a2b31448c7cd5104cdda1c28f30736d23356c8d203f547571e1b893ca7"
+      },
+      "command_id": "g3_focused",
+      "source_files": [
+        "src/core/paper_a_formulations.jl",
+        "src/core/paper_a_diagnostics.jl",
+        "scripts/paper_a/NativeG3Solver.jl",
+        "scripts/paper_a/G3NativeReadback.jl",
+        "scripts/paper_a/G3EquivalentConditioning.jl",
+        "scripts/paper_a/WeekStrengthAdmission.jl",
+        "test/paper_a_g3_finite_exact.jl",
+        "test/paper_a_week_mosek_conditioning.jl",
+        "test/paper_a_added_gfl_native_g3.jl",
+        "test/paper_a_added_gfl_mosek.jl",
+        "test/paper_a_mosek_zeroone_bounds.jl"
+      ],
+      "source_freeze_commit": "ebaffb57feb3a27f2d7d87b745930664f625f935"
+    },
+    {
+      "id": "dcp_ap3",
+      "language": "Julia",
+      "status": "PASS",
+      "passed": 360,
+      "total": 360,
+      "groups": [
+        {
+          "name": "AP3 complete integer conic reference in existing planning model",
+          "passed": 23,
+          "total": 23,
+          "elapsed_as_reported": "2m21.9s",
+          "status": "PASS"
+        },
+        {
+          "name": "AP3 frozen mathematics, conic and domain regressions",
+          "passed": 58,
+          "total": 58,
+          "elapsed_as_reported": "1m08.0s",
+          "status": "PASS"
+        },
+        {
+          "name": "AP3 integrated AP2 common physical model",
+          "passed": 20,
+          "total": 20,
+          "elapsed_as_reported": "15.5s",
+          "status": "PASS"
+        },
+        {
+          "name": "Shared G1 equals the accepted direct row attachment",
+          "passed": 11,
+          "total": 11,
+          "elapsed_as_reported": "14.3s",
+          "status": "PASS"
+        },
+        {
+          "name": "Shared added GFL exposure before G1/G2/G3 construction",
+          "passed": 172,
+          "total": 172,
+          "elapsed_as_reported": "0.3s",
+          "status": "PASS"
+        },
+        {
+          "name": "Added exposure is availability, independent of curtailed dispatch",
+          "passed": 10,
+          "total": 10,
+          "elapsed_as_reported": "0.8s",
+          "status": "PASS"
+        },
+        {
+          "name": "Independent added-renewable reconstruction uses input profiles",
+          "passed": 13,
+          "total": 13,
+          "elapsed_as_reported": "4.1s",
+          "status": "PASS"
+        },
+        {
+          "name": "G2 r=1 is the same G1 row with added RE; M1/M2 receive the same p",
+          "passed": 20,
+          "total": 20,
+          "elapsed_as_reported": "0.1s",
+          "status": "PASS"
+        },
+        {
+          "name": "Added GFL identities and signs reject before finalization",
+          "passed": 33,
+          "total": 33,
+          "elapsed_as_reported": "2.4s",
+          "status": "PASS"
+        }
+      ],
+      "log": {
+        "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\logs\\g3_dcp_ap3_regression_final.log",
+        "bytes": 11880,
+        "sha256": "e7e2e3802fe95310a7d48c95ff4b145ee837c2e42e7336d66dabfa8636efc762"
+      },
+      "command_id": "dcp_ap3",
+      "source_files": [
+        "src/core/paper_a_formulations.jl",
+        "src/core/paper_a_diagnostics.jl",
+        "test/uc_gscr_block_test_utils.jl",
+        "test/paper_a_fixtures.jl",
+        "test/paper_a_ap3.jl",
+        "test/paper_a_additional_gfl.jl"
+      ],
+      "source_freeze_commit": "ebaffb57feb3a27f2d7d87b745930664f625f935"
+    },
+    {
+      "id": "ac_network",
+      "language": "Julia",
+      "status": "PASS",
+      "passed": 101,
+      "total": 101,
+      "groups": [
+        {
+          "name": "Online Q box preserves branch ratings and drops device MVA circles",
+          "passed": 20,
+          "total": 20,
+          "elapsed_as_reported": "1m11.8s",
+          "status": "PASS"
+        },
+        {
+          "name": "Paper-A P/Q network and unchanged strength rows",
+          "passed": 59,
+          "total": 59,
+          "elapsed_as_reported": "59.9s",
+          "status": "PASS"
+        },
+        {
+          "name": "Paper-A strength selection and P/Q solve entry",
+          "passed": 18,
+          "total": 18,
+          "elapsed_as_reported": "20.2s",
+          "status": "PASS"
+        },
+        {
+          "name": "Conic AC network, G0 and candidate storage",
+          "passed": 4,
+          "total": 4,
+          "elapsed_as_reported": "37.9s",
+          "status": "PASS"
+        }
+      ],
+      "log": {
+        "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\logs\\ac_network_regression.log",
+        "bytes": 3435,
+        "sha256": "b0d189205370bc0f0dfdfbcff469c99a8ea6fcfd692d3f296f1f25f7b932c16b"
+      },
+      "command_id": "ac_network",
+      "source_files": [
+        "src/core/paper_a_formulations.jl",
+        "src/core/paper_a_diagnostics.jl",
+        "src/prob/paper_a_ac_network.jl",
+        "test/uc_gscr_block_test_utils.jl",
+        "test/paper_a_fixtures.jl",
+        "test/paper_a_ac_network.jl"
+      ],
+      "source_freeze_commit": "ebaffb57feb3a27f2d7d87b745930664f625f935"
+    },
+    {
+      "id": "original_audit",
+      "language": "Julia",
+      "status": "PASS",
+      "passed": 12,
+      "total": 12,
+      "groups": [
+        {
+          "name": "Original unscaled rows survive solver transformations",
+          "passed": 4,
+          "total": 4,
+          "elapsed_as_reported": "17.7s",
+          "status": "PASS"
+        },
+        {
+          "name": "Julia replay requires expected bytes and separate output",
+          "passed": 8,
+          "total": 8,
+          "elapsed_as_reported": "21.7s",
+          "status": "PASS"
+        }
+      ],
+      "log": {
+        "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\03_replay_integrity\\julia_focused_final.log",
+        "bytes": 310,
+        "sha256": "5f00e1bab65e653ae9205c1d5e853f4307191ddfcb017e73c245a9bddfd73c36"
+      },
+      "command_id": "original_audit",
+      "source_files": [
+        "test/paper_a_original_audit.jl",
+        "scripts/paper_a/week_ac_audit.jl"
+      ],
+      "source_freeze_commit": "ebaffb57feb3a27f2d7d87b745930664f625f935"
+    },
+    {
+      "id": "python_replay",
+      "language": "Python",
+      "status": "PASS",
+      "passed_groups": 3,
+      "total_groups": 3,
+      "log": {
+        "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\03_replay_integrity\\python_focused_final.log",
+        "bytes": 522,
+        "sha256": "5e143c1affce66bea57a2d54d9dd348bd282aaaa62c783e65c01ea29890739a5"
+      },
+      "command_id": "python_replay",
+      "source_files": [
+        "test/test_replay_evidence.py",
+        "scripts/paper_a/replay_evidence.py"
+      ],
+      "source_freeze_commit": "ebaffb57feb3a27f2d7d87b745930664f625f935"
+    },
+    {
+      "id": "native_psd_mutations",
+      "language": "Python",
+      "status": "PASS",
+      "exact_positive_controls": 1,
+      "material_negative_controls": 10,
+      "log": {
+        "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\06_qa\\independent_native_mutations_frozen.log",
+        "bytes": 47,
+        "sha256": "bce63b29aa1351e8df16013be685c1575db1b5366396ae92ddfcd15fa59d2c54"
+      },
+      "command_id": "native_psd_mutations",
+      "source_files": [
+        "audit/test_r3_independent_native_verify.py",
+        "audit/r3_independent_native_verify.py"
+      ],
+      "source_freeze_commit": "ebaffb57feb3a27f2d7d87b745930664f625f935"
+    }
+  ],
+  "source_file_receipts": {
+    "audit/r3_independent_native_verify.py": {
+      "path": "D:\\Projekte\\Code\\FlexPlan_UC_GSCR\\audit\\r3_independent_native_verify.py",
+      "bytes": 7525,
+      "sha256": "665cd3a76925fff0dbdb9530b74b8d15c50262cd96bae78745ce0f1860ad8579",
+      "frozen_git_blob_sha1": "ef9bd8df524ec9d228607dd1449f2e328e4df2fe",
+      "tracked_in_source_freeze": true
+    },
+    "audit/test_r3_independent_native_verify.py": {
+      "path": "D:\\Projekte\\Code\\FlexPlan_UC_GSCR\\audit\\test_r3_independent_native_verify.py",
+      "bytes": 2535,
+      "sha256": "72a258edd23e18c731861d7f2e02647775e9f38ad9cf7c7fa5bc842d5a51e8b7",
+      "frozen_git_blob_sha1": "dda7112375ad57cb02dc7aa4b0fcd6caded47dd5",
+      "tracked_in_source_freeze": true
+    },
+    "scripts/paper_a/G3EquivalentConditioning.jl": {
+      "path": "D:\\Projekte\\Code\\FlexPlan_UC_GSCR\\scripts\\paper_a\\G3EquivalentConditioning.jl",
+      "bytes": 9545,
+      "sha256": "7e582e6f4e5dbeceff0408ef8e198ccda6ef87377feb7de0b915119cbd1ed920",
+      "frozen_git_blob_sha1": "3b5d19f5f3b0910aa8c1c458080ecdba911646a1",
+      "tracked_in_source_freeze": true
+    },
+    "scripts/paper_a/G3NativeReadback.jl": {
+      "path": "D:\\Projekte\\Code\\FlexPlan_UC_GSCR\\scripts\\paper_a\\G3NativeReadback.jl",
+      "bytes": 10161,
+      "sha256": "e3dc7a3b01114f554f5a63d87aa0d4fb72fbda49cf00cdd80d0d90c8c824a30c",
+      "frozen_git_blob_sha1": "b71254e0b447f849f1a69f2ef79f47053b24b9de",
+      "tracked_in_source_freeze": true
+    },
+    "scripts/paper_a/NativeG3Solver.jl": {
+      "path": "D:\\Projekte\\Code\\FlexPlan_UC_GSCR\\scripts\\paper_a\\NativeG3Solver.jl",
+      "bytes": 14615,
+      "sha256": "8a0390dba186bc2da5978c56b48d278292b96cd69169dd1ebde38de66d77c299",
+      "frozen_git_blob_sha1": "ddafa5481015bdc0a827e859f5cf383cc3c336a7",
+      "tracked_in_source_freeze": true
+    },
+    "scripts/paper_a/WeekStrengthAdmission.jl": {
+      "path": "D:\\Projekte\\Code\\FlexPlan_UC_GSCR\\scripts\\paper_a\\WeekStrengthAdmission.jl",
+      "bytes": 3670,
+      "sha256": "948974429684b88ba6268d2b9524f522a6df48041d9b3bb8672160720248d1e0",
+      "frozen_git_blob_sha1": "aad9e284692bf175240c9b476cd75e91b4b4e054",
+      "tracked_in_source_freeze": true
+    },
+    "scripts/paper_a/replay_evidence.py": {
+      "path": "D:\\Projekte\\Code\\FlexPlan_UC_GSCR\\scripts\\paper_a\\replay_evidence.py",
+      "bytes": 4248,
+      "sha256": "7b873c5434a358edf19f181f805ead1b6f70b6b636356d11bb3fb251667299af",
+      "frozen_git_blob_sha1": "04aa3bd0435590c0871230d81721fea7df9e61cf",
+      "tracked_in_source_freeze": true
+    },
+    "scripts/paper_a/week_ac_audit.jl": {
+      "path": "D:\\Projekte\\Code\\FlexPlan_UC_GSCR\\scripts\\paper_a\\week_ac_audit.jl",
+      "bytes": 12209,
+      "sha256": "c79d6a05d060caf2356de49ec67fefce8ca5b526aabfccd454bbb253e0341ff6",
+      "frozen_git_blob_sha1": "35257ec3d3854ac3d079bcce7c0b4d76bd18312c",
+      "tracked_in_source_freeze": true
+    },
+    "src/core/paper_a_diagnostics.jl": {
+      "path": "D:\\Projekte\\Code\\FlexPlan_UC_GSCR\\src\\core\\paper_a_diagnostics.jl",
+      "bytes": 23151,
+      "sha256": "ca6b797768a814d7edef6ef3b7ab1d605d154b891d0fa94ceab943a99fdcf5ca",
+      "frozen_git_blob_sha1": "991ee0da384d722744ad474a921ce244bfa28be2",
+      "tracked_in_source_freeze": true
+    },
+    "src/core/paper_a_formulations.jl": {
+      "path": "D:\\Projekte\\Code\\FlexPlan_UC_GSCR\\src\\core\\paper_a_formulations.jl",
+      "bytes": 11866,
+      "sha256": "cb4d29aeb681cec93a1a98d54d453883232a2fbbc9699ff7de065266f8f45b96",
+      "frozen_git_blob_sha1": "2f0aa09f9e9bfba48f4ffbecb34db71bb0d46e8d",
+      "tracked_in_source_freeze": true
+    },
+    "src/prob/paper_a_ac_network.jl": {
+      "path": "D:\\Projekte\\Code\\FlexPlan_UC_GSCR\\src\\prob\\paper_a_ac_network.jl",
+      "bytes": 8433,
+      "sha256": "cfc402aff21ea7c3adfbce16cf15fb41e93c78f2692fe373e1301fa51ed051dd",
+      "frozen_git_blob_sha1": "6dddae615d9bdc2773a1d814ffc41f585ed3d9d8",
+      "tracked_in_source_freeze": true
+    },
+    "test/paper_a_ac_network.jl": {
+      "path": "D:\\Projekte\\Code\\FlexPlan_UC_GSCR\\test\\paper_a_ac_network.jl",
+      "bytes": 7116,
+      "sha256": "0f27c93d34d9590e91e8cf2d4a51acb26f080bb2374757df6d3931af3ea90517",
+      "frozen_git_blob_sha1": "6a599bacac29839140dbfbd9f33101901c0596c1",
+      "tracked_in_source_freeze": true
+    },
+    "test/paper_a_added_gfl_mosek.jl": {
+      "path": "D:\\Projekte\\Code\\FlexPlan_UC_GSCR\\test\\paper_a_added_gfl_mosek.jl",
+      "bytes": 1734,
+      "sha256": "d489235675a4913fe3dfa7333cd462ed2ba6da9c323e9da6ba70c4c911a0ed50",
+      "frozen_git_blob_sha1": "5965a3cfd02f8405d0091a96d5d6cc3be77d116f",
+      "tracked_in_source_freeze": true
+    },
+    "test/paper_a_added_gfl_native_g3.jl": {
+      "path": "D:\\Projekte\\Code\\FlexPlan_UC_GSCR\\test\\paper_a_added_gfl_native_g3.jl",
+      "bytes": 2940,
+      "sha256": "20f1de74a1263cc9fcfe386863f4495086e9b076af3f4e069f17d5c1594d9cc2",
+      "frozen_git_blob_sha1": "3dda7f485b7c231ca7ce16d83d685c762136d186",
+      "tracked_in_source_freeze": true
+    },
+    "test/paper_a_additional_gfl.jl": {
+      "path": "D:\\Projekte\\Code\\FlexPlan_UC_GSCR\\test\\paper_a_additional_gfl.jl",
+      "bytes": 10998,
+      "sha256": "6d058627e267ecdd319a2a61acc6b91639cb17cc13072fcf460e0033b9208332",
+      "frozen_git_blob_sha1": "92d83ba48b9d5511a0250ec0f1bd18661b253eb3",
+      "tracked_in_source_freeze": true
+    },
+    "test/paper_a_ap3.jl": {
+      "path": "D:\\Projekte\\Code\\FlexPlan_UC_GSCR\\test\\paper_a_ap3.jl",
+      "bytes": 10004,
+      "sha256": "5e304422fc37c2154d2d6fd9a403d80eab2f7f96af9533528d0cf330910a08c8",
+      "frozen_git_blob_sha1": "42a4535d186ecf35e18cdd2c8a7c3818ad53060b",
+      "tracked_in_source_freeze": true
+    },
+    "test/paper_a_fixtures.jl": {
+      "path": "D:\\Projekte\\Code\\FlexPlan_UC_GSCR\\test\\paper_a_fixtures.jl",
+      "bytes": 5856,
+      "sha256": "14983fe8df069b89afe4d114ebc6f268af795dde733a7d10260c802190291974",
+      "frozen_git_blob_sha1": "1801157bf52ca0f20050390d570b5cf93a384e64",
+      "tracked_in_source_freeze": true
+    },
+    "test/paper_a_g3_finite_exact.jl": {
+      "path": "D:\\Projekte\\Code\\FlexPlan_UC_GSCR\\test\\paper_a_g3_finite_exact.jl",
+      "bytes": 6055,
+      "sha256": "ea794caf0f42ad2bb09533ffa40ffdea1f8f938ab0ecb7ce8ef286d67bfa517a",
+      "frozen_git_blob_sha1": "433b9015375c38dfdc78b7070a7cbe39ad83bc87",
+      "tracked_in_source_freeze": true
+    },
+    "test/paper_a_mosek_zeroone_bounds.jl": {
+      "path": "D:\\Projekte\\Code\\FlexPlan_UC_GSCR\\test\\paper_a_mosek_zeroone_bounds.jl",
+      "bytes": 1741,
+      "sha256": "7d32d1c633551996a18b54c2c59e5f4298ccc08233ead4d2a40b704cd8bd7e3f",
+      "frozen_git_blob_sha1": "44be9d7306e0f24e4a3530793900d6cd6dc1485f",
+      "tracked_in_source_freeze": true
+    },
+    "test/paper_a_original_audit.jl": {
+      "path": "D:\\Projekte\\Code\\FlexPlan_UC_GSCR\\test\\paper_a_original_audit.jl",
+      "bytes": 3055,
+      "sha256": "caa46f1418738f552e5fba0736e109252b0e5347aa733302683ad6c1acf951ac",
+      "frozen_git_blob_sha1": "1d4cf3cc9aada6d69b51a08ea73936a1d18b783e",
+      "tracked_in_source_freeze": true
+    },
+    "test/paper_a_week_mosek_conditioning.jl": {
+      "path": "D:\\Projekte\\Code\\FlexPlan_UC_GSCR\\test\\paper_a_week_mosek_conditioning.jl",
+      "bytes": 1287,
+      "sha256": "35eff7f15083235b3ecf15027a7aeda121bab8ba16a9ccbde185904890b15447",
+      "frozen_git_blob_sha1": "e428620df610a535a1deefccc8de53e4efb47969",
+      "tracked_in_source_freeze": true
+    },
+    "test/test_replay_evidence.py": {
+      "path": "D:\\Projekte\\Code\\FlexPlan_UC_GSCR\\test\\test_replay_evidence.py",
+      "bytes": 3156,
+      "sha256": "87fc115bb6cca5cd5ec18fefe33db2d555a6743827fdbb7fcd9f5594a715d0cc",
+      "frozen_git_blob_sha1": "b923ca51880929032825f5aabc8897d5a604e72b",
+      "tracked_in_source_freeze": true
+    },
+    "test/uc_gscr_block_test_utils.jl": {
+      "path": "D:\\Projekte\\Code\\FlexPlan_UC_GSCR\\test\\uc_gscr_block_test_utils.jl",
+      "bytes": 4214,
+      "sha256": "3ffd04c08a731471984a7a2bb63ecafc02b8832c9bfb0990e093d4e486ecb43d",
+      "frozen_git_blob_sha1": "f95d3aeabf1b25f1debb9e40f9abfacb670b70e6",
+      "tracked_in_source_freeze": true
+    }
+  },
+  "totals": {
+    "Julia_passed": 625,
+    "Julia_total": 625,
+    "Python_replay_test_groups": 3,
+    "independent_native_PSD_positive_controls": 1,
+    "independent_native_PSD_negative_controls": 10
+  },
+  "scope_notes": [
+    "No general optimization. Julia regressions include specified small/synthetic solver tests.",
+    "G3 and DCP/AP3 final tests were executed immediately before source freeze; source files are bound here by exact working-file SHA256 and frozen Git blob IDs.",
+    "Historical RSOC wording in one test name is retained; current G3 source and native tests use the exact standard SOC.",
+    "Root AC and replay receipts are independently summarized; this file does not claim the G3 worker executed those commands.",
+    "Working-file SHA256 values bind Windows bytes; Git blob IDs independently bind frozen repository content and may use normalized line endings."
+  ]
+}

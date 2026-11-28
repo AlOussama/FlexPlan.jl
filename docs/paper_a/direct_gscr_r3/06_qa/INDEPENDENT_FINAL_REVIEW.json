@@ -1,0 +1,365 @@
+{
+  "status": "PASS",
+  "source_commit": "ebaffb57feb3a27f2d7d87b745930664f625f935",
+  "reference_commit": "a2cadc4391a3cac1ae06f9f7fc0ea88a62ef4f7e",
+  "recommendation": "R3_TECHNICALLY_ACCEPTED_WITH_EXPLICIT_SCOPE_LIMITATIONS",
+  "reviewer_role": "Independent original-evidence, finite-coefficient and final QA reviewer",
+  "utc": "2026-11-28T01:15:06.818762+00:00",
+  "material_findings": [],
+  "production_files_modified_by_reviewer": [],
+  "qa_only_authorship": true,
+  "models": [
+    {
+      "method": "G0",
+      "formulation": "LPAC",
+      "backend": "mosek",
+      "status": "PASS"
+    },
+    {
+      "method": "G3",
+      "formulation": "LPAC",
+      "backend": "gurobi",
+      "status": "PASS"
+    },
+    {
+      "method": "G3",
+      "formulation": "LPAC",
+      "backend": "mosek",
+      "status": "PASS"
+    },
+    {
+      "method": "G0",
+      "formulation": "SOC-WR",
+      "backend": "mosek",
+      "status": "PASS"
+    },
+    {
+      "method": "G3",
+      "formulation": "SOC-WR",
+      "backend": "gurobi",
+      "status": "PASS"
+    },
+    {
+      "method": "G3",
+      "formulation": "SOC-WR",
+      "backend": "mosek",
+      "status": "PASS"
+    },
+    {
+      "method": "G0",
+      "formulation": "QCRM",
+      "backend": "mosek",
+      "status": "PASS"
+    },
+    {
+      "method": "G3",
+      "formulation": "QCRM",
+      "backend": "gurobi",
+      "status": "PASS"
+    },
+    {
+      "method": "G3",
+      "formulation": "QCRM",
+      "backend": "mosek",
+      "status": "PASS"
+    }
+  ],
+  "new_G0": {
+    "networks": 3,
+    "blocks": 504,
+    "complete_triangle_positions": 354312,
+    "exact_binary_rational_native_trace_readback": "PASS"
+  },
+  "new_G3": {
+    "full_native_references": 6,
+    "cones_total": 52416,
+    "node_rows_total": 37296,
+    "q_bounds_total": 104832,
+    "actual_native_and_doubled_tail_checks": "PASS",
+    "saved_Gurobi_MPS_entire_constraint_model_roundtrips": 3
+  },
+  "new_native_network_certificate_transfer": "PASS_EXPLICIT_FINITE_COEFFICIENT_MONOTONICITY_TO_PREVIOUSLY_ACCEPTED_PLANES",
+  "G3_lower_bound_evidence_class": "EXACT_FLOORED_LB_TRANSFERRED_FROM_R2_G0_VIA_ACCEPTED_G0_G3_PROJECTION_EQUIVALENCE",
+  "transferred_G3_LB_EUR2025": {
+    "LPAC": 127407323716,
+    "SOC-WR": 127395770699,
+    "QCRM": 127395770699
+  },
+  "new_native_solver_LB": null,
+  "new_weekly_optimizations": 0,
+  "reviewer_optimizer_calls": 0,
+  "independent_tests": {
+    "replay_integrity_groups": 3,
+    "native_exact_positive": 1,
+    "native_material_negatives": 10,
+    "result": "PASS"
+  },
+  "reviewed_previously_completed_small_tests": 512,
+  "preservation_review": {
+    "immutable_inputs_reported_unchanged": 1238,
+    "immutable_bytes_reported_unchanged": 6333591003,
+    "authorized_live_source_original_hashes_independently_reconstructed": 13,
+    "scope": "Reviewed fresh root immutable-file hash audit; independently rehashed bound QA inputs and restored all13 original source byte hashes from pinned Git objects."
+  },
+  "retained_limitations": [
+    "Historical native G0 identity remains UNVERIFIED; historical rounded G3 equivalence failure is not retroactively repaired.",
+    "All original point ceilings remain numerical tolerance qualifications, not rigorous exact feasible upper bounds; LPAC G0 hour108 retains approximately -2.237e-10 eigenvalue qualification.",
+    "Archived LPAC G3 point remains SENSITIVITY_ONLY / NOT_GOLD_UB; no accepted G3 GOLD ceiling or new primal is supplied.",
+    "Whole-native old/new network identity is not claimed. The actual SOC-WR RSOC bridge change is explicitly qualified by the recorded gamma<=1 implication into the accepted existing voltage Supporting-Planes.",
+    "QCRM full finite SOC-QCP nesting remains UNVERIFIED and is not used as a certificate premise; F02 remains closed.",
+    "DCP native coverage is small attachment qualification plus existing DCP/UC regressions, not a new168hour DCP native export.",
+    "The frozen launcher checks unstaged changes only; actual staged/unstaged cleanliness is supported by11 independent observations and the final snapshot.",
+    "No exact nonlinear AC feasibility, integer optimum or dynamic stability claim.",
+    "Publication/remote delivery sealing occurs after this scientific-source review and must bind final delivery HEAD separately without altering frozen production code."
+  ],
+  "inputs": {
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\06_qa\\INDEPENDENT_NATIVE_RUNTIME_SUMMARY.json": {
+      "sha256": "ff1a0b8a1b0e9d959ae00746fdeda8328b86b870c96957740b1e2b17a2e37b56",
+      "bytes": 8026
+    },
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\06_qa\\INDEPENDENT_MPS_ROUNDTRIP_SUMMARY.json": {
+      "sha256": "b1bcfb491a8b0ba19c750e2ff009a2bb63ffec8f11cdc0c1eaed6f2e508b4f99",
+      "bytes": 2373
+    },
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\06_qa\\FROZEN_INDEX_WORKTREE_SUPPLEMENT.json": {
+      "sha256": "df5c5566b91bea1c297e6c20279fa22c6b6c2a66708abca66cf4e6c45baff8a2",
+      "bytes": 3643
+    },
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\05_scientific_results\\SOC_WR_NATIVE_BRIDGE_CERTIFICATE_TRANSFER.json": {
+      "sha256": "4c7c0e931302260b316a5e028cd6afdfd7f2d0095f927d024f9ab3800945d942",
+      "bytes": 5255
+    },
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\06_qa\\NATIVE_BRIDGE_INVENTORY_SUPPLEMENT.json": {
+      "sha256": "f10c5865f9ed6bcb4c516ff508bd19d8e3304930aacbdb26a9a8c5e1d970a3a7",
+      "bytes": 760
+    },
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\04_reproducibility\\G0_LPAC_mosek_frozen_BUILD_RECEIPT.json": {
+      "sha256": "708724c493dcdaa7812bce72942640e2bc455245ca1c219cd668025c88c168f4",
+      "bytes": 1763
+    },
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\01_native_g0\\LPAC_mosek_frozen\\profile.json": {
+      "sha256": "c5abf3958e6cd9b1275c2b9d1fcef59985e61283bafb13fec929bf98aa1ecfac",
+      "bytes": 1989
+    },
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\06_qa\\independent_G0_LPAC_mosek_frozen.json": {
+      "sha256": "20140e5d071c61a1faee23c0bd85a33dcd4512bf2b36c45b0a1074016f88ce0d",
+      "bytes": 9519
+    },
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\05_scientific_results\\G0_LPAC_mosek_FROZEN_SOURCE_DELTA.json": {
+      "sha256": "79077fa511e42525c497ad15b55fe0fe553aa6dd79dab0cacc5283f2cc00b4cd",
+      "bytes": 2946
+    },
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\04_reproducibility\\G3_LPAC_gurobi_frozen_BUILD_RECEIPT.json": {
+      "sha256": "77b909902a0b55a334e0658e35d30f016145e55527f0b7bc69f75eed56b74f21",
+      "bytes": 1765
+    },
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\02_native_g3\\LPAC_gurobi_frozen\\profile.json": {
+      "sha256": "e42ecbb5cba9ceaa112573df8973a6d69a7bb509306084a88b013ea67732001c",
+      "bytes": 1938
+    },
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\06_qa\\independent_G3_LPAC_gurobi_frozen.json": {
+      "sha256": "889289a9f1659aecbd5844a30f0d04d8d82b45da3fdec638a8b111556fa8c4e5",
+      "bytes": 901
+    },
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\02_native_g3\\LPAC_gurobi_frozen\\g3_actual_native_verdict.json": {
+      "sha256": "8940ba1e4985f16fa1e7df1c21774ea8e8f6dbe9bc3a8360adba45a1c0902dbf",
+      "bytes": 1241148
+    },
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\06_qa\\independent_G3_LPAC_gurobi_frozen_MPS_ROUNDTRIP.json": {
+      "sha256": "45d1591347d32d9169864ce97dea896389e598c51a9e0212cb732aa88a78fa6e",
+      "bytes": 960
+    },
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\05_scientific_results\\G3_LPAC_gurobi_FROZEN_SOURCE_DELTA.json": {
+      "sha256": "49b9d0736f6301070ebac419453846504f04183272cf06c326f9d571e0655c54",
+      "bytes": 2948
+    },
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\04_reproducibility\\G3_LPAC_mosek_frozen_BUILD_RECEIPT.json": {
+      "sha256": "08dda48c256480726462d93842bee1c00c99ec7b607fe62ca03548608ce5dc0a",
+      "bytes": 1763
+    },
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\02_native_g3\\LPAC_mosek_frozen\\profile.json": {
+      "sha256": "b5f55b57ed72e3ee8a7cc2b987864b418454cfb86365ec45fd3e5b2ce63225cd",
+      "bytes": 1993
+    },
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\06_qa\\independent_G3_LPAC_mosek_frozen.json": {
+      "sha256": "9dd5ff3ea9749989d55cc3b87818363df216b2dcdb6bd335bdf4558e75fd710f",
+      "bytes": 903
+    },
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\02_native_g3\\LPAC_mosek_frozen\\g3_actual_native_verdict.json": {
+      "sha256": "700e7ad5d3547fe49fe9f4f90d96eb95bff9d6ef329f4a7de97bbe0526915651",
+      "bytes": 642
+    },
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\05_scientific_results\\G3_LPAC_mosek_FROZEN_SOURCE_DELTA.json": {
+      "sha256": "b8284980007be9a1f6ba86ea47a548444b504ff56d6729de8add87a9873320d6",
+      "bytes": 2946
+    },
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\04_reproducibility\\G0_SOC-WR_mosek_frozen_BUILD_RECEIPT.json": {
+      "sha256": "3b5f20a6c7909290bd3bf3a8bda7228fca99318407d935ed3ba0b2fd61519112",
+      "bytes": 1767
+    },
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\01_native_g0\\SOC-WR_mosek_frozen\\profile.json": {
+      "sha256": "22bfd4a78a1976e099c7dad75f1ccb26059bea753962978cb6872da0802c9729",
+      "bytes": 2000
+    },
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\06_qa\\independent_G0_SOC-WR_mosek_frozen.json": {
+      "sha256": "826aa9edd02df91d18a87cd331da608bb24ea4c4f396424f8ce45a59a9d90e84",
+      "bytes": 9519
+    },
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\05_scientific_results\\G0_SOC-WR_mosek_FROZEN_SOURCE_DELTA.json": {
+      "sha256": "5ca0c493cb857bc63797d3c424a94be70d4cf1c0a53968bd888e4372a5c321fd",
+      "bytes": 2954
+    },
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\04_reproducibility\\G3_SOC-WR_gurobi_frozen_BUILD_RECEIPT.json": {
+      "sha256": "75becba3f9680ad7d13f9741a0a6348cb8bf32c5283d3313cf4bdedf463232ee",
+      "bytes": 1769
+    },
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\02_native_g3\\SOC-WR_gurobi_frozen\\profile.json": {
+      "sha256": "34d04110fc6fa7987436b0fcf40f58a7201268cfd8e79bf72a72b6d8489ccd78",
+      "bytes": 1945
+    },
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\06_qa\\independent_G3_SOC-WR_gurobi_frozen.json": {
+      "sha256": "774a2bab8630e69833b0dcd601f2793abc18ebfb257925b7c2952ada94e673c1",
+      "bytes": 901
+    },
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\02_native_g3\\SOC-WR_gurobi_frozen\\g3_actual_native_verdict.json": {
+      "sha256": "e44aac49f8ec7d3f013f48d5dd99529343e57bd38b84560e3a63274d11e0834c",
+      "bytes": 1241148
+    },
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\06_qa\\independent_G3_SOC-WR_gurobi_frozen_MPS_ROUNDTRIP.json": {
+      "sha256": "6cf896b37e0d030446a7bb10f3fc6259e8f442ece534dd9dbe260e7dda37701d",
+      "bytes": 961
+    },
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\05_scientific_results\\G3_SOC-WR_gurobi_FROZEN_SOURCE_DELTA.json": {
+      "sha256": "ffd99759d101dea4cab4d76b17a3f46743a8be57fb0016f50b9829aa1695e01d",
+      "bytes": 2956
+    },
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\04_reproducibility\\G3_SOC-WR_mosek_frozen_BUILD_RECEIPT.json": {
+      "sha256": "0904303143569248f8fa35bed8506141a52fe1e0c670519ad5bb0ae7c53a4a70",
+      "bytes": 1767
+    },
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\02_native_g3\\SOC-WR_mosek_frozen\\profile.json": {
+      "sha256": "461f5aff58534b16af05c11686197bc397f1ab84a5506c12b3c943ab35885c87",
+      "bytes": 2004
+    },
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\06_qa\\independent_G3_SOC-WR_mosek_frozen.json": {
+      "sha256": "51a69bd6d36e9003bbdf7dfc3e085192d4db67bb8eb3a56c4e433d0516063827",
+      "bytes": 903
+    },
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\02_native_g3\\SOC-WR_mosek_frozen\\g3_actual_native_verdict.json": {
+      "sha256": "8919bb48a8d205c9cc22279beb914efebce218e4ca34c5f9f98337a28029de9a",
+      "bytes": 642
+    },
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\05_scientific_results\\G3_SOC-WR_mosek_FROZEN_SOURCE_DELTA.json": {
+      "sha256": "bcded830c44121f6ae65e169039c64effab600e30fb208cd4138aba674b4e8ba",
+      "bytes": 2954
+    },
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\04_reproducibility\\G0_QCRM_mosek_frozen_BUILD_RECEIPT.json": {
+      "sha256": "1873e63ef41d2a146610ca042e0257e6cbc46da7c5ec442f6ad75a3a239326d6",
+      "bytes": 1763
+    },
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\01_native_g0\\QCRM_mosek_frozen\\profile.json": {
+      "sha256": "9c7cc21cc3544e0e4daaac3f65940a1725035c75ceb83c11fe415bf9afafef2c",
+      "bytes": 1995
+    },
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\06_qa\\independent_G0_QCRM_mosek_frozen.json": {
+      "sha256": "8444e55e1c5656b586e3d5c9c008832874c402bcb0d5edfec5581125afa3381d",
+      "bytes": 9519
+    },
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\05_scientific_results\\G0_QCRM_mosek_FROZEN_SOURCE_DELTA.json": {
+      "sha256": "cf98aee21d357016db16793c23481a845a2bacbb33f302f91ef1d57212ef02d6",
+      "bytes": 2946
+    },
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\04_reproducibility\\G3_QCRM_gurobi_frozen_BUILD_RECEIPT.json": {
+      "sha256": "8e6ebb7415c4a96863d567b71146a23bb9d9bd5924d43274122d6dce19b18be7",
+      "bytes": 1765
+    },
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\02_native_g3\\QCRM_gurobi_frozen\\profile.json": {
+      "sha256": "129527fd744f7e12ed91c97ca160496d16d41b87bda0bca7e00a2ca413e187f6",
+      "bytes": 1937
+    },
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\06_qa\\independent_G3_QCRM_gurobi_frozen.json": {
+      "sha256": "3b895f8054a5c30bbb0df85a606a73dc421281179c4d1ca53f66d5577c641565",
+      "bytes": 901
+    },
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\02_native_g3\\QCRM_gurobi_frozen\\g3_actual_native_verdict.json": {
+      "sha256": "46f5aedf889be158ecd0c8344c34b1ff9b6da052619f0e552176c88707fb5e58",
+      "bytes": 1241148
+    },
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\06_qa\\independent_G3_QCRM_gurobi_frozen_MPS_ROUNDTRIP.json": {
+      "sha256": "22f68c1d68e2bd14142f38295e154fc4f67bedc3ca7bf3d49310c50c6a887d10",
+      "bytes": 961
+    },
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\05_scientific_results\\G3_QCRM_gurobi_FROZEN_SOURCE_DELTA.json": {
+      "sha256": "076959ae0a2acd3046c862b493bd33624fcc2808a439ac5582086663ed25b2ce",
+      "bytes": 2948
+    },
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\04_reproducibility\\G3_QCRM_mosek_frozen_BUILD_RECEIPT.json": {
+      "sha256": "89a09c36cedb5249b8f526c4d2281de355c6738c678933be9629e77ca982341f",
+      "bytes": 1763
+    },
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\02_native_g3\\QCRM_mosek_frozen\\profile.json": {
+      "sha256": "bb1cdb43e303ab37eb966092a1e210f3bc2d88ecf718f36699f1c6a1c0256e6a",
+      "bytes": 1999
+    },
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\06_qa\\independent_G3_QCRM_mosek_frozen.json": {
+      "sha256": "6115b05879dd882d21ab161311073208a8ea0aae0af819a1117bc088e48f4e02",
+      "bytes": 903
+    },
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\02_native_g3\\QCRM_mosek_frozen\\g3_actual_native_verdict.json": {
+      "sha256": "f78b066e6a45bc7e189be3ffcc5a9d48eb7a57d1a1ebd353a131b15cfe00694c",
+      "bytes": 642
+    },
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\05_scientific_results\\G3_QCRM_mosek_FROZEN_SOURCE_DELTA.json": {
+      "sha256": "c6fd3f7cf17f6144f71bb8fc6dfc98567374bac8d9c2e15b576996a04eab7c0c",
+      "bytes": 2946
+    },
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\00_intake\\ORIGINAL_INPUT_PRESERVATION.json": {
+      "sha256": "ea404742b2813d78b70f2b2edcb1cd63cc3a3b0d9d14682cbf89021d16544fa9",
+      "bytes": 8642
+    },
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\03_replay_integrity\\ORIGINAL_MODEL_AUDIT.json": {
+      "sha256": "1401860045183b256665af2aba9604ed00f64f716eb0e8415d268ea9e17992ed",
+      "bytes": 5862
+    },
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\03_replay_integrity\\NEGATIVE_CONTROL_RESULTS.json": {
+      "sha256": "da1ed566118c84cd92a7de71718547e4562403402163d978e3a504a38d646f93",
+      "bytes": 3934
+    },
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\02_native_g3\\SMALL_BACKEND_QUALIFICATION.json": {
+      "sha256": "d15471e8e14e5b4654a939b4dc519408125cce61d54c650a74816f3fc4f9ec43",
+      "bytes": 2779
+    },
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\04_reproducibility\\JULIA_RUNTIME.json": {
+      "sha256": "ebfcee2bcf63c8881e32625e59c75c5676c860d7396f9e187ffade55839d17b2",
+      "bytes": 61964
+    },
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\04_reproducibility\\SOLVER_LIBRARY_HASHES.json": {
+      "sha256": "ad7274ced58e32ea1a45ab2625520fcbe5300085f257d2dc5cf62928de0adaf0",
+      "bytes": 1422
+    },
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\SCI_GOLD_AC_DIRECT_02_LOCAL_20261127_02\\reused_lower_original_runtime\\LPAC_G0\\exact_dual_1.json": {
+      "sha256": "caefcba42e6974d56c569879d105d49657759da2ef3ac4e2d92df3474008f172",
+      "bytes": 1853
+    },
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\SCI_GOLD_AC_DIRECT_02_LOCAL_20261127_02\\reused_soc_stage_retry\\SOC\\g0_certified_lower_boxdiag_PM0217.json": {
+      "sha256": "45f5257139edb5dc33e9766611b7a4c99c1c646b4effe5f91a0c9d1ae15ddcdf",
+      "bytes": 2097
+    },
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\SCI_GOLD_AC_DIRECT_02_LOCAL_20261127_02\\recovered_transfer\\QCRM\\g0_certified_lower_boxdiag_PM0217.json": {
+      "sha256": "ab09a821f9ae8e7ce649e2ecc32b964df7b42ce1f6495488db1fd7684363931e",
+      "bytes": 1223
+    },
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\06_qa\\independent_replay_tests.log": {
+      "sha256": "c46e3bf9f24e25282bfdf79423dd61d3483c877963d549bad2ca30ee67d7a454",
+      "bytes": 522
+    },
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\06_qa\\independent_native_mutations_frozen.log": {
+      "sha256": "bce63b29aa1351e8df16013be685c1575db1b5366396ae92ddfcd15fa59d2c54",
+      "bytes": 47
+    },
+    "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\06_qa\\FINAL_SOURCE_STATE.json": {
+      "sha256": "d7e9ce8e767c4fa9f6521608b00bdbe040aa71bc9f45ec248ae2685b146bd94e",
+      "bytes": 180
+    }
+  }
+}

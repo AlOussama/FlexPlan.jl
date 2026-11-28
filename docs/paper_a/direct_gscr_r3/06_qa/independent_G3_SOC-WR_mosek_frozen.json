@@ -1,0 +1,15 @@
+{
+  "status": "PASS",
+  "source_commit": "ebaffb57feb3a27f2d7d87b745930664f625f935",
+  "backend": "MOSEK_actual_Task_API",
+  "native_cones": 8736,
+  "q_endpoints": 17472,
+  "all_doubled_fixed_tails_match_full_M_ledger": true,
+  "all_q_budget_incidences_exactly_once": true,
+  "node_budget_rows_with_edges": 5712,
+  "raw_readback_sha256": "761b15b98f53eb43daa7084ee77688db2cd6087e5e1462635f085ca0307740c4",
+  "native_model_sha256": "7247f0509d22728ca77c5ed675601e9af3fd4701fb63494d610c600306d576bd",
+  "audit_terms_sha256": "f46773902831db54afc76a7cf90f713922287d82a4f8abac5cdcec71d517965d",
+  "independent_verifier_sha256": "6706209c6a23a44072e7f6b64a5713fee1a391d1e7f8fa5abd78f07c1d2c48f6",
+  "scope": "Independent raw coefficient/endpoint/budget incidence review; physical diagonal coefficient identity additionally verified by frozen Julia source-to-native checker; no optimization"
+}

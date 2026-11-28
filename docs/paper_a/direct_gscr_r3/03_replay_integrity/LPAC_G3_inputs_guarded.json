@@ -1,0 +1,100 @@
+{
+  "schema": "paper_a_original_replay_inputs/1",
+  "context": {
+    "study": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\KW08_RE70_G2_PQ_20261125_01",
+    "model": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\KW08_RE70_G2_PQ_20261125_01\\DIRECT_GSCR_PM0217_01\\LPAC_G3",
+    "solved": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\KW08_RE70_G2_PQ_20261125_01\\DIRECT_GSCR_PM0217_01\\LPAC_G3_solve"
+  },
+  "inputs": {
+    "case": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\KW08_RE70_G2_PQ_20261125_01\\CONFIRMED_QBOX\\AC_CASE\\case.json",
+      "bytes": 172417680,
+      "sha256": "66885c9b5d27b21ac1000cf16e8da5d886b7ab50085783957907cebef8a41d3b"
+    },
+    "original_native_model": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\KW08_RE70_G2_PQ_20261125_01\\DIRECT_GSCR_PM0217_01\\LPAC_G3\\native.mps",
+      "bytes": 99064792,
+      "sha256": "2487323623b95451ef1323c1fe7232893354d6d0490a3b8f291791a4c539e42e"
+    },
+    "profile": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\KW08_RE70_G2_PQ_20261125_01\\DIRECT_GSCR_PM0217_01\\LPAC_G3\\profile.json",
+      "bytes": 1391,
+      "sha256": "10adce35d27e1d763fd5bb82870883d90e13b48fd0ddabb9e1eee9a6e75f224d"
+    },
+    "export_metadata": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\KW08_RE70_G2_PQ_20261125_01\\DIRECT_GSCR_PM0217_01\\LPAC_G3\\export.json",
+      "bytes": 646,
+      "sha256": "1cdf13cdc6360edfe40395df17002dcbfcad5e142dff8a1222d33adbea8d51a4"
+    },
+    "mapping": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\KW08_RE70_G2_PQ_20261125_01\\DIRECT_GSCR_PM0217_01\\LPAC_G3\\native_columns.csv",
+      "bytes": 6228256,
+      "sha256": "ee68ab636a15a0c9f5c667599785e51f9431e0f96c31a762f4724d0e4f9f94b3"
+    },
+    "audit_terms": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\KW08_RE70_G2_PQ_20261125_01\\DIRECT_GSCR_PM0217_01\\LPAC_G3\\audit_terms.csv",
+      "bytes": 12673554,
+      "sha256": "79f5a819b77e3114de5efc5553a5a00414a8aa770324883281ca0e43c59f310a"
+    },
+    "matrix_ledger": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\KW08_RE70_G2_PQ_20261125_01\\DIRECT_GSCR_PM0217_01\\LPAC_G3\\audit_terms.csv",
+      "bytes": 12673554,
+      "sha256": "79f5a819b77e3114de5efc5553a5a00414a8aa770324883281ca0e43c59f310a"
+    },
+    "terminal_coordinates": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\KW08_RE70_G2_PQ_20261125_01\\DIRECT_GSCR_PM0217_01\\LPAC_G3\\terminal_coordinates.csv",
+      "bytes": 5355635,
+      "sha256": "a8106d0c844a376f2117c0ea9a0c8acf3737eda4ce988236d925aa42e8b5c072"
+    },
+    "outcome": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\KW08_RE70_G2_PQ_20261125_01\\DIRECT_GSCR_PM0217_01\\LPAC_G3_solve\\outcome.json",
+      "bytes": 1057,
+      "sha256": "51c0d6194ea99bf0576130d81ab0a70844be5833b3e70950c886d147af42bfbe"
+    },
+    "primal": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\KW08_RE70_G2_PQ_20261125_01\\DIRECT_GSCR_PM0217_01\\LPAC_G3_solve\\native_primal.npy",
+      "bytes": 3965656,
+      "sha256": "5479e4b956ac20066510359ecc7797e4fbb389921ab4636a7ef04a7a2459170e"
+    },
+    "evaluator": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\KW08_RE70_G2_PQ_20261125_01\\BASE_PAIR_20261126\\independent_base_point.py",
+      "bytes": 15277,
+      "sha256": "c8406a7238f390589faf471db94f8e5ce5eb5589c2507190064dd7dd26851f82"
+    },
+    "replay_program": {
+      "path": "D:\\Projekte\\Code\\FlexPlan_UC_GSCR\\scripts\\paper_a\\replay_direct_ac.py",
+      "bytes": 8809,
+      "sha256": "df3ce7b234b022138a2fafc5c3e41fdd6817a7e93e8b03988e688f3c83f7804a"
+    },
+    "integrity_program": {
+      "path": "D:\\Projekte\\Code\\FlexPlan_UC_GSCR\\scripts\\paper_a\\replay_evidence.py",
+      "bytes": 4248,
+      "sha256": "7b873c5434a358edf19f181f805ead1b6f70b6b636356d11bb3fb251667299af"
+    },
+    "physical_generators.csv": {
+      "path": "D:\\Projekte\\Code\\pypsatomatpowerx\\data\\elec_s_37_csv\\generators.csv",
+      "bytes": 44511,
+      "sha256": "20441d5bd67103b90838e728affa0da332e5112dcce532c8119eb5e50116abb8"
+    },
+    "physical_generators-p_max_pu.csv": {
+      "path": "D:\\Projekte\\Code\\pypsatomatpowerx\\data\\elec_s_37_csv\\generators-p_max_pu.csv",
+      "bytes": 22448817,
+      "sha256": "45336cff93e75ffc9a1a5aae2bc3e8ad8f7054b2f8bcb267d25607c73cc45f46"
+    },
+    "physical_snapshots.csv": {
+      "path": "D:\\Projekte\\Code\\pypsatomatpowerx\\data\\elec_s_37_csv\\snapshots.csv",
+      "bytes": 331809,
+      "sha256": "1dbf7e7d9522f6e43223b21a9e3a4a9a1c9314ef4866897a632c26512d95ddd4"
+    },
+    "physical_dates": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\TECH_FULL37_FIVE_WEEKS_RE50_20261115_01\\AP1_EXPORT\\week_8\\case_manifest.json",
+      "bytes": 68743,
+      "sha256": "a6439feef1a3bb2738798e9af3298aeff89505dea5bcfbdf27a559e3ef252204"
+    },
+    "gold_criteria": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\PAPER_A_BUNDLE_20261123_GOLD01\\02_final_rows\\WK08-70-G2-LP.json",
+      "bytes": 12701,
+      "sha256": "863e13167af7171ad0a6be3d931390c0ccd64258bbaf5b7d159f8101424fd607"
+    }
+  }
+}

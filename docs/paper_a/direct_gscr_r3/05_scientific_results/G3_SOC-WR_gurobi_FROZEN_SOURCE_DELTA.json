@@ -1,0 +1,73 @@
+{
+  "inputs": {
+    "original_audit_terms.csv": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\KW08_RE70_G2_PQ_20261125_01\\DIRECT_GSCR_PM0217_01\\SOC-WR_G3\\audit_terms.csv",
+      "bytes": 12674247,
+      "sha256": "f46773902831db54afc76a7cf90f713922287d82a4f8abac5cdcec71d517965d"
+    },
+    "original_terminal_coordinates.csv": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\KW08_RE70_G2_PQ_20261125_01\\DIRECT_GSCR_PM0217_01\\SOC-WR_G3\\terminal_coordinates.csv",
+      "bytes": 5356265,
+      "sha256": "201e671ee99f4d5c38a5e447217705f55e9a1cb7f2407dae848f56474dc57eb8"
+    },
+    "reference_audit_terms.csv": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\02_native_g3\\SOC-WR_gurobi_frozen\\audit_terms.csv",
+      "bytes": 12674247,
+      "sha256": "f46773902831db54afc76a7cf90f713922287d82a4f8abac5cdcec71d517965d"
+    },
+    "reference_terminal_coordinates.csv": {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\02_native_g3\\SOC-WR_gurobi_frozen\\terminal_coordinates.csv",
+      "bytes": 5356265,
+      "sha256": "201e671ee99f4d5c38a5e447217705f55e9a1cb7f2407dae848f56474dc57eb8"
+    }
+  },
+  "metrics": {
+    "M": {
+      "expressions": 118104,
+      "exactly_equal_expressions": 118104,
+      "coefficient_differences": 0,
+      "unresolved_index_coordinates": 11760,
+      "semantic_status": "EXACT_INDEX_MATCH_WITH_UNRESOLVED_SEMANTICS",
+      "first_differences": []
+    },
+    "cost": {
+      "expressions": 1,
+      "exactly_equal_expressions": 1,
+      "coefficient_differences": 0,
+      "unresolved_index_coordinates": 36772,
+      "semantic_status": "EXACT_INDEX_MATCH_WITH_UNRESOLVED_SEMANTICS",
+      "first_differences": []
+    },
+    "wind_pv": {
+      "expressions": 1,
+      "exactly_equal_expressions": 1,
+      "coefficient_differences": 0,
+      "unresolved_index_coordinates": 0,
+      "semantic_status": "EXACT_SEMANTIC_MATCH",
+      "first_differences": []
+    },
+    "P": {
+      "expressions": 6216,
+      "exactly_equal_expressions": 6216,
+      "coefficient_differences": 0,
+      "unresolved_index_coordinates": 0,
+      "semantic_status": "EXACT_SEMANTIC_MATCH",
+      "first_differences": []
+    },
+    "Q": {
+      "expressions": 6216,
+      "exactly_equal_expressions": 6216,
+      "coefficient_differences": 0,
+      "unresolved_index_coordinates": 0,
+      "semantic_status": "EXACT_SEMANTIC_MATCH",
+      "first_differences": []
+    }
+  },
+  "scope": "Exact sparse source delta audit; no solve, no F02 reconsideration",
+  "source_freeze_commit": "ebaffb57feb3a27f2d7d87b745930664f625f935",
+  "auditor_source": {
+    "path": "D:\\Projekte\\Code\\FlexPlan_UC_GSCR\\scripts\\paper_a\\compare_original_ledgers.py",
+    "bytes": 4049,
+    "sha256": "382a27d6b90a291602d5c53e4d4f753b565f0a0f18052d9ec755a1d9dbd4de81"
+  }
+}

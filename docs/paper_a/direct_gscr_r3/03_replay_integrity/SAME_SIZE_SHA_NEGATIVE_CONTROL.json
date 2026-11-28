@@ -1,0 +1,19 @@
+{
+  "result": "PASS_FAIL_CLOSED",
+  "test": "same-byte-count corruption of expected original row",
+  "expected": {
+    "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\03_replay_integrity\\same_size_sha_control\\original_row.txt",
+    "bytes": 18,
+    "sha256": "c93a196bdae2321d92d67699eef7e9ee8b7c82c69aa064fd341915ab15678c37"
+  },
+  "actual": {
+    "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\03_replay_integrity\\same_size_sha_control\\original_row.txt",
+    "bytes": 18,
+    "sha256": "048e5d7b753a61a561bba24e49540248c4d0dca7caa9972a7d889636a8751b6c"
+  },
+  "observed": "Missing or changed input: original_row",
+  "source_freeze_commit": "ebaffb57feb3a27f2d7d87b745930664f625f935",
+  "frozen_software_source_changed": false,
+  "protected_original_data_changed": false,
+  "synthetic_fixture_changed": true
+}

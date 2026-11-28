@@ -1,0 +1,17 @@
+{
+  "status": "PASS",
+  "scope": "Entire saved MPS constraint matrix, RHS, senses, variable bounds and quadratic rows equal live native C-API JSON exactly as binary64; includes all G3 coordinates/node budgets/q bounds",
+  "optimization_called": false,
+  "column_mapping": "position_preserved_small_named_fixture",
+  "linear_row_mapping": "persisted_native_index_names",
+  "quadratic_row_mapping": "persisted_native_index_names",
+  "variables": 6,
+  "linear_rows": 5,
+  "linear_nonzero_coefficients": 10,
+  "quadratic_rows": 1,
+  "quadratic_nonzero_coefficients": 3,
+  "mps_sha256": "4d12a7d1531e4215cf3e877c99d080ac19a5a81b73ca3038476d72bb27de7bc3",
+  "raw_readback_sha256": "95661ff8f72e4091c5b8ff47d5aa92e9bad93079e7440cd0e198de20660ddb58",
+  "gurobi_library_sha256": "8cb168a8766f157f9c5cac11764ec35c6dd68cf7fd9d9b5f830d3b8d2f82a9fc",
+  "qa_program_sha256": "15d4009142dcbf166306a9d543e1e3150681ceee67dc9c1d7f6e5e5c26be13b1"
+}

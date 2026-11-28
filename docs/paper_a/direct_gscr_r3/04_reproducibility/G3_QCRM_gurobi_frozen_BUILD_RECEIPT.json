@@ -1,0 +1,33 @@
+{
+  "tracked_dirty_after": [],
+  "started_utc": "2026-11-28T00:50:14.5574653Z",
+  "source_commit": "ebaffb57feb3a27f2d7d87b745930664f625f935",
+  "backend": "gurobi",
+  "ended_utc": "2026-11-28T00:57:29.5812961Z",
+  "formulation": "QCRM",
+  "exit_code": 0,
+  "environment": {
+    "TEMP": "E:/ResearchResults/FlexPlan_UC_GSCR/DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01/tmp",
+    "PAPER_A_WEEK_CONTRACT": "E:/ResearchResults/FlexPlan_UC_GSCR/SGOV145_20261121_01/FORMULATION_CONTRACT.md",
+    "PAPER_A_AC_REFERENCE_ONLY": "1",
+    "PAPER_A_AC_ATTEMPT": "02_native_g3/QCRM_gurobi_frozen",
+    "PAPER_A_STRENGTH_EXISTING_CASE_DIR": "E:/ResearchResults/FlexPlan_UC_GSCR/KW08_RE70_G2_PQ_20261125_01/CASES/G2",
+    "JULIA_DEPOT_PATH": "E:/ResearchResults/FlexPlan_UC_GSCR/DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01/julia_depot;E:/ResearchResults/FlexPlan_UC_GSCR/SCI_GOLD_AC_DIRECT_02_LOCAL_20261127_01/julia_depot;E:/ResearchResults/FlexPlan_UC_GSCR/TECH_FULL37_FIVE_WEEKS_RE50_20261115_01/depot;C:/Users/User/.julia",
+    "PAPER_A_AC_CASE_DIR": "E:/ResearchResults/FlexPlan_UC_GSCR/KW08_RE70_G2_PQ_20261125_01/CONFIRMED_QBOX/AC_CASE"
+  },
+  "method": "G3",
+  "source_commit_after": "ebaffb57feb3a27f2d7d87b745930664f625f935",
+  "command": [
+    "C:/Users/User/.julia/juliaup/julia-1.11.5+0.x64.w64.mingw32/bin/julia.exe",
+    "--startup-file=no",
+    "--project=.",
+    "scripts/paper_a/run_week_strength_comparison.jl",
+    "E:/ResearchResults/FlexPlan_UC_GSCR/DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01",
+    "E:/ResearchResults/FlexPlan_UC_GSCR/ORCH_FULL37_SEQUENTIAL_117_20261113_01/SCI02_POSITIVE_SYN_MINIMUM_04/CASE.json",
+    "G3",
+    "relaxed",
+    "ac_compare"
+  ],
+  "optimization_performed": false,
+  "tracked_dirty_before": []
+}

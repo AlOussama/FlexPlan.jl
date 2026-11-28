@@ -1,0 +1,35 @@
+{
+  "policy": "Reuse unchanged accepted original evidence; F02 is not reopened",
+  "files": [
+    {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\SCI_GOLD_AC_DIRECT_02_LOCAL_20261127_02\\RECOVERED_PROOF_EXECUTION.json",
+      "bytes": 3222,
+      "sha256": "9608f9aac3ff388469f6c90c5da108ba8225bc29be65bdd015f331ac4490ed1a"
+    },
+    {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\SCI_GOLD_AC_DIRECT_02_LOCAL_20261127_02\\QCRM_RECOVERED_CERTIFICATE_AUDIT.json",
+      "bytes": 2297,
+      "sha256": "ba077a4081ef011b61a2ecd8edbef6d2aa5ab8ddbdf2aae25a0f36d68ade21d0"
+    },
+    {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\SCI_GOLD_AC_DIRECT_02_LOCAL_20261127_02\\PHYSICAL_MATRIX_RECONSTRUCTION.json",
+      "bytes": 11819669,
+      "sha256": "c2329c26e13ca3056f4f7d5c3219c2e1afd9d8d3476956f249bbcc7fd9f9a92b"
+    },
+    {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\SCI_GOLD_AC_DIRECT_02_LOCAL_20261127_02\\BOUND_AND_POINT_AUDIT.csv",
+      "bytes": 8188,
+      "sha256": "f065bf43dbec84b3d19451ac24945f3601f9dc5715495d08fbae8e3e6338f834"
+    },
+    {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\SCI_GOLD_AC_DIRECT_02_LOCAL_20261127_02\\FOLLOWUP_RECOVERY_PROVENANCE.json",
+      "bytes": 2035,
+      "sha256": "50f4e8b3333b88050df5b0a495506a51fc4cfbec48419c25ca31d37ca743ba94"
+    },
+    {
+      "path": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\SCI_GOLD_AC_DIRECT_02_LOCAL_20261127_02\\DIRECT_GSCR_LOCAL_REVIEW_RETURN.md",
+      "bytes": 9442,
+      "sha256": "dec34925e3ee2dd5d2594e2c805017ac4f2982a6d95db9dcbb67eedb569c9fd4"
+    }
+  ]
+}

@@ -1,0 +1,139 @@
+{
+  "source_commit": "ebaffb57feb3a27f2d7d87b745930664f625f935",
+  "status": "NATIVE_FROZEN_QA_PASS_PENDING_FINAL_REVIEW",
+  "expected_exports": 9,
+  "completed": [
+    {
+      "name": "G0_LPAC_mosek_frozen",
+      "utc": "2026-11-27T23:57:06.409785+00:00",
+      "returncode": 0,
+      "result_file": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\06_qa\\independent_G0_LPAC_mosek_frozen.json",
+      "command": [
+        "C:\\ProgramData\\anaconda3\\python.exe",
+        "-B",
+        "audit/r3_independent_native_verify.py",
+        "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\01_native_g0\\LPAC_mosek_frozen\\native_psd_readback.json",
+        "--expected",
+        "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\01_native_g0\\LPAC_mosek_frozen\\expected_psd.json",
+        "--task",
+        "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\01_native_g0\\LPAC_mosek_frozen\\native.task.gz",
+        "--output",
+        "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\06_qa\\independent_G0_LPAC_mosek_frozen.json"
+      ]
+    },
+    {
+      "name": "G0_SOC-WR_mosek_frozen",
+      "utc": "2026-11-28T00:03:19.016330+00:00",
+      "returncode": 0,
+      "result_file": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\06_qa\\independent_G0_SOC-WR_mosek_frozen.json",
+      "command": [
+        "C:\\ProgramData\\anaconda3\\python.exe",
+        "-B",
+        "audit/r3_independent_native_verify.py",
+        "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\01_native_g0\\SOC-WR_mosek_frozen\\native_psd_readback.json",
+        "--expected",
+        "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\01_native_g0\\SOC-WR_mosek_frozen\\expected_psd.json",
+        "--task",
+        "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\01_native_g0\\SOC-WR_mosek_frozen\\native.task.gz",
+        "--output",
+        "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\06_qa\\independent_G0_SOC-WR_mosek_frozen.json"
+      ]
+    },
+    {
+      "name": "G0_QCRM_mosek_frozen",
+      "utc": "2026-11-28T00:13:17.728689+00:00",
+      "returncode": 0,
+      "result_file": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\06_qa\\independent_G0_QCRM_mosek_frozen.json",
+      "command": [
+        "C:\\ProgramData\\anaconda3\\python.exe",
+        "-B",
+        "audit/r3_independent_native_verify.py",
+        "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\01_native_g0\\QCRM_mosek_frozen\\native_psd_readback.json",
+        "--expected",
+        "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\01_native_g0\\QCRM_mosek_frozen\\expected_psd.json",
+        "--task",
+        "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\01_native_g0\\QCRM_mosek_frozen\\native.task.gz",
+        "--output",
+        "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\06_qa\\independent_G0_QCRM_mosek_frozen.json"
+      ]
+    },
+    {
+      "name": "G3_LPAC_gurobi_frozen",
+      "utc": "2026-11-28T00:23:46.186190+00:00",
+      "returncode": 0,
+      "result_file": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\06_qa\\independent_G3_LPAC_gurobi_frozen.json",
+      "command": [
+        "C:\\ProgramData\\anaconda3\\python.exe",
+        "-B",
+        "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\06_qa\\independent_g3_raw_verify.py",
+        "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\02_native_g3\\LPAC_gurobi_frozen",
+        "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\06_qa\\independent_G3_LPAC_gurobi_frozen.json"
+      ]
+    },
+    {
+      "name": "G3_LPAC_mosek_frozen",
+      "utc": "2026-11-28T00:32:30.229406+00:00",
+      "returncode": 0,
+      "result_file": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\06_qa\\independent_G3_LPAC_mosek_frozen.json",
+      "command": [
+        "C:\\ProgramData\\anaconda3\\python.exe",
+        "-B",
+        "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\06_qa\\independent_g3_raw_verify.py",
+        "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\02_native_g3\\LPAC_mosek_frozen",
+        "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\06_qa\\independent_G3_LPAC_mosek_frozen.json"
+      ]
+    },
+    {
+      "name": "G3_SOC-WR_gurobi_frozen",
+      "utc": "2026-11-28T00:44:23.552431+00:00",
+      "returncode": 0,
+      "result_file": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\06_qa\\independent_G3_SOC-WR_gurobi_frozen.json",
+      "command": [
+        "C:\\ProgramData\\anaconda3\\python.exe",
+        "-B",
+        "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\06_qa\\independent_g3_raw_verify.py",
+        "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\02_native_g3\\SOC-WR_gurobi_frozen",
+        "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\06_qa\\independent_G3_SOC-WR_gurobi_frozen.json"
+      ]
+    },
+    {
+      "name": "G3_SOC-WR_mosek_frozen",
+      "utc": "2026-11-28T00:50:26.749302+00:00",
+      "returncode": 0,
+      "result_file": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\06_qa\\independent_G3_SOC-WR_mosek_frozen.json",
+      "command": [
+        "C:\\ProgramData\\anaconda3\\python.exe",
+        "-B",
+        "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\06_qa\\independent_g3_raw_verify.py",
+        "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\02_native_g3\\SOC-WR_mosek_frozen",
+        "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\06_qa\\independent_G3_SOC-WR_mosek_frozen.json"
+      ]
+    },
+    {
+      "name": "G3_QCRM_gurobi_frozen",
+      "utc": "2026-11-28T00:58:26.806618+00:00",
+      "returncode": 0,
+      "result_file": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\06_qa\\independent_G3_QCRM_gurobi_frozen.json",
+      "command": [
+        "C:\\ProgramData\\anaconda3\\python.exe",
+        "-B",
+        "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\06_qa\\independent_g3_raw_verify.py",
+        "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\02_native_g3\\QCRM_gurobi_frozen",
+        "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\06_qa\\independent_G3_QCRM_gurobi_frozen.json"
+      ]
+    },
+    {
+      "name": "G3_QCRM_mosek_frozen",
+      "utc": "2026-11-28T01:03:53.115551+00:00",
+      "returncode": 0,
+      "result_file": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\06_qa\\independent_G3_QCRM_mosek_frozen.json",
+      "command": [
+        "C:\\ProgramData\\anaconda3\\python.exe",
+        "-B",
+        "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\06_qa\\independent_g3_raw_verify.py",
+        "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\02_native_g3\\QCRM_mosek_frozen",
+        "E:\\ResearchResults\\FlexPlan_UC_GSCR\\DIRECT_GSCR_FINAL_ACCEPTANCE_BUNDLE_R3_01\\06_qa\\independent_G3_QCRM_mosek_frozen.json"
+      ]
+    }
+  ]
+}

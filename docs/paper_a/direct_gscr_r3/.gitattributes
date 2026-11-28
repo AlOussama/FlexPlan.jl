@@ -1,0 +1,4 @@
+# Preserve SHA-256-bound artifact bytes, including their recorded line endings.
+* -text whitespace=cr-at-eol
+# Unified-diff context prefixes are part of the preserved patch artifact.
+*.diff -whitespace

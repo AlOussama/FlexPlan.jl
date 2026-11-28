@@ -1,0 +1,9 @@
+{
+  "repository": "AlOussama/FlexPlan.jl",
+  "branch": "codex/paper-a-q5-digest-139",
+  "remote_head": "a2cadc4391a3cac1ae06f9f7fc0ea88a62ef4f7e",
+  "protected": false,
+  "source": "GitHub connector GET branch endpoint",
+  "source_url": "https://api.github.com/repos/AlOussama/FlexPlan.jl/branches/codex/paper-a-q5-digest-139",
+  "recorded_utc": "2026-11-28T01:05:23.113875+00:00"
+}

@@ -1,0 +1,11 @@
+{
+  "reference_commit": "a2cadc4391a3cac1ae06f9f7fc0ea88a62ef4f7e",
+  "source_freeze_commit": "ebaffb57feb3a27f2d7d87b745930664f625f935",
+  "branch": "codex/paper-a-q5-digest-139",
+  "repository": "AlOussama/FlexPlan.jl",
+  "archive": "E:\\ResearchResults\\FlexPlan_UC_GSCR\\KW08_RE70_G2_PQ_20261125_01",
+  "case_sha256": "66885c9b5d27b21ac1000cf16e8da5d886b7ab50085783957907cebef8a41d3b",
+  "parent_sha256": "ae0f61e54e6aadfc1b4f3cde60f185bbe62c764fde84c96146d714c172b9d531",
+  "r2_bundle_sha256": "c22480d3eb55e146c2321013746cbfe5b214103f0d6481555e982662ad57ebf7",
+  "owner_request_sha256": "8997e2d222334c33752f4d7b5f7af1a64ed72aa696415d606d7e3895d38fc7fb"
+}
